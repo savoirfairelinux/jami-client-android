@@ -312,6 +312,9 @@
   <!--Donation-->
   <string name="donation_card_not_now">Ikkje no</string>
   <!--Extension-->
+  <string name="export_side_step1_code_connect">Knytta</string>
+  <string name="export_side_step2_cancel">Avbryt</string>
   <string name="export_side_step2_confirm">Bekreft</string>
+  <string name="import_side_step1_share">Deling</string>
   <string name="import_side_step2_password_import">Import</string>
 </resources>

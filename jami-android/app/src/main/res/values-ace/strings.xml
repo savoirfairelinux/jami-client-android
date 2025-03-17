@@ -165,4 +165,9 @@
   <string name="mute_conversation">مکالمن ساكيت</string>
   <!--Donation-->
   <!--Extension-->
+  <string name="export_side_step1_code_connect">وصلكن</string>
+  <string name="export_side_step2_cancel">ڤڠڬيل</string>
+  <string name="export_side_step2_confirm">ڤڠاجرن</string>
+  <string name="import_side_step1_share">ڤڠاجين</string>
+  <string name="import_side_step2_password_import">ڤڠاجرن</string>
 </resources>

@@ -329,5 +329,10 @@
   <string name="unable_to_load">Non se cargou %1$s</string>
   <string name="load_success">%1$s: activado</string>
   <string name="unload_success">%1$s: desactivado </string>
+  <string name="export_side_main_title">Exportar conta</string>
+  <string name="export_side_step1_code_connect">Conectar</string>
+  <string name="export_side_step2_cancel">Cancelar</string>
+  <string name="export_side_step2_confirm">Confirmar</string>
+  <string name="import_side_step1_share">Compartir</string>
   <string name="import_side_step2_password_import">Importación</string>
 </resources>

@@ -169,4 +169,9 @@
   <!--Donation-->
   <string name="donation_card_not_now">Не зараз</string>
   <!--Extension-->
+  <string name="export_side_step1_code_connect">Злучэнне</string>
+  <string name="export_side_step2_cancel">Скасаваць</string>
+  <string name="export_side_step2_confirm">Пацвердзіць</string>
+  <string name="import_side_step1_share">Падзяліцца</string>
+  <string name="import_side_step2_password_import">Імпарт</string>
 </resources>

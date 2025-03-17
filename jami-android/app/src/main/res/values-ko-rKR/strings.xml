@@ -322,6 +322,9 @@
   <!--Donation-->
   <string name="donation_card_not_now">나중에</string>
   <!--Extension-->
+  <string name="export_side_step1_code_connect">연결</string>
+  <string name="export_side_step2_cancel">취소</string>
   <string name="export_side_step2_confirm">확인</string>
+  <string name="import_side_step1_share">공유</string>
   <string name="import_side_step2_password_import">가져오기</string>
 </resources>

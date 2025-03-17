@@ -312,6 +312,9 @@
   <!--Donation-->
   <string name="donation_card_not_now">ഇപ്പോൾ വേണ്ട</string>
   <!--Extension-->
+  <string name="export_side_step1_code_connect">ബന്ധിപ്പിക്കുക</string>
+  <string name="export_side_step2_cancel">റദ്ദാക്കുക</string>
   <string name="export_side_step2_confirm">സ്ഥിരീകരണം</string>
+  <string name="import_side_step1_share">പങ്കിടുക</string>
   <string name="import_side_step2_password_import">ഇറക്കുമതി</string>
 </resources>

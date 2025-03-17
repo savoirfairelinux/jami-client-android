@@ -262,4 +262,7 @@
   <!--Donation-->
   <string name="donation_card_not_now">ਹਾਲੇ ਨਹੀਂ</string>
   <!--Extension-->
+  <string name="export_side_step1_code_connect">ਜੋੜੋ</string>
+  <string name="export_side_step2_cancel">ਰੱਦ ਕਰੋ</string>
+  <string name="import_side_step1_share">ਸਾਂਝਾ ਕਰੋ</string>
 </resources>

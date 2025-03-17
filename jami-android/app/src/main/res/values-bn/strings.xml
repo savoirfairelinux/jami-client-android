@@ -314,4 +314,9 @@
   <!--Donation-->
   <string name="donation_card_not_now">এখন না</string>
   <!--Extension-->
+  <string name="export_side_step1_code_connect">সংযুক্ত করুন</string>
+  <string name="export_side_step2_cancel">বাতিল করুন</string>
+  <string name="export_side_step2_confirm">নিশ্চিত করুন</string>
+  <string name="import_side_step1_share">ভাগ করে নেওয়ার</string>
+  <string name="import_side_step2_password_import">আমদানি</string>
 </resources>

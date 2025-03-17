@@ -463,6 +463,10 @@
   <string name="install_success">Extensia %1$s a fost instalată cu succes.</string>
   <string name="install_error">A apărut o eroare la importarea extensiei.</string>
   <string name="export_side_main_title">Exportă contul</string>
+  <string name="import_side_main_title">Importă contul</string>
+  <string name="export_side_step1_code_connect">Conectează</string>
+  <string name="export_side_step2_cancel">Renunță</string>
   <string name="export_side_step2_confirm">Confirmă</string>
+  <string name="import_side_step1_share">Distribuie</string>
   <string name="import_side_step2_password_import">Importă</string>
 </resources>

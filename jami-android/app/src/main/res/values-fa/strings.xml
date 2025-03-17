@@ -325,5 +325,10 @@
   <string name="donation_setting_title">یادآوری اهدا کردن</string>
   <string name="donation_setting_description">فعال کردن یادآوری اهدا کردن</string>
   <!--Extension-->
+  <string name="export_side_main_title">برون‌برد حساب</string>
+  <string name="export_side_step1_code_connect">اتصال</string>
+  <string name="export_side_step2_cancel">لغو</string>
+  <string name="export_side_step2_confirm">تایید</string>
+  <string name="import_side_step1_share">اشتراک گذاری</string>
   <string name="import_side_step2_password_import">واردات</string>
 </resources>

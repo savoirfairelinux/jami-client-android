@@ -233,4 +233,10 @@
   <string name="unload_success">%1$s: 已禁用</string>
   <string name="install_success">扩展%1$s已成功安装</string>
   <string name="install_error">导入扩展时出错</string>
+  <string name="export_side_main_title">导出账户</string>
+  <string name="export_side_step1_code_connect">连接</string>
+  <string name="export_side_step2_cancel">取消</string>
+  <string name="export_side_step2_confirm">確認</string>
+  <string name="import_side_step1_share">分享</string>
+  <string name="import_side_step2_password_import">倒入</string>
 </resources>

@@ -108,7 +108,7 @@
   <string name="account_published_same_as_local_label">Helyiként közzétéve</string>
   <string name="account_published_port_label">Közzétett kikötő</string>
   <string name="account_published_address_label">Nyilvános cím</string>
-  <string name="account_connectivity_label">Közvetlen egyenrangú kapcsolódás </string>
+  <string name="account_connectivity_label">Társ-társ kapcsolódása</string>
   <string name="disabled">Letiltva</string>
   <string name="enabled">Engedélyezve</string>
   <string name="default_value">Alapértelmezett</string>
@@ -119,8 +119,8 @@
   <string name="account_proxy_server_list_label">DHT-meghatalmazáslista URL-címe</string>
   <string name="account_proxy_server_used">Használata: %1$s</string>
   <string name="account_sip_proxy_label">Meghatalmazás</string>
-  <string name="account_peer_discovery_label">Helyi partner felderítése</string>
-  <string name="account_peer_discovery_enable_label">Helyi partner felderítése engedélyezése</string>
+  <string name="account_peer_discovery_label">Helyi társ felderítése</string>
+  <string name="account_peer_discovery_enable_label">Helyi társ felderítése engedélyezése</string>
   <string name="account_peer_discovery_enable_summary">Csatlakozás más DHT-csomópontokhoz, amelyek a helyi hálózaton hirdetnek</string>
   <!--Security Details-->
   <string name="account_credentials_label">Hitelesítő adatok</string>

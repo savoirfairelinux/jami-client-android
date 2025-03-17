@@ -314,4 +314,10 @@
   <!--Donation-->
   <string name="donation_card_not_now">Ikke nu</string>
   <!--Extension-->
+  <string name="export_side_main_title">Eksporter konto</string>
+  <string name="export_side_step1_code_connect">Køb</string>
+  <string name="export_side_step2_cancel">Annuller</string>
+  <string name="export_side_step2_confirm">- Det bekræfter jeg.</string>
+  <string name="import_side_step1_share">Del</string>
+  <string name="import_side_step2_password_import">Importér</string>
 </resources>

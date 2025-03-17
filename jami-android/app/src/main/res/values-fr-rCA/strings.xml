@@ -112,6 +112,7 @@
   <string name="action_call_decline">Refuser</string>
   <string name="action_call_mic_mute">Couper le microphone</string>
   <string name="action_load_extension">Charger le module d\'extension</string>
+  <string name="ab_action_speakerphone">Activer le haut-parleur</string>
   <string name="ab_action_contact_add">Ajouter aux contacts</string>
   <string name="ab_action_contact_add_question">Ajouter au contacts ?</string>
   <string name="ab_action_audio_call">Démarrer appel audio</string>
@@ -461,5 +462,64 @@
   <string name="unload_success">%1$s: désactivé</string>
   <string name="install_success">L\'extension %1$s a été correctement installée.</string>
   <string name="install_error">Une erreur s\'est produite pendant l\'import de l\'extension.</string>
+  <string name="export_side_main_title">Exporter compte</string>
+  <string name="import_side_main_title">Importer un compte</string>
+  <string name="link_device_dialog_exit_title">Voulez-vous arrêter ?</string>
+  <string name="link_device_dialog_exit_export_body_1">Cette opération annule l\'exportation du compte.</string>
+  <string name="link_device_dialog_exit_export_body_2">Arrêter l\'opération annule l\'exportation du compte.</string>
+  <string name="link_device_dialog_exit_import_body_1">La sortie annule l\'opération d\'importation du compte.</string>
+  <string name="link_device_dialog_exit_import_body_2">La sortie annule l\'opération d\'importation du compte.</string>
+  <string name="export_side_step1_advice_qr">Sur le nouvel appareil, créez un nouveau compte.
+Sélectionnez Ajouter un compte -&gt; Se connecter à partir d\'un autre appareil.
+Lorsque vous êtes prêt, scannez le code QR.</string>
+  <string name="export_side_step1_switch_to_code">Ou cliquez ici pour saisir le code d\'authentification</string>
+  <string name="export_side_step1_switch_to_qr">Ou cliquer ici pour scanner le code QR</string>
+  <string name="export_side_step1_error_malformed">Le nouvel identifiant de l\'appareil n\'est pas reconnu.
+Veuillez suivre les instructions ci-dessus.</string>
+  <string name="export_side_step1_code_connect">Se connecter</string>
+  <string name="export_side_step2_advice">Nouvel appareil trouvé à l\'adresse ci-dessous. Est-ce vous ?
+En cliquant sur confirmer, le transfert du compte se poursuivra.</string>
+  <string name="export_side_step2_advice_ip_only">Nouvel appareil trouvé à l\'adresse ci-dessous. Est-ce vous ?
+En cliquant sur confirmer, le transfert du compte se poursuivra.</string>
+  <string name="export_side_step2_ip_only">Nouvelle adresse IP de l\'appareil : %1$s</string>
+  <string name="export_side_step2_cancel">Annuler</string>
+  <string name="export_side_step2_confirm">Confirmer</string>
+  <string name="export_side_step2_password">Le compte est protégé par un mot de passe. 
+Pour continuer, authentifiez-vous sur le nouvel appareil.</string>
+  <string name="export_side_step3_body_loading">L\'opération d\'exportation du compte vers le nouvel appareil est en cours.
+Veuillez patienter...</string>
+  <string name="export_side_step3_body_done">Compte importé avec succès sur le nouvel appareil.</string>
+  <string name="export_side_step3_exit">Terminé</string>
+  <string name="import_side_step1_advice_qr">Sur le nouvel appareil, créez un nouveau compte.
+Sélectionnez Ajouter un compte -&gt; Se connecter à partir d\'un autre appareil.
+Lorsque vous êtes prêt, scannez le code QR.</string>
+  <string name="import_side_step1_advice_code">Lancez l'exportation sur l'appareil source.
+&lt;b&gt;Sélectionnez Compte &amp;gt ; Paramètres du compte &amp;gt ; Lier un nouvel appareil.&lt;/b&gt;
+Lorsque vous êtes prêt, entrez le code ci-dessous.</string>
+  <string name="import_side_step1_share">Partager</string>
+  <string name="import_side_step1_switch_to_code">Ou cliquez ici pour saisir le code d\'authentification</string>
+  <string name="import_side_step1_switch_to_qr">Ou cliquer ici pour afficher le code QR</string>
+  <string name="import_side_step1_connecting">Connexion à l\'appareil source ...</string>
+  <string name="import_side_step1_preparing_device">Préparation de l\'appareil ...</string>
+  <string name="import_side_step2_password_prompt">Le compte est protégé par un mot de passe. 
+Pour continuer, authentifiez-vous.</string>
   <string name="import_side_step2_password_import">Importation</string>
+  <string name="import_side_step2_password_unlocking">Déverrouillage du compte ...</string>
+  <string name="import_side_step2_action_required">Action requise.
+Veuillez confirmer le compte sur l\'appareil source.</string>
+  <string name="import_side_step3_body_loading">Le compte est en cours d\'importation sur le nouvel appareil.
+Veuillez patienter.</string>
+  <string name="import_side_step3_body_done">Vous êtes prêt !
+Votre compte est importé avec succès sur le nouvel appareil !</string>
+  <string name="import_side_step3_go_to_account">Aller sur votre nouveau compte</string>
+  <string name="import_side_step3_exit">Terminé</string>
+  <string name="link_device_share_title">Partager le code authentification Jami</string>
+  <string name="link_device_error_network">Une erreur réseau s\'est produite.
+Vérifier votre connectivité réseau.</string>
+  <string name="link_device_error_authentication">Une erreur d\'authentification s\'est produite. 
+Veuillez vérifier votre mot de passe.</string>
+  <string name="link_device_error_timeout">L\'opération a été interrompue.</string>
+  <string name="link_device_error_canceled">L\'opération a été annulée.</string>
+  <string name="link_device_error_unknown">Une erreur s\'est produite</string>
+  <string name="link_device_error_bad_password">Veuillez vérifier vos informations d\'identification et réessayer.</string>
 </resources>

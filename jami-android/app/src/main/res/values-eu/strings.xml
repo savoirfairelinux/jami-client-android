@@ -313,5 +313,10 @@
   <!--Donation-->
   <string name="donation_card_not_now">Orain ez</string>
   <!--Extension-->
+  <string name="export_side_main_title">Esportatu kontua</string>
+  <string name="export_side_step1_code_connect">Konektatu</string>
+  <string name="export_side_step2_cancel">Utzi</string>
+  <string name="export_side_step2_confirm">Baieztatu.</string>
+  <string name="import_side_step1_share">Partekatu</string>
   <string name="import_side_step2_password_import">Inportazioa</string>
 </resources>

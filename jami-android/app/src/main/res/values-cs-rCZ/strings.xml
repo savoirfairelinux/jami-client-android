@@ -24,13 +24,17 @@
   <string name="menu_item_accounts">Spravovat účty</string>
   <string name="menu_item_account">Spravovat účet</string>
   <string name="menu_item_settings">Nastavení</string>
+  <string name="menu_item_app_settings">Nastavení aplikace</string>
   <string name="menu_item_account_settings">Nastavení účtu</string>
+  <string name="menu_item_extension_list">Nastavení rozšíření</string>
   <string name="menu_item_share">Sdílet můj účet</string>
   <string name="menu_item_about">O Jami</string>
   <string name="video_setting_title">Nastavení videa</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">Vytočit číslo</string>
   <!--History Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">Pozvání přijato</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d Konverzace</item>
     <item quantity="few">%d Konverzace</item>
@@ -38,6 +42,7 @@
     <item quantity="other">%d konverzací</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Hledat jméno nebo konverzaci...</string>
   <string name="choose_number">Zvolte číslo</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -50,6 +55,7 @@
   <string name="notif_outgoing_call">Odchozí hovor</string>
   <string name="notif_current_call_title">Probíhající hovor s %1$s</string>
   <string name="notif_current_call">Probíhající hovor</string>
+  <string name="notif_channel_call_in_progress">Probíhá hovor</string>
   <string name="notif_channel_calls">Hovory</string>
   <string name="notif_channel_missed_calls">Zmeškané hovory</string>
   <string name="notif_channel_incoming_calls">Příchozí hovory</string>
@@ -60,6 +66,8 @@
   <string name="notif_channel_background_service">Služba na pozadí</string>
   <string name="notif_channel_background_service_descr">Umožňuje příjem hovorů a zpráv kdykoli.</string>
   <string name="notif_group_calls">Hovory</string>
+  <string name="notif_inprogress_group_call">Probíhá hovor</string>
+  <string name="notif_background_service">Jami nyní běží na pozadí</string>
   <string name="notif_mark_as_read">Označit jako přečtené</string>
   <string name="notif_dismiss">Odmítnout</string>
   <string name="notif_reply">Odpovědět</string>
@@ -85,6 +93,7 @@
   <string name="ongoing_call">Probíhající hovor</string>
   <string name="hist_in_call">Příchozí hovor %1$s</string>
   <string name="hist_out_call">Odchozí hovor %1$s</string>
+  <string name="start_error_title">Nelze spustit Jami!</string>
   <string name="action_call_accept">Přijmout hovor</string>
   <string name="action_call_accept_audio">Přijmout se zvukem</string>
   <string name="action_call_accept_video">Přijmout s obrazem</string>
@@ -96,6 +105,7 @@
   <string name="ab_action_video_call">Začít video hovor</string>
   <string name="ab_action_change_screen_orientation">Změnit natočení obrazovky</string>
   <string name="share_via">Sdílet přes</string>
+  <string name="write_a_message">Napsat zprávu</string>
   <string name="scan_qr">Skenovat kód QR</string>
   <string name="qr_code">Kód QR</string>
   <string name="new_group">Vytvořit novou skupinu</string>
@@ -115,6 +125,7 @@
   <string name="conversation_send_video">Nahrávat video klip</string>
   <string name="conversation_share_location">Sdílet polohu</string>
   <string name="ongoing_group_call">Probíhající hovor</string>
+  <string name="started_call">Hovor začal</string>
   <string name="in_reply_to">V odpovědi na</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Povolení ke kameře</string>
@@ -140,6 +151,7 @@
   <string name="conversation_details">Detaily konverzace</string>
   <string name="contact_details">Podrobnosti spojení</string>
   <string name="conversation_action_delete_this">Odstranit tuto konverzaci</string>
+  <string name="conversation_action_delete_this_title">Odstranit tuto konverzaci?</string>
   <string name="leave_conversation">Opustit konverzaci</string>
   <string name="conversation_action_delete_this_message">Tento krok nelze vrátit zpět.</string>
   <string name="conversation_action_history_clear">Vymazat historii</string>
@@ -148,13 +160,19 @@
   <string name="delete_contact">Smazat kontakt</string>
   <string name="conversation_action_remove_this_title">Smazat toto spojení?</string>
   <string name="conversation_action_remove_this_message">Toto smaže kontakt a s konečnou platností vymaže konverzační historii.</string>
+  <string name="swarm_group_action_leave">Opustit skupinu</string>
+  <string name="swarm_group_action_leave_title">Opustit tuto skupinu?</string>
+  <string name="swarm_group_action_leave_message">Toto smaže konverzaci s vašeho seznamu konverzací</string>
+  <string name="conversation_action_copy_peer_number">Kopíruj identifikátor kontaktu</string>
   <string name="conversation_action_select_peer_number">Vyberte číslo</string>
   <string name="conversation_action_block_this">Blokovat spojení</string>
   <string name="conversation_action_unblock_this">Odblokovat kontakt</string>
+  <string name="conversation_action_go_to_call">Návrat k hovoru</string>
   <string name="conversation_action_incoming_call">Příchozí hovor</string>
   <string name="conversation_action_latest">Posunout se na konec konverzace</string>
   <string name="conversation_open_file_error">Nebyla nalezena žádná aplikace schopná otevřít tento typ souboru</string>
   <string name="clip_contact_uri">Adresa spojení</string>
+  <string name="clip_message">Obsah zprávy</string>
   <string name="block_contact_dialog_title">Blokovat %1$s?</string>
   <string name="block_contact_dialog_message">%1$s se s vámi nebude schopen spojit, dokud jej neodblokujete.</string>
   <string name="block_contact_completed">%1$s byl zablokován.</string>
@@ -229,12 +247,21 @@
   <string name="conversation_placeholder">Zatím nemáte žádné konverzace</string>
   <string name="contact_request_sent">Poslána žádost o kontakt</string>
   <string name="start_conversation">Začněte konverzaci</string>
+  <string name="search_results">Výsledek hledání</string>
   <string name="tv_contact_row_header">Kontakty</string>
   <string name="gallery_error_title">Nenalezena žádná aplikace pro galerii</string>
   <string name="gallery_error_message">Na zařízení nebyla nalezena žádná aplikace na otevření galerie</string>
+  <string name="generic_error">Vyskytla se neznámá chyba</string>
   <!--File Transfer-->
+  <string name="invalid_file">Neplatný soubor.</string>
+  <string name="not_able_to_write_file">Nelze zapsat soubor.</string>
   <string name="file_transfer_status_created">Inicializuje se</string>
+  <string name="file_transfer_status_unsupported">Nepodporováno</string>
+  <string name="file_transfer_status_ongoing">Probíhá</string>
+  <string name="file_transfer_status_finished">Dokončeno</string>
   <string name="file_transfer_status_canceled">Zrušeno</string>
+  <string name="file_transfer_status_timed_out">Vypršel časový limit</string>
+  <string name="file_saved_successfully">Soubor byl úspěšně uložen.</string>
   <string name="file_download">Stáhnout</string>
   <string name="title_media_viewer">Prohlížeč záznamů</string>
   <string name="menu_file_open">Otevřít soubor</string>
@@ -244,6 +271,7 @@
   <string name="menu_file_share">Sdílet soubor</string>
   <string name="menu_message_copy">Zkopírovat</string>
   <string name="menu_message_edit">Upravit zprávu</string>
+  <string name="menu_message_history">Historie zprávy</string>
   <string name="menu_message_delete">Smazat zprávu</string>
   <string name="menu_message_cancel">Zrušit zprávu</string>
   <string name="menu_message_reply">Odpovědět</string>
@@ -269,6 +297,11 @@
   <string name="tv_send_video">Poslat média</string>
   <string name="tv_action_more">Více</string>
   <string name="conversation_input_speech_hint">Řekněte něco…</string>
+  <string name="audio_permission_denied">Oprávnění k mikrofonu je zakázáno. Chcete-li tuto funkci používat, povolte ji v nastavení zařízení.</string>
+  <string name="camera_permission_denied">Oprávnění ke kameře je zakázáno. Chcete-li tuto funkci používat, povolte ji v nastavení zařízení.</string>
+  <string name="speech_recogniton_unavailable">Rozpoznávání řeči není k dispozici.</string>
+  <string name="audio_permission_rationale_title"> Je vyžadováno oprávnění ke zvuku</string>
+  <string name="camera_permission_rationale_title">Je vyžadováno oprávnění ke kameře</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Doporučeno</string>
   <string name="wizard_status_optional">Volitelné</string>
@@ -321,4 +354,10 @@
   <!--Donation-->
   <string name="donation_card_not_now">Teď ne</string>
   <!--Extension-->
+  <string name="export_side_main_title">Exportovat účet</string>
+  <string name="export_side_step1_code_connect">Připojit</string>
+  <string name="export_side_step2_cancel">Zrušit</string>
+  <string name="export_side_step2_confirm">Potvrdit</string>
+  <string name="import_side_step1_share">Sdílet</string>
+  <string name="import_side_step2_password_import">Importovat</string>
 </resources>

@@ -316,4 +316,10 @@
   <string name="donation_card_not_now">Όχι τώρα</string>
   <string name="donation_donate">Δωρεά</string>
   <!--Extension-->
+  <string name="export_side_main_title">Εξαγωγή λογαριασμού</string>
+  <string name="export_side_step1_code_connect">Σύνδεση</string>
+  <string name="export_side_step2_cancel">Ακύρωση</string>
+  <string name="export_side_step2_confirm">Επιβεβαίωση</string>
+  <string name="import_side_step1_share">Κοινοποίηση</string>
+  <string name="import_side_step2_password_import">Εισαγωγή</string>
 </resources>

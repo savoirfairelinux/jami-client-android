@@ -49,7 +49,7 @@
   <string name="pref_logs_start">Naplózás indítása</string>
   <string name="pref_logs_stop">Naplózás leállítása</string>
   <string name="pref_connection_monitor">Csatlakozásfigyelő</string>
-  <string name="pref_connection_monitor_summary">Egyenrangú kapcsolatok figyelése</string>
+  <string name="pref_connection_monitor_summary">Társ-társ kapcsolatok figyelése</string>
   <string name="pref_push_notifications_logs_title">Push-értesítések naplói</string>
   <string name="pref_push_notifications_logs_summary">Push-értesítésekből rögzített
        naplók megtekintése.</string>
