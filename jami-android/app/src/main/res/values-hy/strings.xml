@@ -313,5 +313,9 @@
   <!--Donation-->
   <string name="donation_card_not_now">Ոչ հիմա</string>
   <!--Extension-->
+  <string name="export_side_step1_code_connect">Կապակցել</string>
+  <string name="export_side_step2_cancel">Արգելել</string>
+  <string name="export_side_step2_confirm">Համոզվեք</string>
+  <string name="import_side_step1_share">Մասնակից</string>
   <string name="import_side_step2_password_import">Արտահանման համար</string>
 </resources>

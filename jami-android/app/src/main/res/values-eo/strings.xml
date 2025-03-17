@@ -312,5 +312,9 @@
   <string name="mute_conversation">Silenta konversacio</string>
   <!--Donation-->
   <!--Extension-->
+  <string name="export_side_step1_code_connect">Konekti</string>
+  <string name="export_side_step2_cancel">Nuligi</string>
+  <string name="export_side_step2_confirm">Konfirmu</string>
+  <string name="import_side_step1_share">Kunhavi</string>
   <string name="import_side_step2_password_import">Enporti</string>
 </resources>

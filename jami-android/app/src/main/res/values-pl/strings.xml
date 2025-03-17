@@ -364,6 +364,9 @@
   <string name="install_error">Wystąpił błąd podczas importowania rozszerzenia.</string>
   <string name="export_side_main_title">Wyeksportuj konto</string>
   <string name="import_side_main_title">Importuj konto</string>
+  <string name="export_side_step1_code_connect">Połącz</string>
+  <string name="export_side_step2_cancel">Anuluj</string>
   <string name="export_side_step2_confirm">Potwierdź</string>
+  <string name="import_side_step1_share">Podziel się</string>
   <string name="import_side_step2_password_import">Importuj</string>
 </resources>

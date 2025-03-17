@@ -314,5 +314,9 @@
   <string name="donation_card_not_now">Tidak sekarang</string>
   <!--Extension-->
   <string name="export_side_main_title">Ekspor akun</string>
+  <string name="export_side_step1_code_connect">Hubungkan</string>
+  <string name="export_side_step2_cancel">Batal</string>
+  <string name="export_side_step2_confirm">Konfirmasi</string>
+  <string name="import_side_step1_share">Bagikan</string>
   <string name="import_side_step2_password_import">Impor</string>
 </resources>

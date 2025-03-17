@@ -440,6 +440,9 @@
   <string name="install_success">A extensão %1$s foi instalada com sucesso.</string>
   <string name="install_error">Ocorreu um erro ao importar a extensão.</string>
   <string name="export_side_main_title">Exportar conta</string>
+  <string name="export_side_step1_code_connect">Conectar</string>
+  <string name="export_side_step2_cancel">Cancelar</string>
   <string name="export_side_step2_confirm">Confirmar</string>
+  <string name="import_side_step1_share">Compartilhar</string>
   <string name="import_side_step2_password_import">Importar</string>
 </resources>

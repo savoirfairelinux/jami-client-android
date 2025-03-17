@@ -317,5 +317,9 @@
   <string name="donation_card_not_now">Ne sada</string>
   <string name="donation_donate">Doniraj</string>
   <!--Extension-->
+  <string name="export_side_step1_code_connect">Povezivanje</string>
+  <string name="export_side_step2_cancel">Otkaži</string>
+  <string name="export_side_step2_confirm">Potvrdi</string>
+  <string name="import_side_step1_share">Podijeli</string>
   <string name="import_side_step2_password_import">Uvezi</string>
 </resources>

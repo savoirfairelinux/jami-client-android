@@ -313,6 +313,9 @@
   <string name="load_success">%1$s: įjungta</string>
   <string name="unload_success">%1$s: išjungta</string>
   <string name="export_side_main_title">Eksportuoti paskyrą</string>
+  <string name="export_side_step1_code_connect">Prisijungti</string>
+  <string name="export_side_step2_cancel">Atsisakyti</string>
   <string name="export_side_step2_confirm">Patvirtinti</string>
+  <string name="import_side_step1_share">Bendrinti</string>
   <string name="import_side_step2_password_import">Importuoti</string>
 </resources>

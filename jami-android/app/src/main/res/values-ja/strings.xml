@@ -319,5 +319,9 @@
   <string name="donation_card_not_now">後で</string>
   <!--Extension-->
   <string name="export_side_main_title">アカウントをエクスポート</string>
+  <string name="export_side_step1_code_connect">接続</string>
+  <string name="export_side_step2_cancel">キャンセル</string>
+  <string name="export_side_step2_confirm">確認</string>
+  <string name="import_side_step1_share">共有</string>
   <string name="import_side_step2_password_import">輸入</string>
 </resources>

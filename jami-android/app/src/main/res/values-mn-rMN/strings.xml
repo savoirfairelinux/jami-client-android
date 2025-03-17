@@ -313,6 +313,9 @@
   <!--Donation-->
   <string name="donation_card_not_now">Одоо биш</string>
   <!--Extension-->
+  <string name="export_side_step1_code_connect">Харилцаа холбоо</string>
+  <string name="export_side_step2_cancel">Цуцлах</string>
   <string name="export_side_step2_confirm">Дашрамд</string>
+  <string name="import_side_step1_share">Хөдөлмөр</string>
   <string name="import_side_step2_password_import">Импортын</string>
 </resources>

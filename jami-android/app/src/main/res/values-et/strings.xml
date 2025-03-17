@@ -111,6 +111,7 @@
   <string name="action_call_decline">Keeldu</string>
   <string name="action_call_mic_mute">Summuta mikrofon</string>
   <string name="action_load_extension">Laadi lisamoodul</string>
+  <string name="ab_action_speakerphone">Lülita valjuhääldi sisse</string>
   <string name="ab_action_contact_add">Lisa kontaktitele</string>
   <string name="ab_action_contact_add_question">Kas lisame kontaktina?</string>
   <string name="ab_action_audio_call">Alustada häälkõnet</string>
@@ -460,5 +461,50 @@
   <string name="unload_success">%1$s: pole kasutusel</string>
   <string name="install_success">„%1$s“ lisamooduli paigaldamine õnnestus.</string>
   <string name="install_error">Lisamooduli importimisel tekkis viga.</string>
+  <string name="export_side_main_title">Ekspordi kasutajakonto</string>
+  <string name="import_side_main_title">Impordi kasutajakonto</string>
+  <string name="link_device_dialog_exit_title">Kas sa soovid lõpetada?</string>
+  <string name="link_device_dialog_exit_export_body_1">Sellega katkeb kasutajakonto eksportimine.</string>
+  <string name="link_device_dialog_exit_export_body_2">Kui võimalik, siis peatamine katkestab kasutajakonto eksportimise.</string>
+  <string name="link_device_dialog_exit_import_body_1">Peatamine katkestab kasutajakonto eksportimise.</string>
+  <string name="link_device_dialog_exit_import_body_2">Peatamine katkestab kasutajakonto importimise.</string>
+  <string name="export_side_step1_advice_qr">Uues seadmes käivita kasutajakonto lisamine.\nVali <b>„Kasutajakonto“ &gt; „Lisa kasutajakonto“ &gt; „Loo ühendus muust seadmest“</b>\nKui see on tehtud, siis skaneeri QR-koodi.</string>
+  <string name="export_side_step1_switch_to_code">Või klõpsi siin autentimiskoodi sisestamiseks</string>
+  <string name="export_side_step1_switch_to_qr">Või klõpsi siin QR-koodi skaneerimiseks</string>
+  <string name="export_side_step1_error_malformed">Uue seadme tunnus pole tuvastatav.\nPalun järgi eelpooltoodud juhendit.</string>
+  <string name="export_side_step1_code_connect">Ühenda</string>
+  <string name="export_side_step2_advice">Uus seade on siin. Kas see oled sina?
+Kui klõpsid „Kinnita“, siis jätkame kasutajakonto eksportimisega.</string>
+  <string name="export_side_step2_advice_ip_only">Uus seade on ühendatud allpooltoodud aadressil. Kas see oled sina?
+Kui klõpsid „Kinnita“, siis jätkame kasutajakonto eksportimisega.</string>
+  <string name="export_side_step2_ip_only">Uue seadme ip-aadress: %1$s</string>
+  <string name="export_side_step2_cancel">Tühista</string>
+  <string name="export_side_step2_confirm">Kinnita</string>
+  <string name="export_side_step2_password">Kasutajakonto on kaitstud salasõnaga.\nJätkamiseks autendi end uues seadmes.</string>
+  <string name="export_side_step3_body_loading">Kasutajakonto eksportimine uude seadmesse on pooleli.
+Palun oota…</string>
+  <string name="export_side_step3_body_done">Kasutajakonto importimine sellesse seadmesse õnnestus. </string>
+  <string name="export_side_step3_exit">Lõpeta</string>
+  <string name="import_side_step1_advice_qr">Algata eksportimine lähteseadmes.\n<b>Vali „Kasutajakonto“ &gt; „Kasutajakonto seadistused“ &gt; „Seo uus seada“</b>\nKui kõik on valmis, siis skaneeri järgnevat QR-koodi.</string>
+  <string name="import_side_step1_advice_code">Algata eksportimine lähteseadmes.\n<b>Vali „Kasutajakonto“ &gt; „Kasutajakonto seadistused“ &gt; „Seo uus seada“</b>\nKui kõik on valmis, siis sisesta järgnev kood.</string>
+  <string name="import_side_step1_share">Jaga</string>
+  <string name="import_side_step1_switch_to_code">Või klõpsi siin autentimiskoodi kuvamiseks</string>
+  <string name="import_side_step1_switch_to_qr">Või klõpsi siin QR-koodi kuvamiseks</string>
+  <string name="import_side_step1_connecting">Loome ühendust lähteseadmega…</string>
+  <string name="import_side_step1_preparing_device">Valmistame seadet ette…</string>
+  <string name="import_side_step2_password_prompt">Kasutajakonto on kaitstud salasõnaga.\nJätkamiseks eemalda lukustus.</string>
   <string name="import_side_step2_password_import">Impordi</string>
+  <string name="import_side_step2_password_unlocking">Eemaldame kasutajakonto lukustust...</string>
+  <string name="import_side_step2_action_required">Sinu osalemine on vajalik.\nPalun kinnita kasutajakonto lähteseadmes.</string>
+  <string name="import_side_step3_body_loading">Kasutajakonto on importimisel uude seadmesse.\nPalun oota.</string>
+  <string name="import_side_step3_body_done">Kõik on tehtud!\nSinu kasutajakonto importimine uude seadmesse õnnestus!</string>
+  <string name="import_side_step3_go_to_account">Suundu oma uue kasutajakonto juurde</string>
+  <string name="import_side_step3_exit">Lõpeta</string>
+  <string name="link_device_share_title">Jaga Jami autentimiseks mõeldud QR-koodi</string>
+  <string name="link_device_error_network">Tekkis võrguühenduse viga.\nPalun kontrolli, et võrguühendus toimib.</string>
+  <string name="link_device_error_authentication">Autentimisel tekkis viga.\nPalun kontrolli et salasõna on õige ja proovi uuesti.</string>
+  <string name="link_device_error_timeout">Tegevus aegus.</string>
+  <string name="link_device_error_canceled">Tegevus on katkestatud.</string>
+  <string name="link_device_error_unknown">Tekkis viga.</string>
+  <string name="link_device_error_bad_password">Palun kontrolli et konto nimi ja salasõna on õiged ja proovi uuesti.</string>
 </resources>

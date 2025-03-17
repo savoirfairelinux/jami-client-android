@@ -311,4 +311,9 @@
   <string name="mute_conversation">ساکئت مکالمات</string>
   <!--Donation-->
   <!--Extension-->
+  <string name="export_side_step1_code_connect">باغلا</string>
+  <string name="export_side_step2_cancel">لغو</string>
+  <string name="export_side_step2_confirm">تأکید ائدیر</string>
+  <string name="import_side_step1_share">بؤلوم</string>
+  <string name="import_side_step2_password_import">واردات</string>
 </resources>

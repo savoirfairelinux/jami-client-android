@@ -346,4 +346,10 @@
   <string name="donation_setting_title">Recordatori de donació</string>
   <string name="donation_setting_description">Activa el recordatori de donació</string>
   <!--Extension-->
+  <string name="export_side_main_title">Exporta el compte</string>
+  <string name="export_side_step1_code_connect">Connectar</string>
+  <string name="export_side_step2_cancel">Canceŀla</string>
+  <string name="export_side_step2_confirm">Confirma</string>
+  <string name="import_side_step1_share">Comparteix</string>
+  <string name="import_side_step2_password_import">Importa</string>
 </resources>

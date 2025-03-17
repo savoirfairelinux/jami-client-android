@@ -312,5 +312,9 @@
   <!--Donation-->
   <string name="donation_card_not_now">હમણાં નહીં</string>
   <!--Extension-->
+  <string name="export_side_step1_code_connect">કનેક્ટ કરો</string>
+  <string name="export_side_step2_cancel">રદ કરો</string>
+  <string name="export_side_step2_confirm">પુષ્ટિ</string>
+  <string name="import_side_step1_share">શેર કરો</string>
   <string name="import_side_step2_password_import">આયાત</string>
 </resources>

@@ -323,7 +323,7 @@
   <string name="file_transfer_status_unjoinable_peer">Elérhetetlen társ</string>
   <string name="file_transfer_status_canceled">Törölve</string>
   <string name="file_transfer_status_error">Hiba történt a fájl átvitele közben.</string>
-  <string name="file_transfer_status_timed_out">Időtúllépés</string>
+  <string name="file_transfer_status_timed_out">Művelet időtúllépése.</string>
   <string name="file_saved_in">Fájl mentve ide: %s.</string>
   <string name="file_saved_successfully">A fájl mentése sikerült.</string>
   <string name="file_download">Letöltés</string>
@@ -442,7 +442,7 @@
   <string name="welcome_jami_description">Oszd meg ennek a fióknak a Jami-azonosítóját, hogy mások könnyebben kapcsolatba léphessenek Önnel!</string>
   <!--Conversation details-->
   <string name="details">Részletek</string>
-  <string name="secure_p2p_connection">Biztonságos egyenrangú kapcsolat</string>
+  <string name="secure_p2p_connection">Biztonságos társ-társ kapcsolata</string>
   <string name="swarm_type">Beszélgetés típusa</string>
   <string name="Private">Magánjellegű</string>
   <string name="swarm_id">Csoportazonosító</string>
@@ -462,5 +462,23 @@
   <string name="install_success">A(z) %1$s bővítmény telepítése sikerült.</string>
   <string name="install_error">Hiba történt a bővítmény importálása közben.</string>
   <string name="export_side_main_title">Fiók exportálása</string>
+  <string name="import_side_main_title">Fiók importálása</string>
+  <string name="link_device_dialog_exit_title">Leállítja a fiók összekapcsolását?</string>
+  <string name="link_device_dialog_exit_export_body_1">A leállítás megszakítja a fiók exportálási műveletét.</string>
+  <string name="link_device_dialog_exit_export_body_2">A leállítás megszakítja a fiók exportálási műveletét.</string>
+  <string name="link_device_dialog_exit_import_body_1">A leállítás megszakítja a fiók importálási műveletét.</string>
+  <string name="link_device_dialog_exit_import_body_2">A leállítás megszakítja a fiók importálási műveletét.</string>
+  <string name="export_side_step1_error_malformed">Ismeretlen új eszközazonosító. Kérjük, kövesse a fenti utasításokat.</string>
+  <string name="export_side_step1_code_connect">Kapcsolódás</string>
+  <string name="export_side_step2_ip_only">Új eszköz IP-címe: %1$s</string>
+  <string name="export_side_step2_cancel">Mégse</string>
+  <string name="export_side_step2_confirm">Megerősítés</string>
+  <string name="export_side_step3_body_done">A fiók importálása sikerült az új eszközön.</string>
+  <string name="import_side_step1_share">Megosztás </string>
   <string name="import_side_step2_password_import">Importálás</string>
+  <string name="import_side_step3_body_done">A telepítés sikeresen befejeződött.</string>
+  <string name="link_device_error_network">Hálózati hiba történt a fiók összekapcsolása közben. Ellenőrizze a kapcsolatot, majd próbálkozzon újra.</string>
+  <string name="link_device_error_timeout">Művelet időtúllépése.</string>
+  <string name="link_device_error_canceled">A műveletet megszakította a felhasználó.</string>
+  <string name="link_device_error_bad_password">Kérjük, ellenőrizze a hitelesítő adatokat, és próbálkozzon újra.</string>
 </resources>

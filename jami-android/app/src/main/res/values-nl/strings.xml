@@ -339,6 +339,9 @@
   <string name="load_success">%1$s: ingeschakeld</string>
   <string name="unload_success">%1$s: uitgeschakeld</string>
   <string name="export_side_main_title">Account exporteren</string>
+  <string name="export_side_step1_code_connect">Verbinden</string>
+  <string name="export_side_step2_cancel">Annuleren</string>
   <string name="export_side_step2_confirm">Bevestigen</string>
+  <string name="import_side_step1_share">Delen</string>
   <string name="import_side_step2_password_import">Importeren</string>
 </resources>
