@@ -28,6 +28,10 @@ class HomeAccountCreationPresenter @Inject constructor() : RootPresenter<HomeAcc
         view?.goToAccountLink()
     }
 
+    fun clickOnBackupAccountLink() {
+        view?.goToBackupAccountLink()
+    }
+
     fun clickOnConnectAccount() {
         view?.goToAccountConnect()
     }

@@ -16,10 +16,11 @@
  */
 package net.jami.account
 
-interface HomeAccountCreationView {
-    fun goToAccountCreation()
-    fun goToAccountLink()
-    fun goToBackupAccountLink()
-    fun goToAccountConnect()
-    fun goToSIPAccountCreation()
+import net.jami.model.AccountCreationModel
+
+interface JamiLinkAccountView {
+    fun enableLinkButton(enable: Boolean)
+    fun showPin(show: Boolean)
+    fun createAccount()
+    fun cancel()
 }

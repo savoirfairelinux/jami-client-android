@@ -83,6 +83,8 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
         if (!model.managementServer.isNullOrEmpty()) {
             presenter.initJamiAccountConnect(model, defaultAccountName)
             mJamsAccount = true
+        } else if (model.archive != null) {
+            presenter.initJamiAccountBackup(model, getText(R.string.ring_account_default_name).toString())
         } else {
             presenter.initJamiAccountCreation(model, defaultAccountName)
             mJamsAccount = false
