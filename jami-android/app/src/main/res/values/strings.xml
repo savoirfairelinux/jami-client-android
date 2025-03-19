@@ -18,7 +18,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <!-- About -->
     <string name="app_name" translatable="false">Jami</string>
     <string name="app_author" translatable="false">Savoir-faire Linux Inc.</string>
-    <string name="app_release" translatable="false">Astarte - %1$s</string>
+    <string name="app_release" translatable="false">Εἰρήνη - %1$s</string>
     <string name="app_website" translatable="false">https://jami.net</string>
     <string name="app_website_contribute" translatable="false"><u>https://jami.net/contribute</u></string>
     <string name="gnu_license_website" translatable="false">https://www.gnu.org/licenses/gpl.html</string>

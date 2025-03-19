@@ -21,8 +21,8 @@ android {
     defaultConfig {
         minSdk = 24
         targetSdk = 35
-        versionCode = 451
-        versionName = "20250314-01"
+        versionCode = 452
+        versionName = "20250319-01"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
@@ -100,12 +100,12 @@ dependencies {
     implementation ("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
     implementation ("androidx.core:core-ktx:1.15.0")
     implementation ("androidx.appcompat:appcompat:1.7.0")
-    implementation ("androidx.constraintlayout:constraintlayout:2.2.0")
+    implementation ("androidx.constraintlayout:constraintlayout:2.2.1")
     implementation ("androidx.cardview:cardview:1.0.0")
     implementation ("androidx.preference:preference-ktx:1.2.1")
-    implementation ("androidx.recyclerview:recyclerview:1.3.2")
-    implementation ("androidx.leanback:leanback:1.2.0-alpha04")
-    implementation ("androidx.leanback:leanback-preference:1.2.0-alpha04")
+    implementation ("androidx.recyclerview:recyclerview:1.4.0")
+    implementation ("androidx.leanback:leanback:1.2.0-beta01")
+    implementation ("androidx.leanback:leanback-preference:1.2.0-beta01")
     implementation ("androidx.car.app:app:1.4.0")
     implementation ("androidx.tvprovider:tvprovider:1.1.0-alpha01")
     implementation ("androidx.media:media:1.7.0")
@@ -118,7 +118,7 @@ dependencies {
     implementation ("com.google.android.material:material:1.12.0")
     implementation ("androidx.biometric:biometric:1.1.0")
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
-    implementation ("com.google.protobuf:protobuf-javalite:4.28.3")
+    implementation ("com.google.protobuf:protobuf-javalite:4.30.1")
     implementation("androidx.annotation:annotation-jvm:1.9.1")
 
     // ORM
@@ -175,11 +175,11 @@ dependencies {
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:4.26.0"
+        artifact = "com.google.protobuf:protoc:4.30.1"
     }
     generateProtoTasks {
-        all().forEach { task ->
-            task.builtins {
+        all().configureEach {
+            builtins {
                 create("java") {
                     option("lite")
                 }
