@@ -132,16 +132,6 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
 
         JamiApplication.instance?.startDaemon(this)
 
-        // Switch to TV if appropriate (could happen with buggy launcher)
-        if (DeviceUtils.isTv(this)) {
-            Log.d(TAG, "Switch to TV")
-            val intent = intent
-            intent.setClass(this, cx.ring.tv.main.HomeActivity::class.java)
-            finish()
-            startActivity(intent)
-            return
-        }
-
         mBinding = ActivityHomeBinding.inflate(layoutInflater).also { binding ->
             setContentView(binding.root)
             //supportActionBar?.title = ""

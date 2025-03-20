@@ -1002,11 +1002,11 @@ class AccountService(
 
     fun setPushNotificationToken(pushNotificationToken: String) {
         Log.i(TAG, "setPushNotificationToken()");
-        eventService.logEvent("pushTokenSet", mapOf("token" to pushNotificationToken))
         mExecutor.execute { JamiService.setPushNotificationToken(pushNotificationToken) }
     }
     fun setPushNotificationConfig(token: String = "", topic: String = "", platform: String = "") {
         Log.i(TAG, "setPushNotificationConfig() $token $topic $platform");
+        eventService.logEvent("pushNotificationConfig", mapOf("token" to token, "topic" to topic, "platform" to platform))
         mExecutor.execute { JamiService.setPushNotificationConfig(StringMap().apply {
             put("token", token)
             put("topic", topic)
