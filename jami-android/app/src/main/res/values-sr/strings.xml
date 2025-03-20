@@ -362,7 +362,9 @@
   <string name="jami_id_copy">Kopiraj JamiId</string>
   <string name="jami_id_share">Podeli JamiId</string>
   <string name="jami_id_validate">Registruj korisničko ime</string>
+  <string name="jami_id_available">Корисничко име је доступно.</string>
   <string name="jami_id_info">• Maksimalno 32 znaka\n• Dozvoljeni specijalni znakovi: crtica (-), donja crta (_)</string>
+  <string name="jami_id_looking_for_availability">Проверава се доступност корисничког имена…</string>
   <string name="jami_id_choose_username">Izaberi korisničko ime</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Dobrodošli u Jami</string>
@@ -377,6 +379,7 @@
   <string name="show_certificate">Prikaži sertifikat</string>
   <string name="mute_conversation">Utišaj razgovor</string>
   <!--Donation-->
+  <string name="donation_card_description">Ако уживате у коришћењу Јами-ја и верујете у нашу мисију, да ли желите да дате донацију?</string>
   <string name="donation_card_not_now">Ne sada</string>
   <string name="donation_donate">Doniraj</string>
   <string name="donation_setting_title">Podsetnik za donaciju</string>
@@ -386,7 +389,10 @@
   <string name="load_success">%1$s: uključeno</string>
   <string name="unload_success">%1$s: isključeno</string>
   <string name="install_error">Došlo je do greške pri uvozu ekstenzije.</string>
+  <string name="import_side_main_title">Увези налог</string>
+  <string name="export_side_step1_code_connect">Poveži</string>
   <string name="export_side_step2_cancel">Otkaži</string>
   <string name="export_side_step2_confirm">Potvrdi</string>
+  <string name="import_side_step1_share">Podeli</string>
   <string name="import_side_step2_password_import">Uvoz</string>
 </resources>

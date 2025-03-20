@@ -280,5 +280,15 @@
   <string name="import_side_step2_password_import">Importar</string>
   <string name="import_side_step2_password_unlocking">Desbloqueo de cuenta…</string>
   <string name="import_side_step2_action_required">Acción requerida.\nConfirmar la cuenta en el dispositivo de origen.</string>
+  <string name="import_side_step3_body_loading">La cuenta se está importando en el nuevo dispositivo.\nPor favor, espere.</string>
+  <string name="import_side_step3_body_done">¡Estás todo listo!\n¡Cuenta importada correctamente en el nuevo dispositivo!</string>
+  <string name="import_side_step3_go_to_account">Ir a mi nueva cuenta</string>
   <string name="import_side_step3_exit">Acabado</string>
+  <string name="link_device_share_title">Compartir código de autenticación Jami</string>
+  <string name="link_device_error_network">Se produjo un error de red.\nVerifique su conexión .</string>
+  <string name="link_device_error_authentication">Se produjo un error de autenticación.\nPor favor, verifique su contraseña.</string>
+  <string name="link_device_error_timeout">Tiempo de espera agotado.</string>
+  <string name="link_device_error_canceled">Operación cancelada.</string>
+  <string name="link_device_error_unknown">Sucedió un error.</string>
+  <string name="link_device_error_bad_password">Comprobar las credenciales e intentarlo de nuevo.</string>
 </resources>
