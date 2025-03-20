@@ -61,4 +61,5 @@ interface IRemoteService {
     void unregisterConnectionMonitor(IConnectionMonitor monitor);
     // null if the accounts haven't been loaded yet
     @nullable String getOrCreateAccount(in Map<String, String> accountData);
+    void connectivityChanged(boolean isConnected);
 }

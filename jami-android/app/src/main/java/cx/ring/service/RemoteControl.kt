@@ -379,6 +379,10 @@ class RemoteControl : LifecycleService() {
                 accountService.currentAccount?.accountId ?: createAccount(data)
             } else null
         }
+
+        override fun connectivityChanged(isConnected: Boolean) {
+            hardwareService.connectivityChanged(isConnected)
+        }
     }
 
     override fun onBind(intent: Intent): IBinder {
