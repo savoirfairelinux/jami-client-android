@@ -80,6 +80,7 @@
   <string name="no_registered_name_for_account">没有注册名称</string>
   <string name="username_available">用户名可用。</string>
   <string name="register_name">注册名称</string>
+  <string name="trying_to_register_name">用户名正在注册中。请稍候...</string>
   <string name="looking_for_username_availability">检查用户名是否可用...</string>
   <!--Create account-->
   <string name="account_sip_cannot_be_registered">无法注册账户</string>

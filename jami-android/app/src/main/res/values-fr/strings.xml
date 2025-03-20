@@ -493,8 +493,8 @@ Veuillez patienter...</string>
   <string name="import_side_step1_advice_qr">Sur le nouvel appareil, créez un nouveau compte.
 Sélectionnez Ajouter un compte -&gt; Se connecter à partir d\'un autre appareil.
 Lorsque vous êtes prêt, scannez le code QR.</string>
-  <string name="import_side_step1_advice_code">Lancez l'exportation sur l'appareil source.
-&lt;b&gt;Sélectionnez Compte &amp;gt ; Paramètres du compte &amp;gt ; Lier un nouvel appareil.&lt;/b&gt;
+  <string name="import_side_step1_advice_code">Lancez l\'exportation sur l\'appareil source.
+Sélectionnez Compte &gt; Paramètres du compte &gt; Lier un nouvel appareil.
 Lorsque vous êtes prêt, entrez le code ci-dessous.</string>
   <string name="import_side_step1_share">Partager</string>
   <string name="import_side_step1_switch_to_code">Ou cliquez ici pour saisir le code d\'authentification</string>
