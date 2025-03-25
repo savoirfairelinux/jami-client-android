@@ -62,4 +62,5 @@ interface IRemoteService {
     // null if the accounts haven't been loaded yet
     @nullable String getOrCreateAccount(in Map<String, String> accountData);
     void connectivityChanged(boolean isConnected);
+    void setAccountData(String accountId, in Map<String, String> accountData);
 }

@@ -383,6 +383,10 @@ class RemoteControl : LifecycleService() {
         override fun connectivityChanged(isConnected: Boolean) {
             hardwareService.connectivityChanged(isConnected)
         }
+
+        override fun setAccountData(accountId: String, accountData: MutableMap<String, String>) {
+            accountService.setAccountDetails(accountId, accountData)
+        }
     }
 
     override fun onBind(intent: Intent): IBinder {
