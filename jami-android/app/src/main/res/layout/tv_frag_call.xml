@@ -14,24 +14,23 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".tv.call.TVCallActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:keepScreenOn="true"
-    tools:background="@color/cardview_dark_background">
+    tools:background="@color/cardview_dark_background"
+    tools:context=".tv.call.TVCallActivity">
 
     <cx.ring.views.ParticipantsContainerView
         android:id="@+id/participant_overlay_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        android:animateLayoutChanges="false"/>
+        android:animateLayoutChanges="false"
+        android:visibility="gone" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/preview_container"
@@ -57,6 +56,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="16dp"
+        android:baselineAligned="false"
         android:orientation="horizontal"
         android:weightSum="100">
 
@@ -129,7 +129,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:contentDescription="@string/action_call_decline"
-                    android:tint="@color/white"
+                    android:tint="@android:color/white"
                     android:visibility="gone"
                     app:backgroundTint="@color/colorError"
                     app:elevation="6dp"
@@ -157,32 +157,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </LinearLayout>
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/call_hangup_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="48dp"
-        android:tint="@color/white"
-        android:visibility="gone"
-        app:backgroundTint="@color/colorError"
-        app:rippleColor="@android:color/white"
-        app:srcCompat="@drawable/baseline_call_end_24"
-        app:useCompatPadding="true"
-        tools:visibility="visible" />
-
     <LinearLayout
         android:id="@+id/record_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_alignParentStart="true"
         android:layout_margin="16dp"
         android:gravity="center_vertical"
-        android:layout_alignParentLeft="true"
+        android:orientation="horizontal"
         android:visibility="invisible"
         tools:visibility="visible">
 
@@ -190,8 +172,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:id="@+id/record_indicator"
             android:layout_width="13dp"
             android:layout_height="13dp"
-            android:backgroundTint="#BF0046"
-            android:background="@drawable/item_color_background" />
+            android:background="@drawable/item_color_background"
+            android:backgroundTint="#BF0046" />
 
         <TextView
             android:id="@+id/record_name"
@@ -199,24 +181,60 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:textSize="12sp"
-            tools:text="Thomas"/>
+            tools:text="Thomas" />
 
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/call_add_btn"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/call_hangup_btn"
-        android:layout_toEndOf="@+id/call_hangup_btn"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="48dp"
-        android:visibility="gone"
-        app:srcCompat="@drawable/baseline_person_add_24"
-        app:useCompatPadding="true"
-        tools:visibility="visible" />
+        android:layout_centerHorizontal="true"
+        android:animateLayoutChanges="true"
+        android:gravity="center_horizontal">
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/call_hangup_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="48dp"
+            android:contentDescription="@string/action_call_hangup"
+            android:tint="@android:color/white"
+            android:visibility="gone"
+            app:backgroundTint="@color/colorError"
+            app:rippleColor="@android:color/white"
+            app:srcCompat="@drawable/baseline_call_end_24"
+            tools:visibility="visible" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/call_mute_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="48dp"
+            android:contentDescription="@string/action_call_mute"
+            android:tint="@android:color/white"
+            android:visibility="gone"
+            app:rippleColor="@android:color/white"
+            app:srcCompat="@drawable/baseline_mic_on_24"
+            tools:visibility="visible" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/call_add_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="48dp"
+            android:contentDescription="@string/bottomSheet_add_participants_btn"
+            android:visibility="gone"
+            app:srcCompat="@drawable/baseline_person_add_24"
+            tools:visibility="visible" />
+    </LinearLayout>
 </RelativeLayout>
