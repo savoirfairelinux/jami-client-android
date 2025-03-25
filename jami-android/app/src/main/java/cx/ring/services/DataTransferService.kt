@@ -109,6 +109,14 @@ class DataTransferService : Service() {
         super.onCreate()
     }
 
+    override fun onTimeout(startId: Int, fgsType: Int) {
+        try {
+            stopForeground(true)
+            stopSelf()
+        } catch (ignored: IllegalStateException) {
+        }
+    }
+
     override fun onDestroy() {
         Log.d(TAG, "OnDestroy(), DataTransferService has been destroyed")
         super.onDestroy()

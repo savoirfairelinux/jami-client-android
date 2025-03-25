@@ -105,6 +105,17 @@ class SyncService : Service() {
         }
     }
 
+    override fun onTimeout(startId: Int, fgsType: Int) {
+        Log.w(TAG, "onTimeout: startId=$startId, fgsType=$fgsType")
+        try {
+            stopForeground(true)
+            stopSelf()
+        } catch (ignored: IllegalStateException) {
+        }
+        notification = null
+        serviceUsers = 0
+    }
+
     override fun onBind(intent: Intent): IBinder? = null
 
     companion object {
