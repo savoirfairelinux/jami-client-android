@@ -118,6 +118,9 @@ class CameraService internal constructor(c: Context) {
     val maxResolutions: Observable<Pair<Int?, Int?>>
         get() = maxResolutionSubject
 
+    val handler: Handler
+        get() = videoHandler
+
     class VideoDevices {
         val cameras: MutableList<String> = ArrayList()
         var currentId: String? = null

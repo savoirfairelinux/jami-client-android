@@ -34,6 +34,7 @@ import android.media.CamcorderProfile
 import android.net.Uri
 import android.os.Build
 import android.util.Log
+import android.view.Surface
 import android.view.View
 import cx.ring.databinding.CamerapickerBinding
 import cx.ring.utils.AndroidFileUtils
@@ -244,7 +245,7 @@ class CustomCameraActivity : Activity() {
     }
 
     private fun prepareRecorder() {
-        recorder!!.setPreviewDisplay(mCameraPreview!!.holder.surface)
+        recorder!!.setPreviewDisplay(Surface(mCameraPreview!!.surfaceTexture))
         try {
             recorder!!.prepare()
             recorder!!.start()

@@ -20,7 +20,8 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.drawable.ColorDrawable
+import android.graphics.RenderEffect
+import android.graphics.Shader
 import android.hardware.Camera
 import android.hardware.Camera.ErrorCallback
 import android.hardware.camera2.CameraManager
@@ -37,7 +38,6 @@ import android.util.Log
 import android.util.Size
 import android.view.KeyEvent
 import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -64,7 +64,12 @@ import net.jami.services.DeviceRuntimeService
 import net.jami.services.HardwareService
 import java.util.Collections
 import javax.inject.Inject
+import androidx.core.view.isGone
+import androidx.core.graphics.createBitmap
+import androidx.core.graphics.drawable.toDrawable
+import androidx.core.view.isInvisible
 
+@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class HomeActivity : FragmentActivity() {
     private val mDisposableBag = CompositeDisposable()
@@ -90,24 +95,48 @@ class HomeActivity : FragmentActivity() {
     private var out: Allocation? = null
     private var mBlurOut: Allocation? = null
     private var cameraPermissionIsRefusedFlag = false // to not ask for permission again if refused
+    private var paused = false
 
     private val mErrorCallback = ErrorCallback { error, camera ->
+        Log.w(TAG, "Camera error: $error")
         try {
             mBlurImage.visibility = View.INVISIBLE
             mBackgroundManager.drawable =
-                ContextCompat.getDrawable(this@HomeActivity, R.drawable.tv_background)
-                    ?: ColorDrawable(getColor(R.color.colorPrimary))
+                ContextCompat.getDrawable(this@HomeActivity, R.drawable.background_welcome_jami)
+                    ?: getColor(R.color.colorPrimary).toDrawable()
+            mCamera = null
+            mPreviewView.removeAllViews()
+            mCameraPreview?.stop()
         } catch (e: Exception) {
             Log.e(TAG, "ErrorCallback", e)
         }
     }
     private val mCameraAvailabilityCallback: AvailabilityCallback = object : AvailabilityCallback() {
         override fun onCameraAvailable(cameraId: String) {
-            if (mBlurImage.visibility == View.INVISIBLE) {
+            Log.w(TAG, "onCameraAvailable $cameraId paused:$paused")
+            if (!paused && mBlurImage.isInvisible) {
                 checkCameraAvailability()
             }
         }
     }
+
+    fun enableBlur(enable: Boolean) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (enable) {
+                val radiusDp = BLUR_RADIUS * TARGET_SIZE.width / 1080
+                val radius = radiusDp * resources.displayMetrics.density
+                mPreviewView.setRenderEffect(
+                    RenderEffect.createBlurEffect(
+                        radius, radius,
+                        Shader.TileMode.MIRROR
+                    )
+                )
+            } else {
+                mPreviewView.setRenderEffect(null)
+            }
+        }
+    }
+
     private val mPreviewCallback = Camera.PreviewCallback { data, camera ->
         if (supportFragmentManager.findFragmentByTag(TVContactFragment.TAG) != null) {
             mBlurImage.visibility = View.GONE
@@ -127,7 +156,7 @@ class HomeActivity : FragmentActivity() {
                 setRadius(BLUR_RADIUS * size.width / 1080)
                 setInput(out)
             }
-            mBlurOutputBitmap = Bitmap.createBitmap(size.width, size.height, Bitmap.Config.ARGB_8888)
+            mBlurOutputBitmap = createBitmap(size.width, size.height)
             mBlurOut = Allocation.createFromBitmap(rs, mBlurOutputBitmap)
         }
         input!!.copyFrom(data)
@@ -135,7 +164,7 @@ class HomeActivity : FragmentActivity() {
         blurIntrinsic!!.forEach(mBlurOut)
         mBlurOut!!.copyTo(mBlurOutputBitmap)
         mBlurImage.setImageBitmap(mBlurOutputBitmap)
-        if (mBlurImage.visibility == View.GONE) {
+        if (mBlurImage.isGone) {
             mPreviewView.visibility = View.INVISIBLE
             mBlurImage.visibility = View.VISIBLE
             mFadeView.visibility = View.VISIBLE
@@ -189,16 +218,23 @@ class HomeActivity : FragmentActivity() {
 
     override fun onPostResume() {
         super.onPostResume()
+        paused = false
         checkCameraAvailability()
     }
 
     override fun onPause() {
         super.onPause()
+        paused = true
         mCameraPreview?.let { preview ->
-            mCamera?.setPreviewCallback(null)
+            mCamera?.let { camera ->
+                camera.release();
+                mCamera = null
+            }
             preview.stop()
             mCameraPreview = null
+            mPreviewView.removeAllViews()
         }
+        mDisposableBag.clear()
     }
 
     override fun onDestroy() {
@@ -251,7 +287,7 @@ class HomeActivity : FragmentActivity() {
         val w = target.width
         val h = target.height
         for (option in choices) {
-            Log.w(TAG, "supportedSize: $option")
+            //Log.w(TAG, "supportedSize: $option")
             if (option.width <= maxWidth && option.height <= maxHeight && option.height == option.width * h / w) {
                 if (option.width >= minWidth && option.height >= minHeight) {
                     bigEnough.add(option)
@@ -264,8 +300,8 @@ class HomeActivity : FragmentActivity() {
         // Pick the smallest of those big enough. If there is no one big enough, pick the
         // largest of those not big enough.
         return when {
-            bigEnough.size > 0 -> Collections.min(bigEnough, CompareSizesByArea())
-            notBigEnough.size > 0 -> Collections.max(notBigEnough, CompareSizesByArea())
+            bigEnough.isNotEmpty() -> Collections.min(bigEnough, CompareSizesByArea())
+            notBigEnough.isNotEmpty() -> Collections.max(notBigEnough, CompareSizesByArea())
             else -> {
                 Log.e(TAG, "Couldn't find any suitable preview size")
                 choices[0]
@@ -274,39 +310,65 @@ class HomeActivity : FragmentActivity() {
     }
 
     private fun setUpCamera() {
+        Log.w(TAG, "setUpCamera()")
+        if (mCamera != null) {
+            Log.w(TAG, "setUpCamera() camera already set up")
+            return
+        }
         mDisposableBag.add(Single.fromCallable {
             val currentCamera = 0
-            Camera.open(currentCamera)!!.apply { mCamera = this }
+            if (mCameraManager == null) {
+                mCameraManager = (getSystemService(CAMERA_SERVICE) as CameraManager).apply {
+                    registerAvailabilityCallback((mCameraAvailabilityCallback), Handler(mainLooper))
+                }
+            }
+            mCameraPreview?.stop()
+            Camera.open(currentCamera)!!.apply {
+                val params = parameters
+                Log.w(TAG, "setUpCamera() supportedPictureSizes " + params.previewSize.width + "x" + params.previewSize.height)
+                val selectSize = chooseOptimalSize(params.supportedPictureSizes, 1280, 720, 1920, 1080, TARGET_SIZE)
+                Log.w(TAG, "setUpCamera() selectSize " + selectSize.width + "x" + selectSize.height)
+                params.setPictureSize(selectSize.width, selectSize.height)
+                params.setPreviewSize(selectSize.width, selectSize.height)
+                setErrorCallback(mErrorCallback)
+                try {
+                    parameters = params
+                } catch (e: Exception) {
+                    Log.e(TAG, "setParameters() error", e)
+                }
+                mCamera = this
+            }
         }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ camera: Camera ->
                 try {
-                    Log.w(TAG, "setUpCamera()")
-                    val params = camera.parameters
-                    val selectSize = chooseOptimalSize(params.supportedPictureSizes, 1280, 720, 1920, 1080, Size(1280, 720))
-                    Log.w(TAG, "setUpCamera() selectSize " + selectSize.width + "x" + selectSize.height)
-                    params.setPictureSize(selectSize.width, selectSize.height)
-                    params.setPreviewSize(selectSize.width, selectSize.height)
-                    camera.parameters = params
-                    mBlurImage.visibility = View.VISIBLE
+                    Log.w(TAG, "setUpCamera() $camera")
                     mFadeView.visibility = View.VISIBLE
-                    if (mCameraManager == null) {
-                        mCameraManager = (getSystemService(CAMERA_SERVICE) as CameraManager).apply {
-                            registerAvailabilityCallback((mCameraAvailabilityCallback), null)
-                        }
-                    }
-                    mCameraPreview = CameraPreview(this, camera)
+                    val cameraPreview = CameraPreview(this, camera)
                     mPreviewView.removeAllViews()
-                    mPreviewView.addView(mCameraPreview, 0)
-                    camera.setErrorCallback(mErrorCallback)
-                    camera.setPreviewCallback(mPreviewCallback)
+                    mPreviewView.addView(cameraPreview, 0)
+                    mCameraPreview = cameraPreview
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        mBlurImage.visibility = View.INVISIBLE
+                        val radiusDp = BLUR_RADIUS * TARGET_SIZE.width / 1080
+                        val radius = radiusDp * resources.displayMetrics.density
+                        Log.w(TAG, "setUpCamera() blur radius $radius")
+                        mPreviewView.setRenderEffect(RenderEffect.createBlurEffect(
+                            radius, radius,
+                            Shader.TileMode.MIRROR
+                        ))
+                    } else {
+                        mBlurImage.visibility = View.VISIBLE
+                        camera.setPreviewCallback(mPreviewCallback)
+                    }
                 } catch (e: Exception) {
-                    Log.e(TAG, "setUpCamera() error", e)
-                    mBackgroundManager.drawable = ContextCompat.getDrawable(this@HomeActivity, R.drawable.tv_background)
+                    Log.e(TAG, "setUpCamera() display error", e)
+                    mBackgroundManager.drawable = ContextCompat.getDrawable(this@HomeActivity, R.drawable.background_welcome_jami)
                 }
-            }) {
-                mBackgroundManager.drawable = ContextCompat.getDrawable(this@HomeActivity, R.drawable.tv_background)
+            }) { e ->
+                Log.e(TAG, "setUpCamera() error", e)
+                mBackgroundManager.drawable = ContextCompat.getDrawable(this@HomeActivity, R.drawable.background_welcome_jami)
             })
     }
 
@@ -345,6 +407,7 @@ class HomeActivity : FragmentActivity() {
 
     companion object {
         private val TAG = HomeActivity::class.simpleName!!
+        private val TARGET_SIZE = Size(1280, 720)
         private const val BLUR_RADIUS = 7.5f
     }
 }
