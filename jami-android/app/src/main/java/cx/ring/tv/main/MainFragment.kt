@@ -106,6 +106,11 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
         super.onViewCreated(view, savedInstanceState)
     }
 
+    override fun onResume() {
+        super.onResume()
+        (activity as? HomeActivity)?.enableBlur(true)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         mDisposable.clear()
