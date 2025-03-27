@@ -106,6 +106,13 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
         super.onViewCreated(view, savedInstanceState)
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden) {
+            (activity as? HomeActivity)?.enableBlur(true)
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         mDisposable.clear()

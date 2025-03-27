@@ -27,8 +27,8 @@ import cx.ring.fragments.CallFragment
 import cx.ring.tv.call.TVCallActivity
 import cx.ring.tv.contact.more.TVContactMoreActivity
 import cx.ring.tv.contact.more.TVContactMoreFragment
-import cx.ring.tv.contactrequest.TVContactRequestDetailPresenter
 import cx.ring.tv.main.BaseDetailFragment
+import cx.ring.tv.main.HomeActivity
 import cx.ring.utils.ConversationPath
 import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
@@ -98,6 +98,11 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
         if (requestCode == REQUEST_CODE) {
             if (resultCode == TVContactMoreFragment.DELETE) finishView()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as? HomeActivity)?.enableBlur(false)
     }
 
     override fun showContact(account: Account, model: ConversationItemViewModel) {
