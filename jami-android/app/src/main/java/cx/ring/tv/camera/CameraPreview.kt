@@ -17,12 +17,19 @@
 package cx.ring.tv.camera
 
 import android.content.Context
+import android.graphics.SurfaceTexture
 import android.hardware.Camera
-import android.view.SurfaceView
-import android.view.SurfaceHolder
+import android.util.Log
+import android.view.TextureView
 import java.lang.Exception
 
-class CameraPreview(context: Context, private var mCamera: Camera?) : SurfaceView(context), SurfaceHolder.Callback {
+class CameraPreview(context: Context, private var mCamera: Camera?) : TextureView(context), TextureView.SurfaceTextureListener {
+    private var mSurfaceTexture: SurfaceTexture? = null
+
+    init {
+        surfaceTextureListener = this
+    }
+
     fun stop() {
         mCamera?.let { camera ->
             try {
@@ -32,37 +39,47 @@ class CameraPreview(context: Context, private var mCamera: Camera?) : SurfaceVie
             }
             camera.release()
             mCamera = null
+            mSurfaceTexture?.release()
         }
+        surfaceTextureListener = null
     }
 
-    override fun surfaceCreated(surfaceHolder: SurfaceHolder) {
-        mCamera?.let { camera ->
-            try {
-                camera.setPreviewDisplay(surfaceHolder)
-                camera.startPreview()
-            } catch (e: Exception) {
-                // left blank for now
-            }
-        }
+    override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
+        Log.w(TAG, "Surface texture available: $width x $height")
+        startPreview(surface)
     }
 
-    override fun surfaceDestroyed(surfaceHolder: SurfaceHolder) {
+    override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, width: Int, height: Int) {
+        Log.w(TAG, "Surface texture changed: $width x $height")
+        startPreview(surface)
+    }
+
+    override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean {
+        Log.w(TAG, "Surface texture destroyed")
         stop()
+        mSurfaceTexture = null
+        return true
     }
 
-    override fun surfaceChanged(surfaceHolder: SurfaceHolder, format: Int, width: Int, height: Int) {
+    override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {
+        // intentionally left blank
+    }
+
+    private fun startPreview(surfaceTexture: SurfaceTexture) {
         mCamera?.let { camera ->
             try {
-                camera.setPreviewDisplay(surfaceHolder)
+                if (mSurfaceTexture != surfaceTexture) {
+                    camera.setPreviewTexture(surfaceTexture)
+                    mSurfaceTexture = surfaceTexture
+                }
                 camera.startPreview()
             } catch (e: Exception) {
-                // intentionally left blank for a test
+                Log.w(TAG, "Error starting camera preview: ${e.message}")
             }
         }
     }
 
-    // Constructor that obtains context and camera
-    init {
-        holder.addCallback(this)
+    companion object {
+        private const val TAG = "CameraPreview"
     }
 }

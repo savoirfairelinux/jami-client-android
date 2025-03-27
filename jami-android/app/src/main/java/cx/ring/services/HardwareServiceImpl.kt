@@ -27,6 +27,7 @@ import android.media.AudioManager.OnAudioFocusChangeListener
 import android.media.MediaRecorder
 import android.media.projection.MediaProjection
 import android.os.Build
+import android.os.Handler
 import android.telecom.CallAudioState
 import android.util.Log
 import android.util.Size
@@ -85,6 +86,8 @@ class HardwareServiceImpl(
     init {
         pushLogEnabled = sharedPreferences.getBoolean(LOGGING_ENABLED_KEY, false)
     }
+    val handler: Handler
+        get() = cameraService.handler
 
     override fun initVideo(): Completable = cameraService.init()
 
