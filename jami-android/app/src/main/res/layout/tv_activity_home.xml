@@ -8,7 +8,7 @@
         android:id="@+id/previewView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="invisible"/>
+        android:visibility="visible"/>
 
     <ImageView
         android:id="@+id/blur"
