@@ -94,6 +94,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         repeatMode = Animation.REVERSE
     }}
     private var mSession: MediaSessionCompat? = null
+    private var muted = false
 
     @Inject
     lateinit var mDeviceRuntimeService: DeviceRuntimeService
@@ -109,15 +110,15 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
     }
 
     override fun handleCallWakelock(isAudioOnly: Boolean) {}
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return TvFragCallBinding.inflate(inflater, container, false).also { b ->
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        TvFragCallBinding.inflate(inflater, container, false).also { b ->
             binding = b
             b.callAcceptBtn.setOnClickListener { acceptClicked() }
             b.callRefuseBtn.setOnClickListener { refuseClicked() }
             b.callHangupBtn.setOnClickListener { hangUpClicked() }
             b.callAddBtn.setOnClickListener { addParticipant() }
+            b.callMuteBtn.setOnClickListener { muteClicked() }
         }.root
-    }
 
     private val listener: SurfaceTextureListener = object : SurfaceTextureListener {
         override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
@@ -247,11 +248,13 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
             if (display) {
                 callHangupBtn.visibility = View.VISIBLE
                 callAddBtn.visibility = View.VISIBLE
+                callMuteBtn.visibility = View.VISIBLE
             } else {
                 callHangupBtn.startAnimation(fadeOutAnimation)
                 callAddBtn.startAnimation(fadeOutAnimation)
                 callHangupBtn.visibility = View.GONE
                 callAddBtn.visibility = View.GONE
+                callMuteBtn.visibility = View.GONE
             }
         }
     }
@@ -543,6 +546,12 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         prepareCall(true)
     }
 
+    fun muteClicked() {
+        presenter.muteMicrophoneToggled(!muted)
+        binding?.callMuteBtn?.setImageResource(if (muted) R.drawable.baseline_mic_on_24 else R.drawable.baseline_mic_off_24)
+        muted = !muted
+    }
+
     override fun finish(hangupReason: CallPresenter.HangupReason) {
         mSession?.isActive = false
         activity?.let { activity ->
@@ -562,7 +571,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
 
     override fun enterPipMode(accountId: String, callId: String?) {
         val context = requireContext()
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N || !context.packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE))
+        if (!context.packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE))
             return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val paramBuilder = PictureInPictureParams.Builder()
