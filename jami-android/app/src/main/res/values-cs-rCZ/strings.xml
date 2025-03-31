@@ -322,6 +322,7 @@
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Sdílet</string>
   <string name="bottomSheet_dialpad_btn">Číselník</string>
+  <string name="bottomSheet_extensions_btn">Rozšíření</string>
   <string name="bottomSheet_add_participants_btn">Přidat</string>
   <string name="bottomSheet_change_camera_btn">Změnit</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
@@ -349,6 +350,8 @@
   <string name="welcome_jami_title">Vítejte v Jami</string>
   <!--Conversation details-->
   <string name="details">Detaily</string>
+  <string name="secure_p2p_connection">Zabezpečené připojení peer-to-peer</string>
+  <string name="swarm_type">Typ konverzace</string>
   <string name="Private">Soukromý</string>
   <string name="mute_conversation">Ztlumit konverzaci</string>
   <!--Donation-->

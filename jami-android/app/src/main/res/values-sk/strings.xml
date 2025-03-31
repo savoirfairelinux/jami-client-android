@@ -315,7 +315,9 @@
   <string name="donation_donate">Prispejte</string>
   <!--Extension-->
   <string name="export_side_main_title">Exportovať účet</string>
+  <string name="export_side_step1_code_connect">Pripojiť</string>
   <string name="export_side_step2_cancel">Zrušiť</string>
   <string name="export_side_step2_confirm">Potvrdiť</string>
+  <string name="import_side_step1_share">Zdieľať</string>
   <string name="import_side_step2_password_import">Dovoz</string>
 </resources>

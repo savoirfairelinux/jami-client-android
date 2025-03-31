@@ -8,6 +8,7 @@
   <string name="pref_category_diagnostic">Diagnostika</string>
   <string name="pref_category_appearance">Vzhled</string>
   <string name="pref_category_connectivity">Připojení</string>
+  <string name="pref_category_extensions">Rozšíření</string>
   <string name="pref_category_video_settings">Pokročilá nastavení videa</string>
   <string name="pref_mobileData_title">Mobilní data</string>
   <string name="pref_mobileData_summary">Povolit Jami na 3G/LTE sítích dodatečně k WiFi</string>
@@ -30,11 +31,17 @@
   <string name="pref_startOnBoot_title">Spustit Jami po zapnutí</string>
   <string name="pref_startOnBoot_summary">Spustit Jami na pozadí po spuštění systému.</string>
   <string name="pref_clearHistory_title">Vymazat historii</string>
+  <string name="pref_clearHistory_summary">Vymazat historii všech konverzací. Tuto akci nelze vrátit zpět.</string>
   <string name="pref_notification_title">Viditelnost notifikací</string>
   <string name="pref_notification_summary">Nastavení viditelnosti oznámení aplikací na zamčené obrazovce.</string>
+  <string name="pref_connectivity_title">Režim připojení</string>
+  <string name="pref_connectivity_summary">Vyberte, jak připojit Jami k distribuovanému systému pro příjem hovorů a zpráv.</string>
   <string name="pref_blackList_title">Seznak blokovaných kontaktů</string>
   <string name="pref_blackList_summary">Zkontrolujte seznam blokovaných kontaktů.</string>
   <string name="pref_delete_account_title">Odstranit účet</string>
+  <string name="pref_delete_account_summary">Smazat účet z tohoto zařízení</string>
+  <string name="pref_persistNotification_title">Spustit na pozadí</string>
+  <string name="pref_persistNotification_summary">Povolit běh na pozadí pro příjem hovorů a zpráv.</string>
   <string name="pref_newGroup_title">Povolení skupinového chatu</string>
   <string name="pref_newGroup_summary">Povolení vytváření skupin v aplikaci Jami.</string>
   <string name="pref_logs_title">Diagnostické záznamy</string>
