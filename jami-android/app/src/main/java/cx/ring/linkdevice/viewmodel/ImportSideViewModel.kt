@@ -31,6 +31,7 @@ import net.jami.model.AccountConfig
 import net.jami.model.ConfigKey
 import net.jami.services.AccountService
 import net.jami.services.AccountService.AuthError
+import net.jami.services.DeviceRuntimeService
 import net.jami.utils.Log
 import javax.inject.Inject
 import javax.inject.Named
@@ -54,7 +55,8 @@ sealed class AddDeviceImportState {
 @HiltViewModel
 class ImportSideViewModel @Inject constructor(
     private val accountService: AccountService,
-    @param:Named("UiScheduler") private val mUiScheduler: Scheduler
+    @param:Named("UiScheduler") private val mUiScheduler: Scheduler,
+    private val mDeviceService: DeviceRuntimeService,
 ) : AuthStateListener, ViewModel() {
 
     // Expose screen UI state
@@ -71,6 +73,7 @@ class ImportSideViewModel @Inject constructor(
         accountService.getAccountTemplate(AccountConfig.ACCOUNT_TYPE_JAMI)
             .flatMapObservable { accountDetails: HashMap<String, String> ->
                 accountDetails[ConfigKey.ARCHIVE_URL.key] = "jami-auth"
+                setProxyDetails(accountDetails)
                 accountService.addAccount(accountDetails)
             }
             .firstOrError()
@@ -81,6 +84,15 @@ class ImportSideViewModel @Inject constructor(
             .observeOn(mUiScheduler)
             .subscribe(this::updateDeviceAuthState)
             .apply { compositeDisposable.add(this) }
+    }
+
+    private fun setProxyDetails(details: MutableMap<String, String>) {
+        details[ConfigKey.PROXY_ENABLED.key] = AccountConfig.TRUE_STR
+        val pushToken = mDeviceService.pushToken
+        if (pushToken.isNotEmpty()) {
+            details[ConfigKey.PROXY_PUSH_TOKEN.key] = pushToken
+            details[ConfigKey.PROXY_PUSH_PLATFORM.key] = mDeviceService.pushPlatform
+        }
     }
 
     fun onAuthentication(password: String = "") {
