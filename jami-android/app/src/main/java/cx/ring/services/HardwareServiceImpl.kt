@@ -60,6 +60,7 @@ import net.jami.services.PreferencesService
 import java.io.File
 import java.lang.ref.WeakReference
 import java.util.concurrent.ScheduledExecutorService
+import androidx.core.content.edit
 
 class HardwareServiceImpl(
     private val context: Context,
@@ -113,10 +114,10 @@ class HardwareServiceImpl(
                 start()
             }
             true
-        } catch (e: IllegalStateException) {
+        } catch (_: IllegalStateException) {
             // Microphone is already in use
             true
-        } catch (exception: Exception) {
+        } catch (_: Exception) {
             false
         } finally {
             recorder.release()
@@ -692,9 +693,9 @@ class HardwareServiceImpl(
     }
 
     override fun saveLoggingState(enabled: Boolean) {
-        sharedPreferences.edit()
-            .putBoolean(LOGGING_ENABLED_KEY, enabled)
-            .apply()
+        sharedPreferences.edit {
+            putBoolean(LOGGING_ENABLED_KEY, enabled)
+        }
     }
 
     companion object {
