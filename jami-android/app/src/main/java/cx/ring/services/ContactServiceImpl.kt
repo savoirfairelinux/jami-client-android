@@ -450,7 +450,7 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
     private fun loadVCardContactData(contact: Contact, accountId: String): Single<Profile> =
         Single.fromCallable {
             val id = Base64.encodeToString(contact.primaryNumber.toByteArray(), Base64.NO_WRAP)
-            VCardServiceImpl.readData(VCardUtils.loadPeerProfileFromDisk(mContext.filesDir, mContext.cacheDir, id, accountId))
+            VCardServiceImpl.loadPeerProfileFromDisk(mContext.filesDir, mContext.cacheDir, id, accountId)
         }
             .subscribeOn(Schedulers.io())
 

@@ -35,6 +35,8 @@ import ezvcard.property.Photo
 import net.jami.utils.QRCodeUtils
 import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
+import androidx.core.graphics.scale
+import androidx.core.graphics.createBitmap
 
 /**
  * Helper calls to manipulates Bitmaps
@@ -103,13 +105,16 @@ object BitmapUtils {
         while (ratio * ratio < minRatio) ratio *= 2
         height /= ratio
         width /= ratio
-        val ret = Bitmap.createScaledBitmap(bmp, width, height, true)
+        val ret = bmp.scale(width, height)
         Log.d(TAG, "reduceBitmap: bitmap size after x" + ratio + " reduce " + ret.byteCount)
         return ret
     }
 
-    fun createScaledBitmap(bitmap: Bitmap?, maxSize: Int): Bitmap {
-        require(!(bitmap == null || maxSize < 0))
+    fun createScaledBitmap(bitmap: Bitmap, maxSize: Int): Bitmap {
+        require(maxSize >= 0)
+        Log.w(TAG, "createScaledBitmap: ${bitmap.width}x${bitmap.height} -> $maxSize")
+        if (bitmap.width <= maxSize && bitmap.height <= maxSize)
+            return bitmap
         var width = bitmap.height
         var height = bitmap.width
         if (width != height) {
@@ -126,7 +131,7 @@ object BitmapUtils {
             width = maxSize
             height = maxSize
         }
-        return Bitmap.createScaledBitmap(bitmap, width, height, true)
+        return bitmap.scale(width, height)
     }
 
     fun drawableToBitmap(drawable: Drawable, size: Int = -1, padding: Int = 0): Bitmap {
@@ -135,8 +140,7 @@ object BitmapUtils {
         }
         val width = drawable.intrinsicWidth.takeIf { it > 0 } ?: size
         val height = drawable.intrinsicHeight.takeIf { it > 0 } ?: size
-        val bitmap =
-            Bitmap.createBitmap(width + 2 * padding, height + 2 * padding, Bitmap.Config.ARGB_8888)
+        val bitmap = createBitmap(width + 2 * padding, height + 2 * padding)
         val canvas = Canvas(bitmap)
         drawable.setBounds(padding, padding, canvas.width - padding, canvas.height - padding)
         drawable.draw(canvas)
@@ -162,7 +166,7 @@ object BitmapUtils {
 
     private fun pageToBitmap(page: Page, maxWidth: Int, maxHeight: Int): Bitmap =
         pageRenderSize(page, maxWidth, maxHeight)
-            .let { (w, h) -> Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888) }
+            .let { (w, h) -> createBitmap(w, h) }
             .apply { page.render(this, null, null, Page.RENDER_MODE_FOR_DISPLAY) }
 
     fun documentToBitmap(context: Context, uri: Uri, maxWidth: Int = -1, maxHeight: Int = -1): Bitmap? =
@@ -187,7 +191,7 @@ object BitmapUtils {
         drawableToBitmap(drawable, size, size / 5)
 
     fun qrToBitmap(qrCodeData: QRCodeUtils.QRCodeData) =
-        Bitmap.createBitmap(qrCodeData.width, qrCodeData.height, Bitmap.Config.ARGB_8888).apply {
+        createBitmap(qrCodeData.width, qrCodeData.height).apply {
             setPixels(qrCodeData.data, 0, qrCodeData.width, 0, 0, qrCodeData.width, qrCodeData.height)
         }
 

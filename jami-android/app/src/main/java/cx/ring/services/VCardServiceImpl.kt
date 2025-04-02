@@ -34,6 +34,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Account
 import net.jami.model.Profile
 import java.io.File
+import java.io.IOException
 
 class VCardServiceImpl(private val mContext: Context) : VCardService() {
     override fun loadProfile(account: Account): Observable<Profile> = loadProfile(mContext, account)
@@ -82,8 +83,7 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
             synchronized(account) {
                 var ret = account.loadedProfile
                 if (ret == null) {
-                    ret = VCardUtils.loadLocalProfileFromDiskWithDefault(context.filesDir, account.accountId)
-                        .map { vcard: VCard -> readData(vcard) }
+                    ret = loadLocalProfileFromDiskWithDefault(context.filesDir, context.cacheDir, account.accountId)
                         .subscribeOn(Schedulers.io())
                         .cache()
                     account.loadedProfile = ret
@@ -100,5 +100,70 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
 
         fun readData(profile: Pair<String?, ByteArray?>): Profile =
             Profile(profile.first, BitmapUtils.bytesToBitmap(profile.second))
+
+        @Throws(IOException::class)
+        fun loadPeerProfileFromDisk(filesDir: File, cacheDir: File, filename: String, accountId: String): Profile {
+            val cacheFolder = VCardUtils.peerProfileCachePath(cacheDir, accountId)
+            val cacheName = File(cacheFolder, "$filename.txt")
+            val cachePicture = File(cacheFolder, filename)
+            val profileFile = File(VCardUtils.peerProfilePath(filesDir, accountId), "$filename.vcf")
+            return loadProfileWithCache(cacheName, cachePicture, profileFile)
+        }
+
+        @Throws(IOException::class)
+        fun loadLocalProfileFromDisk(filesDir: File, cacheDir: File, accountId: String): Profile {
+            val cacheFolder = VCardUtils.localProfileCachePath(cacheDir, accountId)
+            val cacheName = File(cacheFolder, "${VCardUtils.ACCOUNT_PROFILE_NAME}.txt")
+            val cachePicture = File(cacheFolder, "${VCardUtils.ACCOUNT_PROFILE_NAME}_pic")
+            val profileFile = File(VCardUtils.localProfilePath(filesDir, accountId), VCardUtils.LOCAL_USER_VCARD_NAME)
+            return loadProfileWithCache(cacheName, cachePicture, profileFile)
+        }
+        fun loadLocalProfileFromDiskWithDefault(filesDir: File, cacheDir: File, accountId: String): Single<Profile> =
+            Single.fromCallable { loadLocalProfileFromDisk(filesDir, cacheDir, accountId) }
+                .onErrorReturn { Profile.EMPTY_PROFILE }
+
+        fun loadProfileWithCache(cacheName: File, cachePicture: File, profileFile: File): Profile {
+            // Case 1: no profile for this peer
+            if (!profileFile.exists()) {
+                return Profile.EMPTY_PROFILE
+            }
+
+            // Case 2: read profile from cache
+            if (cacheName.exists() && cacheName.lastModified() >= profileFile.lastModified()) {
+                return Profile(
+                    cacheName.readText(),
+                    if (cachePicture.exists()) BitmapUtils.bytesToBitmap(cachePicture.readBytes()) else null
+                )
+            }
+
+            // Case 3: read profile from disk and update cache
+            val (name, picture) = VCardUtils.readData(VCardUtils.loadFromDisk(profileFile))
+            cacheName.writeText(name ?: "")
+            if (picture != null) {
+                BitmapUtils.bytesToBitmap(picture)?.let { bitmap ->
+                    BitmapUtils.createScaledBitmap(bitmap, 512).apply {
+                        if (this === bitmap) {
+                            // Case 3a: bitmap is already small enough, cache it as-is
+                            Schedulers.io().createWorker().schedule {
+                                cachePicture.outputStream().use {
+                                    it.write(picture)
+                                }
+                            }
+                            return Profile(name, bitmap)
+                        }
+                        bitmap.recycle()
+                    }
+                }?.let { scaledBitmap ->
+                    // Case 3b: bitmap is too big, reduce it and write to cache
+                    Schedulers.io().createWorker().schedule {
+                        cachePicture.outputStream().use {
+                            scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 88, it)
+                        }
+                    }
+                    return Profile(name, scaledBitmap)
+                }
+            }
+            return Profile(name, null)
+        }
     }
 }

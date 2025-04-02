@@ -16,7 +16,6 @@
  */
 package net.jami.utils
 
-import net.jami.utils.FileUtils.moveFile
 import ezvcard.VCard
 import ezvcard.property.FormattedName
 import ezvcard.property.Uid
@@ -38,7 +37,8 @@ import java.util.HashMap
 object VCardUtils {
     val TAG = VCardUtils::class.simpleName!!
     const val VCARD_KEY_MIME_TYPE = "mimeType"
-    const val LOCAL_USER_VCARD_NAME = "profile.vcf"
+    const val ACCOUNT_PROFILE_NAME = "profile"
+    const val LOCAL_USER_VCARD_NAME = "$ACCOUNT_PROFILE_NAME.vcf"
     private const val VCARD_MAX_SIZE = 1024L * 1024L * 8
 
     fun readData(vcard: VCard?): Pair<String?, ByteArray?> {
@@ -135,36 +135,6 @@ object VCardUtils {
             "image/png" -> "PNG"
             else -> "JPEG"
         }
-
-    @Throws(IOException::class)
-    fun loadPeerProfileFromDisk(filesDir: File, cacheDir: File, filename: String, accountId: String): Pair<String?, ByteArray?> {
-        val cacheFolder = peerProfileCachePath(cacheDir, accountId)
-        val cacheName = File(cacheFolder, filename + ".txt")
-        val cachePicture = File(cacheFolder, filename)
-        val profileFile = File(peerProfilePath(filesDir, accountId), filename + ".vcf")
-
-        // Case 1: no profile for this peer
-        if (!profileFile.exists()) {
-            return Pair(null, null)
-        }
-
-        // Case 2: read profile from cache
-        if (cacheName.exists() && cacheName.lastModified() > profileFile.lastModified()) {
-            return Pair(
-                cacheName.readText(),
-                if (cachePicture.exists()) cachePicture.readBytes() else null
-            )
-        }
-
-        // Case 3: read profile from disk and update cache
-        val data = readData(loadFromDisk(profileFile))
-        val (name, picture) = data
-        cacheName.writeText(name ?: "")
-        if (picture != null) {
-            cachePicture.writeBytes(picture)
-        }
-        return data
-    }
 
     fun resetCustomProfileName(accountId: String, filename: String, filesDir: File) {
         if (filename.isEmpty()) {
@@ -268,17 +238,20 @@ object VCardUtils {
         return File(accountDir, "CustomPeerProfiles").apply { mkdirs() }
     }
 
-    private fun peerProfilePath(filesDir: File, accountId: String): File {
+    fun peerProfilePath(filesDir: File, accountId: String): File {
         val accountDir = File(filesDir, accountId)
         return File(accountDir, "profiles").apply { mkdirs() }
     }
-    private fun peerProfileCachePath(cacheDir: File, accountId: String): File {
+    fun peerProfileCachePath(cacheDir: File, accountId: String): File {
         val accountDir = File(cacheDir, accountId)
         return File(accountDir, "profiles").apply { mkdirs() }
     }
 
-    private fun localProfilePath(filesDir: File, accountId: String): File =
+    fun localProfilePath(filesDir: File, accountId: String): File =
         File(filesDir, accountId).apply { mkdir() }
+
+    fun localProfileCachePath(cacheDir: File, accountId: String): File =
+        File(cacheDir, accountId).apply { mkdir() }
 
     private fun defaultProfile(accountId: String): VCard = VCard().apply { Uid(accountId) }
 
