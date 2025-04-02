@@ -118,7 +118,7 @@ dependencies {
     implementation ("com.google.android.material:material:1.12.0")
     implementation ("androidx.biometric:biometric:1.1.0")
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
-    implementation ("com.google.protobuf:protobuf-javalite:4.30.1")
+    implementation ("com.google.protobuf:protobuf-javalite:4.30.2")
     implementation("androidx.annotation:annotation-jvm:1.9.1")
 
     // ORM
@@ -138,7 +138,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
     androidTestImplementation("androidx.test.espresso:espresso-contrib:3.6.1")
     androidTestImplementation("androidx.test:rules:1.6.1")
-    androidTestImplementation("com.squareup.okhttp3:okhttp:4.11.0")
+    androidTestImplementation("com.squareup.okhttp3:okhttp:4.12.0")
     androidTestImplementation("androidx.test.espresso:espresso-intents:3.6.1")
     androidTestImplementation("androidx.test:core:1.6.1")
 
@@ -150,7 +150,7 @@ dependencies {
 
     // RxAndroid
     implementation ("io.reactivex.rxjava3:rxandroid:3.0.2")
-    implementation ("io.reactivex.rxjava3:rxjava:3.1.9")
+    implementation ("io.reactivex.rxjava3:rxjava:3.1.10")
 
     // Open Street Map
     implementation ("org.osmdroid:osmdroid-android:6.1.20")
