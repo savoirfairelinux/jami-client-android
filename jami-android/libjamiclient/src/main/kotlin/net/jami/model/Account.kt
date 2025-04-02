@@ -127,24 +127,26 @@ class Account(
                     Log.e(TAG, "conversationStarted ${conversation.accountId} ${conversation.uri} ${conversation.contacts} ${conversation.mode.blockingFirst()}", e)
                 }
             }
-            conversationChanged()
         }
+        conversationChanged()
     }
 
-    fun getSwarm(conversationId: String): Conversation? {
-        synchronized(conversations) { return swarmConversations[conversationId] }
-    }
+    fun getSwarm(conversationId: String): Conversation? =
+        synchronized(conversations) { swarmConversations[conversationId] }
 
     fun newSwarm(conversationId: String, mode: Conversation.Mode): Conversation {
+        Log.d(TAG, "newSwarm $conversationId")
+        val conv: Conversation?
         synchronized(conversations) {
-            var c = swarmConversations[conversationId]
-            if (c == null) {
-                c = Conversation(accountId, Uri(Uri.SWARM_SCHEME, conversationId), mode)
+            conv = swarmConversations[conversationId]
+            if (conv == null) {
+                val c = Conversation(accountId, Uri(Uri.SWARM_SCHEME, conversationId), mode)
                 swarmConversations[conversationId] = c
+                return c
             }
-            c.setMode(mode)
-            return c
         }
+        conv!!.setMode(mode)
+        return conv
     }
 
     fun removeSwarm(conversationId: String) {
@@ -153,14 +155,14 @@ class Account(
             val conversation = swarmConversations.remove(conversationId)
             if (conversation != null) {
                 try {
-                    val c = conversations.remove(conversation.uri.uri)
-                    val contact = c!!.contact
+                    val c = conversations.remove(conversation.uri.uri)!!
+                    val contact = c.contact
                     Log.w(TAG, "removeSwarm: adding back contact conversation " + contact + " " + contact!!.conversationUri.blockingFirst() + " " + c.uri)
-                    if (contact.conversationUri.blockingFirst().equals(c.uri)) {
+                    if (contact.conversationUri.blockingFirst() == c.uri) {
                         contact.setConversationUri(contact.uri)
                         contactAdded(contact)
                     }
-                } catch (ignored: Exception) {
+                } catch (_: Exception) {
                 }
                 conversationChanged()
             }
@@ -238,24 +240,27 @@ class Account(
         pendingSubject.onNext(getSortedPending())
     }
 
-    private fun conversationRefreshed(conversation: Conversation) {
+    private fun conversationRefreshed(conversation: Conversation, sorted: List<Conversation>) {
         if (historyLoaded) {
             conversationSubject.onNext(conversation)
-            updateUnreadConversations()
+            updateUnreadConversations(sorted)
         }
     }
 
     fun conversationChanged() {
+        val sortedList: List<Conversation>?
         synchronized(conversations) {
             conversationsChanged = true
-            if (historyLoaded) {
-                conversationsSubject.onNext(ArrayList(getSortedConversations()))
-                updateUnreadConversations()
-            }
+            sortedList = if (historyLoaded) { ArrayList(getSortedConversations()) } else null
+        }
+        if (sortedList != null) {
+            conversationsSubject.onNext(sortedList)
+            updateUnreadConversations(sortedList)
         }
     }
 
     fun conversationUpdated(conversation: Conversation) {
+        val sortedList: List<Conversation>
         synchronized(conversations) {
             if (!historyLoaded) return
             if (conversationsChanged) {
@@ -264,11 +269,12 @@ class Account(
                 conversation.sortHistory()
                 sortedConversations.sortWith(ConversationComparator())
             }
-            // TODO: remove next line when profile is updated through dedicated signal
-            conversationSubject.onNext(conversation)
-            conversationsSubject.onNext(ArrayList(sortedConversations))
-            updateUnreadConversations()
+            sortedList = ArrayList(sortedConversations)
         }
+        // TODO: remove next line when profile is updated through dedicated signal
+        conversationSubject.onNext(conversation)
+        conversationsSubject.onNext(sortedList)
+        updateUnreadConversations(sortedList)
     }
 
     /**
@@ -313,7 +319,8 @@ class Account(
         if (conversation == cache[key]) {
             if (isJami && !conversation.isSwarm
                 //&& conversation.contacts.size == 1
-                && !conversation.contact!!.conversationUri.blockingFirst().equals(conversation.uri)) {
+                && conversation.contact!!.conversationUri.blockingFirst() != conversation.uri
+            ) {
                 return
             }
             if (mContacts.containsKey(key) || !isJami) {
@@ -330,7 +337,7 @@ class Account(
     fun refreshed(conversation: Conversation) {
         synchronized(conversations) {
             if (conversations.containsValue(conversation)) {
-                conversationRefreshed(conversation)
+                conversationRefreshed(conversation, sortedConversations)
                 return
             }
         }
@@ -727,9 +734,9 @@ class Account(
                     updated(c)
             }
             historyLoaded = true
-            conversationChanged()
-            pendingChanged()
         }
+        conversationChanged()
+        pendingChanged()
     }
 
     private fun getSortedConversations(): List<Conversation> {
@@ -738,7 +745,8 @@ class Account(
             if (conversations.isNotEmpty()) {
                 sortedConversations.addAll(conversations.values)
                 for (c in sortedConversations) c.sortHistory()
-                Collections.sort(sortedConversations, ConversationComparator())
+                //Collections.sort(sortedConversations, ConversationComparator())
+                sortedConversations.sortWith(ConversationComparator())
             }
             conversationsChanged = false
         }
@@ -778,8 +786,8 @@ class Account(
                 }
                 pendingConversation.addContactEvent(contact)
             }
-            conversationChanged()
         }
+        conversationChanged()
     }
 
     private fun contactRemoved(uri: Uri, conversationUri: Uri) {
@@ -789,8 +797,8 @@ class Account(
             synchronized(pending) { if (pending.remove(key) != null) pendingChanged() }
             conversations.remove(key)
             //swarmConversations.remove(conversationUri.uri)
-            conversationChanged()
         }
+        conversationChanged()
     }
 
     private fun getConversationByCallId(callId: String): Conversation? {
@@ -812,8 +820,10 @@ class Account(
             else -> Contact.PresenceStatus.CONNECTED
         })
         synchronized(conversations) {
-            conversations[contactUri]?.let { conversationRefreshed(it) }
-        }
+            Pair(conversations[contactUri], sortedConversations)
+        }.let { it.first?.let {
+            conv -> conversationRefreshed(conv, it.second)
+        }}
         synchronized(pending) { if (pending.containsKey(contactUri)) pendingRefreshed() }
     }
 
@@ -920,13 +930,10 @@ class Account(
     fun setActiveCalls(conversationId: String, activeCalls: List<Conversation.ActiveCall>) =
         getSwarm(conversationId)?.setActiveCalls(activeCalls)
 
-    private fun updateUnreadConversations() {
-        var unread = 0
-        for (model in sortedConversations) {
-            val last = model.lastEvent
-            if (last != null && !last.isRead) unread++
-        }
-        unreadConversationsSubject.onNext(unread)
+    private fun updateUnreadConversations(sortedConversations: List<Conversation>) {
+        unreadConversationsSubject.onNext(sortedConversations.count {
+            it.lastEvent?.isRead == false
+        })
     }
 
     private class ConversationComparator : Comparator<Conversation> {
