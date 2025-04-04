@@ -63,4 +63,8 @@ interface IRemoteService {
     @nullable String getOrCreateAccount(in Map<String, String> accountData);
     void connectivityChanged(boolean isConnected);
     void setAccountData(String accountId, in Map<String, String> accountData);
+    void startConversation(String accountId, in @nullable List<String> initialMembers);
+    void addConversationMember(String accountId, String conversationId, String contactUri);
+    void removeConversationMember(String accountId, String conversationId, String contactUri);
+    void sendMessage(String accountId, String conversationId, String message, String replyTo, int flag);
 }

@@ -387,6 +387,36 @@ class RemoteControl : LifecycleService() {
         override fun setAccountData(accountId: String, accountData: MutableMap<String, String>) {
             accountService.setAccountDetails(accountId, accountData)
         }
+
+        override fun startConversation(accountId: String, initialMembers: List<String>?) {
+            accountService.startConversation(accountId, initialMembers ?: listOf())
+        }
+
+        override fun addConversationMember(
+            accountId: String,
+            conversationId: String,
+            contactUri: String
+        ) {
+            accountService.addConversationMembers(accountId, conversationId, listOf(Uri.fromString(contactUri)))
+        }
+
+        override fun removeConversationMember(
+            accountId: String,
+            conversationId: String,
+            contactUri: String
+        ) {
+            accountService.removeConversationMember(accountId, conversationId, Uri.fromString(contactUri))
+        }
+
+        override fun sendMessage(
+            accountId: String,
+            conversationId: String,
+            message: String,
+            replyTo: String,
+            flag: Int
+        ) {
+            accountService.sendConversationMessage(accountId, Uri.fromString(conversationId), message, replyTo, flag)
+        }
     }
 
     override fun onBind(intent: Intent): IBinder {
