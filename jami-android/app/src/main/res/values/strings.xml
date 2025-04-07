@@ -445,7 +445,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="invitation_message">You have %1$d contact requests</string>
     <string name="no_invitations">There are no invitations to display.</string>
     <string name="invitation_received_message">Invitation received from %s.\nAccept or decline the invitation?</string>
-    <string name="outgoing_contact_invitation_message">This contact is not in your contact list.\nSend a request to connect.</string>
+    <string name="outgoing_contact_invitation_message">This contact is not in your contact list.</string>
 
     <!-- Blacklist -->
     <string name="no_blocked_contact">No blocked contacts</string>
