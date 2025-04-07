@@ -671,6 +671,11 @@ class Account(
                 if (!conversation.isSwarm) {
                     val contact = getContactFromCache(request.from)
                     conversation.addRequestEvent(request, contact)
+                } else {
+                    val removed = pending.remove(request.from.uri)
+                    if (removed != null && removed.request == null) {
+                        Log.w(TAG, "Replaced pending contact ${request.from.uri} with pending conversation request $key")
+                    }
                 }
                 pendingChanged()
             }
