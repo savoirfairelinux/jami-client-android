@@ -16,6 +16,7 @@
  */
 package cx.ring.views
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.Drawable
@@ -35,6 +36,7 @@ import net.jami.utils.HashUtils
 import net.jami.utils.toHex
 import java.util.*
 import kotlin.math.min
+import androidx.core.graphics.createBitmap
 
 class AvatarDrawable : Drawable {
     private class PresenceIndicatorInfo {
@@ -149,9 +151,9 @@ class AvatarDrawable : Drawable {
             val h: Int
             if (outfit == a < b) {
                 w = iw
-                h = iw * bh / bw
+                h = b / bw
             } else {
-                w = ih * bw / bh
+                w = a / bh
                 h = ih
             }
             val x = (iw - w) / 2
@@ -331,6 +333,7 @@ class AvatarDrawable : Drawable {
     /** Should only be used in tests */
     fun getBitmap(): MutableList<Bitmap>? = bitmaps
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private constructor(
         context: Context,
         photos: MutableList<Bitmap>?,
@@ -347,7 +350,7 @@ class AvatarDrawable : Drawable {
         /*if (cropCircle) {
             inSize = minSize
         }*/
-        if (photos != null && photos.size > 0) {
+        if (photos != null && photos.isNotEmpty()) {
             avatarText = null
             bitmaps = photos
             if (photos.size == 1) {
@@ -375,8 +378,10 @@ class AvatarDrawable : Drawable {
             color = ContextCompat.getColor(context, getAvatarColor(id))
             clipPaint = if (cropCircle) arrayOf(Paint()) else null
             if (avatarText == null) {
-                placeholder =
-                    context.getDrawable(if (isGroup) R.drawable.baseline_group_24 else R.drawable.baseline_account_crop_24) as VectorDrawable?
+                placeholder = context.getDrawable(
+                    if (isGroup) R.drawable.baseline_group_24
+                    else R.drawable.baseline_account_crop_24
+                )?.mutate() as VectorDrawable?
             } else {
                 textPaint.color = Color.WHITE
                 textPaint.typeface = Typeface.SANS_SERIF
@@ -518,9 +523,11 @@ class AvatarDrawable : Drawable {
             canvas.drawColor(color)
             if (avatarText != null) {
                 canvas.drawText(avatarText!!, textStartXPoint, textStartYPoint, textPaint)
-            } else if (placeholder != null) {
-                placeholder!!.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN)
-                placeholder!!.draw(canvas)
+            } else {
+                placeholder?.let {
+                    it.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN)
+                    it.draw(canvas)
+                }
             }
         }
     }
@@ -591,13 +598,12 @@ class AvatarDrawable : Drawable {
         }
         if (cropCircle) {
             for (i in workspace.indices) {
-                val workspacei = Bitmap.createBitmap(iw, ih, Bitmap.Config.ARGB_8888)
+                val workspacei = createBitmap(iw, ih)
                 workspace[i] = workspacei
                 clipPaint!![i].shader = BitmapShader(workspacei, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
             }
         } else {
-            workspace[0] =
-                Bitmap.createBitmap(bounds.width(), bounds.height(), Bitmap.Config.ARGB_8888)
+            workspace[0] = createBitmap(bounds.width(), bounds.height())
         }
         if (bitmaps != null) {
             if (bitmaps.size == 1 || (cropCircle && groupCircle)) {
