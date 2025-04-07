@@ -22,7 +22,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:animateLayoutChanges="true"
-    android:background="@color/background">
+    android:background="@color/background"
+    tools:context=".client.ConversationActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:fitsSystemWindows="true"
@@ -127,6 +128,21 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                 tools:src="@drawable/outline_call_24" />
 
         </LinearLayout>
+        <TextView
+            android:id="@+id/trustRequestMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:gravity="center"
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp"
+            android:textColor="@color/colorOnSurface"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            tools:text="@string/outgoing_contact_invitation_message"
+            tools:visibility="visible"/>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
@@ -166,31 +182,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             android:visibility="gone"
             tools:listitem="@layout/item_conv_msg_peer" />
 
-        <LinearLayout
-            android:id="@+id/trustRequestMessageLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <TextView
-                android:id="@+id/tvTrustRequestMessage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/surface"
-                android:gravity="center"
-                android:padding="24dp"
-                android:textColor="@color/colorOnSurface"
-                tools:text="Jean is not in your contacts yet" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/lighter_gray" />
-
-        </LinearLayout>
-
         <ProgressBar
             android:id="@+id/pb_loading"
             android:layout_width="64dp"
@@ -203,7 +194,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             android:id="@+id/mapCard"
             android:layout_width="@dimen/location_sharing_minmap_width"
             android:layout_height="@dimen/location_sharing_minmap_height"
-            android:layout_below="@id/trustRequestMessageLayout"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginHorizontal="0dp"
             android:layout_marginVertical="16dp"
@@ -213,7 +204,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             android:focusable="true"
             android:visibility="gone"
             app:cardCornerRadius="16dp"
-            app:cardElevation="4dp">
+            app:cardElevation="4dp"
+            tools:visibility="visible">
 
             <FrameLayout
                 android:id="@+id/mapLayout"

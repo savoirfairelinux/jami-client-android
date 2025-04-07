@@ -1029,42 +1029,42 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun switchToUnknownView() {
         binding?.apply {
-            toolbar.menu.findItem(R.id.conv_search).setVisible(false)
-            toolbar.menu.findItem(R.id.conv_action_videocall).setVisible(false)
-            toolbar.menu.findItem(R.id.conv_action_audiocall).setVisible(false)
+            toolbar.menu.findItem(R.id.conv_search).isVisible = false
+            toolbar.menu.findItem(R.id.conv_action_videocall).isVisible = false
+            toolbar.menu.findItem(R.id.conv_action_audiocall).isVisible = false
             cvMessageInput.visibility = View.GONE
             unknownContactPrompt.visibility = View.VISIBLE
             trustRequestPrompt.visibility = View.GONE
-            tvTrustRequestMessage.text = getString(R.string.outgoing_contact_invitation_message)
-            trustRequestMessageLayout.visibility = View.VISIBLE
+            trustRequestMessage.text = getString(R.string.outgoing_contact_invitation_message)
+            trustRequestMessage.visibility = View.VISIBLE
             currentBottomView = unknownContactPrompt
         }
     }
 
     override fun switchToIncomingTrustRequestView(name: String, requestMode: Conversation.Mode) {
         binding?.apply {
-            toolbar.menu.findItem(R.id.conv_search).setVisible(false)
-            toolbar.menu.findItem(R.id.conv_action_videocall).setVisible(false)
-            toolbar.menu.findItem(R.id.conv_action_audiocall).setVisible(false)
+            toolbar.menu.findItem(R.id.conv_search).isVisible = false
+            toolbar.menu.findItem(R.id.conv_action_videocall).isVisible = false
+            toolbar.menu.findItem(R.id.conv_action_audiocall).isVisible = false
             cvMessageInput.visibility = View.GONE
             unknownContactPrompt.visibility = View.GONE
             trustRequestPrompt.visibility = View.VISIBLE
             btnBlock.isVisible = requestMode == Conversation.Mode.OneToOne
-            tvTrustRequestMessage.text = getString(R.string.invitation_received_message, name)
-            trustRequestMessageLayout.visibility = View.VISIBLE
+            trustRequestMessage.text = getString(R.string.invitation_received_message, name)
+            trustRequestMessage.visibility = View.VISIBLE
             currentBottomView = trustRequestPrompt
         }
     }
 
     override fun switchToConversationView() {
         binding?.apply {
-            toolbar.menu.findItem(R.id.conv_search).setVisible(true)
-            toolbar.menu.findItem(R.id.conv_action_videocall).setVisible(true)
-            toolbar.menu.findItem(R.id.conv_action_audiocall).setVisible(true)
+            toolbar.menu.findItem(R.id.conv_search).isVisible = true
+            toolbar.menu.findItem(R.id.conv_action_videocall).isVisible = true
+            toolbar.menu.findItem(R.id.conv_action_audiocall).isVisible = true
             cvMessageInput.visibility = View.VISIBLE
             unknownContactPrompt.visibility = View.GONE
             trustRequestPrompt.visibility = View.GONE
-            trustRequestMessageLayout.visibility = View.GONE
+            trustRequestMessage.visibility = View.GONE
             currentBottomView = cvMessageInput
             cvMessageInput.doOnNextLayout {
                 cvMessageInput.height.takeIf { it > 0 }?.let {
@@ -1082,8 +1082,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             cvMessageInput.visibility = View.GONE
             unknownContactPrompt.visibility = View.GONE
             trustRequestPrompt.visibility = View.GONE
-            trustRequestMessageLayout.visibility = View.VISIBLE
-            tvTrustRequestMessage.text = getText(R.string.conversation_syncing)
+            trustRequestMessage.visibility = View.VISIBLE
+            trustRequestMessage.text = getText(R.string.conversation_syncing)
         }
         currentBottomView = null
     }
@@ -1096,8 +1096,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             cvMessageInput.visibility = View.GONE
             unknownContactPrompt.visibility = View.GONE
             trustRequestPrompt.visibility = View.GONE
-            trustRequestMessageLayout.visibility = View.VISIBLE
-            tvTrustRequestMessage.text = getText(R.string.conversation_blocked)
+            trustRequestMessage.visibility = View.VISIBLE
+            trustRequestMessage.text = getText(R.string.conversation_blocked)
         }
     }
 
@@ -1106,8 +1106,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             cvMessageInput.visibility = View.GONE
             unknownContactPrompt.visibility = View.GONE
             trustRequestPrompt.visibility = View.GONE
-            trustRequestMessageLayout.visibility = View.VISIBLE
-            tvTrustRequestMessage.text = getText(R.string.conversation_ended)
+            trustRequestMessage.visibility = View.VISIBLE
+            trustRequestMessage.text = getText(R.string.conversation_ended)
         }
         currentBottomView = null
     }
