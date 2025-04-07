@@ -20,7 +20,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     android:id="@+id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    tools:context=".client.HomeActivity">
 
     <!-- Smartlist to display swarms -->
     <androidx.fragment.app.FragmentContainerView
@@ -28,8 +29,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         android:name="cx.ring.fragments.SmartListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout="@layout/frag_smartlist"
-        app:layout_behavior="@string/searchbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/searchbar_scrolling_view_behavior"
+        tools:layout="@layout/frag_smartlist" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
@@ -48,25 +49,25 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             <!-- Search bar to search for a swarm or for new contacts -->
             <com.google.android.material.search.SearchBar
                 android:id="@+id/search_bar"
-                app:navigationContentDescription="@string/searchbar_navigation_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/searchbar_color"
                 android:hint="@string/searchbar_hint"
                 android:textAppearance="@style/TextAppearance.Material3.SearchBar"
                 app:autoShowKeyboard="true"
+                app:navigationContentDescription="@string/searchbar_navigation_account"
                 app:navigationIcon="@android:color/transparent" />
 
             <!-- Donation card -->
             <include
                 android:id="@+id/donation_card"
                 layout="@layout/frag_donation_card"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:visibility="gone"/>
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone" />
 
             <!-- Received invitations -->
             <include
@@ -84,6 +85,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:hint="@string/searchbar_hint"
+        app:animateNavigationIcon="false"
         app:layout_anchor="@id/search_bar"
         tools:visibility="gone">
 
@@ -157,11 +159,11 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                 android:id="@+id/searchResult"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:orientation="vertical"
                 android:clipToPadding="false"
                 android:divider="@null"
+                android:orientation="vertical"
                 android:paddingBottom="8dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_smartlist" />
 
         </LinearLayout>

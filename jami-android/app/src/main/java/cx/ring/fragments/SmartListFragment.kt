@@ -43,6 +43,7 @@ import net.jami.model.Uri
 import net.jami.services.ConversationFacade
 import net.jami.smartlist.SmartListPresenter
 import net.jami.smartlist.SmartListView
+import androidx.core.net.toUri
 
 @AndroidEntryPoint
 class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>(),
@@ -87,7 +88,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                 val selected = numbers[which]
                 val intent = Intent(Intent.ACTION_CALL)
                     .setClass(context, CallActivity::class.java)
-                    .setData(android.net.Uri.parse(selected.toString()))
+                    .setData(selected.toString().toUri())
                 startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL)
             }.show()
     }

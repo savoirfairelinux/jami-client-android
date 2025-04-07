@@ -275,7 +275,8 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     }.root
 
     private fun displayConversationRequestDialog(conversation: Conversation) {
-        if (conversation.request!!.mode == Conversation.Mode.OneToOne)
+        val request = conversation.request ?: return
+        if (request.mode == Conversation.Mode.OneToOne)
             MaterialAlertDialogBuilder(requireContext())
                 .setItems(R.array.swarm_request_one_to_one_actions) { _, which ->
                     when (which) {
@@ -299,11 +300,10 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
     private fun startSearch() {
         searchDisposable?.dispose()
-        val disposable = mConversationFacade.getSearchResults(debouncedQuery)
+        searchDisposable = mConversationFacade.getSearchResults(debouncedQuery)
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe { searchAdapter?.update(it) }
-        searchDisposable = disposable
-        mDisposable.add(disposable)
+            .apply { mDisposable.add(this) }
     }
 
     /**
@@ -502,11 +502,11 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             .switchMap { mAccountService.getObservableAccountProfile(it.accountId) }
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe { profile ->
-                mBinding ?: return@subscribe
-                mBinding!!.searchBar.navigationIcon =
+                val binding = mBinding ?: return@subscribe
+                binding.searchBar.navigationIcon =
                     BitmapUtils.withPadding(
                         AvatarDrawable.build(
-                            mBinding!!.root.context,
+                            binding.root.context,
                             profile.first,
                             profile.second,
                             true,
