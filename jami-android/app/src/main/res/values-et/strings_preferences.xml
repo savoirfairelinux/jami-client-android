@@ -13,7 +13,7 @@
   <string name="pref_mobileData_title">Mobiilne andmeside</string>
   <string name="pref_mobileData_summary">Lisaks WiFi võrkudel luba, et Jami kasutab 3G/LTE võrke</string>
   <string name="pref_pushNotifications_title">Tõuketeavitused</string>
-  <string name="pref_pushNotifications_summary">Kõnede ja sõnumite taustateavituste jaoks kasuta Google\'i serverid</string>
+  <string name="pref_pushNotifications_summary">Kõnede ja sõnumite taustateavituste jaoks kasuta Google\'i servereid</string>
   <string name="pref_unifiedPush_summary">Kõnede ja sõnumite taustateavituste jaoks kasuta UnifiedPush teenust</string>
   <string name="pref_video_advanced_title">Täiendavad videoseadistused</string>
   <string name="pref_video_advanced_summary">Muuda video bitikiirust, resolutsiooni ning proovi katselisi seadistusi</string>

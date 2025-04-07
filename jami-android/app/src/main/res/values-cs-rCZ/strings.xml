@@ -13,7 +13,12 @@
   <string name="call_service_description">Tato služba je potřebná k tomu, aby vaše hovory mohly běžet na popředí. Je spuštěná jen během hovorů.</string>
   <string name="data_transfer_service_description">Tato služba je potřebná k zobrazení neustálých oznámení během přenosů souborů. Je spuštěná jen během přenosů souborů.</string>
   <!--About dialog-->
+  <string name="thank_note">Rádi bychom poděkovali našim přispěvatelům, jejichž úsilí po mnoho let učinilo tento software tím, čím je.</string>
+  <string name="developers">Vývojáři</string>
   <string name="media">Média</string>
+  <string name="community_management">Správa komunity</string>
+  <string name="special_thanks">Zvláštní poděkování</string>
+  <string name="end_note">Toto je seznam lidí, kteří do Jamiho významně investovali čas s užitečnými výsledky. Všichni tito přispěvatelé, kteří chtějí být přidáni do seznamu, by měli kontaktovat tým Jami na adrese contact@jami.net.</string>
   <!--RingActivity-->
   <string name="error_no_network">Chybí připojení</string>
   <string name="error_account_offline">Účet je offline</string>
@@ -97,8 +102,13 @@
   <string name="action_call_accept">Přijmout hovor</string>
   <string name="action_call_accept_audio">Přijmout se zvukem</string>
   <string name="action_call_accept_video">Přijmout s obrazem</string>
+  <string name="action_call_hold_accept">Přijmout příchozí hovor pouze se zvukem a přidržet aktuální hovor</string>
+  <string name="action_call_hold_accept_video">Přijmout příchozí hovor pomocí videa a přidržet aktuální hovor</string>
+  <string name="action_call_end_accept">Přijmout příchozí hovor a ukončit aktuální hovor</string>
   <string name="action_call_decline">Odmítnout</string>
   <string name="action_call_mic_mute">Ztlumit mikrofon</string>
+  <string name="action_load_extension">Nahrát rozříření</string>
+  <string name="ab_action_speakerphone">Zapnout reproduktor</string>
   <string name="ab_action_contact_add">Přidat do kontaktů</string>
   <string name="ab_action_contact_add_question">Přidat do kontaktů?</string>
   <string name="ab_action_audio_call">Začít audio hovor</string>
@@ -108,6 +118,7 @@
   <string name="write_a_message">Napsat zprávu</string>
   <string name="scan_qr">Skenovat kód QR</string>
   <string name="qr_code">Kód QR</string>
+  <string name="qr_code_not_contact">Nejedná se o QR kód kontaktu Jami</string>
   <string name="new_group">Vytvořit novou skupinu</string>
   <string name="ab_action_flipcamera">Otočit kameru</string>
   <string name="ab_action_hidepreview">Skrýt náhled</string>
@@ -129,6 +140,8 @@
   <string name="in_reply_to">V odpovědi na</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Povolení ke kameře</string>
+  <string name="permission_dialog_camera_message">Videokonverzace vyžadují povolení kamery. Povolení fotoaparátu je zakázáno. Chcete-li tuto funkci používat, povolte ji v nastavení zařízení.</string>
+  <string name="camera_error">Při spouštění fotoaparátu došlo k chybě.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Chyba</string>
   <string name="ringtone_error_format_not_supported">Tento formát je nepodporovaný.</string>
@@ -160,10 +173,12 @@
   <string name="delete_contact">Smazat kontakt</string>
   <string name="conversation_action_remove_this_title">Smazat toto spojení?</string>
   <string name="conversation_action_remove_this_message">Toto smaže kontakt a s konečnou platností vymaže konverzační historii.</string>
+  <string name="conversation_action_add_this_message">Toto odešle požadavek na připojení.</string>
   <string name="swarm_group_action_leave">Opustit skupinu</string>
   <string name="swarm_group_action_leave_title">Opustit tuto skupinu?</string>
   <string name="swarm_group_action_leave_message">Toto smaže konverzaci s vašeho seznamu konverzací</string>
   <string name="conversation_action_copy_peer_number">Kopíruj identifikátor kontaktu</string>
+  <string name="copied_to_clipboard">%1$s zkopírován do schránky.</string>
   <string name="conversation_action_select_peer_number">Vyberte číslo</string>
   <string name="conversation_action_block_this">Blokovat spojení</string>
   <string name="conversation_action_unblock_this">Odblokovat kontakt</string>
@@ -185,6 +200,7 @@
   <string name="conversation_syncing">Stahování konverzace z peeru</string>
   <string name="conversation_blocked">Tento kontakt je blokován</string>
   <string name="conversation_ended">Konverzace skončila.</string>
+  <string name="conversation_message_deleted">%s smazaná zpráva</string>
   <string name="conversation_reply_you">Vy</string>
   <string name="conversation_preference_color">Barva konverzace</string>
   <string name="conversation_preference_emoji">Emoji konverzace</string>
@@ -192,6 +208,7 @@
   <string name="conversation_type_private">Soukromý</string>
   <string name="conversation_type_group">Skupina</string>
   <string name="conversation_search_hint">Najít konverzaci</string>
+  <string name="starting_camera_error">Při spouštění fotoaparátu došlo k chybě.</string>
   <string name="today">Dnes</string>
   <string name="yesterday">Včera</string>
   <!--Contacts-->
@@ -239,6 +256,8 @@
   <string name="accept">Přijmout</string>
   <string name="decline">Nepřijmout</string>
   <string name="block">Blokovat</string>
+  <string name="decline_invitation">Odmítnout pozvání</string>
+  <string name="accept_invitation">Přijmout pozvání</string>
   <string name="invitation_message">Máš%1$džádostí o kontakt</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Žádné blokované kontakty</string>
@@ -259,6 +278,7 @@
   <string name="file_transfer_status_unsupported">Nepodporováno</string>
   <string name="file_transfer_status_ongoing">Probíhá</string>
   <string name="file_transfer_status_finished">Dokončeno</string>
+  <string name="file_transfer_status_unjoinable_peer">Nedosažitelný peer</string>
   <string name="file_transfer_status_canceled">Zrušeno</string>
   <string name="file_transfer_status_timed_out">Vypršel časový limit</string>
   <string name="file_saved_successfully">Soubor byl úspěšně uložen.</string>
@@ -322,6 +342,7 @@
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Sdílet</string>
   <string name="bottomSheet_dialpad_btn">Číselník</string>
+  <string name="bottomSheet_extensions_btn">Rozšíření</string>
   <string name="bottomSheet_add_participants_btn">Přidat</string>
   <string name="bottomSheet_change_camera_btn">Změnit</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
@@ -347,12 +368,16 @@
   <string name="jami_id_choose_username">Výberte uživatelské jméno</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Vítejte v Jami</string>
+  <string name="welcome_jami_description">Sdílejte svůj Jami identifikátor, abyste byli snáze kontaktováni!</string>
   <!--Conversation details-->
   <string name="details">Detaily</string>
+  <string name="secure_p2p_connection">Zabezpečené připojení peer-to-peer</string>
+  <string name="swarm_type">Typ konverzace</string>
   <string name="Private">Soukromý</string>
   <string name="mute_conversation">Ztlumit konverzaci</string>
   <!--Donation-->
   <string name="donation_card_not_now">Teď ne</string>
+  <string name="donation_donate">Darovat</string>
   <!--Extension-->
   <string name="export_side_main_title">Exportovat účet</string>
   <string name="export_side_step1_code_connect">Připojit</string>

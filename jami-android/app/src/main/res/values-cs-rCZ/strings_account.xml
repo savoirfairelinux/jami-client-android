@@ -5,9 +5,11 @@
   <string name="ic_advanced_menu">Pokročilá nastavení</string>
   <string name="ic_blacklist_menu">Blokované kontakty</string>
   <!--Strings related to account creation-->
+  <string name="account_selection">Vyberte účet</string>
   <string name="add_ring_account_title">Přidat účet</string>
   <string name="add_sip_account_title">Přidat účet SIP</string>
   <string name="ring_account_default_name">Účet Jami %1$s</string>
+  <string name="account_creation_error">Při vytváření účtu došlo k chybě.</string>
   <string name="prompt_alias">Přezdívka</string>
   <string name="prompt_hostname">Hostitelské jméno</string>
   <string name="prompt_username">Uživatelské jméno</string>
@@ -21,10 +23,17 @@
   <string name="dialog_wait_create_details">Prosím vyčkejte, než bude váš účet přidán…</string>
   <string name="dialog_wait_update">Aktualizuje se účet</string>
   <string name="dialog_wait_update_details">Počkejte prosím, než bude váš účet aktualizován…</string>
+  <string name="dialog_warn_ip2ip_account_title">Vytvořit prázdný SIP účet?</string>
+  <string name="dialog_warn_ip2ip_account_message">Chystáte se vytvořit účet SIP bez platného názvu hostitele.
+    Budete moci volat a přijímat pouze přímá IP volání.
+    Svůj účet můžete upravit později</string>
   <string name="account_type_ip2ip">Účet IP</string>
   <string name="help_ring">Účet Jami vám umožňuje spojit se s lidmi bezpečně, uživatel s uživatelem, skrze plně rozptýlenou síť.</string>
   <string name="help_sip_title">Přidat účet SIP</string>
+  <string name="help_sip">Nakonfigurujte stávající SIP účet</string>
+  <string name="create_sip_account">Nakonfigurujte účet SIP</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">Smazat účet?</string>
   <string name="account_delete_dialog_message">Tento krok nelze vrátit zpět.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Žádný registrovaný účet</string>
@@ -33,6 +42,7 @@
   <string name="account_device_revoke">Odebrat zařízení</string>
   <string name="account_device_revocation_success_title">Úspěch</string>
   <string name="account_device_revocation_success">Zařízení je nyní odebráno!</string>
+  <string name="account_device_revocation_wrong_password">Neplatné heslo.</string>
   <string name="account_device_revocation_unknown_device">Neznámé zařízení.</string>
   <string name="account_device_revocation_error_unknown">Neznámá chyba.</string>
   <string name="account_password_change">Změnit heslo</string>
@@ -55,6 +65,7 @@
   <string name="account_upnp_label">Povolit UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Extension Details-->
+  <string name="account_preferences_extension_tab">Rozšíření</string>
   <!--Audio Details-->
   <string name="account_audio_label">Zvuk</string>
   <string name="account_preferences_media_tab">Média</string>
@@ -130,6 +141,7 @@ Zadejte, prosím, své heslo.</string>
   <string name="sip_account">Účet SIP</string>
   <string name="ring_account_identity">Totožnost</string>
   <string name="account_migration_title_dialog">Převod účtu</string>
+  <string name="account_migration_message_dialog">Vaše účty je třeba aktualizovat. Chcete přejít na obrazovku Správa účtu a provést tuto operaci?</string>
   <string name="account_update_needed">Nutná aktualizace</string>
   <string name="account_sip_cannot_be_registered_message">Můžete pokračovat v postupu vytvoření účtu nebo údaje upravit zde. Úpravy jsou možné i později v nastavení účtu.</string>
   <string name="account_no_network_title">Chyba sítě</string>

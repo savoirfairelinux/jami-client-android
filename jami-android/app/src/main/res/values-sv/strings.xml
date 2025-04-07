@@ -318,7 +318,9 @@
   <!--Extension-->
   <string name="export_side_main_title">Exportera konto</string>
   <string name="import_side_main_title">Importera konto</string>
+  <string name="export_side_step1_code_connect">Anslut</string>
   <string name="export_side_step2_cancel">Avbryt</string>
   <string name="export_side_step2_confirm">Bekräfta</string>
+  <string name="import_side_step1_share">Dela</string>
   <string name="import_side_step2_password_import">Importera</string>
 </resources>

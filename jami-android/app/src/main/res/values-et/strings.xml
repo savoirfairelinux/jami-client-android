@@ -478,7 +478,7 @@ Kui klõpsid „Kinnita“, siis jätkame kasutajakonto eksportimisega.</string>
   <string name="export_side_step2_advice_ip_only">Uus seade on ühendatud allpooltoodud aadressil. Kas see oled sina?
 Kui klõpsid „Kinnita“, siis jätkame kasutajakonto eksportimisega.</string>
   <string name="export_side_step2_ip_only">Uue seadme ip-aadress: %1$s</string>
-  <string name="export_side_step2_cancel">Tühista</string>
+  <string name="export_side_step2_cancel">Katkesta</string>
   <string name="export_side_step2_confirm">Kinnita</string>
   <string name="export_side_step2_password">Kasutajakonto on kaitstud salasõnaga.\nJätkamiseks autendi end uues seadmes.</string>
   <string name="export_side_step3_body_loading">Kasutajakonto eksportimine uude seadmesse on pooleli.

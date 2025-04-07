@@ -404,7 +404,9 @@
   <string name="install_success">Razširitev %1$s je bila uspešno nameščena.</string>
   <string name="install_error">Pri uvozu razširitve je prišlo do napake.</string>
   <string name="export_side_main_title">Izvozi račun</string>
+  <string name="export_side_step1_code_connect">Poveži</string>
   <string name="export_side_step2_cancel">Prekliči</string>
   <string name="export_side_step2_confirm">Potrdi</string>
+  <string name="import_side_step1_share">Deli</string>
   <string name="import_side_step2_password_import">Uvoz</string>
 </resources>

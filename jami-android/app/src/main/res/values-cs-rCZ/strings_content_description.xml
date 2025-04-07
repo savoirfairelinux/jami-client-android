@@ -1,10 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">Rychlý hovor</string>
+  <string name="contact_picture_description">Kontaktní obrázek</string>
   <string name="dial_numeric_pad">Číselná klávesnice</string>
   <string name="contact_unblock">Odblokovat</string>
+  <string name="video_extensions">Rozšíření videa</string>
   <string name="file_download_button">Stáhnout</string>
   <string name="control_play">Přehrát</string>
   <string name="control_replay">Znovu přehrát</string>
   <string name="control_pause">Pozastavit</string>
+  <string name="searchbar_navigation_account">Vyberte účet</string>
+  <string name="add_conversation_member">Přidat člena konverzace</string>
+  <string name="qrcode_to_scan">QR kód ke skenování</string>
 </resources>
