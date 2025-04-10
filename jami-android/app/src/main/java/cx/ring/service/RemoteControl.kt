@@ -322,10 +322,16 @@ class RemoteControl : LifecycleService() {
         override fun registerEventListener(listener: IRemoteService.IEventListener) {
             Log.d(tag, "Registering event listener: $listener")
             val job = eventService.subscribeToEvents(lifecycleScope) {
-                listener.onEventReceived(
-                    it.name,
-                    it.data
-                )
+                try {
+                    listener.onEventReceived(
+                        it.name,
+                        it.data
+                    )
+                } catch (e: Exception) {
+                    Log.e(tag, "Error notifying event listener: ${e.message}", e)
+                    eventListeners[listener]?.cancel()
+                    eventListeners.remove(listener)
+                }
             }
             eventListeners[listener] = job
         }
@@ -357,9 +363,18 @@ class RemoteControl : LifecycleService() {
                         monitor.onMessages(messages)
                     }
                 }) { error: Throwable ->
+                    val toRemove = mutableListOf<IRemoteService.IEventListener>()
                     eventListeners.forEach({ (listener, _) ->
-                        listener.onEventReceived("ERROR", mapOf("message" to error.message))
+                        try {
+                            listener.onEventReceived("ERROR", mapOf("message" to error.message))
+                        } catch (e: Exception) {
+                            toRemove.add(listener)
+                        }
                     })
+                    toRemove.forEach {
+                        eventListeners[it]?.cancel()
+                        eventListeners.remove(it)
+                    }
                 }
                 .apply {
                     compositeDisposable.add(this)
@@ -416,6 +431,17 @@ class RemoteControl : LifecycleService() {
             flag: Int
         ) {
             accountService.sendConversationMessage(accountId, Uri.fromString(conversationId), message, replyTo, flag)
+        }
+
+        override fun cycleAccount(accountId: String) {
+            Log.d(tag, "Cycling $accountId")
+            val callActive = callService.getIncomingCall() != null || callService.getActiveCall() != null
+            if (!callActive) {
+                accountService.setAccountEnabled(accountId, false)
+                accountService.setAccountEnabled(accountId, true)
+            } else {
+                Log.d(tag, "Call is active, not cycling account")
+            }
         }
     }
 

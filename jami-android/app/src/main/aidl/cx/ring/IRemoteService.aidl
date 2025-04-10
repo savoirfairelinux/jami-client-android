@@ -67,4 +67,5 @@ interface IRemoteService {
     void addConversationMember(String accountId, String conversationId, String contactUri);
     void removeConversationMember(String accountId, String conversationId, String contactUri);
     void sendMessage(String accountId, String conversationId, String message, String replyTo, int flag);
+    void cycleAccount(String accountId);
 }
