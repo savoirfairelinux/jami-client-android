@@ -8,6 +8,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.IBinder
+import android.os.IInterface
+import android.os.RemoteCallbackList
 import android.os.RemoteException
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
@@ -21,7 +23,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import kotlinx.coroutines.Job
 import net.jami.daemon.JamiService
 import net.jami.model.Account
 import net.jami.model.Contact
@@ -61,7 +62,9 @@ class RemoteControl : LifecycleService() {
     @Inject
     lateinit var hardwareService: HardwareService
 
-    private val eventListeners = mutableMapOf<IRemoteService.IEventListener, Job>()
+    private val eventListeners = RemoteCallbackList<IRemoteService.IEventListener>()
+    private val callbacks = RemoteCallbackList<IRemoteService.StateCallback>()
+    private val connectionMonitors = RemoteCallbackList<IRemoteService.IConnectionMonitor>()
 
     private val tag = "JamiRemoteControl"
     private val compositeDisposable = CompositeDisposable()
@@ -83,9 +86,42 @@ class RemoteControl : LifecycleService() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate() {
         super.onCreate()
+        startForegroundServiceWithNotification()
+
         compositeDisposable.add(accountService.observableAccountList.subscribe { accounts = it })
         Log.d(tag, "Service created")
-        startForegroundServiceWithNotification()
+
+        eventService.subscribeToEvents(lifecycleScope) {
+            eventListeners.broadcast { listener ->
+                listener.onEventReceived(it.name, it.data ?: mapOf())
+            }
+        }
+    }
+
+    fun startConnectionMonitor() {
+        hardwareService.mPreferenceService.isLogActive = true
+        compositeDisposable.add(hardwareService.startLogs()
+            .observeOn(Schedulers.io())
+            .subscribe({ messages: List<String> ->
+                if (messages.isNotEmpty()) {
+                    connectionMonitors.broadcast {
+                        it.onMessages(messages)
+                    }
+                }
+            }) { error: Throwable ->
+                eventListeners.broadcast {
+                    it.onEventReceived("ERROR", mapOf("message" to error.message))
+                }
+            }
+            .apply {
+                compositeDisposable.add(this)
+            }
+        )
+    }
+
+    fun stopConnectionMonitor() {
+        hardwareService.stopLogs()
+        hardwareService.mPreferenceService.isLogActive = false
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -114,12 +150,13 @@ class RemoteControl : LifecycleService() {
     override fun onDestroy() {
         super.onDestroy()
         Log.d(tag, "Service destroyed")
+        eventListeners.kill()
+        callbacks.kill()
         compositeDisposable.clear()
     }
 
     // Inner Binder class implementing the AIDL interface
     private val binder = object : IRemoteService.Stub() {
-        val callbacks = mutableListOf<IRemoteService.StateCallback>()
 
         override fun createAccount(map: Map<String, String>): String {
             Log.d(tag, "Creating account with data: $map")
@@ -234,11 +271,13 @@ class RemoteControl : LifecycleService() {
         }
 
         override fun registerCallStateCallback(callback: IRemoteService.StateCallback) {
-            callbacks.add(callback)
+            Log.d(tag, "Registering call state callback: $callback")
+            callbacks.register(callback)
         }
 
-        override fun unregisterCallStateCallback(callback: IRemoteService.StateCallback?) {
-            callbacks.remove(callback)
+        override fun unregisterCallStateCallback(callback: IRemoteService.StateCallback) {
+            val success = callbacks.unregister(callback)
+            Log.d(tag, "Unregistering call state callback: $callback, success: $success, left: ${callbacks.registeredCallbackCount}")
         }
 
         override fun hangUpCall() {
@@ -321,26 +360,13 @@ class RemoteControl : LifecycleService() {
         @RequiresApi(Build.VERSION_CODES.P)
         override fun registerEventListener(listener: IRemoteService.IEventListener) {
             Log.d(tag, "Registering event listener: $listener")
-            val job = eventService.subscribeToEvents(lifecycleScope) {
-                try {
-                    listener.onEventReceived(
-                        it.name,
-                        it.data
-                    )
-                } catch (e: Exception) {
-                    Log.e(tag, "Error notifying event listener: ${e.message}", e)
-                    eventListeners[listener]?.cancel()
-                    eventListeners.remove(listener)
-                }
-            }
-            eventListeners[listener] = job
+            eventListeners.register(listener)
         }
 
         @RequiresApi(Build.VERSION_CODES.P)
         override fun unregisterEventListener(listener: IRemoteService.IEventListener) {
-            Log.d(tag, "Unregistering event listener: $listener")
-            eventListeners[listener]?.cancel()
-            eventListeners.remove(listener)
+            val success = eventListeners.unregister(listener)
+            Log.d(tag, "Unregistering event listener: $listener, success: $success, left: ${eventListeners.registeredCallbackCount}")
         }
 
         override fun getAccountInfo(account: String): Map<String, String> {
@@ -352,41 +378,19 @@ class RemoteControl : LifecycleService() {
         }
 
         val compositeDisposable = CompositeDisposable()
-        val connectionMonitors = mutableMapOf<IRemoteService.IConnectionMonitor, Disposable>()
 
         override fun registerConnectionMonitor(monitor: IRemoteService.IConnectionMonitor) {
-            hardwareService.mPreferenceService.isLogActive = true
-            compositeDisposable.add(hardwareService.startLogs()
-                .observeOn(Schedulers.io())
-                .subscribe({ messages: List<String> ->
-                    if (messages.isNotEmpty()) {
-                        monitor.onMessages(messages)
-                    }
-                }) { error: Throwable ->
-                    val toRemove = mutableListOf<IRemoteService.IEventListener>()
-                    eventListeners.forEach({ (listener, _) ->
-                        try {
-                            listener.onEventReceived("ERROR", mapOf("message" to error.message))
-                        } catch (e: Exception) {
-                            toRemove.add(listener)
-                        }
-                    })
-                    toRemove.forEach {
-                        eventListeners[it]?.cancel()
-                        eventListeners.remove(it)
-                    }
-                }
-                .apply {
-                    compositeDisposable.add(this)
-                    connectionMonitors[monitor] = this
-                }
-            )
+            if (connectionMonitors.registeredCallbackCount == 0) {
+                startConnectionMonitor()
+            }
+            connectionMonitors.register(monitor)
         }
 
         override fun unregisterConnectionMonitor(monitor: IRemoteService.IConnectionMonitor?) {
-            connectionMonitors[monitor]?.dispose()
-            connectionMonitors.remove(monitor)
-            hardwareService.mPreferenceService.isLogActive = connectionMonitors.isNotEmpty()
+            connectionMonitors.unregister(monitor)
+            if (connectionMonitors.registeredCallbackCount == 0) {
+                stopConnectionMonitor()
+            }
         }
 
         override fun getOrCreateAccount(data: Map<String, String>): String? {
@@ -450,13 +454,21 @@ class RemoteControl : LifecycleService() {
         Log.d(tag, "Service bound")
         val disposable = callService.callsUpdates.subscribe { call ->
             Log.i("RemoteControl", "Call state changed: ${call.callStatus}")
-            binder.callbacks.forEach { callback ->
-                Log.i("RemoteControl", "Notifying callback: $callback")
-                callback.newCallState(call.callStatus.toString())
+            callbacks.broadcast {
+                it.newCallState(call.callStatus.toString())
             }
         }
         compositeDisposable.add(disposable)
         compositeDisposable.add(binder.compositeDisposable)
         return binder
     }
+}
+
+
+fun <T: IInterface> RemoteCallbackList<T>.broadcast(action: (T) -> Unit) {
+    for (i in 0 until beginBroadcast()) {
+        val callback = getBroadcastItem(i)
+        action(callback)
+    }
+    finishBroadcast()
 }
