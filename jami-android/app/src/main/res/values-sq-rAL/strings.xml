@@ -295,7 +295,6 @@
   <string name="invitation_message">Keni %1$d kërkesa kontakti</string>
   <string name="no_invitations">S’ka ftesa për shfaqje.</string>
   <string name="invitation_received_message">U mor ftesë nga %s.\nTë pranohet, apo të hidhet poshtë ftesa?</string>
-  <string name="outgoing_contact_invitation_message">Ky kontakt s\’gjendet në listën e kontakteve tuaja.\nDërgoni një kërkesë për t’u lidhur.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">S’ka kontakte të bllokuar</string>
   <!--Smartlist-->

@@ -1,10 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">Швидкий дзвінок</string>
+  <string name="contact_picture_description">Зображення контакту</string>
   <string name="dial_numeric_pad">Цифрова панель набору</string>
   <string name="contact_unblock">Розблокувати</string>
+  <string name="video_extensions">Відеорозширення</string>
   <string name="file_download_button">Завантажити</string>
   <string name="control_play">Програти</string>
   <string name="control_replay">Повторити</string>
   <string name="control_pause">Пауза</string>
+  <string name="searchbar_navigation_account">Вибрати обліковий запис</string>
+  <string name="add_conversation_member">Додати учасника розмови</string>
+  <string name="qrcode_to_scan">QR-код для сканування</string>
 </resources>

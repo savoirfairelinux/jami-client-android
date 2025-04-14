@@ -138,7 +138,6 @@
   <string name="invitation_message">您有 %1$d 个联系人请求</string>
   <string name="no_invitations">没有要显示的邀请。</string>
   <string name="invitation_received_message">收到%s的邀请。\n接受还是拒绝邀请？</string>
-  <string name="outgoing_contact_invitation_message">此联系人不在您的联系人列表中。\n 发送连接请求。</string>
   <!--Blacklist-->
   <!--Smartlist-->
   <string name="start_conversation">发起对话</string>

@@ -295,7 +295,6 @@
   <string name="invitation_message">%1$d kapcsolatfelvételi kérelme van</string>
   <string name="no_invitations">Nincsenek megjelenítendő meghívók.</string>
   <string name="invitation_received_message">Meghívó érkezett a következőtől: %s.\nA meghívás elfogadása vagy visszautasítása.</string>
-  <string name="outgoing_contact_invitation_message">Ez a kapcsolattartó nem szerepel a kapcsolattartólistában.\nKapcsolatfelvételi kérelem küldése.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Nincsenek letiltott kapcsolattartók</string>
   <!--Smartlist-->

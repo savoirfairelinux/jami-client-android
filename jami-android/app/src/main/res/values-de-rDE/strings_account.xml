@@ -26,6 +26,8 @@ Sie können Ihr Konto später bearbeiten</string>
   <!--Advanced Details-->
   <string name="account_stun_enable_label">STUN benutzen</string>
   <string name="account_stun_server_label">STUN-Server</string>
+  <string name="account_accept_files_never">Niemals automatisch annehmen</string>
+  <string name="account_accept_files_always">Immer automatisch annehmen</string>
   <string name="account_connectivity_label">Peer-to-Peer-Konnektivität</string>
   <string name="default_value">Standard</string>
   <string name="account_proxy_list_enable_label">DHT-Proxyliste verwenden</string>

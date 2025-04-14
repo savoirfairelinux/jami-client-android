@@ -15,8 +15,12 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 -->
 <resources>
+    <!-- Call error -->
+    <string name="call_error">Při zahájení hovoru došlo k chybě.</string>
     <string name="call_error_no_microphone">Hovor byl zrušen. Nebyl zjištěn žádný mikrofon.</string>
     <string name="call_error_no_camera_no_microphone">Hovor byl zrušen. Nebyla zjištěna žádná kamera ani mikrofon.</string>
+    <string name="screen_sharing_error">Při spouštění sdílení obrazovky došlo k chybě.</string>
+
     <!-- SipCalls -->
     <string name="call_human_state_searching">Hledá se</string>
     <string name="call_human_state_incoming">Příchozí</string>

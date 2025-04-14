@@ -5,9 +5,11 @@
   <string name="ic_advanced_menu">ਉੱਨਤ ਸੈਟਿੰਗਾਂ</string>
   <string name="ic_blacklist_menu">ਸੰਪਰਕ ਜਿਨ੍ਹਾਂ \'ਤੇ ਬੰਦਸ਼ ਹੈ</string>
   <!--Strings related to account creation-->
+  <string name="account_selection">ਖਾਤਾ ਚੁਣੋ</string>
   <string name="add_ring_account_title">ਖਾਤਾ ਜੋੜੋ</string>
   <string name="add_sip_account_title">SIP ਖਾਤਾ ਜੋੜੋ</string>
   <string name="ring_account_default_name">Jami ਖਾਤਾ %1$s</string>
+  <string name="account_creation_error">ਖਾਤਾ ਬਣਾਉਣ ਵੇਲੇ ਕੋਈ ਗੜਬੜ ਹੋਈ।</string>
   <string name="prompt_alias">ਦੂਜਾ ਨਾਂ</string>
   <string name="prompt_hostname">ਮੇਜ਼ਬਾਨ ਦਾ ਨਾਂ</string>
   <string name="prompt_username">ਵਰਤੋਂਕਾਰ ਨਾਂ</string>

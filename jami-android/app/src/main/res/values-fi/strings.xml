@@ -172,7 +172,7 @@
   <string name="contact_details">Henkilön tiedot</string>
   <string name="conversation_action_delete_this">Poista tämä keskustelu</string>
   <string name="conversation_action_delete_this_title">Poistetaanko tämä keskustelu?</string>
-  <string name="leave_conversation">Jätä keskustelu</string>
+  <string name="leave_conversation">Poistu keskustelusta</string>
   <string name="conversation_action_delete_this_message">Tätä toimintoa ei voi perua.</string>
   <string name="conversation_action_history_clear">Tyhjennä historia</string>
   <string name="conversation_action_history_clear_title">Tyhjennetäänkö keskusteluhistoria?</string>
@@ -240,7 +240,7 @@
   <string name="prompt_new_password">Uusi salasana</string>
   <string name="prompt_new_password_optional">Uusi salasana (valinnainen)</string>
   <string name="prompt_new_password_repeat">Vahvista uusi salasana</string>
-  <string name="account_create_title">Luo Jami-tilin</string>
+  <string name="account_create_title">Luo Jami-tili</string>
   <string name="prompt_new_username">Anna uusi käyttäjänimi</string>
   <string name="prompt_hint_username">Käyttäjänimi</string>
   <string name="help_password_choose">Valitse muistettava, vahva salasana jota käytät Jami-tilin suojaamiseen.</string>
@@ -295,7 +295,6 @@
   <string name="invitation_message">Sinulla on %1$d pyyntöä</string>
   <string name="no_invitations">Näytettäviä kutsuja ei ole.</string>
   <string name="invitation_received_message">Kutsu vastaanotettu %s:lta.\nHyväksytkö kutsu?</string>
-  <string name="outgoing_contact_invitation_message">Tämä henkilö ei ole luettelossasi.\nLähetä yhteyspyyntö.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">EI estettyjä henkilöitä</string>
   <!--Smartlist-->
@@ -410,7 +409,7 @@
   <string name="rename_error">ei voi olla tyhjä.</string>
   <string name="swarm_description">Lisää kuvaus</string>
   <string name="tab_members">Jäsenet</string>
-  <string name="tab_files">Tiedostoja</string>
+  <string name="tab_files">Tiedostot</string>
   <string name="tab_settings">Asetukset</string>
   <string name="not_admin_toast">Ainoastaan ylläpitäjät voivat muokata ryhmän tietoja</string>
   <string name="dialog_title_contact">Muokkaa näyttönimeä</string>

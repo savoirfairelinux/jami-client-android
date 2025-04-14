@@ -239,6 +239,8 @@
   <string name="accept">Akceptuj</string>
   <string name="decline">Odrzuć</string>
   <string name="block">Blokuj</string>
+  <string name="decline_invitation">Odrzuć zaproszenie</string>
+  <string name="accept_invitation">Zaakceptuj zaproszenie</string>
   <string name="invitation_message">Masz %1$d zaproszeń do dodania kontaktu</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Brak zablokowanych kontaktów</string>

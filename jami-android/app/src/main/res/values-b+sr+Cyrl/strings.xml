@@ -252,7 +252,6 @@
   <string name="decline">Одбиј</string>
   <string name="block">Блокирај</string>
   <string name="invitation_message">Имате %1$d захтевa за контакт</string>
-  <string name="outgoing_contact_invitation_message">Ovaj kontakt nije na vašoj listi kontakata.\nPošaljite zahtev za povezivanje.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Нема блокираних контаката</string>
   <!--Smartlist-->
