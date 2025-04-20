@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f752681b_a3b6a45e",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 30
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-04-20T13:05:58Z",
+      "side": 1,
+      "message": "Should **pathname** be **path** or **full path**?\n\nUse *path* instead of *pathname*, both in general references and in syntax.\n\nUse *path* to refer to a drive and any folders below the root directory. When a path also specifies a file, use *full path*.\n\nThank you",
+      "range": {
+        "startLine": 477,
+        "startChar": 65,
+        "endLine": 477,
+        "endChar": 73
+      },
+      "revId": "c17b81da02eaa769ee0a35c1a453cd085f257c7c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
