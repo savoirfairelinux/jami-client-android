@@ -148,7 +148,7 @@
   <string name="account_rtp_min_port">Legalább</string>
   <string name="account_rtp_port_range">Hang RTP-kikötő tartomány</string>
   <!--restore/backup-->
-  <string name="account_new_device_password">Adja meg a főjelszót a fiók feloldásához</string>
+  <string name="account_new_device_password">Főjelszó megadása a fiók zárolásának feloldásához</string>
   <string name="error_password_char_count">Legalább 6 karakter</string>
   <string name="error_passwords_not_equals">A jelszavak nem egyeznek.</string>
   <string name="export_account_wait_title">Kérjük, várjon…</string>
@@ -267,11 +267,11 @@
   <string name="help_pin_info">Adja meg, ha a fiók jelszóval titkosított</string>
   <string name="account_link_device_button">Kapcsolódás</string>
   <!--Biometry-->
-  <string name="account_biometry_auth_title">Jami-fiók feloldása</string>
-  <string name="account_biometry_auth_message">Biometria a fiók feloldásához</string>
+  <string name="account_biometry_auth_title">Jami-fiók zárolásának feloldása</string>
+  <string name="account_biometry_auth_message">Fiók zárolásának feloldása biometria használata</string>
   <string name="account_biometry_enroll_title">Használja a biometrikus hitelesítést?</string>
   <string name="account_biometry_enroll_message">Ez az eszköz támogatja a biztonságos biometrikus hitelesítést.
-A biometrikus vagy eszközhitelesítés kényelmes módot kínál a Jami-fiókhoz való hozzáférés helyi feloldására. A jelszó továbbra is használható.</string>
+A biometrikus vagy eszközhitelesítés kényelmes módot kínál a Jami-fiókhoz való hozzáférés helyi zárolásának feloldására. A jelszó továbbra is használható.</string>
   <string name="account_biometry_enroll_accept">Biometrikus adatok használata</string>
   <string name="no_thanks">Köszönöm, nem</string>
   <string name="account_biometry_enroll_auth_title">Hitelesítés hozzáadása a Jami-fiókhoz</string>

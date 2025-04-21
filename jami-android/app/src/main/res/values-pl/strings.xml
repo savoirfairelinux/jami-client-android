@@ -1,10 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Zgłoś błąd</string>
+  <string name="submit_issue_action_description"><u>Stwórz nowe zgłoszenie błędu</u></string>
   <string name="section_license">Licencja</string>
+  <string name="sponsor_section">Jami to wolne oprogramowanie, stworzone i wspierane przez</string>
   <string name="copyright_section">Prawa autorskie</string>
   <string name="contribute_section">Współpracuj</string>
   <string name="version_section">Wersja</string>
+  <string name="no_browser_app_installed">Nie wykryto przeglądarki internetowej, zainstaluj, żeby zobaczyć tą stronę.</string>
   <string name="website_chooser_title">Zobacz stronę używając...</string>
   <string name="license">To oprogramowanie jest dostarczane \"tak jak jest\", bez jakiejkolwiek gwarancji. Aby uzyskać szczegółowe informacje, zobacz <u>GNU General Public License wersja 3 lub późniejsza</u></string>
   <string name="description">Jami jest wolnym oprogramowaniem do uniwersalnej komunikacji, respektującym wolności i prywatność swoich użytkowników.</string>
@@ -13,7 +17,12 @@
   <string name="call_service_description">Ta usługa jest niezbędna, aby Twoje połączenia telefoniczne działały na pierwszym planie. Działa ona tylko podczas połączeń.</string>
   <string name="data_transfer_service_description">Ta usługa jest niezbędna, aby wyświetlać utrzymujące się powiadomienia podczas transferu plików. Działa ona tylko podczas transferu plików.</string>
   <!--About dialog-->
+  <string name="thank_note">Chcemy podziękować wszystkim, którzy od wielu lat pomagają w tworzeniu tego oprogramowania.</string>
+  <string name="developers">Deweloperzy</string>
   <string name="media">Multimedia</string>
+  <string name="community_management">Zarządzanie społecznością</string>
+  <string name="special_thanks">Specjalne podziękowania dla</string>
+  <string name="end_note">To jest lista ludzi, którzy mocno się przyczynili, inwestując duże ilości czasu i wysiłku w tworzenie i ulepszanie Jami. W celu umieszczenia na liście, prosimy o kontakt z contact@jami.net.</string>
   <!--RingActivity-->
   <string name="error_no_network">Brak połączenia z siecią</string>
   <string name="error_account_offline">To konto jest offline</string>
@@ -24,11 +33,14 @@
   <string name="menu_item_accounts">Ustawienia kont</string>
   <string name="menu_item_account">Zarządzaj kontem</string>
   <string name="menu_item_settings">Ustawienia</string>
+  <string name="menu_item_app_settings">Ustawienia aplikacji</string>
   <string name="menu_item_account_settings">Ustawienia Konta</string>
+  <string name="menu_item_extension_list">Ustawienia rozszerzeń</string>
   <string name="menu_item_share">Udostępnij moje konto</string>
   <string name="menu_item_about">O Jami</string>
   <string name="video_setting_title">Ustawienia wideo</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">Wybierz numer</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Otrzymano zaproszenia</string>
@@ -64,6 +76,7 @@
   <string name="notif_channel_background_service_descr">Pozwala na odbieranie połączeń i wiadomości w dowolnym czasie.</string>
   <string name="notif_group_calls">Rozmowy</string>
   <string name="notif_inprogress_group_call">Rozmowa w toku</string>
+  <string name="notif_background_service">Jami jest aktywny w tle</string>
   <string name="notif_mark_as_read">Zaznacz jako przeczytane</string>
   <string name="notif_dismiss">Odrzuć</string>
   <string name="notif_reply">Odpowiedz</string>
@@ -90,15 +103,24 @@
   <string name="hist_in_call">Czas przychodzączego połączenia: %1$s</string>
   <string name="hist_out_call">Czas wychodzączego połączenia: %1$s</string>
   <string name="call_duration">Połączenie trwało %s</string>
+  <string name="start_error_title">Nie można uruchomić Jami</string>
   <string name="action_call_accept">Zaakceptuj rozmowę</string>
+  <string name="action_call_accept_audio">Odbierz z dźwiękiem</string>
+  <string name="action_call_accept_video">Odbierz z obrazem</string>
+  <string name="action_call_hold_accept">Odbierz z dźwiękiem przychodzącą rozmowę i wstrzymaj obecną rozmowę</string>
+  <string name="action_call_hold_accept_video">Odbierz z obrazem przychodzącą rozmowę i wstrzymaj obecną rozmowę</string>
+  <string name="action_call_end_accept"> Odbierz przychodzącą rozmowę i zakończ obecną rozmowę</string>
   <string name="action_call_decline">Odrzuć</string>
   <string name="action_call_mic_mute">Wycisz mikrofon</string>
+  <string name="action_load_extension">Załaduj rozszerzenie</string>
+  <string name="ab_action_speakerphone">Włącz głośnik</string>
   <string name="ab_action_contact_add">Dodaj do kontaków</string>
   <string name="ab_action_contact_add_question">Dodać do kontaktów?</string>
   <string name="ab_action_audio_call">Rozpocznij połączenie głosowe</string>
   <string name="ab_action_video_call">Rozpocznij rozmowę wideo</string>
   <string name="ab_action_change_screen_orientation">Obróć ekran</string>
   <string name="share_via">Wyślij przez</string>
+  <string name="write_a_message">Napisz wiadomość</string>
   <string name="scan_qr">Zeskanuj kod QR</string>
   <string name="qr_code">Kod QR</string>
   <string name="qr_code_not_contact">Nie jest to kod QR kontaktu Jami</string>
@@ -119,9 +141,11 @@
   <string name="conversation_send_video">Nagraj klip wideo</string>
   <string name="conversation_share_location">Udostępnij lokalizację</string>
   <string name="ongoing_group_call">Trwa połączenie</string>
+  <string name="started_call">Rozmowa rozpoczęta</string>
   <string name="in_reply_to">W odpowiedzi na</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Uprawnienia do aparatu</string>
+  <string name="permission_dialog_camera_message">Rozmowy wideo wymagają dostępu do aparatu. Dostęp do aparatu jest wyłączony. Włącz dostęp do aparatu w ustawieniach urządzenia, aby użyć tej funkcji.</string>
   <string name="camera_error">Wystąpił błąd podczas uruchamiania kamery.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Błąd</string>
@@ -129,11 +153,15 @@
   <string name="ringtone_error_size_too_big">Ten plik jest zbyt duży! Maksymalny rozmiar to %1$d kB.</string>
   <string name="ringtone_custom_prompt">Ustaw niestandardowy dzwonek</string>
   <string name="ringtone_custom_label">Wartość własna</string>
+  <string name="ringtone_jami_tones">Dzwonki Jami</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jami wymaga dostęp do kontaktów. Włącz dostęp do kontaktów w ustawieniach urządzenia, aby użyć tej funkcji.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jami wymaga dostęp do rejestrów połączeń. Włącz dostęp do rejestrów połączeń w ustawieniach urządzenia, aby użyć tej funkcji.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Zeskanuj kod QR konta, które chcesz dodać.</string>
   <string name="title_activity_qrcode">Udostępnij moje konto</string>
+  <string name="error_scan_no_camera_permissions">Skaner kodów QR wymaga dostępu do aparatu. Włącz dostęp w ustawieniach urządzenia, aby użyć tej funkcji.</string>
   <string name="tab_code">Mój Kod</string>
   <string name="tab_scan">Skanuj Kod</string>
   <!--Settings-->
@@ -145,6 +173,7 @@
   <string name="conversation_details">Szczegóły rozmowy</string>
   <string name="contact_details">Detale kontaktu</string>
   <string name="conversation_action_delete_this">Usuń tę rozmowę</string>
+  <string name="conversation_action_delete_this_title">Czy zmazać tą rozmowę?</string>
   <string name="leave_conversation">/Nie mówcie o tym.</string>
   <string name="conversation_action_delete_this_message">Tej czynności nie można cofnąć.</string>
   <string name="conversation_action_history_clear">Wyczyść historię</string>
@@ -153,6 +182,12 @@
   <string name="delete_contact">Usuń kontakt</string>
   <string name="conversation_action_remove_this_title">Usunąć ten kontakt?</string>
   <string name="conversation_action_remove_this_message">To usunie kontakt i całkowicie wyczyści historię rozmowy.</string>
+  <string name="conversation_action_add_this_message">Wyślij żądanie połączenia.</string>
+  <string name="swarm_group_action_leave">Opuść grupę</string>
+  <string name="swarm_group_action_leave_title">Wyjść z tej grupy?</string>
+  <string name="swarm_group_action_leave_message">Usunąć tą rozmowę z listy rozmów?</string>
+  <string name="conversation_action_copy_peer_number">Skopiuj identyfikator kontaktu</string>
+  <string name="copied_to_clipboard">%1$s skopiowane do schowka.</string>
   <string name="conversation_action_select_peer_number">Wybierz numer</string>
   <string name="conversation_action_block_this">Blokuj kontakt</string>
   <string name="conversation_action_unblock_this">Odblokuj kontakt</string>
@@ -161,6 +196,7 @@
   <string name="conversation_action_latest">Przewiń do końca konwersacji</string>
   <string name="conversation_open_file_error">Nie ma zainstalowanej aplikacji zdolnej otworzyć ten plik.</string>
   <string name="clip_contact_uri">Kontakty</string>
+  <string name="clip_message">Zawartość wiadomości</string>
   <string name="block_contact_dialog_title">Czy zablokować %1$s?</string>
   <string name="block_contact_dialog_message">%1$snie będzie w stanie się z tobą skontaktować, dopóki kontakt nie zostanie odblokowany.</string>
   <string name="block_contact_completed">Kontakt %1$s został zablokowany.</string>
@@ -180,15 +216,24 @@
   <string name="conversation_type_contact">Kontakty Jami</string>
   <string name="conversation_type_private">Prywatne</string>
   <string name="conversation_type_group">Grupa</string>
+  <string name="conversation_contact_invited">%1$s został zaproszony do dołączenia to rozmowy</string>
+  <string name="conversation_contact_added">%1$s dołączył to rozmowy</string>
+  <string name="conversation_contact_left">%1$s rozłączył się.</string>
+  <string name="conversation_contact_blocked">%1$s został zablokowany w tej rozmowie.</string>
+  <string name="conversation_contact_unblocked">%1$s został odblokowany w tej rozmowie.</string>
   <string name="conversation_search_hint">Szukaj rozmowy</string>
   <string name="audio_recorder_error">Nie znaleziono aplikacji rejestratora dźwięku.</string>
   <string name="video_recorder_error">Nie znaleziono aplikacji do nagrywania wideo.</string>
+  <string name="taking_picture_error">Wystąpił błąd podczas robienia zdjęcia.</string>
+  <string name="find_picture_error">Wystąpił błąd podczas wyszukiwania zdjęcia.</string>
   <string name="open_camera_error">Wystąpił błąd podczas otwierania kamery.</string>
   <string name="starting_recorder_error">Wystąpił błąd podczas uruchamiania rejestratora.</string>
   <string name="starting_camera_error">Wystąpił błąd podczas uruchamiania kamery.</string>
   <string name="browser_error">Przeglądarka plików nie jest dostępna na tym urządzeniu.</string>
   <string name="import_archive_error">Wystąpił błąd podczas importowania archiwum.</string>
   <string name="export_archive_error">Wystąpił błąd podczas eksportowania archiwum.</string>
+  <string name="load_ringtone_error">Wystąpił błąd podczas ładowania dzwonka.</string>
+  <string name="sharing_log_error">Wystąpił błąd podczas udostępniania logów.</string>
   <string name="no_native_crash">Brak ostatniej awarii natywnej</string>
   <string name="today">Dzisiaj</string>
   <string name="yesterday">Wczoraj</string>
@@ -204,6 +249,7 @@
   <string name="help_password_enter">Wprowadź hasło do swojego głównego konta Jami</string>
   <string name="help_server_enter">Wprowadź URL serwera zarządzania.</string>
   <string name="pin_copied">Kod PIN został skopiowany do schowka.</string>
+  <string name="copied_clipboard">Skopiowane do schowka.</string>
   <string name="wizard_next">Następne</string>
   <string name="wizard_back">Wstecz</string>
   <string name="wizard_skip">Pomiń</string>
@@ -211,13 +257,16 @@
   <string name="hist_contact_added">Kontakt dodany</string>
   <string name="hist_contact_left">Kontakt opuścił</string>
   <string name="hist_contact_blocked">Kontakt zablokowany</string>
+  <string name="hist_contact_unblocked">Kontakt odblokowany</string>
   <string name="hist_invitation_received">Otrzymano zaproszenie</string>
   <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Nazwa profilu</string>
   <string name="profile_message_warning">Profil jest udostępniany wyłącznie kontaktom</string>
+  <string name="custom_profile_message_warning">Profil dopasowany jest widoczny jedynie w tym urządzeniu</string>
   <string name="open_the_gallery">Otwórz galerię</string>
   <string name="take_a_photo">Zrób zdjęcie</string>
+  <string name="remove_photo">Usuń zdjęcie</string>
   <string name="profile_name_hint">Wprowadź swoją nazwę</string>
   <string name="registered_name">Zarejestrowana nazwa</string>
   <string name="no_registered_name">Brak zarejestrowanej nazwy</string>
@@ -232,14 +281,23 @@
   <string name="share_message">Zeskanuj ten kod używając Jami</string>
   <string name="share_message_no_account">Wybierz, proszę, konto które chcesz udostępnić.</string>
   <string name="share_your_account_information">Udostępnij informacje o moim kontakcie</string>
+  <string name="share_contact_information">Udostępnij informacje kontaktowe</string>
   <string name="share_label">Podziel się</string>
   <string name="generic_error_migration">Błąd</string>
+  <string name="generic_error_migration_message">Błąd podczas migracji konta</string>
   <string name="title_share_with">Udostępnij z...</string>
   <!--Pending invitations-->
   <string name="accept">Akceptuj</string>
   <string name="decline">Odrzuć</string>
   <string name="block">Blokuj</string>
+  <string name="decline_invitation">Odrzuć zaproszenie</string>
+  <string name="accept_invitation">Zaakceptuj zaproszenie</string>
+  <string name="accept_invitation_body">Otrzymano zaproszenie od %s.</string>
+  <string name="new_invitation_request_title">Nowe zaproszenie</string>
   <string name="invitation_message">Masz %1$d zaproszeń do dodania kontaktu</string>
+  <string name="no_invitations">Nie ma zaproszeń do wyświetlenia.</string>
+  <string name="invitation_received_message">Otrzymano zaproszenie od %s.\nAkceptować, czy odrzucić?</string>
+  <string name="outgoing_contact_invitation_message">Ten kontakt nie jest w Twojej liście kontaktów.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Brak zablokowanych kontaktów</string>
   <!--Smartlist-->
@@ -247,13 +305,31 @@
   <string name="conversation_placeholder">Nie masz jeszcze żadnych konwersacji</string>
   <string name="contact_request_sent">Wysłano zaproszenie</string>
   <string name="start_conversation">Rozpocznij rozmowę</string>
+  <string name="search_results">Wyniki wyszukiwania</string>
   <string name="tv_contact_row_header">Kontakty</string>
   <string name="gallery_error_title">Nie znaleziono aplikacji Galeria</string>
   <string name="gallery_error_message">Nie znaleziono aplikacji do otworzenia Galerii</string>
+  <string name="generic_error">Wystąpił nieznany błąd.</string>
   <!--File Transfer-->
+  <string name="invalid_file">Niepoprawny plik.</string>
+  <string name="not_able_to_write_file">Nie da się zapisać do tego pliku.</string>
   <string name="file_transfer_status_created">Uruchamianie</string>
+  <string name="file_transfer_status_unsupported">Niewspierane</string>
+  <string name="file_transfer_status_wait_peer_acceptance">Oczekiwanie na peera…</string>
+  <string name="file_transfer_status_wait_host_acceptance">Oczekiwanie na akceprację hosta…</string>
+  <string name="file_transfer_status_ongoing">Trwa</string>
+  <string name="file_transfer_status_finished">Zakończone</string>
+  <string name="file_transfer_status_closed_by_host">Zamknięte przez hosta</string>
+  <string name="file_transfer_status_closed_by_peer">Zamknięte przez peera</string>
+  <string name="file_transfer_status_invalid_pathname">Nieistniejąca ścieżka</string>
+  <string name="file_transfer_status_unjoinable_peer">Peer nieosiągalny</string>
   <string name="file_transfer_status_canceled">Anulowano</string>
+  <string name="file_transfer_status_error">Błąd podczas przesyłania pliku.</string>
+  <string name="file_transfer_status_timed_out">Upłynięcie limitu czasu</string>
+  <string name="file_saved_in">Plik zapisany w %s.</string>
+  <string name="file_saved_successfully">Plik zapisany pomyślnie.</string>
   <string name="file_download">Pobierz</string>
+  <string name="no_space_left_on_device">Brak miejsca na dysku urządzenia.</string>
   <string name="title_media_viewer">Przeglądarka mediów</string>
   <string name="menu_file_open">Otwórz plik</string>
   <string name="menu_file_download">Pobierz plik</string>
@@ -288,10 +364,16 @@
   <string name="tv_send_video">Wyślij Multimedia</string>
   <string name="tv_action_more">Więcej</string>
   <string name="conversation_input_speech_hint">Powiedz coś...</string>
+  <string name="audio_permission_denied">Brak pozwolenia dostępu do mikrofonu. Włącz w ustawieniach urządzenia, w celu użycia tej funkcji.</string>
+  <string name="camera_permission_denied">Brak pozwolenia dostępu do aparatu. Włącz w ustawieniach urządzenia, w celu użycia tej funkcji.</string>
+  <string name="speech_recogniton_unavailable">Brak funkcji rozpoznawania głosu.</string>
   <string name="audio_permission_rationale_title">Wymagane pozwolenie na odtwarzanie dźwięku</string>
+  <string name="camera_permission_rationale_title">Wymagany dostęp do aparatu</string>
   <string name="audio_permission_rationale_message">Jami wymaga uprawnień mikrofonu do korzystania z funkcji zamiany mowy na tekst i nagrywania dźwięku. Zostaniesz o to poproszony/a w następnym kroku.</string>
   <string name="camera_permission_rationale_message">Jami wymaga uprawnień kamery na nagrywanie wideo i wykonywanie połączeń wideo. Zostaniesz o to poproszony/a w następnym kroku.</string>
   <string name="unable_to_start_recorder">Nie można rozpocząć nagrywania dźwięku.</string>
+  <string name="error_sharing_file">Błąd podczas udostępniania pliku.</string>
+  <string name="error_opening_file">Błąd podczas otwierania pliku.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Zalecane</string>
   <string name="wizard_status_optional">Opcjonalne</string>
@@ -309,6 +391,7 @@
   <string name="wizard_profile_button">Zapisz Profil</string>
   <string name="wizard_profile_skip">Pomiń i zrób to później</string>
   <string name="fab_path_choose">Wybierz inny plik</string>
+  <string name="chat_extensions">Rozszerzenia czatu</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Podziel się</string>
   <string name="bottomSheet_dialpad_btn">Wykładnik</string>
@@ -320,38 +403,56 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Dźwięk</string>
   <string name="bottomSheet_raiseHand_btn">Podnieś rękę</string>
+  <string name="open_account_extension_settings">Otwórz ustawienia rozszerzeń konta</string>
+  <string name="open_general_extension_settings">Otwórz generalne ustawienia rozszerzeń</string>
   <string name="uninstall">Odinstaluj</string>
   <string name="reset">Zresetuj</string>
   <!--Swarm Details-->
   <string name="rename_btn">Potwierdź</string>
+  <string name="rename_error">nie może być pusty.</string>
   <string name="swarm_description">Dodaj opis</string>
   <string name="tab_members">Użytkownicy</string>
   <string name="tab_files">Pliki</string>
   <string name="tab_settings">Ustawienia</string>
+  <string name="not_admin_toast">Tylko administratorzy mogą edytować informację o tej grupie</string>
+  <string name="dialog_title_contact">Edytuj wyświetlane imię</string>
+  <string name="dialogtitle_title">Edytuj tytuł grupy</string>
+  <string name="dialogtitle_description">Edytuj opis grupy</string>
   <string name="dialog_hint_title">Tytuł</string>
   <string name="dialog_hint_description">Opis</string>
   <string name="picker_title">Wybierz kontakty</string>
   <string name="picker_btn">Wybierz kontakty</string>
+  <string name="no_contact_to_add">Nie masz kontaktu do dodania</string>
   <string name="bottomsheet_contact">Skontaktuj się z Jami\n%1$s</string>
   <string name="bottomsheet_remove">Usunięcie członka</string>
   <string name="error_open_no_app_found">Nie znaleziono aplikacji zdolnej do obsługi tego typu pliku %1$s</string>
   <string name="swarm_detail_no_document">Nie masz jeszcze żadnych dokumentów.</string>
+  <string name="group_admin">Administrator</string>
+  <string name="share_contact_intent_title">Dodaj ten kontakt do Jami!</string>
+  <string name="share_contact_intent_body">Możesz dodać ten kontakt  “%1$s” w Jami distributed communication platform: %2$s</string>
   <!--JamiId-->
   <string name="jami_id_copy">Skopiuj Jamild</string>
   <string name="jami_id_share">Udostępnij Jamild</string>
   <string name="jami_id_validate">Zarejestruj nazwę użytkownika</string>
   <string name="jami_id_available">Nazwa użytkownika jest dostępna.</string>
+  <string name="jami_id_not_available">Nazwa użytkownika jest niedostępna.</string>
   <string name="jami_id_info">• maksymalnie 32 znaki\n• Następujące specjalne znaki są dozwolone: myślnik (-), podkreślnik (_)</string>
+  <string name="jami_id_looking_for_availability">Sprawdzanie dostępności nazwy użytkownika...</string>
   <string name="jami_id_choose_username">Wybierz nazwę użytkownika</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Witaj w Jami</string>
   <string name="welcome_jami_description">Udostępnij swój identyfikator Jami aby ułatwić skontaktowanie się z Tobą!</string>
   <!--Conversation details-->
   <string name="details">Dane</string>
+  <string name="secure_p2p_connection">Bezpieczne połączenie peer-to-peer</string>
   <string name="swarm_type">Typ konwersacji</string>
   <string name="Private">Prywatne</string>
-  <string name="mute_conversation">Nie mówcie nic.</string>
+  <string name="swarm_id">ID chmury</string>
+  <string name="show_qr_code">Pokaż kod QR</string>
+  <string name="show_certificate">Pokaż certyfikat</string>
+  <string name="mute_conversation">Wycisz rozmowę</string>
   <!--Donation-->
+  <string name="donation_card_description">Jeśli lubisz użytkować Jami i wierzysz w naszą misję, czy rozważysz wykonanie dotacji?</string>
   <string name="donation_card_not_now">Nie w tej chwili</string>
   <string name="donation_donate">Przekaż darowiznę</string>
   <string name="donation_setting_title">Przypomnienie o darowiźnie </string>
@@ -364,9 +465,45 @@
   <string name="install_error">Wystąpił błąd podczas importowania rozszerzenia.</string>
   <string name="export_side_main_title">Wyeksportuj konto</string>
   <string name="import_side_main_title">Importuj konto</string>
+  <string name="link_device_dialog_exit_title">Czy chcesz skończyć?</string>
+  <string name="link_device_dialog_exit_export_body_1">Anulowanie eksportu konta.</string>
+  <string name="link_device_dialog_exit_export_body_2">W miarę możliwości, anuluj eksportowanie konta.</string>
+  <string name="link_device_dialog_exit_import_body_1">Zatrzymanie spowoduje anulowanie importu konta.</string>
+  <string name="link_device_dialog_exit_import_body_2">Zatrzymanie spowoduje anulowanie importu konta. </string>
+  <string name="export_side_step1_advice_qr">W nowym urządzeniu, zacznij nowe konto.\nWybierz Konto &amp;gt; Dodaj konto &amp;gt, Połącz z innego urządzenia\n Kiedy się wyświetli, zeskanuj kod QR</string>
+  <string name="export_side_step1_switch_to_code">Albo kliknij tu, żeby wprowadzić kod autentykacyjny</string>
+  <string name="export_side_step1_switch_to_qr"> Albo kliknij tu, żeby zeskanować kod QR</string>
+  <string name="export_side_step1_error_malformed">Identyfikator nowego urządzenia nie jest rozpoznany.\nProszę postąpić zgodnie z instrukją powyżej.</string>
   <string name="export_side_step1_code_connect">Połącz</string>
+  <string name="export_side_step2_advice">Nowe urządzenie jest zlokalizowane tutaj. Czy to Ty?\nPotwierdź aby kontynuować eksport konta.</string>
+  <string name="export_side_step2_advice_ip_only">Nowe urządzenie jest zlokalizowane pod poniższym adresem. Czy to Ty?\nPotwierdź aby kontynuować eksport konta.</string>
+  <string name="export_side_step2_ip_only">Nowy adres IP urządzenia: %1$s</string>
   <string name="export_side_step2_cancel">Anuluj</string>
   <string name="export_side_step2_confirm">Potwierdź</string>
+  <string name="export_side_step2_password">Konto jest zabezpieczone hasłem.\nWpisz hasło w nowym urządzeniu, aby kontynuować.</string>
+  <string name="export_side_step3_body_loading">Trwa eksportowanie konta do nowego urządzenia.\nPoszę czekać...</string>
+  <string name="export_side_step3_body_done">Import konta do nowego urządzenia zakończony sukcesem.</string>
+  <string name="export_side_step3_exit">Zakończ</string>
+  <string name="import_side_step1_advice_qr">Rozpocznij eksport konta w urządzeniu źródłowym\n<b>Wybierz Konto &gt; Ustawienia konta &gt; Połącz nowe urządzenie</b>\nZeskanuj poniższy kod QR.</string>
+  <string name="import_side_step1_advice_code">Rozpocznij eksport konta na urządzeniu źródłowym.\n<b>Wybierz Konto &gt; Ustawienia konta &gt; Połącz nowe urządzenie</b>\nWpisz ponniższy kod.</string>
   <string name="import_side_step1_share">Podziel się</string>
+  <string name="import_side_step1_switch_to_code">Lub kliknij tu, aby wyświetlić kod autoryzacyjny</string>
+  <string name="import_side_step1_switch_to_qr">Lub kliknij tu, aby wyświetlić kod QR</string>
+  <string name="import_side_step1_connecting">Łączenie z urządzeniem źródłowym...</string>
+  <string name="import_side_step1_preparing_device">Przygotowanie urządzenia…</string>
+  <string name="import_side_step2_password_prompt">Konto jest zabezpieczone hasłem.\nWpisz hasło by kontynuować.</string>
   <string name="import_side_step2_password_import">Importuj</string>
+  <string name="import_side_step2_password_unlocking">Odblokowanie konta…</string>
+  <string name="import_side_step2_action_required">Wymagane działanie.\nProszę odblokować konto w urządzeniu źródłowym.</string>
+  <string name="import_side_step3_body_loading">Importowanie konta do nowego urządzenia.\nProszę czekać.</string>
+  <string name="import_side_step3_body_done">Wszystkie działania zakończone!\nImport konta do nowego urządzenia zakończony sukcesem!</string>
+  <string name="import_side_step3_go_to_account">Idź do mojego nowego konta</string>
+  <string name="import_side_step3_exit">Zakończ</string>
+  <string name="link_device_share_title">Udostępnij kod autentykacyjny Jami</string>
+  <string name="link_device_error_network">Wystąpił błąd połączenia z siecią!\nProszę sprawdzić połączenie.</string>
+  <string name="link_device_error_authentication">Błąd uwierzytelnienia!\nProszę wpisać poprawne hasło.</string>
+  <string name="link_device_error_timeout">Operacja zakończona niepowodzeniem z powodu przekroczenia limitu czasu.</string>
+  <string name="link_device_error_canceled">Operacja anulowana.</string>
+  <string name="link_device_error_unknown">Wystąpił błąd.</string>
+  <string name="link_device_error_bad_password">Sprawdź poprawność hasła i spróbuj ponownie.</string>
 </resources>

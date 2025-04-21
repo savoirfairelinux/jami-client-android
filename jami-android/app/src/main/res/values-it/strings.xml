@@ -296,7 +296,6 @@
   <string name="invitation_message">Hai %1$d richieste di contatto</string>
   <string name="no_invitations">Non ci sono inviti da visualizzare.</string>
   <string name="invitation_received_message">Invito ricevuto da %s.\nAccettare o rifiutare l\'invito?</string>
-  <string name="outgoing_contact_invitation_message">Questo contatto non è presente nell\'elenco dei contatti.\nInvia una richiesta di connessione.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Nessun contatto bloccato</string>
   <!--Smartlist-->

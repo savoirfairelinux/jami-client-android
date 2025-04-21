@@ -295,7 +295,7 @@
   <string name="invitation_message">%1$d kapcsolatfelvételi kérelme van</string>
   <string name="no_invitations">Nincsenek megjelenítendő meghívók.</string>
   <string name="invitation_received_message">Meghívó érkezett a következőtől: %s.\nA meghívás elfogadása vagy visszautasítása.</string>
-  <string name="outgoing_contact_invitation_message">Ez a kapcsolattartó nem szerepel a kapcsolattartólistában.\nKapcsolatfelvételi kérelem küldése.</string>
+  <string name="outgoing_contact_invitation_message">Ez a kapcsolattartó nem szerepel a kapcsolattartólistáján.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Nincsenek letiltott kapcsolattartók</string>
   <!--Smartlist-->
@@ -468,17 +468,43 @@
   <string name="link_device_dialog_exit_export_body_2">A leállítás megszakítja a fiók exportálási műveletét.</string>
   <string name="link_device_dialog_exit_import_body_1">A leállítás megszakítja a fiók importálási műveletét.</string>
   <string name="link_device_dialog_exit_import_body_2">A leállítás megszakítja a fiók importálási műveletét.</string>
+  <string name="export_side_step1_advice_qr">Az új eszközön indítsa el a fiók importálásának műveletét.\nJelölje ki a <b>Fiók → Fiók hozzáadása → Fiók létrehozása más eszközről</b>\nHa készen áll, olvassa be a QR-kódot.</string>
+  <string name="export_side_step1_switch_to_code">Vagy kattintson ide a hitelesítési kód megadásához</string>
+  <string name="export_side_step1_switch_to_qr">Vagy kattintson ide a QR-kód beolvasásához</string>
   <string name="export_side_step1_error_malformed">Ismeretlen új eszközazonosító. Kérjük, kövesse a fenti utasításokat.</string>
   <string name="export_side_step1_code_connect">Kapcsolódás</string>
+  <string name="export_side_step2_advice">Új eszköz található a következő címen. Ön az?
+A fiókexportálási művelet folytatásához kattintson a Megerősítés gombra.</string>
+  <string name="export_side_step2_advice_ip_only">Új eszköz található a következő címen. Ön az?
+A fiókexportálási művelet folytatásához kattintson a Megerősítés gombra.</string>
   <string name="export_side_step2_ip_only">Új eszköz IP-címe: %1$s</string>
   <string name="export_side_step2_cancel">Mégse</string>
   <string name="export_side_step2_confirm">Megerősítés</string>
+  <string name="export_side_step2_password">A fiók jelszóval védett. A folytatáshoz hitelesítsen az új eszközön.</string>
+  <string name="export_side_step3_body_loading">A fiók exportálása az új eszközre folyamatban van.\nKérjük, várjon…</string>
   <string name="export_side_step3_body_done">A fiók importálása sikerült az új eszközön.</string>
+  <string name="export_side_step3_exit">Befejezés</string>
+  <string name="import_side_step1_advice_qr">A forráseszközön indítsa el a fiók exportálásának műveletét.\nJelölje ki a <b>Fiók → Fiókbeállítások → Új eszköz összekapcsolása</b>\nHa készen áll, olvassa be a következő QR-kódot.</string>
+  <string name="import_side_step1_advice_code">A forráseszközön indítsa el a fiók exportálásának műveletét.\nJelölje ki a <b>Fiók → Fiókbeállítások → Új eszköz összekapcsolása</b>\nHa készen áll, írja be a következő kódot.</string>
   <string name="import_side_step1_share">Megosztás </string>
+  <string name="import_side_step1_switch_to_code">Vagy kattintson ide a hitelesítési kód megjelenítéséhez</string>
+  <string name="import_side_step1_switch_to_qr">Vagy kattintson ide a QR-kód megjelenítéséhez</string>
+  <string name="import_side_step1_connecting">Kapcsolódás a forráseszközhöz…</string>
+  <string name="import_side_step1_preparing_device">Eszköz előkészítése…</string>
+  <string name="import_side_step2_password_prompt">A fiók jelszóval védett.\nA folytatáshoz oldja fel a fiók zárolását.</string>
   <string name="import_side_step2_password_import">Importálás</string>
+  <string name="import_side_step2_password_unlocking">Fiók zárolásának feloldása…</string>
+  <string name="import_side_step2_action_required">Beavatkozás szükséges.
+Kérjük, erősítse meg a fiókot a forráseszközön.</string>
+  <string name="import_side_step3_body_loading">A fiók importálása folyamatban van az új eszközön.\nKérjük, várjon…</string>
   <string name="import_side_step3_body_done">A telepítés sikeresen befejeződött.</string>
+  <string name="import_side_step3_go_to_account">Ugrás az új fiókra</string>
+  <string name="import_side_step3_exit">Befejezés</string>
+  <string name="link_device_share_title">Jami hitelesítési kód megosztása</string>
   <string name="link_device_error_network">Hálózati hiba történt a fiók összekapcsolása közben. Ellenőrizze a kapcsolatot, majd próbálkozzon újra.</string>
+  <string name="link_device_error_authentication">Hitelesítési hiba történt az eszköz összekapcsolása közben. Kérjük, ellenőrizze jelszavát, és próbálkozzon újra.</string>
   <string name="link_device_error_timeout">Művelet időtúllépése.</string>
   <string name="link_device_error_canceled">A műveletet megszakította a felhasználó.</string>
+  <string name="link_device_error_unknown">Hiba történt.</string>
   <string name="link_device_error_bad_password">Kérjük, ellenőrizze a hitelesítő adatokat, és próbálkozzon újra.</string>
 </resources>

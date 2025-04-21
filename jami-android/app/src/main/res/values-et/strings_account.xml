@@ -58,7 +58,7 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_basic_category">Põhiseadistused</string>
   <string name="account_alias_label">Kuvatav nimi</string>
   <string name="account_hostname_label">Serveri nimi</string>
-  <string name="account_bootstrap_label">Laadi mällu</string>
+  <string name="account_bootstrap_label"> Algata esmane tuvastus</string>
   <string name="account_name_server_label">Nimeserver</string>
   <string name="account_username_label">Kasutajanimi</string>
   <string name="account_password_label">Salasõna</string>
@@ -111,7 +111,7 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_connectivity_label">Võrdõigusvõrgu ühenduvus</string>
   <string name="disabled">Väljalülitatud</string>
   <string name="enabled">Sisselülitatud</string>
-  <string name="default_value">Vaikesäte</string>
+  <string name="default_value">Vaikimisi</string>
   <string name="account_proxy_label">DHT proksiserver</string>
   <string name="account_proxy_enable_label">Kasuta DHT proksiserverit</string>
   <string name="account_proxy_list_enable_label">Kasuta DHT proksiserverite loendit</string>

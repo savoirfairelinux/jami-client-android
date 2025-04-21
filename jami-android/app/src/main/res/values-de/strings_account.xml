@@ -98,8 +98,8 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="account_accept_files">Erlaube automatisches Empfangen von Dateien</string>
   <string name="account_conversation_settings_title">Unterhaltungseinstellungen</string>
   <string name="account_accept_files_max_size">Maximale Dateigröße für den automatischen Empfang</string>
-  <string name="account_accept_files_never">Niemals automatisch empfangen</string>
-  <string name="account_accept_files_always">Immer automatisch empfangen</string>
+  <string name="account_accept_files_never">Niemals automatisch annehmen</string>
+  <string name="account_accept_files_always">Immer automatisch annehmen</string>
   <string name="size_mb">%1$d MB</string>
   <string name="account_turn_enable_label">TURN benutzen</string>
   <string name="account_turn_server_label">TURN-Server</string>

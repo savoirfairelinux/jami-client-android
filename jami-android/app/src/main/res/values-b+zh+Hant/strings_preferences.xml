@@ -1,9 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="pref_category_contacts">联系人</string>
   <string name="pref_category_appearance">外观</string>
   <string name="pref_category_connectivity">连接性</string>
   <string name="pref_category_extensions">扩展</string>
   <string name="pref_category_video_settings">高级视频设置</string>
+  <string name="pref_clearHistory_title">清除记录</string>
   <string name="pref_clearHistory_summary">清除所有对话的历史记录。此操作无法撤消。</string>
   <string name="pref_connectivity_title">连接模式</string>
   <string name="pref_connectivity_summary">选择如何将Jami连接到分布式系统以接收呼叫和消息。</string>

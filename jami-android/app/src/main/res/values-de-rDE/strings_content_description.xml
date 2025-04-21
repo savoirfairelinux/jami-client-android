@@ -3,7 +3,14 @@
   <!--Strings for xml content description of images-->
   <string name="contact_quick_call_description">Schnellanruf</string>
   <string name="contact_picture_description">Kontaktbild</string>
+  <string name="dial_numeric_pad">Nummerische Wähltastatur</string>
+  <string name="contact_unblock">Blockierung aufheben</string>
   <string name="video_extensions">Videoerweiterungen</string>
+  <string name="file_download_button">Herunterladen</string>
+  <string name="control_play">Wiedergeben</string>
+  <string name="control_replay">Erneut wiedergeben</string>
+  <string name="control_pause">Pause</string>
+  <string name="searchbar_navigation_account">Konto auswählen</string>
   <string name="add_conversation_member">Konversationsmitglied hinzufügen</string>
   <string name="qrcode_to_scan">QR-Code zum Scannen</string>
 </resources>

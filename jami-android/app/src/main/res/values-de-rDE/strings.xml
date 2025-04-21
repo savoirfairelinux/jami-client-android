@@ -3,10 +3,19 @@
   <!--About-->
   <string name="submit_issue_title">Problem übermitteln</string>
   <string name="submit_issue_action_description"><u>Neues Problem erstellen</u></string>
+  <string name="section_license">Lizenz</string>
   <string name="sponsor_section">Jami ist eine kostenlose Software, die entwickelt und unterstützt wird von</string>
+  <string name="copyright_section">Urheberrecht</string>
+  <string name="contribute_section">Beitragen</string>
+  <string name="version_section">Version</string>
   <string name="no_browser_app_installed">Keine Webbrowser-App gefunden. Installieren Sie eine, um diese Seite anzuzeigen.</string>
   <string name="website_chooser_title">Darstellung der Homepage mit...</string>
   <string name="license">Diese Software wird \"wie sie ist\" ohne Gewährleistung irgendwelcher Art zur Verfügung gestellt. Details finden Sie unter <u>GNU General Public License Version 3 oder später</u></string>
+  <string name="description">Jami ist eine freie Software für universelle Kommunikation und respektiert die Freiheiten und Privatsphäre der Benutzer.</string>
+  <string name="credits">Mitwirkende</string>
+  <string name="pip_title">Jami-Konferenz</string>
+  <string name="call_service_description">Dieser Dienst ist notwendig, um Anrufe im Vordergrund zu halten. Er läuft nur während eines Anrufs.</string>
+  <string name="data_transfer_service_description">Dieser Dienst ist erforderlich, um dauerhafte Benachrichtigungen während der Dateiübertragung anzuzeigen. Er wird nur während der Dateiübertragung ausgeführt.</string>
   <!--About dialog-->
   <string name="thank_note">Wir möchten uns bei unseren Mitwirkenden bedanken, deren langjähriger Einsatz diese Software zu dem gemacht hat, was sie ist.</string>
   <string name="developers">Entwickler</string>
@@ -15,21 +24,66 @@
   <string name="special_thanks">Besonderer Dank geht an</string>
   <string name="end_note">Dies ist eine Liste von Personen, die viel Zeit und nützliche Ergebnisse in Jami investiert haben. Alle Mitwirkenden, die zur Liste hinzugefügt werden möchten, sollten sich unter contact@jami.net an das Jami-Team wenden.</string>
   <!--RingActivity-->
+  <string name="error_no_network">Keine Netzwerkverbindung</string>
+  <string name="error_account_offline">Das Konto ist offline</string>
   <!--AB menus-->
+  <string name="ab_action_chat">Textnachrichten</string>
   <!--Sections-->
+  <string name="menu_item_contact_request">Kontaktanfragen</string>
+  <string name="menu_item_accounts">Konten verwalten</string>
+  <string name="menu_item_account">Konto verwalten</string>
+  <string name="menu_item_settings">Einstellungen</string>
   <string name="menu_item_app_settings">App-Einstellungen</string>
+  <string name="menu_item_account_settings">Konto-Einstellungen</string>
   <string name="menu_item_extension_list">Erweiterungseinstellungen</string>
+  <string name="menu_item_share">Mein Konto teilen</string>
+  <string name="menu_item_about">Über Jami</string>
+  <string name="video_setting_title">Video-Einstellungen</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Nummer wählen</string>
   <!--History Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">Erhaltene Einladungen</string>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Nach Namen oder Unterhaltung suchen…</string>
+  <string name="choose_number">Nummer auswählen</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Verpasster eingehender Anruf</string>
+  <string name="notif_missed_outgoing_call">Verpasster ausgehender Anruf</string>
+  <string name="notif_incoming_call">Eingehender Anruf</string>
+  <string name="notif_outgoing_call">Ausgehende Anruf</string>
+  <string name="notif_current_call">Laufender Anruf</string>
   <string name="notif_channel_call_in_progress">Anruf läuft</string>
+  <string name="notif_channel_calls">Anrufe</string>
+  <string name="notif_channel_missed_calls">Verpasste Anrufe</string>
+  <string name="notif_channel_incoming_calls">Eingehende Anrufe</string>
+  <string name="notif_channel_messages">Nachrichten</string>
+  <string name="notif_channel_requests">Anfragen</string>
+  <string name="notif_channel_file_transfer">Dateiübertragung</string>
+  <string name="notif_channel_sync">Datensynchronisation</string>
+  <string name="notif_channel_background_service">Hintergrunddienst</string>
+  <string name="notif_channel_background_service_descr">Ermöglicht den Empfang von Anrufen und Nachrichten zu jeder Zeit.</string>
+  <string name="notif_group_calls">Anrufe</string>
+  <string name="notif_inprogress_group_call">Anruf läuft</string>
   <string name="notif_background_service">Jami läuft derzeit im Hintergrund</string>
+  <string name="notif_mark_as_read">Als gelesen markieren</string>
+  <string name="notif_dismiss">Abweisen</string>
+  <string name="notif_reply">Antworten</string>
+  <string name="notif_sync_title">Gleiche Daten ab ...</string>
+  <string name="notif_location_action_stop">Standort teilen beenden</string>
+  <string name="location_share_action_start">Teilen starten</string>
+  <string name="location_share_action_stop">Teilen beenden</string>
+  <string name="location_share_about_title">Karteninformation</string>
   <!--Call Fragment-->
+  <string name="you_txt_prefix">Du:</string>
+  <string name="action_call_hangup">Auflegen</string>
+  <string name="action_call_maximize">Maximieren</string>
+  <string name="action_call_minimize">Reduzieren</string>
+  <string name="action_call_mute">Stummschalten</string>
+  <string name="action_call_unmute">Stummschaltung aufheben</string>
+  <string name="ongoing_call">Laufender Anruf</string>
   <string name="call_duration">Dauerte %s</string>
   <string name="start_error_title">Jami kann nicht gestartet werden</string>
   <string name="action_call_accept">Anruf annehmen</string>
@@ -38,13 +92,32 @@
   <string name="action_call_hold_accept">Eingehende Anrufe nur mit Audio annehmen und aktuellen Anruf halten</string>
   <string name="action_call_hold_accept_video">Eingehenden Anrufen mit Video annehmen und aktuellen Anruf halten</string>
   <string name="action_call_end_accept">Eingehenden Anruf annehmen und aktuellen Anruf beenden</string>
+  <string name="action_call_decline">Ablehnen</string>
+  <string name="action_call_mic_mute">Mikrofon stummschalten</string>
   <string name="action_load_extension">Erweiterung laden</string>
   <string name="ab_action_speakerphone">Lautsprecher einschalten</string>
+  <string name="ab_action_contact_add">Zu Kontakten hinzufügen</string>
+  <string name="ab_action_contact_add_question">Zu Kontakten hinzufügen?</string>
   <string name="ab_action_audio_call">Einen Audioanruf beginnen</string>
   <string name="ab_action_video_call">Video-Anruf beginnen</string>
+  <string name="ab_action_change_screen_orientation">Bildschirmausrichtung ändern</string>
+  <string name="share_via">Teilen über</string>
   <string name="write_a_message">Nachricht schreiben</string>
+  <string name="scan_qr">QR-Code scannen</string>
+  <string name="qr_code">QR-Code</string>
+  <string name="qr_code_not_contact">Kein Jami-Kontakt-QR-Code</string>
   <string name="new_group">Neue Gruppe erstellen</string>
+  <string name="ab_action_flipcamera">Kamera wechseln</string>
+  <string name="ab_action_hidepreview">Vorschau ausblenden</string>
   <!--Text messages-->
+  <string name="send_message">Nachricht senden</string>
+  <string name="message_sending">Nachricht wird gesendet…</string>
+  <string name="message_failed">Fehlgeschlagen</string>
+  <string name="time_just_now">Gerade eben</string>
+  <string name="send_file">Datei senden</string>
+  <string name="select_media">Galerie öffnen</string>
+  <string name="hist_file_sent">Datei gesendet</string>
+  <string name="hist_file_received">Datei empfangen</string>
   <string name="ongoing_group_call">Aktiver Anruf</string>
   <string name="started_call">Anruf gestartet</string>
   <!--MediaPreferenceFragment-->
@@ -56,6 +129,7 @@
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami benötigt die Berechtigung „Anrufprotokoll schreiben“. Aktivieren Sie diese in den Geräteeinstellungen, um diese Funktion zu nutzen.</string>
   <!--QRCode Scan-->
+  <string name="title_activity_qrcode">Mein Konto teilen</string>
   <string name="error_scan_no_camera_permissions">Für den QR-Scanner ist eine Kameraberechtigung erforderlich. Die Kameraberechtigung ist deaktiviert. Aktivieren Sie diese in den Geräteeinstellungen, um diese Funktion zu nutzen.</string>
   <!--Settings-->
   <!--Conversation-->
@@ -71,6 +145,7 @@
   <string name="swarm_group_action_leave_message">Dadurch wird die Unterhaltung aus Ihrer Unterhaltungsliste entfernt</string>
   <string name="conversation_action_copy_peer_number">Kontakt-ID kopieren</string>
   <string name="copied_to_clipboard">%1$sin die Zwischenablage kopiert.</string>
+  <string name="conversation_action_incoming_call">Eingehender Anruf</string>
   <string name="clip_message">Nachrichteninhalt</string>
   <string name="conversation_message_deleted">%s hat eine Nachricht gelöscht</string>
   <string name="conversation_type_private">Privat</string>
@@ -110,7 +185,7 @@
   <string name="invitation_message">Du hast %1$d Kontaktanfragen</string>
   <string name="no_invitations">Es sind keine Einladungen zum Anzeigen vorhanden.</string>
   <string name="invitation_received_message">Einladung erhalten von %s.\nEinladung annehmen oder ablehnen?</string>
-  <string name="outgoing_contact_invitation_message">Dieser Kontakt ist nicht in Ihrer Kontaktliste.\nSenden Sie eine Verbindungsanfrage.</string>
+  <string name="outgoing_contact_invitation_message">Dieser Kontakt ist nicht in Ihrer Kontaktliste.</string>
   <!--Blacklist-->
   <!--Smartlist-->
   <string name="search_results">Suchergebnisse</string>
@@ -133,9 +208,13 @@
   <string name="file_transfer_status_timed_out">Zeitüberschreitung</string>
   <string name="file_saved_in">Datei gespeichert in %s.</string>
   <string name="file_saved_successfully">Datei erfolgreich gespeichert.</string>
+  <string name="file_download">Herunterladen</string>
   <string name="no_space_left_on_device">Auf dem Gerät ist kein Speicherplatz verfügbar.</string>
+  <string name="menu_message_reply">Antworten</string>
   <!--Bottom Navigation-->
   <!--TV-->
+  <string name="tv_audio_play">Wiedergeben</string>
+  <string name="tv_audio_pause">Pause</string>
   <string name="audio_permission_denied">Die Mikrofonberechtigung ist deaktiviert. Aktivieren Sie diese in den Geräteeinstellungen, um diese Funktion zu nutzen.</string>
   <string name="camera_permission_denied">Die Kameraberechtigung ist deaktiviert. Aktivieren Sie diese in den Geräteeinstellungen, um diese Funktion zu nutzen.</string>
   <string name="speech_recogniton_unavailable">Die Spracherkennung ist nicht verfügbar.</string>

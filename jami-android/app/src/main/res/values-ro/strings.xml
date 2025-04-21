@@ -296,7 +296,7 @@
   <string name="invitation_message">Ai %1$d cereri de contact</string>
   <string name="no_invitations">Nu există invitații.</string>
   <string name="invitation_received_message">Invitație primită de la %s.\nAccepți sau refuzi invitația?</string>
-  <string name="outgoing_contact_invitation_message">Acest contact nu se află în lista de contacte.\nTrimite o cerere de conectare.</string>
+  <string name="outgoing_contact_invitation_message">Acest contact nu se află în lista de contacte.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Niciun contact blocat</string>
   <!--Smartlist-->

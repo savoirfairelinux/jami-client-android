@@ -294,7 +294,6 @@
   <string name="invitation_message">Tem %1$d pedidos de contacto</string>
   <string name="no_invitations">Não há convites a apresentar.</string>
   <string name="invitation_received_message">Convite recebido de %s.\nAceitar ou recusar o convite?</string>
-  <string name="outgoing_contact_invitation_message">Este contacto não se encontra na sua lista de contactos.\nEnvie um pedido para se conectarem</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Sem contactos bloqueados</string>
   <!--Smartlist-->

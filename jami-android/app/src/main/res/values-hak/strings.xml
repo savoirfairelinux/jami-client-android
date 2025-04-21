@@ -17,8 +17,11 @@
   <!--RingActivity-->
   <!--AB menus-->
   <!--Sections-->
+  <string name="menu_item_settings">设置</string>
   <string name="menu_item_app_settings">APP设置</string>
+  <string name="menu_item_account_settings">账户设置</string>
   <string name="menu_item_extension_list">扩展设置</string>
+  <string name="menu_item_share">分享我的账户</string>
   <string name="video_setting_title">视频设置</string>
   <!--Dialing Fragment-->
   <string name="dial_number">拨号</string>
@@ -30,11 +33,26 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">未接来电</string>
+  <string name="notif_missed_outgoing_call">呼叫失败</string>
+  <string name="notif_incoming_call_title">来自 %1$s 的呼叫</string>
+  <string name="notif_incoming_call">来电</string>
+  <string name="notif_outgoing_call_title">%1$s的去电</string>
+  <string name="notif_outgoing_call">去电</string>
+  <string name="notif_current_call">正在通话</string>
   <string name="notif_channel_call_in_progress">通话中</string>
+  <string name="notif_channel_calls">通话</string>
+  <string name="notif_channel_sync">数据同步</string>
+  <string name="notif_group_calls">通话</string>
   <string name="notif_inprogress_group_call">通话中</string>
   <string name="notif_background_service">Jami 正在后台运行</string>
+  <string name="notif_mark_as_read">标记为已读</string>
+  <string name="notif_sync_title">正在同步数据……</string>
   <!--Call Fragment-->
   <string name="action_call_minimize">缩小</string>
+  <string name="ongoing_call">正在通话</string>
+  <string name="hist_in_call">%1$s 的来电</string>
+  <string name="hist_out_call">%1$s 的去电</string>
   <string name="call_duration">最后的%s</string>
   <string name="start_error_title">无法启动Jami</string>
   <string name="action_call_accept">接听通话</string>
@@ -45,24 +63,32 @@
   <string name="action_call_end_accept">接听来电并结束当前通话</string>
   <string name="action_load_extension">加载扩展</string>
   <string name="ab_action_speakerphone">打开扬声器</string>
+  <string name="ab_action_contact_add">加到联系人</string>
   <string name="ab_action_audio_call">发起语音通话</string>
   <string name="ab_action_video_call">開始視訊通話</string>
+  <string name="ab_action_change_screen_orientation">更改屏幕方向</string>
   <string name="write_a_message">写消息</string>
   <string name="qr_code_not_contact">不是Jami的二维码</string>
   <string name="new_group">建立新群組</string>
+  <string name="ab_action_flipcamera">翻转相机</string>
   <!--Text messages-->
+  <string name="select_media">打开相册</string>
   <string name="ongoing_group_call">尚在進行中的通話</string>
   <string name="started_call">通话已开始</string>
   <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">相机权限</string>
   <string name="permission_dialog_camera_message">视频会话需要使用摄像头，请设置相应权限。</string>
   <string name="camera_error">启动相机时出错</string>
   <!--Ringtone activity-->
+  <string name="ringtone_error_format_not_supported">不支持此格式。</string>
+  <string name="ringtone_custom_label">自定义</string>
   <string name="ringtone_jami_tones">Jami铃声</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami需要“读取联系人”权限才能启用此功能。请批准。</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami需要“写入通话记录”权限才能启用此功能。请批准。</string>
   <!--QRCode Scan-->
+  <string name="title_activity_qrcode">分享我的账户</string>
   <string name="error_scan_no_camera_permissions">二维码扫描仪需要相机许可。相机权限已禁用。在设备设置中启用它以使用此功能。</string>
   <!--Settings-->
   <!--Conversation-->
@@ -72,6 +98,7 @@
   <string name="conversation_action_delete_this_title">删除此对话？</string>
   <string name="leave_conversation">离开谈话</string>
   <string name="conversation_action_delete_this_message">此操作不可撤销。</string>
+  <string name="conversation_action_history_clear">清除记录</string>
   <string name="conversation_action_history_clear_title">清除对话历史吗？</string>
   <string name="conversation_action_history_clear_message">这将会清除所有对话记录。</string>
   <string name="delete_contact">刪除聯絡人</string>
@@ -82,9 +109,13 @@
   <string name="swarm_group_action_leave_message">这将从您的对话列表中删除该对话</string>
   <string name="conversation_action_copy_peer_number">复制联系人号码</string>
   <string name="copied_to_clipboard">%1$s已复制到剪贴板。</string>
+  <string name="conversation_action_block_this">屏蔽联系人</string>
   <string name="conversation_action_go_to_call">返回通话</string>
   <string name="conversation_action_incoming_call">来电</string>
+  <string name="conversation_open_file_error">没有适合打开这种文件类型的应用。</string>
   <string name="clip_message">消息内容</string>
+  <string name="conversation_syncing">正在从对等端下载对话</string>
+  <string name="conversation_blocked">此联系人已屏蔽。</string>
   <string name="conversation_ended">对话中止</string>
   <string name="conversation_message_deleted">%s删除了一条消息</string>
   <string name="conversation_reply_you">您</string>
@@ -114,19 +145,25 @@
   <string name="today">今天</string>
   <string name="yesterday">昨天</string>
   <!--Contacts-->
+  <string name="prompt_new_password">新密码</string>
   <string name="prompt_new_password_repeat">确认新密码</string>
   <string name="account_create_title">建立 Jami 帳號</string>
+  <string name="prompt_new_username">输入新用户名</string>
   <string name="pin_copied">PIN码复制到剪贴板</string>
   <string name="copied_clipboard">已复制到剪贴板。</string>
+  <string name="wizard_back">上一步</string>
   <string name="hist_contact_blocked">联系人被封锁</string>
   <string name="hist_contact_unblocked">联系人解除封锁</string>
   <!--Account summary-->
+  <string name="profile">账户</string>
   <string name="profile_name">個人檔案名稱</string>
   <string name="profile_message_warning">资料仅会与联系人分享</string>
   <string name="custom_profile_message_warning">自定义配置文件只对该设备上的账户可见</string>
+  <string name="open_the_gallery">打开相册</string>
   <string name="take_a_photo">照相</string>
   <string name="remove_photo">删除照片</string>
   <string name="identifier">識別碼</string>
+  <string name="account">账户</string>
   <string name="devices_header">裝置</string>
   <!--Share fragment-->
   <string name="share_contact_information">分享联系人</string>
@@ -140,11 +177,12 @@
   <string name="invitation_message">您有 %1$d 个联系人请求</string>
   <string name="no_invitations">没有要显示的邀请。</string>
   <string name="invitation_received_message">收到%s的邀请。\n接受还是拒绝邀请？</string>
-  <string name="outgoing_contact_invitation_message">此联系人不在您的联系人列表中。\n 发送连接请求。</string>
+  <string name="outgoing_contact_invitation_message">此联系人不在您的联系人列表中。</string>
   <!--Blacklist-->
   <!--Smartlist-->
   <string name="start_conversation">发起对话</string>
   <string name="search_results">搜索结果</string>
+  <string name="tv_contact_row_header">联系人</string>
   <string name="generic_error">发生未知错误。</string>
   <!--File Transfer-->
   <string name="invalid_file">无效文件。</string>
@@ -167,7 +205,12 @@
   <string name="no_space_left_on_device">设备上没有可用存储空间。</string>
   <string name="menu_message_history">消息历史记录</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">会话</string>
+  <string name="navigation_item_account">账户</string>
   <!--TV-->
+  <string name="tv_media_preview">预览</string>
+  <string name="tv_audio_pause">暂停</string>
+  <string name="tv_dialog_send">发送</string>
   <string name="audio_permission_denied">麦克风权限已禁用。在设备设置中启用它以使用此功能。</string>
   <string name="camera_permission_denied">相机权限已禁用。在设备设置中启用它以使用此功能。</string>
   <string name="speech_recogniton_unavailable">语音识别不可用。</string>
@@ -182,10 +225,13 @@
   <string name="chat_extensions">聊天扩展</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_extensions_btn">扩展</string>
+  <string name="bottomSheet_change_camera_btn">更改</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">摄像头</string>
   <string name="bottomSheet_hangup_btn">結束電話</string>
   <string name="open_account_extension_settings">打开帐户扩展设置</string>
   <string name="open_general_extension_settings">打开常规扩展设置</string>
   <!--Swarm Details-->
+  <string name="rename_btn">确认</string>
   <string name="rename_error">不能为空。</string>
   <string name="swarm_description">添加描述</string>
   <string name="tab_files">文件</string>
@@ -194,6 +240,7 @@
   <string name="dialog_title_contact">编辑显示名称</string>
   <string name="dialogtitle_title">编辑群名称</string>
   <string name="dialogtitle_description">编辑群简介</string>
+  <string name="dialog_hint_title">标题</string>
   <string name="no_contact_to_add">您没有要添加的联系人</string>
   <string name="bottomsheet_remove">移除成员</string>
   <string name="error_open_no_app_found">找不到处理此文件的应用程序：%1$s</string>

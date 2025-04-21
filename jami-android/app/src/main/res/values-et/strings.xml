@@ -295,7 +295,7 @@
   <string name="invitation_message">Sul on %1$d kontaktipäring(ut)</string>
   <string name="no_invitations">Pole kutseid, mida kuvada.</string>
   <string name="invitation_received_message">Said kutse kasutajalt %s.\nKas võtad kutse vastu või lükkad tagasi?</string>
-  <string name="outgoing_contact_invitation_message">See kontakt pole veel sinu kontaktide hulgas.\nKas saadame talle kutse?</string>
+  <string name="outgoing_contact_invitation_message">Antud kontakt ei leidu sinu kontaktide loendis.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Ei ole blokeeritud kontakte</string>
   <!--Smartlist-->
@@ -478,7 +478,7 @@ Kui klõpsid „Kinnita“, siis jätkame kasutajakonto eksportimisega.</string>
   <string name="export_side_step2_advice_ip_only">Uus seade on ühendatud allpooltoodud aadressil. Kas see oled sina?
 Kui klõpsid „Kinnita“, siis jätkame kasutajakonto eksportimisega.</string>
   <string name="export_side_step2_ip_only">Uue seadme ip-aadress: %1$s</string>
-  <string name="export_side_step2_cancel">Tühista</string>
+  <string name="export_side_step2_cancel">Katkesta</string>
   <string name="export_side_step2_confirm">Kinnita</string>
   <string name="export_side_step2_password">Kasutajakonto on kaitstud salasõnaga.\nJätkamiseks autendi end uues seadmes.</string>
   <string name="export_side_step3_body_loading">Kasutajakonto eksportimine uude seadmesse on pooleli.

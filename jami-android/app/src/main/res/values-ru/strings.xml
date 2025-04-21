@@ -297,7 +297,6 @@
   <string name="invitation_message">У вас %1$d запросов на добавление в контакты</string>
   <string name="no_invitations">Нет приглашений для отображения.</string>
   <string name="invitation_received_message"> Получено приглашение от %s.\nПринять или отклонить приглашение?</string>
-  <string name="outgoing_contact_invitation_message">Этот контакт не в вашем списке контактов.\nОтправьте запрос на подключение.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Нет заблокированных контактов</string>
   <!--Smartlist-->

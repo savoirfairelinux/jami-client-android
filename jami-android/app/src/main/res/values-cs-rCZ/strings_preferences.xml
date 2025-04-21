@@ -8,6 +8,7 @@
   <string name="pref_category_diagnostic">Diagnostika</string>
   <string name="pref_category_appearance">Vzhled</string>
   <string name="pref_category_connectivity">Připojení</string>
+  <string name="pref_category_extensions">Rozšíření</string>
   <string name="pref_category_video_settings">Pokročilá nastavení videa</string>
   <string name="pref_mobileData_title">Mobilní data</string>
   <string name="pref_mobileData_summary">Povolit Jami na 3G/LTE sítích dodatečně k WiFi</string>
@@ -30,17 +31,28 @@
   <string name="pref_startOnBoot_title">Spustit Jami po zapnutí</string>
   <string name="pref_startOnBoot_summary">Spustit Jami na pozadí po spuštění systému.</string>
   <string name="pref_clearHistory_title">Vymazat historii</string>
+  <string name="pref_clearHistory_summary">Vymazat historii všech konverzací. Tuto akci nelze vrátit zpět.</string>
   <string name="pref_notification_title">Viditelnost notifikací</string>
   <string name="pref_notification_summary">Nastavení viditelnosti oznámení aplikací na zamčené obrazovce.</string>
+  <string name="pref_connectivity_title">Režim připojení</string>
+  <string name="pref_connectivity_summary">Vyberte, jak připojit Jami k distribuovanému systému pro příjem hovorů a zpráv.</string>
   <string name="pref_blackList_title">Seznak blokovaných kontaktů</string>
   <string name="pref_blackList_summary">Zkontrolujte seznam blokovaných kontaktů.</string>
   <string name="pref_delete_account_title">Odstranit účet</string>
+  <string name="pref_delete_account_summary">Smazat účet z tohoto zařízení</string>
+  <string name="pref_persistNotification_title">Spustit na pozadí</string>
+  <string name="pref_persistNotification_summary">Povolit běh na pozadí pro příjem hovorů a zpráv.</string>
   <string name="pref_newGroup_title">Povolení skupinového chatu</string>
   <string name="pref_newGroup_summary">Povolení vytváření skupin v aplikaci Jami.</string>
   <string name="pref_logs_title">Diagnostické záznamy</string>
   <string name="pref_logs_summary">Otevření nastavení diagnostického protokolu</string>
   <string name="pref_logs_start">Spuštění záznamu</string>
   <string name="pref_logs_stop">Zazstavení záznamu</string>
+  <string name="pref_connection_monitor">Monitor připojení</string>
+  <string name="pref_connection_monitor_summary">Monitor peer-to-peer připojení</string>
+  <string name="pref_push_notifications_logs_title"> Protokoly push notifikací</string>
+  <string name="pref_push_notifications_logs_summary">Zobrazit protokoly zachycené z push
+        oznámení.</string>
   <string name="pref_typing_title">Povolení indikátorů psaní</string>
   <string name="pref_typing_summary">Indikátory odesílání a přijímání, které ukazují, že se zpráva právě píše.</string>
   <string name="pref_block_record_title">Blokování snímku obrazovky a nahrávání</string>
@@ -48,6 +60,34 @@
   <string name="pref_link_preview_title">Náhledy odkazů</string>
   <string name="pref_link_preview_summary">Náhled vyžaduje stahování obsahu ze serverů třetích stran.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Veřejný\n(zobrazovat oznámení a jejich obsah na zamykací obrazovce)\n</string>
+  <string name="notification_private">Soukromý\n(zobrazovat oznámení, ale skrýt jejich obsah na zamykací obrazovce)\n</string>
+  <string name="notification_secret">Tajný\n(nezobrazovat oznámení na zamykací obrazovce)</string>
+  <string name="connectivity_google_services_title">Služby Google</string>
+  <string name="connectivity_google_services_description">Použít Google Firebase a proxy server DHT k přijímání push oznámení.</string>
+  <string name="connectivity_local_node_title">Místní DHT uzel</string>
+  <string name="connectivity_local_node_description">Použít místní DHT uzel pro připojení k dalším zařízením a kontaktům Jami.</string>
+  <string name="connectivity_unified_push_description">Pro příjem oznámení push použít vlastní server UnifiedPush.</string>
   <string name="connectivity_custom_title">Vlastní</string>
+  <string name="connectivity_custom_description">V současné době se nepoužívá žádný z dostupných konfiguračních předvoleb.</string>
   <!--Extension-->
+  <string name="pref_enable_extensions_title">Povolit rozšíření</string>
+  <string name="pref_enable_extensions_summary">Povolit rozšíření a nastavit jejich parametry</string>
+  <string name="pref_available_extensions_title">Dostupná rozšíření</string>
+  <string name="pref_available_extensions_summary">Nainstalovaná rozšíření a přidání nových rozšíření</string>
+  <string name="fab_extensions_add">Přidat nové rozšíření</string>
+  <string name="extension_uninstall_title">Odinstalovat rozšíření?</string>
+  <string name="extension_reset_preferences">Resetovat předvolby rozšíření</string>
+  <string name="extension_reset_preferences_summary">Rozšíření bylo obnoveno na výchozí nastavení</string>
+  <string name="extension_reset_preferences_ask">Chcete obnovit obecná nastavení rozšíření?</string>
+  <string name="extension_reset_account_preferences_ask">Chcete obnovit nastavení rozšíření účtu?</string>
+  <string name="extension_successfully_installed">Rozšíření <b>%1$s</b> bylo úspěšně nainstalováno.</string>
+  <string name="extension_install_failure">Při instalaci následujícího rozšíření došlo k chybě: <b>%1$s</b></string>
+  <string name="extension_recent_version_exception">Novější verze <b>%1$s</b> je instalována.</string>
+  <string name="extension_same_version_exception">Stejná verze <b>%1$s</b> je instalována</string>
+  <string name="extension_invalid_signature"><b>%1$s</b> má neplatný podpis</string>
+  <string name="extension_invalid_authority">Při ověřování oprávnění pro následující rozšíření došlo k chybě: <b>%1$s</b></string>
+  <string name="extension_invalid_format">Neplatný formát rozšíření: <b>%1$s</b></string>
+  <string name="extension_force_install">vynutit\ninstalovat</string>
+  <string name="extension_path_image_add">Přidat nový obrázek</string>
 </resources>

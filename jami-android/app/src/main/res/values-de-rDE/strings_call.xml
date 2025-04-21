@@ -1,40 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+Copyright (C) 2004-2025 Savoir-faire Linux Inc.
 
-This program is free software; you can redistribute it and/or modify
+This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 3 of the License, or
+the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
- Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+along with this program. If not, see <https://www.gnu.org/licenses/>.
 -->
 <resources>
-    <!-- Call error -->
-    <string name="call_error_no_microphone">Anruf abgebrochen. Kein Mikrofon erkannt.</string>
-    <string name="call_error_no_camera_no_microphone">Anruf abgebrochen. Kamera oder Mikrofon nicht erkannt.</string>
-
-    <!-- SipCalls -->
-    <string name="call_human_state_searching">Suche</string>
-    <string name="call_human_state_incoming">Eingehend</string>
-    <string name="call_human_state_connecting">Verbinden</string>
-    <string name="call_human_state_ringing">Klingeln</string>
-    <string name="call_human_state_current">Sprechen</string>
-    <string name="call_human_state_hungup">Vorbei</string>
-    <string name="call_human_state_busy">Besetzt</string>
     <string name="call_human_state_failure">Fehlgeschlagen</string>
-    <string name="call_human_state_hold">In die Warteschleife schalten</string>
-    <string name="call_human_state_unhold">Gespräch fortsetzen</string>
-    <string name="call_human_state_over">Vorbei</string>
-    <!-- Conferences -->
-    <string name="call_moderator">Moderator</string>
-    <string name="call_muted">Stummgeschaltet</string>
-    <string name="call_handRaised">Hand gehoben</string>
-
-</resources>
+    </resources>

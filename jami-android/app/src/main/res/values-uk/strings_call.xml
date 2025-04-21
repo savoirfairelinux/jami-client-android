@@ -15,8 +15,12 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 -->
 <resources>
+    <!-- Call error -->
+    <string name="call_error">Сталася помилка під час початку дзвінка.</string>
     <string name="call_error_no_microphone">Дзвінок закінчено. Мікрофон не знайдено.</string>
     <string name="call_error_no_camera_no_microphone">Дзвінок закінчено. Камеру або мікрофон не знайдено.</string>
+    <string name="screen_sharing_error">An error occurred while starting the screen share.</string>
+
     <!-- SipCalls -->
     <string name="call_human_state_searching">Шукаю</string>
     <string name="call_human_state_incoming">Викликає</string>

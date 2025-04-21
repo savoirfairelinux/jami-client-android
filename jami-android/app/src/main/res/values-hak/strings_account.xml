@@ -4,6 +4,7 @@
   <!--Strings related to account creation-->
   <string name="account_selection">选择帐户</string>
   <string name="account_creation_error">创建帐户时出错</string>
+  <string name="action_settings">设置</string>
   <string name="dialog_warn_ip2ip_account_title">创建空SIP帐户吗？</string>
   <string name="dialog_warn_ip2ip_account_message">您正在创建一个带有无效主机名的 SIP 账户。 
   这样的话，您只能拨打和接听 ip 通话。 
@@ -27,6 +28,8 @@
   <!--Extension Details-->
   <string name="account_preferences_extension_tab">扩展</string>
   <!--Audio Details-->
+  <string name="account_preferences_media_tab">媒体
+</string>
   <!--Video Details-->
   <!--Advanced Details-->
   <string name="account_chat_settings_title">聊天设置</string>

@@ -2,6 +2,8 @@
 <resources>
   <!--Strings related to account edition screen-->
   <!--Strings related to account creation-->
+  <string name="account_selection">Konto auswählen</string>
+  <string name="action_settings">Einstellungen</string>
   <string name="dialog_warn_ip2ip_account_title">Leeres SIP-Konto erstellen?</string>
   <string name="dialog_warn_ip2ip_account_message">Sie sind dabei, ein SIP-Konto ohne gültigen Hostnamen zu erstellen.
 Sie können nur direkte IP-Anrufe tätigen und empfangen.
@@ -26,6 +28,8 @@ Sie können Ihr Konto später bearbeiten</string>
   <!--Advanced Details-->
   <string name="account_stun_enable_label">STUN benutzen</string>
   <string name="account_stun_server_label">STUN-Server</string>
+  <string name="account_accept_files_never">Niemals automatisch annehmen</string>
+  <string name="account_accept_files_always">Immer automatisch annehmen</string>
   <string name="account_connectivity_label">Peer-to-Peer-Konnektivität</string>
   <string name="default_value">Standard</string>
   <string name="account_proxy_list_enable_label">DHT-Proxyliste verwenden</string>
@@ -65,6 +69,10 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="account_sip_success_title">SIP-Konto registriert</string>
   <string name="account_sip_success_message">SIP-Konto erfolgreich registriert.</string>
   <!--TV-->
+  <string name="account_tv_about">Über Jami</string>
+  <string name="tv_about_version">Version</string>
+  <string name="tv_about_license">Lizenz</string>
+  <string name="tv_about_credits">Mitwirkende</string>
   <string name="account_new_button">Jami-Konto erstellen</string>
   <string name="account_start_export_button">PIN-Code generieren</string>
   <string name="account_connect_server">Verbindung zum JAMS-Server herstellen</string>
