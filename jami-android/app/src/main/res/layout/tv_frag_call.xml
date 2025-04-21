@@ -65,12 +65,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:layout_height="match_parent"
             android:layout_weight="50">
 
-            <ImageView
+            <cx.ring.views.AvatarView
                 android:id="@+id/contact_bubble"
                 android:layout_width="160dp"
                 android:layout_height="160dp"
                 android:layout_centerInParent="true"
-                tools:src="@drawable/ic_contact_picture_fallback" />
+                tools:uri="@tools:sample/first_names"
+                tools:avatar="@tools:sample/avatars"/>
         </RelativeLayout>
 
         <LinearLayout
@@ -93,7 +94,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/text_color_primary_dark"
                 android:transitionName="shared_element"
-                tools:text="Contact Name" />
+                tools:text="@tools:sample/full_names" />
 
             <TextView
                 android:id="@+id/contact_bubble_num_txt"
@@ -181,7 +182,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:textSize="12sp"
-            tools:text="Thomas" />
+            tools:text="@tools:sample/full_names"/>
 
     </LinearLayout>
 
@@ -192,6 +193,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_centerHorizontal="true"
         android:animateLayoutChanges="true"
         android:gravity="center_horizontal">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/call_mute_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="48dp"
+            android:contentDescription="@string/action_call_mute"
+            android:tint="@color/black"
+            android:visibility="gone"
+            app:srcCompat="@drawable/baseline_mic_on_24"
+            tools:visibility="visible" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/call_hangup_btn"
@@ -210,21 +225,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             tools:visibility="visible" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/call_mute_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="48dp"
-            android:contentDescription="@string/action_call_mute"
-            android:tint="@android:color/white"
-            android:visibility="gone"
-            app:rippleColor="@android:color/white"
-            app:srcCompat="@drawable/baseline_mic_on_24"
-            tools:visibility="visible" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/call_add_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -233,6 +233,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="48dp"
             android:contentDescription="@string/bottomSheet_add_participants_btn"
+            android:tint="@color/black"
             android:visibility="gone"
             app:srcCompat="@drawable/baseline_person_add_24"
             tools:visibility="visible" />
