@@ -470,11 +470,11 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
                 binding.contactBubbleNumTxt.visibility = View.GONE
                 binding.contactBubbleTxt.text = username
             }
-            binding.contactBubble.setImageDrawable(AvatarDrawable.Builder()
+            binding.contactBubble.setAvatar(AvatarDrawable.Builder()
                 .withContact(participantInfo[0].contact)
                 .withCircleCrop(true)
                 .withPresence(false)
-                .build(requireActivity()))
+                .build(requireContext()))
 
             generateParticipantOverlay(participantInfo)
         }
