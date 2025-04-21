@@ -261,6 +261,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         if (mHomeFragment == null) {
             mHomeFragment = HomeFragment()
             supportFragmentManager.beginTransaction()
+                .setReorderingAllowed(true)
                 .replace(R.id.home_fragment, mHomeFragment!!, HomeFragment::class.java.simpleName)
                 .commit()
         }
@@ -461,6 +462,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         conversationBackPressedCallback.isEnabled = true
         supportFragmentManager.beginTransaction()
             .replace(R.id.conversation, conversation, ConversationFragment.TAG)
+            .setReorderingAllowed(true)
             .runOnCommit {
                 intent?.let { conversation.handleShareIntent(it) }
             }.commit()
@@ -476,6 +478,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         frameContent = fragment
         supportFragmentManager
             .beginTransaction()
+            .setReorderingAllowed(true)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .replace(R.id.frame, fragment, SettingsFragment.TAG)
             .addToBackStack(SettingsFragment.TAG)
@@ -492,6 +495,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         mBinding!!.frame.isVisible = true
         supportFragmentManager
             .beginTransaction()
+            .setReorderingAllowed(true)
             //.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .replace(R.id.frame, fragment, AboutFragment.TAG)
@@ -529,6 +533,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                 // Place it into the frame
                 frameContent = fragment
                 supportFragmentManager.beginTransaction()
+                        .setReorderingAllowed(true)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .replace(R.id.frame, fragment, JamiAccountSummaryFragment.TAG)
                         .addToBackStack(JamiAccountSummaryFragment.TAG)
@@ -548,6 +553,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                 // Place it into the frame
                 frameContent = fragment
                 supportFragmentManager.beginTransaction()
+                        .setReorderingAllowed(true)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .replace(R.id.frame, fragment, AccountEditionFragment.TAG)
                         .addToBackStack(AccountEditionFragment.TAG)

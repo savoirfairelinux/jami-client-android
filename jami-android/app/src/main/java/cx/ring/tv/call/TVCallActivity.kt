@@ -59,6 +59,7 @@ class TVCallActivity : FragmentActivity() {
             callFragment = TVCallFragment.newInstance(intent.action!!, path.accountId, path.conversationId,
                 intent.extras!!.getString(Intent.EXTRA_PHONE_NUMBER, path.conversationId),  true)
             fragmentTransaction.replace(R.id.main_call_layout, callFragment!!, CALL_FRAGMENT_TAG)
+                .setReorderingAllowed(true)
                 .commit()
         } else {
             Log.d(TAG, "onCreate: incoming call")
@@ -66,6 +67,7 @@ class TVCallActivity : FragmentActivity() {
             Log.d(TAG, "onCreate: conf $confId")
             callFragment = TVCallFragment.newInstance(Intent.ACTION_VIEW, confId)
             fragmentTransaction.replace(R.id.main_call_layout, callFragment!!, CALL_FRAGMENT_TAG)
+                .setReorderingAllowed(true)
                 .commit()
         }
     }

@@ -42,8 +42,9 @@ class TVContactDetailPresenter : Presenter() {
             val fragment = TvConversationFragment.newInstance(ConversationPath.toBundle(item.accountId, item.uri))
             val fragmentManager = (view.context as FragmentActivity).supportFragmentManager
             fragmentManager.beginTransaction()
+                .setReorderingAllowed(true)
                 .replace(R.id.content, fragment, FRAGMENT_TAG)
-                .commit()
+                .commitAllowingStateLoss()
         }
     }
 

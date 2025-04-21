@@ -138,9 +138,13 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
     override fun showLoading(show: Boolean) {
         if (show) {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.main_browse_fragment, mSpinnerFragment).commitAllowingStateLoss()
+                .setReorderingAllowed(true)
+                .replace(R.id.main_browse_fragment, mSpinnerFragment)
+                .commitAllowingStateLoss()
         } else {
-            parentFragmentManager.beginTransaction().remove(mSpinnerFragment)
+            parentFragmentManager.beginTransaction()
+                .setReorderingAllowed(true)
+                .remove(mSpinnerFragment)
                 .commitAllowingStateLoss()
         }
     }
@@ -321,6 +325,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
                     arguments = ConversationPath.toBundle(model.accountId, model.uri)
                 }
                 parentFragmentManager.beginTransaction()
+                    .setReorderingAllowed(true)
                     .hide(this@MainFragment)
                     .add(R.id.fragment_container, contactFragment, TVContactFragment.TAG)
                     .addToBackStack(TVContactFragment.TAG)

@@ -72,7 +72,8 @@ class WelcomeJamiFragment : Fragment() {
             // Create the JamiIdFragment
             childFragmentManager.beginTransaction()
                 .replace(R.id.jamiIdFragmentContainerView, JamiIdFragment())
-                .commit()
+                .setReorderingAllowed(true)
+                .commitAllowingStateLoss()
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

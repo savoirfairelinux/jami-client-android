@@ -48,6 +48,7 @@ abstract class BaseSupportFragment<T : RootPresenter<in V>, in V> : Fragment() {
 
     protected fun replaceFragmentWithSlide(fragment: Fragment, tag: String?, @IdRes containerID: Int) {
         parentFragmentManager.beginTransaction()
+            .setReorderingAllowed(true)
             .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
             .replace(containerID, fragment, tag)
             .addToBackStack(tag)
@@ -56,6 +57,7 @@ abstract class BaseSupportFragment<T : RootPresenter<in V>, in V> : Fragment() {
 
     protected fun replaceFragment(fragment: Fragment, tag: String?, @IdRes containerID: Int) {
         parentFragmentManager.beginTransaction()
+            .setReorderingAllowed(true)
             .replace(containerID, fragment, tag)
             .addToBackStack(tag)
             .commit()

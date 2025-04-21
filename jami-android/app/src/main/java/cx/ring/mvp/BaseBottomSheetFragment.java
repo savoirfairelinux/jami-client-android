@@ -60,6 +60,7 @@ public abstract class BaseBottomSheetFragment<T extends RootPresenter> extends B
     protected void replaceFragmentWithSlide(Fragment fragment, @IdRes int content) {
         getParentFragmentManager()
                 .beginTransaction()
+                .setReorderingAllowed(true)
                 .setCustomAnimations(R.anim.slide_in_right,
                         R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
                 .replace(content, fragment, TAG)
@@ -70,6 +71,7 @@ public abstract class BaseBottomSheetFragment<T extends RootPresenter> extends B
     protected void replaceFragment(Fragment fragment, @IdRes int content) {
         getParentFragmentManager()
                 .beginTransaction()
+                .setReorderingAllowed(true)
                 .replace(content, fragment, TAG)
                 .addToBackStack(TAG)
                 .commit();
