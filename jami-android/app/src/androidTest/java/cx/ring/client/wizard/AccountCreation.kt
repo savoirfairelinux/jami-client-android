@@ -194,7 +194,7 @@ class AccountCreation {
 
         onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
 
-        onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
+        onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click(), scrollTo())
 
         // Prepare the callback when we will intercept the camera intent.
         val intentCallback = IntentCallback { intentCallback ->
@@ -238,7 +238,8 @@ class AccountCreation {
 
         // Click on account settings. Don't know why but doesn't work to select by ID.
         onView(allOf(withText(R.string.menu_item_account_settings), isDisplayed())).perform(click())
-
+        //add delay
+        Thread.sleep(1000)
         // Check if picture is changed in profile.
         onView(withId(R.id.user_photo)).check(matches(withImageUri(downloadedImagesUri[0])))
     }
@@ -252,7 +253,7 @@ class AccountCreation {
 
         onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
 
-        onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
+        onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click(), scrollTo())
 
         // Start recording intents and subscribe to the callback.
         Intents.init()
@@ -285,6 +286,7 @@ class AccountCreation {
         // Click on account settings. Don't know why but doesn't work to select by ID.
         onView(allOf(withText(R.string.menu_item_account_settings), isDisplayed())).perform(click())
 
+        Thread.sleep(1000)
         // Check if picture is changed in profile.
         onView(withId(R.id.user_photo)).check(matches(withImageUri(downloadedImagesUri[1])))
     }
