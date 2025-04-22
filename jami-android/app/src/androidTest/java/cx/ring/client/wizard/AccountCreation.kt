@@ -115,7 +115,7 @@ class AccountCreation {
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
         onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
-
+        Thread.sleep(5000)
         onView(allOf(withId(R.id.ring_password_switch), isDisplayed())).perform(click())
 
         specifyPassword()
@@ -142,7 +142,8 @@ class AccountCreation {
         onView(withId(R.id.create_account_username))
             .perform(waitUntil(allOf(isDisplayed(), isEnabled())), click())
 
-        onView(allOf(withId(R.id.ring_password_switch), isDisplayed())).perform(click())
+        onView(withId(R.id.ring_password_switch))
+            .perform(waitUntil(isDisplayed()), click())
 
         specifyPassword()
 
@@ -164,7 +165,8 @@ class AccountCreation {
 
         onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
 
-        onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
+        onView(withId(R.id.create_account_password))
+            .perform(waitUntil(isDisplayed()), click())
 
         onView(allOf(withId(R.id.username), isDisplayed()))
             .perform(replaceText("Bonjour"), closeSoftKeyboard())
@@ -194,7 +196,8 @@ class AccountCreation {
 
         onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
 
-        onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
+        onView(withId(R.id.create_account_password))
+            .perform(waitUntil(isDisplayed()), click())
 
         // Prepare the callback when we will intercept the camera intent.
         val intentCallback = IntentCallback { intentCallback ->
@@ -226,7 +229,7 @@ class AccountCreation {
         Intents.release()
 
         // Check if the image is displayed.
-         onView(withId(R.id.profile_photo)).check(matches(withImageUri(downloadedImagesUri[0])))
+        onView(withId(R.id.profile_photo)).check(matches(withImageUri(downloadedImagesUri[0])))
 
         onView(allOf(withId(R.id.next_create_account), isDisplayed())).perform(click())
 
@@ -252,7 +255,8 @@ class AccountCreation {
 
         onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
 
-        onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
+        onView(withId(R.id.create_account_password))
+            .perform(waitUntil(isDisplayed()), click())
 
         // Start recording intents and subscribe to the callback.
         Intents.init()
@@ -272,7 +276,7 @@ class AccountCreation {
         Intents.release()
 
         // Check if the image is displayed.
-         onView(withId(R.id.profile_photo)).check(matches(withImageUri(downloadedImagesUri[1])))
+        onView(withId(R.id.profile_photo)).check(matches(withImageUri(downloadedImagesUri[1])))
 
         onView(allOf(withId(R.id.next_create_account), isDisplayed())).perform(click())
 
@@ -298,7 +302,8 @@ class AccountCreation {
 
         onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
 
-        onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
+        onView(withId(R.id.create_account_password))
+            .perform(waitUntil(isDisplayed()), click())
 
         // Start recording intents and subscribe to the callback.
         Intents.init()
@@ -392,7 +397,8 @@ class AccountCreation {
 
         onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
 
-        onView(allOf(withId(R.id.ring_password_switch), isDisplayed())).perform(click())
+        onView(withId(R.id.ring_password_switch))
+            .perform(waitUntil(isDisplayed()), click())
 
         onView(withId(R.id.create_account_password)).check(matches(isDisplayed()))
 
@@ -410,7 +416,8 @@ class AccountCreation {
 
         onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
 
-        onView(allOf(withId(R.id.ring_password_switch), isDisplayed())).perform(click())
+        onView(withId(R.id.ring_password_switch))
+            .perform(waitUntil(isDisplayed()), click())
 
         onView(allOf(withId(R.id.password), isDisplayed()))
             .perform(replaceText("test"), closeSoftKeyboard())
@@ -433,7 +440,8 @@ class AccountCreation {
 
         onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
 
-        onView(allOf(withId(R.id.ring_password_switch), isDisplayed())).perform(click())
+        onView(withId(R.id.ring_password_switch))
+            .perform(waitUntil(isDisplayed()), click())
 
         onView(allOf(withId(R.id.password), isDisplayed()))
             .perform(replaceText("123456"), closeSoftKeyboard())
@@ -458,7 +466,8 @@ class AccountCreation {
 
         onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
 
-        onView(allOf(withId(R.id.ring_password_switch), isDisplayed())).perform(click())
+        onView(withId(R.id.ring_password_switch))
+            .perform(waitUntil(isDisplayed()), click())
 
         specifyPassword()
 
@@ -474,6 +483,7 @@ class AccountCreation {
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
         onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+        Thread.sleep(5000)
 
         onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
 
@@ -509,7 +519,8 @@ class AccountCreation {
         onView(withId(R.id.create_account_username))
             .perform(waitUntil(allOf(isDisplayed(), isEnabled())), click())
 
-        onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
+        onView(withId(R.id.create_account_password))
+            .perform(waitUntil(isDisplayed()), click())
 
         onView(allOf(withId(R.id.skip_create_account), isDisplayed())).perform(click())
 
