@@ -26,7 +26,7 @@ interface MainView {
     fun showContactRequests(contactRequests: List<Conversation>)
     fun callContact(accountID: String, ringID: String)
     fun displayAccountInfo(viewModel: HomeNavigationViewModel)
-    fun showExportDialog(pAccountID: String, hasPassword: Boolean)
+    fun showExportDialog(accountId: String, registeredName: String?)
     fun showProfileEditing()
     fun showAccountShare()
     fun showSettings()
