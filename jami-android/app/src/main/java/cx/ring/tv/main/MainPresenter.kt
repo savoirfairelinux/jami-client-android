@@ -62,7 +62,7 @@ class MainPresenter @Inject constructor(
 
     fun onExportClicked() {
         val account = accountService.currentAccount ?: return
-        view?.showExportDialog(account.accountId, account.hasPassword())
+        view?.showExportDialog(account.accountId, account.displayUsername)
     }
 
     fun onEditProfileClicked() {
