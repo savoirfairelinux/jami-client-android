@@ -384,6 +384,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:exported="false"
             android:theme="@style/AppTheme" />
         <activity
+            android:name=".tv.account.TVExportWizard"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
+            android:exported="false"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name=".tv.search.SearchActivity"
             android:exported="false"
             android:theme="@style/Theme.Leanback" />
