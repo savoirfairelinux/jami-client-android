@@ -34,7 +34,7 @@ import androidx.tvprovider.media.tv.ChannelLogoUtils
 import androidx.tvprovider.media.tv.PreviewProgram
 import androidx.tvprovider.media.tv.TvContractCompat
 import cx.ring.R
-import cx.ring.tv.account.TVAccountExport
+import cx.ring.tv.account.TVExportWizard
 import cx.ring.tv.account.TVProfileEditingFragment
 import cx.ring.tv.account.TVShareActivity
 import cx.ring.tv.call.TVCallActivity
@@ -294,11 +294,17 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
         }
     }
 
-    override fun showExportDialog(pAccountID: String, hasPassword: Boolean) {
-        val wizard: GuidedStepSupportFragment =
-            TVAccountExport.createInstance(pAccountID, hasPassword)
-        GuidedStepSupportFragment.add(parentFragmentManager, wizard, R.id.main_browse_fragment)
+    override fun showExportDialog(accountId: String, registeredName: String?) {
+        Log.d(TAG, "showExportDialog called with accountId: $accountId, name: $registeredName")
+
+        val intent = Intent(requireContext(), TVExportWizard::class.java).apply {
+            putExtra(TVExportWizard.EXTRA_ACCOUNT_ID, accountId)
+            putExtra(TVExportWizard.EXTRA_REGISTERED_NAME, registeredName)
+        }
+
+        startActivity(intent)
     }
+
 
     override fun showProfileEditing() {
         GuidedStepSupportFragment.add(
