@@ -228,6 +228,7 @@ class HomeActivity : FragmentActivity() {
         paused = true
         mCameraPreview?.let { preview ->
             mCamera?.let { camera ->
+                camera.setPreviewCallback(null)
                 camera.release();
                 mCamera = null
             }
@@ -243,6 +244,7 @@ class HomeActivity : FragmentActivity() {
         mDisposableBag.dispose()
         mCameraManager?.unregisterAvailabilityCallback(mCameraAvailabilityCallback)
         mCamera?.let { camera ->
+            camera.setPreviewCallback(null)
             camera.release();
             mCamera = null
         }
