@@ -270,8 +270,8 @@ class HardwareServiceImpl(
     private fun setAudioRouting(requestSpeakerOn: Boolean) {
         // prioritize bluetooth by checking for bluetooth device first
         val bt = mBluetoothWrapper
-        Log.w(TAG, "setAudioRouting requestSpeakerOn:$requestSpeakerOn isBTHeadsetConnected:${bt?.isBTHeadsetConnected} isWiredHeadsetOn:${mAudioManager.isWiredHeadsetOn}")
-        if (bt != null && bt.canBluetooth() && bt.isBTHeadsetConnected) {
+        Log.w(TAG, "setAudioRouting requestSpeakerOn:$requestSpeakerOn isBluetoothScoOn:${mAudioManager.isBluetoothScoOn} isWiredHeadsetOn:${mAudioManager.isWiredHeadsetOn}")
+        if (bt != null && bt.canBluetooth() && mAudioManager.isBluetoothScoOn) {
             routeToBTHeadset()
         } else if (!mAudioManager.isWiredHeadsetOn && mHasSpeakerPhone && requestSpeakerOn) {
             routeToSpeaker()
