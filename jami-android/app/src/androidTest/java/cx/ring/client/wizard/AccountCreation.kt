@@ -114,7 +114,7 @@ class AccountCreation {
     fun accountCreation_SpecifyPasswordOnly() {
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+        performClickWithKeyboardClosed(R.id.skip)
 
         onView(allOf(withId(R.id.ring_password_switch), isDisplayed())).perform(click())
 
@@ -162,7 +162,7 @@ class AccountCreation {
     fun accountCreation_SpecifyProfileName() {
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+        performClickWithKeyboardClosed(R.id.skip)
 
         onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
 
@@ -170,13 +170,11 @@ class AccountCreation {
             .perform(replaceText("Bonjour"), closeSoftKeyboard())
 
         onView(allOf(withId(R.id.next_create_account), isDisplayed())).perform(click())
-
         // Check that we are in the home activity.
         waitForView(withId(R.id.search_bar)).perform(waitUntil(isDisplayed()))
-
+        Thread.sleep(1000)
         // Go to account settings. Click on search bar menu.
         onView(withId(R.id.menu_overflow)).perform(click())
-
         // Click on account settings. Don't know why but doesn't work to select by ID.
         onView(allOf(withText(R.string.menu_item_account_settings), isDisplayed())).perform(click())
 
@@ -192,7 +190,7 @@ class AccountCreation {
     fun accountCreation_SpecifyProfilePictureViaCamera() {
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+        performClickWithKeyboardClosed(R.id.skip)
 
         onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
 
@@ -233,6 +231,7 @@ class AccountCreation {
         // Check that we are in the home activity.
         waitForView(withId(R.id.search_bar)).perform(waitUntil(isDisplayed()))
 
+        Thread.sleep(1000)
         // Go to account settings. Click on search bar menu.
         onView(withId(R.id.menu_overflow)).perform(click())
 
@@ -250,7 +249,7 @@ class AccountCreation {
     fun accountCreation_SpecifyProfilePictureViaGallery() {
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+        performClickWithKeyboardClosed(R.id.skip)
 
         onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
 
@@ -279,6 +278,7 @@ class AccountCreation {
         // Check that we are in the home activity.
         waitForView(withId(R.id.search_bar)).perform(waitUntil(isDisplayed()))
 
+        Thread.sleep(1000)
         // Go to account settings. Click on search bar menu.
         onView(withId(R.id.menu_overflow)).perform(click())
 
@@ -296,7 +296,7 @@ class AccountCreation {
     fun accountCreation_SpecifyProfilePicture_CanCancel(){
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+        performClickWithKeyboardClosed(R.id.skip)
 
         onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
 
@@ -390,7 +390,7 @@ class AccountCreation {
     fun passwordSelection_EnableSection() {
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+        performClickWithKeyboardClosed(R.id.skip)
 
         onView(allOf(withId(R.id.ring_password_switch), isDisplayed())).perform(click())
 
@@ -408,7 +408,7 @@ class AccountCreation {
     fun passwordSelection_LessThan6Characters_InvalidPassword() {
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+        performClickWithKeyboardClosed(R.id.skip)
 
         onView(allOf(withId(R.id.ring_password_switch), isDisplayed())).perform(click())
 
@@ -431,7 +431,7 @@ class AccountCreation {
     fun passwordSelection_WrongRecopy() {
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+        performClickWithKeyboardClosed(R.id.skip)
 
         onView(allOf(withId(R.id.ring_password_switch), isDisplayed())).perform(click())
 
@@ -456,7 +456,7 @@ class AccountCreation {
     fun passwordSelection_ValidPassword() {
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+        performClickWithKeyboardClosed(R.id.skip)
 
         onView(allOf(withId(R.id.ring_password_switch), isDisplayed())).perform(click())
 
@@ -473,7 +473,7 @@ class AccountCreation {
     private fun createDefaultAccount() {
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+        performClickWithKeyboardClosed(R.id.skip)
 
         onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
 
@@ -515,6 +515,12 @@ class AccountCreation {
 
         Log.d(TAG, "Account created: $username")
     }
+
+    private fun performClickWithKeyboardClosed(viewId: Int) {
+        onView(isRoot()).perform(closeSoftKeyboard())
+        onView(withId(viewId)).perform(waitUntil(isDisplayed()), click())
+    }
+
 
     companion object {
         private val TAG = AccountCreation::class.java.simpleName
