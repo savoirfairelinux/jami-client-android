@@ -16,8 +16,10 @@
  */
 package net.jami.conversation
 
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
@@ -117,8 +119,12 @@ class ConversationPresenter @Inject constructor(
             .subscribe({ conversation: Conversation ->
                 conversation.isVisible = true
                 conversation.isBubble = isBubble
-                accountService.getAccount(conversation.accountId)?.let { account ->
-                    conversationFacade.readMessages(account, conversation, !isBubble)}
+                mCompositeDisposable.add(Completable.fromAction {
+                    accountService.getAccount(conversation.accountId)?.let { account ->
+                        conversationFacade.readMessages(account, conversation, !isBubble)}
+                }
+                    .subscribeOn(Schedulers.computation())
+                    .subscribe())
             }) { e -> Log.e(TAG, "Error loading conversation", e) })
     }
 
