@@ -587,13 +587,14 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
     private fun goToQRFragment() {
         // Hide keyboard to prevent any glitch.
+        val accountUri = mAccountService.currentAccount?.uri ?: return
         (requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
             .hideSoftInputFromWindow(requireView().windowToken, 0)
 
         QRCodeFragment.newInstance(
             QRCodeFragment.MODE_SHARE or QRCodeFragment.MODE_SCAN,
             QRCodeFragment.MODE_SCAN,
-            Uri.fromString(mAccountService.currentAccount?.uri!!)
+            Uri.fromString(accountUri)
         ).show(parentFragmentManager, QRCodeFragment.TAG)
 
         collapseSearchActionView()
