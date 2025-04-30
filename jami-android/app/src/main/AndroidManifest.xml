@@ -48,7 +48,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
-    <!--<uses-permission android:name="android.permission.FOREGROUND_SERVICE_REMOTE_MESSAGING" />-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_REMOTE_MESSAGING" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_PHONE_CALL" />
     <uses-permission android:name="com.android.providers.tv.permission.WRITE_EPG_DATA" />
@@ -332,7 +332,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <service
             android:name=".service.DRingService"
             android:exported="false"
-            android:foregroundServiceType="dataSync">
+            android:foregroundServiceType="dataSync|remoteMessaging">
             <intent-filter>
                 <action android:name=".service.DRingService" />
             </intent-filter>

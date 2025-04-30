@@ -22,6 +22,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.ServiceInfo
 import android.database.ContentObserver
 import android.net.*
 import android.net.ConnectivityManager.NetworkCallback
@@ -179,10 +180,22 @@ class DRingService : Service() {
     private fun showSystemNotification(settings: Settings) {
         try {
             if (settings.enablePermanentService) {
-                startForeground(NOTIFICATION_ID, mNotificationService.serviceNotification as Notification)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                    startForeground(NOTIFICATION_ID, mNotificationService.serviceNotification as Notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_REMOTE_MESSAGING)
+                } else {
+                    startForeground(NOTIFICATION_ID, mNotificationService.serviceNotification as Notification)
+                }
             } else {
-                stopForeground(true)
+                stopForeground(STOP_FOREGROUND_REMOVE)
             }
+        } catch (e: Exception) {
+            Log.e(TAG, "Can't start or stop foreground service: ${e.message}")
+        }
+    }
+
+    override fun onTimeout(startId: Int, fgsType: Int) {
+        try {
+            stopForeground(STOP_FOREGROUND_REMOVE)
         } catch (e: Exception) {
             Log.e(TAG, "Can't start or stop foreground service: ${e.message}")
         }
