@@ -24,6 +24,15 @@
         app:zoomage_zoomable="true"
         tools:src="@tools:sample/backgrounds/scenic" />
 
+    <VideoView
+        android:id="@+id/video_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:transitionName="video"
+        android:visibility="gone"
+        android:keepScreenOn="true" />
+
     <com.google.android.material.bottomappbar.BottomAppBar
         app:elevation="0dp"
         app:backgroundTint="@color/transparent"
