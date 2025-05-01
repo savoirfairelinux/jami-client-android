@@ -54,13 +54,14 @@
             android:minHeight="@dimen/conversation_avatar_size"
             app:cardCornerRadius="16dp">
 
-            <TextureView
+            <ImageView
                 android:id="@+id/video"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
                 android:maxHeight="200dp"
-                android:transitionName="picture" />
+                android:transitionName="video" />
 
         </androidx.cardview.widget.CardView>
 
