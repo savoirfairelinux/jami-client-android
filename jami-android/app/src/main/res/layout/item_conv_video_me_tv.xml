@@ -45,13 +45,12 @@
             android:foregroundGravity="center"
             app:cardCornerRadius="16dp">
 
-            <TextureView
+            <ImageView
                 android:id="@+id/video"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:adjustViewBounds="true"
-                android:maxHeight="200dp"
-                android:transitionName="picture" />
+                android:scaleType="centerCrop"
+                android:transitionName="video" />
 
         </androidx.cardview.widget.CardView>
 
