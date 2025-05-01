@@ -40,12 +40,27 @@ class MediaViewerFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val view = inflater.inflate(R.layout.fragment_media_viewer, container, false) as ViewGroup
-        Glide.with(this)
-            .load(mUri)
-            .into(view.findViewById(R.id.image))
-        view.findViewById<BottomAppBar>(R.id.bottomAppBar).setOnMenuItemClickListener { l ->
-            val uri = mUri ?: return@setOnMenuItemClickListener false
+        val view = inflater.inflate(R.layout.fragment_media_viewer, container, false)
+        val imageView = view.findViewById<View>(R.id.image)
+        val videoView = view.findViewById<android.widget.VideoView>(R.id.video_view)
+        val bottomAppBar = view.findViewById<BottomAppBar>(R.id.bottomAppBar)
+        val shareButton = view.findViewById<Button>(R.id.shareBtn)
+        val uri = mUri ?: return view
+        val mimeType = AndroidFileUtils.getMimeType(requireContext().contentResolver, uri)
+
+        if (mimeType?.startsWith("video/") == true) {
+            imageView.visibility = View.GONE
+            videoView.visibility = View.VISIBLE
+            videoView.setVideoURI(uri)
+            videoView.setMediaController(null)
+            videoView.start()
+        } else {
+            videoView.visibility = View.GONE
+            imageView.visibility = View.VISIBLE
+            Glide.with(this).load(uri).into(imageView as android.widget.ImageView)
+        }
+
+        bottomAppBar.setOnMenuItemClickListener { l ->
             when (l.itemId) {
                 R.id.conv_action_share -> AndroidFileUtils.shareFile(requireContext(), uri)
                 R.id.conv_action_download -> startSaveFile(uri)
@@ -53,9 +68,10 @@ class MediaViewerFragment : Fragment() {
             }
             true
         }
-        view.findViewById<Button>(R.id.shareBtn).setOnClickListener {
-            AndroidFileUtils.shareFile(requireContext(), mUri ?: return@setOnClickListener)
+        shareButton.setOnClickListener {
+            AndroidFileUtils.shareFile(requireContext(), uri)
         }
+
         return view
     }
 

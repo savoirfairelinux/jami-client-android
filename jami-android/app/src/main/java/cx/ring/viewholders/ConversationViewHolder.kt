@@ -132,7 +132,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     var btnAccept: View? = null
     var btnRefuse: View? = null
     var progress: ContentLoadingProgressBar? = null
-    val video: TextureView? = when (type) {
+    val video: ImageView? = when (type) {
         MessageType.INCOMING_VIDEO,
         MessageType.OUTGOING_VIDEO -> v.findViewById(R.id.video)
         else -> null
