@@ -1607,6 +1607,13 @@ class AccountService(
             transfer.daemonPath = File(paths[0]!!)
             transfer.transferStatus = transferStatus
             transfer.bytesProgress = progress
+
+            if (transferStatus == TransferStatus.TRANSFER_FINISHED &&
+                transfer.bytesProgress == 0L) {
+                performDownloadRetry(account, conversation, interactionId, fileId)
+                return
+            }
+
             if (oldState != transferStatus) {
                 if (transferStatus == Interaction.TransferStatus.TRANSFER_ONGOING) {
                     DataTransferRefreshTask(account, conversation, transfer)
@@ -1627,6 +1634,39 @@ class AccountService(
         Log.d(TAG, "Data Transfer dataTransferSubject.onNext")
         dataTransfers.onNext(transfer)
     }
+
+    private fun performDownloadRetry(account: Account, conversation: Conversation,
+                                     interactionId: String?, fileId: String) {
+        val transfer: DataTransfer? = when {
+            conversation.isSwarm -> {
+                if (interactionId == null) {
+                    Log.w(TAG, "performDownloadRetry(): Missing interactionId for swarm conversation")
+                    return
+                }
+                conversation.getMessage(interactionId) as? DataTransfer
+            }
+            else -> account.getDataTransfer(fileId)
+        }
+
+        if (transfer == null) {
+            Log.w(TAG, "performDownloadRetry(): Transfer not found for fileId=$fileId")
+            return
+        }
+
+        val conversationId = conversation.uri.rawRingId
+        val newPath = mDeviceRuntimeService.getNewConversationPath(
+            account.accountId, conversationId, transfer.displayName
+        )
+        Log.d(TAG, "performDownloadRetry(): Retrying download for fileId=$fileId -> $newPath")
+        JamiService.downloadFile(
+            account.accountId,
+            conversationId,
+            transfer.messageId,
+            fileId,
+            newPath.absolutePath
+        )
+    }
+
 
     fun setProxyEnabled(enabled: Boolean) {
         mExecutor.execute {
