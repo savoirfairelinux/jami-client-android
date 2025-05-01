@@ -24,6 +24,24 @@
         app:zoomage_zoomable="true"
         tools:src="@tools:sample/backgrounds/scenic" />
 
+    <FrameLayout
+        android:id="@+id/video_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:transitionName="video">
+
+        <VideoView
+            android:id="@+id/video_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:keepScreenOn="true"
+            android:transitionName="video"
+            android:visibility="gone" />
+    </FrameLayout>
+
     <com.google.android.material.bottomappbar.BottomAppBar
         app:elevation="0dp"
         app:backgroundTint="@color/transparent"

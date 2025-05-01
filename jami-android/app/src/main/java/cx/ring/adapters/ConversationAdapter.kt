@@ -20,23 +20,24 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.SurfaceTexture
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
 import android.media.MediaPlayer
+import android.media.ThumbnailUtils
 import android.net.Uri
+import android.provider.MediaStore
 import android.text.format.DateUtils
 import android.text.format.Formatter
 import android.util.TypedValue
 import android.view.*
-import android.view.TextureView.SurfaceTextureListener
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityOptionsCompat
@@ -637,7 +638,6 @@ class ConversationAdapter(
 
         holder.video?.let { video ->
             video.setOnClickListener(null)
-            video.surfaceTextureListener = null
         }
         holder.surface?.release()
         holder.surface = null
@@ -750,105 +750,62 @@ class ConversationAdapter(
 
     private fun configureVideo(viewHolder: ConversationViewHolder, path: File) {
         val context = viewHolder.itemView.context
-        viewHolder.player?.let {
-            viewHolder.player = null
-            it.release()
-        }
-        val video = viewHolder.video ?: return
-        val cardLayout = viewHolder.mLayout as CardView
-
-        val contentUri = try {
-            getUriForFile(context, path)
+        val imageView = viewHolder.video ?: return
+        val cardLayout = viewHolder.mLayout as? CardView ?: return
+        val thumbnail = try {
+            ThumbnailUtils.createVideoThumbnail(
+                path.canonicalPath,
+                MediaStore.Video.Thumbnails.MINI_KIND
+            )
         } catch (e: Exception) {
-            Log.w(TAG, "Can't open video", e)
-            return
-        }
-        val player = MediaPlayer.create(context, contentUri) ?: return
-
-        viewHolder.player = player
-        val playBtn = ContextCompat.getDrawable(cardLayout.context, R.drawable.baseline_play_arrow_24)!!.mutate()
-        DrawableCompat.setTint(playBtn, Color.WHITE)
-        cardLayout.foreground = playBtn
-        player.setOnCompletionListener { mp: MediaPlayer ->
-            if (mp.isPlaying) mp.pause()
-            mp.seekTo(1)
-            cardLayout.foreground = playBtn
+            Log.e(TAG, "Failed to create video thumbnail", e)
+            null
         }
 
-        player.setOnVideoSizeChangedListener { _: MediaPlayer, width: Int, height: Int ->
-            Log.w(TAG, "OnVideoSizeChanged " + width + "x" + height)
-            val p = video.layoutParams as FrameLayout.LayoutParams
-            val maxDim = max(width, height)
-            if (maxDim != 0) {
-                p.width = width * mPictureMaxSize / maxDim
-                p.height = height * mPictureMaxSize / maxDim
-            } else {
-                p.width = 0
-                p.height = 0
+        if (thumbnail != null) {
+            val maxDim = max(thumbnail.width, thumbnail.height)
+            val targetWidth = thumbnail.width * mPictureMaxSize / maxDim
+            val targetHeight = thumbnail.height * mPictureMaxSize / maxDim
+
+            imageView.layoutParams = imageView.layoutParams.apply {
+                width = targetWidth
+                height = targetHeight
             }
-            video.layoutParams = p
+            imageView.setImageBitmap(thumbnail)
+        } else {
+            imageView.setImageResource(R.drawable.video_thumbnail_fallback)
         }
 
-        if (video.isAvailable) {
-            if (viewHolder.surface == null) {
-                viewHolder.surface = Surface(video.surfaceTexture)
-            }
-            player.setSurface(viewHolder.surface)
+        ContextCompat.getDrawable(context, R.drawable.baseline_play_arrow_24)
+            ?.mutate()?.let { drawable ->
+            DrawableCompat.setTint(drawable, Color.WHITE)
+            cardLayout.foreground = drawable
+            cardLayout.foregroundGravity = Gravity.CENTER
         }
 
-        video.surfaceTextureListener = object : SurfaceTextureListener {
-            override fun onSurfaceTextureAvailable(
-                surfaceTexture: SurfaceTexture,
-                width: Int,
-                height: Int
-            ) {
-                if (viewHolder.surface == null) {
-                    viewHolder.surface = Surface(surfaceTexture).also { surface ->
-                        try {
-                            player.setSurface(surface)
-                        } catch (e: Exception) {
-                            // Left blank
-                        }
-                    }
-                }
+        imageView.setOnClickListener {
+            if (!path.exists()) {
+                Toast.makeText(context, R.string.video_not_found, Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
-
-            override fun onSurfaceTextureSizeChanged(
-                surface: SurfaceTexture,
-                width: Int,
-                height: Int
-            ) { }
-
-            override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean {
-                try {
-                    player.setSurface(null)
-                } catch (e: Exception) {
-                    // Left blank
-                }
-                viewHolder.surface?.let {
-                    viewHolder.surface = null
-                    it.release()
-                }
-                return true
-            }
-
-            override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {}
-        }
-
-        video.setOnClickListener {
             try {
-                if (player.isPlaying) {
-                    player.pause()
-                    (viewHolder.mLayout as CardView).foreground = playBtn
-                } else {
-                    player.start()
-                    (viewHolder.mLayout as CardView).foreground = null
-                }
+                val contentUri = getUriForFile(context, path)
+                val intent = Intent(context, MediaViewerActivity::class.java)
+                    .setAction(Intent.ACTION_VIEW)
+                    .setDataAndType(contentUri, "video/*")
+                    .setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    .putExtra("video_width", thumbnail?.width ?: 0)
+                    .putExtra("video_height", thumbnail?.height ?: 0)
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    conversationFragment.requireActivity(),
+                    imageView,
+                    "video"
+                )
+                conversationFragment.startActivityForResult(intent, 3006, options.toBundle())
             } catch (e: Exception) {
-                // Left blank
+                Log.e(TAG, "Failed to open video in MediaViewerActivity", e)
             }
         }
-        player.seekTo(1)
     }
 
     /**
