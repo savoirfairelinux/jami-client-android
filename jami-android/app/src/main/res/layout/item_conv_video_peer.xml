@@ -76,13 +76,14 @@
         app:layout_constraintLeft_toRightOf="@id/photo"
         app:layout_constraintTop_toBottomOf="@id/peer_name">
 
-        <TextureView
+        <ImageView
             android:id="@+id/video"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
             android:maxHeight="200dp"
-            android:transitionName="picture" />
+            android:transitionName="video" />
 
     </androidx.cardview.widget.CardView>
 

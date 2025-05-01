@@ -16,13 +16,20 @@
  */
 package cx.ring.client
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.view.MotionEvent
+import android.view.ViewConfiguration
+import android.view.ViewTreeObserver
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
@@ -30,33 +37,156 @@ import com.google.android.material.bottomappbar.BottomAppBar
 import cx.ring.R
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.utils.DeviceUtils
+import kotlin.math.abs
 
 class MediaViewerFragment : Fragment() {
     private var mUri: Uri? = null
+    private var videoView: android.widget.VideoView? = null
+    private var mediaController: android.widget.MediaController? = null
+    private var previewWidth = 0
+    private var previewHeight = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mUri = requireActivity().intent.data
+        postponeEnterTransition()
+        // Get thumbnail dimensions from intent
+        val intent = requireActivity().intent
+        previewWidth = intent.getIntExtra("video_width", 0)
+        previewHeight = intent.getIntExtra("video_height", 0)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val view = inflater.inflate(R.layout.fragment_media_viewer, container, false) as ViewGroup
-        Glide.with(this)
-            .load(mUri)
-            .into(view.findViewById(R.id.image))
-        view.findViewById<BottomAppBar>(R.id.bottomAppBar).setOnMenuItemClickListener { l ->
-            val uri = mUri ?: return@setOnMenuItemClickListener false
-            when (l.itemId) {
+
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        val view = inflater.inflate(R.layout.fragment_media_viewer, container, false)
+        val imageView = view.findViewById<View>(R.id.image)
+        videoView = view.findViewById(R.id.video_view)
+        val bottomAppBar = view.findViewById<BottomAppBar>(R.id.bottomAppBar)
+        val shareButton = view.findViewById<Button>(R.id.shareBtn)
+        val uri = mUri ?: return view
+        val mimeType = AndroidFileUtils.getMimeType(requireContext().contentResolver, uri)
+        val edgeThreshold = ViewConfiguration.get(requireContext()).scaledEdgeSlop
+
+        if (mimeType?.startsWith("video/") == true) {
+            if (previewWidth > 0 && previewHeight > 0) {
+                val screenWidth = resources.displayMetrics.widthPixels
+                val screenHeight = resources.displayMetrics.heightPixels
+                val aspectRatio = previewWidth.toFloat() / previewHeight
+                val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+                val (w, h) = if (isLandscape) {
+                    val height = screenHeight
+                    val width = (height * aspectRatio).toInt().coerceAtMost(screenWidth)
+                    width to height
+                } else {
+                    val width = screenWidth
+                    val height = (width / aspectRatio).toInt().coerceAtMost(screenHeight)
+                    width to height
+                }
+
+                videoView?.layoutParams = FrameLayout.LayoutParams(w, h).apply {
+                    gravity = Gravity.CENTER
+                }
+            }
+
+            imageView.visibility = View.GONE
+            videoView?.visibility = View.VISIBLE
+            videoView?.apply {
+                mediaController = android.widget.MediaController(requireContext()).apply {
+                    setAnchorView(this@apply)
+                }
+                setMediaController(mediaController)
+                setVideoURI(uri)
+                setOnPreparedListener { mp ->
+                    val videoWidth = mp.videoWidth
+                    val videoHeight = mp.videoHeight
+                    val thumbRatio = calculateAspectRatio(previewWidth, previewHeight)
+                    val videoRatio = calculateAspectRatio(videoWidth, videoHeight)
+
+                    if (abs(thumbRatio - videoRatio) > 0.01f) {
+                        val screenWidth = resources.displayMetrics.widthPixels
+                        val screenHeight = resources.displayMetrics.heightPixels
+                        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
+                        val (w, h) = if (isLandscape) {
+                            val height = screenHeight
+                            val width = (height * videoRatio).toInt().coerceAtMost(screenWidth)
+                            width to height
+                        } else {
+                            val width = screenWidth
+                            val height = (width / videoRatio).toInt().coerceAtMost(screenHeight)
+                            width to height
+                        }
+                        layoutParams = FrameLayout.LayoutParams(w, h).apply {
+                            gravity = Gravity.CENTER
+                        }
+                    }
+
+                    start()
+
+                    view.findViewById<ViewGroup>(R.id.video_container)?.viewTreeObserver
+                        ?.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
+                            override fun onPreDraw(): Boolean {
+                                view.viewTreeObserver.removeOnPreDrawListener(this)
+                                startPostponedEnterTransition()
+                                return true
+                            }
+                        })
+                }
+            }
+        } else {
+            videoView?.visibility = View.GONE
+            imageView.visibility = View.VISIBLE
+            Glide.with(this).load(uri).into(imageView as android.widget.ImageView)
+            startPostponedEnterTransition()
+        }
+
+        videoView?.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                val screenWidth = resources.displayMetrics.widthPixels
+                if (event.x < edgeThreshold || event.x > screenWidth - edgeThreshold) {
+                    return@setOnTouchListener true
+                }
+            }
+            false
+        }
+
+        bottomAppBar.setOnMenuItemClickListener {
+            when (it.itemId) {
                 R.id.conv_action_share -> AndroidFileUtils.shareFile(requireContext(), uri)
                 R.id.conv_action_download -> startSaveFile(uri)
                 R.id.conv_action_open -> openFile(uri)
             }
             true
         }
-        view.findViewById<Button>(R.id.shareBtn).setOnClickListener {
-            AndroidFileUtils.shareFile(requireContext(), mUri ?: return@setOnClickListener)
+
+        shareButton.setOnClickListener {
+            AndroidFileUtils.shareFile(requireContext(), uri)
         }
+
         return view
+    }
+
+    private fun calculateAspectRatio(width: Int, height: Int): Float {
+        return if (height != 0) width.toFloat() / height else 1f
+    }
+
+    override fun onPause() {
+        videoView?.pause()
+        super.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mUri?.let { uri ->
+            videoView?.apply {
+                if (!isPlaying) {
+                    start()
+                }
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

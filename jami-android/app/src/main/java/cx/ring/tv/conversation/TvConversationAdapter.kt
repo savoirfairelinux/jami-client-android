@@ -18,8 +18,9 @@ package cx.ring.tv.conversation
 
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.SurfaceTexture
 import android.media.MediaPlayer
+import android.media.ThumbnailUtils
+import android.provider.MediaStore
 import android.text.format.DateUtils
 import android.text.format.Formatter
 import android.util.Log
@@ -29,14 +30,13 @@ import android.view.ContextMenu.ContextMenuInfo
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MenuItem
-import android.view.Surface
-import android.view.TextureView.SurfaceTextureListener
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityOptionsCompat
@@ -270,7 +270,6 @@ class TvConversationAdapter(
         }
         if (holder.video != null) {
             holder.video.setOnClickListener(null)
-            holder.video.surfaceTextureListener = null
         }
         holder.surface?.release()
         holder.surface = null
@@ -323,7 +322,7 @@ class TvConversationAdapter(
         return true
     }
 
-    private fun configureImage(viewHolder: ConversationViewHolder, path: File) {
+    private fun configureImage(viewHolder: ConversationViewHolder, path: File, displayName: String?) {
         val context = viewHolder.itemView.context
         Glide.with(context)
             .load(path)
@@ -337,7 +336,7 @@ class TvConversationAdapter(
 
         viewHolder.itemView.setOnClickListener { v: View ->
             try {
-                val contentUri = getUriForFile(v.context, path)
+                val contentUri = getUriForFile(v.context, path, displayName)
                 val i = Intent(context, MediaViewerActivity::class.java)
                     .setAction(Intent.ACTION_VIEW)
                     .setDataAndType(contentUri, "image/*")
@@ -417,9 +416,38 @@ class TvConversationAdapter(
         }
     }
 
-    private fun configureVideo(viewHolder: ConversationViewHolder, path: File) {
+    private fun configureVideo(viewHolder: ConversationViewHolder, path: File, displayName: String?) {
         val context = viewHolder.itemView.context
-        viewHolder.itemView.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+        val imageView = viewHolder.video ?: return
+        val cardLayout = viewHolder.mLayout as? CardView ?: return
+        val playIcon = ContextCompat.getDrawable(context,R.drawable.baseline_play_arrow_24)?.mutate()
+
+        val thumbnail = try {
+            ThumbnailUtils.createVideoThumbnail(
+                path.canonicalPath,
+                MediaStore.Video.Thumbnails.MINI_KIND
+            )
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to create video thumbnail", e)
+            null
+        }
+
+        if (thumbnail != null) {
+            val maxDim = max(thumbnail.width, thumbnail.height)
+            val targetWidth = thumbnail.width * mPictureMaxSize / maxDim
+            val targetHeight = thumbnail.height * mPictureMaxSize / maxDim
+
+            imageView.layoutParams = imageView.layoutParams.apply {
+                width = targetWidth
+                height = targetHeight
+            }
+
+            imageView.setImageBitmap(thumbnail)
+        } else {
+            imageView.setImageResource(R.drawable.video_thumbnail_fallback)
+        }
+
+        viewHolder.itemView.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
             viewHolder.itemView.setBackgroundResource(
                 if (hasFocus) R.drawable.tv_item_selected_background
                 else R.drawable.tv_item_unselected_background
@@ -428,97 +456,36 @@ class TvConversationAdapter(
                 ?.scaleX(if (hasFocus) 1.1f else 1f)
         }
 
-        viewHolder.player?.let {
-            viewHolder.player = null
-            it.release()
-        }
-        val video = viewHolder.video ?: return
-        val cardLayout = viewHolder.mLayout as CardView
-        val player = MediaPlayer.create(context, getUriForFile(context, path)) ?: return
-        viewHolder.player = player
-        val playBtn =
-            ContextCompat.getDrawable(cardLayout.context, R.drawable.baseline_play_arrow_24)!!
-                .mutate()
-        DrawableCompat.setTint(playBtn, Color.WHITE)
-        cardLayout.foreground = playBtn
-        player.setOnCompletionListener { mp: MediaPlayer ->
-            if (mp.isPlaying) mp.pause()
-            mp.seekTo(1)
-            cardLayout.foreground = playBtn
+        playIcon?.let {
+            DrawableCompat.setTint(it, Color.WHITE)
+            cardLayout.foreground = it
+            cardLayout.foregroundGravity = Gravity.CENTER
         }
 
-        player.setOnVideoSizeChangedListener { mp: MediaPlayer, width: Int, height: Int ->
-            Log.w(TAG, "OnVideoSizeChanged " + width + "x" + height)
-            val p = video.layoutParams as FrameLayout.LayoutParams
-            val maxDim = max(width, height)
-            if (maxDim != 0) {
-                p.width = width * mPictureMaxSize / maxDim
-                p.height = height * mPictureMaxSize / maxDim
-            } else {
-                p.width = 0
-                p.height = 0
-            }
-            video.layoutParams = p
-        }
-        if (video.isAvailable) {
-            if (viewHolder.surface == null) {
-                viewHolder.surface = Surface(video.surfaceTexture)
-            }
-            player.setSurface(viewHolder.surface)
-        }
-        video.surfaceTextureListener = object : SurfaceTextureListener {
-            override fun onSurfaceTextureAvailable(
-                surfaceTexture: SurfaceTexture,
-                width: Int,
-                height: Int
-            ) {
-                if (viewHolder.surface == null) {
-                    viewHolder.surface = Surface(surfaceTexture).also { surface ->
-                        try {
-                            player.setSurface(surface)
-                        } catch (e: Exception) {
-                            // Left blank
-                        }
-                    }
-                }
+        imageView.setOnClickListener {
+            if (!path.exists()) {
+                Toast.makeText(context, R.string.video_not_found, Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
 
-            override fun onSurfaceTextureSizeChanged(
-                surface: SurfaceTexture,
-                width: Int,
-                height: Int
-            ) {
-            }
-
-            override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean {
-                try {
-                    player.setSurface(null)
-                } catch (e: Exception) {
-                    // Left blank
-                }
-                viewHolder.surface?.let {
-                    viewHolder.surface = null
-                    it.release()
-                }
-                return true
-            }
-
-            override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {}
-        }
-        video.setOnClickListener {
             try {
-                if (player.isPlaying) {
-                    player.pause()
-                    (viewHolder.mLayout as CardView).foreground = playBtn
-                } else {
-                    player.start()
-                    (viewHolder.mLayout as CardView).foreground = null
-                }
+                val contentUri = getUriForFile(context, path, displayName)
+                val intent = Intent(context, MediaViewerActivity::class.java)
+                    .setAction(Intent.ACTION_VIEW)
+                    .setDataAndType(contentUri, "video/*")
+                    .setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    .putExtra("video_width", thumbnail?.width ?: 0)
+                    .putExtra("video_height", thumbnail?.height ?: 0)
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    conversationFragment.requireActivity(),
+                    imageView,
+                    "video"
+                )
+                conversationFragment.startActivityForResult(intent, 3006, options.toBundle())
             } catch (e: Exception) {
-                // Left blank
+                Log.w(TAG, "Failed to open video in MediaViewerActivity", e)
             }
         }
-        player.seekTo(1)
     }
 
     private fun configureForFileInfo(
@@ -605,8 +572,8 @@ class TvConversationAdapter(
             false
         }
         when (type) {
-            MessageType.TransferType.IMAGE -> { configureImage(viewHolder, path) }
-            MessageType.TransferType.VIDEO -> { configureVideo(viewHolder, path) }
+            MessageType.TransferType.IMAGE -> { configureImage(viewHolder, path, file.body) }
+            MessageType.TransferType.VIDEO -> { configureVideo(viewHolder, path, file.body) }
             MessageType.TransferType.AUDIO -> { configureAudio(viewHolder, path) }
             else -> {
                 viewHolder.itemView.onFocusChangeListener =
