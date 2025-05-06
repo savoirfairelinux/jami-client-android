@@ -82,7 +82,6 @@ class TVContactMoreFragment : LeanbackSettingsFragmentCompat() {
                 .setPositiveButton(buttonText, onClickListener)
                 .setNegativeButton(android.R.string.cancel, null)
                 .create()
-            alertDialog.window!!.setLayout(DIALOG_WIDTH, DIALOG_HEIGHT)
             alertDialog.setOwnerActivity(requireActivity())
             alertDialog.setOnShowListener {
                 val positive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
@@ -111,7 +110,5 @@ class TVContactMoreFragment : LeanbackSettingsFragmentCompat() {
     companion object {
         const val CLEAR = 101
         const val DELETE = 102
-        private const val DIALOG_WIDTH = 900
-        private const val DIALOG_HEIGHT = 400
     }
 }

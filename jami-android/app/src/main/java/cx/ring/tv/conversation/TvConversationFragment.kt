@@ -136,7 +136,6 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
             }
             .setNegativeButton(android.R.string.cancel, null)
             .create().apply {
-                window!!.setLayout(DIALOG_WIDTH, DIALOG_HEIGHT)
                 setOwnerActivity(requireActivity())
             }
     }
@@ -267,8 +266,6 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
                 .setNegativeButton(android.R.string.cancel, null)
                 .setNeutralButton(R.string.tv_media_preview, null)
                 .create()
-        alertDialog.window!!
-            .setLayout(DIALOG_WIDTH, DIALOG_HEIGHT)
         alertDialog.setOwnerActivity(activity)
         alertDialog.setOnShowListener { dialog: DialogInterface? ->
             val positive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
@@ -306,8 +303,6 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
                 .setNegativeButton(android.R.string.cancel, null)
                 .setNeutralButton(R.string.tv_audio_play, null)
                 .create()
-        alertDialog.window!!
-            .setLayout(DIALOG_WIDTH, DIALOG_HEIGHT)
         alertDialog.setOwnerActivity(requireActivity())
         alertDialog.setOnShowListener { dialog: DialogInterface? ->
             val positive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
@@ -841,8 +836,6 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         private const val KEY_AUDIOFILE = "audiofile"
         private const val REQUEST_CODE_PHOTO = 101
         private const val REQUEST_CODE_SAVE_FILE = 103
-        private const val DIALOG_WIDTH = 900
-        private const val DIALOG_HEIGHT = 400
         private const val REQUEST_AUDIO_PERMISSION_FOR_VIDEO = 201
 
         fun newInstance(args: Bundle?): TvConversationFragment {
