@@ -39,6 +39,30 @@
       },
       "revId": "a7321fe2fb1f09b5e262bd4112ce7a66ab61b552",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d55bee0e_9ab07f44",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/twopane/TwoPaneLayout.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2025-05-09T19:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9164ace_91421020",
+      "range": {
+        "startLine": 444,
+        "startChar": 8,
+        "endLine": 455,
+        "endChar": 9
+      },
+      "revId": "a7321fe2fb1f09b5e262bd4112ce7a66ab61b552",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
