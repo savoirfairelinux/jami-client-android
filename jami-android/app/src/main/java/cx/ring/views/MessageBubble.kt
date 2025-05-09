@@ -260,7 +260,7 @@ class MessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context,
         val timeBottom: Int
         // Edited is always aligned with the time.
         val editedEnd: Int = timeStart
-        val editedStart: Int = editedEnd - messageEdited.measuredWidth
+        val editedStart = editedEnd - if (messageEdited.isVisible) messageEdited.measuredWidth else 0
 
         when (calculatedCase) {
             Case.NEW_LINE -> {
