@@ -40,6 +40,7 @@ import androidx.transition.TransitionManager
 import androidx.window.layout.FoldingFeature
 import androidx.window.layout.FoldingFeature.Orientation.Companion.VERTICAL
 import androidx.window.layout.WindowInfoTracker
+import cx.ring.R
 import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.math.abs
 import kotlin.math.max
@@ -214,6 +215,13 @@ class TwoPaneLayout @JvmOverloads constructor(
         super.onDetachedFromWindow()
         mFirstLayout = true
         mFoldingFeatureObserver?.unregisterLayoutStateChangeCallback()
+    }
+
+    private fun updateAccessibilityForPane(pane: View, isVisible: Boolean) {
+        pane.visibility = if (isVisible) View.VISIBLE else View.INVISIBLE
+        pane.importantForAccessibility =
+            if (isVisible) View.IMPORTANT_FOR_ACCESSIBILITY_YES
+            else View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -432,6 +440,18 @@ class TwoPaneLayout @JvmOverloads constructor(
                 nextXOffset = foldingFeature!!.bounds.width()
             }
             nextXStart += child.width + abs(nextXOffset)
+        }
+        if (childCount == 2) {
+            val homePane = findViewById<View>(R.id.home_fragment)
+            val conversationPane = findViewById<View>(R.id.conversation)
+
+            if (isSlideable) {
+                updateAccessibilityForPane(homePane, !isOpened)
+                updateAccessibilityForPane(conversationPane, isOpened)
+            } else {
+                updateAccessibilityForPane(homePane, true)
+                updateAccessibilityForPane(conversationPane, true)
+            }
         }
         mFirstLayout = false
     }
