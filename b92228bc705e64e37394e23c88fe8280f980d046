@@ -16,6 +16,24 @@
       "message": "I can\u0027t access the Jenkins CI, but according to my local compilation, it fails with `jami-android/libjamiclient/src/main/kotlin/net/jami/services/DaemonService.kt:170:9 \u0027registeredNameFound\u0027 overrides nothing` O.o",
       "revId": "b92228bc705e64e37394e23c88fe8280f980d046",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdbd4f2c_cb11268e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1129
+      },
+      "writtenOn": "2025-05-11T19:47:33Z",
+      "side": 1,
+      "message": "I had no problems at all when I built the patch locally. Everything seemed to work...",
+      "parentUuid": "24a231af_13ef234f",
+      "revId": "b92228bc705e64e37394e23c88fe8280f980d046",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
