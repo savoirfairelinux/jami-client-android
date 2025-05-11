@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bffeb215_f5b3c260",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1129
+      },
+      "writtenOn": "2025-05-11T19:43:07Z",
+      "side": 1,
+      "message": "Finally, I had time to do a proper build and to test the patch.\nIt seems to work as expected.\nMy test setup was the same computer \u003c-\u003e smartphone combination.\nThe video stream now starts properly and is continuous. Switching the smartphone camera also works properly.\nThe only thing I noted was that the smartphone\u0027s video stream started only after a few seconds on my computer (~10s). However, this might be unrelated. There seemed to be some decoder issue according to the stderr.",
+      "revId": "f6518f60f8c94b4fa36a57e7af9edc54ca7f10c8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
