@@ -212,7 +212,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="account_update_needed">Update needed</string>
     <string name="account_cannot_be_found_title">Account error</string>
     <string name="account_cannot_be_found_message">Unable to find account on the Jami network. Make sure it was exported on Jami from an existing device, and that provided credentials are correct.</string>
-    <string name="jams_account_cannot_be_found_message">An error occurred while connecting the account. Please check credentials and try again.</string>
     <string name="account_sip_cannot_be_registered_message">You can continue with the account creation process or edit your information here. Edition is still possible later in the account settings.</string>
     <string name="account_no_network_title">Network error</string>
     <string name="account_no_network_message">A connectivity error occurred while adding the Jami account to the distributed network. Check your device connectivity.</string>
