@@ -243,14 +243,19 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
             .show()
     }
 
-    override fun displayCannotBeFoundError() {
+    override fun displayCannotBeFoundError(mIsJamsAccount: Boolean?) {
         if (mAlertDialog != null && mAlertDialog!!.isShowing) {
             return
         }
-        mAlertDialog = MaterialAlertDialogBuilder(this@AccountWizardActivity)
+        val message = if (mIsJamsAccount == true) {
+            getString(R.string.jams_account_cannot_be_found_message)
+        } else {
+            getString(R.string.account_cannot_be_found_message)
+        }
+        mAlertDialog = AlertDialog.Builder(this@AccountWizardActivity)
             .setPositiveButton(android.R.string.ok, null)
             .setTitle(R.string.account_cannot_be_found_title)
-            .setMessage(R.string.account_cannot_be_found_message)
+            .setMessage(message)
             .setOnDismissListener { supportFragmentManager.popBackStack() }
             .show()
     }
