@@ -31,7 +31,7 @@ interface AccountWizardView {
     fun saveProfile(account: Account)
     fun displayGenericError()
     fun displayNetworkError()
-    fun displayCannotBeFoundError()
+    fun displayCannotBeFoundError(mIsJamsAccount: Boolean)
     fun displaySuccessDialog()
     fun goToProfileCreation()
 }
