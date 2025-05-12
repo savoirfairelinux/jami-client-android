@@ -233,6 +233,8 @@ class AccountCreation {
         // Check that we are in the home activity.
         waitForView(withId(R.id.search_bar)).perform(waitUntil(isDisplayed()))
 
+        Thread.sleep(500)
+
         // Go to account settings. Click on search bar menu.
         onView(withId(R.id.menu_overflow)).perform(click())
 
@@ -278,6 +280,8 @@ class AccountCreation {
 
         // Check that we are in the home activity.
         waitForView(withId(R.id.search_bar)).perform(waitUntil(isDisplayed()))
+
+        Thread.sleep(500)
 
         // Go to account settings. Click on search bar menu.
         onView(withId(R.id.menu_overflow)).perform(click())
