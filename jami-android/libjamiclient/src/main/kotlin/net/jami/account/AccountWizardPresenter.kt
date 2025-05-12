@@ -154,7 +154,7 @@ class AccountWizardPresenter @Inject constructor(
                             mCreatingAccount = false
                             view.displayGenericError()
                         } else {
-                            view.finish(true)
+                            view.goToProfileCreation()
                         }
                     }
                 }) {
