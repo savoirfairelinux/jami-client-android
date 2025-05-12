@@ -660,11 +660,7 @@ class AccountSettings {
         onView(withId(R.id.existing_password)).perform(typeText("123456"), closeSoftKeyboard())
         onView(withId(R.id.link_button)).perform(click())
 
-        try {
-            AccountCreation.skipBiometrics()
-        } catch (e: Exception) {
-            Log.d(TAG, "Biometrics dialog not shown, skipping...")
-        }
+        AccountCreation.skipBiometrics()
 
         // Check that we are in the home activity.
         onView(withId(R.id.search_bar)).check(matches(isDisplayed()))
