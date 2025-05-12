@@ -154,13 +154,14 @@ class AccountWizardPresenter @Inject constructor(
                             mCreatingAccount = false
                             view.displayGenericError()
                         } else {
-                            view.finish(true)
+                            view.goToProfileCreation()
                         }
                     }
                 }) {
                     mCreatingAccount = false
                     view!!.displayProgress(false)
-                    view!!.displayCannotBeFoundError()
+                    view!!.displayCannotBeFoundError(
+                        accountCreationModel.managementServer.isNullOrEmpty())
                 })
         } else {
             view?.goToProfileCreation()
