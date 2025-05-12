@@ -28,6 +28,8 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.application.JamiApplication
@@ -72,6 +74,21 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
                     .commit()
         } else  // migration is not needed
             presenter.init(intent.action ?: AccountConfig.ACCOUNT_TYPE_JAMI)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.wizard_container)) { view, insets ->
+                val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
+                val navInsets = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+
+                view.setPadding(
+                    view.paddingLeft,
+                    view.paddingTop,
+                    view.paddingRight,
+                    maxOf(imeInsets.bottom, navInsets.bottom)
+                )
+                insets
+            }
+        }
     }
 
     override fun onDestroy() {
