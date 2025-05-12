@@ -148,6 +148,7 @@
   <string name="conversation_action_incoming_call">Eingehender Anruf</string>
   <string name="clip_message">Nachrichteninhalt</string>
   <string name="conversation_message_deleted">%s hat eine Nachricht gelöscht</string>
+  <string name="video_not_found">Videodatei nicht gefunden</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_type_group">Gruppe</string>
   <string name="conversation_contact_invited">%1$swurde zur Unterhaltung eingeladen.</string>

@@ -1,63 +1,74 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="section_license">Licens</string>
+  <string name="section_license">Lisens</string>
   <string name="copyright_section">Opphavsrett</string>
   <string name="contribute_section">Bidra til</string>
-  <string name="version_section">Versionen</string>
-  <string name="website_chooser_title">Vis webside ved bruk av...</string>
+  <string name="version_section">Utgåve</string>
+  <string name="website_chooser_title">Vis nettstad ved å bruka ...</string>
   <string name="license">Dette programvaren er levert "som det er", utan nokon garanti. For meir informasjon, sjå GNU General Public License versjon 3 eller seinare&lt;/u&gt;</string>
-  <string name="description">Jami er fri programvare for universell kommunikasjon som respekterer friheitene og privatlivet til brukarane sine.</string>
+  <string name="description">Jami er fri programvare for universell kommunikasjon som respekterer fridomane og privatlivet til brukarane sine.</string>
   <string name="credits">Treningar</string>
   <string name="pip_title">Jami-konferansen</string>
-  <string name="call_service_description">Denne tjenesten er nødvendig for å halde samtalene dine i foregånde. Han vert berre brukt under samtal.</string>
-  <string name="data_transfer_service_description">Denne tjenesten er nødvendig for å vise vedvarende meldingar under filoverføringar.</string>
+  <string name="call_service_description">Denne tenesta er naudsynt for å halda samtalane dine i framgrunnen. Han vert berre brukt under samtalar.</string>
+  <string name="data_transfer_service_description">Denne tenesta er naudsynt for å visa vedvarande meldingar under filoverføringar.</string>
   <!--About dialog-->
-  <string name="media">Medeldamedia</string>
+  <string name="thank_note">Me ynskjer å takka dei som har medverka saman med oss, som har arbeidd over mange år for å gjera programvara til kva ho er.</string>
+  <string name="developers">Utviklarar</string>
+  <string name="media">Media</string>
+  <string name="special_thanks">Særleg takk til</string>
+  <string name="end_note">Dette er ei liste over folk som har lagt inn mykje tid, med utviklande resultat, inn i Jami. Kven som helst av desse bidragsytarane som ynskjer å verta lagt til burde kontakta Jami-teamet på contact@jami.net.</string>
   <!--RingActivity-->
-  <string name="error_no_network">Ingen nettverksanslutning</string>
+  <string name="error_no_network">Ingen nettverkstilslutning</string>
   <string name="error_account_offline">Denne kontoen er avlogga</string>
   <!--AB menus-->
   <string name="ab_action_chat">Tekstmeldingar</string>
   <!--Sections-->
-  <string name="menu_item_contact_request">Kontaktbevis</string>
+  <string name="menu_item_contact_request">Kontaktførespurnadar</string>
   <string name="menu_item_accounts">Hantera kontoar</string>
   <string name="menu_item_account">Ta styr på kontoen</string>
   <string name="menu_item_settings">Innstillingar</string>
-  <string name="menu_item_account_settings">Settingar på konto</string>
-  <string name="menu_item_share">Deila kontoen min</string>
+  <string name="menu_item_app_settings">App-innstillingar</string>
+  <string name="menu_item_account_settings">Kontoinnstillingar</string>
+  <string name="menu_item_extension_list">Utvidingsinstillingar</string>
+  <string name="menu_item_share">Dela kontoen min</string>
   <string name="menu_item_about">Om Jami</string>
-  <string name="video_setting_title">Videoinnstillingane</string>
+  <string name="video_setting_title">Videoinnstillingar</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">Slå inn nummer</string>
   <!--History Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">Invitasjonar motteke</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d samtale</item>
-    <item quantity="other">%d Samtal</item>
+    <item quantity="other">%d Samtalar</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="choose_number">Velg eit nummer</string>
+  <string name="searchbar_hint">Søk etter namn eller samtale ...</string>
+  <string name="choose_number">Vel eit nummer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Miska innkomne samtal</string>
-  <string name="notif_missed_outgoing_call">Miska utgående samtale</string>
-  <string name="notif_incoming_call_title">Innkommende samtal frå %1$s</string>
-  <string name="notif_incoming_call">Innkommende samtal</string>
-  <string name="notif_outgoing_call_title">Utgående samtal til %1$s</string>
-  <string name="notif_outgoing_call">Utgående samtale</string>
+  <string name="notif_missed_incoming_call">Tapa innkomande samtale</string>
+  <string name="notif_missed_outgoing_call">Tapa utgåande samtale</string>
+  <string name="notif_incoming_call_title">Innkomande samtale frå %1$s</string>
+  <string name="notif_incoming_call">Innkomande samtale</string>
+  <string name="notif_outgoing_call_title">Utgåande samtale til %1$s</string>
+  <string name="notif_outgoing_call">Utgåande samtale</string>
   <string name="notif_current_call_title">Fortsett samtale med %1$s</string>
-  <string name="notif_current_call">Forlopande samtale</string>
-  <string name="notif_channel_calls">Ringing</string>
-  <string name="notif_channel_missed_calls">Miska ring</string>
-  <string name="notif_channel_incoming_calls">Innkommende samtal</string>
+  <string name="notif_current_call">Samtale går føre seg</string>
+  <string name="notif_channel_call_in_progress">Er i samtale</string>
+  <string name="notif_channel_calls">Samtalar</string>
+  <string name="notif_channel_missed_calls">Tapa samtalar</string>
+  <string name="notif_channel_incoming_calls">Innkomande samtale</string>
   <string name="notif_channel_messages">Meldingar</string>
   <string name="notif_channel_requests">Foreldre</string>
   <string name="notif_channel_file_transfer">File overføring</string>
   <string name="notif_channel_sync">Data synkronisering</string>
   <string name="notif_channel_background_service">Hygdeleg service</string>
   <string name="notif_channel_background_service_descr">Tillat til å motta samtal og meldingar når som helst.</string>
-  <string name="notif_group_calls">Ringing</string>
+  <string name="notif_group_calls">Samtalar</string>
+  <string name="notif_inprogress_group_call">Samtale går føre seg</string>
   <string name="notif_mark_as_read">Merk som lesing</string>
   <string name="notif_dismiss">Kast bort</string>
   <string name="notif_reply">Svar</string>
@@ -83,16 +94,26 @@
   <string name="ongoing_call">Forlopande samtale</string>
   <string name="hist_in_call">Inkommande samtal av %1$s</string>
   <string name="hist_out_call">Utgående samtale av %1$s</string>
-  <string name="action_call_decline">Nedgang</string>
-  <string name="action_call_mic_mute">Stum mikrofon</string>
+  <string name="action_call_accept_audio">Godta med ljod</string>
+  <string name="action_call_accept_video">Godta med video</string>
+  <string name="action_call_hold_accept">Godta den innkomande samtala med berre ljod og bli verande i samtala</string>
+  <string name="action_call_hold_accept_video">Godta den innkomande samtala med video og bli verande i samtala</string>
+  <string name="action_call_end_accept">Godta den innkomande samtala og enda den noverande samtala</string>
+  <string name="action_call_decline">Nekta</string>
+  <string name="action_call_mic_mute">Døyva mikrofonen</string>
+  <string name="action_load_extension">Last opp utviding</string>
+  <string name="ab_action_speakerphone">Skru på høgtalar</string>
   <string name="ab_action_contact_add">Legg til kontakt</string>
   <string name="ab_action_contact_add_question">Legg til kontakt?</string>
   <string name="ab_action_audio_call">Start lydsamtale</string>
   <string name="ab_action_video_call">Start video samtal</string>
   <string name="ab_action_change_screen_orientation">Endra skjermorienteringa</string>
   <string name="share_via">Del via</string>
+  <string name="write_a_message">Skriv melding</string>
   <string name="scan_qr">Skanna QR-kode</string>
   <string name="qr_code">QR-kode</string>
+  <string name="qr_code_not_contact">Dette er ikkje ein QR kode for å kontakta andre på Jami</string>
+  <string name="new_group">Lag ei ny gruppe</string>
   <string name="ab_action_flipcamera">Flip-kamera</string>
   <string name="ab_action_hidepreview">Skjå ut forhandsvisning</string>
   <string name="remote_recording">%s innspilling...</string>
@@ -100,7 +121,7 @@
   <string name="send_message">Send melding</string>
   <string name="message_sending">Send ein melding...</string>
   <string name="message_failed">Fjellet</string>
-  <string name="time_just_now">No, akkurat no</string>
+  <string name="time_just_now">Nett no</string>
   <string name="send_file">Sende fil</string>
   <string name="select_media">Open gallery</string>
   <string name="hist_file_sent">File sendt</string>
@@ -109,6 +130,7 @@
   <string name="conversation_send_video">Ta opp videoen</string>
   <string name="conversation_share_location">Del plassering</string>
   <string name="ongoing_group_call">Forlopande samtale</string>
+  <string name="started_call">Byrja ei samtale</string>
   <string name="in_reply_to">I svar på</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Filmtillating til kamera</string>
@@ -213,6 +235,8 @@
   <string name="accept">Ta imot</string>
   <string name="decline">Nedgang</string>
   <string name="block">Block</string>
+  <string name="decline_invitation">Nekta invitasjon</string>
+  <string name="accept_invitation">Godta invitasjon</string>
   <string name="invitation_message">Du har %1$d kontaktforeldingar</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Ingen blokkade kontakt</string>
@@ -226,7 +250,7 @@
   <string name="gallery_error_message">Ingen applikasjon finnast på einheten til å opna Gallery</string>
   <!--File Transfer-->
   <string name="file_transfer_status_canceled">Avbrutt</string>
-  <string name="file_download">Ta ned</string>
+  <string name="file_download">Last ned</string>
   <string name="title_media_viewer">Medievisjon</string>
   <string name="menu_file_open">Åpne fil</string>
   <string name="menu_file_download">Nedlasting av fil</string>
@@ -235,41 +259,42 @@
   <string name="menu_file_share">Del filen</string>
   <string name="menu_message_copy">Kopiert</string>
   <string name="menu_message_edit">Redigera melding</string>
+  <string name="menu_message_history">Meldingshistorikk</string>
   <string name="menu_message_delete">Ta bort meldinga</string>
   <string name="menu_message_cancel">Avbryt melding</string>
   <string name="menu_message_reply">Svar</string>
   <string name="menu_delete">Ta bort</string>
-  <string name="pref_darkTheme_title">Dunkle tema</string>
+  <string name="pref_darkTheme_title">Dimt tema</string>
   <string name="pref_darkTheme_summary">Alltid aktivera mørk tema i staden for å bruke systemadferd</string>
   <!--Bottom Navigation-->
-  <string name="navigation_item_conversation">Samtal</string>
+  <string name="navigation_item_conversation">Samtalar</string>
   <string name="navigation_item_contact_request">Invitasjonar</string>
   <string name="navigation_item_account">Konto</string>
   <string name="search_results_public_directory">Publikumskreds</string>
   <!--TV-->
-  <string name="tv_send_audio_dialog_message">Skicka ein lydmelding?</string>
-  <string name="tv_send_image_dialog_message">Send bilden?</string>
+  <string name="tv_send_audio_dialog_message">Send ljodmeldinga?</string>
+  <string name="tv_send_image_dialog_message">Send bilete?</string>
   <string name="tv_send_video_dialog_message">Send videoen?</string>
   <string name="tv_media_preview">Forhandsvisning</string>
-  <string name="tv_audio_play">Spelar</string>
+  <string name="tv_audio_play">Spel av</string>
   <string name="tv_audio_pause">Pause</string>
   <string name="tv_dialog_send">Send inn</string>
   <string name="tv_audio_recording">Filmane blir opptekna.</string>
   <string name="tv_send_text">Send sms</string>
   <string name="tv_send_audio">Send lyd</string>
   <string name="tv_send_video">Send media</string>
-  <string name="tv_action_more">Mer om det</string>
+  <string name="tv_action_more">Meir om det</string>
   <string name="conversation_input_speech_hint">Sei noko...</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Tilrådeleg</string>
-  <string name="wizard_status_optional">Utval</string>
-  <string name="wizard_status_required">Trenger</string>
-  <string name="wizard_username_info">Velg ein brukernavn for kontoen din</string>
-  <string name="wizard_username_button">Velg brukernavn</string>
+  <string name="wizard_status_optional">Valfritt</string>
+  <string name="wizard_status_required">Naudsynt</string>
+  <string name="wizard_username_info">Vel eit brukarnamn for kontoen din</string>
+  <string name="wizard_username_button">Vel brukarnamn</string>
   <string name="wizard_username_skip">Skip utval av brukernavn</string>
   <string name="wizard_password_info">Passord til kontoen</string>
-  <string name="wizard_password_placeholder">Velg ein passord for å kryptera kontoen på denne enkla</string>
-  <string name="wizard_password_button">Velg password</string>
+  <string name="wizard_password_placeholder">Vel eit passord for å kryptera kontoen på denne eininga</string>
+  <string name="wizard_password_button">Vel passord</string>
   <string name="wizard_password_skip">Skapa konto</string>
   <string name="wizard_password_switch">Kryptera konto med passord</string>
   <string name="wizard_password_warning">Legg merke til at passordet ikkje kan gjenoppretta</string>
@@ -291,6 +316,7 @@
   <string name="reset">Omsetning</string>
   <!--Swarm Details-->
   <string name="rename_btn">Bekreft</string>
+  <string name="swarm_description">Legg til skildring</string>
   <string name="tab_members">Medlemmar</string>
   <string name="tab_files">Dateiar</string>
   <string name="tab_settings">Innstillingar</string>
@@ -311,10 +337,11 @@
   <string name="mute_conversation">Taus samtale</string>
   <!--Donation-->
   <string name="donation_card_not_now">Ikkje no</string>
+  <string name="donation_donate">Doner</string>
   <!--Extension-->
   <string name="export_side_step1_code_connect">Knytta</string>
   <string name="export_side_step2_cancel">Avbryt</string>
-  <string name="export_side_step2_confirm">Bekreft</string>
+  <string name="export_side_step2_confirm">Godta</string>
   <string name="import_side_step1_share">Deling</string>
   <string name="import_side_step2_password_import">Import</string>
 </resources>

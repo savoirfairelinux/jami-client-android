@@ -3,10 +3,16 @@
   <!--About-->
   <string name="submit_issue_title">Enviar problema</string>
   <string name="submit_issue_action_description"><u>Crear nueva edición</u></string>
+  <string name="section_license">Licencia</string>
   <string name="sponsor_section">Jami es software libre desarrollado y respaldado por</string>
+  <string name="copyright_section">Derechos Reservados</string>
+  <string name="contribute_section">Contribuir</string>
+  <string name="version_section">Versión</string>
   <string name="no_browser_app_installed">No se encontró ninguna aplicación de navegador web, instalar una para ver esta página.</string>
   <string name="website_chooser_title">Mira la pagina web usando...</string>
   <string name="license">Este software se proporciona \"tal cual\" sin garantía de ningún tipo. Para mas información, vea 1 GNU General Public License versión 3 o superior</string>
+  <string name="description">Jami es software libre para la comunicación universal que respeta las libertades y privacidad de sus usuarios.</string>
+  <string name="credits">Créditos</string>
   <!--About dialog-->
   <string name="thank_note">Nos gustaría agradecer a nuestros colaboradores, cuyos esfuerzos durante muchos años han hecho de este software lo que es.</string>
   <string name="developers">Desarrolladores</string>
@@ -15,8 +21,11 @@
   <string name="special_thanks">Un agradecimiento especial a</string>
   <string name="end_note">Esta es una lista de personas que han invertido una cantidad significativa de tiempo, con resultados útiles, en Jami. Cualquier colaborador que desee ser agregado a la lista debe comunicarse con el equipo de Jami al contact@jami.net.</string>
   <!--RingActivity-->
+  <string name="error_account_offline">La cuenta se encuentra fuera de línea</string>
   <!--AB menus-->
   <!--Sections-->
+  <string name="menu_item_accounts">Administrar cuentas</string>
+  <string name="menu_item_account">Administrar cuenta</string>
   <string name="menu_item_app_settings">Configuración de la Aplicación</string>
   <string name="menu_item_account_settings">Configuración de la cuenta</string>
   <string name="menu_item_extension_list">Configuración de Extensiones</string>
@@ -26,8 +35,14 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Invitaciones recibidas</string>
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d Conversación</item>
+    <item quantity="many">%d Conversaciones</item>
+    <item quantity="other">%dConversaciones</item>
+  </plurals>
   <!--ContactList Fragment-->
   <string name="searchbar_hint">Buscar nombre o conversación...</string>
+  <string name="choose_number">Elige un número</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
@@ -36,7 +51,9 @@
   <string name="notif_channel_file_transfer">Transferencia de archivos</string>
   <string name="notif_inprogress_group_call">Llamada en curso</string>
   <string name="notif_background_service">Jami se está ejecutando actualmente en segundo plano</string>
+  <string name="location_share_contact">%1$s está compartiendo su ubicación contigo</string>
   <!--Call Fragment-->
+  <string name="you_txt_prefix">Tú:</string>
   <string name="hist_out_call">Llamada saliente de %1$s</string>
   <string name="call_duration">Último %s</string>
   <string name="start_error_title">No se puede iniciar Jami</string>
@@ -133,6 +150,7 @@
   <string name="identifier">Identificador</string>
   <string name="devices_header">Dispositivos</string>
   <!--Share fragment-->
+  <string name="share_message">Escanear este código con Jami</string>
   <string name="share_contact_information">Compartir información de contacto</string>
   <string name="generic_error_migration_message">Se produjo un error al migrar la cuenta.</string>
   <!--Pending invitations-->
@@ -172,9 +190,14 @@
   <string name="no_space_left_on_device">No hay espacio disponible en el dispositivo.</string>
   <string name="menu_message_edit">Editar mensaje</string>
   <string name="menu_message_history">Historial de mensajes</string>
+  <string name="menu_delete">Eliminar</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_contact_request">Invitaciones</string>
   <!--TV-->
+  <string name="tv_send_image_dialog_message">¿Enviar la imagen?</string>
+  <string name="tv_send_video_dialog_message">¿Enviar el video?</string>
+  <string name="tv_send_video">Enviar  Archivo Multimedia</string>
+  <string name="conversation_input_speech_hint">Teclea algo...</string>
   <string name="audio_permission_denied">El permiso del micrófono está deshabilitado. Habilítelo en la configuración del dispositivo para usar esta función.</string>
   <string name="camera_permission_denied">El permiso de la cámara está deshabilitado. Habilítelo en la configuración del dispositivo para usar esta función.</string>
   <string name="speech_recogniton_unavailable">El reconocimiento de voz no está disponible.</string>
@@ -186,10 +209,22 @@
   <string name="error_sharing_file">Ocurrió un error mientras cdompartía el archivo:</string>
   <string name="error_opening_file">Se produjo un error al abrir el archivo.</string>
   <!--Wizard-->
+  <string name="wizard_username_info">Escoje un nombre de usuario para tu cuenta</string>
+  <string name="wizard_username_button">Elegir nombre de usuario</string>
+  <string name="wizard_username_skip">Saltar elección de nombre de usuario</string>
+  <string name="wizard_password_placeholder">Elije una contraseña para cifrar la cuenta en éste dispositivo</string>
+  <string name="wizard_password_button">Crear contraseña</string>
+  <string name="wizard_password_warning">Tenga en cuenta que la contraseña no puede ser recuperada</string>
+  <string name="wizard_profile_info">El perfil es compartido sólo con tus contactos</string>
+  <string name="wizard_profile_skip">Saltar y hacerlo después</string>
+  <string name="fab_path_choose">Escoje otro archivo</string>
   <string name="chat_extensions">Extensiones de chat</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_extensions_btn">Extensions</string>
+  <string name="bottomSheet_add_participants_btn">Añadir</string>
+  <string name="bottomSheet_change_camera_btn">Cambiar</string>
   <string name="bottomSheet_hangup_btn">Terminar llamada</string>
+  <string name="bottomSheet_raiseHand_btn">Levantar la mano</string>
   <string name="open_account_extension_settings">Abra la Configuración de la Extensión de la Cuenta</string>
   <string name="open_general_extension_settings">Abra la Configuración General de la Extensión</string>
   <!--Swarm Details-->

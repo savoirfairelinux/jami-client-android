@@ -8,6 +8,7 @@
   <string name="pref_category_diagnostic">രോഗനിർണയം</string>
   <string name="pref_category_appearance">രൂപം</string>
   <string name="pref_category_connectivity">കണക്റ്റിവിറ്റി</string>
+  <string name="pref_category_extensions">എക്സ്റ്റൻഷനുകൾ</string>
   <string name="pref_category_video_settings">വിപുലമായ വീഡിയോ ക്രമീകരണങ്ങൾ</string>
   <string name="pref_mobileData_title">മൊബൈൽ ഡാറ്റ</string>
   <string name="pref_mobileData_summary">വൈഫൈ കൂടാതെ 3 ജി/എൽടിഇ നെറ്റ്വർക്കുകളിൽ ജാമിക്ക് പ്രവേശനം അനുവദിക്കുക</string>

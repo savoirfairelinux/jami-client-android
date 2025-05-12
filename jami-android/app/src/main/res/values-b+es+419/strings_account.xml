@@ -1,8 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings related to account edition screen-->
+  <string name="ic_delete_menu">Eliminar</string>
+  <string name="ic_advanced_menu">Opciones avanzadas</string>
+  <string name="ic_blacklist_menu">Contactos bloqueados</string>
   <!--Strings related to account creation-->
   <string name="account_selection">Seleccionar cuenta</string>
+  <string name="add_ring_account_title">Añadir cuenta</string>
   <string name="account_creation_error">Se produjo un error al crear la cuenta.</string>
   <string name="dialog_warn_ip2ip_account_title">¿Crear una cuenta SIP vacía?</string>
   <string name="dialog_warn_ip2ip_account_message">Estás a punto de crear una cuenta SIP con un nombre de host inválido.
@@ -75,6 +79,10 @@
   <string name="account_sip_success_title">Cuenta SIP registrada</string>
   <string name="account_sip_success_message">Cuenta SIP registrada con éxito.</string>
   <!--TV-->
+  <string name="account_tv_advance_settings_header">Opciones avanzadas</string>
+  <string name="tv_about_version">Versión</string>
+  <string name="tv_about_license">Licencia</string>
+  <string name="tv_about_credits">Créditos</string>
   <string name="account_new_button">Crear una cuenta de Jami</string>
   <string name="account_start_export_button">Generar código PIN</string>
   <string name="account_connect_server">Conéctese al servidor JAMS</string>

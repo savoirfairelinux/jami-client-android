@@ -209,6 +209,7 @@
   <string name="conversation_ended">Unterhaltung beendet.</string>
   <string name="conversation_message_deleted">%s hat eine Nachricht gelöscht</string>
   <string name="conversation_reply_you">Sie</string>
+  <string name="video_not_found">Videodatei nicht gefunden</string>
   <string name="conversation_preference_color">Farbe der Unterhaltung</string>
   <string name="conversation_preference_emoji">Emoji der Unterhaltung</string>
   <string name="conversation_type_contact">Jami-Kontakt</string>

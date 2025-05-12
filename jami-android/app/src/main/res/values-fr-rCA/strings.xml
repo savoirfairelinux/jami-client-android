@@ -210,12 +210,13 @@
   <string name="conversation_ended">La conversation est terminée.</string>
   <string name="conversation_message_deleted">%s a supprimé un message</string>
   <string name="conversation_reply_you">Vous</string>
+  <string name="video_not_found">Fichier vidéo introuvable</string>
   <string name="conversation_preference_color">Couleur de la conversation</string>
   <string name="conversation_preference_emoji">Émoji de la conversation</string>
   <string name="conversation_type_contact">Contact Jami</string>
   <string name="conversation_type_private">Privé</string>
   <string name="conversation_type_group">Groupe</string>
-  <string name="conversation_contact_invited">1%1$s est invité à rejoindre la conversation.</string>
+  <string name="conversation_contact_invited">%1$s est invité à rejoindre la conversation.</string>
   <string name="conversation_contact_added">%1$s a rejoint la conversation.</string>
   <string name="conversation_contact_left">%1$s a quitté la conversation.</string>
   <string name="conversation_contact_blocked">%1$s a été bloqué dans la conversation.</string>

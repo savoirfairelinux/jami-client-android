@@ -44,6 +44,11 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Invitaciones recibidas</string>
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d Conversación</item>
+    <item quantity="many">%d Conversaciones</item>
+    <item quantity="other">%dConversaciones</item>
+  </plurals>
   <!--ContactList Fragment-->
   <string name="searchbar_hint">Buscar nombre o conversación...</string>
   <string name="choose_number">Seleccionar un numero</string>

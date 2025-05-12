@@ -209,6 +209,7 @@
   <string name="conversation_ended">Vestlus on lõppenud.</string>
   <string name="conversation_message_deleted">%s kustutas sõnumi</string>
   <string name="conversation_reply_you">Sina</string>
+  <string name="video_not_found">Videofaili ei leidu</string>
   <string name="conversation_preference_color">Vestluse värv</string>
   <string name="conversation_preference_emoji">Vestluse emojid</string>
   <string name="conversation_type_contact">Jami kontakt</string>

@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">പ്രശ്നം സബ്മിറ്റു ചെയ്യുക</string>
   <string name="section_license">ലൈസൻസ്</string>
   <string name="copyright_section">പകർപ്പവകാശം</string>
   <string name="contribute_section">സംഭാവന ചെയ്യുക</string>
@@ -83,6 +84,8 @@
   <string name="ongoing_call">തുടര് ന്ന വിളി</string>
   <string name="hist_in_call">%1$s എന്ന പേരിൽ വരുന്ന കോൾ</string>
   <string name="hist_out_call">%1$s എന്നതിന്റെ ഔട്ട്ഗോയിംഗ് കോൾ</string>
+  <string name="action_call_accept_audio">ഓഡിയൊ വഴി സ്വീകരിക്കുക</string>
+  <string name="action_call_accept_video">വീഡിയൊ വഴി സ്വീകരിക്കുക</string>
   <string name="action_call_decline">കുറവ്</string>
   <string name="action_call_mic_mute">മിണ്ടാത്ത മൈക്രോഫോൺ</string>
   <string name="ab_action_contact_add">കോൺടാക്റ്റുകളിലേക്ക് ചേർക്കുക</string>
@@ -93,8 +96,9 @@
   <string name="share_via">∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ </string>
   <string name="scan_qr">ക്യുആർ കോഡ് സ്കാൻ ചെയ്യുക</string>
   <string name="qr_code">ക്യുആർ കോഡ്</string>
+  <string name="new_group">പുതിയ ഗ്രൂപ്പ് നിർമ്മിക്കുക</string>
   <string name="ab_action_flipcamera">ഫ്ലിപ്പ് ക്യാമറ</string>
-  <string name="ab_action_hidepreview">മുൻകൂർ കാണൽ മറയ്ക്കുക</string>
+  <string name="ab_action_hidepreview">പ്രിവ്യൂ മറയ്ക്കുക</string>
   <string name="remote_recording">%s റെക്കോർഡിംഗ്</string>
   <!--Text messages-->
   <string name="send_message">സന്ദേശം അയയ്ക്കുക</string>
@@ -145,6 +149,7 @@
   <string name="conversation_action_select_peer_number">ഒരു നമ്പര് തിരഞ്ഞെടുക്കുക</string>
   <string name="conversation_action_block_this">തടയൽ കോൺടാക്റ്റ്</string>
   <string name="conversation_action_unblock_this">കോൺടാക്റ്റ് തടയുക</string>
+  <string name="conversation_action_go_to_call">കോളിലേക്ക് തിരിച്ചുവരിക</string>
   <string name="conversation_action_incoming_call">വരാനിരിക്കുന്ന കോൾ</string>
   <string name="conversation_action_latest">സംഭാഷണത്തിന്‍റെ അവസാനത്തിലേക്ക് സ്‌ക്രോൾ ചെയ്യുക</string>
   <string name="conversation_open_file_error">ഈ ഫയൽ തരം തുറക്കാൻ സാധിക്കുന്ന ഒരു അപ്ലിക്കേഷനും ഇൻസ്റ്റാൾ ചെയ്തിട്ടില്ല.</string>
@@ -180,11 +185,12 @@
   <string name="help_password_choose">ജാമി അക്കൌണ്ട് പരിരക്ഷിക്കുന്നതിന് നിങ്ങള് ക്ക് ഓർമ്മയുണ്ടാകുന്ന ശക്തമായ പാസ്വേഡ് തിരഞ്ഞെടുക്കുക.</string>
   <string name="help_password_enter">നിങ്ങളുടെ പ്രധാന ജാമി അക്കൌണ്ട് പാസ്വേഡ് നൽകുക.</string>
   <string name="help_server_enter">മാനേജ്മെന്റ് സെർവറിന്റെ URL നൽകുക.</string>
+  <string name="copied_clipboard">ക്ലിപ്‍ബോർഡിലേക്ക് കോപ്പി ചെയ്യുക.</string>
   <string name="wizard_next">അടുത്തത്</string>
   <string name="wizard_back">തിരിച്ചുപോവുക</string>
   <string name="wizard_skip">സ്കിപ്പ് ചെയ്യുക</string>
   <string name="hist_contact_invited">ബന്ധപ്പെടാൻ ക്ഷണിച്ചു</string>
-  <string name="hist_contact_added">ബന്ധം കൂട്ടിച്ചേർത്തു</string>
+  <string name="hist_contact_added">കോണ്ടാക്ട് ചേർത്തു</string>
   <string name="hist_contact_left">ഇടതുവശത്തുള്ള കോൺടാക്ട്</string>
   <string name="hist_invitation_received">ക്ഷണം ലഭിച്ചത്</string>
   <!--Account summary-->
@@ -213,6 +219,8 @@
   <string name="accept">അംഗീകരിക്കുക</string>
   <string name="decline">കുറവ്</string>
   <string name="block">തടയൽ</string>
+  <string name="decline_invitation">ക്ഷണം നിരസിക്കുക</string>
+  <string name="accept_invitation">ക്ഷണം സ്വീകരിക്കുക</string>
   <string name="invitation_message">%1$d കോൺടാക്റ്റ് അഭ്യർത്ഥനകൾ</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">തടഞ്ഞ ബന്ധങ്ങളില്ല</string>
@@ -221,6 +229,7 @@
   <string name="conversation_placeholder">നിങ്ങള് ക്ക് ഇതുവരെ സംഭാഷണം ഉണ്ടായില്ല</string>
   <string name="contact_request_sent">കോൺടാക്റ്റ് അഭ്യർത്ഥന അയച്ചു</string>
   <string name="start_conversation">സംഭാഷണം ആരംഭിക്കുക</string>
+  <string name="search_results">തിരച്ചിലിന്റെ ഫലം</string>
   <string name="tv_contact_row_header">ബന്ധുക്കൾ</string>
   <string name="gallery_error_title">ഗാലറി ആപ്ലിക്കേഷൻ കണ്ടെത്തിയില്ല</string>
   <string name="gallery_error_message">ഗാലറി തുറക്കുന്നതിനുള്ള ഉപകരണത്തിൽ ഒരു ആപ്ലിക്കേഷനും കണ്ടെത്തിയില്ല</string>
@@ -280,6 +289,7 @@
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">പങ്കിടുക</string>
   <string name="bottomSheet_dialpad_btn">ഡയല് പഡ്</string>
+  <string name="bottomSheet_extensions_btn">എക്സ്റ്റൻഷനുകൾ</string>
   <string name="bottomSheet_add_participants_btn">ചേർക്കുക</string>
   <string name="bottomSheet_change_camera_btn">മാറ്റം</string>
   <string name="bottomSheet_camera_onoff_switch_btn">ക്യാമറ</string>
@@ -291,6 +301,7 @@
   <string name="reset">പുനഃ സജ്ജീകരണം</string>
   <!--Swarm Details-->
   <string name="rename_btn">സ്ഥിരീകരണം</string>
+  <string name="swarm_description">വിവരണം ചേർക്കുക</string>
   <string name="tab_members">അംഗങ്ങള്</string>
   <string name="tab_files">ഫയലുകൾ</string>
   <string name="tab_settings">ക്രമീകരണങ്ങൾ</string>
@@ -299,18 +310,22 @@
   <string name="picker_title">കോൺടാക്റ്റുകൾ തിരഞ്ഞെടുക്കുക</string>
   <string name="picker_btn">കോൺടാക്റ്റുകൾ തിരഞ്ഞെടുക്കുക</string>
   <string name="bottomsheet_contact">ജാമി %1$s നെ ബന്ധപ്പെടുക</string>
-  <string name="bottomsheet_remove">അംഗം നീക്കം ചെയ്യുക</string>
+  <string name="bottomsheet_remove">അംഗത്തെ നീക്കം ചെയ്യുക</string>
   <!--JamiId-->
   <string name="jami_id_validate">ഉപയോക്തൃനാമം രജിസ്റ്റർ ചെയ്യുക</string>
   <string name="jami_id_choose_username">ഒരു ഉപയോക്തൃനാമം തിരഞ്ഞെടുക്കുക</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ജാമിയിൽ സ്വാഗതം</string>
+  <string name="welcome_jami_description">കൂടുതൽ എളുപ്പത്തിൽ ബന്ധപ്പെടുവാനായി താങ്കളുടെ ജാമി ഐഡന്റിഫയർ പങ്കിടു!</string>
   <!--Conversation details-->
   <string name="details">വിശദാംശങ്ങള്</string>
+  <string name="swarm_type">സംഭാഷണ ടൈപ്പ്</string>
   <string name="Private">സ്വകാര്യ</string>
   <string name="mute_conversation">നിശബ്ദ സംഭാഷണം</string>
   <!--Donation-->
+  <string name="donation_card_description">താങ്കൾ ജാമി ഉപയോഗിക്കാൻ ഇഷ്ടപ്പെടുന്നുണ്ടെങ്കിൽ, ഞങ്ങളുടെ ദൗത്യത്തിൽ വിശ്വസിക്കുന്നുണ്ടെങ്കിൽ, ഈ സംരഭത്തിലേക്കു സംഭാവന ചെയ്യുവാൻ താത്പര്യമുണ്ടോ?</string>
   <string name="donation_card_not_now">ഇപ്പോൾ വേണ്ട</string>
+  <string name="donation_donate">സംഭാവന ചെയ്യുക</string>
   <!--Extension-->
   <string name="export_side_step1_code_connect">ബന്ധിപ്പിക്കുക</string>
   <string name="export_side_step2_cancel">റദ്ദാക്കുക</string>

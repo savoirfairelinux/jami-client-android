@@ -11,8 +11,8 @@
   <string name="no_browser_app_installed">No se encontró ninguna aplicación de navegador web, instalar una para ver esta página.</string>
   <string name="website_chooser_title">Ver sitio web usando...</string>
   <string name="license">Este software se proporciona \"tal cual\" sin garantía de ningún tipo. Para mas información, vea 1 GNU General Public License versión 3 o superior</string>
-  <string name="description">Jami es un software libre para la comunicación universal que respeta las libertades y la privacidad de sus usuarios.</string>
-  <string name="credits">Creditos</string>
+  <string name="description">Jami es software libre para la comunicación universal que respeta las libertades y privacidad de sus usuarios.</string>
+  <string name="credits">Créditos</string>
   <string name="pip_title">Conferencia Jami</string>
   <string name="call_service_description">Este servicio es necesario para mantener sus llamadas funcionando en primer plano. Solo funciona durante las llamadas.</string>
   <string name="data_transfer_service_description">Este servicio es necesario para mostrar notificaciones persistentes durante las transferencias de archivos. Solo se ejecuta durante las transferencias de archivos.</string>
@@ -25,13 +25,13 @@
   <string name="end_note">Esta es una lista de personas que han invertido una cantidad significativa de tiempo, con resultados útiles, en Jami. Cualquier colaborador que desee ser agregado a la lista debe comunicarse con el equipo de Jami al contact@jami.net.</string>
   <!--RingActivity-->
   <string name="error_no_network">Sin conexión de red</string>
-  <string name="error_account_offline">La cuenta se encuentra desconectada</string>
+  <string name="error_account_offline">La cuenta se encuentra fuera de línea</string>
   <!--AB menus-->
   <string name="ab_action_chat">Mensaje de Texto</string>
   <!--Sections-->
   <string name="menu_item_contact_request">Solicitud de contacto</string>
-  <string name="menu_item_accounts">Administración de Cuentas</string>
-  <string name="menu_item_account">Administración de Cuenta</string>
+  <string name="menu_item_accounts">Administrar cuentas</string>
+  <string name="menu_item_account">Administrar cuenta</string>
   <string name="menu_item_settings">Configuraciones</string>
   <string name="menu_item_app_settings">Configuración de la Aplicación</string>
   <string name="menu_item_account_settings">Configuración de la cuenta</string>
@@ -44,9 +44,14 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Invitaciones recibidas</string>
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d Conversación</item>
+    <item quantity="many">%d Conversaciones</item>
+    <item quantity="other">%dConversaciones</item>
+  </plurals>
   <!--ContactList Fragment-->
   <string name="searchbar_hint">Buscar nombre o conversación...</string>
-  <string name="choose_number">Seleccionar un numero</string>
+  <string name="choose_number">Elige un número</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
@@ -79,7 +84,7 @@
   <string name="notif_incoming_picture">Imagen de %1$s</string>
   <string name="notif_sync_title">Sincronizando datos...</string>
   <string name="notif_location_title">Compartir ubicación con %1$s</string>
-  <string name="location_share_contact">%1$s está compartiendo su ubicación con vos</string>
+  <string name="location_share_contact">%1$s está compartiendo su ubicación contigo</string>
   <string name="notif_location_multi_title">Compartiendo ubicación con %1$d contactos</string>
   <string name="notif_location_remaining">%1$d minutos restantes</string>
   <string name="notif_location_action_stop">Dejar de compartir ubicación</string>
@@ -87,7 +92,7 @@
   <string name="location_share_action_stop">Dejar de compartir</string>
   <string name="location_share_about_title">Información del mapa</string>
   <!--Call Fragment-->
-  <string name="you_txt_prefix">Vos:</string>
+  <string name="you_txt_prefix">Tú:</string>
   <string name="action_call_hangup">Colgar</string>
   <string name="action_call_maximize">Maximizar</string>
   <string name="action_call_minimize">Reducir</string>
@@ -272,7 +277,7 @@
   <string name="devices">Dispositivos vinculados</string>
   <string name="total_devices">Dispositivos totales:</string>
   <!--Share fragment-->
-  <string name="share_message">Escaneá este código con Jami</string>
+  <string name="share_message">Escanear este código con Jami</string>
   <string name="share_message_no_account">Selecciona una cuenta que quieras compartir.</string>
   <string name="share_your_account_information">Compartir mi información de contactos.</string>
   <string name="share_contact_information">Compartir información de contacto</string>
@@ -305,7 +310,7 @@
   <string name="gallery_error_message">No se encontró ninguna aplicación para abrir la Galería</string>
   <string name="generic_error">Ocurrió un error desconocido.</string>
   <!--File Transfer-->
-  <string name="invalid_file">Archivo inválidado.</string>
+  <string name="invalid_file">Archivo inválido.</string>
   <string name="not_able_to_write_file">No se puede escribir el archivo.</string>
   <string name="file_transfer_status_created">Inicializando</string>
   <string name="file_transfer_status_unsupported">Sin soporte</string>
@@ -346,8 +351,8 @@
   <string name="search_results_public_directory">Directorio Público</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Desea enviar mensaje de audio?</string>
-  <string name="tv_send_image_dialog_message">Desea enviar la imagen?</string>
-  <string name="tv_send_video_dialog_message">Desea enviar el vídeo?</string>
+  <string name="tv_send_image_dialog_message">¿Enviar la imagen?</string>
+  <string name="tv_send_video_dialog_message">¿Enviar el video?</string>
   <string name="tv_media_preview">Pevisualizar</string>
   <string name="tv_audio_play">Reproducir</string>
   <string name="tv_audio_pause">Pausa</string>
@@ -355,9 +360,9 @@
   <string name="tv_audio_recording">Grabando...</string>
   <string name="tv_send_text">Envíar Texto</string>
   <string name="tv_send_audio">Enviar Audio</string>
-  <string name="tv_send_video">Enviar un Archivo Multimedia</string>
+  <string name="tv_send_video">Enviar  Archivo Multimedia</string>
   <string name="tv_action_more">Maś</string>
-  <string name="conversation_input_speech_hint">Diga algo...</string>
+  <string name="conversation_input_speech_hint">Teclea algo...</string>
   <string name="audio_permission_denied">El permiso del micrófono está deshabilitado. Habilítelo en la configuración del dispositivo para usar esta función.</string>
   <string name="camera_permission_denied">El permiso de la cámara está deshabilitado. Habilítelo en la configuración del dispositivo para usar esta función.</string>
   <string name="speech_recogniton_unavailable">El reconocimiento de voz no está disponible.</string>
@@ -372,31 +377,31 @@
   <string name="wizard_status_recommended">Recomendado</string>
   <string name="wizard_status_optional">Opcional</string>
   <string name="wizard_status_required">Requerido</string>
-  <string name="wizard_username_info">Escoja un nombre de usuario para su cuenta</string>
-  <string name="wizard_username_button">Escoger nombre de usuario</string>
-  <string name="wizard_username_skip">Saltar escoger nombre de usuario</string>
+  <string name="wizard_username_info">Escoje un nombre de usuario para tu cuenta</string>
+  <string name="wizard_username_button">Elegir nombre de usuario</string>
+  <string name="wizard_username_skip">Saltar elección de nombre de usuario</string>
   <string name="wizard_password_info">Contraseña de la cuenta</string>
-  <string name="wizard_password_placeholder">Escoja una contraseña para cifrar la cuenta</string>
-  <string name="wizard_password_button">Escoger contraseña</string>
+  <string name="wizard_password_placeholder">Elige una contraseña para cifrar la cuenta en éste dispositivo</string>
+  <string name="wizard_password_button">Crear contraseña</string>
   <string name="wizard_password_skip">Crear una cuenta</string>
   <string name="wizard_password_switch">Cifrar la cuenta con contraseña</string>
-  <string name="wizard_password_warning">Note que la contraseña no puede ser recuperada</string>
-  <string name="wizard_profile_info">El perfil sera compartido solo con sus contactos</string>
+  <string name="wizard_password_warning">Tenga en cuenta que la contraseña no puede ser recuperada</string>
+  <string name="wizard_profile_info">El perfil es compartido sólo con tus contactos</string>
   <string name="wizard_profile_button">Guardar perfil</string>
-  <string name="wizard_profile_skip">Ignore esto y ejecútelo más tarde</string>
-  <string name="fab_path_choose">Escoja otro archivo</string>
+  <string name="wizard_profile_skip">Saltar y hacerlo después</string>
+  <string name="fab_path_choose">Escoje otro archivo</string>
   <string name="chat_extensions">Extensiones de chat</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Compartir</string>
   <string name="bottomSheet_dialpad_btn">Teclado de marcación</string>
   <string name="bottomSheet_extensions_btn">Extensions</string>
-  <string name="bottomSheet_add_participants_btn">Agregar</string>
-  <string name="bottomSheet_change_camera_btn">Cambio</string>
+  <string name="bottomSheet_add_participants_btn">Añadir</string>
+  <string name="bottomSheet_change_camera_btn">Cambiar</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Cámara</string>
   <string name="bottomSheet_hangup_btn">Terminar llamada</string>
   <string name="bottomSheet_mute_microphone_btn">Micrófono</string>
   <string name="bottomSheet_sound_output_btn">Sonidos</string>
-  <string name="bottomSheet_raiseHand_btn">Levanta tu mano</string>
+  <string name="bottomSheet_raiseHand_btn">Levantar la mano</string>
   <string name="open_account_extension_settings">Abra la Configuración de la Extensión de la Cuenta</string>
   <string name="open_general_extension_settings">Abra la Configuración General de la Extensión</string>
   <string name="uninstall">Desinstalar</string>
@@ -477,20 +482,20 @@
   <string name="export_side_step2_password">La cuenta está protegida con contraseña.\nPara continuar, autentíquese en el nuevo dispositivo .</string>
   <string name="export_side_step3_body_loading">La operación de exportación de la cuenta al nuevo dispositivo está en curso.\nPor favor espere…</string>
   <string name="export_side_step3_body_done">Cuenta importada correctamente en el nuevo dispositivo.</string>
-  <string name="export_side_step3_exit">Acabado</string>
+  <string name="export_side_step3_exit">Finalizar</string>
   <string name="import_side_step1_advice_qr">Iniciar la exportación en el dispositivo de origen.\n<b>Seleccionar Cuenta &gt; Configuar la Cuenta &gt; Vincular nuevo dispositivo</b>\nCuando esté listo, escanee el código QR a continuación.</string>
   <string name="import_side_step1_advice_code">Iniciar la exportación en el dispositivo de origen.\n<b>Seleccionar Cuenta &gt; Configuración de la Cuenta &gt; Vincular nuevo dispositivo</b>\nCuando esté listo, ingrese el código a continuación.</string>
   <string name="import_side_step1_share">Compartir</string>
-  <string name="import_side_step1_switch_to_code">O clic aquí para mostrar el código de autenticación</string>
-  <string name="import_side_step1_switch_to_qr">O clic aquí para mostrar el código QR</string>
+  <string name="import_side_step1_switch_to_code">O toca aquí para mostrar el código de autenticación</string>
+  <string name="import_side_step1_switch_to_qr">O toca aquí para mostrar el código QR</string>
   <string name="import_side_step1_connecting">Conexión al dispositivo fuente…</string>
-  <string name="import_side_step1_preparing_device">Dispositivo de preparación…</string>
-  <string name="import_side_step2_password_prompt">La cuenta está protegida con contraseña.\nDesbloquéelo para continuar .</string>
+  <string name="import_side_step1_preparing_device">Preparando dispositivo…</string>
+  <string name="import_side_step2_password_prompt">La cuenta está protegida con contraseña.\nDesbloquea para continuar .</string>
   <string name="import_side_step2_password_import">Importar</string>
-  <string name="import_side_step2_password_unlocking">Desbloqueo de cuenta…</string>
+  <string name="import_side_step2_password_unlocking">Desbloqueando cuenta…</string>
   <string name="import_side_step2_action_required">Acción requerida.\nConfirmar la cuenta en el dispositivo de origen.</string>
   <string name="import_side_step3_body_loading">La cuenta se está importando en el nuevo dispositivo.\nPor favor, espere.</string>
-  <string name="import_side_step3_body_done">¡Estás todo listo!\n¡Cuenta importada correctamente en el nuevo dispositivo!</string>
+  <string name="import_side_step3_body_done">¡Está todo listo!\n¡La cuenta se importó exitosamente en el nuevo dispositivo!</string>
   <string name="import_side_step3_go_to_account">Ir a mi nueva cuenta</string>
   <string name="import_side_step3_exit">Acabado</string>
   <string name="link_device_share_title">Compartir código de autenticación Jami</string>

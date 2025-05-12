@@ -30,8 +30,8 @@
   <string name="ab_action_chat">Szöveges üzenetek</string>
   <!--Sections-->
   <string name="menu_item_contact_request">Kapcsolatfelvételi kérelemek</string>
-  <string name="menu_item_accounts">Fiókok kezelése</string>
-  <string name="menu_item_account">Fiók kezelése</string>
+  <string name="menu_item_accounts">Fiókkezelés</string>
+  <string name="menu_item_account">Fiókkezelés</string>
   <string name="menu_item_settings">Beállítások</string>
   <string name="menu_item_app_settings">Alkalmazási beállítások</string>
   <string name="menu_item_account_settings">Fiókbeállítások</string>
@@ -280,7 +280,7 @@
   <string name="share_message_no_account">Fiókmegosztás kijelölése</string>
   <string name="share_your_account_information">Névjegy adatainak megosztása</string>
   <string name="share_contact_information">Kapcsolattartó részletei megosztása</string>
-  <string name="share_label">Megosztás </string>
+  <string name="share_label">Megosztás</string>
   <string name="generic_error_migration">Hiba</string>
   <string name="generic_error_migration_message">Hiba történt a fiók áttelepítése közben.</string>
   <string name="title_share_with">Megosztás a következővel…</string>
@@ -391,7 +391,7 @@
   <string name="fab_path_choose">Más fájl kiválasztása</string>
   <string name="chat_extensions">Csevegőbővítmények</string>
   <!--Bottom sheet-->
-  <string name="bottomSheet_share_btn">Megosztás </string>
+  <string name="bottomSheet_share_btn">Megosztás</string>
   <string name="bottomSheet_dialpad_btn">Tárcsázó</string>
   <string name="bottomSheet_extensions_btn">Bővítmények</string>
   <string name="bottomSheet_add_participants_btn">Hozzáadás</string>
@@ -486,7 +486,7 @@ A fiókexportálási művelet folytatásához kattintson a Megerősítés gombra
   <string name="export_side_step3_exit">Befejezés</string>
   <string name="import_side_step1_advice_qr">A forráseszközön indítsa el a fiók exportálásának műveletét.\nJelölje ki a <b>Fiók → Fiókbeállítások → Új eszköz összekapcsolása</b>\nHa készen áll, olvassa be a következő QR-kódot.</string>
   <string name="import_side_step1_advice_code">A forráseszközön indítsa el a fiók exportálásának műveletét.\nJelölje ki a <b>Fiók → Fiókbeállítások → Új eszköz összekapcsolása</b>\nHa készen áll, írja be a következő kódot.</string>
-  <string name="import_side_step1_share">Megosztás </string>
+  <string name="import_side_step1_share">Megosztás</string>
   <string name="import_side_step1_switch_to_code">Vagy kattintson ide a hitelesítési kód megjelenítéséhez</string>
   <string name="import_side_step1_switch_to_qr">Vagy kattintson ide a QR-kód megjelenítéséhez</string>
   <string name="import_side_step1_connecting">Kapcsolódás a forráseszközhöz…</string>
@@ -494,8 +494,7 @@ A fiókexportálási művelet folytatásához kattintson a Megerősítés gombra
   <string name="import_side_step2_password_prompt">A fiók jelszóval védett.\nA folytatáshoz oldja fel a fiók zárolását.</string>
   <string name="import_side_step2_password_import">Importálás</string>
   <string name="import_side_step2_password_unlocking">Fiók zárolásának feloldása…</string>
-  <string name="import_side_step2_action_required">Beavatkozás szükséges.
-Kérjük, erősítse meg a fiókot a forráseszközön.</string>
+  <string name="import_side_step2_action_required">Beavatkozás szükséges. Kérjük, erősítse meg a fiókot a forráseszközön.</string>
   <string name="import_side_step3_body_loading">A fiók importálása folyamatban van az új eszközön.\nKérjük, várjon…</string>
   <string name="import_side_step3_body_done">A telepítés sikeresen befejeződött.</string>
   <string name="import_side_step3_go_to_account">Ugrás az új fiókra</string>

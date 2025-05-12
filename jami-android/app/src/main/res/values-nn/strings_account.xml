@@ -33,6 +33,7 @@
   <string name="account_device_revoke">Einheit for å avbryta</string>
   <string name="account_device_revocation_success_title">Framgang</string>
   <string name="account_device_revocation_success">Einheten er no avkalt!</string>
+  <string name="account_device_revocation_wrong_password">Feil passord.</string>
   <string name="account_device_revocation_unknown_device">Unkjent apparat.</string>
   <string name="account_device_revocation_error_unknown">Unkjent feil.</string>
   <string name="account_password_change">Endra passord</string>
@@ -115,16 +116,18 @@
   <string name="account_rtp_max_port">Maksimal</string>
   <string name="account_rtp_min_port">Minimum</string>
   <!--restore/backup-->
-  <string name="account_new_device_password">Skriv inn hovudpassord for å låsa opp konto</string>
+  <string name="account_new_device_password">Skriv inn hovudpassord for å låsa opp kontoen</string>
   <string name="error_password_char_count">Minst 6 teikn</string>
+  <string name="error_passwords_not_equals">Passorda er ikkje like.</string>
   <string name="export_account_wait_title">Vennligst vent...</string>
   <string name="export_account_wait_message">Informasjon om eksportkontoen</string>
   <string name="account_export_file">Baksekonto</string>
   <string name="account_export_file_summary">Du kan lagra kontoen din opp på einheten din for å gjenoppretta den seinare.</string>
+  <string name="account_export_end_decryption_message">Feil passord. Prøv igjen med det rette passordet</string>
   <string name="account_enter_password">Skriv inn passord</string>
   <string name="account_contact_me">Kontakt meg på Jami!</string>
   <string name="update_account">Aktualisering av kontoen</string>
-  <string name="account_migration">Konta på Jami kan oppdaterast. Vennligst skriv inn passordet ditt.</string>
+  <string name="account_migration">Konta på Jami kan oppdaterast. Skriv inn passordet ditt.</string>
   <string name="ring_account">Jami-kontoen</string>
   <string name="sip_account">SIP-konto</string>
   <string name="ring_account_identity">Identitet</string>
@@ -160,6 +163,7 @@
   <string name="help_credentials_enter">Skriv inn kjennskap til organisasjonen din</string>
   <string name="help_connect_password_enter">Skriv inn ordførarens password</string>
   <string name="account_connect_prompt_username">Bruksnamn</string>
+  <string name="account_enter_username">Skriv inn brukarnamn</string>
   <!--Name registration-->
   <string name="error_username_empty">Skriv inn eit brukernavn</string>
   <string name="register_name">Namn på register</string>
