@@ -28,6 +28,7 @@ import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
@@ -518,6 +519,9 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
                             resources.displayMetrics
                         ).toInt()
                     )
+                binding.searchView.toolbar.navigationIcon = AppCompatResources.getDrawable(
+                    binding.root.context, R.drawable.baseline_arrow_back_24
+                )
             }
         )
 
