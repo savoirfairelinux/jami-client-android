@@ -88,18 +88,23 @@ class HomeAccountCreationFragment :
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccHomeCreateBinding.inflate(inflater, container, false).apply {
-            linkDevice.setOnClickListener { goToAccountLink() }
-            ringCreateBtn.setOnClickListener { goToAccountCreation() }
-            accountConnectServer.setOnClickListener { goToAccountConnect() }
-            ringImportAccount.setOnClickListener { performFileSearch() }
-            sipAddAccount.setOnClickListener { goToSIPAccountCreation() }
+            linkDevice.setOnClickListener { presenter.clickOnLinkAccount() }
+            ringCreateBtn.setOnClickListener { presenter.clickOnCreateAccount() }
+            accountConnectServer.setOnClickListener { presenter.clickOnConnectAccount() }
+            ringImportAccount.setOnClickListener { presenter.clickOnBackupAccountLink() }
+            sipAddAccount.setOnClickListener { presenter.clickOnCreateSIPAccount() }
             binding = this
         }.root
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mCompositeDisposable.dispose()
+        mCompositeDisposable.clear()
         binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mCompositeDisposable.dispose()
     }
 
     override fun goToAccountCreation() {
@@ -112,10 +117,6 @@ class HomeAccountCreationFragment :
             .launch(Intent(requireContext(), LinkDeviceImportSideActivity::class.java))
     }
 
-    override fun goToBackupAccountLink() {
-        TODO("Not yet implemented")
-    }
-
     override fun goToAccountConnect() {
         replaceFragmentWithSlide(JamiAccountConnectFragment(), JamiAccountConnectFragment.TAG, R.id.wizard_container)
     }
@@ -124,7 +125,7 @@ class HomeAccountCreationFragment :
         replaceFragmentWithSlide(SIPAccountCreationFragment(), SIPAccountCreationFragment.TAG, R.id.wizard_container)
     }
 
-    private fun performFileSearch() {
+    override fun goToBackupAccountLink() {
         try {
             importBackupLauncher.launch(
                 Intent(Intent.ACTION_OPEN_DOCUMENT)
