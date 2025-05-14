@@ -88,18 +88,23 @@ class HomeAccountCreationFragment :
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccHomeCreateBinding.inflate(inflater, container, false).apply {
-            linkDevice.setOnClickListener { goToAccountLink() }
-            ringCreateBtn.setOnClickListener { goToAccountCreation() }
-            accountConnectServer.setOnClickListener { goToAccountConnect() }
-            ringImportAccount.setOnClickListener { performFileSearch() }
-            sipAddAccount.setOnClickListener { goToSIPAccountCreation() }
+            linkDevice.setOnClickListener { presenter.clickOnLinkAccount() }
+            ringCreateBtn.setOnClickListener { presenter.clickOnCreateAccount() }
+            accountConnectServer.setOnClickListener { presenter.clickOnConnectAccount() }
+            ringImportAccount.setOnClickListener { presenter.clickOnBackupAccountLink() }
+            sipAddAccount.setOnClickListener { presenter.clickOnCreateSIPAccount() }
             binding = this
         }.root
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mCompositeDisposable.dispose()
+        mCompositeDisposable.clear()
         binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mCompositeDisposable.dispose()
     }
 
     override fun goToAccountCreation() {
@@ -113,18 +118,6 @@ class HomeAccountCreationFragment :
     }
 
     override fun goToBackupAccountLink() {
-        TODO("Not yet implemented")
-    }
-
-    override fun goToAccountConnect() {
-        replaceFragmentWithSlide(JamiAccountConnectFragment(), JamiAccountConnectFragment.TAG, R.id.wizard_container)
-    }
-
-    override fun goToSIPAccountCreation() {
-        replaceFragmentWithSlide(SIPAccountCreationFragment(), SIPAccountCreationFragment.TAG, R.id.wizard_container)
-    }
-
-    private fun performFileSearch() {
         try {
             importBackupLauncher.launch(
                 Intent(Intent.ACTION_OPEN_DOCUMENT)
@@ -135,6 +128,14 @@ class HomeAccountCreationFragment :
             view?.let { v ->
                 Snackbar.make(v, getString(R.string.browser_error), Snackbar.LENGTH_SHORT).show() }
         }
+    }
+
+    override fun goToAccountConnect() {
+        replaceFragmentWithSlide(JamiAccountConnectFragment(), JamiAccountConnectFragment.TAG, R.id.wizard_container)
+    }
+
+    override fun goToSIPAccountCreation() {
+        replaceFragmentWithSlide(SIPAccountCreationFragment(), SIPAccountCreationFragment.TAG, R.id.wizard_container)
     }
 
     companion object {
