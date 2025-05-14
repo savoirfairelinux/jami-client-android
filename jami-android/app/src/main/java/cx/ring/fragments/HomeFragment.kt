@@ -229,6 +229,9 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
                 searchAdapter?.update(ConversationFacade.ConversationList())
                 searchDisposable = null
             } else if (previousState === TransitionState.HIDDEN) { // Showing
+                searchView.toolbar.navigationIcon = AppCompatResources.getDrawable(
+                    requireContext(), R.drawable.baseline_arrow_back_24
+                )
                 newSwarmFab.isVisible = false
                 startSearch()
             }
