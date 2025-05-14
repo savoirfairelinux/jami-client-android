@@ -144,6 +144,7 @@ class Messaging {
 
     @Test
     fun a02_sendText_displayedInPeerSide() {
+        Thread.sleep(8000)
         AccountNavigationUtils.moveToAccount(accountA.displayUri!!)
 
         // Go to conversation.
@@ -196,6 +197,7 @@ class Messaging {
 
     @Test
     fun a04_replySelfText_displayedInPeerSide() {
+        Thread.sleep(8000)
         // Move to accountA.
         AccountNavigationUtils.moveToAccount(accountA.displayUri!!)
 
@@ -466,6 +468,7 @@ class Messaging {
 
     @Test
     fun a16_sendSymbol_displayedInPeerSide() {
+        Thread.sleep(8000)
         // Move to accountA.
         AccountNavigationUtils.moveToAccount(accountA.displayUri!!)
 
