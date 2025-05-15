@@ -115,7 +115,7 @@ class HomeActivity : FragmentActivity() {
     private val mCameraAvailabilityCallback: AvailabilityCallback = object : AvailabilityCallback() {
         override fun onCameraAvailable(cameraId: String) {
             Log.w(TAG, "onCameraAvailable $cameraId paused:$paused")
-            if (!paused && mBlurImage.isInvisible) {
+            if (!paused && mCamera == null) {
                 checkCameraAvailability()
             }
         }
