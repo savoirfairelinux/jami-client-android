@@ -1,10 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">گزارش اشکال</string>
+  <string name="submit_issue_action_description"><u>گزارش مشکل جدید</u></string>
   <string name="section_license">مجوز</string>
+  <string name="sponsor_section">Jami is free software developed and supported by</string>
   <string name="copyright_section">کپی رایت</string>
   <string name="contribute_section">مشارکت و همکاری</string>
   <string name="version_section">نسخه</string>
+  <string name="no_browser_app_installed">هیچ برنامه مرورگری پیدا نشد، برای مشاهده این صفحه، یکی را نصب کنید</string>
   <string name="website_chooser_title">مشاهده وبسایت با ...</string>
   <string name="license">این نرم افزار این نرم افزار \"همانطور که هست\" ارائه شده و هیچ تضمینی وجود ندارد برای جزئیات ببینید 
 <u> GNU General Public License version 3 or later </u></string>
@@ -15,7 +19,13 @@
   <string name="call_service_description">این سرویس برای اینکه تماس های شما رو در پیش زمینه نگه دارد ضروری است . فقط موقع تماس اجرا میشود</string>
   <string name="data_transfer_service_description">این سرویس برای نمایش اعلان‌های مداوم در هنگام انتقال فایل ضروری است. فقط در زمان‌های انتقال فایل اجرا می‌شود.</string>
   <!--About dialog-->
+  <string name="thank_note"> مایلیم از مشارکت‌کنندگان خود تشکر کنیم، که تلاش‌هایشان طی سالیان متمادی این نرم‌افزار را به جایگاه کنونی رسانده است .</string>
+  <string name="developers">توسعه دهندگان</string>
   <string name="media">رسانه</string>
+  <string name="community_management">Community Management</string>
+  <string name="special_thanks">سپاس ویژه از</string>
+  <string name="end_note">این فهرستی از افرادی است که سرمایه‌گذاری زمانی قابل توجهی با نتایج مفید انجام داده‌اند.جامیهر یک از این مشارکت‌کنندگان که مایل به اضافه شدن به لیست هستند، باید با Jam‌‌i تماس بگیرند. 
+contact@jami.net.</string>
   <!--RingActivity-->
   <string name="error_no_network">قطع ارتباط با شبکه</string>
   <string name="error_account_offline">حساب آنلاین نیست</string>
@@ -26,11 +36,14 @@
   <string name="menu_item_accounts">مدیریت حساب ها</string>
   <string name="menu_item_account">مدیرت حساب</string>
   <string name="menu_item_settings">تنظیمات</string>
+  <string name="menu_item_app_settings">تنظیمات برنامه</string>
   <string name="menu_item_account_settings">تنظیمات حساب</string>
+  <string name="menu_item_extension_list">تنظیمات افزونه ها</string>
   <string name="menu_item_share">به اشتراک گذاری حساب من</string>
   <string name="menu_item_about">درباره جمی</string>
   <string name="video_setting_title">تنظیمات ویدیو</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">Dial number</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">دعوت‌نامه‌های دریافت شد</string>
@@ -39,6 +52,7 @@
     <item quantity="other">%dگفتگو ها</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">جست و جوی نام یا گفت و گو ...</string>
   <string name="choose_number">یک شماره انتخاب کنید</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -63,6 +77,7 @@
   <string name="notif_channel_background_service_descr">اجازه دریافت تماس‌ها و پیام‌ها در هر زمان.</string>
   <string name="notif_group_calls">تماس‌ها</string>
   <string name="notif_inprogress_group_call">تماس در حال انجام</string>
+  <string name="notif_background_service">جمی هم اکنون در پس زمینه در حال اجراست </string>
   <string name="notif_mark_as_read">علامت‌گذاری به عنوان خوانده‌شده</string>
   <string name="notif_dismiss"> رد‌کردن</string>
   <string name="notif_reply">پاسخ</string>
@@ -88,7 +103,12 @@
   <string name="ongoing_call">تماس جاری</string>
   <string name="hist_in_call">تماس ورودی به مدت  %1$s</string>
   <string name="hist_out_call">تماس خروجی به مدت %1$s</string>
+  <string name="start_error_title">مشکل در شروع برنامه </string>
   <string name="action_call_accept">قبول تماس</string>
+  <string name="action_call_accept_audio">پاسخ به صورت صوتی</string>
+  <string name="action_call_accept_video">پاسخ به صورت ویدیویی</string>
+  <string name="action_call_hold_accept">در حالت انتظار نگه داشتن تماس فعلی و ‍ پذیرفتن تماس بعدی</string>
+  <string name="action_call_hold_accept_video">در حالت انتظار نگه داشتن تماس فعلی و پذیرفتن تماس ویدیویی</string>
   <string name="action_call_decline">ردکردن</string>
   <string name="action_call_mic_mute">قطع میکروفون</string>
   <string name="ab_action_contact_add">افزودن به مخاطبان</string>
@@ -115,15 +135,19 @@
   <string name="conversation_send_video">ضبط بُریده ویدیویی</string>
   <string name="conversation_share_location">اشتراک مکان</string>
   <string name="ongoing_group_call">تماس جاری</string>
+  <string name="started_call">تماس آغاز شده </string>
   <string name="in_reply_to">در پاسخ به</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">مجوز دوربین</string>
+  <string name="permission_dialog_camera_message">مکالمات ویدیویی نیاز به اجازه‌ی دسترسی به دوربین دارند. اجازه‌ی دسترسی به دوربین غیرفعال است. آن را در تنظیمات دستگاه فعال کنید تا بتوانید از این قابلیت استفاده کنید.</string>
+  <string name="camera_error">خطایی هنگام راه‌اندازی دوربین رخ داد</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">خطا</string>
   <string name="ringtone_error_format_not_supported">این قالب پشتیبانی نمی‌شود.</string>
   <string name="ringtone_error_size_too_big">این فایل خیلی بزرگ است. حداکثر اندازه %1$d کیلو‌بایت است.</string>
   <string name="ringtone_custom_prompt">تعیین صدای زنگ سفارشی</string>
   <string name="ringtone_custom_label">سفارشی</string>
+  <string name="ringtone_jami_tones">Jami ringtones</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
@@ -148,6 +172,8 @@
   <string name="delete_contact">مخاطب را حذف کنید</string>
   <string name="conversation_action_remove_this_title">حذف این مخاطب؟</string>
   <string name="conversation_action_remove_this_message">این باعث حذف مخاطب شده و قطعا تاریخچه گفتگو را پاک خواهد کرد.</string>
+  <string name="swarm_group_action_leave_title">گروه را ترک می کنید ؟</string>
+  <string name="swarm_group_action_leave_message">این باعث حذف مکالمه از فهرست مکالمات شما خواهد شد.</string>
   <string name="conversation_action_select_peer_number">گزینش یک شماره</string>
   <string name="conversation_action_block_this">مسدودسازی مخاطب</string>
   <string name="conversation_action_unblock_this">رفع مسدودی مخاطب</string>
@@ -174,6 +200,7 @@
   <string name="conversation_type_private">خصوصی</string>
   <string name="conversation_type_group">گروه</string>
   <string name="conversation_search_hint">جستجو در گفتگو‌ها</string>
+  <string name="starting_camera_error">خطایی هنگام راه‌اندازی دوربین رخ داد</string>
   <string name="today">امروز</string>
   <string name="yesterday">دیروز</string>
   <!--Contacts-->

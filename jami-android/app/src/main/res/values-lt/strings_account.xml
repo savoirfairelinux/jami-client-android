@@ -155,6 +155,7 @@
   <string name="account_enter_username">Įveskite naudotojo vardą</string>
   <!--Name registration-->
   <string name="error_username_empty">Įveskite naudotojo vardą</string>
+  <string name="username_available">Naudotojo vardas yra prieinamas.</string>
   <string name="trying_to_register_name">Vyksta naudotojo vardo registracija. Palaukite…</string>
   <string name="registered_username">Registruotas naudotojo vardas</string>
   <string name="register_username">Registruoti viešąjį naudotojo vardą</string>
@@ -162,6 +163,7 @@
   <string name="username_already_taken">Naudotojo vardas jau užimtas</string>
   <string name="invalid_username">Neteisingas naudotojo vardas</string>
   <string name="unknown_error">Nežinoma klaida. Patikrinkite tinklo ryšį!</string>
+  <string name="looking_for_username_availability">Tikrinamas naudotojo vardo prieinamumas…</string>
   <string name="account_status_connecting">Sujungiama</string>
   <string name="account_status_connection_error">Ryšio klaida</string>
   <string name="account_status_online">Prisijungęs</string>

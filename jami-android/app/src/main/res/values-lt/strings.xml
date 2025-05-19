@@ -76,8 +76,11 @@
   <string name="action_call_hangup">Padėti ragelį</string>
   <string name="hist_in_call">%1$s gaunamasis skambutis</string>
   <string name="hist_out_call">%1$s išsiunčiamasis skambutis</string>
+  <string name="call_duration">Trukmė: %s</string>
   <string name="start_error_title">Nepavyko paleisti Jami</string>
   <string name="action_call_accept">Atsiliepti</string>
+  <string name="action_call_accept_audio">Atsiliepti su garsu</string>
+  <string name="action_call_accept_video">Atsiliepti su vaizdu</string>
   <string name="action_call_decline">Atmesti</string>
   <string name="action_call_mic_mute">Išjungti mikrofoną</string>
   <string name="action_load_extension">Įkelti plėtinį</string>
@@ -87,6 +90,7 @@
   <string name="ab_action_video_call">Pradėti vaizdo skambutį</string>
   <string name="ab_action_change_screen_orientation">Keisti ekrano orientaciją</string>
   <string name="share_via">Bendrinti per</string>
+  <string name="write_a_message">Rašyti žinutę</string>
   <string name="scan_qr">Skenuoti QR kodą</string>
   <string name="qr_code">QR kodas</string>
   <string name="qr_code_not_contact">Ne Jami adresato QR kodas</string>
@@ -104,10 +108,12 @@
   <string name="hist_file_received">Failas gautas</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kameros leidimas</string>
+  <string name="camera_error">Paleidžiant kamerą įvyko klaida.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Klaida</string>
   <string name="ringtone_error_format_not_supported">Šis formatas yra nepalaikomas.</string>
   <string name="ringtone_error_size_too_big">Šis failas yra per didelis. Didžiausias dydis yra %1$dkB.</string>
+  <string name="ringtone_jami_tones">Jami skambučio melodijos</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
@@ -157,10 +163,13 @@
   <string name="conversation_ended">Pokalbis pasibaigė.</string>
   <string name="conversation_message_deleted">%s ištrynė žinutę</string>
   <string name="conversation_reply_you">Jūs</string>
+  <string name="video_not_found">Vaizdo įrašo failas nerastas</string>
   <string name="conversation_preference_color">Pokalbio spalva</string>
   <string name="conversation_type_contact">Jami adresatas</string>
   <string name="conversation_type_private">Privatus</string>
   <string name="conversation_type_group">Grupė</string>
+  <string name="starting_camera_error">Paleidžiant kamerą įvyko klaida.</string>
+  <string name="browser_error">Šiame įrenginyje neprieinama jokia failų naršyklė.</string>
   <string name="today">Šiandien</string>
   <string name="yesterday">Vakar</string>
   <!--Contacts-->
@@ -168,9 +177,11 @@
   <string name="prompt_new_password">Naujas slaptažodis</string>
   <string name="prompt_new_password_optional">Naujas slaptažodis (nebūtina)</string>
   <string name="prompt_new_password_repeat">Pakartokite naują slaptažodį</string>
+  <string name="account_create_title">Susikurkite Jami paskyrą</string>
   <string name="prompt_new_username">Įveskite naują naudotojo vardą</string>
   <string name="prompt_hint_username">Naudotojo vardas</string>
   <string name="help_password_choose">Pasirinkite stiprų slaptažodį, kurį prisiminsite, kad apsaugotumėte savo Jami paskyrą.</string>
+  <string name="pin_copied">PIN kodas nukopijuotas į iškarpinę.</string>
   <string name="copied_clipboard">Nukopijuota į iškarpinę.</string>
   <string name="wizard_next">Kitas</string>
   <string name="wizard_back">Atgal</string>
@@ -226,6 +237,8 @@
   <!--File Transfer-->
   <string name="file_transfer_status_created">Inicijuojama</string>
   <string name="file_transfer_status_canceled">Atsisakyta</string>
+  <string name="file_saved_in">Failas įrašytas į %s.</string>
+  <string name="file_saved_successfully">Failas sėkmingai įrašytas.</string>
   <string name="file_download">Atsisiųsti</string>
   <string name="title_media_viewer">Medijos žiūryklė</string>
   <string name="menu_file_open">Atverti failą</string>
@@ -260,6 +273,7 @@
   <string name="tv_action_more">Daugiau</string>
   <string name="conversation_input_speech_hint">Ką nors sakykite…</string>
   <string name="error_sharing_file">Bendrinant failą įvyko klaida.</string>
+  <string name="error_opening_file">Atveriant failą įvyko klaida.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Rekomenduojama</string>
   <string name="wizard_status_optional">Nebūtina</string>
@@ -291,12 +305,19 @@
   <string name="tab_files">Failai</string>
   <string name="tab_settings">Nustatymai</string>
   <string name="not_admin_toast">Tik administratoriai gali taisyti šios grupės informaciją</string>
+  <string name="dialogtitle_title">Taisyti grupės pavadinimą</string>
+  <string name="dialogtitle_description">Taisyti grupės aprašą</string>
+  <string name="dialog_hint_title">Pavadinimas</string>
   <string name="dialog_hint_description">Aprašas</string>
   <string name="bottomsheet_contact">Susisiekite su Jami\n%1$s</string>
   <string name="bottomsheet_remove">Ištrinti narį</string>
+  <string name="swarm_detail_no_document">Kol kas neturite jokių dokumentų.</string>
   <!--JamiId-->
   <string name="jami_id_copy">Kopijuoti JamiId</string>
   <string name="jami_id_validate">Registruoti naudotojo vardą</string>
+  <string name="jami_id_available">Naudotojo vardas yra prieinamas.</string>
+  <string name="jami_id_not_available">Naudotojo vardas yra neprieinamas.</string>
+  <string name="jami_id_looking_for_availability">Tikrinamas naudotojo vardo prieinamumas…</string>
   <string name="jami_id_choose_username">Pasirinkite naudotojo vardą</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Sveiki atvykę į Jami</string>
@@ -318,4 +339,5 @@
   <string name="export_side_step2_confirm">Patvirtinti</string>
   <string name="import_side_step1_share">Bendrinti</string>
   <string name="import_side_step2_password_import">Importuoti</string>
+  <string name="link_device_error_unknown">Įvyko klaida.</string>
 </resources>

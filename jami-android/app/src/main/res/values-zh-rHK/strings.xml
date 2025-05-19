@@ -205,6 +205,7 @@
   <string name="conversation_ended">我们的谈话结束了.</string>
   <string name="conversation_message_deleted">%s删除了一条消息</string>
   <string name="conversation_reply_you">您</string>
+  <string name="video_not_found">未找到视频文件</string>
   <string name="conversation_preference_color">会话颜色</string>
   <string name="conversation_preference_emoji">会画表情</string>
   <string name="conversation_type_contact">Jami 联系人</string>
