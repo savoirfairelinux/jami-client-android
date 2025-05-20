@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "623d53c6_55046dd8",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 40
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-05-20T02:12:22Z",
+      "side": 1,
+      "message": "Should `linking the device` and `linking the account` be unified?",
+      "range": {
+        "startLine": 679,
+        "startChar": 76,
+        "endLine": 679,
+        "endChar": 95
+      },
+      "revId": "7f916424410913b11548eeef982248595384ee8c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91c5b20a_35fe9664",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 40
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-05-20T02:12:22Z",
+      "side": 1,
+      "message": "Should `linking the device` and `linking the account` be unified?",
+      "range": {
+        "startLine": 680,
+        "startChar": 91,
+        "endLine": 680,
+        "endChar": 110
+      },
+      "revId": "7f916424410913b11548eeef982248595384ee8c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
