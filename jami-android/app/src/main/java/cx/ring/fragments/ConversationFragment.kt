@@ -338,11 +338,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                         presenter.loadMore()
                     }
 
-                    // Recyclerview is composed of items which are sometimes invisible (to preserve
-                    // the model and interaction relationship).
-                    // Because of bug #1251, we use findLastCompletelyVisibleItemPosition because
-                    // findLastVisibleItemPosition ignores invisible items (don't understand why).
-                    val lastVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition()
+                    val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
                     if (layoutManager.itemCount - lastVisibleItemPosition > visibleLatestThreshold)
                         fabLatest.show()
                     else fabLatest.hide()
