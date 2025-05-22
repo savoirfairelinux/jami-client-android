@@ -1357,7 +1357,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     override fun getMediaProjection(resultCode: Int, data: Any): MediaProjection? {
         val dataIntent = data as Intent
-        return mProjectionManager.getMediaProjection(resultCode, dataIntent)
+        return mProjectionManager.getMediaProjection(resultCode, dataIntent)!!
     }
 
     public fun extensionsButtonClicked() {
