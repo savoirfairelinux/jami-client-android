@@ -82,7 +82,7 @@ class TVContactPresenter @Inject constructor(
             view?.goToCallActivity(conf.id)
         } else {
             if (conversation.isSwarm) {
-                view?.callContact(conversation.accountId, conversation.uri, conversation.contact!!.uri)
+                view?.callContact(conversation.accountId, conversation.uri, conversation.contact?.uri ?: conversation.uri)
             } else {
                 view?.callContact(conversation.accountId, conversation.uri, conversation.uri)
             }
