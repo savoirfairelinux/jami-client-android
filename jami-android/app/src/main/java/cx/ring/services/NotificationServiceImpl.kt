@@ -721,32 +721,34 @@ class NotificationServiceImpl(
             if (notifiedRequests.contains(contactKey)) {
                 return
             }
-            mContactService.getLoadedConversation(request).subscribe({ vm ->
-                mPreferencesService.saveRequestPreferences(account.accountId, contactKey)
-                val info = ConversationPath.toUri(account.accountId, request.uri)
-                val builder = getRequestNotificationBuilder()
+            mContactService.getLoadedConversation(request)
+                .observeOn(Schedulers.computation())
+                .subscribe({ vm ->
+                    mPreferencesService.saveRequestPreferences(account.accountId, contactKey)
+                    val info = ConversationPath.toUri(account.accountId, request.uri)
+                    val builder = getRequestNotificationBuilder()
 
-                builder.setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(),
-                    Intent(Intent.ACTION_VIEW, info, mContext, HomeActivity::class.java),
-                    ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT))
-                )
+                    builder.setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(),
+                        Intent(Intent.ACTION_VIEW, info, mContext, HomeActivity::class.java),
+                        ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT))
+                    )
 
-                builder.setContentText(vm.uriTitle)
-                    .addAction(R.drawable.baseline_person_add_24, mContext.getText(R.string.accept), PendingIntent.getService(
-                        mContext, random.nextInt(),
-                        Intent(DRingService.ACTION_TRUST_REQUEST_ACCEPT, info, mContext, DRingService::class.java),
-                        ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)))
-                    .addAction(R.drawable.baseline_delete_24, mContext.getText(R.string.decline), PendingIntent.getService(
-                        mContext, random.nextInt(),
-                        Intent(DRingService.ACTION_TRUST_REQUEST_REFUSE, info, mContext, DRingService::class.java),
-                        ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)))
-                    .addAction(R.drawable.baseline_block_24, mContext.getText(R.string.block), PendingIntent.getService(
-                        mContext, random.nextInt(),
-                        Intent(DRingService.ACTION_TRUST_REQUEST_BLOCK, info, mContext, DRingService::class.java),
-                        ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)))
-                getContactPicture(request)?.let { pic -> builder.setLargeIcon(pic) }
-                notificationManager.notify(notificationId, builder.build())
-            }) { e: Throwable -> Log.w(TAG, "error showing notification", e) }
+                    builder.setContentText(vm.uriTitle)
+                        .addAction(R.drawable.baseline_person_add_24, mContext.getText(R.string.accept), PendingIntent.getService(
+                            mContext, random.nextInt(),
+                            Intent(DRingService.ACTION_TRUST_REQUEST_ACCEPT, info, mContext, DRingService::class.java),
+                            ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)))
+                        .addAction(R.drawable.baseline_delete_24, mContext.getText(R.string.decline), PendingIntent.getService(
+                            mContext, random.nextInt(),
+                            Intent(DRingService.ACTION_TRUST_REQUEST_REFUSE, info, mContext, DRingService::class.java),
+                            ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)))
+                        .addAction(R.drawable.baseline_block_24, mContext.getText(R.string.block), PendingIntent.getService(
+                            mContext, random.nextInt(),
+                            Intent(DRingService.ACTION_TRUST_REQUEST_BLOCK, info, mContext, DRingService::class.java),
+                            ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)))
+                    getContactPicture(request)?.let { pic -> builder.setLargeIcon(pic) }
+                    notificationManager.notify(notificationId, builder.build())
+                }) { e: Throwable -> Log.w(TAG, "error showing notification", e) }
         } else {
             val builder = getRequestNotificationBuilder()
             var newRequest = false
