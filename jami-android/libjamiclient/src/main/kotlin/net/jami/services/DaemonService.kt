@@ -343,11 +343,11 @@ class DaemonService(
 
     internal inner class ConversationCallbackImpl : ConversationCallback() {
         override fun swarmLoaded(id: Long, accountId: String, conversationId: String, messages: SwarmMessageVect) {
-            mAccountService.swarmLoaded(id, accountId, conversationId, messages)
+            mExecutor.submit { mAccountService.swarmLoaded(id, accountId, conversationId, messages) }
         }
 
         override fun messagesFound(id: Long, accountId: String, conversationId: String, messages: VectMap) {
-            mAccountService.messagesFound(id, accountId, conversationId, messages.toNative())
+            mExecutor.submit { mAccountService.messagesFound(id, accountId, conversationId, messages.toNative()) }
         }
 
         override fun conversationReady(accountId: String, conversationId: String) {
@@ -367,7 +367,7 @@ class DaemonService(
         }
 
         override fun conversationMemberEvent(accountId: String, conversationId: String, uri: String, event: Int) {
-            mAccountService.conversationMemberEvent(accountId, conversationId, uri, event)
+            mExecutor.submit { mAccountService.conversationMemberEvent(accountId, conversationId, uri, event) }
         }
 
         override fun conversationProfileUpdated(accountId: String, conversationId: String, profile: StringMap) {
@@ -379,19 +379,19 @@ class DaemonService(
         }
 
         override fun swarmMessageReceived(accountId: String, conversationId: String, message: SwarmMessage) {
-            mAccountService.swarmMessageReceived(accountId, conversationId, message)
+            mExecutor.submit { mAccountService.swarmMessageReceived(accountId, conversationId, message) }
         }
 
         override fun swarmMessageUpdated(accountId: String, conversationId: String, message: SwarmMessage) {
-            mAccountService.swarmMessageUpdated(accountId, conversationId, message)
+            mExecutor.submit { mAccountService.swarmMessageUpdated(accountId, conversationId, message) }
         }
 
         override fun reactionAdded(accountId: String, conversationId: String, messageId: String, reaction: StringMap) {
-            mAccountService.reactionAdded(accountId, conversationId, messageId, reaction)
+            mExecutor.submit { mAccountService.reactionAdded(accountId, conversationId, messageId, reaction) }
         }
 
         override fun reactionRemoved(accountId: String, conversationId: String, messageId: String, reactionId: String) {
-            mAccountService.reactionRemoved(accountId, conversationId, messageId, reactionId)
+            mExecutor.submit { mAccountService.reactionRemoved(accountId, conversationId, messageId, reactionId) }
         }
     }
 
