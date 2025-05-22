@@ -3,8 +3,9 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 val hilt_version: String by rootProject.extra
 
 plugins {
-    id("java-library")
-    id("org.jetbrains.kotlin.jvm")
+    id("kotlin")
+    id("java")
+    kotlin("kapt")
 }
 
 dependencies {
