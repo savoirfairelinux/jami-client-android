@@ -246,7 +246,7 @@ class ConversationPresenter @Inject constructor(
                 Log.e(TAG, "Can't update conversation color", e)
             })
 
-        disposable.add(account.getLocationUpdates(c.uri)
+        disposable.add(account.getLocationUpdates(c)
             .observeOn(uiScheduler)
             .subscribe {
                 Log.e(TAG, "getLocationUpdates: update")

@@ -903,6 +903,9 @@ class Account(
 
     fun getLocationUpdates(conversationUri: Uri): Observable<Observable<ContactLocation>> {
         val conversation = getByUri(conversationUri) ?: return Observable.empty()
+        return getLocationUpdates(conversation)
+    }
+    fun getLocationUpdates(conversation: Conversation): Observable<Observable<ContactLocation>> {
         if (conversation.isGroup())
             return Observable.empty()
         val contact = conversation.contact ?: return Observable.empty()
