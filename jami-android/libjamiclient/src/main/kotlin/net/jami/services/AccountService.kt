@@ -1288,22 +1288,30 @@ class AccountService(
                 try {
                     val fileName = message["displayName"]!!
                     val fileId = message["fileId"]
-                    val paths = arrayOfNulls<String>(1)
-                    val progressA = LongArray(1)
-                    val totalA = LongArray(1)
-                    JamiService.fileTransferInfo(account.accountId, conversation.uri.rawRingId, fileId, paths, totalA, progressA)
-                    if (totalA[0] == 0L) {
-                        totalA[0] = message["totalSize"]!!.toLong()
+                    val total = message["totalSize"]?.toLong() ?: 0
+                    val dt = DataTransfer(fileId, account.accountId, author, fileName, contact.isUser, timestamp, total, 0)
+                    val worker = Schedulers.computation().createWorker()
+                    worker.schedule {
+                        val paths = arrayOfNulls<String>(1)
+                        val progressA = LongArray(1)
+                        val totalA = LongArray(1)
+                        JamiService.fileTransferInfo(account.accountId, conversation.uri.rawRingId, fileId, paths, totalA, progressA)
+                        if (totalA[0] == 0L) {
+                            totalA[0] = total
+                        }
+                        val path = File(paths[0]!!)
+                        val isComplete = path.exists() && progressA[0] == totalA[0]
+                        synchronized(dt) {
+                            dt.daemonPath = path
+                            dt.bytesProgress = progressA[0]
+                            dt.transferStatus = if (isComplete) TransferStatus.TRANSFER_FINISHED
+                            else if (fileId == "") TransferStatus.FILE_REMOVED
+                            else TransferStatus.FILE_AVAILABLE
+                        }
+                        conversation.updateInteraction(dt)
+                        worker.dispose()
                     }
-                    val path = File(paths[0]!!)
-                    val isComplete = path.exists() && progressA[0] == totalA[0]
-                    DataTransfer(fileId, account.accountId, author, fileName, contact.isUser, timestamp, totalA[0], progressA[0]).apply {
-                        daemonPath = path
-                        transferStatus = if (isComplete)
-                            TransferStatus.TRANSFER_FINISHED
-                        else if (fileId == "") TransferStatus.FILE_REMOVED
-                        else TransferStatus.FILE_AVAILABLE
-                    }
+                    dt
                 } catch (e: Exception) {
                     Interaction(conversation, Interaction.InteractionType.INVALID)
                 }
@@ -1325,7 +1333,9 @@ class AccountService(
         interaction.edit = edit
         if (replyTo != null) {
             interaction.replyTo = conversation.loadMessage(replyTo) {
-                JamiService.loadSwarmUntil(account.accountId, conversation.uri.rawRingId, "", replyTo)
+                mExecutor.execute {
+                    JamiService.loadSwarmUntil(account.accountId, conversation.uri.rawRingId, "", replyTo)
+                }
             }
         }
         if (interaction.contact == null)
