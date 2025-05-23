@@ -104,9 +104,10 @@ class AdvancedAccountFragment : BasePreferenceFragment<AdvancedAccountPresenter>
                 } else if (!confKey.isBool) {
                     var value = config[confKey]
                     if (confKey == ConfigKey.RINGNS_HOST && value.isEmpty()) {
-                        value = getString(R.string.default_value)
+                        pref.summary = getString(R.string.default_value)
+                    } else {
+                        pref.summary = value
                     }
-                    pref.summary = value
                     if (pref is EditTextPreference) {
                         pref.text = value
                     }
@@ -153,7 +154,12 @@ class AdvancedAccountFragment : BasePreferenceFragment<AdvancedAccountPresenter>
             }
             else -> {
                 presenter.preferenceChanged(key, newValue)
-                preference.summary = newValue.toString()
+                val newVal = newValue.toString()
+                if (key == ConfigKey.RINGNS_HOST && newVal.isEmpty()) {
+                    preference.summary = getString(R.string.default_value)
+                } else {
+                    preference.summary = newVal
+                }
             }
         }
         return true
