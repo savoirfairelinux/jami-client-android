@@ -62,7 +62,7 @@
   <string name="account_name_server_label">Névkiszolgáló</string>
   <string name="account_username_label">Felhasználónév</string>
   <string name="account_password_label">Jelszó</string>
-  <string name="account_optionnal_category">Választható beállítások</string>
+  <string name="account_optionnal_category">Nem kötelező beállítások</string>
   <string name="account_useragent_label">Felhasználói ügynök</string>
   <string name="account_autoanswer_label">Automatikus hívásfogadás</string>
   <string name="account_rendezvous_label">Találkozási pont mód</string>
@@ -87,7 +87,7 @@
   <string name="account_preferences_advanced_tab">Haladó</string>
   <string name="account_chat_settings_title">Csevegés beállításai</string>
   <string name="account_read_receipts_label">Olvasási visszaigazolások küldése</string>
-  <string name="account_read_receipts_summary">Küldjön és fogadjon nyugtákat, jelezve, hogy üzenet jelenik meg.</string>
+  <string name="account_read_receipts_summary">Visszaigazolások küldése és fogadása, amelyek jelzik az üzenetek megjelenítését.</string>
   <string name="account_call_settings_title">Hívás beállítások</string>
   <string name="account_dht_public_in_calls_label">Az ismeretlen névjegyektől érkező bejövő hívások engedélyezése</string>
   <string name="account_registration_exp_label">Regisztráció lejárata</string>
@@ -260,7 +260,7 @@
   <string name="account_link_time_valid">PIN-kód lejárata: %1$s.</string>
   <string name="account_link_device_info">Válassza az „Új eszköz összekapcsolása” lehetőséget a másik Jami alkalmazásban a QR- vagy PIN-kód megjelenítéséhez</string>
   <string name="account_generate_export_device">A másik eszközön</string>
-  <string name="account_generate_export_info">Telepítse és indítsa el a Jami alkalmazást, válassza az „Importálás másik eszközről” lehetőséget, és olvassa be a QR-kódot.</string>
+  <string name="account_generate_export_info">Telepítse és indítsa el a Jami alkalmazást. Válassza az „Importálás másik eszközről” lehetőséget, és olvassa be a QR-kódot.</string>
   <string name="content_description_qr_generated">Fiók QR-kódja</string>
   <string name="account_generate_export_invalid">A PIN-kód már nem érvényes.\nAdja meg a jelszót, és hozzon létre egy másikat az új eszköz összekapcsolásához.</string>
   <string name="account_generate_export_invalid_two">A PIN-kód már nem érvényes.\nAz új eszköz összekapcsolásához hozzon létre egy másikat.</string>

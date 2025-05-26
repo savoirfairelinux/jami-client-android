@@ -209,6 +209,7 @@
   <string name="conversation_ended">Véget ért a beszélgetés.</string>
   <string name="conversation_message_deleted">%s törölt egy üzenetet</string>
   <string name="conversation_reply_you">Ön</string>
+  <string name="video_not_found">Videofájl nem található</string>
   <string name="conversation_preference_color">Beszélgetés színe</string>
   <string name="conversation_preference_emoji">Beszélgetés hangulatjel</string>
   <string name="conversation_type_contact">Jami-kapcsolattartó</string>
@@ -374,11 +375,11 @@
   <string name="error_opening_file">Hiba történt a fájl megnyitásakor.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Ajánlott</string>
-  <string name="wizard_status_optional">Választható</string>
+  <string name="wizard_status_optional">Nem kötelező</string>
   <string name="wizard_status_required">Szükséges</string>
   <string name="wizard_username_info">Válasszon felhasználónevet a fiókjához</string>
   <string name="wizard_username_button">Felhasználónév kiválasztása</string>
-  <string name="wizard_username_skip">Felhasználónév kihagyása</string>
+  <string name="wizard_username_skip">Felhasználónév kijelölésének kihagyása</string>
   <string name="wizard_password_info">Fiók jelszava</string>
   <string name="wizard_password_placeholder">Válasszon egy jelszót az eszköz fiókkulcsának titkosításához</string>
   <string name="wizard_password_button">Jelszó kiválasztása</string>
@@ -387,7 +388,7 @@
   <string name="wizard_password_warning">Vegye figyelembe, hogy a jelszó nem lehet helyreállított</string>
   <string name="wizard_profile_info">Névjegy megosztása csak a kapcsolattartókkal</string>
   <string name="wizard_profile_button">Névjegy mentése</string>
-  <string name="wizard_profile_skip">Későbbre halasztás</string>
+  <string name="wizard_profile_skip">Kihagyás és tegye később</string>
   <string name="fab_path_choose">Más fájl kiválasztása</string>
   <string name="chat_extensions">Csevegőbővítmények</string>
   <!--Bottom sheet-->
@@ -501,7 +502,7 @@ A fiókexportálási művelet folytatásához kattintson a Megerősítés gombra
   <string name="import_side_step3_exit">Befejezés</string>
   <string name="link_device_share_title">Jami hitelesítési kód megosztása</string>
   <string name="link_device_error_network">Hálózati hiba történt a fiók összekapcsolása közben. Ellenőrizze a kapcsolatot, majd próbálkozzon újra.</string>
-  <string name="link_device_error_authentication">Hitelesítési hiba történt az eszköz összekapcsolása közben. Kérjük, ellenőrizze jelszavát, és próbálkozzon újra.</string>
+  <string name="link_device_error_authentication">Hitelesítési hiba történt az eszköz összekapcsolása közben. Kérjük, ellenőrizze a hitelesítő adatokat, és próbálkozzon újra.</string>
   <string name="link_device_error_timeout">Művelet időtúllépése.</string>
   <string name="link_device_error_canceled">A műveletet megszakította a felhasználó.</string>
   <string name="link_device_error_unknown">Hiba történt.</string>

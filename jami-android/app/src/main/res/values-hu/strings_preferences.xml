@@ -54,7 +54,7 @@
   <string name="pref_push_notifications_logs_summary">Push-értesítésekből rögzített
        naplók megtekintése.</string>
   <string name="pref_typing_title">Gépelésjelző megjelenítése</string>
-  <string name="pref_typing_summary">Küldjön és fogadjon gépelési mutatókat, amelyek azt mutatják, hogy egy üzenetet gépel.</string>
+  <string name="pref_typing_summary">Gépelésjelzők küldése és fogadása, amelyek jelzik az üzenetek beírását.</string>
   <string name="pref_block_record_title">Képernyőkép és felvétel letiltása</string>
   <string name="pref_block_record_summary">Letiltsa a képernyőkép készítését vagy a videók rögzítését.</string>
   <string name="pref_link_preview_title">Webhivatkozások előnézete</string>

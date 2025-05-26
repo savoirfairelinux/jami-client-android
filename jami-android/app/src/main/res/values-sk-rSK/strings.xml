@@ -1,10 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Odoslať problém</string>
   <string name="section_license">Licencia</string>
+  <string name="sponsor_section">Jami je bezplatný softvér vyvíjaný a podporovaný</string>
   <string name="copyright_section">Autorské právo</string>
   <string name="contribute_section">Prispejte</string>
   <string name="version_section">Verzia</string>
+  <string name="no_browser_app_installed">Nebol nájdený žiadny webový prehliadač, na zobrazenie tejto stránky si nejaký nainštalujte.</string>
   <string name="website_chooser_title">Zobraziť stránku pomocou...</string>
   <string name="license">Tento softvér je distribuovaný \"tak, ako je\", bez záruky akéhokoľvek druhu. Pre viac informácií pozrite <u>GNU General Public Licence verzie 3 alebo neskoršej</u></string>
   <string name="description">Jami je slobodný softvér na univerzálnu komunikáciu, ktorý rešpektuje slobody a súkromie používateľov.</string>
@@ -13,7 +16,10 @@
   <string name="call_service_description">Táto služba je potrebná na to, aby boli vaše hovory v popredí. Beží iba počas hovorov.</string>
   <string name="data_transfer_service_description">Táto služba je potrebná na zobrazenie upozornení počas prenosu súborov. Beží iba počas prenosu súborov. </string>
   <!--About dialog-->
+  <string name="thank_note">Chceli by sme poďakovať našim prispievateľom, ktorých úsilie počas mnohých rokov urobilo tento program tým, čím je.</string>
+  <string name="developers">Vývojári</string>
   <string name="media">Médiá</string>
+  <string name="special_thanks">Špeciálne poďakovanie</string>
   <!--RingActivity-->
   <string name="error_no_network">Žiadne sieťové pripojenie</string>
   <string name="error_account_offline">Účet je offline</string>
@@ -24,6 +30,7 @@
   <string name="menu_item_accounts">Spravovať účty</string>
   <string name="menu_item_account">Spravovať účet</string>
   <string name="menu_item_settings">Nastavenia</string>
+  <string name="menu_item_app_settings">Nastavenia aplikácie</string>
   <string name="menu_item_account_settings">Nastavenia účtu</string>
   <string name="menu_item_share">Zdieľať môj účet</string>
   <string name="menu_item_about">O programe Jami</string>
