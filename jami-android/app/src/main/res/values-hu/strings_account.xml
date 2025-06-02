@@ -202,13 +202,13 @@
   <string name="account_start_export_button">PIN-kód létrehozása</string>
   <string name="account_end_export_button">bezárás</string>
   <string name="account_export_title">Fiók összekapcsolása más eszközökkel</string>
-  <string name="account_connect_server_button">Csatlakozás a felügyeleti kiszolgálóhoz</string>
+  <string name="account_connect_server_button">Csatlakozás a kezelő kiszolgálóhoz</string>
   <string name="account_connect_button">Kapcsolódás</string>
-  <string name="prompt_server">A Jami felügyeleti kiszolgáló URL-je</string>
-  <string name="help_credentials_enter">Adja meg a szervezet hitelesítő adatait</string>
+  <string name="prompt_server">Kezelő-kiszolgáló URL-címe</string>
+  <string name="help_credentials_enter">Szervezet hitelesítő adatainak megadása</string>
   <string name="help_connect_password_enter">Szervezet jelszavának megadása</string>
   <string name="account_connect_prompt_username">Felhasználónév</string>
-  <string name="account_connect_server">Csatlakozás a JAMS kiszolgálóhoz</string>
+  <string name="account_connect_server">Csatlakozás a kezelő-kiszolgálóhoz</string>
   <string name="account_enter_username">Felhasználónév megadása</string>
   <string name="account_enter_servername">Kiszolgáló megadása</string>
   <!--Name registration-->
