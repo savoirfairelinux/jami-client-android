@@ -1022,7 +1022,6 @@ class ConversationAdapter(
     ) {
         val context = viewHolder.itemView.context
         val file = interaction as DataTransfer
-        val path = presenter.deviceRuntimeService.getConversationPath(file)
         val timeString = TextUtils.timestampToTime(context, formatter, file.timestamp)
         viewHolder.mFileTime?.text = timeString
 
@@ -1101,6 +1100,7 @@ class ConversationAdapter(
         }
 
         val isMessageSeparationNeeded = isMessageSeparationNeeded(isDateShown, position)
+        val path = presenter.deviceRuntimeService.getConversationPath(file) ?: return
         when (type) {
             MessageType.TransferType.IMAGE -> {
                 // Add margin if message need to be separated.
