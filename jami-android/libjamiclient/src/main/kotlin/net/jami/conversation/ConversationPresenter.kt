@@ -299,18 +299,18 @@ class ConversationPresenter @Inject constructor(
      */
     fun saveFile(interaction: Interaction) {
         val transfer = interaction as DataTransfer
-        val fileAbsolutePath = deviceRuntimeService.getConversationPath(transfer).absolutePath
+        val fileAbsolutePath = deviceRuntimeService.getConversationPath(transfer)?.absolutePath ?: return
         view?.startSaveFile(transfer, fileAbsolutePath)
     }
 
     fun shareFile(file: DataTransfer) {
-        val path = deviceRuntimeService.getConversationPath(file)
+        val path = deviceRuntimeService.getConversationPath(file) ?: return
         view?.shareFile(path, file.displayName)
     }
 
     fun openFile(interaction: Interaction) {
         val file = interaction as DataTransfer
-        val path = deviceRuntimeService.getConversationPath(file)
+        val path = deviceRuntimeService.getConversationPath(file) ?: return
         view?.openFile(path, file.displayName)
     }
 

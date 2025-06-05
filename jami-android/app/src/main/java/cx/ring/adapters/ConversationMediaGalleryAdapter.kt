@@ -225,7 +225,7 @@ class ConversationMediaGalleryAdapter(
     private fun configureForFileInfo(viewHolder: ConversationMediaViewHolder, file: DataTransfer, position: Int) {
         Log.w(TAG, "configureForFileInfo $position")
         val path = deviceRuntimeService.getConversationPath(file)
-        if (file.isComplete) {
+        if (file.isComplete && path != null) {
             when {
                 file.isPicture -> configureImage(viewHolder.image!!, path, file.body!!)
                 file.isAudio -> configureAudio(viewHolder, path)

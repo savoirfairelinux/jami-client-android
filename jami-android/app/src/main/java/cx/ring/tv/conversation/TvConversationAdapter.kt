@@ -571,6 +571,8 @@ class TvConversationAdapter(
                 RecyclerViewContextMenuInfo(viewHolder.bindingAdapterPosition, v.id.toLong())
             false
         }
+        if (path == null)
+            return
         when (type) {
             MessageType.TransferType.IMAGE -> { configureImage(viewHolder, path, file.body) }
             MessageType.TransferType.VIDEO -> { configureVideo(viewHolder, path, file.body) }
