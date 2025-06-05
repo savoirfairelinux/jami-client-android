@@ -9,3 +9,4 @@ android-toolchain-*/
 config.mak
 jami-android/captures/
 .cxx
+.vscode/settings.json
