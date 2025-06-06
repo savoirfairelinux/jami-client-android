@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a36350e0_143df153",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 19
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-06-06T19:39:47Z",
+      "side": 0,
+      "message": "\"The operation timed out\" is good",
+      "parentUuid": "035560d4_a6005322",
+      "range": {
+        "startLine": 481,
+        "startChar": 50,
+        "endLine": 481,
+        "endChar": 59
+      },
+      "revId": "7d9299293061e883a452ec385810110131f48eef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a7010dd9_bb25454f",
         "filename": "jami-android/app/src/main/res/values/strings.xml",
         "patchSetId": 19
@@ -37,6 +61,30 @@
       "writtenOn": "2025-03-11T03:19:45Z",
       "side": 0,
       "message": "Can this line be removed as it is a duplicate of the line above?",
+      "range": {
+        "startLine": 636,
+        "startChar": 1,
+        "endLine": 636,
+        "endChar": 129
+      },
+      "revId": "7d9299293061e883a452ec385810110131f48eef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28f97bff_d139bba4",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 19
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-06-06T19:39:47Z",
+      "side": 0,
+      "message": "yes but we need to update the code accordingly",
+      "parentUuid": "a7010dd9_bb25454f",
       "range": {
         "startLine": 636,
         "startChar": 1,
