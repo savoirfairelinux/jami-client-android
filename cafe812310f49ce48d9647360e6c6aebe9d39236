@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd2a3484_8b4214f2",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 56
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-06-06T22:21:21Z",
+      "side": 0,
+      "message": "Unable to find where `file_transfer_status_invalid_pathname` is used in the code to update to `file_transfer_status_invalid_file`. Can you help?",
+      "range": {
+        "startLine": 478,
+        "startChar": 18,
+        "endLine": 478,
+        "endChar": 55
+      },
+      "revId": "cafe812310f49ce48d9647360e6c6aebe9d39236",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
