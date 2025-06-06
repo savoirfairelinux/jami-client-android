@@ -48,6 +48,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1014af51_aeb6941e",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 19
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-06-06T21:51:37Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "a36350e0_143df153",
+      "range": {
+        "startLine": 481,
+        "startChar": 50,
+        "endLine": 481,
+        "endChar": 59
+      },
+      "revId": "7d9299293061e883a452ec385810110131f48eef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a7010dd9_bb25454f",
@@ -85,6 +109,30 @@
       "side": 0,
       "message": "yes but we need to update the code accordingly",
       "parentUuid": "a7010dd9_bb25454f",
+      "range": {
+        "startLine": 636,
+        "startChar": 1,
+        "endLine": 636,
+        "endChar": 129
+      },
+      "revId": "7d9299293061e883a452ec385810110131f48eef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d348bed_47007567",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 19
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-06-06T21:51:37Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "28f97bff_d139bba4",
       "range": {
         "startLine": 636,
         "startChar": 1,
