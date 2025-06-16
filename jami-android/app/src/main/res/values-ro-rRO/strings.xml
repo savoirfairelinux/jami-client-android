@@ -63,7 +63,7 @@
   <string name="notif_outgoing_call">Apel efectuat</string>
   <string name="notif_current_call_title">Apel în curs cu %1$s</string>
   <string name="notif_current_call">Apel în curs</string>
-  <string name="notif_channel_call_in_progress">Apelare în curs</string>
+  <string name="notif_channel_call_in_progress">Apel în curs</string>
   <string name="notif_channel_calls">Apeluri</string>
   <string name="notif_channel_missed_calls">Apeluri pierdute</string>
   <string name="notif_channel_incoming_calls">Apeluri primite</string>

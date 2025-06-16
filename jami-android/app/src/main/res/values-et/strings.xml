@@ -6,12 +6,12 @@
   <string name="section_license">Litsents</string>
   <string name="sponsor_section">Jami on vaba tarkvara, mida arendab ja toetab</string>
   <string name="copyright_section">Autoriõigused</string>
-  <string name="contribute_section">Osale kaastöös</string>
+  <string name="contribute_section">Tee kaastööd</string>
   <string name="version_section">Versioon</string>
   <string name="no_browser_app_installed">Veebibrauserit ei leidu, paigalda see lehe avamiseks</string>
   <string name="website_chooser_title">Vaata veebisaiti kasutades...</string>
   <string name="license">See tarkvara on saadaval „nii nagu on“ põhimõtte alusel, ilma mingisuguste garantiideta. Lisateave: <u>GNU Üldise Avaliku Litsentsi versioon 3 või hilisem</u></string>
-  <string name="description">Jami on universaalse suhtlemise vaba tarkvara, mis austab kasutajate vabadusi ja privaatsust.</string>
+  <string name="description">Jami on vaba tarkvara universaalseks suhtlemiseks, mis austab kasutajate vabadusi ja privaatsust.</string>
   <string name="credits">Tänuavaldused</string>
   <string name="pip_title">Jami konverents</string>
   <string name="call_service_description">See teenus on vajalik, et teie kõned käivad eelses taustas.</string>
@@ -34,7 +34,7 @@
   <string name="menu_item_account">Halda kasutajakontot</string>
   <string name="menu_item_settings">Seadistused</string>
   <string name="menu_item_app_settings">Rakenduse seadistused</string>
-  <string name="menu_item_account_settings">Kontode seaded</string>
+  <string name="menu_item_account_settings">Kontode seadistused</string>
   <string name="menu_item_extension_list">Lisamoodulite seadistused</string>
   <string name="menu_item_share">Jaga minu kontot</string>
   <string name="menu_item_about">Teave Jami kohta</string>
@@ -158,10 +158,10 @@
   <string name="permission_dialog_write_call_log_message">Jami vajab „Salvesta kõnelogi“ luba. Selle funktsionaalsuse kasutamiseks anna nutiseadme seadistustest vastavad õigused.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skaneeri lisatava konto QR-kood.</string>
-  <string name="title_activity_qrcode">Jaga minu konto</string>
+  <string name="title_activity_qrcode">Jaga minu kontot</string>
   <string name="error_scan_no_camera_permissions">QR-koodi skanner vajab õigust kaamera kasutamiseks, aga hetkel on selline luba puudu. Selle funktsionaalsuse kasutamiseks anna nutiseadme seadistustest vastavad õigused.</string>
   <string name="tab_code">Minu kood</string>
-  <string name="tab_scan">Skaneeri kood</string>
+  <string name="tab_scan">Skaneeri QR-koodi</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Kas kustutame ajaloo?</string>
   <string name="clear_history_dialog_message">Seda tegevust ei saa tagasi pöörata.</string>
@@ -261,7 +261,7 @@
   <!--Account summary-->
   <string name="profile">Profiil</string>
   <string name="profile_name">Profiili nimi</string>
-  <string name="profile_message_warning">Profiil jagatakse ainult kontaktidega</string>
+  <string name="profile_message_warning">Seda profiili jagatakse ainult kasutajakonto kontaktidega</string>
   <string name="custom_profile_message_warning">Sinu kohendatud profiil on nähtav vaid sellele kasutajakontole selles seadmes</string>
   <string name="open_the_gallery">Ava galerii</string>
   <string name="take_a_photo">Pildista</string>
@@ -277,16 +277,16 @@
   <string name="devices">Seotud seadmed</string>
   <string name="total_devices">Seadmeid kokku: </string>
   <!--Share fragment-->
-  <string name="share_message">Skanneeri seda koodi Jamiga.</string>
+  <string name="share_message">Skanneeri seda QR-koodi Jamiga</string>
   <string name="share_message_no_account">Palun vali jagatav konto.</string>
-  <string name="share_your_account_information">Jaga minu kontaktandmed</string>
-  <string name="share_contact_information">Jaga kontaktandmed</string>
+  <string name="share_your_account_information">Jaga minu kontaktandmeid</string>
+  <string name="share_contact_information">Jaga kontaktandmeid</string>
   <string name="share_label">Jaga</string>
   <string name="generic_error_migration">Viga</string>
   <string name="generic_error_migration_message">Kasutajakonto kolimisel tekkis viga.</string>
   <string name="title_share_with">Jaga seda...</string>
   <!--Pending invitations-->
-  <string name="accept">Võta vastu</string>
+  <string name="accept">Nõustu</string>
   <string name="decline">Keeldu</string>
   <string name="block">Blokeeri</string>
   <string name="decline_invitation">Lükka kutse tagasi</string>
@@ -342,8 +342,8 @@
   <string name="menu_message_cancel">Tühista sõnum</string>
   <string name="menu_message_reply">Vasta</string>
   <string name="menu_delete">Kustuta</string>
-  <string name="pref_darkTheme_title">Tume teema</string>
-  <string name="pref_darkTheme_summary">Süsteemse teema asemel kasuta alati tumedat teemat</string>
+  <string name="pref_darkTheme_title">Tume kujundus</string>
+  <string name="pref_darkTheme_summary">Süsteemse kujunduse asemel kasuta alati tumedat kujundust</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Vestlused</string>
   <string name="navigation_item_contact_request">Kutsed</string>
@@ -377,7 +377,7 @@
   <string name="wizard_status_recommended">Soovitatav</string>
   <string name="wizard_status_optional">Valikuline</string>
   <string name="wizard_status_required">Nõutav</string>
-  <string name="wizard_username_info">Vali oma konto kasutajanimi</string>
+  <string name="wizard_username_info">Vali oma kontole kasutajanimi</string>
   <string name="wizard_username_button">Vali kasutajanimi</string>
   <string name="wizard_username_skip">Jäta kasutajanime valik vahele</string>
   <string name="wizard_password_info">Kasutajakonto salasõna</string>
@@ -386,7 +386,7 @@
   <string name="wizard_password_skip">Loo kasutajakonto</string>
   <string name="wizard_password_switch">Kasuta konto krüptimisel salasõna</string>
   <string name="wizard_password_warning">Palun arvesta, et hilisemaks salasõna taastamiseks puudub võimalus - palun jäta ta meelde või märgi turvaliselt oma salasõnalaekasse</string>
-  <string name="wizard_profile_info">Profiil jagatakse ainult kontaktidega</string>
+  <string name="wizard_profile_info">Seda profiili jagatakse ainult kasutajakonto kontaktidega</string>
   <string name="wizard_profile_button">Salvesta profiil</string>
   <string name="wizard_profile_skip">Jäta vahele ja tee seda hiljem.</string>
   <string name="fab_path_choose">Vali muu fail</string>
@@ -444,7 +444,7 @@
   <!--Conversation details-->
   <string name="details">Üksikasjalikud andmed</string>
   <string name="secure_p2p_connection">Turvaline ühendus võrdõigusvõrgus</string>
-  <string name="swarm_type">Vestluse tüüp.</string>
+  <string name="swarm_type">Vestluse tüüp</string>
   <string name="Private">Isiklik</string>
   <string name="swarm_id">Vestlusrühma tunnus</string>
   <string name="show_qr_code">Näita QR-koodi</string>
