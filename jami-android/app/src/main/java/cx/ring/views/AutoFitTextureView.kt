@@ -23,6 +23,7 @@ import android.util.TypedValue
 import kotlin.jvm.JvmOverloads
 import android.view.TextureView
 import androidx.core.view.ViewCompat
+import cx.ring.R
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -33,8 +34,17 @@ class AutoFitTextureView @JvmOverloads constructor(context: Context, attrs: Attr
     : TextureView(context, attrs, defStyle) {
     private var mRatioWidth = 720
     private var mRatioHeight = 1280
+    private var isFullscreen = false
     private val mSize: Int = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150f, context.resources.displayMetrics).roundToInt()
     private val mBounds = listOf(Rect())
+
+    init {
+        if (attrs != null) {
+            val a = context.obtainStyledAttributes(attrs, R.styleable.AutoFitTextureView)
+            isFullscreen = a.getBoolean(R.styleable.AutoFitTextureView_isFullscreen, false)
+            a.recycle()
+        }
+    }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
@@ -60,17 +70,41 @@ class AutoFitTextureView @JvmOverloads constructor(context: Context, attrs: Attr
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val width = min(MeasureSpec.getSize(widthMeasureSpec), mSize)
-        val height = min(MeasureSpec.getSize(heightMeasureSpec), mSize)
-        if (0 == mRatioWidth || 0 == mRatioHeight) {
-            setMeasuredDimension(width, height)
-        } else {
-            if (width < height * mRatioWidth / mRatioHeight) {
-                setMeasuredDimension(width, width * mRatioHeight / mRatioWidth)
+        val requestedWidth = MeasureSpec.getSize(widthMeasureSpec)
+        val requestedHeight = MeasureSpec.getSize(heightMeasureSpec)
+
+        val targetWidth = if (isFullscreen) requestedWidth else min(requestedWidth, mSize)
+        val targetHeight = if (isFullscreen) requestedHeight else min(requestedHeight, mSize)
+
+        if (mRatioWidth == 0 || mRatioHeight == 0) {
+            setMeasuredDimension(targetWidth, targetHeight)
+            return
+        }
+
+        val aspectRatio = mRatioWidth.toFloat() / mRatioHeight
+        val adjustedWidth: Int
+        val adjustedHeight: Int
+
+        if (isFullscreen) {
+            // Fullscreen mode: adjust to fill parent while keeping aspect ratio
+            if (targetHeight >= targetWidth) {
+                adjustedHeight = targetHeight
+                adjustedWidth = (adjustedHeight * aspectRatio).toInt().coerceAtMost(targetWidth)
             } else {
-                setMeasuredDimension(height * mRatioWidth / mRatioHeight, height)
+                adjustedWidth = targetWidth
+                adjustedHeight = (adjustedWidth / aspectRatio).toInt().coerceAtMost(targetHeight)
+            }
+        } else {
+            // Preview mode: fit inside a 150dp box with correct aspect ratio
+            if (targetWidth < targetHeight * aspectRatio) {
+                adjustedWidth = targetWidth
+                adjustedHeight = (adjustedWidth / aspectRatio).toInt()
+            } else {
+                adjustedHeight = targetHeight
+                adjustedWidth = (adjustedHeight * aspectRatio).toInt()
             }
         }
+
+        setMeasuredDimension(adjustedWidth, adjustedHeight)
     }
 }
