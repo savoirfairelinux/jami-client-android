@@ -287,7 +287,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             binding.callMicBtn.isChecked = presenter.isMicrophoneMuted
 
             binding.extensionPreviewSurface.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
-                configureTransform(mPreviewSurfaceWidth, mPreviewSurfaceHeight)
+                //configureTransform(mPreviewSurfaceWidth, mPreviewSurfaceHeight)
             }
             binding.extensionPreviewContainer.setOnTouchListener { v: View, event: MotionEvent ->
                 val action = event.actionMasked
@@ -390,9 +390,32 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 }
             }
 
+            binding.fullscreenCameraPreview.surfaceTextureListener = object : TextureView.SurfaceTextureListener {
+                override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
+                    Log.d("TransformDebug", "onSurfaceTextureAvailable fullscreenPreview: width: $width, height: $height")
+                    mPreviewSurfaceWidth = width
+                    mPreviewSurfaceHeight = height
+                    presenter.fullScreenVideoSurfaceCreated(binding.fullscreenCameraPreview)
+                    configureTransform(binding.fullscreenCameraPreview, width, height)
+                }
+
+                override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, width: Int, height: Int) {
+                    Log.d("TransformDebug", "onSurfaceTextureSizeChanged fullscreenPreview: width: $width, height: $height")
+                    configureTransform(binding.fullscreenCameraPreview, width, height)
+                }
+
+                override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean {
+                    presenter.previewVideoSurfaceDestroyed()
+                    return true
+                }
+
+                override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {}
+            }
+
             binding.previewSurface.surfaceTextureListener = listener
             binding.previewSurface.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
-                configureTransform(mPreviewSurfaceWidth, mPreviewSurfaceHeight)
+                Log.d("TransformDebug", "onLayoutChange previewSurface: width: ${binding.previewSurface.width}, height: ${binding.previewSurface.height}")
+                configureTransform(binding.previewSurface, mPreviewSurfaceWidth, mPreviewSurfaceHeight)
             }
             binding.previewContainer.setOnTouchListener(previewTouchListener)
 
@@ -507,12 +530,14 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             mPreviewSurfaceWidth = width
             mPreviewSurfaceHeight = height
             presenter.previewVideoSurfaceCreated(binding!!.previewSurface)
+            configureTransform(binding!!.previewSurface, width, height)
         }
 
         override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, width: Int, height: Int) {
             Log.w(TAG, " onSurfaceTextureSizeChanged ------>  width: $width, height: $height")
             mPreviewSurfaceWidth = width
             mPreviewSurfaceHeight = height
+            configureTransform(binding!!.previewSurface, width, height)
             configurePreview(width, 1f)
         }
 
@@ -1076,6 +1101,9 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
      * */
     override fun initNormalStateDisplay() {
         Log.w(CallPresenter.TAG, "initNormalStateDisplay")
+        binding?.fullscreenCameraPreview?.apply {
+            visibility = View.GONE
+        }
         binding?.apply {
             callBtnRow.isVisible = false
             callAcceptBtn.isVisible = false
@@ -1137,9 +1165,14 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 if (flip) mPreviewWidth else mPreviewHeight
             )
         }
+
+        binding?.fullscreenCameraPreview?.setAspectRatio(
+            if (flip) mPreviewHeight else mPreviewWidth,
+            if (flip) mPreviewWidth else mPreviewHeight
+        )
     }
 
-    private fun configureTransform(viewWidth: Int, viewHeight: Int) {
+    private fun configureTransform(targetView: TextureView, viewWidth: Int, viewHeight: Int) {
         val activity = activity ?: return
         val binding = binding ?: return
         val rotation = activity.windowManager.defaultDisplay.rotation
@@ -1159,9 +1192,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         } else if (Surface.ROTATION_180 == rotation) {
             matrix.postRotate(180f, centerX, centerY)
         }
-        if (!isChooseExtensionMode) {
-            binding.previewSurface.setTransform(matrix)
-        }
+
+        targetView.setTransform(matrix)
     }
 
     override fun goToConversation(accountId: String, conversationId: Uri) {

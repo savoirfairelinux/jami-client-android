@@ -89,6 +89,7 @@ abstract class HardwareService(
     abstract fun hasInput(id: String): Boolean
     abstract fun getCameraInfo(camId: String, formats: IntVect, sizes: UintVect, rates: UintVect)
     abstract fun setParameters(camId: String, format: Int, width: Int, height: Int, rate: Int)
+    abstract fun startCameraPreview(videoPreview: Boolean)
     abstract fun startCapture(camId: String?)
     abstract fun stopCapture(camId: String)
     abstract fun hasMicrophone(): Boolean
@@ -100,6 +101,8 @@ abstract class HardwareService(
     abstract fun addPreviewVideoSurface(holder: Any, conference: Conference?)
     abstract fun updatePreviewVideoSurface(conference: Conference)
     abstract fun removePreviewVideoSurface()
+    abstract fun addFullScreenPreviewSurface(holder: Any)
+    abstract fun removeFullScreenPreviewSurface()
     abstract fun changeCamera(setDefaultCamera: Boolean = false): String?
     abstract fun setPreviewSettings()
     abstract fun hasCamera(): Boolean
