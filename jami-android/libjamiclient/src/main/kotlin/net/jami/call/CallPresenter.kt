@@ -357,7 +357,17 @@ class CallPresenter @Inject constructor(
 
     fun previewVideoSurfaceCreated(holder: Any) {
         mHardwareService.addPreviewVideoSurface(holder, mConference)
+        mHardwareService.startCameraPreview(false)
         //mHardwareService.startCapture(null);
+    }
+
+    fun fullScreenVideoSurfaceCreated(holder: Any) {
+       mHardwareService.addFullScreenPreviewSurface(holder)
+       mHardwareService.startCameraPreview(true)
+    }
+
+    fun fullScreenVideoSurfaceDestroyed() {
+        mHardwareService.removeFullScreenPreviewSurface()
     }
 
     fun videoSurfaceDestroyed() {
