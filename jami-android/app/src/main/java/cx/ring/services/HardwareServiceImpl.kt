@@ -21,6 +21,7 @@ import android.bluetooth.BluetoothHeadset
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.graphics.SurfaceTexture
 import android.media.AudioDeviceInfo
 import android.media.AudioManager
 import android.media.AudioManager.OnAudioFocusChangeListener
@@ -42,6 +43,7 @@ import androidx.media.AudioManagerCompat
 import cx.ring.service.CallConnection
 import cx.ring.services.CallServiceImpl.Companion.CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY
 import cx.ring.services.CameraService.CameraListener
+import cx.ring.services.CameraService.VideoParams
 import cx.ring.utils.BluetoothWrapper
 import cx.ring.utils.BluetoothWrapper.BluetoothChangeListener
 import io.reactivex.rxjava3.core.Completable
@@ -79,6 +81,7 @@ class HardwareServiceImpl(
     private var mIsChooseExtension = false
     private var mMediaHandlerId: String? = null
     private var mExtensionCallId: String? = null
+    private var mPreviewCamId: String? = null
     private val sharedPreferences: SharedPreferences = context
         .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     override val pushLogFile: File = File(context.filesDir, "firebaselog.txt")
@@ -481,12 +484,96 @@ class HardwareServiceImpl(
         mMediaHandlerId = null
     }
 
+    override fun startCameraPreview(videoPreview: Boolean) {
+        val surface = (if (videoPreview) mFullScreenPreviewSurface else mCameraPreviewSurface).get()
+        if (surface == null || !surface.isAvailable || surface.surfaceTexture == null) {
+            Log.e(TAG, "startCameraPreview > Surface not ready or null")
+            return
+        }
+        val conf = mCameraPreviewCall.get()
+        val useHardwareCodec =
+            mPreferenceService.isHardwareAccelerationEnabled && (conf == null || !conf.isConference) && !mIsChooseExtension
+        mPreviewCamId = cameraService.switchInput(true) ?: return
+        val videoParams = cameraService.getParams(mPreviewCamId) ?: return
+
+        if(videoPreview) {
+            openCameraPreview(
+                videoParams,
+                surface as? TextureView,
+                useHardwareCodec,
+                false,
+                true
+            )
+        } else {
+            openCameraPreview(
+                videoParams,
+                surface as? TextureView,
+                useHardwareCodec,
+                false,
+                false,
+                onOpened = {
+                    handleExtensionMediaHandler(conf?.id)
+                }
+            )
+        }
+    }
+
+    private fun openCameraPreview(
+        videoParams: VideoParams,
+        previewSurface: TextureView?,
+        useHardwareCodec: Boolean,
+        codecStart: Boolean,
+        videoPreview: Boolean,
+        onOpened: (() -> Unit)? = null
+    ) {
+        val conf = mCameraPreviewCall.get()
+        videoParams.isCapturing = true
+        mUiScheduler.scheduleDirect {
+            cameraService.openCamera(videoParams, previewSurface,
+                object : CameraListener {
+                    override fun onOpened() {
+                        onOpened?.invoke()
+                    }
+
+                    override fun onError() {
+                        stopCapture(videoParams.id)
+                    }
+                },
+                useHardwareCodec,
+                mPreferenceService.resolution,
+                mPreferenceService.bitrate,
+                codecStart,
+                videoPreview
+            )
+        }
+        cameraEvents.onNext(VideoEvent(videoParams.id,
+            started = true,
+            w = videoParams.size.width,
+            h = videoParams.size.height,
+            rot = videoParams.rotation
+        ))
+    }
+
+    private fun handleExtensionMediaHandler(callId: String?) {
+        val currentCallId = callId ?: return
+        if (mExtensionCallId != null && mExtensionCallId != currentCallId) {
+            mMediaHandlerId?.let {
+                JamiService.toggleCallMediaHandler(it, currentCallId, false)
+            }
+            mIsChooseExtension = false
+            mMediaHandlerId = null
+            mExtensionCallId = null
+        } else if (mIsChooseExtension && mMediaHandlerId != null) {
+            mExtensionCallId = currentCallId
+            toggleMediaHandler(currentCallId)
+        }
+    }
+
     override fun startCapture(camId: String?) {
         val cam = camId ?: cameraService.switchInput(true) ?: return
         Log.i(TAG, "startCapture > camId: $camId, cam: $cam, mIsChooseExtension: $mIsChooseExtension")
         shouldCapture.add(cam)
         val videoParams = cameraService.getParams(cam) ?: return
-        if (videoParams.isCapturing) return
 
         val surface = mCameraPreviewSurface.get()
         if (surface == null) {
@@ -508,7 +595,6 @@ class HardwareServiceImpl(
             }
         }
         Log.w(TAG, "startCapture: id:$cam codec:${videoParams.codec} size:${videoParams.size} rot${videoParams.rotation} hw:$useHardwareCodec bitrate:${mPreferenceService.bitrate}")
-        videoParams.isCapturing = true
 
         if (videoParams.id == CameraService.VideoDevices.SCREEN_SHARING) {
             val projection = pendingScreenSharingSession ?: return
@@ -519,39 +605,20 @@ class HardwareServiceImpl(
             return
         }
 
-        mUiScheduler.scheduleDirect {
-            cameraService.openCamera(videoParams, surface,
-                object : CameraListener {
-                    override fun onOpened() {
-                        val currentCall = conf?.id ?: return
-                        if (mExtensionCallId != null && mExtensionCallId != currentCall) {
-                            if (mMediaHandlerId != null) {
-                                JamiService.toggleCallMediaHandler(mMediaHandlerId, currentCall,false)
-                            }
-                            mIsChooseExtension = false
-                            mMediaHandlerId = null
-                            mExtensionCallId = null
-                        } else if (mIsChooseExtension && mMediaHandlerId != null) {
-                            mExtensionCallId = currentCall
-                            toggleMediaHandler(currentCall)
-                        }
-                    }
-                    override fun onError() {
-                        stopCapture(videoParams.id)
-                    }
-                },
+        if (cam != mPreviewCamId || !videoParams.isCapturing) {
+            openCameraPreview(
+                videoParams,
+                surface as? TextureView,
                 useHardwareCodec,
-                mPreferenceService.resolution,
-                mPreferenceService.bitrate
+                true,
+                false,
+                onOpened = {
+                    handleExtensionMediaHandler(conf?.id)
+                }
             )
+        } else {
+            cameraService.startCodec(videoParams)
         }
-
-        cameraEvents.onNext(VideoEvent(cam,
-            started = true,
-            w = videoParams.size.width,
-            h = videoParams.size.height,
-            rot = videoParams.rotation
-        ))
     }
 
     override fun stopCapture(camId: String) {
@@ -618,6 +685,13 @@ class HardwareServiceImpl(
         }
     }
 
+    override fun addFullScreenPreviewSurface(holder: Any) {
+        Log.w(TAG, "addFullScreenPreviewSurface > holder:$holder")
+        if (holder !is TextureView) return
+        if (mFullScreenPreviewSurface.get() === holder) return
+        mFullScreenPreviewSurface = WeakReference(holder)
+    }
+
     override fun updatePreviewVideoSurface(conference: Conference) {
         val old = mCameraPreviewCall.get()
         mCameraPreviewCall = WeakReference(conference)
@@ -647,6 +721,10 @@ class HardwareServiceImpl(
 
     override fun removePreviewVideoSurface() {
         mCameraPreviewSurface.clear()
+    }
+
+    override fun removeFullScreenPreviewSurface() {
+        mFullScreenPreviewSurface.clear()
     }
 
     override fun changeCamera(setDefaultCamera: Boolean): String? {
@@ -717,6 +795,7 @@ class HardwareServiceImpl(
 
         private val TAG = HardwareServiceImpl::class.simpleName!!
         private var mCameraPreviewSurface = WeakReference<TextureView>(null)
+        private var mFullScreenPreviewSurface = WeakReference<TextureView>(null)
         private var mCameraExtensionPreviewSurface = WeakReference<SurfaceView>(null)
         private var mCameraPreviewCall = WeakReference<Conference>(null)
         private val videoSurfaces = HashMap<String, WeakReference<SurfaceHolder>>()
