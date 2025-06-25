@@ -261,6 +261,7 @@ class CameraService internal constructor(c: Context) {
         // SPS and PPS NALs (Config Data).
         var codecData: ByteBuffer? = null
         var codecStarted: Boolean = false
+        var isKeyFrame: Boolean = false
 
         fun getAndroidCodec() = when (val codec = codec) {
             "H264" -> MediaFormat.MIMETYPE_VIDEO_AVC
@@ -436,7 +437,8 @@ class CameraService internal constructor(c: Context) {
                                 val isKeyFrame = info.flags and MediaCodec.BUFFER_FLAG_KEY_FRAME != 0
                                 // If it's a key-frame, send the cached SPS/PPS NALs prior to
                                 // sending key-frame.
-                                if (isKeyFrame) {
+                                if (isKeyFrame || videoParams.isKeyFrame) {
+                                    videoParams.isKeyFrame = false
                                     videoParams.codecData?.let { data ->
                                         JamiService.captureVideoPacket(
                                             videoParams.inputUri,
@@ -623,18 +625,113 @@ class CameraService internal constructor(c: Context) {
         return false
     }
 
+    fun startCodec(params: VideoParams) {
+        Log.d(TAG, "startCodec called")
+        if (!params.codecStarted) {
+            try {
+                params.isKeyFrame = true
+                params.mediaCodec?.start()
+                params.codecStarted = true
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to start codec", e)
+            }
+        }
+    }
+
+    fun createCameraSession(
+        camera: CameraDevice,
+        previewSurface: Surface,
+        captureSurface: Surface?,
+        handler: Handler,
+        codec: MediaCodec?,
+        listener: CameraListener,
+        fpsRange: Range<Int>,
+        videoParams: VideoParams,
+        codecStart: Boolean
+    ) {
+        try {
+            Log.d("CameraSession", "Recreating session...")
+            Log.d("CameraSession", "Preview surface: $previewSurface")
+            Log.d("CameraSession", "Capture surface: $captureSurface")
+            Log.d("CameraSession", "FPS range: ${fpsRange.lower} - ${fpsRange.upper}")
+
+            val requestBuilder = camera.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW).apply {
+                addTarget(previewSurface)
+                captureSurface?.let {
+                    addTarget(it)
+                    Log.d("CameraSession", "Added capture surface to request")
+                }
+
+                set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_VIDEO)
+                set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON)
+                set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, fpsRange)
+                set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_AUTO)
+            }
+
+            val captureCallback = if (codec != null) object : CameraCaptureSession.CaptureCallback() {
+                override fun onCaptureStarted(
+                    session: CameraCaptureSession,
+                    request: CaptureRequest,
+                    timestamp: Long,
+                    frameNumber: Long
+                ) {
+                    Log.d("CameraSession", "Capture started: frame $frameNumber at $timestamp")
+                    if (codecStart && !videoParams.codecStarted) {
+                        try {
+                            videoParams.mediaCodec?.start()
+                            videoParams.codecStarted = true
+                        } catch (e: Exception) {
+                            Log.e(TAG, "Failed to start codec", e)
+                        }
+                    }
+                }
+            } else null
+
+            val sessionCallback = object : CameraCaptureSession.StateCallback() {
+                override fun onConfigured(session: CameraCaptureSession) {
+                    Log.i("CameraSession", "Session configured successfully")
+                    listener.onOpened()
+                    try {
+                        session.setRepeatingRequest(requestBuilder.build(), captureCallback, handler)
+                        Log.d("CameraSession", "Repeating request set successfully")
+                    } catch (e: Exception) {
+                        Log.e("CameraSession", "Failed to set repeating request", e)
+                        camera.close()
+                    }
+                }
+
+                override fun onConfigureFailed(session: CameraCaptureSession) {
+                    Log.w("CameraSession", "Session configuration failed")
+                    listener.onError()
+                }
+            }
+
+            val surfaces = listOfNotNull(previewSurface, captureSurface)
+            Log.d("CameraSession", "Creating session with ${surfaces.size} targets")
+            camera.createCaptureSession(surfaces, sessionCallback, handler)
+
+        } catch (e: Exception) {
+            Log.e("CameraSession", "Failed to recreate session", e)
+            listener.onError()
+        }
+    }
+
     fun openCamera(
         videoParams: VideoParams,
-        surface: TextureView,
+        surface: TextureView?,
         listener: CameraListener,
         hw_accel: Boolean,
         resolution: Int,
-        bitrate: Int
+        bitrate: Int,
+        codecStart: Boolean,
+        videoPreview: Boolean
     ) {
         //previewCamera?.close()
         val handler = videoHandler
         try {
-            val view = surface as AutoFitTextureView
+            Log.e(TAG, "opencamera videoPreview ${videoPreview} ${videoParams.id} with resolution: ${videoParams.size} and rate: ${videoParams.rate} fps")
+            Log.e(TAG, "opencamera rotation: ${videoParams.rotation} codec: ${videoParams.codec} hw_accel: $hw_accel")
+            val view =  surface as AutoFitTextureView
             val flip = videoParams.rotation % 180 != 0
             val cc = manager!!.getCameraCharacteristics(videoParams.id)
             val fpsRange = chooseOptimalFpsRange(cc.get(CameraCharacteristics.CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES))
@@ -649,136 +746,86 @@ class CameraService internal constructor(c: Context) {
             view.setAspectRatio(previewSize.height, previewSize.width)
             val texture = view.surfaceTexture ?: throw IllegalStateException()
             val previewSurface = Surface(texture)
-            val codec = if (hw_accel)
-                openEncoder(videoParams, videoParams.getAndroidCodec(), handler, resolution, bitrate)
-            else null
-            val targets: MutableList<Surface> = ArrayList(2)
-            targets.add(previewSurface)
             var tmpReader: ImageReader? = null
-            if (codec?.second != null) {
-                targets.add(codec.second!!)
+            var codec: Pair<MediaCodec?, Surface?> = Pair(null, null)
+            var captureSurface: Surface? = null
+            if (!videoPreview) {
+                codec = if (hw_accel)
+                    openEncoder(videoParams, videoParams.getAndroidCodec(), handler, resolution, bitrate)
+                else Pair(null, null)
+
+                if (codec.second != null) {
+                    videoParams.mediaCodec = codec.first
+                } else {
+                    tmpReader = ImageReader.newInstance(
+                        videoParams.size.width,
+                        videoParams.size.height,
+                        ImageFormat.YUV_420_888,
+                        8
+                    )
+                    tmpReader.setOnImageAvailableListener(OnImageAvailableListener { r: ImageReader ->
+                        val image = r.acquireLatestImage()
+                        if (image != null) {
+                            JamiService.captureVideoFrame(
+                                videoParams.inputUri,
+                                image,
+                                videoParams.rotation
+                            )
+                            image.close()
+                        }
+                    }, handler)
+                }
+                Log.d("camerasession", "Using codec surface")
+                captureSurface = codec.second ?: tmpReader?.surface
+            }
+            val camera = videoParams.camera
+            if (videoParams.isCapturing && camera != null) {
+                createCameraSession(camera, previewSurface, captureSurface, handler, codec.first, listener, fpsRange, videoParams, codecStart)
             } else {
-                tmpReader = ImageReader.newInstance(videoParams.size.width, videoParams.size.height, ImageFormat.YUV_420_888, 8)
-                tmpReader.setOnImageAvailableListener(OnImageAvailableListener { r: ImageReader ->
-                    val image = r.acquireLatestImage()
-                    if (image != null) {
-                        JamiService.captureVideoFrame(videoParams.inputUri, image, videoParams.rotation)
-                        image.close()
+                manager.openCamera(videoParams.id, object : CameraDevice.StateCallback() {
+                    override fun onOpened(camera: CameraDevice) {
+                        try {
+                            Log.w(TAG, "onOpened " + videoParams.id)
+                            //previewCamera = camera
+                            videoParams.camera = camera
+                            texture.setDefaultBufferSize(previewSize.width, previewSize.height)
+                            createCameraSession(camera, previewSurface, captureSurface, handler, codec.first, listener, fpsRange, videoParams, codecStart)
+                        } catch (e: Exception) {
+                            Log.w(TAG, "onOpened error:", e)
+                        }
+                    }
+
+                    override fun onDisconnected(camera: CameraDevice) {
+                        Log.w(TAG, "onDisconnected")
+                        camera.close()
+                        listener.onError()
+                    }
+
+                    override fun onError(camera: CameraDevice, error: Int) {
+                        Log.w(TAG, "onError: $error")
+                        camera.close()
+                        listener.onError()
+                    }
+
+                    override fun onClosed(camera: CameraDevice) {
+                        Log.w(TAG, "onClosed")
+                        try {
+                            videoParams.mediaCodec?.let { mediaCodec ->
+                                if (videoParams.codecStarted)
+                                    mediaCodec.signalEndOfInputStream()
+                                mediaCodec.release()
+                                videoParams.mediaCodec = null
+                                videoParams.codecStarted = false
+                            }
+                            codec?.second?.release()
+                            tmpReader?.close()
+                            previewSurface.release()
+                        } catch (e: Exception) {
+                            Log.w(TAG, "Error stopping codec", e)
+                        }
                     }
                 }, handler)
-                targets.add(tmpReader.surface)
             }
-            val reader = tmpReader
-            manager.openCamera(videoParams.id, object : CameraDevice.StateCallback() {
-                override fun onOpened(camera: CameraDevice) {
-                    try {
-                        Log.w(TAG, "onOpened " + videoParams.id)
-                        //previewCamera = camera
-                        videoParams.camera = camera
-                        videoParams.mediaCodec = codec?.first
-                        texture.setDefaultBufferSize(previewSize.width, previewSize.height)
-                        val request = camera.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW).apply {
-                            addTarget(previewSurface)
-                            if (codec?.second != null) {
-                                addTarget(codec.second!!)
-                            } else if (reader != null) {
-                                addTarget(reader.surface)
-                            }
-                            set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_VIDEO)
-                            set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON)
-                            set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, fpsRange)
-                            set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_AUTO)
-                        }.build()
-
-                        val stateCallback = object : CameraCaptureSession.StateCallback() {
-                            override fun onConfigured(session: CameraCaptureSession) {
-                                Log.w(TAG, "onConfigured")
-                                listener.onOpened()
-                                try {
-                                    session.setRepeatingRequest(request,
-                                        if (codec?.second != null) object : CaptureCallback() {
-                                            override fun onCaptureStarted(
-                                                session: CameraCaptureSession,
-                                                request: CaptureRequest,
-                                                timestamp: Long,
-                                                frameNumber: Long
-                                            ) {
-                                                if (frameNumber == 1L) {
-                                                    try {
-                                                        videoParams.mediaCodec?.start()
-                                                        videoParams.codecStarted = true
-                                                    } catch (e: Exception) {
-                                                        listener.onError()
-                                                    }
-                                                }
-                                            }
-                                        } else null,
-                                        handler)
-                                } catch (e: Exception) {
-                                    Log.w(TAG, "onConfigured error:", e)
-                                    camera.close()
-                                }
-                            }
-
-                            override fun onConfigureFailed(session: CameraCaptureSession) {
-                                listener.onError()
-                                Log.w(TAG, "onConfigureFailed")
-                            }
-
-                            override fun onClosed(session: CameraCaptureSession) {
-                                Log.w(TAG, "CameraCaptureSession onClosed")
-                            }
-                        }
-
-                        // TODO Handle unsupported use case on some devices
-                        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                            val outputConfiguration = targets.map {
-                                OutputConfiguration(it).apply {
-                                    streamUseCase = if (this.surface == codec?.second || this.surface == reader?.surface)
-                                        CameraMetadata.SCALER_AVAILABLE_STREAM_USE_CASES_VIDEO_CALL.toLong()
-                                    else
-                                        CameraMetadata.SCALER_AVAILABLE_STREAM_USE_CASES_PREVIEW.toLong()
-                                }
-                            }
-                            val conf = SessionConfiguration(SessionConfiguration.SESSION_REGULAR, outputConfiguration, videoExecutor, stateCallback)
-                            camera.createCaptureSession(conf)
-                        } else */
-                        camera.createCaptureSession(targets, stateCallback, handler)
-                    } catch (e: Exception) {
-                        Log.w(TAG, "onOpened error:", e)
-                    }
-                }
-
-                override fun onDisconnected(camera: CameraDevice) {
-                    Log.w(TAG, "onDisconnected")
-                    camera.close()
-                    listener.onError()
-                }
-
-                override fun onError(camera: CameraDevice, error: Int) {
-                    Log.w(TAG, "onError: $error")
-                    camera.close()
-                    listener.onError()
-                }
-
-                override fun onClosed(camera: CameraDevice) {
-                    Log.w(TAG, "onClosed")
-                    try {
-                        videoParams.mediaCodec?.let { mediaCodec ->
-                            if (videoParams.codecStarted)
-                                mediaCodec.signalEndOfInputStream()
-                            mediaCodec.release()
-                            videoParams.mediaCodec = null
-                            videoParams.codecStarted = false
-                        }
-                        codec?.second?.release()
-                        reader?.close()
-                        previewSurface.release()
-                    } catch (e: Exception) {
-                        Log.w(TAG, "Error stopping codec", e)
-                    }
-                }
-            }, handler)
         } catch (e: SecurityException) {
             Log.e(TAG, "Security exception while settings preview parameters", e)
         } catch (e: Exception) {
