@@ -32,4 +32,8 @@
         <attr name="fitToContent" format="boolean"/>
     </declare-styleable>
 
+    <declare-styleable name="AutoFitTextureView">
+        <attr name="isFullscreen" format="boolean"/>
+    </declare-styleable>
+
 </resources>
