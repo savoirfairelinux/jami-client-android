@@ -20,6 +20,7 @@ import com.google.gson.JsonParser
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
@@ -1254,7 +1255,7 @@ class AccountService(
      * @return The Interaction object representing the interaction.
      */
     private fun getInteraction(
-        account: Account, conversation: Conversation, message: Map<String, String>
+        account: Account, conversation: Conversation, message: Map<String, String>, worker: Scheduler.Worker = Schedulers.computation().createWorker()
     ): Interaction {
         val id = message["id"]!!
         val type = message["type"]!!
@@ -1290,7 +1291,7 @@ class AccountService(
                     val fileId = message["fileId"]
                     val total = message["totalSize"]?.toLong() ?: 0
                     val dt = DataTransfer(fileId, account.accountId, author, fileName, contact.isUser, timestamp, total, 0)
-                    val worker = Schedulers.computation().createWorker()
+                    //val worker = Schedulers.computation().createWorker()
                     worker.schedule {
                         val paths = arrayOfNulls<String>(1)
                         val progressA = LongArray(1)
@@ -1370,7 +1371,7 @@ class AccountService(
         return interaction
     }
 
-    private fun addMessage(account: Account, conversation: Conversation, message: SwarmMessage, newMessage: Boolean): Interaction {
+    private fun addMessage(account: Account, conversation: Conversation, message: SwarmMessage, newMessage: Boolean, worker: Scheduler.Worker = Schedulers.computation().createWorker()): Interaction {
         val interaction = getInteractionFromSwarmMessage(account, conversation, message)
         conversation.addSwarmElement(interaction, newMessage)
         return interaction
@@ -1506,15 +1507,17 @@ class AccountService(
 
     fun swarmMessageReceived(accountId: String, conversationId: String, message: SwarmMessage) {
         getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
-            synchronized(conversation) {
-                val interaction = addMessage(account, conversation, message, true)
+            val worker = Schedulers.computation().createWorker()
+            val interaction = synchronized(conversation) {
+                val interaction = addMessage(account, conversation, message, true, worker)
                 account.conversationUpdated(conversation)
                 val isIncoming = !interaction.contact!!.isUser
                 if (isIncoming)
                     incomingSwarmMessageSubject.onNext(interaction)
-                if (interaction is DataTransfer)
-                    dataTransfers.onNext(interaction)
+                interaction
             }
+            if (interaction is DataTransfer)
+                worker.schedule { dataTransfers.onNext(interaction) }
         }}
     }
 
