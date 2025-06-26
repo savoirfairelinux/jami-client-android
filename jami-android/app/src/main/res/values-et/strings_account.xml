@@ -28,7 +28,7 @@
 Seega saad saad teha ja vastu võtta ainult otseseid IP-kõnesid.
 Saad oma kontot hiljem muuta</string>
   <string name="account_type_ip2ip">IP-konto</string>
-  <string name="help_ring">Jami konto kasutaja võimaldab sul suhelda inimestega turvaliselt läbi täielikult jaotatud võrgu.</string>
+  <string name="help_ring">Jami konto kasutaja võimaldab sul inimestega turvaliselt suhelda hajutatud võrdõigusvõrgus.</string>
   <string name="help_sip_title">Lisa SIP-konto</string>
   <string name="help_sip">Seadista olemasolev SIP-konto</string>
   <string name="create_sip_account">Seadista SIP-kontot</string>
@@ -58,7 +58,7 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_basic_category">Põhiseadistused</string>
   <string name="account_alias_label">Kuvatav nimi</string>
   <string name="account_hostname_label">Serveri nimi</string>
-  <string name="account_bootstrap_label"> Algata esmane tuvastus</string>
+  <string name="account_bootstrap_label">Server esmaseks tuvastuseks</string>
   <string name="account_name_server_label">Nimeserver</string>
   <string name="account_username_label">Kasutajanimi</string>
   <string name="account_password_label">Salasõna</string>
@@ -270,7 +270,7 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_biometry_auth_title">Eemalda Jami kasutajakonto lukustus</string>
   <string name="account_biometry_auth_message">Oma kasutajakonto avamiseks kasuta biomeetrilist tuvastust</string>
   <string name="account_biometry_enroll_title">Kas kasutame biomeetrilist tuvastamist?</string>
-  <string name="account_biometry_enroll_message">Sinu nutiseade võimaldab kasutada biomeetrilist tuvastamist
+  <string name="account_biometry_enroll_message">Sinu nutiseade võimaldab kasutada biomeetrilist tuvastamist.
 See pakub täiendava mugava ligipääsu sinu Jami kasutajakontole. Jätkuvalt jääb alles võimalus kasutada salasõna.</string>
   <string name="account_biometry_enroll_accept">Kasuta biomeetrilist tuvastamist</string>
   <string name="no_thanks">Tänan, ei</string>
