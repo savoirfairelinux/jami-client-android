@@ -11,10 +11,10 @@
   <string name="pref_category_extensions">Lisamoodulid</string>
   <string name="pref_category_video_settings">Täiendavad videoseadistused</string>
   <string name="pref_mobileData_title">Mobiilne andmeside</string>
-  <string name="pref_mobileData_summary">Lisaks WiFi võrkudel luba, et Jami kasutab 3G/LTE võrke</string>
+  <string name="pref_mobileData_summary">Lisaks WiFi võrkudele luba, et Jami kasutab 3G/LTE võrke</string>
   <string name="pref_pushNotifications_title">Tõuketeavitused</string>
   <string name="pref_pushNotifications_summary">Kõnede ja sõnumite taustateavituste jaoks kasuta Google\'i servereid</string>
-  <string name="pref_unifiedPush_summary">Kõnede ja sõnumite taustateavituste jaoks kasuta UnifiedPush teenust</string>
+  <string name="pref_unifiedPush_summary">Kõnede ja sõnumite taustateavituste jaoks kasuta UnifiedPushi teenust</string>
   <string name="pref_video_advanced_title">Täiendavad videoseadistused</string>
   <string name="pref_video_advanced_summary">Muuda video bitikiirust, resolutsiooni ning proovi katselisi seadistusi</string>
   <string name="pref_hd_summary">Võimalda kõrgresolutsiooniga video saatmist</string>
