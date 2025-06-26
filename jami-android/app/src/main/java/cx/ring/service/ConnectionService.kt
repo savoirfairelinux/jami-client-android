@@ -34,7 +34,9 @@ import net.jami.services.ContactService
 import net.jami.services.ConversationFacade
 import net.jami.services.DeviceRuntimeService
 import net.jami.services.NotificationService
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import androidx.core.net.toUri
 
 @RequiresApi(CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY)
 @AndroidEntryPoint
@@ -56,12 +58,14 @@ class ConnectionService : ConnectionService() {
             val contactId = request.extras.getString(ConversationPath.KEY_CONVERSATION_URI)
             if (account != null && contactId != null) {
                 try {
-                    val profile = conversationFacade.getConversationProfile(account, Uri.fromString(contactId)).blockingGet()
-                    Log.w(TAG, "Set connection metadata ${profile.title} ${android.net.Uri.parse(profile.uriTitle)}")
+                    val profile = conversationFacade.getConversationProfile(account, Uri.fromString(contactId))
+                        .timeout(2, TimeUnit.SECONDS)
+                        .blockingGet()
+                    Log.w(TAG, "Set connection metadata ${profile.title} ${profile.uriTitle.toUri()}")
                     setCallerDisplayName(profile.title, TelecomManager.PRESENTATION_ALLOWED)
-                    setAddress(android.net.Uri.parse(profile.uriTitle), TelecomManager.PRESENTATION_UNKNOWN)
+                    setAddress(profile.uriTitle.toUri(), TelecomManager.PRESENTATION_UNKNOWN)
                 } catch (e: Exception) {
-                    Log.e(TAG, "Error setting connection metadata", e)
+                    Log.e(TAG, "Error setting connection metadata for $contactId on $account", e)
                     setAddress(request.address, TelecomManager.PRESENTATION_UNKNOWN)
                 }
             } else
