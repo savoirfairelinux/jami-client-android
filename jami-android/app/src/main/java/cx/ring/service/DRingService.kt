@@ -104,7 +104,11 @@ class DRingService : Service() {
 
         fun enable(context: Context) {
             val connectivityManager = context.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager?
-            connectivityManager?.registerNetworkCallback(networkRequest, this)
+            try {
+                connectivityManager?.registerNetworkCallback(networkRequest, this)
+            } catch (e: Exception) {
+                Log.e(TAG, "Can't register network callback", e)
+            }
         }
 
         fun disable(context: Context) {
