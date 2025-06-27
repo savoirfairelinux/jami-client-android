@@ -1334,10 +1334,8 @@ class AccountService(
         interaction.edit = edit
         if (replyTo != null) {
             interaction.replyTo = conversation.loadMessage(replyTo) {
-                mExecutor.execute {
-                    JamiService.loadSwarmUntil(account.accountId, conversation.uri.rawRingId, "", replyTo)
-                }
-            }
+                JamiService.loadSwarmUntil(account.accountId, conversation.uri.rawRingId, "", replyTo)
+            }.subscribeOn(Schedulers.computation())
         }
         if (interaction.contact == null)
             interaction.contact = contact
