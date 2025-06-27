@@ -120,195 +120,165 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_height="match_parent"
         android:clipToPadding="false">
 
-        <com.google.android.flexbox.FlexboxLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/contact_bubble_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="vertical"
-            android:visibility="gone"
-            app:alignItems="stretch"
-            app:flexDirection="column"
-            app:flexWrap="wrap"
-            tools:visibility="visible">
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true">
 
-            <RelativeLayout
-                android:layout_width="230dp"
-                android:layout_height="230dp">
-
-                <cx.ring.views.AvatarView
-                    android:id="@+id/contact_bubble"
-                    android:layout_width="160dp"
-                    android:layout_height="160dp"
-                    android:layout_centerInParent="true"
-                    tools:uri="@tools:sample/first_names"
-                    tools:avatar="@tools:sample/avatars" />
-            </RelativeLayout>
-
-            <LinearLayout
+            <!-- Top group: Avatar + name + status -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/call_contact_info_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
+                android:paddingTop="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/call_btn_row"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="spread_inside">
 
+                <!-- Avatar Container -->
+                <RelativeLayout
+                    android:id="@+id/avatar_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <cx.ring.views.AvatarView
+                        android:id="@+id/contact_bubble"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_centerInParent="true"
+                        tools:avatar="@tools:sample/avatars"
+                        tools:uri="@tools:sample/first_names" />
+                </RelativeLayout>
+
+                <!-- Contact Name -->
                 <TextView
                     android:id="@+id/contact_bubble_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:ellipsize="middle"
-                    android:gravity="center_horizontal"
-                    android:paddingStart="32dp"
-                    android:paddingEnd="32dp"
+                    android:gravity="center"
+                    android:paddingHorizontal="32dp"
                     android:singleLine="true"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@android:color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/avatar_container"
                     tools:text="@tools:sample/full_names" />
 
+                <!-- Contact Number -->
                 <TextView
                     android:id="@+id/contact_bubble_num_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     android:ellipsize="middle"
-                    android:gravity="center_horizontal"
-                    android:paddingStart="32dp"
-                    android:paddingEnd="32dp"
+                    android:gravity="center"
+                    android:paddingHorizontal="32dp"
                     android:singleLine="true"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@android:color/white"
                     android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/contact_bubble_txt"
                     tools:text="jami:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
                     tools:visibility="visible" />
 
+                <!-- Call Status -->
                 <TextView
                     android:id="@+id/call_status_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:paddingStart="32dp"
-                    android:paddingEnd="32dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:paddingHorizontal="32dp"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/contact_bubble_num_txt"
                     tools:text="Connecting" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/call_btn_row"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/call_refuse_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="16dp"
-                        android:contentDescription="@string/action_call_decline"
-                        android:visibility="gone"
-                        app:backgroundTint="@color/colorError"
-                        app:elevation="6dp"
-                        app:fabSize="normal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/call_accept_audio_btn"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:pressedTranslationZ="12dp"
-                        app:rippleColor="@android:color/white"
-                        app:srcCompat="@drawable/baseline_call_end_24"
-                        app:tint="@android:color/white"
-                        tools:visibility="visible" />
 
-                    <TextView
-                        android:id="@+id/call_refuse_btn_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="8dp"
-                        android:ellipsize="end"
-                        android:scrollHorizontally="false"
-                        android:singleLine="true"
-                        android:text="@string/action_call_hangup"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="11sp"
-                        app:layout_constraintEnd_toEndOf="@id/call_refuse_btn"
-                        app:layout_constraintStart_toStartOf="@id/call_refuse_btn"
-                        app:layout_constraintTop_toBottomOf="@id/call_refuse_btn" />
+            <!-- Bottom group: Call buttons -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/call_btn_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/call_mode_toggle_btn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/call_contact_info_container">
 
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/call_accept_audio_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="16dp"
-                        android:contentDescription="@string/action_call_accept_audio"
-                        android:visibility="gone"
-                        app:backgroundTint="@color/green_500"
-                        app:elevation="6dp"
-                        app:fabSize="normal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/call_accept_btn"
-                        app:layout_constraintStart_toEndOf="@id/call_refuse_btn"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:pressedTranslationZ="12dp"
-                        app:rippleColor="@android:color/white"
-                        app:srcCompat="@drawable/baseline_call_24"
-                        app:tint="@android:color/white"
-                        tools:visibility="visible" />
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/call_refuse_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:contentDescription="@string/action_call_decline"
+                    android:visibility="gone"
+                    app:backgroundTint="@color/colorError"
+                    app:elevation="6dp"
+                    app:fabSize="normal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/call_accept_btn"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:pressedTranslationZ="12dp"
+                    app:rippleColor="@android:color/white"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
+                    app:srcCompat="@drawable/baseline_call_end_24"
+                    app:tint="@android:color/white"
+                    tools:visibility="visible" />
 
-                    <TextView
-                        android:id="@+id/call_accept_audio_btn_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="8dp"
-                        android:ellipsize="end"
-                        android:scrollHorizontally="false"
-                        android:singleLine="true"
-                        android:text="@string/action_call_accept_audio"
-                        android:textAlignment="center"
-                        android:textColor="@android:color/white"
-                        android:textSize="11sp"
-                        app:layout_constraintEnd_toEndOf="@id/call_accept_audio_btn"
-                        app:layout_constraintStart_toStartOf="@id/call_accept_audio_btn"
-                        app:layout_constraintTop_toBottomOf="@id/call_accept_audio_btn" />
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/call_accept_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:contentDescription="@string/action_call_accept"
+                    android:visibility="gone"
+                    app:backgroundTint="@color/green_500"
+                    app:elevation="6dp"
+                    app:fabSize="normal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/call_refuse_btn"
+                    app:pressedTranslationZ="12dp"
+                    app:rippleColor="@android:color/white"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
+                    app:srcCompat="@drawable/baseline_call_24"
+                    app:tint="@android:color/white"
+                    tools:visibility="visible" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/call_accept_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="16dp"
-                        android:contentDescription="@string/action_call_accept_video"
-                        android:visibility="gone"
-                        app:backgroundTint="@color/green_500"
-                        app:elevation="6dp"
-                        app:fabSize="normal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/call_accept_audio_btn"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:pressedTranslationZ="12dp"
-                        app:rippleColor="@android:color/white"
-                        app:srcCompat="@drawable/baseline_videocam_24"
-                        app:tint="@android:color/white"
-                        tools:visibility="visible" />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/call_mode_toggle_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:contentDescription="@string/switch_to_audio"
+                android:visibility="visible"
+                app:backgroundTint="@color/material_switch_track_checked"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
+                app:srcCompat="@drawable/videocam_off_24px"
+                app:tint="@android:color/white"
+                tools:visibility="visible" />
 
-                    <TextView
-                        android:id="@+id/call_accept_btn_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="8dp"
-                        android:ellipsize="end"
-                        android:scrollHorizontally="false"
-                        android:singleLine="true"
-                        android:text="@string/action_call_accept_video"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="11sp"
-                        app:layout_constraintEnd_toEndOf="@id/call_accept_btn"
-                        app:layout_constraintStart_toStartOf="@id/call_accept_btn"
-                        app:layout_constraintTop_toBottomOf="@id/call_accept_btn" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </LinearLayout>
-
-        </com.google.android.flexbox.FlexboxLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <EditText
             android:id="@+id/dialpad_edit_text"
