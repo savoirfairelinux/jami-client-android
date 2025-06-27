@@ -130,6 +130,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private val mCompositeDisposable = CompositeDisposable()
     private var bottomSheetParams: BottomSheetBehavior<View>? = null
     private var extensionsAdapter: ExtensionsAdapter? = null
+    private var isVideoMode: Boolean = true
 
     private val cameraPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
         if (isGranted) {
@@ -171,8 +172,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                         updatePipParams()
                     }
                 }
-                b.callAcceptBtn.setOnClickListener { acceptClicked() }
-                b.callAcceptAudioBtn.setOnClickListener { acceptAudioClicked() }
+                b.callAcceptBtn.setOnClickListener { if(isVideoMode) acceptClicked() else acceptAudioClicked() }
+                //b.callAcceptAudioBtn.setOnClickListener { acceptAudioClicked() }
                 b.callRefuseBtn.setOnClickListener { refuseClicked() }
                 b.callHngUpBtn.setOnClickListener { hangupClicked() }
                 b.callSpeakerBtn.setOnClickListener { speakerClicked() }
@@ -389,6 +390,21 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     }
                     else -> false
                 }
+            }
+
+            binding.callModeToggleBtn.setOnClickListener{
+                if (!isVideoMode) {
+                    binding.callModeToggleBtn.setImageResource(R.drawable.videocam_off_24px)
+                    binding.callModeToggleBtn.contentDescription = getString(R.string.switch_to_audio)
+                    binding.callAcceptBtn.contentDescription = getString(R.string.action_call_accept_video)
+                    binding.fullscreenCameraPreview.visibility = View.VISIBLE
+                } else {
+                    binding.callModeToggleBtn.setImageResource(R.drawable.videocam_24px)
+                    binding.callModeToggleBtn.contentDescription = getString(R.string.switch_to_video)
+                    binding.callAcceptBtn.contentDescription = getString(R.string.action_call_accept_audio)
+                    binding.fullscreenCameraPreview.visibility = View.GONE
+                }
+                isVideoMode = !isVideoMode
             }
 
             binding.fullscreenCameraPreview.surfaceTextureListener = object : SurfaceTextureListener {
@@ -1099,18 +1115,13 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
      * */
     override fun initNormalStateDisplay() {
         Log.w(CallPresenter.TAG, "initNormalStateDisplay")
-        binding?.fullscreenCameraPreview?.apply {
-            visibility = View.GONE
-        }
         binding?.apply {
+            callModeToggleBtn.visibility = View.GONE
             callBtnRow.isVisible = false
             callAcceptBtn.isVisible = false
-            callAcceptBtnText.isVisible = false
-            callAcceptAudioBtn.isVisible = false
-            callAcceptAudioBtnText.isVisible = false
             callRefuseBtn.isVisible = false
-            callRefuseBtnText.isVisible = false
             contactBubbleLayout.isVisible = false
+            fullscreenCameraPreview.visibility = View.GONE
             participantOverlayContainer.isVisible = true
         }
 
@@ -1122,14 +1133,17 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         Log.w(TAG, "initIncomingCallDisplay")
         binding?.apply {
             callBtnRow.isVisible = true
-            callAcceptBtn.isVisible = hasVideo
-            callAcceptBtnText.isVisible = hasVideo
-            callAcceptAudioBtn.isVisible = true
-            callAcceptAudioBtnText.isVisible = true
+            callAcceptBtn.isVisible = true
             callRefuseBtn.isVisible = true
-            callRefuseBtnText.isVisible = true
             contactBubbleLayout.isVisible = true
             participantOverlayContainer.isVisible = false
+            if(!hasVideo){
+                callModeToggleBtn.visibility = View.GONE
+                binding?.fullscreenCameraPreview?.visibility = View.GONE
+            } else {
+                callModeToggleBtn.visibility = View.VISIBLE
+                binding?.fullscreenCameraPreview?.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -1137,11 +1151,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         Log.w(TAG, "initOutGoingCallDisplay")
         binding?.apply {
             callAcceptBtn.isVisible = false
-            callAcceptBtnText.isVisible = false
-            callAcceptAudioBtn.isVisible = false
-            callAcceptAudioBtnText.isVisible = false
+            callModeToggleBtn.visibility = View.GONE
             callRefuseBtn.isVisible = true
-            callRefuseBtnText.isVisible = true
             contactBubbleLayout.isVisible = true
             if (hasVideo) {
                 fullscreenCameraPreview.visibility = View.VISIBLE
