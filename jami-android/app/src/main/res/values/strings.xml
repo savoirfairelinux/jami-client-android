@@ -257,6 +257,9 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="action_call_accept_audio">Accept with audio</string>
     <string name="action_call_accept_video">Accept with video</string>
     <string name="action_call_hold_accept">Accept incoming call with audio only and hold current call</string>
+    <string name="toggle_call_mode">Toggle call mode between video and audio</string>
+    <string name="switch_to_audio">Switch to Audio</string>
+    <string name="switch_to_video">Switch to Video</string>
     <string name="action_call_hold_accept_video">Accept incoming call with video and hold current call</string>
     <string name="action_call_end_accept">Accept incoming call and end current call</string>
     <string name="action_call_decline">Decline</string>
