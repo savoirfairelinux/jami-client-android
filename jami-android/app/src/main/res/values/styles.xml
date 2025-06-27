@@ -450,6 +450,11 @@
         <item name="cornerSize">@dimen/dialog_radius</item>
     </style>
 
+    <style name="ShapeAppearance.App.Circle" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
     <style name="TitleTextStyle" parent="MaterialAlertDialog.Material3.Title.Text">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">20sp</item>
