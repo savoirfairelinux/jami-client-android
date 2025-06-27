@@ -129,6 +129,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private val mCompositeDisposable = CompositeDisposable()
     private var bottomSheetParams: BottomSheetBehavior<View>? = null
     private var extensionsAdapter: ExtensionsAdapter? = null
+    private var isVideoMode: Boolean = true
 
     private val cameraPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
         if (isGranted) {
@@ -170,8 +171,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                         updatePipParams()
                     }
                 }
-                b.callAcceptBtn.setOnClickListener { acceptClicked() }
-                b.callAcceptAudioBtn.setOnClickListener { acceptAudioClicked() }
+                b.callAcceptBtn.setOnClickListener { if(isVideoMode) acceptClicked() else acceptAudioClicked() }
+                //b.callAcceptAudioBtn.setOnClickListener { acceptAudioClicked() }
                 b.callRefuseBtn.setOnClickListener { refuseClicked() }
                 b.callHngUpBtn.setOnClickListener { hangupClicked() }
                 b.callSpeakerBtn.setOnClickListener { speakerClicked() }
@@ -387,6 +388,24 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                         } else false
                     }
                     else -> false
+                }
+            }
+
+            binding.callModeToggleBtn.setOnClickListener{
+                isVideoMode = !isVideoMode
+
+                if (isVideoMode) {
+                    binding.callModeToggleBtn.setImageResource(R.drawable.switch_audio_24)
+                    binding.callModeToggleLabel.text = getString(R.string.switch_to_audio)
+                    binding.callAcceptBtn.setImageResource(R.drawable.baseline_videocam_24)
+                    binding.callAcceptBtn.contentDescription = getString(R.string.action_call_accept_video)
+                    binding.callAcceptBtnText.text = getString(R.string.action_call_accept_video)
+                } else {
+                    binding.callModeToggleBtn.setImageResource(R.drawable.switch_video_24)
+                    binding.callModeToggleLabel.text = getString(R.string.switch_to_video)
+                    binding.callAcceptBtn.setImageResource(R.drawable.baseline_call_24)
+                    binding.callAcceptBtn.contentDescription = getString(R.string.action_call_accept_audio)
+                    binding.callAcceptBtnText.text = getString(R.string.action_call_accept_audio)
                 }
             }
 
@@ -1097,11 +1116,12 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             visibility = View.GONE
         }
         binding?.apply {
+            callModeToggleContainer.visibility = View.GONE
             callBtnRow.isVisible = false
             callAcceptBtn.isVisible = false
             callAcceptBtnText.isVisible = false
-            callAcceptAudioBtn.isVisible = false
-            callAcceptAudioBtnText.isVisible = false
+            //callAcceptAudioBtn.isVisible = false
+            //callAcceptAudioBtnText.isVisible = false
             callRefuseBtn.isVisible = false
             callRefuseBtnText.isVisible = false
             contactBubbleLayout.isVisible = false
@@ -1115,15 +1135,23 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     override fun initIncomingCallDisplay(hasVideo: Boolean) {
         Log.w(TAG, "initIncomingCallDisplay")
         binding?.apply {
+            callModeToggleContainer.visibility = View.VISIBLE
             callBtnRow.isVisible = true
-            callAcceptBtn.isVisible = hasVideo
-            callAcceptBtnText.isVisible = hasVideo
-            callAcceptAudioBtn.isVisible = true
-            callAcceptAudioBtnText.isVisible = true
+            callAcceptBtn.isVisible = true
+            callAcceptBtnText.isVisible = true
+            //callAcceptAudioBtn.isVisible = true
+            //callAcceptAudioBtnText.isVisible = true
             callRefuseBtn.isVisible = true
             callRefuseBtnText.isVisible = true
             contactBubbleLayout.isVisible = true
             participantOverlayContainer.isVisible = false
+        }
+        if(!hasVideo){
+            isVideoMode = false
+            binding?.callModeToggleContainer?.visibility = View.GONE
+            binding?.callAcceptBtn?.setImageResource(R.drawable.baseline_call_24)
+            binding?.callAcceptBtn?.contentDescription = getString(R.string.action_call_accept_audio)
+            binding?.callAcceptBtnText?.text = getString(R.string.action_call_accept_audio)
         }
     }
 
@@ -1132,8 +1160,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         binding?.apply {
             callAcceptBtn.isVisible = false
             callAcceptBtnText.isVisible = false
-            callAcceptAudioBtn.isVisible = false
-            callAcceptAudioBtnText.isVisible = false
+            //callAcceptAudioBtn.isVisible = false
+            //callAcceptAudioBtnText.isVisible = false
             callRefuseBtn.isVisible = true
             callRefuseBtnText.isVisible = true
             contactBubbleLayout.isVisible = true
