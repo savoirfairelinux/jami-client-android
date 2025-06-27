@@ -20,7 +20,6 @@ import com.google.gson.JsonParser
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
@@ -1255,7 +1254,7 @@ class AccountService(
      * @return The Interaction object representing the interaction.
      */
     private fun getInteraction(
-        account: Account, conversation: Conversation, message: Map<String, String>, worker: Scheduler.Worker = Schedulers.computation().createWorker()
+        account: Account, conversation: Conversation, message: Map<String, String>
     ): Interaction {
         val id = message["id"]!!
         val type = message["type"]!!
@@ -1289,30 +1288,22 @@ class AccountService(
                 try {
                     val fileName = message["displayName"]!!
                     val fileId = message["fileId"]
-                    val total = message["totalSize"]?.toLong() ?: 0
-                    val dt = DataTransfer(fileId, account.accountId, author, fileName, contact.isUser, timestamp, total, 0)
-                    //val worker = Schedulers.computation().createWorker()
-                    worker.schedule {
-                        val paths = arrayOfNulls<String>(1)
-                        val progressA = LongArray(1)
-                        val totalA = LongArray(1)
-                        JamiService.fileTransferInfo(account.accountId, conversation.uri.rawRingId, fileId, paths, totalA, progressA)
-                        if (totalA[0] == 0L) {
-                            totalA[0] = total
-                        }
-                        val path = File(paths[0]!!)
-                        val isComplete = path.exists() && progressA[0] == totalA[0]
-                        synchronized(dt) {
-                            dt.daemonPath = path
-                            dt.bytesProgress = progressA[0]
-                            dt.transferStatus = if (isComplete) TransferStatus.TRANSFER_FINISHED
-                            else if (fileId == "") TransferStatus.FILE_REMOVED
-                            else TransferStatus.FILE_AVAILABLE
-                        }
-                        conversation.updateInteraction(dt)
-                        worker.dispose()
+                    val paths = arrayOfNulls<String>(1)
+                    val progressA = LongArray(1)
+                    val totalA = LongArray(1)
+                    JamiService.fileTransferInfo(account.accountId, conversation.uri.rawRingId, fileId, paths, totalA, progressA)
+                    if (totalA[0] == 0L) {
+                        totalA[0] = message["totalSize"]!!.toLong()
                     }
-                    dt
+                    val path = File(paths[0]!!)
+                    val isComplete = path.exists() && progressA[0] == totalA[0]
+                    DataTransfer(fileId, account.accountId, author, fileName, contact.isUser, timestamp, totalA[0], progressA[0]).apply {
+                        daemonPath = path
+                        transferStatus = if (isComplete)
+                            TransferStatus.TRANSFER_FINISHED
+                        else if (fileId == "") TransferStatus.FILE_REMOVED
+                        else TransferStatus.FILE_AVAILABLE
+                    }
                 } catch (e: Exception) {
                     Interaction(conversation, Interaction.InteractionType.INVALID)
                 }
@@ -1369,7 +1360,7 @@ class AccountService(
         return interaction
     }
 
-    private fun addMessage(account: Account, conversation: Conversation, message: SwarmMessage, newMessage: Boolean, worker: Scheduler.Worker = Schedulers.computation().createWorker()): Interaction {
+    private fun addMessage(account: Account, conversation: Conversation, message: SwarmMessage, newMessage: Boolean): Interaction {
         val interaction = getInteractionFromSwarmMessage(account, conversation, message)
         conversation.addSwarmElement(interaction, newMessage)
         return interaction
@@ -1505,17 +1496,15 @@ class AccountService(
 
     fun swarmMessageReceived(accountId: String, conversationId: String, message: SwarmMessage) {
         getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
-            val worker = Schedulers.computation().createWorker()
-            val interaction = synchronized(conversation) {
-                val interaction = addMessage(account, conversation, message, true, worker)
+            synchronized(conversation) {
+                val interaction = addMessage(account, conversation, message, true)
                 account.conversationUpdated(conversation)
                 val isIncoming = !interaction.contact!!.isUser
                 if (isIncoming)
                     incomingSwarmMessageSubject.onNext(interaction)
-                interaction
+                if (interaction is DataTransfer)
+                    dataTransfers.onNext(interaction)
             }
-            if (interaction is DataTransfer)
-                worker.schedule { dataTransfers.onNext(interaction) }
         }}
     }
 
@@ -1551,11 +1540,11 @@ class AccountService(
 
     fun acceptFileTransfer(accountId: String, conversationUri: Uri, messageId: String?, fileId: String) {
         getAccount(accountId)?.let { account -> account.getByUri(conversationUri)?.let { conversation ->
-            val transfer = (if (conversation.isSwarm)
+            val transfer = if (conversation.isSwarm)
                 conversation.getMessage(messageId!!) as DataTransfer?
             else
-                account.getDataTransfer(fileId)) ?: return
-            acceptFileTransfer(conversation, fileId, transfer)
+                account.getDataTransfer(fileId)
+            acceptFileTransfer(conversation, fileId, transfer!!)
         }}
     }
 
