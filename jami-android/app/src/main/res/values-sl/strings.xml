@@ -19,6 +19,7 @@
   <!--About dialog-->
   <string name="developers">Razvijalci</string>
   <string name="media">Medij</string>
+  <string name="community_management">Upravljanje skupnosti</string>
   <string name="special_thanks">Posebne zahvale</string>
   <!--RingActivity-->
   <string name="error_no_network">Ni omrežne povezave</string>
@@ -30,6 +31,7 @@
   <string name="menu_item_accounts">Upravljaj račune</string>
   <string name="menu_item_account">Upravljaj račun</string>
   <string name="menu_item_settings">Nastavitve</string>
+  <string name="menu_item_app_settings">Nastavitve aplikacije</string>
   <string name="menu_item_account_settings">Nastavitve računa</string>
   <string name="menu_item_extension_list">Nastavitve razširitev</string>
   <string name="menu_item_share">Deli moj račun</string>
@@ -101,12 +103,15 @@
   <string name="call_duration">Trajanje: %s</string>
   <string name="start_error_title">Jami ni možno zagnati</string>
   <string name="action_call_accept">Sprejmi klic</string>
+  <string name="action_call_accept_audio">Sprejmi z zvokom</string>
+  <string name="action_call_accept_video">Sprejmi z videosliko</string>
   <string name="action_call_hold_accept">Sprejmi dohodni klic samo z zvokom in zadrži trenutni klic</string>
   <string name="action_call_hold_accept_video">Sprejmi dohodni klic z videom in zadrži trenutni klic</string>
   <string name="action_call_end_accept">Sprejmi dohodni klic in končaj trenutni klic</string>
   <string name="action_call_decline">Zavrni</string>
   <string name="action_call_mic_mute">Izključi mikrofon</string>
   <string name="action_load_extension">Naloži razširitev</string>
+  <string name="ab_action_speakerphone">Vklopi zvočnik</string>
   <string name="ab_action_contact_add">Dodaj med stike</string>
   <string name="ab_action_contact_add_question">Želite dodati med stike?</string>
   <string name="ab_action_audio_call">Začni zvočni klic</string>
@@ -231,6 +236,7 @@
   <string name="help_password_enter">Vnesite glavno geslo svojega Jami računa.</string>
   <string name="help_server_enter">Vnesite URL upravljalnega strežnika.</string>
   <string name="pin_copied">Koda PIN je kopirana na odložišče.</string>
+  <string name="copied_clipboard">Kopirano na odložišče.</string>
   <string name="wizard_next">Naprej</string>
   <string name="wizard_back">Nazaj</string>
   <string name="wizard_skip">Preskoči</string>
@@ -272,6 +278,7 @@
   <string name="accept_invitation">Sprejmi povabilo</string>
   <string name="new_invitation_request_title">Novo povabilo</string>
   <string name="invitation_message">Imate%1$d zahtev za stik</string>
+  <string name="outgoing_contact_invitation_message">Ta stik ni na seznamu vaših stikov.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Ni blokiranih stikov</string>
   <!--Smartlist-->
@@ -279,12 +286,17 @@
   <string name="conversation_placeholder">Trenutno še nimate pogovorov</string>
   <string name="contact_request_sent">Zahteva za stik poslana</string>
   <string name="start_conversation">Začni pogovor</string>
+  <string name="search_results">Rezultati iskanja</string>
   <string name="tv_contact_row_header">Stiki</string>
   <string name="gallery_error_title">Ni aplikacije za galerijo</string>
   <string name="gallery_error_message">Na napravi ni bilo mogoče najti aplikacije za odpiranje galerije</string>
   <string name="generic_error">Prišlo je do neznane napake.</string>
   <!--File Transfer-->
+  <string name="invalid_file">Neveljavna datoteka.</string>
+  <string name="not_able_to_write_file">Ne možno zapisati datoteke.</string>
   <string name="file_transfer_status_created">Zaganjam</string>
+  <string name="file_transfer_status_unsupported">ni podprto</string>
+  <string name="file_transfer_status_unjoinable_peer">Nedosegljiv soležnik</string>
   <string name="file_transfer_status_canceled">Preklicano</string>
   <string name="file_download">Prenesi</string>
   <string name="title_media_viewer">Prikazovalnik vsebin</string>
@@ -365,6 +377,8 @@
   <string name="tab_files">Datoteke</string>
   <string name="tab_settings">Nastavitve</string>
   <string name="not_admin_toast">Samo skrbniki lahko urejajo podatke te skupine</string>
+  <string name="dialogtitle_title">Uredi naziv skupine</string>
+  <string name="dialogtitle_description">Uredi opis skupine</string>
   <string name="dialog_hint_title">Naslov</string>
   <string name="dialog_hint_description">Opis</string>
   <string name="picker_title">Izberite stike</string>
@@ -380,19 +394,23 @@
   <string name="jami_id_copy">Kopiraj JamiId</string>
   <string name="jami_id_share">Deli JamiId</string>
   <string name="jami_id_validate">Registriraj uporabniško ime</string>
+  <string name="jami_id_available">Uporabniško ime je na voljo.</string>
   <string name="jami_id_info">• Največ 32 znakov\n• Dovoljena posebna znaka: vezaj (-), podčrtaj (_)</string>
+  <string name="jami_id_looking_for_availability">Poteka preverjanje, ali je uporabniško ime na voljo ...</string>
   <string name="jami_id_choose_username">Izberite uporabniško ime</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Dobrodošli v Jami</string>
   <string name="welcome_jami_description">Delite svoj identifikator Jami, da vas lažje najdejo!</string>
   <!--Conversation details-->
   <string name="details">Detajli</string>
+  <string name="swarm_type">Vrsta pogovora</string>
   <string name="Private">Zasebno</string>
   <string name="swarm_id">ID roja</string>
   <string name="show_qr_code">Pokaži QR-kodo</string>
   <string name="show_certificate">Pokaži potrdilo</string>
   <string name="mute_conversation">Utišaj pogovor</string>
   <!--Donation-->
+  <string name="donation_card_description">Če vam je Jami všeč in verjamete v naše poslanstvo - bi prispevali projektu?</string>
   <string name="donation_card_not_now">Ne zdaj</string>
   <string name="donation_donate">Donirajte</string>
   <string name="donation_setting_title">Opomnik za donacije</string>
@@ -407,6 +425,8 @@
   <string name="export_side_step1_code_connect">Poveži</string>
   <string name="export_side_step2_cancel">Prekliči</string>
   <string name="export_side_step2_confirm">Potrdi</string>
+  <string name="export_side_step3_exit">Dokončaj</string>
   <string name="import_side_step1_share">Deli</string>
   <string name="import_side_step2_password_import">Uvoz</string>
+  <string name="import_side_step3_exit">Dokončaj</string>
 </resources>

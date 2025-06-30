@@ -53,6 +53,7 @@
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">Po meri</string>
   <!--Extension-->
+  <string name="pref_enable_extensions_title">Omogoči razširitve</string>
   <string name="fab_extensions_add">Dodaj novo razširitev</string>
   <string name="extension_invalid_signature"><b>%1$s</b> ima neveljaven podpis</string>
   <string name="extension_path_image_add">Dodaj novo sliko</string>
