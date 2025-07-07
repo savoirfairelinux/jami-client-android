@@ -1,10 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Sorunu bildir</string>
+  <string name="submit_issue_action_description"><u>Sorun bildirimi oluştur</u></string>
   <string name="section_license">Lisans</string>
+  <string name="sponsor_section">Jami, özgür yazılımdır ve şunlarca geliştirilir ve desteklenir:</string>
   <string name="copyright_section">Telif Hakkı</string>
   <string name="contribute_section">Katkı Yap</string>
   <string name="version_section">Sürüm</string>
+  <string name="no_browser_app_installed">Web tarayıcı uygulaması bulunmadı, bu sayfayı görmek için bir tane yükleyin.</string>
   <string name="website_chooser_title">Şunu kullanarak web sitesini gör…</string>
   <string name="license">Bu yazılım, herhangi bir garanti olmaksızın \"olduğu gibi\" sağlanmaktadır. Ayrıntılar için <u>GNU Genel Kamu Lisansı sürüm 3 veya sonrasına bakın.</u></string>
   <string name="description">Jami, kullanıcılarının özgürlüğüne ve mahremiyetine saygı duyan ücretsiz bir evrensel iletişim yazılımıdır.</string>
@@ -13,6 +17,8 @@
   <string name="call_service_description">Bu hizmet, çağrıların ön planda devam etmesini sağlamak için gereklidir. Yalnızca çağrı esnasında çalışır.</string>
   <string name="data_transfer_service_description">Bu hizmet, dosya aktarımları sırasında kalıcı bildirimleri görüntülemek için gereklidir. Yalnızca dosya aktarımları sırasında çalışır.</string>
   <!--About dialog-->
+  <string name="thank_note">Bu yazılımın bu hale gelmesinde şimdiye kadar yardımı dokunan herkese teşekkür ediyoruz.</string>
+  <string name="developers">Geliştiriciler</string>
   <string name="media">Ortam</string>
   <!--RingActivity-->
   <string name="error_no_network">Ağ bağlantısı yok</string>
