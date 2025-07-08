@@ -70,7 +70,6 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">ਉੱਨਤ</string>
   <string name="account_chat_settings_title">ਚੈਟ ਸੈਟਿੰਗਾਂ</string>
-  <string name="account_read_receipts_label">ਪੜ੍ਹੇ ਜਾਣ ਦਾ ਇਸ਼ਾਰਾ ਚਾਲੂ ਕਰੋ</string>
   <string name="account_call_settings_title">ਕਾਲ ਸੈਟਿੰਗਾਂ</string>
   <string name="account_dht_public_in_calls_label">ਅਣਪਛਾਤੇ ਸੰਪਰਕਾਂ ਤੋਂ ਕਾਲਾਂ ਆਉਣ ਦਿਓ</string>
   <string name="account_registration_exp_label">ਦਰਜ ਹੋਣ ਦੀ ਮਿਆਦ</string>
@@ -141,15 +140,14 @@
   <string name="account_link_device">ਕਿਸੇ ਹੋਰ ਡੀਵਾਈਸ ਤੋਂ ਜੁੜੋ</string>
   <string name="account_link_button">ਨੈੱਟਵਰਕ ਤੋਂ ਕਨੈਕਟ ਕਰੋ</string>
   <string name="account_link_archive_button">ਬੈਕਅੱਪ ਤੋਂ ਕਨੈਕਟ ਕਰੋ</string>
-  <string name="account_new_button">Jami ਖਾਤਾ ਬਣਾਓ</string>
-  <string name="account_link_export_button">ਨਵਾਂ ਡੀਵਾਈਸ ਜੋੜੋ</string>
+  <string name="account_link_export_button">ਨਵਾਂ ਡੀਵਾਈਸ ਲਿੰਕ ਕਰੋ</string>
   <string name="account_end_export_button">ਬੰਦ ਕਰੋ</string>
   <string name="account_connect_server_button">ਪ੍ਰਬੰਧ ਸਰਵਰ ਨਾਲ ਜੋੜੋ</string>
   <string name="account_connect_button">ਜੋੜੋ</string>
-  <string name="prompt_server">Jami ਪ੍ਰਬੰਧ ਸਰਵਰ ਦਾ URL</string>
   <string name="help_credentials_enter">ਆਪਣੀ ਸੰਸਥਾ ਸਬੰਧੀ ਨਾਂ ਦਾਖਲ ਕਰੋ</string>
   <string name="help_connect_password_enter">ਆਪਣੀ ਸੰਸਥਾ ਸਬੰਧੀ ਪਾਸਵਰਡ ਦਾਖਲ ਕਰੋ</string>
   <string name="account_connect_prompt_username">ਵਰਤੋਂਕਾਰ ਨਾਂ</string>
+  <string name="account_connect_server">ਪ੍ਰਬੰਧ ਸਰਵਰ ਨਾਲ ਜੋੜੋ</string>
   <!--Name registration-->
   <string name="error_username_empty">ਵਰਤੋਂਕਾਰ ਨਾਂ ਦਾਖਲ ਕਰੋ</string>
   <string name="register_name">ਨਾਂ ਦਰਜ ਕਰੋ</string>

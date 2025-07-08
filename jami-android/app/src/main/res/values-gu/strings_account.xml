@@ -69,8 +69,6 @@
   <string name="account_video_enable">વિડિઓ સક્ષમ કરો</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">અદ્યતન</string>
-  <string name="account_read_receipts_label">વાંચન રસીદો સક્ષમ કરો</string>
-  <string name="account_read_receipts_summary">સંદેશ પ્રદર્શિત થયો છે તે સૂચિત રસીદ મોકલો અને પ્રાપ્ત કરો.</string>
   <string name="account_call_settings_title">કૉલ સેટિંગ્સ</string>
   <string name="account_dht_public_in_calls_label">અજ્ઞાત સંપર્કોમાંથી આવનારા કૉલ્સને મંજૂરી આપો</string>
   <string name="account_registration_exp_label">નોંધણી સમાપ્ત થાય છે</string>
@@ -148,18 +146,18 @@
   <string name="account_link_device">અન્ય ઉપકરણથી કનેક્ટ કરો</string>
   <string name="account_link_button">નેટવર્કથી કનેક્ટ</string>
   <string name="account_link_archive_button">બેકઅપ થી કનેક્ટ</string>
-  <string name="account_new_button">એક Jami એકાઉન્ટ બનાવો</string>
-  <string name="account_link_export_button">નવી ઉપકરણને લિંક કરો</string>
+  <string name="account_new_button">Jami એકાઉન્ટ બનાવો</string>
+  <string name="account_link_export_button">લિંક નવી ઉપકરણ</string>
   <string name="account_link_show_button">%d વધુ જોડાયેલ ઉપકરણ બતાવો</string>
   <string name="account_link_hide_button">જોડાયેલ ઉપકરણ છુપાવો</string>
   <string name="account_end_export_button">નજીક</string>
   <string name="account_export_title">અન્ય ઉપકરણો સાથે લિંક એકાઉન્ટ</string>
   <string name="account_connect_server_button">મેનેજમેન્ટ સર્વર સાથે કનેક્ટ</string>
   <string name="account_connect_button">કનેક્ટ કરો</string>
-  <string name="prompt_server">Jami મેનેજમેન્ટ સર્વર URL</string>
   <string name="help_credentials_enter">તમારી સંસ્થાની ઓળખપત્રો દાખલ કરો</string>
   <string name="help_connect_password_enter">તમારી સંસ્થા પાસવર્ડ દાખલ કરો</string>
   <string name="account_connect_prompt_username">વપરાશકર્તા નામ</string>
+  <string name="account_connect_server">મેનેજમેન્ટ સર્વર સાથે કનેક્ટ</string>
   <!--Name registration-->
   <string name="error_username_empty">વપરાશકર્તા નામ દાખલ કરો</string>
   <string name="register_name">રજિસ્ટર નામ</string>

@@ -69,8 +69,6 @@
   <string name="account_video_enable">Aktiver video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avanceret</string>
-  <string name="account_read_receipts_label">Aktivere indlæse kvitteringer</string>
-  <string name="account_read_receipts_summary">Send og modtage kvitteringer, der angiver, at der er vist en besked.</string>
   <string name="account_call_settings_title">Opkaldsindstillinger</string>
   <string name="account_dht_public_in_calls_label">Tillad indkomne opkald fra ukendte kontakter</string>
   <string name="account_registration_exp_label">Registreringsudløb</string>
@@ -148,18 +146,18 @@
   <string name="account_link_device">Forbindelse fra et andet udstyr</string>
   <string name="account_link_button">Opret forbindelse</string>
   <string name="account_link_archive_button">Forbindelse fra backup</string>
-  <string name="account_new_button">Opret en Jami-konto</string>
-  <string name="account_link_export_button">Tilknyt en ny enhed</string>
+  <string name="account_new_button">Oprette Jami-konto</string>
+  <string name="account_link_export_button">Tilknyt ny enhed</string>
   <string name="account_link_show_button">Vis %d flere tilknyttede enheder</string>
   <string name="account_link_hide_button">Skjul det tilkoblede anordning</string>
   <string name="account_end_export_button">luk</string>
   <string name="account_export_title">Link konto til andre enheder</string>
   <string name="account_connect_server_button">Forbindelse til administrationsserveren</string>
   <string name="account_connect_button">Køb</string>
-  <string name="prompt_server">Jami administrationsserver URL</string>
   <string name="help_credentials_enter">Indtast din organisations legitimationsoplysninger</string>
   <string name="help_connect_password_enter">Indtast dit organisations adgangskode</string>
   <string name="account_connect_prompt_username">Brugernavn</string>
+  <string name="account_connect_server">Forbindelse til administrationsserveren</string>
   <string name="account_enter_username">Indtast brugernavn</string>
   <!--Name registration-->
   <string name="error_username_empty">Indtast et brugernavn</string>

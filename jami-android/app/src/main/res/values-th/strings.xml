@@ -225,6 +225,7 @@
   <string name="gallery_error_title">ไม่พบแอปแกลเลอรี</string>
   <string name="gallery_error_message">ไม่พบแอปพลิเคชันบนอุปกรณ์ที่จะเปิด Gallery</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">ไฟล์ไม่ถูกต้อง</string>
   <string name="file_transfer_status_canceled">ยกเลิกแล้ว</string>
   <string name="file_download">ดาวน์โหลด</string>
   <string name="title_media_viewer">โปรแกรมดูสื่อ</string>

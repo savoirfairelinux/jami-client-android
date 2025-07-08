@@ -260,6 +260,7 @@ contact@jami.net</string>
   <string name="gallery_error_message">هیچ برنامه کاربردی برای باز کردن گالری، در دستگاه یافت نشد.</string>
   <!--File Transfer-->
   <string name="file_transfer_status_created">آغازِ فرایند</string>
+  <string name="file_transfer_status_invalid_file">فایل نامعتبر</string>
   <string name="file_transfer_status_canceled">لغو شده</string>
   <string name="file_download">دانلود</string>
   <string name="title_media_viewer">نمایش‌دهنده رسانه</string>

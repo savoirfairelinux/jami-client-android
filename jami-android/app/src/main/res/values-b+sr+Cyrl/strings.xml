@@ -263,6 +263,7 @@
   <string name="gallery_error_title">Није пронађена апликација за галерију</string>
   <string name="gallery_error_message">Није пронађена апликација која ће отворити галерију</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">Неисправна датотека</string>
   <string name="file_transfer_status_canceled">Отказано</string>
   <string name="file_download">Преузимање</string>
   <string name="title_media_viewer">Прегледач медија</string>

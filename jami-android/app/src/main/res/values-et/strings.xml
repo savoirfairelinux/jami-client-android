@@ -247,7 +247,6 @@
   <string name="help_password_choose">Vali tugev ja korralik salasõna, mida sa hästi mäletad, et kaitsta oma Jami kontot.</string>
   <string name="help_password_enter">Sisesta oma peamine Jami konto salasõna.</string>
   <string name="help_server_enter">Sisesta haldusserveri URL.</string>
-  <string name="pin_copied">PIN-kood on kopeeritud lõikelauale.</string>
   <string name="copied_clipboard">Kopeeritud lõikelauale.</string>
   <string name="wizard_next">Järgmine</string>
   <string name="wizard_back">Tagasi</string>
@@ -320,13 +319,11 @@
   <string name="file_transfer_status_finished">Valmis</string>
   <string name="file_transfer_status_closed_by_host">Serveri poolt suletud</string>
   <string name="file_transfer_status_closed_by_peer">Teise osapoole poolt suletud</string>
-  <string name="file_transfer_status_invalid_pathname">Vigane asukoha nimi</string>
   <string name="file_transfer_status_unjoinable_peer">Võrdõigusvõrgu sõlm pole leitav</string>
   <string name="file_transfer_status_canceled">Katkestatud</string>
   <string name="file_transfer_status_error">Faili edastamisel tekkis viga.</string>
-  <string name="file_transfer_status_timed_out">Päring aegus</string>
+  <string name="file_transfer_status_timed_out">Tegevus aegus.</string>
   <string name="file_saved_in">Fail on salvestatud kausta %s</string>
-  <string name="file_saved_successfully">Faili salvestamine õnnestus.</string>
   <string name="file_download">Laadi alla</string>
   <string name="no_space_left_on_device">Siin nutiseadmes pole piisavalt andmeruumi</string>
   <string name="title_media_viewer">Meediavaataja</string>
@@ -460,19 +457,13 @@
   <string name="unable_to_load">Laadimine ei õnnestu: %1$s</string>
   <string name="load_success">%1$s: kasutusel</string>
   <string name="unload_success">%1$s: pole kasutusel</string>
-  <string name="install_success">„%1$s“ lisamooduli paigaldamine õnnestus.</string>
   <string name="install_error">Lisamooduli importimisel tekkis viga.</string>
   <string name="export_side_main_title">Ekspordi kasutajakonto</string>
   <string name="import_side_main_title">Impordi kasutajakonto</string>
-  <string name="link_device_dialog_exit_title">Kas sa soovid lõpetada?</string>
-  <string name="link_device_dialog_exit_export_body_1">Sellega katkeb kasutajakonto eksportimine.</string>
-  <string name="link_device_dialog_exit_export_body_2">Kui võimalik, siis peatamine katkestab kasutajakonto eksportimise.</string>
-  <string name="link_device_dialog_exit_import_body_1">Peatamine katkestab kasutajakonto eksportimise.</string>
-  <string name="link_device_dialog_exit_import_body_2">Peatamine katkestab kasutajakonto importimise.</string>
+  <string name="link_device_dialog_stop_import_body">Lõpetamisel katkeb importimine.</string>
   <string name="export_side_step1_advice_qr">Uues seadmes käivita kasutajakonto lisamine.\nVali <b>„Kasutajakonto“ &gt; „Lisa kasutajakonto“ &gt; „Loo ühendus muust seadmest“</b>\nKui see on tehtud, siis skaneeri QR-koodi.</string>
   <string name="export_side_step1_switch_to_code">Või klõpsi siin autentimiskoodi sisestamiseks</string>
   <string name="export_side_step1_switch_to_qr">Või klõpsi siin QR-koodi skaneerimiseks</string>
-  <string name="export_side_step1_error_malformed">Uue seadme tunnus pole tuvastatav.\nPalun järgi eelpooltoodud juhendit.</string>
   <string name="export_side_step1_code_connect">Ühenda</string>
   <string name="export_side_step2_advice">Uus seade on siin. Kas see oled sina?
 Kui klõpsid „Kinnita“, siis jätkame kasutajakonto eksportimisega.</string>
@@ -482,9 +473,6 @@ Kui klõpsid „Kinnita“, siis jätkame kasutajakonto eksportimisega.</string>
   <string name="export_side_step2_cancel">Katkesta</string>
   <string name="export_side_step2_confirm">Kinnita</string>
   <string name="export_side_step2_password">Kasutajakonto on kaitstud salasõnaga.\nJätkamiseks autendi end uues seadmes.</string>
-  <string name="export_side_step3_body_loading">Kasutajakonto eksportimine uude seadmesse on pooleli.
-Palun oota…</string>
-  <string name="export_side_step3_body_done">Kasutajakonto importimine sellesse seadmesse õnnestus. </string>
   <string name="export_side_step3_exit">Lõpeta</string>
   <string name="import_side_step1_advice_qr">Algata eksportimine lähteseadmes.\n<b>Vali „Kasutajakonto“ &gt; „Kasutajakonto seadistused“ &gt; „Seo uus seada“</b>\nKui kõik on valmis, siis skaneeri järgnevat QR-koodi.</string>
   <string name="import_side_step1_advice_code">Algata eksportimine lähteseadmes.\n<b>Vali „Kasutajakonto“ &gt; „Kasutajakonto seadistused“ &gt; „Seo uus seada“</b>\nKui kõik on valmis, siis sisesta järgnev kood.</string>
@@ -496,16 +484,10 @@ Palun oota…</string>
   <string name="import_side_step2_password_prompt">Kasutajakonto on kaitstud salasõnaga.\nJätkamiseks eemalda lukustus.</string>
   <string name="import_side_step2_password_import">Impordi</string>
   <string name="import_side_step2_password_unlocking">Eemaldame kasutajakonto lukustust...</string>
-  <string name="import_side_step2_action_required">Sinu osalemine on vajalik.\nPalun kinnita kasutajakonto lähteseadmes.</string>
-  <string name="import_side_step3_body_loading">Kasutajakonto on importimisel uude seadmesse.\nPalun oota.</string>
-  <string name="import_side_step3_body_done">Kõik on tehtud!\nSinu kasutajakonto importimine uude seadmesse õnnestus!</string>
-  <string name="import_side_step3_go_to_account">Suundu oma uue kasutajakonto juurde</string>
+  <string name="import_side_step3_body_done">Kasutajakonto importimine õnnestus. </string>
   <string name="import_side_step3_exit">Lõpeta</string>
-  <string name="link_device_share_title">Jaga Jami autentimiseks mõeldud QR-koodi</string>
-  <string name="link_device_error_network">Tekkis võrguühenduse viga.\nPalun kontrolli, et võrguühendus toimib.</string>
-  <string name="link_device_error_authentication">Autentimisel tekkis viga.\nPalun kontrolli et salasõna on õige ja proovi uuesti.</string>
+  <string name="link_device_error_authentication">Seadme linkimisel tekkis autentimisviga. Palun kontrolli et konto nimi ja salasõna on õiged ja proovi uuesti.</string>
   <string name="link_device_error_timeout">Tegevus aegus.</string>
-  <string name="link_device_error_canceled">Tegevus on katkestatud.</string>
   <string name="link_device_error_unknown">Tekkis viga.</string>
   <string name="link_device_error_bad_password">Palun kontrolli et konto nimi ja salasõna on õiged ja proovi uuesti.</string>
 </resources>

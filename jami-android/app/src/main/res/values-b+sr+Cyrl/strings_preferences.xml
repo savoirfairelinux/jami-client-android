@@ -52,8 +52,7 @@
   <string name="pref_push_notifications_logs_title">Дневници Push обавештења</string>
   <string name="pref_push_notifications_logs_summary">Прегледајте евиденције снимљене из push
 обавештења.</string>
-  <string name="pref_typing_title">Омогући индикаторе куцања</string>
-  <string name="pref_typing_summary">Шаљи и примај индикаторе куцања који показују да се порука куца.</string>
+  <string name="pref_typing_title">Индикатор за типовање</string>
   <string name="pref_block_record_title">Блокирај снимак екрана и снимање</string>
   <string name="pref_block_record_summary">Блокирај снимање екрана или видео снимка.</string>
   <string name="pref_link_preview_title">Прегледи веб-веза</string>

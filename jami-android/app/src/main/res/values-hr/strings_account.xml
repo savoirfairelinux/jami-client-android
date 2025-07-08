@@ -70,8 +70,6 @@
   <string name="account_video_enable">Omogući video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Napredno</string>
-  <string name="account_read_receipts_label">Aktivirajte prijemni račune</string>
-  <string name="account_read_receipts_summary">Pošaljite i primijte potvrde o prikazu poruke.</string>
   <string name="account_call_settings_title">Postavke zvanja</string>
   <string name="account_dht_public_in_calls_label">Dozvoli dolazne pozive od nepoznatih kontakata</string>
   <string name="account_registration_exp_label">Registracija istjeće</string>
@@ -149,18 +147,18 @@
   <string name="account_link_device">Povezivanje s drugog uređaja</string>
   <string name="account_link_button">Povezivanje s mreže</string>
   <string name="account_link_archive_button">Povezivanje sa rezervom</string>
-  <string name="account_new_button">Napravite Jami račun</string>
-  <string name="account_link_export_button">Povežite novi uređaj</string>
+  <string name="account_new_button">Stvoriti račun Jami</string>
+  <string name="account_link_export_button">Povezivanje novog uređaja</string>
   <string name="account_link_show_button">Pokaži %d više povezanih uređaja</string>
   <string name="account_link_hide_button">Skloni se priključeno uređaj</string>
   <string name="account_end_export_button">U blizini</string>
   <string name="account_export_title">Uloženje povezivanja s drugim uređajima</string>
   <string name="account_connect_server_button">Povezivanje s upravnim serverom</string>
   <string name="account_connect_button">Povezivanje</string>
-  <string name="prompt_server">URL-a za upravljanje serverom Jamija</string>
   <string name="help_credentials_enter">Ubaci podatke o organizaciji</string>
   <string name="help_connect_password_enter">Ubaci lozinku organizacije</string>
   <string name="account_connect_prompt_username">Korisničko ime</string>
+  <string name="account_connect_server">Povezivanje s upravnim serverom</string>
   <!--Name registration-->
   <string name="error_username_empty">Ubaci korisničko ime</string>
   <string name="register_name">Ime registra</string>

@@ -115,6 +115,7 @@
   <string name="gallery_error_title">Ne pronađeno aplikacija Galerija</string>
   <string name="gallery_error_message">Nije pronađena aplikacija na uređaju za otvaranje Galerije</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">Neispravna datoteka</string>
   <string name="file_transfer_status_canceled">Otkazano</string>
   <string name="file_download">Snimka</string>
   <string name="title_media_viewer">Sredni gledatelj</string>

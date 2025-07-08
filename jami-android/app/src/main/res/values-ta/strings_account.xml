@@ -69,8 +69,6 @@
   <string name="account_video_enable">வீடியோவை இயக்கு</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">மேம்படுத்தபட்ட</string>
-  <string name="account_read_receipts_label">படிப்பு ரசீதுகளை இயக்கு</string>
-  <string name="account_read_receipts_summary">ஒரு செய்தி காண்பிக்கப்பட்டுள்ளது என்பதைக் குறிக்கும் ரசீதுகளை அனுப்புங்கள் மற்றும் பெறுங்கள்.</string>
   <string name="account_call_settings_title">அழைப்பு அமைப்புகள்</string>
   <string name="account_dht_public_in_calls_label">அறியப்படாத தொடர்புகளிலிருந்து வரும் அழைப்புகளை அனுமதிக்கவும்</string>
   <string name="account_registration_exp_label">பதிவு காலம் முடிவடைகிறது</string>
@@ -156,10 +154,10 @@
   <string name="account_export_title">மற்ற சாதனங்களுடன் இணைப்பு கணக்கு</string>
   <string name="account_connect_server_button">நிர்வாக சேவையகத்துடன் இணைக்கவும்</string>
   <string name="account_connect_button">இணைக்கவும்</string>
-  <string name="prompt_server">Jami மேலாண்மை சேவையக URL</string>
   <string name="help_credentials_enter">உங்கள் நிறுவனத்தின் சான்றிதழ்களை உள்ளிடவும்</string>
   <string name="help_connect_password_enter">உங்கள் நிறுவனத்தின் கடவுச்சொல்லை உள்ளிடவும்</string>
   <string name="account_connect_prompt_username">பயனர் பெயர்</string>
+  <string name="account_connect_server">நிர்வாக சேவையகத்துடன் இணைக்கவும்</string>
   <!--Name registration-->
   <string name="error_username_empty">பயனர்பெயரை உள்ளிடவும்</string>
   <string name="register_name">பதிவு பெயர்</string>

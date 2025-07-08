@@ -69,8 +69,6 @@
   <string name="account_video_enable">فعل الفيديو</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">إعدادات متقدمة</string>
-  <string name="account_read_receipts_label">تمكين إيصالات القراءة</string>
-  <string name="account_read_receipts_summary">إرسال الإيصالات واستلامها للإشارة إلى عرض رسالة.</string>
   <string name="account_call_settings_title">إعدادات الاتصال</string>
   <string name="account_dht_public_in_calls_label">السماح بمكالمات واردة من جهات إتصال غير معروفة</string>
   <string name="account_registration_exp_label">إنقضاء فترة التسجيل</string>
@@ -148,18 +146,18 @@
   <string name="account_link_device">اتصل من جهاز آخر</string>
   <string name="account_link_button">الاتصال من الشبكة</string>
   <string name="account_link_archive_button">الاتصال من النسخ الاحتياطي</string>
-  <string name="account_new_button">إنشاء حساب جامي</string>
-  <string name="account_link_export_button">ربط جهاز جديد</string>
+  <string name="account_new_button">إعداد حساب جامي</string>
+  <string name="account_link_export_button">اربط جهاز جديد</string>
   <string name="account_link_show_button">إظهار %d المزيد من الأجهزة المرتبطة</string>
   <string name="account_link_hide_button">إخفاء الأجهزة المرتبطة</string>
   <string name="account_end_export_button">إغلاق</string>
   <string name="account_export_title">رابط حساب للأجهزة الأخرى</string>
   <string name="account_connect_server_button">الاتصال بخادم الإدارة</string>
   <string name="account_connect_button">إتصال</string>
-  <string name="prompt_server">عنوان URL خادم ادارة جامى</string>
   <string name="help_credentials_enter">أدخل بيانات اعتماد مؤسستك</string>
   <string name="help_connect_password_enter">أدخل كلمة مرور مؤسستك</string>
   <string name="account_connect_prompt_username">اسم المستخدم</string>
+  <string name="account_connect_server">الاتصال بخادم الإدارة</string>
   <string name="account_enter_username">أدخِل اسم المستخدم</string>
   <!--Name registration-->
   <string name="error_username_empty">أدخل اسم مستخدم</string>

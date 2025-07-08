@@ -69,8 +69,6 @@
   <string name="account_video_enable">Activar la vidèo</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avançat</string>
-  <string name="account_read_receipts_label">Abilitar de recipas de lectura</string>
-  <string name="account_read_receipts_summary">Enviar e recebre de recipas que indican qu\'un messatge es estat visualizat.</string>
   <string name="account_call_settings_title">Paramètres sonada</string>
   <string name="account_dht_public_in_calls_label">Permetre las cridas entremesas d\'unes contactes desconeguts</string>
   <string name="account_registration_exp_label">L\'inscripcion expira</string>
@@ -148,18 +146,18 @@
   <string name="account_link_device">Conectar d\' un autre dispositiu</string>
   <string name="account_link_button">Conectar de la ret</string>
   <string name="account_link_archive_button">Conectar de backup</string>
-  <string name="account_new_button">Crear un compte Jami</string>
-  <string name="account_link_export_button">Ligam un dispositiu novèl</string>
+  <string name="account_new_button">Creacion d\' un compte Jami</string>
+  <string name="account_link_export_button">Link dispositiu novèl</string>
   <string name="account_link_show_button">Mostrar %d d\' autre dispositiu ligat</string>
   <string name="account_link_hide_button">Escondir un dispositiu ligat</string>
   <string name="account_end_export_button">près</string>
   <string name="account_export_title">Conta de ligam a d\'autres dispositius</string>
   <string name="account_connect_server_button">Conectar al servidor de gestion</string>
   <string name="account_connect_button">Se connectar</string>
-  <string name="prompt_server">URL del servidor de gestion Jami</string>
   <string name="help_credentials_enter">Intrar las credencials de vòstra organizacion</string>
   <string name="help_connect_password_enter">Escriure la vòstra paròli d\' organizacion</string>
   <string name="account_connect_prompt_username">Nom d’utilizaire</string>
+  <string name="account_connect_server">Conectar al servidor de gestion</string>
   <!--Name registration-->
   <string name="error_username_empty">Introducir un nom d\' utilizaire</string>
   <string name="register_name">Nomen del registre</string>

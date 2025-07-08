@@ -85,8 +85,6 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avançado</string>
   <string name="account_chat_settings_title">Configurações de conversação</string>
-  <string name="account_read_receipts_label">Ativar verificação de leitura</string>
-  <string name="account_read_receipts_summary">Enviar e receber verificações indicando que a mensagem foi mostrada.</string>
   <string name="account_call_settings_title">Configurações de chamada</string>
   <string name="account_dht_public_in_calls_label">Permitir receber chamadas de contactos desconhecidos</string>
   <string name="account_registration_exp_label">O registo expirou</string>
@@ -195,19 +193,17 @@
   <string name="account_link_button">Conectar da rede</string>
   <string name="account_link_archive_button">Conectar da cópia de segurança</string>
   <string name="account_new_button">Criar uma conta Jami</string>
-  <string name="account_link_export_button">Vincular um novo dispositivo</string>
+  <string name="account_link_export_button">Vincular novo dispositivo</string>
   <string name="account_link_show_button">Mostrar %d mais dispositivos vinculados</string>
   <string name="account_link_hide_button">Ocultar dispositivo vinculado</string>
-  <string name="account_start_export_button">Gerar o código PIN</string>
   <string name="account_end_export_button">fechar</string>
   <string name="account_export_title">Vincular a conta a outros dispositivos</string>
   <string name="account_connect_server_button">Conectar ao servidor de gestão</string>
   <string name="account_connect_button">Conectar</string>
-  <string name="prompt_server">URL do servidor de gestão do Jami</string>
   <string name="help_credentials_enter">Introduza as credenciais da sua organização</string>
   <string name="help_connect_password_enter">Introduza a palavra-passe da sua organização</string>
   <string name="account_connect_prompt_username">Nome de utilizador</string>
-  <string name="account_connect_server">Conectar ao servidor JAMS</string>
+  <string name="account_connect_server">Conectar ao servidor de gestão</string>
   <string name="account_enter_username">Introduza o nome de utilizador</string>
   <string name="account_enter_servername">Introduza o servidor</string>
   <!--Name registration-->
@@ -252,18 +248,10 @@
   <string name="account_disabled_indicator">Desativado</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Este formato não é suportado.</string>
-  <string name="account_link_info">Na nova aplicação Jami, digitalize o código QR ou introduza manualmente o código PIN.</string>
   <string name="account_link_device_title">Vincular um novo dispositivo</string>
-  <string name="account_link_password">Esta conta é encriptada por palavra-passe, introduza a palavra-passe para gerar o código PIN.</string>
   <string name="account_link_generate_button">Gerar</string>
-  <string name="account_link_time_valid">O código PIN não é válido: %1$s.</string>
-  <string name="account_link_device_info">Escolha “Vincular um novo dispositivo” na outra aplicação Jami para mostrar o código QR ou o código PIN</string>
   <string name="account_generate_export_device">No outro dispositivo</string>
-  <string name="account_generate_export_info">Instale e inicie o Jami, selecione “Importar de outro dispositivo” e leia o código QR.</string>
   <string name="content_description_qr_generated">Código QR da conta</string>
-  <string name="account_generate_export_invalid">O código PIN já não é válido.\nIntroduza a palavra-passe e crie outro para vincular o novo dispositivo.</string>
-  <string name="account_generate_export_invalid_two">O código PIN já não é válido.\nCrie outro para vincular o novo dispositivo.</string>
-  <string name="help_pin_info">Preencher se a conta estiver encriptada por palavra-passe</string>
   <string name="account_link_device_button">Conectar</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Desbloquear a conta Jami</string>
@@ -277,6 +265,5 @@ A autenticação biométrica ou do dispositivo adiciona uma forma conveniente de
   <string name="account_biometry_enroll_auth_message">Adicione uma autenticação biométrica ou de dispositivo segura como alternativa à sua palavra-passe</string>
   <string name="account_auth_error">Erro de autenticação: %1$s</string>
   <string name="account_auth_success">A autenticação foi bem sucedida</string>
-  <string name="account_auth_key_error">Falha ao desencriptar a chave da conta</string>
   <string name="account_auth_password">Utilizar a palavra-passe da conta</string>
 </resources>

@@ -12,5 +12,4 @@
   <string name="control_pause">Пауза</string>
   <string name="searchbar_navigation_account">Вибрати обліковий запис</string>
   <string name="add_conversation_member">Додати учасника розмови</string>
-  <string name="qrcode_to_scan">QR-код для сканування</string>
 </resources>

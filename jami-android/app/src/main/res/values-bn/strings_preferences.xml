@@ -41,8 +41,7 @@
   <string name="pref_logs_summary">খোলা ডায়াগনস্টিক লগ সেটিংস</string>
   <string name="pref_logs_start">লগিং শুরু করুন</string>
   <string name="pref_logs_stop">কাঠের কাঠ বন্ধ করুন</string>
-  <string name="pref_typing_title">টাইপিং নির্দেশক সক্ষম করুন</string>
-  <string name="pref_typing_summary">বার্তাটি টাইপ করা হচ্ছে তা দেখানোর জন্য টাইপিং নির্দেশক প্রেরণ এবং গ্রহণ করুন।</string>
+  <string name="pref_typing_title">টাইপিং সূচক</string>
   <string name="pref_block_record_title">স্ক্রিনশট এবং রেকর্ডিং ব্লক করুন</string>
   <string name="pref_block_record_summary">স্ক্রিনশট বা ভিডিও রেকর্ডিং বন্ধ করুন।</string>
   <string name="pref_link_preview_title">ওয়েব সংযোগের প্রাকদর্শন</string>

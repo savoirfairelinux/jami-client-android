@@ -69,8 +69,6 @@
   <string name="account_video_enable">ভিডিও সক্ষম করুন</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">উন্নত</string>
-  <string name="account_read_receipts_label">পাঠ প্রাপ্তি সক্ষম করুন</string>
-  <string name="account_read_receipts_summary">একটি বার্তা প্রদর্শিত হয়েছে বলে প্রাপ্তি এবং প্রাপ্তি প্রাপ্তি।</string>
   <string name="account_call_settings_title">কল সেটিং</string>
   <string name="account_dht_public_in_calls_label">অজানা পরিচিতি থেকে ইনকামিং কলগুলিকে অনুমতি দিন</string>
   <string name="account_registration_exp_label">নিবন্ধন মেয়াদ শেষ</string>
@@ -149,17 +147,17 @@
   <string name="account_link_button">নেটওয়ার্ক থেকে সংযোগ</string>
   <string name="account_link_archive_button">ব্যাকআপ থেকে সংযোগ</string>
   <string name="account_new_button">জামি অ্যাকাউন্ট তৈরি করুন</string>
-  <string name="account_link_export_button">একটি নতুন ডিভাইস লিঙ্ক</string>
+  <string name="account_link_export_button">নতুন ডিভাইস লিঙ্ক</string>
   <string name="account_link_show_button">%d আরো সংযুক্ত ডিভাইস দেখান</string>
   <string name="account_link_hide_button">সংযুক্ত ডিভাইস লুকান</string>
   <string name="account_end_export_button">ঘনিষ্ঠ</string>
   <string name="account_export_title">অন্যান্য ডিভাইসের সাথে লিঙ্ক অ্যাকাউন্ট</string>
   <string name="account_connect_server_button">ম্যানেজমেন্ট সার্ভারের সাথে সংযোগ স্থাপন</string>
   <string name="account_connect_button">সংযুক্ত করুন</string>
-  <string name="prompt_server">জামি ম্যানেজমেন্ট সার্ভার URL</string>
   <string name="help_credentials_enter">আপনার প্রতিষ্ঠানের পরিচয়পত্র লিখুন</string>
   <string name="help_connect_password_enter">আপনার প্রতিষ্ঠানের পাসওয়ার্ড লিখুন</string>
   <string name="account_connect_prompt_username">ব্যবহারকারীর নাম</string>
+  <string name="account_connect_server">ম্যানেজমেন্ট সার্ভারের সাথে সংযোগ স্থাপন</string>
   <!--Name registration-->
   <string name="error_username_empty">একটি ব্যবহারকারীর নাম লিখুন</string>
   <string name="register_name">নিবন্ধন নাম</string>

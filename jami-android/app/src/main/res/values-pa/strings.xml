@@ -197,6 +197,7 @@
   <string name="gallery_error_message">ਗੈਲਰੀ ਖੋਲ੍ਹਣ ਲਈ ਇਸ ਡੀਵਾਈਸ \'ਤੇ ਕੋਈ ਐਪਲੀਕੇਸ਼ਨ ਨਹੀਂ ਮਿਲੀ</string>
   <!--File Transfer-->
   <string name="file_transfer_status_created">ਸ਼ੁਰੂ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</string>
+  <string name="file_transfer_status_invalid_file">ਅਢੁਕਵੀਂ ਫ਼ਾਈਲ</string>
   <string name="file_transfer_status_canceled">ਰੱਦ ਕੀਤਾ ਗਿਆ</string>
   <string name="title_media_viewer">ਮੀਡੀਆ ਵਿਊਅਰ</string>
   <string name="menu_file_open">ਫ਼ਾਈਲ ਖੋਲ੍ਹੋ</string>

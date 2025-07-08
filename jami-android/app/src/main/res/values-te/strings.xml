@@ -225,6 +225,7 @@
   <string name="gallery_error_title">గ్యాలరీ యాప్ దొరకలేదు</string>
   <string name="gallery_error_message">గ్యాలరీని తెరవడానికి పరికరంలో ఏ అప్లికేషన్ కనుగొనబడలేదు</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">చెల్లుబాటు అయ్యే ఫైల్</string>
   <string name="file_transfer_status_canceled">రద్దు చేయబడినది</string>
   <string name="file_download">డౌన్లోడ్</string>
   <string name="title_media_viewer">మీడియా వీక్షకుడు</string>

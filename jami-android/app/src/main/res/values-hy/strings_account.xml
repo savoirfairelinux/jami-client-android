@@ -69,8 +69,6 @@
   <string name="account_video_enable">Հեռուստատեսություն</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Առաջադեմ</string>
-  <string name="account_read_receipts_label">Հեռախոսահամարներ</string>
-  <string name="account_read_receipts_summary">Հեռացնել եւ ստանալ վիտամուտներ, որոնք ցույց են տալիս, որ հաղորդագրություն է ցուցադրվել:</string>
   <string name="account_call_settings_title">Հեռախոսազանգի կարգավորումները</string>
   <string name="account_dht_public_in_calls_label">Թույլ տալ մուտքագրվող զանգերը անհայտ կոնտակտներից</string>
   <string name="account_registration_exp_label">Գրանցման ժամկետը լրանում է</string>
@@ -149,17 +147,17 @@
   <string name="account_link_button">Հեռախոսային ցանցից միանալ</string>
   <string name="account_link_archive_button">Կապակցեք պահուստային համակարգից</string>
   <string name="account_new_button">Ստեղծեք Jami հաշիվ</string>
-  <string name="account_link_export_button">Կապակցեք նոր սարք</string>
+  <string name="account_link_export_button">Կապակցեք նոր սարքը</string>
   <string name="account_link_show_button">Ցուցադրել %d ավելի շատ կապված սարք</string>
   <string name="account_link_hide_button">Հավաքել միացված սարքը</string>
   <string name="account_end_export_button">մոտ</string>
   <string name="account_export_title">Կապակցում հաշիվ այլ սարքեր</string>
   <string name="account_connect_server_button">Կապակցեք կառավարման սերվերի հետ</string>
   <string name="account_connect_button">Կապակցել</string>
-  <string name="prompt_server">Jami կառավարման սերվեր URL</string>
   <string name="help_credentials_enter">Ներբեռնեք ձեր կազմակերպության հավատարմագրերը</string>
   <string name="help_connect_password_enter">Տեղադրել ձեր կազմակերպության գաղտնաբառը</string>
   <string name="account_connect_prompt_username">Օգտագործողի անունը</string>
+  <string name="account_connect_server">Կապակցեք կառավարման սերվերի հետ</string>
   <!--Name registration-->
   <string name="error_username_empty">Գտեք օգտվողի անուն</string>
   <string name="register_name">Գրանցման անուն</string>

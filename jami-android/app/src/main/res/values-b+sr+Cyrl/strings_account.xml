@@ -86,8 +86,6 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Напредно</string>
   <string name="account_chat_settings_title">Подешавања ћаскања</string>
-  <string name="account_read_receipts_label">Омогући потврде о читању</string>
-  <string name="account_read_receipts_summary">Слање и примање потврда које показују да је порука приказана.</string>
   <string name="account_call_settings_title">Подешавања позива</string>
   <string name="account_dht_public_in_calls_label">Дозволи долазне позиве од непознатих контаката</string>
   <string name="account_registration_exp_label">Регистрација истиче</string>
@@ -195,20 +193,18 @@
   <string name="account_link_device">Повежи се са другог уређаја</string>
   <string name="account_link_button">Повежи са мреже</string>
   <string name="account_link_archive_button">Повежи из резервне копије</string>
-  <string name="account_new_button">Направи Јами налог</string>
-  <string name="account_link_export_button">Повежи нови уређај</string>
+  <string name="account_new_button">Направите Јами налог</string>
+  <string name="account_link_export_button">Сврнути ново уређај</string>
   <string name="account_link_show_button">Прикажи %d више повезаних уређаја</string>
   <string name="account_link_hide_button">Сакриј повезани уређај</string>
-  <string name="account_start_export_button">Генеришите ПИН код</string>
   <string name="account_end_export_button">затвори</string>
   <string name="account_export_title">Повежи налог са другим уређајима</string>
   <string name="account_connect_server_button">Повежи се са сервером за управљање</string>
   <string name="account_connect_button">Повежи</string>
-  <string name="prompt_server">УРЛ сервера за управљање Јамијем</string>
   <string name="help_credentials_enter">Унеси акредитиве своје организације</string>
   <string name="help_connect_password_enter">Унеси лозинку своје организације</string>
   <string name="account_connect_prompt_username">Корисничко име</string>
-  <string name="account_connect_server">Повежите се са JAMS сервером</string>
+  <string name="account_connect_server">Повежи се са сервером за управљање</string>
   <string name="account_enter_username">Унеси корисничко име</string>
   <string name="account_enter_servername">Унесите сервер</string>
   <!--Name registration-->
@@ -253,18 +249,10 @@
   <string name="account_disabled_indicator">Онемогућено</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Овај формат није подржан.</string>
-  <string name="account_link_info">У новој апликацији Јами скенирајте QR код или ручно унесите PIN код.</string>
   <string name="account_link_device_title">Повежите нови уређај</string>
-  <string name="account_link_password">Овај налог је шифрован лозинком, унесите лозинку да бисте генерисали PIN код.</string>
   <string name="account_link_generate_button">Генериши</string>
-  <string name="account_link_time_valid">PIN код ће бити неважећи: %1$s.</string>
-  <string name="account_link_device_info">Изаберите „Повежи нови уређај“ из друге Јами апликације да бисте приказали QR код или PIN код.</string>
   <string name="account_generate_export_device">На другом уређају</string>
-  <string name="account_generate_export_info">Инсталирајте и покрените Јами, изаберите „Увези са другог уређаја“ и скенирајте QR код.</string>
   <string name="content_description_qr_generated">QR код налога</string>
-  <string name="account_generate_export_invalid">PIN код више није важећи.\nУнесите лозинку и генеришите другу да бисте повезали нови уређај.</string>
-  <string name="account_generate_export_invalid_two">PIN код више није важећи.\nГенеришите још један да бисте повезали нови уређај.</string>
-  <string name="help_pin_info">Попуните ако је налог шифрован лозинком</string>
   <string name="account_link_device_button">Повежи се</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Откључајте Јами налог</string>
@@ -278,6 +266,5 @@
   <string name="account_biometry_enroll_auth_message">Додајте безбедну биометријску или аутентификацију уређаја као алтернативу лозинки</string>
   <string name="account_auth_error">Грешка при аутентификацији: %1$s</string>
   <string name="account_auth_success">Аутентификација је успела</string>
-  <string name="account_auth_key_error">Дешифровање кључа налога није успело</string>
   <string name="account_auth_password">Користите лозинку налога</string>
 </resources>

@@ -41,8 +41,7 @@
   <string name="pref_logs_summary">Mipangilio ya wazi ya rekodi ya uchunguzi</string>
   <string name="pref_logs_start">Kuanza Kuweka</string>
   <string name="pref_logs_stop">Acha kuondoa</string>
-  <string name="pref_typing_title">Kuwezesha alama za kuandika</string>
-  <string name="pref_typing_summary">Tuma na kupokea viashiria vya kuandika vinavyoonyesha kwamba ujumbe unapiga.</string>
+  <string name="pref_typing_title">Kiashiria cha aina</string>
   <string name="pref_block_record_title">Kuzuia screenshot na kurekodi</string>
   <string name="pref_block_record_summary">Acha kupiga picha za skrini au kurekodi video.</string>
   <string name="pref_link_preview_summary">Kuangalia mbele inahitaji kupakua maudhui kutoka kwa seva za mtu wa tatu.</string>

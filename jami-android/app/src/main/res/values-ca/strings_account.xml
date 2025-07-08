@@ -70,8 +70,6 @@
   <string name="account_video_enable">Habilita el vídeo</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avançat</string>
-  <string name="account_read_receipts_label">Habilita la confirmació de lectura</string>
-  <string name="account_read_receipts_summary">Envia i rep indicadors de confirmació de que un missatge s\'ha mostrat</string>
   <string name="account_call_settings_title">Preferències de trucada</string>
   <string name="account_dht_public_in_calls_label">Permet trucades entrants de contactes desconeguts</string>
   <string name="account_registration_exp_label">Expiració del registre</string>
@@ -149,18 +147,18 @@
   <string name="account_link_device">Connecta des d\'un altre dispositiu</string>
   <string name="account_link_button">Connecta des de la xarxa</string>
   <string name="account_link_archive_button">Connecta des d\'una còpia de seguretat</string>
-  <string name="account_new_button">Crear un compte Jami</string>
-  <string name="account_link_export_button">Enllaça un nou dispositiu</string>
+  <string name="account_new_button">Creació de compte Jami</string>
+  <string name="account_link_export_button">Coneix el nou dispositiu</string>
   <string name="account_link_show_button">Mostra %d més dispositius enllaçats</string>
   <string name="account_link_hide_button">Amaga el dispositiu enllaçat</string>
   <string name="account_end_export_button">tanca</string>
   <string name="account_export_title">Enllaça el compte amb altres dispositius</string>
   <string name="account_connect_server_button">Connecta amb el servidor de gestió</string>
   <string name="account_connect_button">Connectar</string>
-  <string name="prompt_server">URL del servidor de gestió Jami</string>
   <string name="help_credentials_enter">Inseriu els credencials de la vostra organització</string>
   <string name="help_connect_password_enter">Inseriu la contrasenya de la vostra organització</string>
   <string name="account_connect_prompt_username">Nom d\'usuari</string>
+  <string name="account_connect_server">Connecta amb el servidor de gestió</string>
   <string name="account_enter_username">Inseriu el vostre nom d\'usuari</string>
   <!--Name registration-->
   <string name="error_username_empty">Inseriu el vostre nom d\'usuari</string>

@@ -86,8 +86,6 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">高级</string>
   <string name="account_chat_settings_title">聊天设置</string>
-  <string name="account_read_receipts_label">启用已读回执</string>
-  <string name="account_read_receipts_summary">接收并发送显示一个消息已读的回执。</string>
   <string name="account_call_settings_title">呼叫设置</string>
   <string name="account_dht_public_in_calls_label">允许未知联系人的来电</string>
   <string name="account_registration_exp_label">注册过期</string>
@@ -195,20 +193,18 @@
   <string name="account_link_device">从另一台设备连接</string>
   <string name="account_link_button">从网络关联</string>
   <string name="account_link_archive_button">从备份文件关联</string>
-  <string name="account_new_button">创建 Jami 账户</string>
+  <string name="account_new_button">建立 Jami 帳號</string>
   <string name="account_link_export_button">关联新设备</string>
   <string name="account_link_show_button">再显示 %d 个关联设备</string>
   <string name="account_link_hide_button">隐藏关联设备</string>
-  <string name="account_start_export_button">生成PIN码</string>
   <string name="account_end_export_button">关闭</string>
   <string name="account_export_title">将账号关联至其他设备</string>
   <string name="account_connect_server_button">连接到管理服务器</string>
   <string name="account_connect_button">连接</string>
-  <string name="prompt_server">Jami 管理服务器 URL</string>
   <string name="help_credentials_enter">输入您的组织凭据</string>
   <string name="help_connect_password_enter">输入您的组织密码</string>
   <string name="account_connect_prompt_username">用户名</string>
-  <string name="account_connect_server">连接到JAMS服务器</string>
+  <string name="account_connect_server">连接到管理服务器</string>
   <string name="account_enter_username">输入用户名</string>
   <string name="account_enter_servername">输入服务器</string>
   <!--Name registration-->
@@ -253,18 +249,10 @@
   <string name="account_disabled_indicator">已停用</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">不支持的文件格式。</string>
-  <string name="account_link_info">在新的Jami应用程序上，扫描二维码或手动输入PIN</string>
   <string name="account_link_device_title">关联新设备</string>
-  <string name="account_link_password">此帐户是密码加密的，请输入密码以生成PIN码</string>
   <string name="account_link_generate_button">生成</string>
-  <string name="account_link_time_valid">PIN码将失效：%1$s</string>
-  <string name="account_link_device_info">从其他Jami应用程序中选择“链接新设备”以显示二维码或PIN</string>
   <string name="account_generate_export_device">在其他设备上</string>
-  <string name="account_generate_export_info">安装并启动Jami，选择“从其他设备导入”并扫描QR码</string>
   <string name="content_description_qr_generated">此账户二维码</string>
-  <string name="account_generate_export_invalid">PIN不再有效。\n输入密码并生成新的密码以链接新设备。</string>
-  <string name="account_generate_export_invalid_two">PIN不再有效。\n生成新PIN以链接新设备。</string>
-  <string name="help_pin_info">如果帐户是密码加密的，请输入</string>
   <string name="account_link_device_button">连接</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">解锁Jami帐户</string>
@@ -278,6 +266,5 @@
   <string name="account_biometry_enroll_auth_message">添加安全生物特征或设备身份验证作为密码的替代方案</string>
   <string name="account_auth_error">身份验证错误：%1$s</string>
   <string name="account_auth_success">身份验证成功</string>
-  <string name="account_auth_key_error">无法解密帐户密钥</string>
   <string name="account_auth_password">使用帐户密码</string>
 </resources>

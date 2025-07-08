@@ -69,8 +69,6 @@
   <string name="account_video_enable">เปิดวีดีโอ</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">ขั้นสูง</string>
-  <string name="account_read_receipts_label">เปิดใช้งานใบตอบรับการอ่าน</string>
-  <string name="account_read_receipts_summary">ส่งและรับใบเสร็จที่ระบุว่ามีการแสดงข้อความ</string>
   <string name="account_call_settings_title">การตั้งค่าการโทร</string>
   <string name="account_dht_public_in_calls_label">อนุญาตสายเรียกเข้าจากผู้ติดต่อที่ไม่รู้จัก</string>
   <string name="account_registration_exp_label">การลงทะเบียนหมดอายุ</string>
@@ -156,10 +154,10 @@
   <string name="account_export_title">บัญชีเชื่อมต่อกับอุปกรณ์อื่นๆ</string>
   <string name="account_connect_server_button">เชื่อมต่อเซอร์เวอร์บริหาร</string>
   <string name="account_connect_button">เชื่อมต่อ</string>
-  <string name="prompt_server">URL ของเซอร์เวอร์บริหาร Jami</string>
   <string name="help_credentials_enter">กรอกข้อมูลองค์กรของคุณ</string>
   <string name="help_connect_password_enter">กรอกรหัสผ่านองค์กรของคุณ</string>
   <string name="account_connect_prompt_username">ชื่อผู้ใช้</string>
+  <string name="account_connect_server">เชื่อมต่อเซอร์เวอร์บริหาร</string>
   <!--Name registration-->
   <string name="error_username_empty">กรอกชื่อผู้ใช้</string>
   <string name="register_name">ชื่อทะเบียน</string>

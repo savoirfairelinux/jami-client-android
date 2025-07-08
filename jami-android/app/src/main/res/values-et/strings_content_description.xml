@@ -12,5 +12,4 @@
   <string name="control_pause">Peata</string>
   <string name="searchbar_navigation_account">Vali kasutajakonto</string>
   <string name="add_conversation_member">Lisa vestlusele osaleja</string>
-  <string name="qrcode_to_scan">QR-kood skaneerimiseks</string>
 </resources>

@@ -247,7 +247,6 @@
   <string name="help_password_choose">Scegliere una password facile da ricordare per proteggere il tuo account Jami.</string>
   <string name="help_password_enter">Inserisci la password del tuo account principale Jami.</string>
   <string name="help_server_enter">Inserire l\'URL del server di gestione.</string>
-  <string name="pin_copied">Codice PIN copiato negli appunti.</string>
   <string name="copied_clipboard">Copiato negli appunti.</string>
   <string name="wizard_next">Prossimo</string>
   <string name="wizard_back">Indietro</string>
@@ -319,13 +318,11 @@
   <string name="file_transfer_status_finished">Completo</string>
   <string name="file_transfer_status_closed_by_host">Chiuso dall\'host</string>
   <string name="file_transfer_status_closed_by_peer">Chiuso dall\'interlocutore</string>
-  <string name="file_transfer_status_invalid_pathname">Percorso non valido</string>
+  <string name="file_transfer_status_invalid_file">File non valido</string>
   <string name="file_transfer_status_unjoinable_peer">Utente irraggiungibile</string>
   <string name="file_transfer_status_canceled">Annullato</string>
   <string name="file_transfer_status_error">Si è verificato un errore durante il trasferimento del file.</string>
-  <string name="file_transfer_status_timed_out">Tempo scaduto</string>
   <string name="file_saved_in">File salvato in %s.</string>
-  <string name="file_saved_successfully">File salvato con successo.</string>
   <string name="file_download">Scarica</string>
   <string name="no_space_left_on_device">Spazio esaurito sul dispositivo.</string>
   <string name="title_media_viewer">Visualizzatore media</string>
@@ -459,7 +456,6 @@
   <string name="unable_to_load">Impossibile caricare %1$s</string>
   <string name="load_success">%1$s: attivato</string>
   <string name="unload_success">%1$s: disattivato</string>
-  <string name="install_success">L\'estensione %1$s è stata installata con successo.</string>
   <string name="install_error">Si è verificato un errore durante l\'importazione dell\'estensione.</string>
   <string name="export_side_main_title">Esporta account</string>
   <string name="export_side_step1_code_connect">Connetti</string>

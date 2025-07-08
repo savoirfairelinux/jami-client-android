@@ -41,8 +41,7 @@
   <string name="pref_logs_summary">Configuraciones abiertes del rexistru de diagnósticu</string>
   <string name="pref_logs_start">Comienza la arquivada</string>
   <string name="pref_logs_stop">Pa parar la tala</string>
-  <string name="pref_typing_title">Abilitar los indicadores de mecanografía</string>
-  <string name="pref_typing_summary">Enviar y recibir indicadores de mecanografía que muestren que se ta mecanografiando un mensaxe.</string>
+  <string name="pref_typing_title">Indicador de mecanografía</string>
   <string name="pref_block_record_title">Bloquear captura d\' pantalla y grabación</string>
   <string name="pref_block_record_summary">Bloquear la toma de captura de pantalla o grabación de video.</string>
   <string name="pref_link_preview_summary">La vista previa requiere descargar conteníos de servidores de terceros.</string>

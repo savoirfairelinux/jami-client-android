@@ -86,8 +86,6 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Дополнительно</string>
   <string name="account_chat_settings_title">Настройки чата</string>
-  <string name="account_read_receipts_label">Включить подтверждения прочтения</string>
-  <string name="account_read_receipts_summary">Подтверждения прочтения показывают что сообщение было прочтено</string>
   <string name="account_call_settings_title">Настройки вызовов</string>
   <string name="account_dht_public_in_calls_label">Разрешить входящие звонки от неизвестных контактов</string>
   <string name="account_registration_exp_label">Срок регистрации истекает</string>
@@ -195,20 +193,18 @@
   <string name="account_link_device">Подключиться с другого устройства</string>
   <string name="account_link_button">Подключение из сети</string>
   <string name="account_link_archive_button">Подключиться из резервной копии</string>
-  <string name="account_new_button">Создать аккаунт Jami</string>
+  <string name="account_new_button">Создать учетную запись Jami</string>
   <string name="account_link_export_button">Привязать новое устройство</string>
   <string name="account_link_show_button">Показать еще %d привязанных устройств</string>
   <string name="account_link_hide_button">Скрыть привязанное устройство</string>
-  <string name="account_start_export_button">Создать PIN-код</string>
   <string name="account_end_export_button">закрыть</string>
   <string name="account_export_title">Привязать аккаунт к другому устройству</string>
   <string name="account_connect_server_button">Подключиться к управляющему серверу</string>
   <string name="account_connect_button">Соединение</string>
-  <string name="prompt_server">URL управляющего сервера Jami</string>
   <string name="help_credentials_enter">Введите учетные данные вашей организации</string>
   <string name="help_connect_password_enter">Введите пароль вашей организации</string>
   <string name="account_connect_prompt_username">Имя пользователя</string>
-  <string name="account_connect_server">Подключиться к JAMS серверу</string>
+  <string name="account_connect_server">Подключиться к управляющему серверу</string>
   <string name="account_enter_username">Введите имя пользователя</string>
   <string name="account_enter_servername">Введите сервер</string>
   <!--Name registration-->
@@ -253,18 +249,10 @@
   <string name="account_disabled_indicator">Отключен</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Этот формат не поддерживается</string>
-  <string name="account_link_info">В новом приложении Jami отсканируйте QR-код или введите PIN-код вручную.</string>
   <string name="account_link_device_title">Привязать новое устройство</string>
-  <string name="account_link_password">Этот аккаунт зашифрован паролем, введите пароль для генерации ПИН-кода.</string>
   <string name="account_link_generate_button">Сгенерировать</string>
-  <string name="account_link_time_valid">ПИН-код будет недействителен: %1$s.</string>
-  <string name="account_link_device_info">Выберите \"Привязать новое устройство\" в другом приложении Jami, чтобы отобразить коды QR-код или PIN-код.</string>
   <string name="account_generate_export_device">На другом устройстве</string>
-  <string name="account_generate_export_info">Установите и запустите Jami, выберите \"Импортировать с другого устройства\", затем отсканируйте QR-код.</string>
   <string name="content_description_qr_generated">QR-код аккаунта</string>
-  <string name="account_generate_export_invalid">PIN-код больше не действителен.\nВведите пароль и сгенерируйте другой для привязки к новому устройству.</string>
-  <string name="account_generate_export_invalid_two">PIN-код больше не действителен.\nСгенерируйте другой для привязки к новому устройству.</string>
-  <string name="help_pin_info">Заполните, если аккаунт зашифрован паролем</string>
   <string name="account_link_device_button">Соединение</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Разблокировать аккаунт Jami</string>
@@ -278,6 +266,5 @@
   <string name="account_biometry_enroll_auth_message">Добавить защищенную биометрию или аутентификацию устройства как альтернативу паролю</string>
   <string name="account_auth_error">Ошибка аутентификации: %1$s</string>
   <string name="account_auth_success">Аутентификация прошла успешно</string>
-  <string name="account_auth_key_error">Не удалось расшифровать ключ аккаунта</string>
   <string name="account_auth_password">Использовать пароль аккаунта</string>
 </resources>

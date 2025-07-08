@@ -225,6 +225,7 @@
   <string name="gallery_error_title">गॅलरी अॅप सापडले नाही</string>
   <string name="gallery_error_message">गॅलरी उघडण्यासाठी डिव्हाइसवर कोणताही अनुप्रयोग आढळला नाही</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">अमान्य फाइल</string>
   <string name="file_transfer_status_canceled">रद्द केले</string>
   <string name="file_download">डाऊनलोड करा</string>
   <string name="title_media_viewer">मीडिया दर्शक</string>

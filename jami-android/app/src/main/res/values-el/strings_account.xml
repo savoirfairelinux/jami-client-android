@@ -69,8 +69,6 @@
   <string name="account_video_enable">Ενεργοποίηση βίντεο</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Για προχωρημένους</string>
-  <string name="account_read_receipts_label">Ενεργοποιήστε τις αποδείξεις ανάγνωσης</string>
-  <string name="account_read_receipts_summary">Στείλτε και λάβετε αποδείξεις που δείχνουν ότι έχει εμφανιστεί ένα μήνυμα.</string>
   <string name="account_call_settings_title">Ρυθμίσεις κλήσης</string>
   <string name="account_dht_public_in_calls_label">Να επιτρέπονται κλήσεις από άγνωστες επαφές</string>
   <string name="account_registration_exp_label">Λήξη εγγραφής</string>
@@ -148,7 +146,7 @@
   <string name="account_link_device">Συνδέστε από άλλη συσκευή</string>
   <string name="account_link_button">Συνδέστε από το δίκτυο</string>
   <string name="account_link_archive_button">Συνδέστε από την υποστήριξη</string>
-  <string name="account_new_button">Δημιουργία λογαριασμού Jami</string>
+  <string name="account_new_button">Δημιουργήστε λογαριασμό Jami</string>
   <string name="account_link_export_button">Σύνδεση νέας συσκευής</string>
   <string name="account_link_show_button">Δείξτε %d περισσότερες συνδεδεμένες συσκευές</string>
   <string name="account_link_hide_button">Κρύψτε το συνδεδεμένο όργανο</string>
@@ -156,10 +154,10 @@
   <string name="account_export_title">Λογαριασμός σύνδεσης με άλλες συσκευές</string>
   <string name="account_connect_server_button">Συνδέστε τον διακομιστή διαχείρισης</string>
   <string name="account_connect_button">Σύνδεση</string>
-  <string name="prompt_server">URL του διακομιστή διαχείρισης Jami</string>
   <string name="help_credentials_enter">Εισάγετε τα στοιχεία διαπιστώσεων της οργάνωσής σας</string>
   <string name="help_connect_password_enter">Εισάγετε τον κωδικό πρόσβασης της οργάνωσης σας</string>
   <string name="account_connect_prompt_username">Όνομα χρήστη</string>
+  <string name="account_connect_server">Συνδέστε τον διακομιστή διαχείρισης</string>
   <!--Name registration-->
   <string name="error_username_empty">Εισάγετε όνομα χρήστη</string>
   <string name="register_name">Πληροφορική ονομασία</string>

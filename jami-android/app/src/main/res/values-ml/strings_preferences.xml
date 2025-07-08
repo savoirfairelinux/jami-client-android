@@ -42,8 +42,7 @@
   <string name="pref_logs_summary">ഡയഗ്നോസ്റ്റിക് ലോഗ് ക്രമീകരണങ്ങൾ തുറക്കുക</string>
   <string name="pref_logs_start">ലോഗ് ആരംഭിക്കുക</string>
   <string name="pref_logs_stop">മരം മുറിക്കുന്നത് നിർത്തുക</string>
-  <string name="pref_typing_title">ടൈപ്പുചെയ്യൽ സൂചകങ്ങൾ പ്രവർത്തനക്ഷമമാക്കുക</string>
-  <string name="pref_typing_summary">ഒരു സന്ദേശം ടൈപ്പുചെയ്യുന്നതായി കാണിക്കുന്ന ടൈപ്പുചെയ്യൽ സൂചകങ്ങൾ അയയ്ക്കുകയും സ്വീകരിക്കുകയും ചെയ്യുക.</string>
+  <string name="pref_typing_title">ടൈപ്പിംഗ് സൂചകങ്ങൾ</string>
   <string name="pref_block_record_title">സ്ക്രീൻഷോട്ടും റെക്കോർഡിംഗും തടയുക</string>
   <string name="pref_block_record_summary">സ്ക്രീൻഷോട്ട് എടുക്കുകയോ വീഡിയോ റെക്കോർഡ് ചെയ്യുകയോ ചെയ്യുന്നത് തടയുക.</string>
   <string name="pref_link_preview_title">വെബ് ലിങ്ക് പ്രിവ്യൂകൾ</string>

@@ -42,8 +42,7 @@
   <string name="pref_logs_summary">Tanılama günlüğü ayarlarını aç</string>
   <string name="pref_logs_start">Günlükle</string>
   <string name="pref_logs_stop">Günlüklemeyi durdur</string>
-  <string name="pref_typing_title">Yazım göstergelerini etkinleştir</string>
-  <string name="pref_typing_summary">İleti yazıldığını gösteren yazım göstergelerini gönder ve al.</string>
+  <string name="pref_typing_title">Tipleme göstergesi</string>
   <string name="pref_block_record_title">Ekran görüntüsünü ve kaydını engelle</string>
   <string name="pref_block_record_summary">Ekran görüntüsü ya da kaydını almayı engelle.</string>
   <string name="pref_link_preview_title">Web bağlantısı önizlemeleri</string>

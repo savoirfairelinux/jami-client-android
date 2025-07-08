@@ -225,6 +225,7 @@
   <string name="gallery_error_title">कुनै ग्यालरी अनुप्रयोग भेटिएन</string>
   <string name="gallery_error_message">Gallery खोल्नका लागि कुनै अनुप्रयोग उपकरणमा फेला परेन</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">अवैध फाइल</string>
   <string name="file_transfer_status_canceled">रद्द गरियो</string>
   <string name="file_download">डाउनलोड</string>
   <string name="title_media_viewer">मिडिया दर्शक</string>

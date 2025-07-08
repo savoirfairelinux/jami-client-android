@@ -225,6 +225,7 @@
   <string name="gallery_error_title">எந்த கேலரி பயன்பாடு காணப்படவில்லை</string>
   <string name="gallery_error_message">கேலரியை திறக்க சாதனத்தில் எந்த பயன்பாடும் காணப்படவில்லை</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">செல்லாத கோப்பு</string>
   <string name="file_transfer_status_canceled">ரத்து செய்யப்பட்டது</string>
   <string name="file_download">பதிவிறக்கம்</string>
   <string name="title_media_viewer">ஊடக பார்வையாளர்</string>

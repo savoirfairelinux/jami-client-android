@@ -52,8 +52,7 @@
   <string name="pref_connection_monitor_summary">Отслеживание одноранговых подключений</string>
   <string name="pref_push_notifications_logs_title">Журналы push-уведомлений</string>
   <string name="pref_push_notifications_logs_summary">Просмотр журналов push-уведомлений</string>
-  <string name="pref_typing_title">Включить оповещения о наборе текста</string>
-  <string name="pref_typing_summary">Оповещения о наборе текста показывают что пользователь набирает сообщение</string>
+  <string name="pref_typing_title">Индикатор набора сообщения</string>
   <string name="pref_block_record_title">Отключить снимки и запись экрана</string>
   <string name="pref_block_record_summary">Отключить снимки и запись экрана</string>
   <string name="pref_link_preview_title">Предпросмотры ссылок</string>

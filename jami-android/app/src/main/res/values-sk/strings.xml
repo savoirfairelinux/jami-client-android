@@ -233,6 +233,7 @@
   <string name="gallery_error_message">Nebola nájdená žiadna aplikácia na otvorenie Galérie</string>
   <!--File Transfer-->
   <string name="file_transfer_status_created">Inicializácia</string>
+  <string name="file_transfer_status_invalid_file">Neplatný súbor</string>
   <string name="file_transfer_status_canceled">Zrušené</string>
   <string name="file_download">Stiahnite</string>
   <string name="title_media_viewer">Zobrazovač médií</string>

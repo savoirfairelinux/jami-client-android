@@ -69,8 +69,6 @@
   <string name="account_video_enable">Видеог ашиглах</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Өргөн дэвшилтэт</string>
-  <string name="account_read_receipts_label">Хэлгээний хүлээн авах боломжийг хангах</string>
-  <string name="account_read_receipts_summary">Мэдээлэл илрүүлсэн тухай хүлээн авах, хүлээн авах.</string>
   <string name="account_call_settings_title">Зудлагын тохируулалт</string>
   <string name="account_dht_public_in_calls_label">Таны мэдэхгүй холбоотондоо орж ирж буй дуудлагаг зөвшөөрөх</string>
   <string name="account_registration_exp_label">бүртгэл дуусч байна</string>
@@ -156,10 +154,10 @@
   <string name="account_export_title">Бусад төхөөрөмжүүдтэй холбогдсон данс</string>
   <string name="account_connect_server_button">Захиргааны сервертэй холбох</string>
   <string name="account_connect_button">Харилцаа холбоо</string>
-  <string name="prompt_server">Jami менежментийн серверний URL</string>
   <string name="help_credentials_enter">Танай байгууллагын итгэлийг оруулна</string>
   <string name="help_connect_password_enter">Байгууллагынхаа нууц үг</string>
   <string name="account_connect_prompt_username">Хэрэглэгчийн нэр</string>
+  <string name="account_connect_server">Захиргааны сервертэй холбох</string>
   <!--Name registration-->
   <string name="error_username_empty">Хэрэглэгчийн нэрийг оруул</string>
   <string name="register_name">Төлөөлөгчдийн нэр</string>

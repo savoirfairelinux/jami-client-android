@@ -52,8 +52,7 @@
   <string name="pref_connection_monitor_summary">监控对等连接</string>
   <string name="pref_push_notifications_logs_title">推送通知日志</string>
   <string name="pref_push_notifications_logs_summary">查看从推送通知中捕获的日志。</string>
-  <string name="pref_typing_title">启用输入状态显示</string>
-  <string name="pref_typing_summary">发送和接收表示正在编写消息的输入状态。</string>
+  <string name="pref_typing_title">类型指标</string>
   <string name="pref_block_record_title">阻止截屏和录屏</string>
   <string name="pref_block_record_summary">阻止截屏或录屏</string>
   <string name="pref_link_preview_title">网页链接预览</string>

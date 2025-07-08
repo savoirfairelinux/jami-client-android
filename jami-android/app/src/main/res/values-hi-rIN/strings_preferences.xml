@@ -41,8 +41,7 @@
   <string name="pref_logs_summary">खुले डायग्नोस्टिक लॉग सेटिंग्स</string>
   <string name="pref_logs_start">लॉगिंग शुरू करें</string>
   <string name="pref_logs_stop">लकड़ी का काटना बंद करो</string>
-  <string name="pref_typing_title">टाइपिंग संकेतकों को सक्षम करें</string>
-  <string name="pref_typing_summary">संदेश टाइप किए जा रहे हैं, यह दिखाने वाले टाइपिंग संकेत भेजें और प्राप्त करें।</string>
+  <string name="pref_typing_title">टाइपिंग सूचक</string>
   <string name="pref_block_record_title">स्क्रीनशॉट और रिकॉर्डिंग को ब्लॉक करें</string>
   <string name="pref_block_record_summary">स्क्रीनशॉट लेने या वीडियो रिकॉर्ड करने से रोकें।</string>
   <string name="pref_link_preview_title">वेब लिंक पूर्वावलोकन</string>

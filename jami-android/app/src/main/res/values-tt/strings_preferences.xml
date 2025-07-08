@@ -41,8 +41,7 @@
   <string name="pref_logs_summary">Диагностика журналын ачыклау</string>
   <string name="pref_logs_start">Урманны язарга керегез</string>
   <string name="pref_logs_stop">Урманны ташлама</string>
-  <string name="pref_typing_title">Типография күрсәткечләрен кую</string>
-  <string name="pref_typing_summary">Хәбәрнең язылачагын күрсәтүче язу күрсәткечләрен җибәрү һәм алу.</string>
+  <string name="pref_typing_title">Типография күрсәткече</string>
   <string name="pref_block_record_title">Скриншотны һәм язманы туктату</string>
   <string name="pref_block_record_summary">Скриншотны төшерү яки видеоязманы ясауны туктатыгыз.</string>
   <string name="pref_link_preview_summary">Пресматривать өченче як серверларыннан контентны йөкләүне таләп итә.</string>

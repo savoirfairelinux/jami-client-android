@@ -41,8 +41,7 @@
   <string name="pref_logs_summary">Åpne innstillinger for feilfinningsloggen</string>
   <string name="pref_logs_start">Sett i gang loggføring</string>
   <string name="pref_logs_stop">Stans loggføring</string>
-  <string name="pref_typing_title">Aktiver inntastingindikator</string>
-  <string name="pref_typing_summary">Send og motta inntastingindikatorer som viser at en melding blir tastet.</string>
+  <string name="pref_typing_title">Typindikator</string>
   <string name="pref_block_record_title">Hindre skjermdump og -opptak</string>
   <string name="pref_block_record_summary">Hindre skjermdump og -opptak</string>
   <string name="pref_link_preview_title">Koblingsforhåndsvisninger</string>

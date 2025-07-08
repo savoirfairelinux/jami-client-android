@@ -202,13 +202,10 @@
   <string name="file_transfer_status_finished">Fertiggestellt</string>
   <string name="file_transfer_status_closed_by_host">Vom Veranstalter geschlossen</string>
   <string name="file_transfer_status_closed_by_peer">Vom Teilnehmer geschlossen</string>
-  <string name="file_transfer_status_invalid_pathname">Ungültiger Pfadname</string>
   <string name="file_transfer_status_unjoinable_peer">Teilnehmer nicht erreichbar</string>
   <string name="file_transfer_status_canceled">Abgebrochen</string>
   <string name="file_transfer_status_error">Beim Übertragen der Datei ist ein Fehler aufgetreten.</string>
-  <string name="file_transfer_status_timed_out">Zeitüberschreitung</string>
   <string name="file_saved_in">Datei gespeichert in %s.</string>
-  <string name="file_saved_successfully">Datei erfolgreich gespeichert.</string>
   <string name="file_download">Herunterladen</string>
   <string name="no_space_left_on_device">Auf dem Gerät ist kein Speicherplatz verfügbar.</string>
   <string name="menu_message_reply">Antworten</string>
@@ -262,18 +259,11 @@
   <!--Extension-->
   <string name="load_success">%1$s: aktiviert</string>
   <string name="unload_success">%1$s: deaktiviert</string>
-  <string name="install_success">Die Erweiterung %1$s wurde erfolgreich installiert.</string>
   <string name="export_side_main_title">Konto exportieren</string>
   <string name="import_side_main_title">Konto importieren</string>
-  <string name="link_device_dialog_exit_title">Möchten Sie aufhören?</string>
-  <string name="link_device_dialog_exit_export_body_1">Dadurch wird der Kontoexportvorgang abgebrochen.</string>
-  <string name="link_device_dialog_exit_export_body_2">Wenn möglich, wird durch das Stoppen der Kontoexportvorgang abgebrochen.</string>
-  <string name="link_device_dialog_exit_import_body_1">Durch das Anhalten wird der Kontoimportvorgang abgebrochen.</string>
-  <string name="link_device_dialog_exit_import_body_2">Durch das Anhalten wird der Kontoimportvorgang abgebrochen.</string>
   <string name="export_side_step1_advice_qr">Richten Sie auf dem neuen Gerät ein neues Konto ein.\nWählen Sie „Konto“ &gt; „Konto hinzufügen“ &gt; „Von einem anderen Gerät verbinden“.\nWenn Sie fertig sind, scannen Sie den QR-Code</string>
   <string name="export_side_step1_switch_to_code">Oder klicken Sie hier, um den Authentifizierungscode einzugeben</string>
   <string name="export_side_step1_switch_to_qr">Oder klicken Sie hier, um den QR-Code zu scannen</string>
-  <string name="export_side_step1_error_malformed">Die neue Gerätekennung wird nicht erkannt.\nBitte befolgen Sie die obigen Anweisungen.</string>
   <string name="export_side_step1_code_connect">Verbinden</string>
   <string name="export_side_step2_advice">Das neue Gerät befindet sich hier. Sind Sie das?\nUm den Kontoexportvorgang fortzusetzen, klicken Sie auf „Bestätigen“.</string>
   <string name="export_side_step2_advice_ip_only">Neues Gerät an die untere Adresse angeschlossen. Sind Sie das?\nUm mit dem Exportieren des Kontos fortzufahren, klicken Sie auf „Bestätigen“.</string>
@@ -281,8 +271,6 @@
   <string name="export_side_step2_cancel">Abbrechen</string>
   <string name="export_side_step2_confirm">Bestätigen</string>
   <string name="export_side_step2_password">Das Konto ist passwortgeschützt.\nUm fortzufahren, authentifizieren Sie sich auf dem neuen Gerät.</string>
-  <string name="export_side_step3_body_loading">Der Vorgang zum Exportieren des Kontos auf das neue Gerät wird ausgeführt.\nBitte warten…</string>
-  <string name="export_side_step3_body_done">Konto erfolgreich auf das neue Gerät importiert.</string>
   <string name="export_side_step3_exit">Abschließen</string>
   <string name="import_side_step1_advice_qr">Starten Sie den Export auf dem Quellgerät.\n<b>Wählen Sie Konto &gt; Kontoeinstellungen &gt; Neues Gerät verknüpfen</b>\nWenn Sie bereit sind, scannen Sie den untenstehenden QR-Code.</string>
   <string name="import_side_step1_advice_code">Starten Sie den Export auf dem Quellgerät.\n<b>Wählen Sie „Konto“ &gt; „Kontoeinstellungen“ &gt; „Neues Gerät verknüpfen“.</b>\nWenn Sie bereit sind, geben Sie den untenstehenden Code ein.</string>
@@ -294,16 +282,9 @@
   <string name="import_side_step2_password_prompt">Das Konto ist passwortgeschützt.\nEntsperren Sie es, um fortzufahren.</string>
   <string name="import_side_step2_password_import">Import</string>
   <string name="import_side_step2_password_unlocking">Konto entsperren…</string>
-  <string name="import_side_step2_action_required">Aktion erforderlich.\nBitte bestätigen Sie das Konto auf dem Quellgerät.</string>
-  <string name="import_side_step3_body_loading">Das Konto wird auf das neue Gerät importiert.\nBitte warten.</string>
-  <string name="import_side_step3_body_done">Sie sind fertig!\nKonto erfolgreich auf das neue Gerät importiert!</string>
-  <string name="import_side_step3_go_to_account">Gehe zu meinem neuen Konto</string>
+  <string name="import_side_step3_body_done">Das Konto wurde erfolgreich importiert.</string>
   <string name="import_side_step3_exit">Abschließen</string>
-  <string name="link_device_share_title">Teilen Sie den Jami-Authentifizierungscode</string>
-  <string name="link_device_error_network">Ein Netzwerkfehler ist aufgetreten.\nBitte überprüfen Sie Ihre Verbindung.</string>
-  <string name="link_device_error_authentication">Ein Authentifizierungsfehler ist aufgetreten.\nBitte bestätigen Sie Ihr Passwort.</string>
   <string name="link_device_error_timeout">Beim Vorgang ist das Zeitlimit überschritten.</string>
-  <string name="link_device_error_canceled">Der Vorgang wurde abgebrochen.</string>
   <string name="link_device_error_unknown">Es ist ein Fehler aufgetreten.</string>
   <string name="link_device_error_bad_password">Bitte überprüfen Sie die Anmeldeinformationen und versuchen Sie es erneut.</string>
 </resources>

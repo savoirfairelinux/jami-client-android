@@ -41,8 +41,7 @@
   <string name="pref_logs_summary">הגדרות של תיעוד האבחנה פתוחה</string>
   <string name="pref_logs_start">התחל לגרות</string>
   <string name="pref_logs_stop">תפסיקו לחתוך.</string>
-  <string name="pref_typing_title">אפשרות של מדדים כתיבה</string>
-  <string name="pref_typing_summary">לשלוח ולקבל אינדיקציות טייפציה המראות כי הודעה מתפרסמת.</string>
+  <string name="pref_typing_title">מדד טייפ</string>
   <string name="pref_block_record_title">חוסם צילום מסך וזירת</string>
   <string name="pref_block_record_summary">חוסם צילום מסך או הקלטת וידאו.</string>
   <string name="pref_link_preview_title">תצוגות מקדימות של קישורי אינטרנט</string>

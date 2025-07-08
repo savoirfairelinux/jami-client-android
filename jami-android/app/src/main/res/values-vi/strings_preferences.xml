@@ -41,8 +41,7 @@
   <string name="pref_logs_summary">Mở cài đặt nhật ký chẩn đoán</string>
   <string name="pref_logs_start">Bắt đầu ghi chép</string>
   <string name="pref_logs_stop">Ngừng khai thác</string>
-  <string name="pref_typing_title">Khả năng đánh dấu</string>
-  <string name="pref_typing_summary">Gửi và nhận các chỉ số đánh dấu cho thấy một tin nhắn đang được đánh dấu.</string>
+  <string name="pref_typing_title">Chỉ số đánh máy</string>
   <string name="pref_block_record_title">Blok chụp màn hình và ghi</string>
   <string name="pref_block_record_summary">Blok chụp ảnh màn hình hoặc ghi video.</string>
   <string name="pref_link_preview_title">Xem trước kết nối web</string>

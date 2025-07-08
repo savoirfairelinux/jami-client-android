@@ -41,8 +41,7 @@
   <string name="pref_logs_summary">เปิดการตั้งค่าบันทึกการวินิจฉัย</string>
   <string name="pref_logs_start">เริ่มการบันทึก</string>
   <string name="pref_logs_stop">หยุดการบันทึก</string>
-  <string name="pref_typing_title">เปิดใช้งานตัวบ่งชี้การพิมพ์</string>
-  <string name="pref_typing_summary">ส่งและรับตัวบ่งชี้การพิมพ์ที่แสดงว่ากำลังพิมพ์ข้อความ</string>
+  <string name="pref_typing_title">ตัวชี้วัดการเติม</string>
   <string name="pref_block_record_title">บล็อกภาพหน้าจอและการบันทึก</string>
   <string name="pref_block_record_summary">บล็อกการจับภาพหน้าจอหรือบันทึกวิดีโอ</string>
   <string name="pref_link_preview_title">ตัวอย่างลิงก์เว็บ</string>

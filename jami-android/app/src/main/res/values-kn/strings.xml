@@ -225,6 +225,7 @@
   <string name="gallery_error_title">ಗ್ಯಾಲರಿ ಅಪ್ಲಿಕೇಶನ್ ಕಂಡುಬಂದಿಲ್ಲ</string>
   <string name="gallery_error_message">ಗ್ಯಾಲರಿ ತೆರೆಯಲು ಸಾಧನದಲ್ಲಿ ಯಾವುದೇ ಅಪ್ಲಿಕೇಶನ್ ಕಂಡುಬಂದಿಲ್ಲ</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">ಅಮಾನ್ಯ ಕಡತ</string>
   <string name="file_transfer_status_canceled">ರದ್ದುಗೊಳಿಸಲಾಗಿದೆ</string>
   <string name="file_download">ಡೌನ್ಲೋಡ್ ಮಾಡಿ</string>
   <string name="title_media_viewer">ಮಾಧ್ಯಮ ವೀಕ್ಷಕ</string>

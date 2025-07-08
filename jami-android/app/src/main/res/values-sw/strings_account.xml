@@ -69,8 +69,6 @@
   <string name="account_video_enable">Weka Video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Maendeleo</string>
-  <string name="account_read_receipts_label">Kuwezesha risiti kusoma</string>
-  <string name="account_read_receipts_summary">Tuma na kupokea risiti zinazoonyesha kwamba ujumbe umeonyeshwa.</string>
   <string name="account_call_settings_title">Mipangilio ya simu</string>
   <string name="account_dht_public_in_calls_label">Ruhusu simu zinazoingia kutoka kwa mawasiliano yasiyojulikana</string>
   <string name="account_registration_exp_label">Usajili Unapita</string>
@@ -156,10 +154,10 @@
   <string name="account_export_title">Kuunganisha akaunti kwa vifaa vingine</string>
   <string name="account_connect_server_button">Kuunganisha na usimamizi wa seva</string>
   <string name="account_connect_button">Unganisha</string>
-  <string name="prompt_server">Jami Usimamizi Server URL</string>
   <string name="help_credentials_enter">Ingiza maelezo ya shirika lako</string>
   <string name="help_connect_password_enter">Ingiza password ya shirika lako</string>
   <string name="account_connect_prompt_username">Jina la mtumiaji</string>
+  <string name="account_connect_server">Kuunganisha na usimamizi wa seva</string>
   <!--Name registration-->
   <string name="error_username_empty">Ingiza jina la mtumiaji</string>
   <string name="register_name">Jina la Usajili</string>

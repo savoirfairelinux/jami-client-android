@@ -69,8 +69,6 @@
   <string name="account_video_enable">भिडियो सक्षम गर्नुहोस्</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">उन्नत</string>
-  <string name="account_read_receipts_label">पढ्ने रसिद सक्षम गर्नुहोस्</string>
-  <string name="account_read_receipts_summary">सन्देश देखाइएको छ भनेर संकेत गर्ने र प्राप्त गर्ने रसिदहरू पठाउनुहोस्।</string>
   <string name="account_call_settings_title">कल सेटिंग्स</string>
   <string name="account_dht_public_in_calls_label">अज्ञात सम्पर्कबाट आउने कलहरू अनुमति दिनुहोस्</string>
   <string name="account_registration_exp_label">दर्ता समाप्त</string>
@@ -149,17 +147,17 @@
   <string name="account_link_button">नेटवर्कबाट जडान</string>
   <string name="account_link_archive_button">ब्याकअपबाट जडान</string>
   <string name="account_new_button">Jami खाता सिर्जना गर्नुहोस्</string>
-  <string name="account_link_export_button">नयाँ उपकरण जडान गर्नुहोस्</string>
+  <string name="account_link_export_button">नयाँ यन्त्रलाई लिंक गर्नुहोस्</string>
   <string name="account_link_show_button">%d थप जोडिएको उपकरण देखाउनुहोस्</string>
   <string name="account_link_hide_button">छुपाएर जडान गरिएको उपकरण</string>
   <string name="account_end_export_button">नजिक</string>
   <string name="account_export_title">अन्य उपकरणहरूमा लिंक खाता</string>
   <string name="account_connect_server_button">व्यवस्थापन सर्भरमा जडान</string>
   <string name="account_connect_button">जोड्नुहोस्</string>
-  <string name="prompt_server">Jami व्यवस्थापन सर्भर URL</string>
   <string name="help_credentials_enter">आफ्नो संगठनको परिचयपत्र प्रविष्ट गर्नुहोस्</string>
   <string name="help_connect_password_enter">आफ्नो संगठनको पासवर्ड प्रविष्ट गर्नुहोस्</string>
   <string name="account_connect_prompt_username">प्रयोगकर्ता नाम</string>
+  <string name="account_connect_server">व्यवस्थापन सर्भरमा जडान</string>
   <!--Name registration-->
   <string name="error_username_empty">प्रयोगकर्ता नाम प्रविष्ट गर्नुहोस्</string>
   <string name="register_name">नाम दर्ता</string>

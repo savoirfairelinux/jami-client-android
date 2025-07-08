@@ -42,8 +42,7 @@
   <string name="pref_logs_summary">Abrir axustes do rexistro dos diagnósticos</string>
   <string name="pref_logs_start">Comezar a rexistrar</string>
   <string name="pref_logs_stop">Deter o rexistro</string>
-  <string name="pref_typing_title">Activar indicadores de escritura</string>
-  <string name="pref_typing_summary">Enviar e recibir indicadores de escritura mostrando que se está a escribir unha mensaxe.</string>
+  <string name="pref_typing_title">Indicador de tipografía</string>
   <string name="pref_block_record_title">Bloquear captura de pantalla e gravación</string>
   <string name="pref_block_record_summary">Bloquear a captura de pantalla ou gravación de vídeo.</string>
   <string name="pref_link_preview_title">Previsualización de ligazóns web</string>

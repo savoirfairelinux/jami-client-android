@@ -41,8 +41,7 @@
   <string name="pref_logs_summary">نتظیمات گزارش عیب‌یابی را باز کن</string>
   <string name="pref_logs_start">شروع گزارش‌گیری</string>
   <string name="pref_logs_stop">توقف گزارش‌گیری</string>
-  <string name="pref_typing_title">فعال‌سازی نمایش در‌حال‌نوشتن</string>
-  <string name="pref_typing_summary">نشانگرهای تایپ را که نشان می دهد پیام در حال تایپ است، ارسال و دریافت کنید.</string>
+  <string name="pref_typing_title">شاخص تایپ</string>
   <string name="pref_block_record_title">مسدود‌سازی عکس از صفحه و ضبط ویدیویی</string>
   <string name="pref_block_record_summary">مسدود‌سازی عکس از صفحه و ضبط ویدیویی</string>
   <string name="pref_link_preview_title">پیش نمایش های پیوند وب</string>

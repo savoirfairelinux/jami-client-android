@@ -230,6 +230,7 @@
   <string name="gallery_error_title">Non se atopa app Galería</string>
   <string name="gallery_error_message">Non se atopa unha app no dispositivo para abrir Galería</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">Ficheiro non válido</string>
   <string name="file_transfer_status_canceled">Cancelado</string>
   <string name="file_download">Descargar</string>
   <string name="title_media_viewer">Visor de multimedia</string>

@@ -68,8 +68,6 @@
   <string name="account_video_enable">אפשר וידאו</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">מתקדם</string>
-  <string name="account_read_receipts_label">אפשרת קבלות קריאה</string>
-  <string name="account_read_receipts_summary">לשלוח ולקבל קוויטים המראים כי הודעה הוצגה.</string>
   <string name="account_call_settings_title">הגדרות שיחות</string>
   <string name="account_dht_public_in_calls_label">אפשרת שיחות נכנסות ממגעים לא ידועים</string>
   <string name="account_registration_exp_label">רישום פוקע</string>
@@ -147,7 +145,7 @@
   <string name="account_link_device">חיבור ממכשיר אחר</string>
   <string name="account_link_button">חיבור ממערכת</string>
   <string name="account_link_archive_button">חיבור ממחזקה</string>
-  <string name="account_new_button">יצירת חשבון Jami</string>
+  <string name="account_new_button">ליצור חשבון Jami</string>
   <string name="account_link_export_button">קישור מכשיר חדש</string>
   <string name="account_link_show_button">הראה %d יותר מכשיר מקושר</string>
   <string name="account_link_hide_button">חבוי מכשיר מחובר</string>
@@ -155,10 +153,10 @@
   <string name="account_export_title">חשבון חיבור למכשירים אחרים</string>
   <string name="account_connect_server_button">חיבור למשרת ניהול</string>
   <string name="account_connect_button">חיבור</string>
-  <string name="prompt_server">דואר URL של שרת ניהול Jami</string>
   <string name="help_credentials_enter">הכניסה של תעודות אישור של ארגוןך</string>
   <string name="help_connect_password_enter">הכניסו את הסיסמה של הארגון שלכם</string>
   <string name="account_connect_prompt_username">שם משתמש</string>
+  <string name="account_connect_server">חיבור למשרת ניהול</string>
   <!--Name registration-->
   <string name="error_username_empty">הכניסו שם משתמש</string>
   <string name="register_name">שם רישום</string>

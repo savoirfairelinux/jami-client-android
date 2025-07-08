@@ -12,5 +12,4 @@
   <string name="control_pause">Паузирај</string>
   <string name="searchbar_navigation_account">Изабери налог</string>
   <string name="add_conversation_member">Додајте члана конверзације</string>
-  <string name="qrcode_to_scan">QR код за скенирање</string>
 </resources>

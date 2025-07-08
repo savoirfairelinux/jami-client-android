@@ -69,8 +69,6 @@
   <string name="account_video_enable">ವೀಡಿಯೊವನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">ಮುಂದುವರಿದ</string>
-  <string name="account_read_receipts_label">ಓದುವ ರಸೀದಿಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
-  <string name="account_read_receipts_summary">ಸಂದೇಶವನ್ನು ತೋರಿಸಲಾಗಿದೆ ಎಂದು ಸೂಚಿಸುವ ರಸೀದಿಗಳನ್ನು ಕಳುಹಿಸಿ ಮತ್ತು ಸ್ವೀಕರಿಸಿ.</string>
   <string name="account_call_settings_title">ಕರೆ ಸೆಟ್ಟಿಂಗ್ಗಳು</string>
   <string name="account_dht_public_in_calls_label">ಅಪರಿಚಿತ ಸಂಪರ್ಕಗಳಿಂದ ಬರುವ ಕರೆಗಳನ್ನು ಅನುಮತಿಸಿ</string>
   <string name="account_registration_exp_label">ನೋಂದಣಿ ಅವಧಿ</string>
@@ -149,17 +147,17 @@
   <string name="account_link_button">ನೆಟ್ವರ್ಕ್ನಿಂದ ಸಂಪರ್ಕ</string>
   <string name="account_link_archive_button">ಬ್ಯಾಕ್ಅಪ್ನಿಂದ ಸಂಪರ್ಕ</string>
   <string name="account_new_button">ಜಾಮಿ ಖಾತೆಯನ್ನು ರಚಿಸಿ</string>
-  <string name="account_link_export_button">ಹೊಸ ಸಾಧನವನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
+  <string name="account_link_export_button">ಹೊಸ ಸಾಧನ ಲಿಂಕ್</string>
   <string name="account_link_show_button">%d ಹೆಚ್ಚು ಸಂಪರ್ಕಿತ ಸಾಧನವನ್ನು ತೋರಿಸಿ</string>
   <string name="account_link_hide_button">ಸಂಪರ್ಕಿತ ಸಾಧನವನ್ನು ಮರೆಮಾಡಿ</string>
   <string name="account_end_export_button">ಮುಚ್ಚುವಿಕೆ</string>
   <string name="account_export_title">ಇತರ ಸಾಧನಗಳಿಗೆ ಲಿಂಕ್ ಖಾತೆ</string>
   <string name="account_connect_server_button">ನಿರ್ವಹಣಾ ಸರ್ವರ್ಗೆ ಸಂಪರ್ಕ</string>
   <string name="account_connect_button">ಸಂಪರ್ಕ</string>
-  <string name="prompt_server">ಜಾಮಿ ನಿರ್ವಹಣೆ ಸರ್ವರ್ URL</string>
   <string name="help_credentials_enter">ನಿಮ್ಮ ಸಂಸ್ಥೆಯ ರುಜುವಾತುಗಳನ್ನು ನಮೂದಿಸಿ</string>
   <string name="help_connect_password_enter">ನಿಮ್ಮ ಸಂಸ್ಥೆಯ ಪಾಸ್ವರ್ಡ್ ನಮೂದಿಸಿ</string>
   <string name="account_connect_prompt_username">ಬಳಕೆದಾರ ಹೆಸರು</string>
+  <string name="account_connect_server">ನಿರ್ವಹಣಾ ಸರ್ವರ್ಗೆ ಸಂಪರ್ಕ</string>
   <!--Name registration-->
   <string name="error_username_empty">ಬಳಕೆದಾರ ಹೆಸರು ನಮೂದಿಸಿ</string>
   <string name="register_name">ನೋಂದಣಿ ಹೆಸರು</string>

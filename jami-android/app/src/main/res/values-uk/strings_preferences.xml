@@ -52,8 +52,7 @@
   <string name="pref_connection_monitor_summary">Монітор однорангових з\'єднаннь</string>
   <string name="pref_push_notifications_logs_title">Журнали пуш-сповіщень</string>
   <string name="pref_push_notifications_logs_summary">Переглянути журнали, отримані з пуш-сповіщень.</string>
-  <string name="pref_typing_title">Дозволити індикатори набору тексту</string>
-  <string name="pref_typing_summary">Надсилати та приймати маркери, які показують, що повідомлення вводиться.</string>
+  <string name="pref_typing_title">Індикатор типування</string>
   <string name="pref_block_record_title">Блокувати скріншоти і запис</string>
   <string name="pref_block_record_summary">Заборонити знімки екрана або запис відео.</string>
   <string name="pref_link_preview_title">Перегляди веб-посилань</string>

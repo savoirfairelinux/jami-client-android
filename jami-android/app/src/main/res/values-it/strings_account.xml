@@ -86,8 +86,6 @@ Si potra modificare questo account più tardi.</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avanzate</string>
   <string name="account_chat_settings_title">Impostazioni chat</string>
-  <string name="account_read_receipts_label">Mostra conferma di lettura</string>
-  <string name="account_read_receipts_summary">Invia e ricevi conferme indicanti che un messaggio è stato visualizzato.</string>
   <string name="account_call_settings_title">Impostazioni di chiamata</string>
   <string name="account_dht_public_in_calls_label">Ricevi chiamate sconosciute</string>
   <string name="account_registration_exp_label">Scadenza registrazione</string>
@@ -199,16 +197,14 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_link_export_button">Associa un altro dispositivo</string>
   <string name="account_link_show_button">Mostra %d altri dispositivi associati</string>
   <string name="account_link_hide_button">Nascondi i dispositivi associati</string>
-  <string name="account_start_export_button">Genera codice PIN</string>
   <string name="account_end_export_button">chiudi</string>
   <string name="account_export_title">Associa l\'account ad altri dispositivi</string>
   <string name="account_connect_server_button">Connetti al server di gestione</string>
   <string name="account_connect_button">Connetti</string>
-  <string name="prompt_server">URL del server di gestione Jami</string>
   <string name="help_credentials_enter">Inserisci le credenziali della tua organizzazione</string>
   <string name="help_connect_password_enter">Inserisci la password della tua organizzazione</string>
   <string name="account_connect_prompt_username">Nome utente</string>
-  <string name="account_connect_server">Connetti al server Jams</string>
+  <string name="account_connect_server">Connetti al server di gestione</string>
   <string name="account_enter_username">Inserire il nome utente</string>
   <string name="account_enter_servername">Inserire il server</string>
   <!--Name registration-->
@@ -253,18 +249,10 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_disabled_indicator">Disabilitato</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Questo formato non è supportato.</string>
-  <string name="account_link_info">Nella nuova app Jami, scansionare il codice QR o inserire manualmente il PIN.</string>
   <string name="account_link_device_title">Associa un altro dispositivo</string>
-  <string name="account_link_password">Questo account è protetto da password; immettere la password per generare il codice PIN.</string>
   <string name="account_link_generate_button">Genera</string>
-  <string name="account_link_time_valid">Il codice PIN scadrà: %1$s.</string>
-  <string name="account_link_device_info">Scegliere \"Associa un altro dispositivo\" dall\'altra applicazione Jami per mostrare il codice QR o il PIN.</string>
   <string name="account_generate_export_device">Nell\'altro dispositivo</string>
-  <string name="account_generate_export_info">Installa e avvia Jami, seleziona \"Importa da un altro dispositivo\" e scansiona il codice QR.</string>
   <string name="content_description_qr_generated">Codice QR dell\'account</string>
-  <string name="account_generate_export_invalid">Il codice PIN non è più valido.\nInserire la password e generare un altro PIN per associare il nuovo dispositivo.</string>
-  <string name="account_generate_export_invalid_two">Il codice PIN non è più valido.\nGenerare un altro PIN per associare il nuovo dispositivo.</string>
-  <string name="help_pin_info">Compilare se l\'account ha una password</string>
   <string name="account_link_device_button">Connetti</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Sblocca l\'account Jami</string>
@@ -278,6 +266,5 @@ L\'autenticazione biometrica aggiunge un modo comodo per sbloccare localmente l\
   <string name="account_biometry_enroll_auth_message">Aggiungi l\'autenticazione biometrica o del dispositivo come alternativa alla password</string>
   <string name="account_auth_error">Errore di autenticazione: %1$s</string>
   <string name="account_auth_success">L\'autenticazione è riuscita</string>
-  <string name="account_auth_key_error">Impossibile decifrare la chiave dell\'account</string>
   <string name="account_auth_password">Usa la password dell\'account</string>
 </resources>

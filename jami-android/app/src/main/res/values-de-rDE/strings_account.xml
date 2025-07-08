@@ -73,9 +73,10 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="tv_about_version">Version</string>
   <string name="tv_about_license">Lizenz</string>
   <string name="tv_about_credits">Mitwirkende</string>
-  <string name="account_new_button">Jami-Konto erstellen</string>
-  <string name="account_start_export_button">PIN-Code generieren</string>
-  <string name="account_connect_server">Verbindung zum JAMS-Server herstellen</string>
+  <string name="account_new_button">Erstellen Sie ein Jami-Konto</string>
+  <string name="account_link_export_button">Ein neues Gerät verknüpfen</string>
+  <string name="prompt_server">URL des Verwaltungsservers</string>
+  <string name="account_connect_server">Mit dem Verwaltungs-Server verbinden</string>
   <string name="account_enter_username">Benutzernamen eingeben</string>
   <string name="account_enter_servername">Server eingeben</string>
   <!--Name registration-->
@@ -94,11 +95,7 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="account_device_name_empty">Der Gerätename darf nicht leer sein.</string>
   <string name="account_disabled_indicator">Deaktiviert</string>
   <!--Link a new device-->
-  <string name="account_link_info">Scannen Sie in der neuen Jami-App den QR-Code oder geben Sie den PIN-Code manuell ein.</string>
-  <string name="account_link_device_info">Wählen Sie in der anderen Jami-App „Neues Gerät verknüpfen“, um den QR-Code oder PIN-Code anzuzeigen.</string>
-  <string name="account_generate_export_info">Installieren und starten Sie Jami, wählen Sie „Von einem anderen Gerät importieren“ und scannen Sie den QR-Code.</string>
+  <string name="account_generate_export_info">Installieren und starten Sie Jami. Wählen Sie „Von einem anderen Gerät importieren“ und scannen Sie den QR-Code. Alternativ können Sie den PIN-Code manuell eingeben.</string>
   <string name="content_description_qr_generated">Konto-QR-Code</string>
-  <string name="account_generate_export_invalid">Der PIN-Code ist nicht mehr gültig.\nGeben Sie das Passwort ein und generieren Sie ein neues, um das neue Gerät zu verknüpfen.</string>
-  <string name="account_generate_export_invalid_two">Der PIN-Code ist nicht mehr gültig.\nGenerieren Sie einen anderen, um das neue Gerät zu verknüpfen.</string>
   <!--Biometry-->
 </resources>

@@ -42,8 +42,7 @@
   <string name="pref_logs_summary">Otvorena postavka dijagnostičkog dnevnika</string>
   <string name="pref_logs_start">Počnite s logiranjem</string>
   <string name="pref_logs_stop">Prestani se drvoći.</string>
-  <string name="pref_typing_title">Aktivirajte pokazatelje štampanja</string>
-  <string name="pref_typing_summary">Pošaljite i primijte pokazatelje za pisanje koji pokazuju da se poruka štampa.</string>
+  <string name="pref_typing_title">U skladu s člankom 1. stavkom 1.</string>
   <string name="pref_block_record_title">Blokavanje snimka zaslona i snimanja</string>
   <string name="pref_block_record_summary">Zabranite snimanje ekrana ili snimanje video.</string>
   <string name="pref_link_preview_title">Pretpregledi web-veza</string>

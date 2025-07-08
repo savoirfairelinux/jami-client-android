@@ -53,8 +53,8 @@
   <string name="pref_push_notifications_logs_title">Push ilmoituslokit</string>
   <string name="pref_push_notifications_logs_summary">Tarkastele push-toiminnolla kerättyjä lokeja
         ilmoitukset.</string>
-  <string name="pref_typing_title">Kirjoittamisen ilmaisin käyttöön</string>
-  <string name="pref_typing_summary">Kirjoittamisen ilmaisin, joka näyttää, että viestiä kirjoitetaan.</string>
+  <string name="pref_typing_title">Typpintason indikaattori</string>
+  <string name="pref_typing_summary">Ilmaisee, milloin viestejä kirjoitetaan.</string>
   <string name="pref_block_record_title">Estä ruudunkaappaus ja tallennus</string>
   <string name="pref_block_record_summary">Estä ruudunkaappaus tai videon tallennus.</string>
   <string name="pref_link_preview_title">Linkin esikatselu</string>

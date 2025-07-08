@@ -225,6 +225,7 @@
   <string name="gallery_error_title">Hakuna programu ya Galeria iliyopatikana</string>
   <string name="gallery_error_message">Hakuna programu iliyopatikana kwenye kifaa cha kufungua Galeria</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">Faili isiyofaa</string>
   <string name="file_transfer_status_canceled">Imeghairiwa</string>
   <string name="file_download">Pakua</string>
   <string name="title_media_viewer">Kiangaliaji cha media</string>

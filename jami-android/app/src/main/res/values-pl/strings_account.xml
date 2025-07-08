@@ -86,8 +86,6 @@ Możesz to zmienić później.</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Zaawansowane</string>
   <string name="account_chat_settings_title">Ustawienia czatu</string>
-  <string name="account_read_receipts_label">Włącz potwierdzenia odczytu</string>
-  <string name="account_read_receipts_summary">Wysyłaj i odbieraj potwierdzenia odczytu pokazujące, że wiadomość została odczytana.</string>
   <string name="account_call_settings_title">Ustawienia rozmowy</string>
   <string name="account_dht_public_in_calls_label">Zezwól na połączenia od nieznanych użytkowników</string>
   <string name="account_registration_exp_label">Rejestracja Wygasła</string>
@@ -195,20 +193,18 @@ Możesz to zmienić później.</string>
   <string name="account_link_device">Połącz z innego urządzenia</string>
   <string name="account_link_button">Połącz z sieci</string>
   <string name="account_link_archive_button">Połącz z kopii zapasowej</string>
-  <string name="account_new_button">Stwórz konto Jami</string>
+  <string name="account_new_button">Utworz konto Jami</string>
   <string name="account_link_export_button">Połącz nowe urządzenie</string>
   <string name="account_link_show_button">Wyświetlać %d więcej urządzeń połączonych</string>
   <string name="account_link_hide_button">Ukryj urządzenie połączone</string>
-  <string name="account_start_export_button">Wygeneruj kod PIN</string>
   <string name="account_end_export_button">zamknij</string>
   <string name="account_export_title">Konty łączenia z innymi urządzeniami</string>
   <string name="account_connect_server_button">Połączenie z serwerem zarządzania</string>
   <string name="account_connect_button">Połącz</string>
-  <string name="prompt_server">Adres serwera zarządzającego Jami</string>
   <string name="help_credentials_enter">Wprowadź swoje poświadczenia organizacji</string>
   <string name="help_connect_password_enter">Wprowadź swoje hasło organizacji</string>
   <string name="account_connect_prompt_username">Nazwa użytkownika</string>
-  <string name="account_connect_server">Połącz z serwerem JAMS</string>
+  <string name="account_connect_server">Połączenie z serwerem zarządzania</string>
   <string name="account_enter_username">Wpisz nazwę użytkownika</string>
   <string name="account_enter_servername">Wpisz serwer</string>
   <!--Name registration-->
@@ -253,18 +249,10 @@ Możesz to zmienić później.</string>
   <string name="account_disabled_indicator">Niepełnosprawni</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Ten format nie jest obsługiwany.</string>
-  <string name="account_link_info">W nowej aplikacji Jami; zeskanuj kod QR lub wpisz ręcznie PIN.</string>
   <string name="account_link_device_title">Połącz nowe urządzenie</string>
-  <string name="account_link_password">To konto jest szyfrowane hasłem, wprowadź hasło, aby wygenerować kod PIN.</string>
   <string name="account_link_generate_button">Generowanie</string>
-  <string name="account_link_time_valid">Kod PIN będzie nieprawidłowy: %1$s.</string>
-  <string name="account_link_device_info">Wybież \"Połącz nowe urządzenie\" w drugiej aplikacji Jami, żeby pokazać kod QR lub PIN.</string>
   <string name="account_generate_export_device">Na drugim urządzeniu</string>
-  <string name="account_generate_export_info">Zainstaluj i uruchom Jami, wybierz \"Import z innego urządzenia\" i zeskanuj kod QR.</string>
   <string name="content_description_qr_generated">Kod QR konta</string>
-  <string name="account_generate_export_invalid">Kod PIN jest już nieaktualny.\nWpisz hasło, żeby wygenerować nowy PIN w celu połączenia nowego urządzenia.</string>
-  <string name="account_generate_export_invalid_two">Kod PIN jest już nieaktualny.\nWygeneruj nowy PIN w celu połączenia nowego urządzenia.</string>
-  <string name="help_pin_info">Wypełnij, jeśli konto jest szyfrowane hasłem</string>
   <string name="account_link_device_button">Połącz</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Odblokuj konto Jami</string>
@@ -277,6 +265,5 @@ Możesz to zmienić później.</string>
   <string name="account_biometry_enroll_auth_message">Dodaj bezpieczne uwierzytelnianie biometryczne lub uwierzytelnianie urządzenia jako alternatywę dla hasła</string>
   <string name="account_auth_error">Błąd uwierzytelnienia: %1$s</string>
   <string name="account_auth_success">Uwierzytelnienie powiodło się</string>
-  <string name="account_auth_key_error">Odszyfrowanie klucza konta nie powiodło się</string>
   <string name="account_auth_password">Użyj hasła do konta</string>
 </resources>

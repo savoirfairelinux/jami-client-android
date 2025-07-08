@@ -68,8 +68,6 @@
   <string name="account_video_enable">ڤرلو ممڤوپا?? ي ڤيديو</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">ڤڠاجين</string>
-  <string name="account_read_receipts_label">ممبنتو ڤرليندوڠن ڤرليندوڠن</string>
-  <string name="account_read_receipts_summary">مڠهادڤي دان مڠهادڤي كيسيت يڠ مڠهادڤي كاسيت يڠ دڤرچايا?? ي.</string>
   <string name="account_call_settings_title">سيٽنگون تماس</string>
   <string name="account_dht_public_in_calls_label">ممبريکن ڤڠاجين يڠ دڤرچايا?? ي دري ڤڠاجين يڠ تيدق دڤرچايا?? ي</string>
   <string name="account_registration_exp_label">ڤرجالنن مڠمبيل</string>
@@ -147,18 +145,18 @@
   <string name="account_link_device">منچاريكن دري ڤرودوک لاين</string>
   <string name="account_link_button">منچاريكن دري نيتۏرك</string>
   <string name="account_link_archive_button">منوليسكن دري ڤڠوربانن</string>
-  <string name="account_new_button">منوليسكن اکاونت Jami</string>
-  <string name="account_link_export_button">منچيلكن ڤڠڬونا?? ن بارو</string>
+  <string name="account_new_button">منوليس ايكون Jami</string>
+  <string name="account_link_export_button">دڠن ڤڠاجرن ڤڠاجرن</string>
   <string name="account_link_show_button">مڠمبيل %d ڤرودوک يڠ دتڠݢوڠ</string>
   <string name="account_link_hide_button">ڤڠڬيلن يڠ دڤرچايا?? ي</string>
   <string name="account_end_export_button">ڤڠڬيلن</string>
   <string name="account_export_title">حساب لينک اونتوق ڤڠڬونا يڠ لاين</string>
   <string name="account_connect_server_button">منچاريکن کڤد ڤمبلاجرن</string>
   <string name="account_connect_button">وصلكن</string>
-  <string name="prompt_server">URL server مڠڬوناكن Jami</string>
   <string name="help_credentials_enter">مڠهادڤي كريديتاسي ڤركارا</string>
   <string name="help_connect_password_enter">ڤرلو مڠهادڤي كاسد ڤڠڬونا</string>
   <string name="account_connect_prompt_username">نام ڤڠڬونا</string>
+  <string name="account_connect_server">منچاريکن کڤد ڤمبلاجرن</string>
   <!--Name registration-->
   <string name="error_username_empty">مڠهادڤكن نام ڤڠڬونا</string>
   <string name="register_name">نام ڤرجواڠن</string>

@@ -69,8 +69,6 @@
   <string name="account_video_enable">Видеоны қосу</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Жетісті</string>
-  <string name="account_read_receipts_label">Оқыту квитанцияларын рұқсат ету</string>
-  <string name="account_read_receipts_summary">Хат көрсетілді деген квитанцияларды жіберіп алыңыз.</string>
   <string name="account_call_settings_title">Ақырып алу параметрлері</string>
   <string name="account_dht_public_in_calls_label">Беймәлім байланыс желілерінен келетін шақыруларды рұқсат ету</string>
   <string name="account_registration_exp_label">Тіркеу мерзімі аяқталады</string>
@@ -156,10 +154,10 @@
   <string name="account_export_title">Басқа құрылғыларға сілтеме беру</string>
   <string name="account_connect_server_button">Басқару серверіне қосылу</string>
   <string name="account_connect_button">Қосылыңыз</string>
-  <string name="prompt_server">Jami менеджмент серверінің URL-сі</string>
   <string name="help_credentials_enter">Ұйымның куәліктерін келтіріңіз</string>
   <string name="help_connect_password_enter">Ұйымның паролін келтіріңіз</string>
   <string name="account_connect_prompt_username">Пайдаланушы аты</string>
+  <string name="account_connect_server">Басқару серверіне қосылу</string>
   <!--Name registration-->
   <string name="error_username_empty">Пайдаланушы атауын келтіріңіз</string>
   <string name="register_name">Тіркеу атауы</string>

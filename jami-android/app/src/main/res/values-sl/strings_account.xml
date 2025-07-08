@@ -86,8 +86,6 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Napredno</string>
   <string name="account_chat_settings_title">Nastavitve klepeta</string>
-  <string name="account_read_receipts_label">Omogoči potrditev branja</string>
-  <string name="account_read_receipts_summary">Pošilja in prejema obvestila, da je bilo sporočilo prikazano.</string>
   <string name="account_call_settings_title">Nastavitve klicev</string>
   <string name="account_dht_public_in_calls_label">Dovoli klice neznanih stikov</string>
   <string name="account_registration_exp_label">Registracija poteče</string>
@@ -194,20 +192,18 @@
   <string name="account_link_device">Poveži se z druge naprave</string>
   <string name="account_link_button">Poveži se iz omrežja</string>
   <string name="account_link_archive_button">Poveži se se iz varnostne kopije</string>
-  <string name="account_new_button">Ustvari račun Jami</string>
+  <string name="account_new_button">Ustvarite račun Jami</string>
   <string name="account_link_export_button">Poveži novo napravo</string>
   <string name="account_link_show_button">Prikaži %d več povezanih naprav</string>
   <string name="account_link_hide_button">Skrij povezano napravo</string>
-  <string name="account_start_export_button">Tvori kodo PIN</string>
   <string name="account_end_export_button">zapri</string>
   <string name="account_export_title">Poveži račun z drugimi napravami</string>
   <string name="account_connect_server_button">Povezava na upravljalni strežnik</string>
   <string name="account_connect_button">Poveži</string>
-  <string name="prompt_server">Naslov naslov upravljalnega strežnika Jami</string>
   <string name="help_credentials_enter">Vnesite podatke o svoji organizaciji</string>
   <string name="help_connect_password_enter">Vnesite geslo svoje organizacije</string>
   <string name="account_connect_prompt_username">Uporabnik</string>
-  <string name="account_connect_server">Poveži se s strežnikom JAMS</string>
+  <string name="account_connect_server">Povezava na upravljalni strežnik</string>
   <string name="account_enter_username">Vnesite uporabniško ime</string>
   <string name="account_enter_servername">Vnesite strežnik</string>
   <!--Name registration-->
@@ -252,18 +248,10 @@
   <string name="account_disabled_indicator">Onemogočeno</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Format ni podprt.</string>
-  <string name="account_link_info">V novem programu Jami optično preberite QR-kodo ali ročno vnesite kodo PIN.</string>
   <string name="account_link_device_title">Poveži novo napravo</string>
-  <string name="account_link_password">Ta račun je šifriran z geslom, vnesite geslo, da tvorite kodo PIN.</string>
   <string name="account_link_generate_button">Tvori</string>
-  <string name="account_link_time_valid">Koda PIN bo neveljavna: %1$s.</string>
-  <string name="account_link_device_info">Izberite \"Poveži novo napravo\" v drugem programu Jami, da prikažete QR-kodo ali kodo PIN</string>
   <string name="account_generate_export_device">Na drugi napravi</string>
-  <string name="account_generate_export_info">Namestite in zaženite Jami, izberite \"Uvozi iz druge naprave\" in optično preberite kodo QR.</string>
   <string name="content_description_qr_generated">QR-koda računa</string>
-  <string name="account_generate_export_invalid">Koda PIN ni več veljavna.\n Vnesite geslo in tvorite novo kodo, da se povežete z novo napravo.</string>
-  <string name="account_generate_export_invalid_two">Koda PIN ni več veljavna.\n Tvorite novo, da se povežete z novo napravo.</string>
-  <string name="help_pin_info">Izpolnite, če je račun zaščiten z geslom</string>
   <string name="account_link_device_button">Poveži</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Odkleni račun Jami</string>
@@ -277,6 +265,5 @@ Biometrično overjanje ali overjanje lastno napravi dodaja priročen način za k
   <string name="account_biometry_enroll_auth_message">Dodajte varno biometrično overjanje ali napravi lastno overjanje kot alternativo za svoje geslo</string>
   <string name="account_auth_error">Napaka overjanja: %1$s</string>
   <string name="account_auth_success">Overjanje je uspelo</string>
-  <string name="account_auth_key_error">Ključa računa ni bilo možno dešifrirati</string>
   <string name="account_auth_password">Uporabi geslo računa</string>
 </resources>

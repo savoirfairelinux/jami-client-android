@@ -229,6 +229,7 @@
   <string name="gallery_error_message">Ingen app hittades på enheten, för att öppna Galleri</string>
   <!--File Transfer-->
   <string name="file_transfer_status_created">Startar</string>
+  <string name="file_transfer_status_invalid_file">Ogiltig fil</string>
   <string name="file_transfer_status_canceled">Avbruten</string>
   <string name="file_download">Ladda ner</string>
   <string name="title_media_viewer">Mediaspelare</string>

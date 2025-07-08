@@ -225,6 +225,7 @@
   <string name="gallery_error_title">ગેલેરી એપ્લિકેશન મળી નથી</string>
   <string name="gallery_error_message">ગેલેરી ખોલવા માટે ઉપકરણ પર કોઈ એપ્લિકેશન મળી નથી</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">અમાન્ય ફાઇલ</string>
   <string name="file_transfer_status_canceled">રદ થયેલ છે</string>
   <string name="file_download">ડાઉનલોડ કરો</string>
   <string name="title_media_viewer">મીડિયા દર્શક</string>

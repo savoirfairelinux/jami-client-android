@@ -70,8 +70,6 @@
   <string name="account_video_enable">व्हिडिओ सक्षम करा</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">प्रगत</string>
-  <string name="account_read_receipts_label">वाचन प्राप्ती सक्षम करा</string>
-  <string name="account_read_receipts_summary">संदेश प्रदर्शित झाला आहे असे सूचित करणारे रसीद पाठवा आणि प्राप्त करा.</string>
   <string name="account_call_settings_title">कॉल सेटिंग्ज</string>
   <string name="account_dht_public_in_calls_label">अज्ञात संपर्कांकडून येणाऱ्या कॉलला अनुमती द्या</string>
   <string name="account_registration_exp_label">नोंदणी कालावधी संपतो</string>
@@ -149,7 +147,7 @@
   <string name="account_link_device">दुसर्या डिव्हाइसवरून कनेक्ट करा</string>
   <string name="account_link_button">नेटवर्कवरून कनेक्ट</string>
   <string name="account_link_archive_button">बॅकअप पासून कनेक्ट</string>
-  <string name="account_new_button">जामी खाते तयार करा</string>
+  <string name="account_new_button">Jami खाते तयार करा</string>
   <string name="account_link_export_button">नवीन डिव्हाइस लिंक करा</string>
   <string name="account_link_show_button">%d अधिक जोडलेले डिव्हाइस दाखवा</string>
   <string name="account_link_hide_button">कनेक्ट केलेले डिव्हाइस लपवा</string>
@@ -157,10 +155,10 @@
   <string name="account_export_title">इतर उपकरणांना लिंक खाते</string>
   <string name="account_connect_server_button">व्यवस्थापन सर्व्हरशी कनेक्ट</string>
   <string name="account_connect_button">कनेक्ट करा</string>
-  <string name="prompt_server">Jami व्यवस्थापन सर्व्हर URL</string>
   <string name="help_credentials_enter">आपल्या संस्थेची माहिती प्रविष्ट करा</string>
   <string name="help_connect_password_enter">आपला संचयी शब्द प्रविष्ट करा</string>
   <string name="account_connect_prompt_username">नाव</string>
+  <string name="account_connect_server">व्यवस्थापन सर्व्हरशी कनेक्ट</string>
   <!--Name registration-->
   <string name="error_username_empty">एक वापरकर्तानाव प्रविष्ट करा</string>
   <string name="register_name">नोंदणी नाव</string>

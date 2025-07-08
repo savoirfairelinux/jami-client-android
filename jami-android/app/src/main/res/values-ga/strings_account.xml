@@ -68,8 +68,6 @@
   <string name="account_video_enable">Céadú físeán</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Ardaithe</string>
-  <string name="account_read_receipts_label">Céadú iontuanna léitheoireachta</string>
-  <string name="account_read_receipts_summary">Cuir agus faigh iontu deontais a thugann le fios go bhfuil teachtaireacht taispeána.</string>
   <string name="account_call_settings_title">Cluiche Aistriúcháin</string>
   <string name="account_dht_public_in_calls_label">Ceadaigh glaonna a thagann isteach ó theagmhálacha neamhaithne</string>
   <string name="account_registration_exp_label">Críochnaíonn clárú</string>
@@ -147,18 +145,18 @@
   <string name="account_link_device">Déan nasc ó ghléas eile</string>
   <string name="account_link_button">Déan nasc ó líonra</string>
   <string name="account_link_archive_button">Déan nasc ó ghnóthach</string>
-  <string name="account_new_button">Déan cuntas Jami</string>
-  <string name="account_link_export_button">Déan nasc a dhéanamh ar ghléas nua</string>
+  <string name="account_new_button">Creidigh cuntas Jami</string>
+  <string name="account_link_export_button">Déan nasc le feiste nua</string>
   <string name="account_link_show_button">Taispeánadh %d níos mó feiste ceangailte</string>
   <string name="account_link_hide_button">Iarrann an t-ionad ceangailte le críocha an Rialacháin seo</string>
   <string name="account_end_export_button">go dlúth</string>
   <string name="account_export_title">Contae nasc chuig feistí eile</string>
   <string name="account_connect_server_button">Déan nasc chuig an tseirbhís bainistíochta</string>
   <string name="account_connect_button">Déan nasc</string>
-  <string name="prompt_server">Jami bainistiú Seirbhís URL</string>
   <string name="help_credentials_enter">Cuir isteach do shaincheapanna eagraíochta</string>
   <string name="help_connect_password_enter">Cuir isteach do phasfhocal eagraíochta</string>
   <string name="account_connect_prompt_username">Ainm úsáideora</string>
+  <string name="account_connect_server">Déan nasc chuig an tseirbhís bainistíochta</string>
   <!--Name registration-->
   <string name="error_username_empty">Cuir ainm úsáideora isteach</string>
   <string name="register_name">Ainm an chláir</string>

@@ -71,8 +71,6 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Gelişmiş</string>
   <string name="account_chat_settings_title">Konuşma ayarları</string>
-  <string name="account_read_receipts_label">Okunma bilgisini etkinleştir</string>
-  <string name="account_read_receipts_summary">İletinin görüldüğünü belirten onay bilgilerini gönder ve al.</string>
   <string name="account_call_settings_title">Çağrı ayarları</string>
   <string name="account_dht_public_in_calls_label">Bilinmeyen kişilerden gelen çağrılara izin ver</string>
   <string name="account_registration_exp_label">Kaydolma Bitimi</string>
@@ -158,10 +156,10 @@
   <string name="account_export_title">Hesabı diğer aygıtlara bağla</string>
   <string name="account_connect_server_button">Yönetim sunucusuna bağlan</string>
   <string name="account_connect_button">Bağlan</string>
-  <string name="prompt_server">Jami Yönetim Sunucusu URL\'si</string>
   <string name="help_credentials_enter">Kuruluş kimlik bilgilerinizi girin</string>
   <string name="help_connect_password_enter">Kuruluş parolanızı girin</string>
   <string name="account_connect_prompt_username">Kullanıcı adı</string>
+  <string name="account_connect_server">Yönetim sunucusuna bağlan</string>
   <string name="account_enter_username">Kullanıcı adını girin</string>
   <!--Name registration-->
   <string name="error_username_empty">Kullanıcı adı gir</string>
@@ -197,11 +195,8 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Bu biçim desteklenmiyor.</string>
   <string name="account_link_device_title">Yeni aygıt bağla</string>
-  <string name="account_link_password">Bu hesap parola ile şifrelenmiştir; PIN kodunu oluşturmak için parolayı girin.</string>
   <string name="account_link_generate_button">Oluştur</string>
-  <string name="account_link_time_valid">%1$s sonra bu PIN geçerliliğini yitirecek.</string>
   <string name="account_generate_export_device">Diğer aygıtta</string>
-  <string name="help_pin_info">Hesap parola ile şifrelenmişse doldurun</string>
   <string name="account_link_device_button">Bağlan</string>
   <!--Biometry-->
 </resources>

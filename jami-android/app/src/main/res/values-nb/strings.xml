@@ -229,6 +229,7 @@
   <string name="gallery_error_message">Fant ingen programmer på enheten for åpning av galleri</string>
   <!--File Transfer-->
   <string name="file_transfer_status_created">Igangsetter</string>
+  <string name="file_transfer_status_invalid_file">Ugyldig fil</string>
   <string name="file_transfer_status_canceled">Avbrutt</string>
   <string name="file_download">Last ned</string>
   <string name="title_media_viewer">Mediaviser</string>

@@ -249,6 +249,7 @@
   <string name="gallery_error_title">Ingen Gallery app finnast</string>
   <string name="gallery_error_message">Ingen applikasjon finnast på einheten til å opna Gallery</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">Utilgrepeleg fil</string>
   <string name="file_transfer_status_canceled">Avbrutt</string>
   <string name="file_download">Last ned</string>
   <string name="title_media_viewer">Medievisjon</string>

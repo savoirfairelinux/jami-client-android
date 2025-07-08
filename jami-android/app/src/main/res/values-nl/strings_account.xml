@@ -69,8 +69,6 @@
   <string name="account_video_enable">Video inschakelen</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Geavanceerd</string>
-  <string name="account_read_receipts_label">Ontvangst bevestigingen inschakelen</string>
-  <string name="account_read_receipts_summary">Verstuur en ontvang meldingen die aangeven dat een bericht getoond is</string>
   <string name="account_call_settings_title">Oproepinstellingen</string>
   <string name="account_dht_public_in_calls_label">Sta inkomende oproepen van onbekende contacten toe</string>
   <string name="account_registration_exp_label">Verval registratie</string>
@@ -148,18 +146,18 @@
   <string name="account_link_device">Dit apparaat koppelen</string>
   <string name="account_link_button">Verbinden uit netwerk</string>
   <string name="account_link_archive_button">Verbinden uit back-up</string>
-  <string name="account_new_button">Een Jami-account aanmaken</string>
-  <string name="account_link_export_button">Een nieuw apparaat koppelen</string>
+  <string name="account_new_button">Maak een account op Jami</string>
+  <string name="account_link_export_button">Nieuw apparaat koppelen</string>
   <string name="account_link_show_button">Toon %d meer gekoppelde apparaten</string>
   <string name="account_link_hide_button">Gekoppelde apparaten verbergen</string>
   <string name="account_end_export_button">sluiten</string>
   <string name="account_export_title">Link account naar andere apparaten</string>
   <string name="account_connect_server_button">Verbinden met beheerserver</string>
   <string name="account_connect_button">Verbinden</string>
-  <string name="prompt_server">Jami-beheerserver-URL</string>
   <string name="help_credentials_enter">Voer de referenties van uw organisatie in</string>
   <string name="help_connect_password_enter">Voer het wachtwoord van uw organisatie in</string>
   <string name="account_connect_prompt_username">Gebruikersnaam</string>
+  <string name="account_connect_server">Verbinden met beheerserver</string>
   <string name="account_enter_username">Voer gebruikersnaam in</string>
   <!--Name registration-->
   <string name="error_username_empty">Voer een gebruikersnaam in</string>

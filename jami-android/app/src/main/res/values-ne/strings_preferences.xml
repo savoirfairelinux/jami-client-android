@@ -41,8 +41,7 @@
   <string name="pref_logs_summary">खुला डायग्नोस्टिक लॉग सेटिंग्स</string>
   <string name="pref_logs_start">लकडाउन सुरु गर्नुहोस्</string>
   <string name="pref_logs_stop">लकडाउन बन्द गर्नुहोस्</string>
-  <string name="pref_typing_title">टाइपिंग सूचक सक्षम गर्नुहोस्</string>
-  <string name="pref_typing_summary">सन्देश टाइप भइरहेको देखाउने टाइपिंग सूचकहरू पठाउनुहोस् र प्राप्त गर्नुहोस्।</string>
+  <string name="pref_typing_title">टाइपिंग सूचक</string>
   <string name="pref_block_record_title">स्क्रीनशट र रेकर्डिङ रोक्नुहोस्</string>
   <string name="pref_block_record_summary">स्क्रिनशट लिने वा भिडियो रेकर्ड गर्ने कार्य रोक्नुहोस्।</string>
   <string name="pref_link_preview_summary">पूर्वावलोकनले तेस्रो पक्षको सर्भरबाट सामग्री डाउनलोड गर्न आवश्यक छ।</string>

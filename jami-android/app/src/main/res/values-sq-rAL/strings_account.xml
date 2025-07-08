@@ -86,8 +86,6 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Të mëtejshme</string>
   <string name="account_chat_settings_title">Rregullime fjalosjeje</string>
-  <string name="account_read_receipts_label">Aktivizo dëshmi leximi</string>
-  <string name="account_read_receipts_summary">Dërgoni dhe merrni dëshmi që tregojnë se po shfaqet një mesazh.</string>
   <string name="account_call_settings_title">Rregullime për thirrjet</string>
   <string name="account_dht_public_in_calls_label">Lejo thirrje ardhëse prej kontaktesh të panjohur</string>
   <string name="account_registration_exp_label">Skadim Regjistrimi</string>
@@ -196,19 +194,18 @@
   <string name="account_link_button">Lidhu prej rrjeti</string>
   <string name="account_link_archive_button">Lidhje prej kopjeruajtjeje</string>
   <string name="account_new_button">Krijoni një llogari Jami</string>
-  <string name="account_link_export_button">Lidhni një pajisje të re</string>
+  <string name="account_link_export_button">Lidhni pajisje të re</string>
   <string name="account_link_show_button">Shfaq %d pajisje të tjera të lidhura</string>
   <string name="account_link_hide_button">Fshihe pajisjen e lidhur</string>
-  <string name="account_start_export_button">Prodho kod PIN</string>
   <string name="account_end_export_button">mbylle</string>
   <string name="account_export_title">Lidheni llogarinë te pajisje të tjera</string>
   <string name="account_connect_server_button">Lidhu me shërbyesin e administrimit</string>
   <string name="account_connect_button">Lidhu</string>
-  <string name="prompt_server">URL shërbyesi administrimi Jami</string>
+  <string name="prompt_server">URL shërbyesi administrimesh</string>
   <string name="help_credentials_enter">Jepni kredencialet e hyrjes për entin tuaj</string>
   <string name="help_connect_password_enter">Jepni fjalëkalimin e entit tuaj</string>
   <string name="account_connect_prompt_username">Emër përdoruesi</string>
-  <string name="account_connect_server">Lidhu me një shërbyes JAMS</string>
+  <string name="account_connect_server">Lidhu me shërbyesin e administrimit</string>
   <string name="account_enter_username">Jepni emër përdoruesi</string>
   <string name="account_enter_servername">Jepni shërbyesin</string>
   <!--Name registration-->
@@ -253,18 +250,11 @@
   <string name="account_disabled_indicator">Çaktivizuar</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Ky format nuk mbulohet.</string>
-  <string name="account_link_info">Te aplikacioni i ri Jami, skanoni kodin QR, ose jepni dorazi kodin PIN.</string>
   <string name="account_link_device_title">Lidhni një pajisje të re</string>
-  <string name="account_link_password">Kjo llogari është e mbrojtur me fjalëkalim, jepni fjalëkalimin që të prodhohet kodi PIN.</string>
   <string name="account_link_generate_button">Prodhoje</string>
-  <string name="account_link_time_valid">Kodi PIN do të jetë i pavlefshëm: %1$s.</string>
-  <string name="account_link_device_info">Zgjidhni “Lidhni një pajisje të re”, që nga aplikacioni tjetër Jami, që të shfaqet kodi QR, ose kodi PIN</string>
   <string name="account_generate_export_device">Te pajisja tjetër</string>
-  <string name="account_generate_export_info">Instaloni dhe niseni Jami-n, përzgjidhni “Importo prej pajisje tjetër” dhe skanoni kodin QR.</string>
+  <string name="account_generate_export_info">Instaloni dhe nisni Jami-n. Përzgjidhni “Importo prej pajisje tjetër” dhe skanoni kodin QR. Ndryshe jepeni kodin PIN dorazi.</string>
   <string name="content_description_qr_generated">Kod QR llogarie</string>
-  <string name="account_generate_export_invalid">Kodi PIN s’është më i vlefshëm.\n Që të lidhni pajisjen e re, jepni fjalëkalimin dhe prodhoni një tjetër.</string>
-  <string name="account_generate_export_invalid_two">Kodi PIN s’është më i vlefshëm.\nQë të lidhni pajisjen e re, prodhoni një tjetër.</string>
-  <string name="help_pin_info">Plotësojeni nëse llogaria është e fshehtëzuar me fjalëkalim</string>
   <string name="account_link_device_button">Lidhu</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Shkyçni llogari Jami</string>
@@ -278,6 +268,5 @@ Mirëfilltësimi biometrik, ose përmes pajisjes, shton një rrugë të leverdis
   <string name="account_biometry_enroll_auth_message">Shtoni mirëfilltësim të siguruar biometrik, ose përmes pajisjes, si një alternativë e fjalëkalimit tuaj</string>
   <string name="account_auth_error">Gabim mirëfilltësimi: %1$s</string>
   <string name="account_auth_success">Mirëfilltësimi pat sukses</string>
-  <string name="account_auth_key_error">S’u arrit të shfehtëzohet kyçi i llogarisë</string>
   <string name="account_auth_password">Përdorni fjalëkalim llogarie</string>
 </resources>

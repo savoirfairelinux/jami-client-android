@@ -188,7 +188,6 @@
   <string name="help_password_choose">자미 계정을 보호하기 위해 기억할 강력한 비밀번호를 선택하세요.</string>
   <string name="help_password_enter">주 주 자미 계정 비밀번호를 입력하세요.</string>
   <string name="help_server_enter">관리 서버의 URL를 입력하십시오.</string>
-  <string name="pin_copied">PIN 코드를 클립보드에 복사했습니다.</string>
   <string name="wizard_next">다음</string>
   <string name="wizard_back">돌아와</string>
   <string name="wizard_skip">스피프</string>
@@ -234,6 +233,7 @@
   <string name="gallery_error_title">갤러리 앱은 발견되지 않았습니다</string>
   <string name="gallery_error_message">갤러리를 열 수 있는 장치에서 응용 프로그램이 발견되지 않았습니다</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">유효하지 않은 파일</string>
   <string name="file_transfer_status_canceled">취소됨</string>
   <string name="file_download">다운로드</string>
   <string name="title_media_viewer">미디어 시청자</string>

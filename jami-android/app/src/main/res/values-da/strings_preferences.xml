@@ -41,8 +41,7 @@
   <string name="pref_logs_summary">Åbne indstillinger for diagnostisk log</string>
   <string name="pref_logs_start">Start logging</string>
   <string name="pref_logs_stop">Stop med at logge</string>
-  <string name="pref_typing_title">Aktivere indskrivningsindikatorer</string>
-  <string name="pref_typing_summary">Send og modtage indskriftsindikatorer, der viser, at der er skrevet en besked.</string>
+  <string name="pref_typing_title">Indikator til indtydning</string>
   <string name="pref_block_record_title">Block skærmbilleder og optagelse</string>
   <string name="pref_block_record_summary">Blokker at tage skærmbilleder eller optage videoer.</string>
   <string name="pref_link_preview_title">Eksempelvisning af weblinks</string>

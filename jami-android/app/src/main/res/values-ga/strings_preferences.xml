@@ -41,8 +41,7 @@
   <string name="pref_logs_summary">Cinntíocht leabhar diagnóis oscailte</string>
   <string name="pref_logs_start">Tosaíocht a Thosaigh</string>
   <string name="pref_logs_stop">Stop logging</string>
-  <string name="pref_typing_title">Céadú táscairí tipping</string>
-  <string name="pref_typing_summary">Cuir isteach agus faigh comharthaí teip a léiríonn go bhfuil teip ar teip.</string>
+  <string name="pref_typing_title">Treoir maidir le cineálú</string>
   <string name="pref_block_record_title">Scáileán agus taifeadadh bloc</string>
   <string name="pref_block_record_summary">Stop a ghlacadh grianghraf scrion nó físeán a thaifeadadh.</string>
   <string name="pref_link_preview_summary">Ní mór don réamhsheiceáil ábhar a íoslódáil ó sheirbhísí tríú páirtí.</string>

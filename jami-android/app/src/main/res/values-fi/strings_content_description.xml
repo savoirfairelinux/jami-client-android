@@ -12,5 +12,4 @@
   <string name="control_pause">Pysäytä</string>
   <string name="searchbar_navigation_account">Valitse tili</string>
   <string name="add_conversation_member">Lisää keskusteluun jäsen</string>
-  <string name="qrcode_to_scan">Lue QR-koodi</string>
 </resources>

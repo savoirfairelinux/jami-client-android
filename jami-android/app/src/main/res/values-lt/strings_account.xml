@@ -146,12 +146,13 @@
   <string name="account_link_device">Prisijungti iš kito įrenginio</string>
   <string name="account_link_button">Prijungti iš tinklo</string>
   <string name="account_link_archive_button">Prijungti iš atsarginės kopijos</string>
-  <string name="account_new_button">Susikurti Jami paskyrą</string>
+  <string name="account_new_button">Susikurkite Jami paskyrą</string>
   <string name="account_link_export_button">Susieti naują įrenginį</string>
   <string name="account_link_hide_button">Slėpti susietą įrenginį</string>
   <string name="account_end_export_button">užverti</string>
   <string name="account_connect_button">Prisijungti</string>
   <string name="account_connect_prompt_username">Naudotojo vardas</string>
+  <string name="account_connect_server">Prisijunkite prie valdymo serverio</string>
   <string name="account_enter_username">Įveskite naudotojo vardą</string>
   <!--Name registration-->
   <string name="error_username_empty">Įveskite naudotojo vardą</string>
@@ -197,5 +198,4 @@
   <string name="no_thanks">Ne, ačiū</string>
   <string name="account_auth_error">Tapatybės nustatymo klaida: %1$s</string>
   <string name="account_auth_success">Tapatybė sėkmingai nustatyta</string>
-  <string name="account_auth_key_error">Nepavyko iššifruoti paskyros rakto</string>
 </resources>

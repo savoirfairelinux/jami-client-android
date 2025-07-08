@@ -226,6 +226,7 @@
   <string name="gallery_error_title">Aplikasi galeri tidak ditemukan</string>
   <string name="gallery_error_message">Tidak ada aplikasi yang ditemukan untuk membuka galeri</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">Berkas tidak valid</string>
   <string name="file_transfer_status_canceled">Dibatalkan</string>
   <string name="file_download">Unduh</string>
   <string name="title_media_viewer">Penglihat media</string>

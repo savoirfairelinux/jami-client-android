@@ -68,8 +68,6 @@
   <string name="account_video_enable">Видеоны кую</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Алга таба</string>
-  <string name="account_read_receipts_label">Укырга кертүне кую</string>
-  <string name="account_read_receipts_summary">Хәбәр күрсәтелгән дип күрсәтелгән распискалар җибәрү һәм алу.</string>
   <string name="account_call_settings_title">Чакырулар өчен көйләүләр</string>
   <string name="account_dht_public_in_calls_label">Билгесез контактлардан керүче шалтыратуларга рөхсәт итү</string>
   <string name="account_registration_exp_label">Теркәлү вакыты тәмамлана</string>
@@ -148,17 +146,17 @@
   <string name="account_link_button">Авырулар</string>
   <string name="account_link_archive_button">Ярдәмдән тоташтыру</string>
   <string name="account_new_button">Jami хисабы булдыру</string>
-  <string name="account_link_export_button">Яңа җайланманы тоташтыру</string>
+  <string name="account_link_export_button">Яңа җайланманы бәйлә</string>
   <string name="account_link_show_button">%d күбрәк бәйләнгән җайланманы күрсәтү</string>
   <string name="account_link_hide_button">Яшереп куелган җайланма</string>
   <string name="account_end_export_button">якын</string>
   <string name="account_export_title">Башка җайланмалар белән бәйләнеш хисабы</string>
   <string name="account_connect_server_button">Идарә серверына тоташтыру</string>
   <string name="account_connect_button">Бәйләнешкә кертү</string>
-  <string name="prompt_server">Jami идарәсе сервер URL</string>
   <string name="help_credentials_enter">Үз оешмагызның идентификацияләрен кертегез</string>
   <string name="help_connect_password_enter">Үз оешмагызның шифрен кертегез</string>
   <string name="account_connect_prompt_username">Исем кулланучы</string>
+  <string name="account_connect_server">Идарә серверына тоташтыру</string>
   <!--Name registration-->
   <string name="error_username_empty">Кулланучы исемен кертегез</string>
   <string name="register_name">Исем исемлеге</string>

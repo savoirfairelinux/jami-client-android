@@ -69,8 +69,6 @@
   <string name="account_video_enable">Ŝalti Videon</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Specialaj</string>
-  <string name="account_read_receipts_label">Aktivigu legas kvitancojn</string>
-  <string name="account_read_receipts_summary">Sendu kaj ricevu kvitancojn indikantajn, ke mesaĝo estis montrita.</string>
   <string name="account_call_settings_title">Telefonoj</string>
   <string name="account_dht_public_in_calls_label">Permesu alveni alvokojn de nekonataj kontaktoj</string>
   <string name="account_registration_exp_label">Datlimo de registrado</string>
@@ -148,18 +146,18 @@
   <string name="account_link_device">Konektiĝi de alia aparato</string>
   <string name="account_link_button">Konektiĝu de reto</string>
   <string name="account_link_archive_button">Konektiĝi de rezervo</string>
-  <string name="account_new_button">Krei konto en Jami</string>
-  <string name="account_link_export_button">Ligigu novan aparaton</string>
+  <string name="account_new_button">Kreu konto Jami</string>
+  <string name="account_link_export_button">Ligi novan aparaton</string>
   <string name="account_link_show_button">Montru %d pli ligitan aparaton</string>
   <string name="account_link_hide_button">Kaŝu ligitan aparaton</string>
   <string name="account_end_export_button">proksima</string>
   <string name="account_export_title">Rilata konto al aliaj aparatoj</string>
   <string name="account_connect_server_button">Konekti al administradservilo</string>
   <string name="account_connect_button">Konekti</string>
-  <string name="prompt_server">Jam administro servilo URL</string>
   <string name="help_credentials_enter">Enmetu viajn organizajn akreditaĵojn</string>
   <string name="help_connect_password_enter">Enigu vian organiza pasvorton</string>
   <string name="account_connect_prompt_username">Uzantnomo</string>
+  <string name="account_connect_server">Konekti al administradservilo</string>
   <!--Name registration-->
   <string name="error_username_empty">Enigu uzantnomon</string>
   <string name="register_name">Nomo de la registro</string>

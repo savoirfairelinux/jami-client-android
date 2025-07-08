@@ -225,6 +225,7 @@
   <string name="gallery_error_title">Галерея қолданбасы табылмады</string>
   <string name="gallery_error_message">Галереяны ашу үшін құрылғыда қолданба табылмады</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">Қате файл</string>
   <string name="file_transfer_status_canceled">Бас тартылды</string>
   <string name="file_download">Жүктеу</string>
   <string name="title_media_viewer">Медиа қараушы</string>

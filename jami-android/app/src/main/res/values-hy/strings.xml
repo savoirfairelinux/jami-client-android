@@ -226,6 +226,7 @@
   <string name="gallery_error_title">Գալերիային հավելված չի գտնվել</string>
   <string name="gallery_error_message">Գալերիա բացելու սարքում չի գտնվել ծրագիր</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">Անավերժ ֆայլ</string>
   <string name="file_transfer_status_canceled">Արգելվել է</string>
   <string name="file_download">Ներբեռնել</string>
   <string name="title_media_viewer">ԶԼՄ-ների դիտող</string>

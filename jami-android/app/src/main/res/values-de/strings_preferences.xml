@@ -52,8 +52,8 @@
   <string name="pref_connection_monitor_summary">Peer-to-Peer-Verbindungen überwachen</string>
   <string name="pref_push_notifications_logs_title">Push-Benachrichtigungsprotokolle</string>
   <string name="pref_push_notifications_logs_summary">Von Push-Benachrichtigung erfassten Protokolle anzeigen</string>
-  <string name="pref_typing_title">Tipp-Indikatoren aktivieren</string>
-  <string name="pref_typing_summary">Senden und Empfangen von Tipp-Benachrichtungen, die das Tippen einer Nachricht anzeigen.</string>
+  <string name="pref_typing_title">Tipp-Indikatoren</string>
+  <string name="pref_typing_summary">Anzeigen wenn Nachrichten getippt werden.</string>
   <string name="pref_block_record_title">Screenshot und Aufzeichnung blockieren</string>
   <string name="pref_block_record_summary">Aufnahme von Screenshots oder Videos blockieren.</string>
   <string name="pref_link_preview_title">Linkvorschau</string>

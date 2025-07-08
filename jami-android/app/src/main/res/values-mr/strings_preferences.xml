@@ -41,8 +41,7 @@
   <string name="pref_logs_summary">उघड डायग्नोस्टिक लॉग सेटिंग्ज</string>
   <string name="pref_logs_start">लॉगिंग सुरू करा</string>
   <string name="pref_logs_stop">कोळशाचे काम थांबवा</string>
-  <string name="pref_typing_title">टाइपिंग निर्देशक सक्षम करा</string>
-  <string name="pref_typing_summary">संदेश टाइप केला जात आहे हे दर्शविणारे टाइपिंग निर्देशक पाठवा आणि प्राप्त करा.</string>
+  <string name="pref_typing_title">टाइपिंग इंडिकेटर</string>
   <string name="pref_block_record_title">स्क्रीनशॉट आणि रेकॉर्डिंग ब्लॉक करा</string>
   <string name="pref_block_record_summary">स्क्रीनशॉट किंवा व्हिडिओ रेकॉर्डिंग टाळा.</string>
   <string name="pref_link_preview_title">वेब लिंक पूर्वावलोकने</string>

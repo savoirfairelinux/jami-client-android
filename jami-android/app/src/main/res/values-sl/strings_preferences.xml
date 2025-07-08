@@ -44,8 +44,7 @@
   <string name="pref_logs_summary">Odpri nastavitve diagnostičnih zapisnikov</string>
   <string name="pref_logs_start">Začni beležiti</string>
   <string name="pref_logs_stop">Prenehaj beležiti</string>
-  <string name="pref_typing_title">Omogoči pokazatelja tipkanja</string>
-  <string name="pref_typing_summary">Pošilja in prejema pokazatelje tipkanja, ki kažejo, da se sporočilo vnaša.</string>
+  <string name="pref_typing_title">Pokazatelj tipkanja</string>
   <string name="pref_block_record_title">Blokiraj zajem slik in snemanje</string>
   <string name="pref_block_record_summary">Blokirajte zajem slike ali snemanje videoposnetkov.</string>
   <string name="pref_link_preview_title">Predogled spletnih povezav</string>

@@ -69,8 +69,6 @@
   <string name="account_video_enable">Povoliť video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Pokročilé</string>
-  <string name="account_read_receipts_label">Aktivujte odčítanie potvrdení</string>
-  <string name="account_read_receipts_summary">Posielať a prijímať potvrdenia o zobrazení správy.</string>
   <string name="account_call_settings_title">Nastavenia hovoru</string>
   <string name="account_dht_public_in_calls_label">Povoliť prichádzajúce hovory od neznámych kontaktov</string>
   <string name="account_registration_exp_label">Expirácia registrácie</string>
@@ -148,17 +146,17 @@
   <string name="account_link_device">Pripojenie z iného zariadenia</string>
   <string name="account_link_button">Pripojiť zo siete</string>
   <string name="account_link_archive_button">Pripojiť zo zálohy</string>
-  <string name="account_new_button">Vytvoriť Jami účet</string>
+  <string name="account_new_button">Vytvorte účet Jami</string>
   <string name="account_link_export_button">Prepojiť nové zariadenie</string>
   <string name="account_link_hide_button">Skryjte prepojené zariadenie</string>
   <string name="account_end_export_button">Zavrieť</string>
   <string name="account_export_title">Účet prepojenia s inými zariadeniami</string>
   <string name="account_connect_server_button">Pripojiť k spravujúcemu serveru</string>
   <string name="account_connect_button">Pripojiť</string>
-  <string name="prompt_server">URL Jami spravujúceho serveru</string>
   <string name="help_credentials_enter">Zadajte údaje vašej organizácie</string>
   <string name="help_connect_password_enter">Zadajte heslo vašej organizácie</string>
   <string name="account_connect_prompt_username">Používateľské meno</string>
+  <string name="account_connect_server">Pripojiť k spravujúcemu serveru</string>
   <string name="account_enter_username">Zadajte používateľské meno</string>
   <!--Name registration-->
   <string name="error_username_empty">Zadajte používateľské meno</string>

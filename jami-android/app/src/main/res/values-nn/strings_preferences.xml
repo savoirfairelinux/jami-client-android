@@ -41,8 +41,7 @@
   <string name="pref_logs_summary">Åpne innstillingar på diagnostisk logg</string>
   <string name="pref_logs_start">Start logging</string>
   <string name="pref_logs_stop">Sluta å logga</string>
-  <string name="pref_typing_title">Legg til bruk for å skrive</string>
-  <string name="pref_typing_summary">Send og motta skrivingsindikator som viser at ein melding blir skrivd.</string>
+  <string name="pref_typing_title">Typegjennomføringsindikator</string>
   <string name="pref_block_record_title">Block skjermbild og opptak</string>
   <string name="pref_block_record_summary">Blokkar å ta skjermbilder eller opptake av video.</string>
   <string name="pref_link_preview_title">Førehandsvisingar av nettkoplingar</string>

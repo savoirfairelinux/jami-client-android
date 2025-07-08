@@ -69,8 +69,6 @@
   <string name="account_video_enable">వీడియోను ప్రారంభించండి</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">ఆధునిక</string>
-  <string name="account_read_receipts_label">రీడ్ రిసీవ్లను ప్రారంభించండి</string>
-  <string name="account_read_receipts_summary">సందేశం ప్రదర్శించబడిందని సూచించే రిసీవ్లను పంపండి మరియు స్వీకరించండి.</string>
   <string name="account_call_settings_title">కాల్ సెట్టింగులు</string>
   <string name="account_dht_public_in_calls_label">తెలియని పరిచయాల నుండి ఇన్కమింగ్ కాల్స్ అనుమతించు</string>
   <string name="account_registration_exp_label">నమోదు గడువు ముగిసింది</string>
@@ -148,18 +146,18 @@
   <string name="account_link_device">మరొక పరికరము నుండి కనెక్ట్</string>
   <string name="account_link_button">నెట్వర్క్ నుండి కనెక్ట్</string>
   <string name="account_link_archive_button">బ్యాకప్ నుండి కనెక్ట్</string>
-  <string name="account_new_button">జమీ ఖాతాను సృష్టించండి</string>
-  <string name="account_link_export_button">కొత్త పరికరాన్ని లింక్ చేయండి</string>
+  <string name="account_new_button">జమి ఖాతాను సృష్టించు</string>
+  <string name="account_link_export_button">కొత్త పరికరానికి లింక్</string>
   <string name="account_link_show_button">%d మరింత లింక్ చేయబడిన పరికరాన్ని చూపించు</string>
   <string name="account_link_hide_button">లింక్ చేయబడిన పరికరాన్ని దాచండి</string>
   <string name="account_end_export_button">దగ్గరగా</string>
   <string name="account_export_title">ఇతర పరికరాలకు లింక్ ఖాతా</string>
   <string name="account_connect_server_button">నిర్వహణ సర్వర్కు కనెక్ట్</string>
   <string name="account_connect_button">కనెక్ట్</string>
-  <string name="prompt_server">జామి మేనేజ్మెంట్ సర్వర్ URL</string>
   <string name="help_credentials_enter">మీ సంస్థ యొక్క ఆధారాలను నమోదు చేయండి</string>
   <string name="help_connect_password_enter">మీ సంస్థ పాస్వర్డ్ను నమోదు చేయండి</string>
   <string name="account_connect_prompt_username">వాడుకరి పేరు</string>
+  <string name="account_connect_server">నిర్వహణ సర్వర్కు కనెక్ట్</string>
   <!--Name registration-->
   <string name="error_username_empty">ఒక వినియోగదారు పేరును నమోదు చేయండి</string>
   <string name="register_name">రిజిస్టర్ పేరు</string>

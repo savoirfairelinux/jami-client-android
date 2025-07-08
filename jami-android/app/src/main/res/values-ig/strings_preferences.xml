@@ -41,8 +41,7 @@
   <string name="pref_logs_summary">Mbido ndekọ ndekọ nchọpụta na-emeghe</string>
   <string name="pref_logs_start">Malite Ịkụ Ụgbọ</string>
   <string name="pref_logs_stop">Kwụsị ịkwa osisi</string>
-  <string name="pref_typing_title">Gbaa mbọ hụ na e nwere ihe ndị a na-eme.</string>
-  <string name="pref_typing_summary">Ziga ma nata akara ederede nke na-egosi na a na-ede ozi.</string>
+  <string name="pref_typing_title">Ihe ngosi maka ịpị</string>
   <string name="pref_block_record_title">Gbochie nseta ihuenyo na ndekọ</string>
   <string name="pref_block_record_summary">Kwụsị iwere nseta ihuenyo ma ọ bụ idekọ vidiyo.</string>
   <string name="pref_link_preview_summary">Nlele anya chọrọ ibudata ọdịnaya site na sava ndị ọzọ.</string>

@@ -247,7 +247,6 @@
   <string name="help_password_choose">Válasszon erős jelszót, amelyre emlékezni fog, hogy megvédje a Jami-fiókját.</string>
   <string name="help_password_enter">Fő Jami-fiók jelszavának megadása.</string>
   <string name="help_server_enter">Adja meg a felügyeleti kiszolgáló URL-jét.</string>
-  <string name="pin_copied">A PIN-kód kimásolva a vágólapra.</string>
   <string name="copied_clipboard">A vágólapra másolva.</string>
   <string name="wizard_next">Tovább</string>
   <string name="wizard_back">Vissza</string>
@@ -320,13 +319,12 @@
   <string name="file_transfer_status_finished">Befejeződött</string>
   <string name="file_transfer_status_closed_by_host">Az állomás lezárta</string>
   <string name="file_transfer_status_closed_by_peer">A társ lezárta</string>
-  <string name="file_transfer_status_invalid_pathname">Érvénytelen elérési út</string>
+  <string name="file_transfer_status_invalid_file">Érvénytelen fájl</string>
   <string name="file_transfer_status_unjoinable_peer">Elérhetetlen társ</string>
   <string name="file_transfer_status_canceled">Törölve</string>
   <string name="file_transfer_status_error">Hiba történt a fájl átvitele közben.</string>
   <string name="file_transfer_status_timed_out">Művelet időtúllépése.</string>
   <string name="file_saved_in">Fájl mentve ide: %s.</string>
-  <string name="file_saved_successfully">A fájl mentése sikerült.</string>
   <string name="file_download">Letöltés</string>
   <string name="no_space_left_on_device">Nincs szabad tárhely az eszközön.</string>
   <string name="title_media_viewer">Média lejátszó</string>
@@ -460,15 +458,10 @@
   <string name="unable_to_load">Nem sikerült betölteni: %1$s</string>
   <string name="load_success">%1$s: engedélyezve</string>
   <string name="unload_success">%1$s: letiltva</string>
-  <string name="install_success">A(z) %1$s bővítmény telepítése sikerült.</string>
   <string name="install_error">Hiba történt a bővítmény importálása közben.</string>
   <string name="export_side_main_title">Fiók exportálása</string>
   <string name="import_side_main_title">Fiók importálása</string>
-  <string name="link_device_dialog_exit_title">Leállítja a fiók összekapcsolását?</string>
-  <string name="link_device_dialog_exit_export_body_1">A leállítás megszakítja a fiók exportálási műveletét.</string>
-  <string name="link_device_dialog_exit_export_body_2">A leállítás megszakítja a fiók exportálási műveletét.</string>
-  <string name="link_device_dialog_exit_import_body_1">A leállítás megszakítja a fiók importálási műveletét.</string>
-  <string name="link_device_dialog_exit_import_body_2">A leállítás megszakítja a fiók importálási műveletét.</string>
+  <string name="link_device_dialog_stop_import_body">A leállítás megszakítja a fiók importálási műveletét.</string>
   <string name="export_side_step1_advice_qr">Az új eszközön indítsa el a fiók importálásának műveletét.\nJelölje ki a <b>Fiók → Fiók hozzáadása → Fiók létrehozása más eszközről</b>\nHa készen áll, olvassa be a QR-kódot.</string>
   <string name="export_side_step1_switch_to_code">Vagy kattintson ide a hitelesítési kód megadásához</string>
   <string name="export_side_step1_switch_to_qr">Vagy kattintson ide a QR-kód beolvasásához</string>
@@ -482,8 +475,6 @@ A fiókexportálási művelet folytatásához kattintson a Megerősítés gombra
   <string name="export_side_step2_cancel">Mégse</string>
   <string name="export_side_step2_confirm">Megerősítés</string>
   <string name="export_side_step2_password">A fiók jelszóval védett. A folytatáshoz hitelesítsen az új eszközön.</string>
-  <string name="export_side_step3_body_loading">A fiók exportálása az új eszközre folyamatban van.\nKérjük, várjon…</string>
-  <string name="export_side_step3_body_done">A fiók importálása sikerült az új eszközön.</string>
   <string name="export_side_step3_exit">Befejezés</string>
   <string name="import_side_step1_advice_qr">A forráseszközön indítsa el a fiók exportálásának műveletét.\nJelölje ki a <b>Fiók → Fiókbeállítások → Új eszköz összekapcsolása</b>\nHa készen áll, olvassa be a következő QR-kódot.</string>
   <string name="import_side_step1_advice_code">A forráseszközön indítsa el a fiók exportálásának műveletét.\nJelölje ki a <b>Fiók → Fiókbeállítások → Új eszköz összekapcsolása</b>\nHa készen áll, írja be a következő kódot.</string>
@@ -496,15 +487,10 @@ A fiókexportálási művelet folytatásához kattintson a Megerősítés gombra
   <string name="import_side_step2_password_import">Importálás</string>
   <string name="import_side_step2_password_unlocking">Fiók zárolásának feloldása…</string>
   <string name="import_side_step2_action_required">Beavatkozás szükséges. Kérjük, erősítse meg a fiókot a forráseszközön.</string>
-  <string name="import_side_step3_body_loading">A fiók importálása folyamatban van az új eszközön.\nKérjük, várjon…</string>
-  <string name="import_side_step3_body_done">A telepítés sikeresen befejeződött.</string>
-  <string name="import_side_step3_go_to_account">Ugrás az új fiókra</string>
+  <string name="import_side_step3_body_done">Megtörtént a fiók importálása.</string>
   <string name="import_side_step3_exit">Befejezés</string>
-  <string name="link_device_share_title">Jami hitelesítési kód megosztása</string>
-  <string name="link_device_error_network">Hálózati hiba történt a fiók összekapcsolása közben. Ellenőrizze a kapcsolatot, majd próbálkozzon újra.</string>
   <string name="link_device_error_authentication">Hitelesítési hiba történt az eszköz összekapcsolása közben. Kérjük, ellenőrizze a hitelesítő adatokat, és próbálkozzon újra.</string>
   <string name="link_device_error_timeout">Művelet időtúllépése.</string>
-  <string name="link_device_error_canceled">A műveletet megszakította a felhasználó.</string>
   <string name="link_device_error_unknown">Hiba történt.</string>
   <string name="link_device_error_bad_password">Kérjük, ellenőrizze a hitelesítő adatokat, és próbálkozzon újra.</string>
 </resources>

@@ -69,8 +69,6 @@
   <string name="account_video_enable">動画を有効化</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">詳細</string>
-  <string name="account_read_receipts_label">既読表示を有効化</string>
-  <string name="account_read_receipts_summary">相手や自分がメッセージを表示したことを送受信する。</string>
   <string name="account_call_settings_title">通話設定</string>
   <string name="account_dht_public_in_calls_label">未知の連絡先からの着信を許可</string>
   <string name="account_registration_exp_label">登録の有効期限切れ</string>
@@ -148,18 +146,18 @@
   <string name="account_link_device">他のデバイスから接続する</string>
   <string name="account_link_button">ネットワークから接続</string>
   <string name="account_link_archive_button">バックアップから接続</string>
-  <string name="account_new_button">Jamiアカウントを作成</string>
-  <string name="account_link_export_button">新しいデバイスをリンク</string>
+  <string name="account_new_button">Jamiアカウントを作成する</string>
+  <string name="account_link_export_button">新しいデバイスを連結する</string>
   <string name="account_link_show_button">さらに%d個のデバイスを表示</string>
   <string name="account_link_hide_button">リンクされたデバイスを隠す</string>
   <string name="account_end_export_button">閉じる</string>
   <string name="account_export_title">アカウントを他のデバイスとリンク</string>
   <string name="account_connect_server_button">管理サーバーに接続</string>
   <string name="account_connect_button">接続</string>
-  <string name="prompt_server">Jami管理サーバーのURL</string>
   <string name="help_credentials_enter">組織のログイン情報を入力</string>
   <string name="help_connect_password_enter">組織のパスワードを入力</string>
   <string name="account_connect_prompt_username">ユーザー名</string>
+  <string name="account_connect_server">管理サーバーに接続</string>
   <string name="account_enter_username">ユーザー名を入力</string>
   <!--Name registration-->
   <string name="error_username_empty">ユーザー名を入力してください</string>

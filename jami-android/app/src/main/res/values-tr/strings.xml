@@ -240,6 +240,7 @@
   <string name="gallery_error_message">Galeriyi açmak için aygıtta herhangi bir uygulama bulunamadı</string>
   <!--File Transfer-->
   <string name="file_transfer_status_created">Başlatılıyor</string>
+  <string name="file_transfer_status_invalid_file">Geçersiz dosya</string>
   <string name="file_transfer_status_canceled">İptal edildi</string>
   <string name="file_download">İndir</string>
   <string name="title_media_viewer">Ortam Galerisi</string>

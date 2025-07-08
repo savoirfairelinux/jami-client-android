@@ -249,7 +249,6 @@
   <string name="help_password_choose">Escolha uma palavra-passe forte que se lembre para proteger a sua conta Jami.</string>
   <string name="help_password_enter">Introduza a palavra-passe da sua conta principal do Jami.</string>
   <string name="help_server_enter">Introduzir o URL do servidor de gestão.</string>
-  <string name="pin_copied">Código PIN copiado para a área de transferência.</string>
   <string name="copied_clipboard">Copiado para a área de transferência,</string>
   <string name="wizard_next">Próximo</string>
   <string name="wizard_back">Voltar</string>
@@ -322,13 +321,12 @@
   <string name="file_transfer_status_finished">Concluído</string>
   <string name="file_transfer_status_closed_by_host">Fechado pelo anfitrião</string>
   <string name="file_transfer_status_closed_by_peer">Fechado pelo par</string>
-  <string name="file_transfer_status_invalid_pathname">Nome de caminho inválido</string>
+  <string name="file_transfer_status_invalid_file">Ficheiro inválido</string>
   <string name="file_transfer_status_unjoinable_peer">Par não conectável</string>
   <string name="file_transfer_status_canceled">Cancelada</string>
   <string name="file_transfer_status_error">Um erro ocorreu ao transferir o arquivo.</string>
-  <string name="file_transfer_status_timed_out">Tempo esgotado</string>
+  <string name="file_transfer_status_timed_out">O tempo da operação esgotou.</string>
   <string name="file_saved_in">Arquivo salvo em %s.</string>
-  <string name="file_saved_successfully">Arquivo salvo com sucesso.</string>
   <string name="file_download">Descarregar</string>
   <string name="title_media_viewer">Visualizador de média</string>
   <string name="menu_file_open">Abrir ficheiro</string>
@@ -460,15 +458,9 @@
   <string name="unable_to_load">Não foi possível carregar %1$s</string>
   <string name="load_success">%1$s: ativado</string>
   <string name="unload_success">%1$s: desativado</string>
-  <string name="install_success">A extensão %1$s foi instalada com sucesso.</string>
   <string name="install_error">Ocorreu um erro ao importar a extensão.</string>
   <string name="export_side_main_title">Exportar conta</string>
   <string name="import_side_main_title">Importar conta</string>
-  <string name="link_device_dialog_exit_title">Você deseja parar?</string>
-  <string name="link_device_dialog_exit_export_body_1">Isto vai cancelar a operação de exportar a conta.</string>
-  <string name="link_device_dialog_exit_export_body_2">Se possível, parar vai cancelar a operação de exportar a conta.</string>
-  <string name="link_device_dialog_exit_import_body_1">Parar vai cancelar a operação de exportar a conta.</string>
-  <string name="link_device_dialog_exit_import_body_2">Parar vai cancelar a operação de exportar a conta.</string>
   <string name="export_side_step1_advice_qr">Inicie uma nova conta no novo dispositivo.\nSelecione <b>Conta &gt; Adicionar Conta &gt; Conectar de novo dispositivo</b>\nEscaneie o código QR estiver pronto.</string>
   <string name="export_side_step1_switch_to_code">Ou clique aqui para digitar o código de autenticação</string>
   <string name="export_side_step1_switch_to_qr">Ou clque aqui para escanear o código QR</string>
@@ -479,7 +471,6 @@
   <string name="export_side_step2_cancel">Cancelar</string>
   <string name="export_side_step2_confirm">Confirmar</string>
   <string name="export_side_step2_password">Esta conta está protegida com senha. Para continuar, faça a autenticação no novo dispositivo.</string>
-  <string name="export_side_step3_body_done">Conta importada com sucesso no novo dispositivo.</string>
   <string name="export_side_step3_exit">Finalizar</string>
   <string name="import_side_step1_share">Partilhar</string>
   <string name="import_side_step1_switch_to_code">Ou clique aqui para exibir o código de autenticação</string>
@@ -487,15 +478,8 @@
   <string name="import_side_step1_preparing_device">Preparando dispositivo...</string>
   <string name="import_side_step2_password_import">Importar</string>
   <string name="import_side_step2_password_unlocking">Desbloqueando conta...</string>
-  <string name="import_side_step3_body_loading">A conta está sendo importada no novo dispositivo.\nPor favor aguarde.</string>
-  <string name="import_side_step3_body_done">Pronto!\nConta importada com sucesso no novo dispositivo.</string>
-  <string name="import_side_step3_go_to_account">Ir para minha nova conta</string>
   <string name="import_side_step3_exit">Finalizar</string>
-  <string name="link_device_share_title">Compartilhar código de autenticação do Jami</string>
-  <string name="link_device_error_network">Ocorreu um erro de rede.\nPor favor verifique sua conexão.</string>
-  <string name="link_device_error_authentication">Ocorreu um erro de autenticação.\nPor favor verifique sua senha.</string>
   <string name="link_device_error_timeout">O tempo da operação esgotou.</string>
-  <string name="link_device_error_canceled">A operação foi cancelada.</string>
   <string name="link_device_error_unknown">Um erro ocorreu.</string>
   <string name="link_device_error_bad_password">Por favor verifique as credenciais e tente novamente.</string>
 </resources>

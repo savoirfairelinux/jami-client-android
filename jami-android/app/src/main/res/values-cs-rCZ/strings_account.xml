@@ -86,8 +86,6 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Pokročilé</string>
   <string name="account_chat_settings_title">Nastavení chatu</string>
-  <string name="account_read_receipts_label">Povolení potvrzení o přečtení</string>
-  <string name="account_read_receipts_summary">Odesílání a přijímání potvrzení o zobrazení zprávy.</string>
   <string name="account_call_settings_title">Nastavení volání</string>
   <string name="account_dht_public_in_calls_label">Povolit příchozí hovory od neznámých kontatků</string>
   <string name="account_registration_exp_label">Vypršení registrace</string>
@@ -196,20 +194,18 @@ Zadejte, prosím, své heslo.</string>
   <string name="account_link_device">Připojit z jiného zařízení</string>
   <string name="account_link_button">Připojit ze sítě</string>
   <string name="account_link_archive_button">Připojit ze zálohy</string>
-  <string name="account_new_button">Vytvořit účet Jami</string>
+  <string name="account_new_button">Vytvoři Jami účet</string>
   <string name="account_link_export_button">Připojit nové zařízení</string>
   <string name="account_link_show_button">Zobrazit %d další propojené zařízení</string>
   <string name="account_link_hide_button">Skrýt propojené zařízení</string>
-  <string name="account_start_export_button">Generovat PIN kód</string>
   <string name="account_end_export_button">zavřít</string>
   <string name="account_export_title">Propojení účtu s dalšími zařízeními</string>
   <string name="account_connect_server_button">Připojit se ke správcovskému serveru</string>
   <string name="account_connect_button">Připojit</string>
-  <string name="prompt_server">Adresa URL správcovského serveru Jami</string>
   <string name="help_credentials_enter">Zadejte přihlašovací údaje vaší organizace</string>
   <string name="help_connect_password_enter">Zadejte heslo vaší organizace</string>
   <string name="account_connect_prompt_username">Uživatelské jméno</string>
-  <string name="account_connect_server">Připojit k JAMS serveru</string>
+  <string name="account_connect_server">Připojit se ke správcovskému serveru</string>
   <string name="account_enter_username">Zadejte uživatelské jméno</string>
   <string name="account_enter_servername">Zadejte server</string>
   <!--Name registration-->
@@ -254,18 +250,10 @@ Zadejte, prosím, své heslo.</string>
   <string name="account_disabled_indicator">zakázáno</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Tento formát je nepodporovaný.</string>
-  <string name="account_link_info">On the new Jami app, scan the QR code or enter manually the PIN code.</string>
   <string name="account_link_device_title">Připojit nové zařízení</string>
-  <string name="account_link_password">Tento účet je zašifrován heslem, zadejte heslo pro vygenerování PIN kódu.</string>
   <string name="account_link_generate_button">Generovat</string>
-  <string name="account_link_time_valid">PIN kód bude neplatný: %1$s.</string>
-  <string name="account_link_device_info">Vyberte „Připojit nové zařízení“ z jiné aplikace Jami, abyste zobrazili QR kód nebo PIN kód.</string>
   <string name="account_generate_export_device">Na druhém zařízení</string>
-  <string name="account_generate_export_info">Nainstalujte a spusťte Jami, vyberte „Importovat z jiného zařízení“ a naskenujte QR kód.</string>
   <string name="content_description_qr_generated">QR kód účtu</string>
-  <string name="account_generate_export_invalid">Kód PIN již není platný.\nZadejte heslo a vygenerujte si jiné pro připojení nového zařízení.</string>
-  <string name="account_generate_export_invalid_two">Kód PIN již není platný.\nPro připojení nového zařízení vygenerujte jiný.</string>
-  <string name="help_pin_info">Vyplňte, pokud je účet zašifrován heslem</string>
   <string name="account_link_device_button">Připojit</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Odemkněte Jami účet</string>
@@ -279,6 +267,5 @@ Biometrické ověřování nebo ověřování zařízení přidává pohodlný z
   <string name="account_biometry_enroll_auth_message">Přidejte zabezpečenou biometrickou nebo autentizaci pomocí zařízení jako alternativu k vašemu heslu</string>
   <string name="account_auth_error">Chyba ověření: %1$s</string>
   <string name="account_auth_success">Ověření proběhlo úspěšně</string>
-  <string name="account_auth_key_error">Nepodařilo dešifrovat klíč účtu</string>
   <string name="account_auth_password">Použijte heslo účtu</string>
 </resources>

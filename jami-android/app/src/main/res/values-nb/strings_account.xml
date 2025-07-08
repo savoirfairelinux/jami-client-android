@@ -69,8 +69,6 @@
   <string name="account_video_enable">Aktiver video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avansert</string>
-  <string name="account_read_receipts_label">Aktiver lesekvitteringer</string>
-  <string name="account_read_receipts_summary">Send og motta kvitteringer som indikerer at en melding er blitt vist.</string>
   <string name="account_call_settings_title">Samtale innstillinger</string>
   <string name="account_dht_public_in_calls_label">Tillat anrop fra ukjente kontakter</string>
   <string name="account_registration_exp_label">Tidsavbrudd registrering</string>
@@ -148,18 +146,18 @@
   <string name="account_link_device">Koble til fra en annen enhet</string>
   <string name="account_link_button">Koble til fra nettverk</string>
   <string name="account_link_archive_button">Koble til fra sikkerhetskopi</string>
-  <string name="account_new_button">Opprett en Jami-konto</string>
-  <string name="account_link_export_button">Koble til en ny enhet</string>
+  <string name="account_new_button">opprette Jami-konto</string>
+  <string name="account_link_export_button">Tilknytt ny enhet</string>
   <string name="account_link_show_button">Vis %d flere tilknyttede enheter</string>
   <string name="account_link_hide_button">Skjul tilknyttet enhet</string>
   <string name="account_end_export_button">lukk</string>
   <string name="account_export_title">Koble konto sammen med andre enheter</string>
   <string name="account_connect_server_button">Koble til administrasjonstjener</string>
   <string name="account_connect_button">Koble til</string>
-  <string name="prompt_server">URL Jami administrasjonstjener</string>
   <string name="help_credentials_enter">Tast inn opplysninger om din organisasjon</string>
   <string name="help_connect_password_enter">Tast inn passordet til din organisasjon</string>
   <string name="account_connect_prompt_username">Brukernavn</string>
+  <string name="account_connect_server">Koble til administrasjonstjener</string>
   <string name="account_enter_username">Skriv inn brukernavn</string>
   <!--Name registration-->
   <string name="error_username_empty">Skriv inn et brukernavn</string>

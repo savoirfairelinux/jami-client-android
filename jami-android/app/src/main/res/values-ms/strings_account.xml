@@ -69,8 +69,6 @@
   <string name="account_video_enable">Aktifkan panggilan video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Lanjut</string>
-  <string name="account_read_receipts_label">വായന രസീതുകൾ പ്രവർത്തനക്ഷമമാക്കുക</string>
-  <string name="account_read_receipts_summary">ഒരു സന്ദേശം പ്രദർശിപ്പിച്ചതായി സൂചിപ്പിക്കുന്ന രസീതുകൾ അയയ്ക്കുകയും സ്വീകരിക്കുകയും ചെയ്യുക.</string>
   <string name="account_call_settings_title">കോൾ ക്രമീകരണങ്ങൾ</string>
   <string name="account_dht_public_in_calls_label">അജ്ഞാത കോൺടാക്റ്റുകളിൽ നിന്നും വരുന്ന കോളുകൾ അനുവദിക്കുക</string>
   <string name="account_registration_exp_label">Pendafataran luput</string>
@@ -149,17 +147,17 @@
   <string name="account_link_button">നെറ്റ് വർക്കിൽ നിന്നും കണക്ട് ചെയ്യുക</string>
   <string name="account_link_archive_button">ബാക്കപ്പ് വഴി കണക്ട് ചെയ്യുക</string>
   <string name="account_new_button">ജാമി അക്കൌണ്ട് സൃഷ്ടിക്കുക</string>
-  <string name="account_link_export_button">പുതിയ ഉപകരണം ബന്ധിപ്പിക്കുക</string>
+  <string name="account_link_export_button">പുതിയ ഉപകരണം ലിങ്ക് ചെയ്യുക</string>
   <string name="account_link_show_button">%d കൂടുതൽ ലിങ്കുചെയ്ത ഉപകരണം കാണിക്കുക</string>
   <string name="account_link_hide_button">ബന്ധിപ്പിച്ചിരിക്കുന്ന ഉപകരണം മറയ്ക്കുക</string>
   <string name="account_end_export_button">tutup</string>
   <string name="account_export_title">മറ്റ് ഉപകരണങ്ങളുമായി ലിങ്ക് അക്കൌണ്ട്</string>
   <string name="account_connect_server_button">മാനേജ്മെന്റ് സെർവറുമായി ബന്ധിപ്പിക്കുക</string>
   <string name="account_connect_button">ബന്ധിപ്പിക്കുക</string>
-  <string name="prompt_server">ജാമി മാനേജ്മെന്റ് സെർവർ URL</string>
   <string name="help_credentials_enter">നിങ്ങളുടെ സംഘടനയുടെ ക്രെഡിറ്റീവുകൾ നൽകുക</string>
   <string name="help_connect_password_enter">നിങ്ങളുടെ സംഘടനയുടെ പാസ്വേഡ് നൽകുക</string>
   <string name="account_connect_prompt_username">Nama pengguna</string>
+  <string name="account_connect_server">മാനേജ്മെന്റ് സെർവറുമായി ബന്ധിപ്പിക്കുക</string>
   <!--Name registration-->
   <string name="error_username_empty">Masukkan nama pengguna</string>
   <string name="register_name">രജിസ്ട്രി നാമം</string>

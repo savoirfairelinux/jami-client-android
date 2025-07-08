@@ -69,8 +69,6 @@
   <string name="account_video_enable">비디오를 활성화</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">발전</string>
-  <string name="account_read_receipts_label">읽기 영수증을 활성화</string>
-  <string name="account_read_receipts_summary">메시지가 표시된 것을 나타내는 영수증을 보내거나 수신하십시오.</string>
   <string name="account_call_settings_title">전화 설정</string>
   <string name="account_dht_public_in_calls_label">알려지지 않은 연락처에서 수신 전화를 허용</string>
   <string name="account_registration_exp_label">등록 기간이 만료</string>
@@ -156,10 +154,10 @@
   <string name="account_export_title">다른 장치에 연결된 계정</string>
   <string name="account_connect_server_button">관리 서버에 연결</string>
   <string name="account_connect_button">연결</string>
-  <string name="prompt_server">Jami 관리 서버 URL</string>
   <string name="help_credentials_enter">조직의 자격증을 입력하세요</string>
   <string name="help_connect_password_enter">조직 비밀번호를 입력하세요</string>
   <string name="account_connect_prompt_username">사용자명</string>
+  <string name="account_connect_server">관리 서버에 연결</string>
   <!--Name registration-->
   <string name="error_username_empty">사용자 이름을 입력</string>
   <string name="register_name">등록 이름</string>

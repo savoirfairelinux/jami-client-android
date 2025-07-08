@@ -12,5 +12,4 @@
   <string name="control_pause">Pozastavit</string>
   <string name="searchbar_navigation_account">Vyberte účet</string>
   <string name="add_conversation_member">Přidat člena konverzace</string>
-  <string name="qrcode_to_scan">QR kód ke skenování</string>
 </resources>

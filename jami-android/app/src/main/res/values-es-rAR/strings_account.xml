@@ -86,8 +86,7 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avanzadas</string>
   <string name="account_chat_settings_title">Configuraciones de chat</string>
-  <string name="account_read_receipts_label">Habilitar confirmaciones de lectura</string>
-  <string name="account_read_receipts_summary">Enviar y recibir confirmaciones de lectura indicando que se ha visto un mensaje.</string>
+  <string name="account_read_receipts_label">Recibos de lectura</string>
   <string name="account_call_settings_title">Ajustes de llamada</string>
   <string name="account_dht_public_in_calls_label">Permitir llamadas entrantes de contactos desconocidos</string>
   <string name="account_registration_exp_label">Caducidad del registro</string>
@@ -195,20 +194,19 @@
   <string name="account_link_device">Conectarse desde otro dispositivo</string>
   <string name="account_link_button">Conectarse desde la red</string>
   <string name="account_link_archive_button">Conectarse desde un archivo de respaldo</string>
-  <string name="account_new_button">Crear una cuenta de Jami</string>
-  <string name="account_link_export_button">Vincular un nuevo dispositivo</string>
+  <string name="account_new_button">Crear una cuenta en Jami</string>
+  <string name="account_link_export_button">Vincular nuevo dispositivo</string>
   <string name="account_link_show_button">Mostrar %d dispositivo(s) vinculado(s) más</string>
   <string name="account_link_hide_button">Ocultar dispositivo vinculado</string>
-  <string name="account_start_export_button">Generar código PIN</string>
   <string name="account_end_export_button">Cerrar</string>
   <string name="account_export_title">Vincular cuenta a otros dispositivos</string>
   <string name="account_connect_server_button">Conectarse al servidor de gestión</string>
   <string name="account_connect_button">Conectarse</string>
-  <string name="prompt_server">URL del servidor de gestión de Jami</string>
+  <string name="prompt_server">URL del servidor de administración</string>
   <string name="help_credentials_enter">Ingresá tus credenciales de la organización</string>
   <string name="help_connect_password_enter">Ingresá tu contraseña de la organización</string>
   <string name="account_connect_prompt_username">Nombre de usuario</string>
-  <string name="account_connect_server">Conéctese al servidor JAMS</string>
+  <string name="account_connect_server">Conectarse al servidor de gestión</string>
   <string name="account_enter_username">Ingresar nombre de usuario</string>
   <string name="account_enter_servername">Entrar al servidor</string>
   <!--Name registration-->
@@ -253,18 +251,11 @@
   <string name="account_disabled_indicator">Deshabilitado</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Formato no soportado.</string>
-  <string name="account_link_info">En la nueva aplicación Jami, escanear el código QR o ingresar manualmente el código PIN.</string>
   <string name="account_link_device_title">Vincular un nuevo dispositivo</string>
-  <string name="account_link_password">Esta cuenta está cifrada con contraseña, introducir la contraseña para generar el código PIN.</string>
   <string name="account_link_generate_button">Generar</string>
-  <string name="account_link_time_valid">El código PIN será inválido: %1$s.</string>
-  <string name="account_link_device_info">Elegir \"Vincular un nuevo dispositivo\" en la otra aplicación Jami para mostrar el código QR o el código PIN.</string>
   <string name="account_generate_export_device">En el otro dispositivo</string>
-  <string name="account_generate_export_info">Instala y ejecuta Jami, selecciona \"Importar desde otro dispositivo\" y escanea el código QR.</string>
+  <string name="account_generate_export_info">Instalar y ejecutar Jami. Seleccionar \"Importar desde otro dispositivo\" y escanear el código QR. Alternativamente, ingresar el código PIN manualmente.</string>
   <string name="content_description_qr_generated">Código QR de la cuenta</string>
-  <string name="account_generate_export_invalid">El código PIN ya no es válido.\ ingresar la contraseña y generar otra para vincular el nuevo dispositivo .</string>
-  <string name="account_generate_export_invalid_two">El código PIN ya no es válido.\nGenerar otro para vincular el nuevo dispositivo.</string>
-  <string name="help_pin_info">Rellene si la cuenta está cifrada con contraseña</string>
   <string name="account_link_device_button">Conectarse</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Desbloquear cuenta de Jami</string>
@@ -278,6 +269,5 @@ La autenticación biométrica o del dispositivo agrega una forma conveniente de 
   <string name="account_biometry_enroll_auth_message">Agregue autenticación biométrica o de dispositivo seguro como una alternativa a su contraseña.</string>
   <string name="account_auth_error">Error de autenticación: %1$s</string>
   <string name="account_auth_success">La autenticación se ha realizado correctamente</string>
-  <string name="account_auth_key_error">Error al descifrar la clave de la cuenta</string>
   <string name="account_auth_password">Introduce la contraseña de la cuenta</string>
 </resources>

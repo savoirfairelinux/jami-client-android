@@ -69,8 +69,6 @@
   <string name="account_video_enable">Gaitu bideoa</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Aurreratua</string>
-  <string name="account_read_receipts_label">Irakurketa ordainagiriak aktibatu</string>
-  <string name="account_read_receipts_summary">Bidali eta jaso mezu bat agertu dela adierazten duten kuotxak.</string>
   <string name="account_call_settings_title">Dei-ezarpenak</string>
   <string name="account_dht_public_in_calls_label">Ezagunik ez diren kontaktuetatik datozen deiak baimendu</string>
   <string name="account_registration_exp_label">Erregistroa amaitu da</string>
@@ -148,7 +146,7 @@
   <string name="account_link_device">Beste gailu batetik konektatu</string>
   <string name="account_link_button">Konektatu saretik</string>
   <string name="account_link_archive_button">Konektatu babes-kopiatik</string>
-  <string name="account_new_button">Sortu Jami kontua</string>
+  <string name="account_new_button">Jarri kontu bat Jami-n</string>
   <string name="account_link_export_button">Estekatu gailu berria</string>
   <string name="account_link_show_button">%d gehiagoren konektatutako gailua erakutsi</string>
   <string name="account_link_hide_button">Ezkutatu lotutako gailua</string>
@@ -156,10 +154,10 @@
   <string name="account_export_title">Beste gailu batzuekin lotutako kontuak</string>
   <string name="account_connect_server_button">Administrazio zerbitzariarekin konektatu</string>
   <string name="account_connect_button">Konektatu</string>
-  <string name="prompt_server">Jami kudeaketa zerbitzariaren URL</string>
   <string name="help_credentials_enter">Sartu zure erakundearen identifikazioa</string>
   <string name="help_connect_password_enter">Sartu zure erakundearen pasahitza</string>
   <string name="account_connect_prompt_username">Erabiltzaile-izena</string>
+  <string name="account_connect_server">Administrazio zerbitzariarekin konektatu</string>
   <!--Name registration-->
   <string name="error_username_empty">Sartu erabiltzaile-izen bat</string>
   <string name="register_name">Izen-zerrenda</string>

@@ -235,7 +235,6 @@
   <string name="help_password_choose">Izberite močno geslo, ki si ga boste zapomnili in z njim zaščitili svoj račun Jami.</string>
   <string name="help_password_enter">Vnesite glavno geslo svojega Jami računa.</string>
   <string name="help_server_enter">Vnesite URL upravljalnega strežnika.</string>
-  <string name="pin_copied">Koda PIN je kopirana na odložišče.</string>
   <string name="copied_clipboard">Kopirano na odložišče.</string>
   <string name="wizard_next">Naprej</string>
   <string name="wizard_back">Nazaj</string>
@@ -296,6 +295,7 @@
   <string name="not_able_to_write_file">Ne možno zapisati datoteke.</string>
   <string name="file_transfer_status_created">Zaganjam</string>
   <string name="file_transfer_status_unsupported">ni podprto</string>
+  <string name="file_transfer_status_invalid_file">Napačna datoteka</string>
   <string name="file_transfer_status_unjoinable_peer">Nedosegljiv soležnik</string>
   <string name="file_transfer_status_canceled">Preklicano</string>
   <string name="file_download">Prenesi</string>
@@ -419,7 +419,6 @@
   <string name="unable_to_load">Ni možno naložiti %1$s</string>
   <string name="load_success">%1$s: omogočeno</string>
   <string name="unload_success">%1$s: onemogočeno</string>
-  <string name="install_success">Razširitev %1$s je bila uspešno nameščena.</string>
   <string name="install_error">Pri uvozu razširitve je prišlo do napake.</string>
   <string name="export_side_main_title">Izvozi račun</string>
   <string name="export_side_step1_code_connect">Poveži</string>
@@ -428,5 +427,7 @@
   <string name="export_side_step3_exit">Dokončaj</string>
   <string name="import_side_step1_share">Deli</string>
   <string name="import_side_step2_password_import">Uvoz</string>
+  <string name="import_side_step3_body_done">Račun je bil uspešno uvožen.</string>
   <string name="import_side_step3_exit">Dokončaj</string>
+  <string name="link_device_error_authentication">Pri povezovanju naprave je prišlo do napake overjanja. Prevrite svoje poverilnice in poskusite znova.</string>
 </resources>

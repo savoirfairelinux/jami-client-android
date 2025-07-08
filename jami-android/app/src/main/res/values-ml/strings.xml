@@ -234,6 +234,7 @@
   <string name="gallery_error_title">ഗാലറി ആപ്ലിക്കേഷൻ കണ്ടെത്തിയില്ല</string>
   <string name="gallery_error_message">ഗാലറി തുറക്കുന്നതിനുള്ള ഉപകരണത്തിൽ ഒരു ആപ്ലിക്കേഷനും കണ്ടെത്തിയില്ല</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">അസാധുവായ ഫയൽ</string>
   <string name="file_transfer_status_canceled">റദ്ദാക്കി</string>
   <string name="file_download">ഡൌൺലോഡ് ചെയ്യുക</string>
   <string name="title_media_viewer">മാധ്യമ കാഴ്ചക്കാരൻ</string>
@@ -332,4 +333,7 @@
   <string name="export_side_step2_confirm">സ്ഥിരീകരണം</string>
   <string name="import_side_step1_share">പങ്കിടുക</string>
   <string name="import_side_step2_password_import">ഇറക്കുമതി</string>
+  <string name="import_side_step2_action_required">ചെയ്യാനുണ്ട്. സോഴ്സ് ഡിവൈസിലെ അക്കൗണ്ട് ദയവായി സ്ഥിരീകരിക്കുക.</string>
+  <string name="import_side_step3_body_done">ഈ അക്കൗണ്ട് വിജയകരമായി ഇമ്പോർട്ട് ചെയ്തു.</string>
+  <string name="link_device_error_authentication">ഈ ഡിവൈസുമായി ബന്ധിപ്പിക്കുമ്പോൾ ആധികാരികത സംബന്ധിച്ചുള്ള പ്രശ്നം വന്നിരിക്കുന്നു. ക്രഡെൻഷലുകൾ പരിശോധിച്ച് ദയവായി വീണ്ടും ശ്രമിക്കുക.</string>
 </resources>

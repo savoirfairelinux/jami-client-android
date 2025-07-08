@@ -227,6 +227,7 @@
   <string name="gallery_error_title">Pas cap d\' aplicacion Galeria trobada</string>
   <string name="gallery_error_message">Pas cap d\' aplicacion trobada sul dispositiu per dobrir Galeria</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">Dossièr invalide</string>
   <string name="file_transfer_status_canceled">Annulèt</string>
   <string name="file_download">Descargar</string>
   <string name="title_media_viewer">Vector de medias</string>

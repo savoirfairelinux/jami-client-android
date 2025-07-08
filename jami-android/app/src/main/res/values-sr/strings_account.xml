@@ -84,8 +84,6 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Napredno</string>
   <string name="account_chat_settings_title">Podešavanja ćaskanja</string>
-  <string name="account_read_receipts_label">Omogući potvrde o čitanju</string>
-  <string name="account_read_receipts_summary">Slanje i primanje potvrda koje pokazuju da je poruka prikazana.</string>
   <string name="account_call_settings_title">Podešavanje poziva</string>
   <string name="account_dht_public_in_calls_label">Dozvoli dolazne pozive od nepoznatih kontakata</string>
   <string name="account_registration_exp_label">Registracija ističe</string>
@@ -193,20 +191,18 @@
   <string name="account_link_device">Poveži se sa drugog uređaja</string>
   <string name="account_link_button">Poveži se sa mreže</string>
   <string name="account_link_archive_button">Poveži se sa rezervne kopije</string>
-  <string name="account_new_button">Napravi Jami nalog</string>
+  <string name="account_new_button">Napravite Jami nalog</string>
   <string name="account_link_export_button">Povežite novi uređaj</string>
   <string name="account_link_show_button">Prikaži %d više povezanih uređaja</string>
   <string name="account_link_hide_button">Sakri povezane uređaje</string>
-  <string name="account_start_export_button">Генеришите ПИН код</string>
   <string name="account_end_export_button">zatvori</string>
   <string name="account_export_title">Poveži nalog sa drugim uređajima</string>
   <string name="account_connect_server_button">Povežite se sa serverom za upravljanje</string>
   <string name="account_connect_button">Poveži</string>
-  <string name="prompt_server">URL servera za upravljanje Jamijem</string>
   <string name="help_credentials_enter">Unesite akreditive svoje organizacije</string>
   <string name="help_connect_password_enter">Unesi lozinku za vašu organizaciju</string>
   <string name="account_connect_prompt_username">Korisničko ime</string>
-  <string name="account_connect_server">Povežite se sa JAMS serverom</string>
+  <string name="account_connect_server">Povežite se sa serverom za upravljanje</string>
   <string name="account_enter_username">Unesi korisničko ime</string>
   <string name="account_enter_servername">Unesite server</string>
   <!--Name registration-->
@@ -251,18 +247,10 @@
   <string name="account_disabled_indicator">Onemogućeno</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Format nije podržan</string>
-  <string name="account_link_info">У новој апликацији Јами скенирајте QR код или ручно унесите ПИН код.</string>
   <string name="account_link_device_title">Povežite novi uređaj</string>
-  <string name="account_link_password">Ovaj nalog je šifrovan lozinkom, unesite lozinku da biste generisali PIN kod.</string>
   <string name="account_link_generate_button">Generiši</string>
-  <string name="account_link_time_valid">PIN kod će biti nevažeći: %1$s.</string>
-  <string name="account_link_device_info">Изаберите „Повежи нови уређај“ из друге Јами апликације да бисте приказали QR код или PIN код.</string>
   <string name="account_generate_export_device">Na drugom uređaju</string>
-  <string name="account_generate_export_info">Instalirajte i pokrenite Jami, izaberite „Uvezi sa drugog uređaja“ i skenirajte QR kod.</string>
   <string name="content_description_qr_generated">QR код налога</string>
-  <string name="account_generate_export_invalid">PIN код више није важећи.\nУнесите лозинку и генеришите другу да бисте повезали нови уређај.</string>
-  <string name="account_generate_export_invalid_two">PIN код више није важећи.\nГенеришите још један да бисте повезали нови уређај.</string>
-  <string name="help_pin_info">Popunite ako je nalog šifrovan lozinkom</string>
   <string name="account_link_device_button">Poveži</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Otključajte Jami nalog</string>
@@ -275,6 +263,5 @@
   <string name="account_biometry_enroll_auth_message">Dodajte bezbednu biometrijsku ili autentifikaciju uređaja kao alternativu lozinki</string>
   <string name="account_auth_error">Greška potvrda identiteta: %1$s</string>
   <string name="account_auth_success">Autentifikacija je uspela</string>
-  <string name="account_auth_key_error">Dešifrovanje ključa naloga nije uspelo</string>
   <string name="account_auth_password">Koristite lozinku naloga</string>
 </resources>

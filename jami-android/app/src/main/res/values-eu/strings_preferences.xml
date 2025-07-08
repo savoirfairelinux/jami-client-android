@@ -41,8 +41,7 @@
   <string name="pref_logs_summary">Diagnostikoaren egunerokoaren konfigurazioa ireki</string>
   <string name="pref_logs_start">Hasten da eguraldia.</string>
   <string name="pref_logs_stop">Utzi eguraldia.</string>
-  <string name="pref_typing_title">Titularitza adierazleak aktibatu</string>
-  <string name="pref_typing_summary">Bidali eta jaso mezu bat idazten ari dela adierazten duten adierazleak.</string>
+  <string name="pref_typing_title">Tipografia-indizatzailea</string>
   <string name="pref_block_record_title">Ezabatu pantaila-irudia eta grabazioa</string>
   <string name="pref_block_record_summary">Ez atera pantaila edo grabatu bideo bat.</string>
   <string name="pref_link_preview_title">Web-esteken aurrebistak</string>

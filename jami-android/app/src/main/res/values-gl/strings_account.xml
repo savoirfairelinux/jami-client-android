@@ -71,8 +71,6 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avanzado</string>
   <string name="account_chat_settings_title">Axustes de parola</string>
-  <string name="account_read_receipts_label">Activar notificación de lectura</string>
-  <string name="account_read_receipts_summary">Enviar e recibir notificación de que unha mensaxe foi mostrada.</string>
   <string name="account_call_settings_title">Axustes de chamada</string>
   <string name="account_dht_public_in_calls_label">Permitir chamadas entrantes de contactos descoñecidos</string>
   <string name="account_registration_exp_label">Caducidade do rexistro</string>
@@ -150,18 +148,18 @@
   <string name="account_link_device">Conectar desde outro dispositivo</string>
   <string name="account_link_button">Conectar desde a rede</string>
   <string name="account_link_archive_button">Conectar desde copia de apoio</string>
-  <string name="account_new_button">Crear conta Jami</string>
-  <string name="account_link_export_button">Ligar un novo dispositio</string>
+  <string name="account_new_button">Crea unha conta Jami</string>
+  <string name="account_link_export_button">Ligar novo dispositivo</string>
   <string name="account_link_show_button">Mostar %d dispositivo ligado</string>
   <string name="account_link_hide_button">Agochar dispositivo ligado</string>
   <string name="account_end_export_button">pechar</string>
   <string name="account_export_title">Ligar conta a outros dispositivos</string>
   <string name="account_connect_server_button">Conectar a servidor de xestión</string>
   <string name="account_connect_button">Conectar</string>
-  <string name="prompt_server">URL do servidor de xestión Jami</string>
   <string name="help_credentials_enter">Escribe as credenciais da túa organización</string>
   <string name="help_connect_password_enter">Escribe o contrasinal da túa organización</string>
   <string name="account_connect_prompt_username">Nome de usuaria</string>
+  <string name="account_connect_server">Conectar a servidor de xestión</string>
   <string name="account_enter_username">Escribir nome de usuaria</string>
   <!--Name registration-->
   <string name="error_username_empty">Escribe nome de usuaria</string>
@@ -197,11 +195,8 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Este formato non está soportado.</string>
   <string name="account_link_device_title">Ligar un novo dispositio</string>
-  <string name="account_link_password">Esta conta está protexida con contrasinal, escribe o contrasinal para crear un código PIN.</string>
   <string name="account_link_generate_button">Crear</string>
-  <string name="account_link_time_valid">O código PIN xa non será válido en: %1$s.</string>
   <string name="account_generate_export_device">No outro dispositivo</string>
-  <string name="help_pin_info">Completar se a conta está cifrada con contrasinal</string>
   <string name="account_link_device_button">Conectar</string>
   <!--Biometry-->
 </resources>

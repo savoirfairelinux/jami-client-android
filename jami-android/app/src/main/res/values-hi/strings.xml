@@ -199,7 +199,6 @@
   <string name="help_password_choose">अपने जेमी खाते की सुरक्षा के लिए एक मजबूत पासवर्ड चुनें जिसे आप याद रखेंगे।</string>
   <string name="help_password_enter">अपने मुख्य जेमी खाते का पासवर्ड दर्ज करें।</string>
   <string name="help_server_enter">प्रबंधन सर्वर का URL दर्ज करें।</string>
-  <string name="pin_copied">पिन कोड क्लिपबोर्ड पर कॉपी किया गया</string>
   <string name="wizard_next">अगला</string>
   <string name="wizard_back">वापस</string>
   <string name="wizard_skip">स्किप</string>
@@ -245,6 +244,7 @@
   <string name="gallery_error_title">कोई गैलरी ऐप नहीं मिला</string>
   <string name="gallery_error_message">गैलरी खोलने के लिए डिवाइस पर कोई एप्लिकेशन नहीं मिला</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">अमान्य फ़ाइल</string>
   <string name="file_transfer_status_canceled">रद्द किया गया</string>
   <string name="file_download">डाउनलोड करें</string>
   <string name="title_media_viewer">मीडिया दर्शक</string>
@@ -352,7 +352,6 @@
   <string name="unable_to_load">%1$sभरने में असमर्थ</string>
   <string name="load_success">%1$s: सक्षम</string>
   <string name="unload_success">%1$s: अक्षम</string>
-  <string name="install_success">%1$s एक्सटेंशन सफलतापूर्वक स्थापित हो गया है</string>
   <string name="install_error">एक्सटेंशन आयात करते समय एक त्रुटि हुई</string>
   <string name="export_side_step1_code_connect">कनेक्ट करें</string>
   <string name="export_side_step2_cancel">रद्द करें</string>

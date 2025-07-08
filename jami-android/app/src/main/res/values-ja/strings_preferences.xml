@@ -41,8 +41,7 @@
   <string name="pref_logs_summary">診断記録設定を開く</string>
   <string name="pref_logs_start">記録を開始する</string>
   <string name="pref_logs_stop">記録を終了する</string>
-  <string name="pref_typing_title">自分の入力状況の表示を有効化</string>
-  <string name="pref_typing_summary">相手や自分がメッセージを入力している最中であることを送受信する。</string>
+  <string name="pref_typing_title">タイプインジケーター</string>
   <string name="pref_block_record_title">画面撮影・録画の禁止</string>
   <string name="pref_block_record_summary">画面を撮影・録画することを禁止する。</string>
   <string name="pref_link_preview_title">Web リンクのプレビュー</string>

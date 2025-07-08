@@ -41,8 +41,7 @@
   <string name="pref_logs_summary">ઓપન ડાયગ્નોસ્ટિક લોગ સેટિંગ્સ</string>
   <string name="pref_logs_start">લોગિંગ શરૂ કરો</string>
   <string name="pref_logs_stop">લોગિંગ બંધ કરો</string>
-  <string name="pref_typing_title">ટાઇપિંગ સૂચકાંકોને સક્ષમ કરો</string>
-  <string name="pref_typing_summary">સંદેશ લખવામાં આવી રહ્યો છે તે દર્શાવતા ટાઇપિંગ સૂચકાંકો મોકલો અને પ્રાપ્ત કરો.</string>
+  <string name="pref_typing_title">ટાઈપિંગ સૂચક</string>
   <string name="pref_block_record_title">સ્ક્રીનશોટ અને રેકોર્ડિંગ બ્લોક</string>
   <string name="pref_block_record_summary">સ્ક્રીનશૉટ લેવાનું અથવા વિડિઓ રેકોર્ડ કરવાનું અવરોધિત કરો.</string>
   <string name="pref_link_preview_title">વેબ લિંક પૂર્વાવલોકનો</string>

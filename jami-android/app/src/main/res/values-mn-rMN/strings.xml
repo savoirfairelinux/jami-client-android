@@ -226,6 +226,7 @@
   <string name="gallery_error_title">Галерийн хэрэгсэл олдохгүй</string>
   <string name="gallery_error_message">Галерея нээлтэд хэрэгсэл байхгүй</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">Үндсэн хуулийн бус файл</string>
   <string name="file_transfer_status_canceled">Цуцаллаа</string>
   <string name="file_download">Хөгжүүлнэ</string>
   <string name="title_media_viewer">Мэдээлэл үзэгч</string>

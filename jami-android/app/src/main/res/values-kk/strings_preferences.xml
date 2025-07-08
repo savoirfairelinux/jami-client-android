@@ -41,8 +41,7 @@
   <string name="pref_logs_summary">Диагностикалық журналды ашу параметрлері</string>
   <string name="pref_logs_start">Жазбаларды жазуды бастаңыз</string>
   <string name="pref_logs_stop">Ағаштарды кесуді тоқтату</string>
-  <string name="pref_typing_title">Түрлеу көрсеткіштерін рұқсат ету</string>
-  <string name="pref_typing_summary">Хатты жазатындығын көрсететін жазу индикаторларын жіберу және алу.</string>
+  <string name="pref_typing_title">Типолау көрсеткіші</string>
   <string name="pref_block_record_title">Экран түсірілімін және жазуды бөлеңіз</string>
   <string name="pref_block_record_summary">Скрийн түсіруді немесе бейне түсіруді тоқтату.</string>
   <string name="pref_link_preview_title">Веб-сілтеменің алдын ала қарау нұсқалары</string>

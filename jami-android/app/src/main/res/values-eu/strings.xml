@@ -226,6 +226,7 @@
   <string name="gallery_error_title">Ez da galeria aplikaziorik aurkitu</string>
   <string name="gallery_error_message">Galeri-errorearen mezua</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">Fitxategi baliogabea</string>
   <string name="file_transfer_status_canceled">Bertan behera utzita</string>
   <string name="file_download">Deskargatu </string>
   <string name="title_media_viewer">Titulu-euskarriko ikusle</string>

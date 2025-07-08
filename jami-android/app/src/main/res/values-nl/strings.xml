@@ -236,6 +236,7 @@
   <string name="gallery_error_message">Geen app om Galerij te openen gevonden op dit apparaat</string>
   <!--File Transfer-->
   <string name="file_transfer_status_created">Bezig met initialiseren</string>
+  <string name="file_transfer_status_invalid_file">Ongeldig bestand</string>
   <string name="file_transfer_status_canceled">Geannuleerd</string>
   <string name="file_download">Download</string>
   <string name="title_media_viewer">Mediaweergave</string>

@@ -53,8 +53,8 @@
   <string name="pref_push_notifications_logs_title">Regjistra njoftimesh push</string>
   <string name="pref_push_notifications_logs_summary">Shihni regjistra të marrë prej
         njoftimeve push.</string>
-  <string name="pref_typing_title">Aktivizo tregues shtypjeje</string>
-  <string name="pref_typing_summary">Dërgoni dhe merrni shenja shtypjeje që tregojnë se po shtypet një mesazh.</string>
+  <string name="pref_typing_title">Tregues shtypjeje në tastierë</string>
+  <string name="pref_typing_summary">Trego kur shtypen mesazhe.</string>
   <string name="pref_block_record_title">Bllokoni foto ekrani dhe regjistrim</string>
   <string name="pref_block_record_summary">Blloko bërje fotosh ose regjistrim videosh.</string>
   <string name="pref_link_preview_title">Paraparje lidhjesh web</string>

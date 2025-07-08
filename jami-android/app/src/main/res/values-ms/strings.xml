@@ -225,6 +225,7 @@
   <string name="gallery_error_title">ഗാലറി ആപ്ലിക്കേഷൻ കണ്ടെത്തിയില്ല</string>
   <string name="gallery_error_message">ഗാലറി തുറക്കുന്നതിനുള്ള ഉപകരണത്തിൽ ഒരു ആപ്ലിക്കേഷനും കണ്ടെത്തിയില്ല</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">അസാധുവായ ഫയൽ</string>
   <string name="file_transfer_status_canceled">Dibatalkan</string>
   <string name="file_download">ഡൌൺലോഡ് ചെയ്യുക</string>
   <string name="title_media_viewer">മാധ്യമ കാഴ്ചക്കാരൻ</string>

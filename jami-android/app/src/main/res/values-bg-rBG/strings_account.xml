@@ -69,8 +69,6 @@
   <string name="account_video_enable">Активиране на видео</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Разширени</string>
-  <string name="account_read_receipts_label">Осигуряване на четенето на разписки</string>
-  <string name="account_read_receipts_summary">Изпращане и получаване на квитанции, които показват, че е било показвано съобщение.</string>
   <string name="account_call_settings_title">Настройки на обаждането</string>
   <string name="account_dht_public_in_calls_label">Осигуряване на входящи обаждания от неизвестни контакти</string>
   <string name="account_registration_exp_label">Срок на регистрацията</string>
@@ -148,17 +146,17 @@
   <string name="account_link_device">Свържете се от друго устройство</string>
   <string name="account_link_button">Свържете се от мрежата</string>
   <string name="account_link_archive_button">Свържете се от резервното</string>
-  <string name="account_new_button">Създаване на профил в Jami</string>
+  <string name="account_new_button">Създаване на акаунт Jami</string>
   <string name="account_link_export_button">Свържете ново устройство</string>
   <string name="account_link_hide_button">Скрийте свързано устройство</string>
   <string name="account_end_export_button">затваряне</string>
   <string name="account_export_title">Свързване на акаунт с други устройства</string>
   <string name="account_connect_server_button">Свързване с сървър за управление</string>
   <string name="account_connect_button">Свържете се</string>
-  <string name="prompt_server">URL на сървъра за управление на Jami</string>
   <string name="help_credentials_enter">Введете идентификационните данни на организацията си</string>
   <string name="help_connect_password_enter">Введете паролата на организацията си</string>
   <string name="account_connect_prompt_username">Потребителско име</string>
+  <string name="account_connect_server">Свързване с сървър за управление</string>
   <string name="account_enter_username">Въведете потребителско име</string>
   <!--Name registration-->
   <string name="error_username_empty">Въведете потребителско име</string>

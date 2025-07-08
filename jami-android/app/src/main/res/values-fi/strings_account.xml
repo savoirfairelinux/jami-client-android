@@ -86,8 +86,6 @@ Voit muokata tiliäsi myöhemmin</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Lisäasetukset</string>
   <string name="account_chat_settings_title">Chat-asetukset</string>
-  <string name="account_read_receipts_label">Lukukuittaukset käyttöön</string>
-  <string name="account_read_receipts_summary">Lähetä ja vastaanota kuittaus, että viesti on nähty.</string>
   <string name="account_call_settings_title">Puheluasetukset</string>
   <string name="account_dht_public_in_calls_label">Salli tuntemattomien henkilöiden puhelut</string>
   <string name="account_registration_exp_label">Rekistöröinti vanhentuu</string>
@@ -199,16 +197,15 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_link_export_button">Linkitä uusi laite</string>
   <string name="account_link_show_button">Näytä %d muuta linkitettyä laitetta</string>
   <string name="account_link_hide_button">Piilota linkitetty laite</string>
-  <string name="account_start_export_button">Luo PIN-koodi</string>
   <string name="account_end_export_button">sulje</string>
   <string name="account_export_title">Linkitä tunnus toisesta laitteesta</string>
   <string name="account_connect_server_button">Yhteyden muodostaminen hallintapalvelimeen</string>
   <string name="account_connect_button">Yhdistä</string>
-  <string name="prompt_server">Jamin hallintapalvelimen URL</string>
+  <string name="prompt_server">Hallintapalvelimen osoite</string>
   <string name="help_credentials_enter">Anna organisaatiosi tunnistetiedot</string>
   <string name="help_connect_password_enter">Anna organisaatiosi salasana</string>
   <string name="account_connect_prompt_username">Käyttäjänimi</string>
-  <string name="account_connect_server">Yhdistä JAMS-palvelimeen</string>
+  <string name="account_connect_server">Yhteyden muodostaminen hallintapalvelimeen</string>
   <string name="account_enter_username">Anna käyttäjänimi</string>
   <string name="account_enter_servername">Anna palvelin</string>
   <!--Name registration-->
@@ -253,18 +250,11 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_disabled_indicator">Poistettu</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Tätä tiedostomuotoa ei tueta.</string>
-  <string name="account_link_info">Skannaa QR-koodi uudessa Jami-sovelluksessa tai anna PIN-koodi käsin.</string>
   <string name="account_link_device_title">Linkitä uusi laite</string>
-  <string name="account_link_password">Tili on salattu salasanalla, anna salasana ja luo PIN-koodi.</string>
   <string name="account_link_generate_button">Luo</string>
-  <string name="account_link_time_valid">PIN-koodi on virheellinen: %1$s.</string>
-  <string name="account_link_device_info">Valitse toisesta Jami-sovelluksesta \"Linkitä uusi laite\" saadaksesi QR-koodin tai PIN-koodin.</string>
   <string name="account_generate_export_device">Toisella laitteella</string>
-  <string name="account_generate_export_info">Asenna ja käynnistä Jami. Valitse \"Tuo toisesta laitteesta\" ja skannaa QR-koodi.</string>
+  <string name="account_generate_export_info">Asenna ja käynnistä Jami. Valitse \"Tuo toiselta laitteelta\" ja skannaa QR-koodi tai anna PIN-koodi käsin.</string>
   <string name="content_description_qr_generated">Tilin QR-koodi</string>
-  <string name="account_generate_export_invalid">PIN-koodi ei ole enää voimassa.\nAnna salasana ja linkitä laite uudelleen.</string>
-  <string name="account_generate_export_invalid_two">PIN-koodi ei ole enää voimassa.\nLuo uusi ja linkitä laite uudelleen.</string>
-  <string name="help_pin_info">Täytä, jos tili on salattu salasanalla</string>
   <string name="account_link_device_button">Yhdistä</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Avaa Jami-tilin lukitus</string>
@@ -277,6 +267,5 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_biometry_enroll_auth_message">Lisää suojattu biometrinen tai laitetodennus vaihtoehtona salasanallesi</string>
   <string name="account_auth_error">Todennusvirhe: %1$s</string>
   <string name="account_auth_success">Todennus onnistui</string>
-  <string name="account_auth_key_error">Tilin avaimen salauksen purku epäonnistui</string>
   <string name="account_auth_password">Käytä tilin salasanaa</string>
 </resources>

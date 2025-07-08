@@ -41,8 +41,7 @@
   <string name="pref_logs_summary">ಡಯಾಗ್ನೋಸ್ಟಿಕ್ ಲಾಗ್ ಸೆಟ್ಟಿಂಗ್ಗಳನ್ನು ತೆರೆಯಿರಿ</string>
   <string name="pref_logs_start">ಲಾಗ್ ಹಾಕುವಿಕೆ ಆರಂಭಿಸಿ</string>
   <string name="pref_logs_stop">ಛೇದಕಗಳನ್ನು ನಿಲ್ಲಿಸಿ</string>
-  <string name="pref_typing_title">ಟೈಪಿಂಗ್ ಸೂಚಕಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
-  <string name="pref_typing_summary">ಸಂದೇಶವನ್ನು ಟೈಪ್ ಮಾಡಲಾಗುತ್ತಿದೆ ಎಂಬುದನ್ನು ತೋರಿಸುವ ಟೈಪಿಂಗ್ ಸೂಚಕಗಳನ್ನು ಕಳುಹಿಸಿ ಮತ್ತು ಸ್ವೀಕರಿಸಿ.</string>
+  <string name="pref_typing_title">ಟೈಪಿಂಗ್ ಸೂಚಕ</string>
   <string name="pref_block_record_title">ಸ್ಕ್ರೀನ್ಶಾಟ್ ಮತ್ತು ರೆಕಾರ್ಡಿಂಗ್ ಅನ್ನು ನಿರ್ಬಂಧಿಸಿ</string>
   <string name="pref_block_record_summary">ಸ್ಕ್ರೀನ್ಶಾಟ್ ತೆಗೆಯುವುದನ್ನು ಅಥವಾ ವಿಡಿಯೋ ರೆಕಾರ್ಡಿಂಗ್ ಮಾಡುವುದನ್ನು ತಡೆಗಟ್ಟಿ.</string>
   <string name="pref_link_preview_title">ವೆಬ್ ಲಿಂಕ್ ಪೂರ್ವವೀಕ್ಷಣೆಗಳು</string>

@@ -53,8 +53,7 @@
   <string name="pref_push_notifications_logs_title">Registos de notificações push</string>
   <string name="pref_push_notifications_logs_summary">Ver os registos capturados por
         notificações push.</string>
-  <string name="pref_typing_title">Habilitar indicadores de digitação</string>
-  <string name="pref_typing_summary">Enviar e receber indicadores de escrita, mostrando que a mensagem está sendo escrita.</string>
+  <string name="pref_typing_title">Indicador de digitação</string>
   <string name="pref_block_record_title">Bloquear captura de tela e gravação</string>
   <string name="pref_block_record_summary">Bloquear captura de tela e gravação de vídeo</string>
   <string name="pref_link_preview_title">Visualizações de links da Web</string>

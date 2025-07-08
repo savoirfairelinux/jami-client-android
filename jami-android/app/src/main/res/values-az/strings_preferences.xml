@@ -41,8 +41,7 @@
   <string name="pref_logs_summary">آچیق دیآگنوستاتیک دوققلو قورولوشلار</string>
   <string name="pref_logs_start">لوقونلاشما باشلا</string>
   <string name="pref_logs_stop">چوبانليق اتمهيي</string>
-  <string name="pref_typing_title">تایپلاشما مؤشراتلرینی فعال ائتمک</string>
-  <string name="pref_typing_summary">بیر پیغامین تایپ اولونماسی ایفاده اولونان تایپ گؤستریجیلرینی گؤندرمک و آلماق.</string>
+  <string name="pref_typing_title">تایپلاشما مؤدّی</string>
   <string name="pref_block_record_title">سکرین شات و ضبطی بلاک</string>
   <string name="pref_block_record_summary">سکرین عکس آلماغی یا ویدئو ضبط ائتمه یه مانع اول.</string>
   <string name="pref_link_preview_summary">پیش نمایش اوچونجو طرفین سرورلاریندان محتوا آلتیندا آلینما لازیمدیر.</string>

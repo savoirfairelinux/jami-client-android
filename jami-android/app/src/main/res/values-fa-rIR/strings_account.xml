@@ -69,8 +69,6 @@
   <string name="account_video_enable">فعال کردن ویدیو</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">پیشرفته</string>
-  <string name="account_read_receipts_label">فعال‌سازی رسیدهای خواندن</string>
-  <string name="account_read_receipts_summary">نشانگرهای تایپ را که نشان می دهد پیام در حال تایپ است، ارسال و دریافت کنید.</string>
   <string name="account_call_settings_title">تنظیمات تماس</string>
   <string name="account_dht_public_in_calls_label">اجازه تماس ورودی به مخاطبان ناشناخته</string>
   <string name="account_registration_exp_label">ثبت‌نام منقضی شد</string>
@@ -148,18 +146,18 @@
   <string name="account_link_device">اتصال از دستگاه دیگر</string>
   <string name="account_link_button">اتصال از طریق شبکه</string>
   <string name="account_link_archive_button">اتصال از طریق پشتیبان</string>
-  <string name="account_new_button">ایجاد یک حساب جمی</string>
-  <string name="account_link_export_button">پیوند یک دستگاه جدید</string>
+  <string name="account_new_button">حساب Jami را ایجاد کنید</string>
+  <string name="account_link_export_button">پیوند دستگاه جدید</string>
   <string name="account_link_show_button">نمایش %d دستگاه‌های پیوندیافته بیشتر</string>
   <string name="account_link_hide_button">مخفی‌کردن دستگاه پیوند‌داده‌شده</string>
   <string name="account_end_export_button">بستن</string>
   <string name="account_export_title">پیوند حساب کاربری با دستگاه دیگر</string>
   <string name="account_connect_server_button">اتصال یه سرور مدیریت</string>
   <string name="account_connect_button">اتصال</string>
-  <string name="prompt_server">آدرس URL سرور مدیریت جمی</string>
   <string name="help_credentials_enter">اعتبار‌نامه سازمانی خود را وارد کنید</string>
   <string name="help_connect_password_enter">گذرواژه سازمانی خود را وارد کنید</string>
   <string name="account_connect_prompt_username">نام کاربری</string>
+  <string name="account_connect_server">اتصال یه سرور مدیریت</string>
   <string name="account_enter_username">نام کاربری را وارد کنید</string>
   <!--Name registration-->
   <string name="error_username_empty">یک نام کاربری وارد کنید</string>

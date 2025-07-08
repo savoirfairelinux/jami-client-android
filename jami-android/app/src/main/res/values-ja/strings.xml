@@ -231,6 +231,7 @@
   <string name="gallery_error_title">ギャラリーアプリがありません</string>
   <string name="gallery_error_message">デバイス上にギャラリーを開くアプリがありません</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">無効なファイル</string>
   <string name="file_transfer_status_canceled">キャンセルしました</string>
   <string name="file_download">入手</string>
   <string name="title_media_viewer">メディアビューアー</string>

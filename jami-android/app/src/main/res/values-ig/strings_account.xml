@@ -68,8 +68,6 @@
   <string name="account_video_enable">Gbaa vidiyo ahụ</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Ihe Ndị Dị Elu</string>
-  <string name="account_read_receipts_label">Gbaa mbọ hụ na ị na-agụ akwụkwọ ndị e nyere gị</string>
-  <string name="account_read_receipts_summary">Ziga ma nata akwụkwọ nnata nke na-egosi na e gosipụtara ozi.</string>
   <string name="account_call_settings_title">Ntọala oku</string>
   <string name="account_dht_public_in_calls_label">Kwe ka oku na-abata site na kọntaktị ndị a na-amaghị</string>
   <string name="account_registration_exp_label">Ndebanye aha ahụ na-agwụ</string>
@@ -155,10 +153,10 @@
   <string name="account_export_title">Njikọ akaụntụ na ngwaọrụ ndị ọzọ</string>
   <string name="account_connect_server_button">Jikọọ na njikwa ihe nkesa</string>
   <string name="account_connect_button">Jikọọ</string>
-  <string name="prompt_server">Jami management server URL</string>
   <string name="help_credentials_enter">Tinye nzere nke nzukọ gị</string>
   <string name="help_connect_password_enter">Tinye paswọọdụ gị</string>
   <string name="account_connect_prompt_username">Aha njirimara</string>
+  <string name="account_connect_server">Jikọọ na njikwa ihe nkesa</string>
   <!--Name registration-->
   <string name="error_username_empty">Tinye aha njirimara</string>
   <string name="register_name">Aha ndekọ</string>

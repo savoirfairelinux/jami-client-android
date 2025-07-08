@@ -68,8 +68,6 @@
   <string name="account_video_enable">Khả năng video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Tiến bộ</string>
-  <string name="account_read_receipts_label">Khả năng nhận đọc</string>
-  <string name="account_read_receipts_summary">Gửi và nhận biên lai cho thấy một tin nhắn đã được hiển thị.</string>
   <string name="account_call_settings_title">Cài đặt cuộc gọi</string>
   <string name="account_dht_public_in_calls_label">Cho phép cuộc gọi đến từ các liên lạc không rõ</string>
   <string name="account_registration_exp_label">Việc đăng ký hết hạn</string>
@@ -148,17 +146,17 @@
   <string name="account_link_button">Kết nối từ mạng</string>
   <string name="account_link_archive_button">Kết nối từ backup</string>
   <string name="account_new_button">Tạo tài khoản Jami</string>
-  <string name="account_link_export_button">Kết nối một thiết bị mới</string>
+  <string name="account_link_export_button">Kết nối thiết bị mới</string>
   <string name="account_link_show_button">hiển thị %d thiết bị liên kết khác</string>
   <string name="account_link_hide_button">Cụm thiết bị kết nối</string>
   <string name="account_end_export_button">gần</string>
   <string name="account_export_title">Tài khoản liên kết với các thiết bị khác</string>
   <string name="account_connect_server_button">Kết nối với máy chủ quản lý</string>
   <string name="account_connect_button">Kết nối</string>
-  <string name="prompt_server">Jami quản lý máy chủ URL</string>
   <string name="help_credentials_enter">Nhập thông tin cá nhân của tổ chức của bạn</string>
   <string name="help_connect_password_enter">Nhập mật khẩu của tổ chức</string>
   <string name="account_connect_prompt_username">Username</string>
+  <string name="account_connect_server">Kết nối với máy chủ quản lý</string>
   <!--Name registration-->
   <string name="error_username_empty">Nhập tên người dùng</string>
   <string name="register_name">Tên đăng ký</string>

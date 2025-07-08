@@ -52,8 +52,7 @@
   <string name="pref_connection_monitor_summary">Monitoruj połączenia peer-to-peer</string>
   <string name="pref_push_notifications_logs_title">Logi powiadomień push</string>
   <string name="pref_push_notifications_logs_summary">Zobacz logi powiadomień push.</string>
-  <string name="pref_typing_title">Włącz wskaźniki pisania</string>
-  <string name="pref_typing_summary">Wysyłaj i odbieraj wskaźniki pisania pokazujące, że wiadomość jest pisana.</string>
+  <string name="pref_typing_title">Wskaźnik typu</string>
   <string name="pref_block_record_title">Zablokuj zrzuty ekranu i nagrywanie</string>
   <string name="pref_block_record_summary">Zablokuj robienie zrzutu ekranu lub nagrywania wideo.</string>
   <string name="pref_link_preview_title">Podglądy linków</string>

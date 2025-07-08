@@ -41,8 +41,7 @@
   <string name="pref_logs_summary">Ανοίξτε τις ρυθμίσεις καταγραφής διαγνωστικού</string>
   <string name="pref_logs_start">Έναρξη καταγραφής</string>
   <string name="pref_logs_stop">Τερματισμός καταγραφής</string>
-  <string name="pref_typing_title">Ενεργοποιήστε δείκτες τυπογραφίας</string>
-  <string name="pref_typing_summary">Στείλτε και λαμβάνετε δείκτες πληκτρολόγησης που δείχνουν ότι πληκτρολογείται ένα μήνυμα.</string>
+  <string name="pref_typing_title">Δείκτης τυπογραφίας</string>
   <string name="pref_block_record_title">Κλείστε το screenshot και την εγγραφή</string>
   <string name="pref_block_record_summary">Αποτρέψτε την λήψη οθόνης ή την ηχογράφηση βίντεο.</string>
   <string name="pref_link_preview_title">Προεπισκοπήσεις συνδέσεων Web</string>

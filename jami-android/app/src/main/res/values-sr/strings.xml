@@ -263,6 +263,7 @@
   <string name="gallery_error_title">Nije pronađena aplikacija za galeriju</string>
   <string name="gallery_error_message">Nije pronađena aplikacija koja će otvoriti galeriju</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">Neispravna datoteka</string>
   <string name="file_transfer_status_canceled">Otkazan</string>
   <string name="file_download">Preuzimanje</string>
   <string name="title_media_viewer">Pregledač medija</string>

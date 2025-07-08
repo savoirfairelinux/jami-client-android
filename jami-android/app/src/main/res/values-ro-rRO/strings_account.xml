@@ -86,8 +86,6 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avansate</string>
   <string name="account_chat_settings_title">Reglări discuții</string>
-  <string name="account_read_receipts_label">Arată confirmarea de citire</string>
-  <string name="account_read_receipts_summary">Trimite și primește confirmări de citire care arată că un mesaj a fost citit.</string>
   <string name="account_call_settings_title">Reglări apeluri</string>
   <string name="account_dht_public_in_calls_label">Primește apeluri necunoscute</string>
   <string name="account_registration_exp_label">Expirarea înscrierii</string>
@@ -196,19 +194,18 @@
   <string name="account_link_button">Conectează-te dintr-o rețea</string>
   <string name="account_link_archive_button">Conectare din copia de rezervă</string>
   <string name="account_new_button">Creează un cont Jami</string>
-  <string name="account_link_export_button">Asociază alt aparat</string>
+  <string name="account_link_export_button">Asociază un nou aparat</string>
   <string name="account_link_show_button">Arată încă %d aparate asociate</string>
   <string name="account_link_hide_button">Ascunde aparatul asociat</string>
-  <string name="account_start_export_button">Generează codul PIN</string>
   <string name="account_end_export_button">închide</string>
   <string name="account_export_title">Asociază contul cu alte aparate</string>
   <string name="account_connect_server_button">Conectează-te la serverul de administrare</string>
   <string name="account_connect_button">Conectează</string>
-  <string name="prompt_server">URL-ul serverului de administrare Jami</string>
+  <string name="prompt_server">URL-ul serverului de administrare</string>
   <string name="help_credentials_enter">Introdu datele de autentificare ale organizației tale</string>
   <string name="help_connect_password_enter">Introdu parola organizației tale</string>
   <string name="account_connect_prompt_username">Nume de utilizator</string>
-  <string name="account_connect_server">Conectează la un server JAMS</string>
+  <string name="account_connect_server">Conectează-te la serverul de administrare</string>
   <string name="account_enter_username">Introdu numele de utilizator</string>
   <string name="account_enter_servername">Introdu serverul</string>
   <!--Name registration-->
@@ -253,18 +250,11 @@
   <string name="account_disabled_indicator">Dezactivat</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Acest format nu este acceptat.</string>
-  <string name="account_link_info">În noua aplicație Jami, scanează codul QR sau introdu manual codul PIN.</string>
   <string name="account_link_device_title">Asociază alt aparat</string>
-  <string name="account_link_password">Acest cont este cifrat cu parolă. Introdu parola pentru a genera codul PIN.</string>
   <string name="account_link_generate_button">Generează</string>
-  <string name="account_link_time_valid">Codul PIN expiră: %1$s.</string>
-  <string name="account_link_device_info">Alege „Asociază alt aparat” din cealaltă aplicație Jami pentru a afișa codul QR sau PIN-ul.</string>
   <string name="account_generate_export_device">În celălalt aparat</string>
-  <string name="account_generate_export_info">Instalează și pornește Jami, alege „Importă din alt aparat” și scanează codul QR.</string>
+  <string name="account_generate_export_info">Instalează și pornește Jami, alege „Importă din alt aparat” și scanează codul QR sau introdu manual codul PIN.</string>
   <string name="content_description_qr_generated">Codul QR al contului</string>
-  <string name="account_generate_export_invalid">Codul PIN nu mai este valabil.\nIntrodu parola și generează altul pentru asocierea noului aparat.</string>
-  <string name="account_generate_export_invalid_two">Codul PIN nu mai este valabil.\nGenerează altul pentru asocierea noului aparat.</string>
-  <string name="help_pin_info">Se completează dacă acest cont are parolă</string>
   <string name="account_link_device_button">Conectează</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Deblochează contul Jami</string>
@@ -278,6 +268,5 @@ Autentificarea biometrică adaugă o modalitate convenabilă de deblocare local�
   <string name="account_biometry_enroll_auth_message">Adaugă autentificarea biometrică sau alta ca o alternativă la parola ta</string>
   <string name="account_auth_error">Eroare de autentificare: %1$s</string>
   <string name="account_auth_success">Autentificarea a reușit</string>
-  <string name="account_auth_key_error">Nu s-a reușit descifrarea cheii contului</string>
   <string name="account_auth_password">Folosește parola contului</string>
 </resources>
