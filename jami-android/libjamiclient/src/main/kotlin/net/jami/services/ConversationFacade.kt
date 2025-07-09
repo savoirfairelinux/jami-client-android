@@ -730,11 +730,10 @@ class ConversationFacade(
                 })
 
         mDisposableBag.add(mAccountService.incomingMessages
-            .concatMapSingle { msg: TextMessage -> getAccountSubject(msg.account!!)
-                    .map { a: Account -> a.addTextMessage(msg)
-                        msg }
-            }
-            .subscribe({ txt: TextMessage -> parseNewMessage(txt) })
+            .subscribe({ (a: Account, txt: TextMessage) ->
+                a.addTextMessage(txt)
+                parseNewMessage(txt)
+            })
                 { e: Throwable -> Log.e(TAG, "Error adding text message", e) })
 
         mDisposableBag.add(mAccountService.incomingSwarmMessages

@@ -132,16 +132,18 @@ class AccountService(
 
     private val incomingMessageSubject: Subject<Message> = PublishSubject.create()
     private val incomingSwarmMessageSubject: Subject<Interaction> = PublishSubject.create()
-    val incomingMessages: Observable<TextMessage> = incomingMessageSubject
-        .flatMapMaybe { msg: Message ->
+    val incomingMessages: Observable<Pair<Account, TextMessage>> = incomingMessageSubject
+        .concatMapMaybe { msg -> getAccountSingle(msg.accountId)
+          .flatMapMaybe { a: Account ->
             val message = msg.messages[CallService.MIME_TEXT_PLAIN]
-            if (message != null) {
+            if (a.isSip && message != null) {
                 return@flatMapMaybe mHistoryService
                     .incomingMessage(msg.accountId, msg.messageId, msg.author, message)
+                    .map { Pair(a, it) }
                     .toMaybe()
             }
             Maybe.empty()
-        }
+        }}
         .share()
     val locationUpdates: Observable<Location> = incomingMessageSubject
         .flatMapMaybe { msg: Message ->
