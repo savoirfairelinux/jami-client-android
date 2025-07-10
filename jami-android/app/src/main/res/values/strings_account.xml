@@ -299,6 +299,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="account_device_name_empty">Device name cannot be empty.</string>
     <string name="account_device_this_indicator">This device</string>
     <string name="account_disabled_indicator">Disabled</string>
+    <string name="account_device_id">Device Id</string>
 
     <!-- Link a new device -->
     <string name="error_format_not_supported">This format is not supported.</string>
