@@ -24,4 +24,24 @@
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/device_id_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/device_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/account_device_id"
+            android:enabled="false"
+            android:focusable="false"
+            android:clickable="false"
+            android:inputType="none"
+            android:textColor="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 </LinearLayout>
