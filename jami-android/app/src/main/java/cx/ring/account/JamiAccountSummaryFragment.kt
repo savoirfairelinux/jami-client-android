@@ -717,7 +717,10 @@ class JamiAccountSummaryFragment :
 
     override fun onDeviceRename() {
         RenameDeviceDialog().apply {
-            arguments = Bundle().apply { putString(RenameDeviceDialog.DEVICENAME_KEY, presenter.deviceName) }
+            arguments = Bundle().apply {
+                putString(RenameDeviceDialog.DEVICENAME_KEY, presenter.deviceName)
+                putString(RenameDeviceDialog.DEVICEID_KEY, mAccount?.deviceId)
+            }
             setListener(this@JamiAccountSummaryFragment)
         }.show(parentFragmentManager, FRAGMENT_DIALOG_RENAME)
     }

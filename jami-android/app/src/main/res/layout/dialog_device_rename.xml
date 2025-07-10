@@ -1,27 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingTop="16dp">
+    android:fillViewport="true">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ring_device_name_txt_box"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp">
+        android:orientation="vertical"
+        android:paddingTop="16dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ring_device_name_txt"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/ring_device_name_txt_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/account_rename_device_hint"
-            android:imeOptions="actionDone"
-            android:inputType="textCapWords"
-            android:lines="1"
-            android:maxLines="1" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp">
 
-</LinearLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ring_device_name_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/account_rename_device_hint"
+                android:imeOptions="actionDone"
+                android:inputType="textCapWords"
+                android:lines="1"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/device_id_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/account_device_id"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/device_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:textIsSelectable="true" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
