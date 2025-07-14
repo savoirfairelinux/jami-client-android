@@ -281,6 +281,7 @@
   <string name="file_transfer_status_unsupported">Nepodporováno</string>
   <string name="file_transfer_status_ongoing">Probíhá</string>
   <string name="file_transfer_status_finished">Dokončeno</string>
+  <string name="file_transfer_status_invalid_file">Neplatný soubor</string>
   <string name="file_transfer_status_unjoinable_peer">Nedosažitelný peer</string>
   <string name="file_transfer_status_canceled">Zrušeno</string>
   <string name="file_download">Stáhnout</string>

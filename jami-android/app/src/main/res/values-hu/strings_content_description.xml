@@ -12,4 +12,5 @@
   <string name="control_pause">Megállítás</string>
   <string name="searchbar_navigation_account">Fiók kijelölése</string>
   <string name="add_conversation_member">Beszélgetési tag hozzáadása</string>
+  <string name="qrcode_to_scan">QR-kód a beolvasáshoz</string>
 </resources>

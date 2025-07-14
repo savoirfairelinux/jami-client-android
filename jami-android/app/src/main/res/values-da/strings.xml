@@ -227,6 +227,7 @@
   <string name="gallery_error_message">Der blev ikke funden nogen applikation på enheden der kan vise Galleriet</string>
   <!--File Transfer-->
   <string name="file_transfer_status_created">Initialiserer</string>
+  <string name="file_transfer_status_invalid_file">Ugyldig fil</string>
   <string name="file_transfer_status_canceled">Annulleret</string>
   <string name="file_download">Download</string>
   <string name="title_media_viewer">Mediefremviser</string>

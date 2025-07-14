@@ -12,4 +12,5 @@
   <string name="control_pause">暂停</string>
   <string name="searchbar_navigation_account">选择帐户</string>
   <string name="add_conversation_member">添加对话成员</string>
+  <string name="qrcode_to_scan">二维码，请扫描</string>
 </resources>

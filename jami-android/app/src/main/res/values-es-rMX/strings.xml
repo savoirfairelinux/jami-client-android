@@ -248,6 +248,7 @@
   <string name="help_password_choose">Elige una contraseña robusta que recuerdes para proteger tu cuenta de Jami.</string>
   <string name="help_password_enter">Ingresa la contraseña maestra de tu cuenta de Jami</string>
   <string name="help_server_enter">Ingresá la URL del servidor de administración.</string>
+  <string name="pin_copied">Código de autenticación copiado en el portapapeles.</string>
   <string name="copied_clipboard">Copiado al portapapeles.</string>
   <string name="wizard_next">Siguiente</string>
   <string name="wizard_back">Atrás</string>
@@ -320,11 +321,13 @@
   <string name="file_transfer_status_finished">Completado</string>
   <string name="file_transfer_status_closed_by_host">Cerrado por anfitrión</string>
   <string name="file_transfer_status_closed_by_peer">Cerrado por pares</string>
+  <string name="file_transfer_status_invalid_file">Archivo no válido</string>
   <string name="file_transfer_status_unjoinable_peer">Par inalcanzable</string>
   <string name="file_transfer_status_canceled">Cancelado</string>
   <string name="file_transfer_status_error">Se produjo un error mientras transfería el archivo.</string>
   <string name="file_transfer_status_timed_out">Tiempo de espera agotado.</string>
   <string name="file_saved_in">Archivo guardado en %s.</string>
+  <string name="file_saved_successfully">El archivo se guardó correctamente.</string>
   <string name="file_download">Descargar</string>
   <string name="no_space_left_on_device">No hay espacio disponible en el dispositivo.</string>
   <string name="title_media_viewer">Visor de medios</string>
@@ -458,12 +461,17 @@
   <string name="unable_to_load">No se puede cargar %1$s</string>
   <string name="load_success">%1$s: habilitado</string>
   <string name="unload_success">%1$s: desactivado</string>
+  <string name="install_success">Se ha instalado correctamente la extensión %1$s.</string>
   <string name="install_error">Se produjo un error al importar la extensión.</string>
   <string name="export_side_main_title">Exportar cuenta</string>
   <string name="import_side_main_title">Importar cuenta</string>
+  <string name="link_device_dialog_stop_title">¿Quieres dejar de vincular el dispositivo?</string>
+  <string name="link_device_dialog_stop_export_body">Detener cancelará la operación de exportación de la cuenta.</string>
+  <string name="link_device_dialog_stop_import_body">Detener cancelará la operación de importación de la cuenta.</string>
   <string name="export_side_step1_advice_qr">En el nuevo dispositivo, inicie una nueva cuenta.\nSelect <b>Account &gt; Add Account &gt; Conéctese desde otro dispositivo</b>\ncuando esté listo, escanee el código QR</string>
   <string name="export_side_step1_switch_to_code">O haga clic aquí para ingresar el código de autenticación</string>
   <string name="export_side_step1_switch_to_qr">O haga clic aquí para escanear el código QR</string>
+  <string name="export_side_step1_error_malformed">Nuevo identificador de dispositivo no reconocido. Por favor, siga las instrucciones anteriores.</string>
   <string name="export_side_step1_code_connect">Conectarse</string>
   <string name="export_side_step2_advice">El nuevo dispositivo se encuentra aquí. ¿Eres tú?\nPara continuar con la operación de exportación de la cuenta, haga clic en Confirmar.</string>
   <string name="export_side_step2_advice_ip_only">Nuevo dispositivo conectado en la dirección que sigue. ¿Eres tú?\nPara continuar exportando la cuenta, clic en Confirmar.</string>
@@ -471,6 +479,8 @@
   <string name="export_side_step2_cancel">Cancelar</string>
   <string name="export_side_step2_confirm">Confirmar</string>
   <string name="export_side_step2_password">La cuenta está protegida con contraseña.\nPara continuar, autentíquese en el nuevo dispositivo .</string>
+  <string name="export_side_step3_body_loading">La operación de exportación de la cuenta al nuevo dispositivo está en curso. Espera un momento…</string>
+  <string name="export_side_step3_body_done">La cuenta se importó correctamente en el nuevo dispositivo.</string>
   <string name="export_side_step3_exit">Finalizar</string>
   <string name="import_side_step1_advice_qr">Iniciar la exportación en el dispositivo de origen.\n<b>Seleccionar Cuenta &gt; Configuar la Cuenta &gt; Vincular nuevo dispositivo</b>\nCuando esté listo, escanee el código QR a continuación.</string>
   <string name="import_side_step1_advice_code">Iniciar la exportación en el dispositivo de origen.\n<b>Seleccionar Cuenta &gt; Configuración de la Cuenta &gt; Vincular nuevo dispositivo</b>\nCuando esté listo, ingrese el código a continuación.</string>
@@ -482,9 +492,16 @@
   <string name="import_side_step2_password_prompt">La cuenta está protegida con contraseña.\nDesbloquea para continuar .</string>
   <string name="import_side_step2_password_import">Importar</string>
   <string name="import_side_step2_password_unlocking">Desbloqueando cuenta…</string>
+  <string name="import_side_step2_action_required">Acción requerida. Confirme la cuenta en el dispositivo de origen.</string>
+  <string name="import_side_step3_body_loading">La cuenta se está importando en el nuevo dispositivo. Espera un momento…</string>
+  <string name="import_side_step3_body_done">La cuenta se importó correctamente.</string>
+  <string name="import_side_step3_go_to_account">Ir a la nueva cuenta</string>
   <string name="import_side_step3_exit">Acabado</string>
+  <string name="link_device_share_title">Compartir código de autenticación</string>
+  <string name="link_device_error_network">Se produjo un error de red al vincular el dispositivo. Verificar la conexión e intentarlo de nuevo.</string>
   <string name="link_device_error_authentication">Se produjo un error de autenticación al vincular el dispositivo. Compruebe las credenciales e inténtelo de nuevo.</string>
   <string name="link_device_error_timeout">Tiempo de espera agotado.</string>
+  <string name="link_device_error_canceled">Operación cancelada por el usuario.</string>
   <string name="link_device_error_unknown">Sucedió un error.</string>
   <string name="link_device_error_bad_password">Comprobar las credenciales e intentarlo de nuevo.</string>
 </resources>

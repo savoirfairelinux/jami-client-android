@@ -12,4 +12,5 @@
   <string name="control_pause">Pausar</string>
   <string name="searchbar_navigation_account">Seleccionar cuenta</string>
   <string name="add_conversation_member">Agregar miembro de conversación</string>
+  <string name="qrcode_to_scan">Código QR para escanear</string>
 </resources>

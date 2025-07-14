@@ -226,6 +226,7 @@
   <string name="gallery_error_title">Neniu Galerio-apliko trovita</string>
   <string name="gallery_error_message">Neniu apliko trovita en la aparato por malfermi Galerion</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">Nelaŭdata dosiero</string>
   <string name="file_transfer_status_canceled">Nuligita</string>
   <string name="file_download">Elŝutu</string>
   <string name="title_media_viewer">Amaskomunikila spektanto</string>

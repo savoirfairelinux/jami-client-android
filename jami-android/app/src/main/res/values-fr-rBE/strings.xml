@@ -468,6 +468,7 @@ Sélectionnez Ajouter un compte -&gt; Se connecter à partir d\'un autre apparei
 Lorsque vous êtes prêt, scannez le code QR.</string>
   <string name="export_side_step1_switch_to_code">Ou cliquez ici pour saisir le code d\'authentification</string>
   <string name="export_side_step1_switch_to_qr">Ou cliquer ici pour scanner le code QR</string>
+  <string name="export_side_step1_error_malformed">Nouvel identifiant d\'appareil non reconnu. Veuillez suivre les instructions ci-dessus.</string>
   <string name="export_side_step1_code_connect">Se connecter</string>
   <string name="export_side_step2_advice">Nouvel appareil trouvé à l\'adresse ci-dessous. Est-ce vous ?
 En cliquant sur confirmer, le transfert du compte se poursuivra.</string>
@@ -494,6 +495,7 @@ Lorsque vous êtes prêt, entrez le code ci-dessous.</string>
 Pour continuer, authentifiez-vous.</string>
   <string name="import_side_step2_password_import">Importation</string>
   <string name="import_side_step2_password_unlocking">Déverrouillage du compte ...</string>
+  <string name="import_side_step2_action_required">Action requise. Veuillez confirmer le compte sur l\'appareil source.</string>
   <string name="import_side_step3_body_done">Le compte a été importé avec succès.</string>
   <string name="import_side_step3_exit">Terminé</string>
   <string name="link_device_error_authentication">Une erreur d\'authentification s\'est produite lors de la connexion de l\'appareil. Veuillez vérifier les informations d\'identification et réessayer.</string>

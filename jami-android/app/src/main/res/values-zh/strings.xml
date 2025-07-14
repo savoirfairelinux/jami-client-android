@@ -246,6 +246,7 @@
   <string name="help_password_choose">为了保护您的 Jami 账户，请使用一个强密码并牢记。</string>
   <string name="help_password_enter">输入您的 Jami 主账户密码。</string>
   <string name="help_server_enter">输入管理服务器的 URL。</string>
+  <string name="pin_copied">验证码已复制到剪贴板。</string>
   <string name="copied_clipboard">已复制到剪贴板。</string>
   <string name="wizard_next">下一步</string>
   <string name="wizard_back">上一步</string>
@@ -324,6 +325,7 @@
   <string name="file_transfer_status_error">传输文件时发生错误。</string>
   <string name="file_transfer_status_timed_out">操作超时。</string>
   <string name="file_saved_in">文件保存在%s。</string>
+  <string name="file_saved_successfully">文件已成功保存。</string>
   <string name="file_download">下载</string>
   <string name="no_space_left_on_device">设备上没有可用存储空间。</string>
   <string name="title_media_viewer">媒体播放器</string>
@@ -457,9 +459,13 @@
   <string name="unable_to_load">无法加载 %1$s</string>
   <string name="load_success">%1$s: 已启用</string>
   <string name="unload_success">%1$s: 已禁用</string>
+  <string name="install_success">扩展程序%1$s已成功安装。</string>
   <string name="install_error">导入扩展时出错</string>
   <string name="export_side_main_title">导出账户</string>
   <string name="import_side_main_title">导入帐户</string>
+  <string name="link_device_dialog_stop_title">是否要停止与设备的关联？</string>
+  <string name="link_device_dialog_stop_export_body">停止操作将取消导出账户操作。</string>
+  <string name="link_device_dialog_stop_import_body">停止操作将取消导入账户操作。</string>
   <string name="export_side_step1_advice_qr">在新设备上，启动一个新账户。\n选择<b>账户&gt; 添加账户&gt; 从其他设备连接</b>\n准备好后，扫描二维码</string>
   <string name="export_side_step1_switch_to_code">或点击此处输入验证码</string>
   <string name="export_side_step1_switch_to_qr">或点击此处扫描二维码</string>
@@ -471,6 +477,8 @@
   <string name="export_side_step2_cancel">取消</string>
   <string name="export_side_step2_confirm">确认</string>
   <string name="export_side_step2_password">该帐户受密码保护。\n要继续，请在新设备上进行身份验证。</string>
+  <string name="export_side_step3_body_loading">正在将账户导出到新设备。请稍候…</string>
+  <string name="export_side_step3_body_done">账户已成功导入到新设备。</string>
   <string name="export_side_step3_exit">完成</string>
   <string name="import_side_step1_advice_qr">在原设备上启动导出。\n&lt;b&gt;选择帐户&amp;gt；帐户设置&amp;gt；链接新设备&lt;/b&gt;\n准备就绪后，扫描下面的二维码。</string>
   <string name="import_side_step1_advice_code">在原设备上启动导出。\n<b>选择帐户&gt;帐户设置&gt;链接新设备</b>\n准备就绪后，输入下面的代码。</string>
@@ -483,10 +491,15 @@
   <string name="import_side_step2_password_import">載入</string>
   <string name="import_side_step2_password_unlocking">解锁帐户...</string>
   <string name="import_side_step2_action_required">需要采取措施。请在原设备上确认帐户。</string>
+  <string name="import_side_step3_body_loading">账户正在导入到新设备。请稍候…</string>
   <string name="import_side_step3_body_done">已成功导入帐户。</string>
+  <string name="import_side_step3_go_to_account">前往新账户</string>
   <string name="import_side_step3_exit">完成</string>
+  <string name="link_device_share_title">分享验证码</string>
+  <string name="link_device_error_network">在连接设备时发生网络错误。请检查您的连接并重试。</string>
   <string name="link_device_error_authentication">链接设备时出现身份验证错误。请检查凭据，然后重试。</string>
   <string name="link_device_error_timeout">操作超时。</string>
+  <string name="link_device_error_canceled">操作已被用户取消。</string>
   <string name="link_device_error_unknown">发生错误。</string>
   <string name="link_device_error_bad_password">请检查凭据并重试。</string>
 </resources>

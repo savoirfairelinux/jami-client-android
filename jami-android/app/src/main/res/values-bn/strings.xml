@@ -226,6 +226,7 @@
   <string name="gallery_error_title">কোন গ্যালারি অ্যাপ পাওয়া যায় নি</string>
   <string name="gallery_error_message">গ্যালারি খুলতে ডিভাইসে কোন অ্যাপ্লিকেশন পাওয়া যায়নি</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">অবৈধ ফাইল</string>
   <string name="file_transfer_status_canceled">বাতিল হয়েছে</string>
   <string name="file_download">ডাউনলোড</string>
   <string name="title_media_viewer">মিডিয়া ভিউয়ার</string>

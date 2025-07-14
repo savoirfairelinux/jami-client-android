@@ -228,6 +228,7 @@
   <string name="gallery_error_title">Δεν βρέθηκε εφαρμογή συλλογής</string>
   <string name="gallery_error_message">Δεν βρέθηκε εφαρμογή σε αυτή τη συσκευή για άνοιγμα της Συλλογής</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">Μη έγκυρο αρχείο</string>
   <string name="file_transfer_status_canceled">Ακυρώθηκε</string>
   <string name="file_download">Λήψη</string>
   <string name="title_media_viewer">Προβολέας πολυμέσων</string>

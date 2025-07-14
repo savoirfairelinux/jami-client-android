@@ -250,6 +250,7 @@
   <string name="gallery_error_title">No s\'ha trobat cap applicació de Galeria</string>
   <string name="gallery_error_message">No s\'ha trobat cap aplicació al dispositiu per obrir Galeria</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">Fitxer invalid</string>
   <string name="file_transfer_status_canceled">Cancel·lada</string>
   <string name="file_download">Descarrega</string>
   <string name="title_media_viewer">Visor de medis</string>

@@ -225,6 +225,7 @@
   <string name="gallery_error_title">Nun se atopó l\' aplicación Galería</string>
   <string name="gallery_error_message">Nun se atopó aplicación nel dispositivu pa abrir Galería</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">Archivu inválidu</string>
   <string name="file_transfer_status_canceled">Cancelada</string>
   <string name="file_download">Descargar</string>
   <string name="title_media_viewer">Vía de medios</string>

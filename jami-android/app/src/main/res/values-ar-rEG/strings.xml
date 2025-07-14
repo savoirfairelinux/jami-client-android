@@ -223,6 +223,7 @@
   <string name="gallery_error_title">لا يوجد برنامج المعرض</string>
   <string name="gallery_error_message">لم يتم إيجاد برنامج على الجهاز لفتح المعرض</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_invalid_file">ملف غير صالح</string>
   <string name="file_transfer_status_canceled">تم الإلغاء</string>
   <string name="file_download">تنزيل</string>
   <string name="title_media_viewer">عارض الوسائط</string>

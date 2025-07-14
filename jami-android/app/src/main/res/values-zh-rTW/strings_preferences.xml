@@ -53,6 +53,7 @@
   <string name="pref_push_notifications_logs_title">推送通知日志</string>
   <string name="pref_push_notifications_logs_summary">查看从推送通知中捕获的日志。</string>
   <string name="pref_typing_title">类型指标</string>
+  <string name="pref_typing_summary">显示消息正在输入中。</string>
   <string name="pref_block_record_title">封鎖螢幕截圖與錄製</string>
   <string name="pref_block_record_summary">靜止拍攝螢幕截圖或錄製影片。</string>
   <string name="pref_link_preview_title">網頁連結預覽</string>

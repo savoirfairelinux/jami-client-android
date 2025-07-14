@@ -87,6 +87,7 @@
   <string name="account_preferences_advanced_tab">Haladó</string>
   <string name="account_chat_settings_title">Csevegés beállításai</string>
   <string name="account_read_receipts_label">Olvasási visszaigazolások</string>
+  <string name="account_read_receipts_summary">Kézbesítési és olvasási visszaigazolások küldése és kérése az üzenetek kézbesítéséről vagy elolvasásáról.</string>
   <string name="account_call_settings_title">Hívás beállítások</string>
   <string name="account_dht_public_in_calls_label">Az ismeretlen névjegyektől érkező bejövő hívások engedélyezése</string>
   <string name="account_registration_exp_label">Regisztráció lejárata</string>
@@ -198,6 +199,7 @@
   <string name="account_link_export_button">Új eszköz összekapcsolása</string>
   <string name="account_link_show_button">További %d összekapcsolt eszköz megjelenítése</string>
   <string name="account_link_hide_button">Összekapcsolt eszköz elrejtése</string>
+  <string name="account_start_export_button">Hitelesítési kód létrehozása</string>
   <string name="account_end_export_button">bezárás</string>
   <string name="account_export_title">Fiók összekapcsolása más eszközökkel</string>
   <string name="account_connect_server_button">Csatlakozás a kezelő kiszolgálóhoz</string>
@@ -251,11 +253,18 @@
   <string name="account_disabled_indicator">Letiltva</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Ez a formátum nem támogatott</string>
+  <string name="account_link_info">Az új eszközön található Jami alkalmazásban olvasd be a QR-kódot, vagy írd be kézzel a hitelesítési kódot.</string>
   <string name="account_link_device_title">Új eszköz összekapcsolása</string>
+  <string name="account_link_password">Ez a fiók jelszóval titkosított, adja meg a jelszót a hitelesítési kód létrehozásához.</string>
   <string name="account_link_generate_button">Létrehozás</string>
+  <string name="account_link_time_valid">Hitelesítési kód lejárata: %1$s.</string>
+  <string name="account_link_device_info">Jelöld ki az „Új eszköz összekapcsolása” lehetőséget a másik Jami alkalmazásban a QR-kód vagy a hitelesítési kód megjelenítéséhez.</string>
   <string name="account_generate_export_device">A másik eszközön</string>
   <string name="account_generate_export_info">Telepítse és indítsa el a Jami alkalmazást. Válassza az „Importálás másik eszközről” lehetőséget, és olvassa be a QR-kódot. Vagy adja meg kézzel a PIN-kódot.</string>
   <string name="content_description_qr_generated">Fiók QR-kódja</string>
+  <string name="account_generate_export_invalid">A hitelesítési kód már nem érvényes.\nAdja meg a jelszót, és hozzon létre egy másikat az új eszköz összekapcsolásához.</string>
+  <string name="account_generate_export_invalid_two">A hitelesítési kód már nem érvényes.\nAz új eszköz összekapcsolásához hozzon létre egy újat.</string>
+  <string name="help_pin_info">Szükséges, ha a fiók jelszóval titkosított.</string>
   <string name="account_link_device_button">Kapcsolódás</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Jami-fiók zárolásának feloldása</string>
@@ -269,5 +278,6 @@ A biometrikus vagy eszközhitelesítés kényelmes módot kínál a Jami-fiókho
   <string name="account_biometry_enroll_auth_message">Adjon hozzá biztonságos biometrikus vagy eszközhitelesítést jelszava helyett</string>
   <string name="account_auth_error">Hitelesítési hiba: %1$s</string>
   <string name="account_auth_success">Hitelesítés sikerült</string>
+  <string name="account_auth_key_error">Hiba történt a fiókkulcs visszafejtése közben.</string>
   <string name="account_auth_password">Fiókjelszó használata</string>
 </resources>

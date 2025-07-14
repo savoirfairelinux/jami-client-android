@@ -3,7 +3,7 @@
   <!--Strings for xml content description of images-->
   <string name="contact_quick_call_description">Kiirkõne</string>
   <string name="contact_picture_description">Kontakti pilt</string>
-  <string name="dial_numeric_pad">Valimisklahvistik</string>
+  <string name="dial_numeric_pad">Numbriklahvistik</string>
   <string name="contact_unblock">Eemalda blokeering</string>
   <string name="video_extensions">Video lisamoodulid</string>
   <string name="file_download_button">Laadi alla</string>
@@ -12,4 +12,5 @@
   <string name="control_pause">Peata</string>
   <string name="searchbar_navigation_account">Vali kasutajakonto</string>
   <string name="add_conversation_member">Lisa vestlusele osaleja</string>
+  <string name="qrcode_to_scan">QR-kood skaneerimiseks</string>
 </resources>

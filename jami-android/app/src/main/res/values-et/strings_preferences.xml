@@ -52,7 +52,7 @@
   <string name="pref_connection_monitor_summary">Jälgi võrdõigusvõrgu ühendusi</string>
   <string name="pref_push_notifications_logs_title">Tõuketeavituste logi</string>
   <string name="pref_push_notifications_logs_summary">Vaata tõuketeavituste logisid.</string>
-  <string name="pref_typing_title">Trükkimisteatis</string>
+  <string name="pref_typing_title">Kirjutamisteatis</string>
   <string name="pref_typing_summary">Näita, kui sõnumid on koostamisel.</string>
   <string name="pref_block_record_title">Blokeeri ekraanitõmmised ja -salvestamine</string>
   <string name="pref_block_record_summary">Blokeeri ekraanivaatest tõmmiste ja salvestuste tegemine.</string>

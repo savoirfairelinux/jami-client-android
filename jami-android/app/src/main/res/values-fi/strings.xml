@@ -465,6 +465,7 @@
   <string name="export_side_step1_advice_qr">Luo uusi tili uudella laitteella.\nValitse&gt; <b>Lisää tili&gt; Yhdistä toisesta laitteesta.</b>\nKun olet valmis, skannaa QR-koodi.</string>
   <string name="export_side_step1_switch_to_code">tai paina painiketta kirjoita todennuskoodi käsin.</string>
   <string name="export_side_step1_switch_to_qr">tai paina painiketta ja skannaa QR-koodi.</string>
+  <string name="export_side_step1_error_malformed">Tuntematon uusi laitetunniste. Noudata yllä olevia ohjeita.</string>
   <string name="export_side_step1_code_connect">Yhdistä</string>
   <string name="export_side_step2_advice">Uusi laite löydetty. Oletko se sinä?\nJatka tilin vientiä painamalla vahvista.</string>
   <string name="export_side_step2_advice_ip_only">Uusi laite löydetty alla olevasta osoitteesta. Oletko se sinä?\nJatka tilin vientiä painamalla vahvista.</string>
@@ -483,6 +484,7 @@
   <string name="import_side_step2_password_prompt">Tili on suojattu salasanalla.\nJatka ja avaa sen lukitus.</string>
   <string name="import_side_step2_password_import">Tuo</string>
   <string name="import_side_step2_password_unlocking">Avataan tiliä…</string>
+  <string name="import_side_step2_action_required">Toimenpiteitä tarvitaan. Vahvista tili toisella laitteella.</string>
   <string name="import_side_step3_body_done">Tili tuotiin onnistuneesti.</string>
   <string name="import_side_step3_exit">Valmis</string>
   <string name="link_device_error_authentication">Yhdistämisessä tapahtui todennusvirhe. Tarkista kirjautumistiedot ja yritä uudelleen.</string>
