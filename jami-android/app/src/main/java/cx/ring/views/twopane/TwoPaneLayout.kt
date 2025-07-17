@@ -32,6 +32,7 @@ import androidx.core.view.AccessibilityDelegateCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.core.view.animation.PathInterpolatorCompat
+import androidx.core.view.doOnNextLayout
 import androidx.customview.view.AbsSavedState
 import androidx.customview.widget.Openable
 import androidx.transition.ChangeBounds
@@ -40,11 +41,13 @@ import androidx.transition.TransitionManager
 import androidx.window.layout.FoldingFeature
 import androidx.window.layout.FoldingFeature.Orientation.Companion.VERTICAL
 import androidx.window.layout.WindowInfoTracker
-import cx.ring.R
 import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
+import androidx.core.view.isGone
+import androidx.core.content.withStyledAttributes
+import androidx.core.view.isVisible
 
 /**
  * TwoPaneLayout provides a horizontal, multi-pane layout for use at the top level
@@ -218,10 +221,10 @@ class TwoPaneLayout @JvmOverloads constructor(
     }
 
     private fun updateAccessibilityForPane(pane: View, isVisible: Boolean) {
-        pane.visibility = if (isVisible) View.VISIBLE else View.INVISIBLE
         pane.importantForAccessibility =
-            if (isVisible) View.IMPORTANT_FOR_ACCESSIBILITY_YES
-            else View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
+            if (isVisible) IMPORTANT_FOR_ACCESSIBILITY_YES
+            else IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
+        pane.post { pane.visibility = if (isVisible) VISIBLE else INVISIBLE }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -255,7 +258,7 @@ class TwoPaneLayout @JvmOverloads constructor(
         for (i in 0 until childCount) {
             val child = getChildAt(i)
             val lp = child.layoutParams as LayoutParams
-            if (child.visibility == GONE) {
+            if (child.isGone) {
                 continue
             }
             if (lp.weight > 0) {
@@ -307,7 +310,7 @@ class TwoPaneLayout @JvmOverloads constructor(
         if (canSlide || weightSum > 0) {
             for (i in 0 until childCount) {
                 val child = getChildAt(i)
-                if (child.visibility == GONE) {
+                if (child.isGone) {
                     continue
                 }
                 val lp = child.layoutParams as LayoutParams
@@ -354,7 +357,7 @@ class TwoPaneLayout @JvmOverloads constructor(
         if (hasFold && !canSlide) {
             for (i in 0 until childCount) {
                 val child = getChildAt(i)
-                if (child.visibility == GONE) {
+                if (child.isGone) {
                     continue
                 }
                 val splitView = if (i == 0) leftSplitBounds else rightSplitBounds
@@ -406,7 +409,7 @@ class TwoPaneLayout @JvmOverloads constructor(
         }
         for (i in 0 until childCount) {
             val child = getChildAt(i)
-            if (child.visibility == GONE) {
+            if (child.isGone) {
                 continue
             }
             val lp = child.layoutParams as LayoutParams
@@ -599,9 +602,9 @@ class TwoPaneLayout @JvmOverloads constructor(
         }
 
         constructor(c: Context, attrs: AttributeSet?) : super(c, attrs) {
-            val a = c.obtainStyledAttributes(attrs, ATTRS)
-            weight = a.getFloat(0, 0f)
-            a.recycle()
+            c.withStyledAttributes(attrs, ATTRS) {
+                weight = getFloat(0, 0f)
+            }
         }
 
         companion object {
@@ -654,7 +657,7 @@ class TwoPaneLayout @JvmOverloads constructor(
             val childCount = childCount
             for (i in 0 until childCount) {
                 val child = getChildAt(i)
-                if (child.visibility == VISIBLE) {
+                if (child.isVisible) {
                     // Force importance to "yes" since the value is unable to be read.
                     child.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES)
                     info.addChild(child)
