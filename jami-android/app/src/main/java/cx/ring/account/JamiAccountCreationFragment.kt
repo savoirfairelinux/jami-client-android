@@ -28,6 +28,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import cx.ring.R
 import cx.ring.databinding.FragAccJamiCreateBinding
 import cx.ring.views.WizardViewPager
 
@@ -44,32 +45,64 @@ class JamiAccountCreationFragment : Fragment() {
             }
         }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View =
-        FragAccJamiCreateBinding.inflate(inflater, container, false).apply {
-            val pagerAdapter = ScreenSlidePagerAdapter(childFragmentManager)
-            pager.apply {
-                adapter = pagerAdapter
-                disableScroll(true)
-                offscreenPageLimit = 1
-                addOnPageChangeListener(object : OnPageChangeListener {
-                    override fun onPageScrolled(position: Int,positionOffset: Float, positionOffsetPixels: Int) {}
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = FragAccJamiCreateBinding.inflate(inflater, container, false).apply {
 
-                    override fun onPageSelected(position: Int) {
-                        currentFragment = pagerAdapter.getRegisteredFragment(position)
-                        val enable = currentFragment is JamiAccountPasswordFragment || currentFragment is ProfileCreationFragment
-                        onBackPressedCallback.isEnabled = enable
-                    }
+        val pagerAdapter = ScreenSlidePagerAdapter(childFragmentManager)
+        val stepTitleResIds = listOf(
+            R.string.step_title_create_username,
+            R.string.step_title_set_password,
+            R.string.step_title_create_profile
+        )
+        val totalSteps = stepTitleResIds.size
 
-                    override fun onPageScrollStateChanged(state: Int) {}
-                })
-            }
-            indicator.setupWithViewPager(pager, true)
-            val tabStrip = indicator.getChildAt(0) as LinearLayout
-            for (i in 0 until tabStrip.childCount) {
-                tabStrip.getChildAt(i).setOnTouchListener { v, event -> true }
-            }
-            binding = this
-        }.root
+        fun stepContentDescription(position: Int): String {
+            val stepTitle = getString(
+                stepTitleResIds.getOrNull(position) ?: stepTitleResIds.first())
+            return getString(R.string.step_format, position + 1, totalSteps, stepTitle)
+        }
+
+        pager.apply {
+            adapter = pagerAdapter
+            disableScroll(true)
+            offscreenPageLimit = 1
+            contentDescription = stepContentDescription(0)
+
+            addOnPageChangeListener(object : OnPageChangeListener {
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {}
+
+                override fun onPageSelected(position: Int) {
+                    currentFragment = pagerAdapter.getRegisteredFragment(position)
+                    val enableBack =
+                        currentFragment is JamiAccountPasswordFragment ||
+                                currentFragment is ProfileCreationFragment
+                    onBackPressedCallback.isEnabled = enableBack
+                    contentDescription = stepContentDescription(position)
+                }
+
+                override fun onPageScrollStateChanged(state: Int) {}
+            })
+        }
+
+        indicator.setupWithViewPager(pager, true)
+        val tabStrip = indicator.getChildAt(0) as LinearLayout
+        for (i in 0 until tabStrip.childCount) {
+            val tab = tabStrip.getChildAt(i)
+            tab.isClickable = false
+            tab.isFocusable = true
+            tab.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
+            tab.contentDescription = stepContentDescription(i)
+            tab.setOnTouchListener { _, _ -> true }
+        }
+        binding = this
+    }.root
 
     override fun onDestroyView() {
         super.onDestroyView()

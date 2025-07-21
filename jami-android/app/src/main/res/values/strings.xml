@@ -710,4 +710,11 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="link_device_error_unknown">An error occurred.</string>
     <string name="link_device_error_bad_password">Please check credentials and try again.</string>
     <string name="test_push">Test Push</string>
+
+    <!--  Accessibility  -->
+    <string name="step_title_create_username">Create username</string>
+    <string name="step_title_set_password">Set password</string>
+    <string name="step_title_create_profile">Create profile</string>
+    <string name="step_format">Step %1$d of %2$d: %3$s</string>
+
 </resources>
