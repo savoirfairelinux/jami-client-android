@@ -63,10 +63,21 @@ class JamiAccountCreationFragment : Fragment() {
                     override fun onPageScrollStateChanged(state: Int) {}
                 })
             }
+
+            val stepDescriptions = listOf(
+                "Step 1 of 3: Create username",
+                "Step 2 of 3: Set password",
+                "Step 3 of 3: Create profile"
+            )
             indicator.setupWithViewPager(pager, true)
             val tabStrip = indicator.getChildAt(0) as LinearLayout
             for (i in 0 until tabStrip.childCount) {
-                tabStrip.getChildAt(i).setOnTouchListener { v, event -> true }
+                val tab = tabStrip.getChildAt(i)
+                tab.isClickable = false
+                tab.isFocusable = true
+                tab.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
+                tab.contentDescription = stepDescriptions.getOrNull(i) ?: "Step ${i + 1}"
+                tab.setOnTouchListener { v, event -> true }
             }
             binding = this
         }.root
