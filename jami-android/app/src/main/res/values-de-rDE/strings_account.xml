@@ -26,6 +26,8 @@ Sie können Ihr Konto später bearbeiten</string>
   <!--Audio Details-->
   <!--Video Details-->
   <!--Advanced Details-->
+  <string name="account_read_receipts_label">Lesebestätigungen</string>
+  <string name="account_read_receipts_summary">Senden und fordern Sie Übermittlungs- und Lesebestätigungen an, die gesendet werden sollen, wenn Nachrichten übermittelt oder gelesen werden.</string>
   <string name="account_stun_enable_label">STUN benutzen</string>
   <string name="account_stun_server_label">STUN-Server</string>
   <string name="account_accept_files_never">Niemals automatisch annehmen</string>
@@ -75,6 +77,7 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="tv_about_credits">Mitwirkende</string>
   <string name="account_new_button">Erstellen Sie ein Jami-Konto</string>
   <string name="account_link_export_button">Ein neues Gerät verknüpfen</string>
+  <string name="account_start_export_button">Authentifizierungscode generieren</string>
   <string name="prompt_server">URL des Verwaltungsservers</string>
   <string name="account_connect_server">Mit dem Verwaltungs-Server verbinden</string>
   <string name="account_enter_username">Benutzernamen eingeben</string>
@@ -95,7 +98,15 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="account_device_name_empty">Der Gerätename darf nicht leer sein.</string>
   <string name="account_disabled_indicator">Deaktiviert</string>
   <!--Link a new device-->
+  <string name="account_link_info">Scannen Sie in der Jami-App auf dem neuen Gerät den QR-Code oder geben Sie den Authentifizierungscode manuell ein.</string>
+  <string name="account_link_password">Dieses Konto ist passwortverschlüsselt. Geben Sie das Passwort ein, um den Authentifizierungscode zu generieren.</string>
+  <string name="account_link_time_valid">Der Authentifizierungscode wird ungültig: %1$s.</string>
+  <string name="account_link_device_info">Wählen Sie „Neues Gerät verknüpfen“ aus der anderen Jami-App, um den QR-Code oder den Authentifizierungscode anzuzeigen.</string>
   <string name="account_generate_export_info">Installieren und starten Sie Jami. Wählen Sie „Von einem anderen Gerät importieren“ und scannen Sie den QR-Code. Alternativ können Sie den PIN-Code manuell eingeben.</string>
   <string name="content_description_qr_generated">Konto-QR-Code</string>
+  <string name="account_generate_export_invalid">Der Authentifizierungscode ist nicht mehr gültig.\nGeben Sie das Passwort ein und generieren Sie ein neues, um das neue Gerät zu verknüpfen.</string>
+  <string name="account_generate_export_invalid_two">Der Authentifizierungscode ist nicht mehr gültig.\nGenerieren Sie einen neuen, um das neue Gerät zu verknüpfen.</string>
+  <string name="help_pin_info">Erforderlich, wenn das Konto passwortverschlüsselt ist.</string>
   <!--Biometry-->
+  <string name="account_auth_key_error">Beim Entschlüsseln des Kontoschlüssels ist ein Fehler aufgetreten.</string>
 </resources>

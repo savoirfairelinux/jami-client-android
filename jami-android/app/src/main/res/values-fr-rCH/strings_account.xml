@@ -86,6 +86,8 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Options avancées</string>
   <string name="account_chat_settings_title">Paramètres de clavardage</string>
+  <string name="account_read_receipts_label">Read receipts</string>
+  <string name="account_read_receipts_summary">Send and request delivery and read receipts to be sent when messages are delivered or read.</string>
   <string name="account_call_settings_title">Paramètres appels</string>
   <string name="account_dht_public_in_calls_label">Autoriser les appels entrants de contacts inconnus</string>
   <string name="account_registration_exp_label">Expiration de l\'inscription</string>
@@ -197,6 +199,7 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <string name="account_link_export_button">Lier un nouvel appareil</string>
   <string name="account_link_show_button">Montrer %d appareils liés suppléementaires</string>
   <string name="account_link_hide_button">Cacher les appareils liés</string>
+  <string name="account_start_export_button">Générer le code d\'authentification</string>
   <string name="account_end_export_button">fermer</string>
   <string name="account_export_title">Associer le compte à d\'autres appareils</string>
   <string name="account_connect_server_button">Se connecter à partir d\'un serveur d\'entreprise</string>
@@ -250,11 +253,18 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <string name="account_disabled_indicator">Désactivé</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Ce format n\'est pas supporté.</string>
+  <string name="account_link_info">Dans Jami, sur le nouvel appareil, scanner le code QR ou bien entrer le code d\'authentification manuellement.</string>
   <string name="account_link_device_title">Associer un nouvel appareil</string>
+  <string name="account_link_password">Le compte est encrypté, veuillez entrer le mot de passe afin de générer le code d\'authentification.</string>
   <string name="account_link_generate_button">Générer</string>
+  <string name="account_link_time_valid">Le code d\'authentification sera invalide : %1$s.</string>
+  <string name="account_link_device_info">Choose “Link a new device” from the other Jami app to show the QR code or the authentication code.</string>
   <string name="account_generate_export_device">Sur l\'autre appareil</string>
   <string name="account_generate_export_info">Installer et lancer Jami, choisissez \"Importer d\'un nouvel appareil\" et scanner le code QR ou entrer manuellement le NIP.</string>
   <string name="content_description_qr_generated">Code QR du compte</string>
+  <string name="account_generate_export_invalid">Le code d\'authentification n\'est plus valide.\nEntrez le mot de passe et générez-en un autre pour connecter le nouvel appareil.</string>
+  <string name="account_generate_export_invalid_two">The authentication code is no longer valid.\nGenerate another one to link the new device.</string>
+  <string name="help_pin_info">Nécessaire si le compte est chiffré par mot de passe.</string>
   <string name="account_link_device_button">Se connecter</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Déverrouiller le compte Jami</string>
@@ -268,5 +278,6 @@ L\'authentification biométrique ou par appareil est un moyen pratique de déver
   <string name="account_biometry_enroll_auth_message">Ajoutez une authentification biométrique sécurisée ou une authentification de l\'appareil comme alternative à votre mot de passe.</string>
   <string name="account_auth_error">Erreur d\'authentification : %1$s</string>
   <string name="account_auth_success">Authentification réussie</string>
+  <string name="account_auth_key_error">Une erreur s\'est produite lors du décryptage de la clé du compte.</string>
   <string name="account_auth_password">Utiliser le mot de passe du compte</string>
 </resources>

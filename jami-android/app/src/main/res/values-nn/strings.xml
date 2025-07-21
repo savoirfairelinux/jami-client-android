@@ -99,7 +99,7 @@
   <string name="action_call_hold_accept">Godta den innkomande samtala med berre ljod og bli verande i samtala</string>
   <string name="action_call_hold_accept_video">Godta den innkomande samtala med video og bli verande i samtala</string>
   <string name="action_call_end_accept">Godta den innkomande samtala og enda den noverande samtala</string>
-  <string name="action_call_decline">Nekta</string>
+  <string name="action_call_decline">Ikkje godta</string>
   <string name="action_call_mic_mute">Døyva mikrofonen</string>
   <string name="action_load_extension">Last opp utviding</string>
   <string name="ab_action_speakerphone">Skru på høgtalar</string>
@@ -233,9 +233,9 @@
   <string name="title_share_with">Del med...</string>
   <!--Pending invitations-->
   <string name="accept">Ta imot</string>
-  <string name="decline">Nedgang</string>
+  <string name="decline">Ikkje godta</string>
   <string name="block">Block</string>
-  <string name="decline_invitation">Nekta invitasjon</string>
+  <string name="decline_invitation">Ikkje godta innbydinga</string>
   <string name="accept_invitation">Godta invitasjon</string>
   <string name="invitation_message">Du har %1$d kontaktforeldingar</string>
   <!--Blacklist-->
@@ -321,6 +321,8 @@
   <string name="tab_members">Medlemmar</string>
   <string name="tab_files">Dateiar</string>
   <string name="tab_settings">Innstillingar</string>
+  <string name="dialogtitle_title">Redigera gruppetittel</string>
+  <string name="dialogtitle_description">Redigera gruppeskildring</string>
   <string name="dialog_hint_title">Tittel</string>
   <string name="dialog_hint_description">Beskriving</string>
   <string name="picker_title">Velg kontakt</string>
@@ -334,9 +336,11 @@
   <string name="welcome_jami_title">Velkommen til Jami</string>
   <!--Conversation details-->
   <string name="details">Detaljer</string>
+  <string name="swarm_type">Samtaletype</string>
   <string name="Private">Privat</string>
   <string name="mute_conversation">Taus samtale</string>
   <!--Donation-->
+  <string name="donation_card_description">Dersom du likar å bruka Jami og trur på saka vår, har du lyst til å donera?</string>
   <string name="donation_card_not_now">Ikkje no</string>
   <string name="donation_donate">Doner</string>
   <!--Extension-->

@@ -496,9 +496,13 @@ A fiókexportálási művelet folytatásához kattintson a Megerősítés gombra
   <string name="import_side_step2_action_required">Beavatkozás szükséges. Kérjük, erősítse meg a fiókot a forráseszközön.</string>
   <string name="import_side_step3_body_loading">A fiók importálása folyamatban van az új eszközön. Kérjük, várjon…</string>
   <string name="import_side_step3_body_done">Megtörtént a fiók importálása.</string>
+  <string name="import_side_step3_go_to_account">Ugrás az új fiókra</string>
   <string name="import_side_step3_exit">Befejezés</string>
+  <string name="link_device_share_title">Hitelesítési kód megosztása</string>
+  <string name="link_device_error_network">Hálózati hiba történt az eszköz összekapcsolása közben. Kérjük, ellenőrizze a kapcsolatot, és próbálkozzon újra.</string>
   <string name="link_device_error_authentication">Hitelesítési hiba történt az eszköz összekapcsolása közben. Kérjük, ellenőrizze a hitelesítő adatokat, és próbálkozzon újra.</string>
   <string name="link_device_error_timeout">Művelet időtúllépése.</string>
+  <string name="link_device_error_canceled">A felhasználó megszakította a műveletet.</string>
   <string name="link_device_error_unknown">Hiba történt.</string>
   <string name="link_device_error_bad_password">Kérjük, ellenőrizze a hitelesítő adatokat, és próbálkozzon újra.</string>
 </resources>

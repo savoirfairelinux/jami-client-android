@@ -86,6 +86,8 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avansate</string>
   <string name="account_chat_settings_title">Reglări discuții</string>
+  <string name="account_read_receipts_label">Confirmare de citire</string>
+  <string name="account_read_receipts_summary">Trimite și solicită confirmări de livrare și citire atunci când mesajele sunt livrate sau citite.</string>
   <string name="account_call_settings_title">Reglări apeluri</string>
   <string name="account_dht_public_in_calls_label">Primește apeluri necunoscute</string>
   <string name="account_registration_exp_label">Expirarea înscrierii</string>
@@ -197,6 +199,7 @@
   <string name="account_link_export_button">Asociază un nou aparat</string>
   <string name="account_link_show_button">Arată încă %d aparate asociate</string>
   <string name="account_link_hide_button">Ascunde aparatul asociat</string>
+  <string name="account_start_export_button">Generează codul de autentificare</string>
   <string name="account_end_export_button">închide</string>
   <string name="account_export_title">Asociază contul cu alte aparate</string>
   <string name="account_connect_server_button">Conectează-te la serverul de administrare</string>
@@ -250,11 +253,18 @@
   <string name="account_disabled_indicator">Dezactivat</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Acest format nu este acceptat.</string>
+  <string name="account_link_info">În aplicația Jami din noul aparat, scanează codul QR sau introdu manual codul de autentificare.</string>
   <string name="account_link_device_title">Asociază alt aparat</string>
+  <string name="account_link_password">Acest cont este cifrat cu parolă. Introdu parola pentru a genera codul de autentificare.</string>
   <string name="account_link_generate_button">Generează</string>
+  <string name="account_link_time_valid">Codul de utentificare expiră: %1$s.</string>
+  <string name="account_link_device_info">Alege „Asociază alt aparat” din cealaltă aplicație Jami pentru a afișa codul QR sau codul de autentificare.</string>
   <string name="account_generate_export_device">În celălalt aparat</string>
   <string name="account_generate_export_info">Instalează și pornește Jami, alege „Importă din alt aparat” și scanează codul QR sau introdu manual codul PIN.</string>
   <string name="content_description_qr_generated">Codul QR al contului</string>
+  <string name="account_generate_export_invalid">Codul de autentificare nu mai este valabil.\nIntrodu parola și generează altul pentru asocierea noului aparat.</string>
+  <string name="account_generate_export_invalid_two">Codul de autentificare nu mai este valabil.\nGenerează altul pentru asocierea noului aparat.</string>
+  <string name="help_pin_info">Obligatoriu dacă este cifrat cu parolă contul.</string>
   <string name="account_link_device_button">Conectează</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Deblochează contul Jami</string>
@@ -268,5 +278,6 @@ Autentificarea biometrică adaugă o modalitate convenabilă de deblocare local�
   <string name="account_biometry_enroll_auth_message">Adaugă autentificarea biometrică sau alta ca o alternativă la parola ta</string>
   <string name="account_auth_error">Eroare de autentificare: %1$s</string>
   <string name="account_auth_success">Autentificarea a reușit</string>
+  <string name="account_auth_key_error">A apărut o eroare la descifrarea cheii contului.</string>
   <string name="account_auth_password">Folosește parola contului</string>
 </resources>
