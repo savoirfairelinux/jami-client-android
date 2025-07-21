@@ -47,10 +47,17 @@ class JamiAccountCreationFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View =
         FragAccJamiCreateBinding.inflate(inflater, container, false).apply {
             val pagerAdapter = ScreenSlidePagerAdapter(childFragmentManager)
+            val stepDescriptions = listOf(
+                "Step 1 of 3: Create username",
+                "Step 2 of 3: Set password",
+                "Step 3 of 3: Create profile"
+            )
             pager.apply {
                 adapter = pagerAdapter
                 disableScroll(true)
                 offscreenPageLimit = 1
+                contentDescription = stepDescriptions.firstOrNull() ?: "Step 1 of 3"
+
                 addOnPageChangeListener(object : OnPageChangeListener {
                     override fun onPageScrolled(position: Int,positionOffset: Float, positionOffsetPixels: Int) {}
 
@@ -58,15 +65,23 @@ class JamiAccountCreationFragment : Fragment() {
                         currentFragment = pagerAdapter.getRegisteredFragment(position)
                         val enable = currentFragment is JamiAccountPasswordFragment || currentFragment is ProfileCreationFragment
                         onBackPressedCallback.isEnabled = enable
+                        contentDescription = stepDescriptions
+                            .getOrNull(position)?: "Step ${position + 1} of 3"
                     }
 
                     override fun onPageScrollStateChanged(state: Int) {}
                 })
             }
+
             indicator.setupWithViewPager(pager, true)
             val tabStrip = indicator.getChildAt(0) as LinearLayout
             for (i in 0 until tabStrip.childCount) {
-                tabStrip.getChildAt(i).setOnTouchListener { v, event -> true }
+                val tab = tabStrip.getChildAt(i)
+                tab.isClickable = false
+                tab.isFocusable = true
+                tab.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
+                tab.contentDescription = stepDescriptions.getOrNull(i) ?: "Step ${i + 1}"
+                tab.setOnTouchListener { v, event -> true }
             }
             binding = this
         }.root
