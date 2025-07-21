@@ -25,6 +25,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.accessibility.AccessibilityManager
 import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
@@ -437,6 +438,14 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             insets
         }
 
+        val accessibilityManager =
+            requireContext().getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
+        adjustLayoutForAccessibility(accessibilityManager.isEnabled )
+
+        accessibilityManager.addAccessibilityStateChangeListener { isEnabled ->
+            adjustLayoutForAccessibility(isEnabled)
+        }
+
         mSmartListFragment = mBinding!!.fragmentContainer.getFragment()
 
         disableAppBarScroll()
@@ -535,6 +544,20 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     override fun onStop() {
         super.onStop()
         mDisposable.clear()
+    }
+
+    private fun adjustLayoutForAccessibility(enabled: Boolean) {
+        val params = mBinding?.appBarContainer?.layoutParams as? AppBarLayout.LayoutParams ?: return
+        val recyclerView = mSmartListFragment?.getRecyclerView() ?: return
+
+        params.scrollFlags = if (enabled) 0 else (
+                AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or
+                        AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or
+                        AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP or
+                        AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
+                )
+        mBinding?.appBarContainer?.layoutParams = params
+        recyclerView.clipToPadding = enabled
     }
 
     /**
