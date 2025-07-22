@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f701f0d_c5e5925d",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Conversation.kt",
+        "patchSetId": 17
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-07-22T18:41:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fc06bd1_c9bda3f0",
+      "range": {
+        "startLine": 289,
+        "startChar": 29,
+        "endLine": 289,
+        "endChar": 55
+      },
+      "revId": "0893ff2d25b5b70ec843cf8cae4b2721820a8a1f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7f0a2d90_d0f0c79b",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-07-21T20:15:30Z",
       "side": 1,
       "message": "might not be required if Call has timestampEnd",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 20
+      },
+      "revId": "0893ff2d25b5b70ec843cf8cae4b2721820a8a1f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9fce2db_1f309981",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/interaction/CallHistory.kt",
+        "patchSetId": 17
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-07-22T18:41:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f0a2d90_d0f0c79b",
       "range": {
         "startLine": 26,
         "startChar": 8,
