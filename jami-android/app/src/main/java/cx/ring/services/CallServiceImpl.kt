@@ -32,7 +32,7 @@ import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.SingleSubject
-import net.jami.model.interaction.Call
+import net.jami.model.Call
 import net.jami.model.Media
 import net.jami.model.Uri
 import net.jami.services.AccountService
@@ -159,13 +159,13 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
                         VideoProfile.STATE_BIDIRECTIONAL
                     )
                 extras.putString(ConversationPath.KEY_ACCOUNT_ID, call.account)
-                extras.putString(NotificationService.KEY_CALL_ID, call.daemonIdString)
+                extras.putString(NotificationService.KEY_CALL_ID, call.id)
                 extras.putString(
                     ConversationPath.KEY_CONVERSATION_URI,
                     call.contact?.uri?.rawUriString
                 )
 
-                val key = call.daemonIdString!!
+                val key = call.id!!
                 val subject = SingleSubject.create<SystemCall>()
 
                 // Place call request
