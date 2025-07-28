@@ -33,7 +33,7 @@
   <string name="pref_clearHistory_title">Kustuta ajalugu</string>
   <string name="pref_clearHistory_summary">Kustuta kõikide vestluste ajalugu. Seda tegevust ei saa tagasi pöörata.</string>
   <string name="pref_notification_title">Teavituste nähtavus</string>
-  <string name="pref_notification_summary">Seada rakenduse teavituste nähtavust nutiseadme lukustusvaates.</string>
+  <string name="pref_notification_summary">Seadista rakenduse teavituste nähtavust nutiseadme lukustusvaates.</string>
   <string name="pref_connectivity_title">Ühenduvusrežiim</string>
   <string name="pref_connectivity_summary">Vali kuidas luuakse helistamiseks ja sõnumite saatmiseks ühendus Jami hajutatud võrguga.</string>
   <string name="pref_blackList_title">Blokeeritud osapoolte nimekiri</string>

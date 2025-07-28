@@ -19,4 +19,12 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="call_error">启动呼叫时出错</string>
     <string name="screen_sharing_error">启动屏幕共享时出错</string>
 
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">正在搜索</string>
+    <string name="call_human_state_incoming">来电</string>
+    <string name="call_human_state_connecting">正在连接</string>
+    <string name="call_human_state_ringing">正在响铃</string>
+    <string name="call_human_state_current">正在通话</string>
+    <string name="call_human_state_busy">忙碌中</string>
+    <string name="call_human_state_hold">等待</string>
     </resources>

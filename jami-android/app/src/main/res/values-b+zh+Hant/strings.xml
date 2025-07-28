@@ -17,6 +17,7 @@
   <!--RingActivity-->
   <!--AB menus-->
   <!--Sections-->
+  <string name="menu_item_account">管理账户</string>
   <string name="menu_item_settings">设置</string>
   <string name="menu_item_app_settings">APP设置</string>
   <string name="menu_item_account_settings">账户设置</string>
@@ -42,6 +43,7 @@
   <string name="notif_current_call">正在通话</string>
   <string name="notif_channel_call_in_progress">通话中</string>
   <string name="notif_channel_calls">通话</string>
+  <string name="notif_channel_messages">消息</string>
   <string name="notif_channel_sync">数据同步</string>
   <string name="notif_group_calls">通话</string>
   <string name="notif_inprogress_group_call">通话中</string>
@@ -61,6 +63,7 @@
   <string name="action_call_hold_accept">接受仅带音频的来电并保持当前通话</string>
   <string name="action_call_hold_accept_video">接受视频来电并保持当前通话</string>
   <string name="action_call_end_accept">接听来电并结束当前通话</string>
+  <string name="action_call_mic_mute">禁用麦克风</string>
   <string name="action_load_extension">加载扩展</string>
   <string name="ab_action_speakerphone">打开扬声器</string>
   <string name="ab_action_contact_add">加到联系人</string>
@@ -72,6 +75,7 @@
   <string name="new_group">建立新群組</string>
   <string name="ab_action_flipcamera">翻转相机</string>
   <!--Text messages-->
+  <string name="send_file">发送文件</string>
   <string name="select_media">打开相册</string>
   <string name="ongoing_group_call">尚在進行中的通話</string>
   <string name="started_call">通话已开始</string>
@@ -110,6 +114,7 @@
   <string name="conversation_action_copy_peer_number">复制联系人号码</string>
   <string name="copied_to_clipboard">%1$s已复制到剪贴板。</string>
   <string name="conversation_action_block_this">屏蔽联系人</string>
+  <string name="conversation_action_unblock_this">取消屏蔽该联系人</string>
   <string name="conversation_action_go_to_call">返回通话</string>
   <string name="conversation_action_incoming_call">来电</string>
   <string name="conversation_open_file_error">没有适合打开这种文件类型的应用。</string>
@@ -153,8 +158,10 @@
   <string name="pin_copied">验证码已复制到剪贴板。</string>
   <string name="copied_clipboard">已复制到剪贴板。</string>
   <string name="wizard_back">上一步</string>
+  <string name="hist_contact_added">已添加联系人</string>
   <string name="hist_contact_blocked">联系人被封锁</string>
   <string name="hist_contact_unblocked">联系人解除封锁</string>
+  <string name="hist_invitation_received">已收到邀請</string>
   <!--Account summary-->
   <string name="profile">账户</string>
   <string name="profile_name">個人檔案名稱</string>
@@ -204,9 +211,14 @@
   <string name="file_saved_in">文件保存在%s。</string>
   <string name="file_saved_successfully">文件已成功保存。</string>
   <string name="no_space_left_on_device">设备上没有可用存储空间。</string>
+  <string name="menu_file_save">保存文件</string>
+  <string name="menu_file_share">共享文件</string>
+  <string name="menu_message_copy">复制</string>
   <string name="menu_message_history">消息历史记录</string>
+  <string name="menu_message_delete">删除消息</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">会话</string>
+  <string name="navigation_item_contact_request">邀请</string>
   <string name="navigation_item_account">账户</string>
   <!--TV-->
   <string name="tv_media_preview">预览</string>

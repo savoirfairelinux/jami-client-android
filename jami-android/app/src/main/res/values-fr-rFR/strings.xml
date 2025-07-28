@@ -248,6 +248,7 @@
   <string name="help_password_choose">Choisir un mot de passe robuste dont vous vous rappellerez pour protéger votre compte Jami.</string>
   <string name="help_password_enter">Saisissez le mot de passe principal de votre compte Jami.</string>
   <string name="help_server_enter">Entrez l\'URL du serveur de gestion</string>
+  <string name="pin_copied">Authentication code copied to clipboard.</string>
   <string name="copied_clipboard">Copié dans le presse-papier</string>
   <string name="wizard_next">Suivant</string>
   <string name="wizard_back">Retour</string>
@@ -326,6 +327,7 @@
   <string name="file_transfer_status_error">Une erreur s\'est produite pendant le transfert du fichier.</string>
   <string name="file_transfer_status_timed_out">L\'opération a été interrompue.</string>
   <string name="file_saved_in">Fichier sauvegardé sur %s.</string>
+  <string name="file_saved_successfully">Fichier enregistré avec succès</string>
   <string name="file_download">Télécharger</string>
   <string name="no_space_left_on_device">Plus d\'espace de stockage disponible sur cet appareil.</string>
   <string name="title_media_viewer">Visionneuse</string>
@@ -459,9 +461,12 @@
   <string name="unable_to_load">Impossible de charger %1$s</string>
   <string name="load_success">%1$s: activé</string>
   <string name="unload_success">%1$s: désactivé</string>
+  <string name="install_success">Le module d\'extension %1$s a été correctement installé.</string>
   <string name="install_error">Une erreur s\'est produite pendant l\'import de l\'extension.</string>
   <string name="export_side_main_title">Exporter votre compte</string>
   <string name="import_side_main_title">Importer un compte</string>
+  <string name="link_device_dialog_stop_title">Voulez-vous interrompre l\'association du compte ?</string>
+  <string name="link_device_dialog_stop_export_body">Arrêter l\'opération annule l\'exportation du compte.</string>
   <string name="link_device_dialog_stop_import_body">Interrompre annulera l\'importation du compte.</string>
   <string name="export_side_step1_advice_qr">Sur le nouvel appareil, créez un nouveau compte.
 Sélectionnez Ajouter un compte -&gt; Se connecter à partir d\'un autre appareil.
@@ -479,6 +484,9 @@ En cliquant sur confirmer, le transfert du compte se poursuivra.</string>
   <string name="export_side_step2_confirm">Confirmer</string>
   <string name="export_side_step2_password">Le compte est protégé par un mot de passe. 
 Pour continuer, authentifiez-vous sur le nouvel appareil.</string>
+  <string name="export_side_step3_body_loading">L\'opération d\'exportation du compte vers le nouvel appareil est en cours.
+Veuillez patienter...</string>
+  <string name="export_side_step3_body_done">Compte importé avec succès sur le nouvel appareil.</string>
   <string name="export_side_step3_exit">Terminé</string>
   <string name="import_side_step1_advice_qr">Sur le nouvel appareil, créez un nouveau compte.
 Sélectionnez Ajouter un compte -&gt; Se connecter à partir d\'un autre appareil.
@@ -496,10 +504,16 @@ Pour continuer, authentifiez-vous.</string>
   <string name="import_side_step2_password_import">Importation</string>
   <string name="import_side_step2_password_unlocking">Déverrouillage du compte ...</string>
   <string name="import_side_step2_action_required">Action requise. Veuillez confirmer le compte sur l\'appareil source.</string>
+  <string name="import_side_step3_body_loading">Le compte est en cours d\'importation sur le nouvel appareil.
+Veuillez patienter.</string>
   <string name="import_side_step3_body_done">Le compte a été importé avec succès.</string>
+  <string name="import_side_step3_go_to_account">Aller sur votre nouveau compte</string>
   <string name="import_side_step3_exit">Terminé</string>
+  <string name="link_device_share_title">Partager le code authentification</string>
+  <string name="link_device_error_network">Une erreur réseau s\'est produite pendant l\'association du compte. Vérifier votre connectivité réseau.</string>
   <string name="link_device_error_authentication">Une erreur d\'authentification s\'est produite lors de la connexion de l\'appareil. Veuillez vérifier les informations d\'identification et réessayer.</string>
   <string name="link_device_error_timeout">L\'opération a été interrompue.</string>
+  <string name="link_device_error_canceled">L\'opération a été annulée.</string>
   <string name="link_device_error_unknown">Une erreur s\'est produite</string>
   <string name="link_device_error_bad_password">Veuillez vérifier vos informations d\'identification et réessayer.</string>
 </resources>
