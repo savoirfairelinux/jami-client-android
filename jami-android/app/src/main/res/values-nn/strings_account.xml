@@ -124,8 +124,8 @@
   <string name="account_export_end_decryption_message">Feil passord. Prøv igjen med det rette passordet</string>
   <string name="account_enter_password">Skriv inn passord</string>
   <string name="account_contact_me">Kontakt meg på Jami!</string>
-  <string name="update_account">Aktualisering av kontoen</string>
-  <string name="account_migration">Konta på Jami kan oppdaterast. Skriv inn passordet ditt.</string>
+  <string name="update_account">Oppdater kontoen</string>
+  <string name="account_migration">Kontoen på Jami kan oppdaterast. Skriv inn passordet ditt.</string>
   <string name="ring_account">Jami-kontoen</string>
   <string name="sip_account">SIP-konto</string>
   <string name="ring_account_identity">Identitet</string>

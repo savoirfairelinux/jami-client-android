@@ -343,7 +343,7 @@
   <string name="menu_message_reply">Vasta</string>
   <string name="menu_delete">Kustuta</string>
   <string name="pref_darkTheme_title">Tume kujundus</string>
-  <string name="pref_darkTheme_summary">Süsteemse kujunduse asemel kasuta alati tumedat kujundust</string>
+  <string name="pref_darkTheme_summary">Süsteemi kujunduse asemel kasuta alati tumedat kujundust</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Vestlused</string>
   <string name="navigation_item_contact_request">Kutsed</string>
@@ -483,8 +483,8 @@ Kui klõpsid „Kinnita“, siis jätkame kasutajakonto eksportimisega.</string>
   <string name="export_side_step3_body_loading">Kasutajakonto eksportimine uude seadmesse on pooleli. Palun oota…</string>
   <string name="export_side_step3_body_done">Kasutajakonto importimine uude seadmesse õnnestus. </string>
   <string name="export_side_step3_exit">Lõpeta</string>
-  <string name="import_side_step1_advice_qr">Algata eksportimine lähteseadmes.\n<b>Vali „Kasutajakonto“ &gt; „Kasutajakonto seadistused“ &gt; „Seo uus seada“</b>\nKui kõik on valmis, siis skaneeri järgnevat QR-koodi.</string>
-  <string name="import_side_step1_advice_code">Algata eksportimine lähteseadmes.\n<b>Vali „Kasutajakonto“ &gt; „Kasutajakonto seadistused“ &gt; „Seo uus seada“</b>\nKui kõik on valmis, siis sisesta järgnev kood.</string>
+  <string name="import_side_step1_advice_qr">Algata eksportimine lähteseadmes.\n<b>Vali „Kasutajakonto“ &gt; „Kasutajakonto seadistused“ &gt; „Seo uus seade“</b>\nKui kõik on valmis, siis skaneeri järgnevat QR-koodi.</string>
+  <string name="import_side_step1_advice_code">Algata eksportimine lähteseadmes.\n<b>Vali „Kasutajakonto“ &gt; „Kasutajakonto seadistused“ &gt; „Seo uus seade“</b>\nKui kõik on valmis, siis sisesta järgnev kood.</string>
   <string name="import_side_step1_share">Jaga</string>
   <string name="import_side_step1_switch_to_code">Või klõpsi siin autentimiskoodi kuvamiseks</string>
   <string name="import_side_step1_switch_to_qr">Või klõpsi siin QR-koodi kuvamiseks</string>
