@@ -30,6 +30,7 @@ import net.jami.model.Account
 import net.jami.model.AccountConfig
 import net.jami.model.ConfigKey
 import net.jami.services.AccountService
+import net.jami.services.PreferencesService
 import net.jami.services.AccountService.AuthError
 import net.jami.services.DeviceRuntimeService
 import net.jami.utils.Log
@@ -57,6 +58,7 @@ class ImportSideViewModel @Inject constructor(
     private val accountService: AccountService,
     @param:Named("UiScheduler") private val mUiScheduler: Scheduler,
     private val mDeviceService: DeviceRuntimeService,
+    private val mPreferencesService: PreferencesService,
 ) : AuthStateListener, ViewModel() {
 
     // Expose screen UI state
@@ -84,6 +86,13 @@ class ImportSideViewModel @Inject constructor(
             .observeOn(mUiScheduler)
             .subscribe(this::updateDeviceAuthState)
             .apply { compositeDisposable.add(this) }
+
+        if (mDeviceService.pushToken.isNotEmpty()) {
+            val settings = mPreferencesService.settings
+            if (!settings.enablePushNotifications) {
+                mPreferencesService.settings = settings.copy(enablePushNotifications = true)
+            }
+        }
     }
 
     private fun setProxyDetails(details: MutableMap<String, String>) {
