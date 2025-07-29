@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e5035c3_7522dcc6",
+        "filename": "jami-android/app/src/main/res/layout/dialog_device_rename.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-07-29T17:45:26Z",
+      "side": 1,
+      "message": "needs to be a text label, not a TextInput",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 60
+      },
+      "revId": "23a34c5dca73d8b57c30e240c4f13df420321b3a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
