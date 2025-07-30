@@ -139,8 +139,8 @@ class JamiAccountUsernameFragment : BaseSupportFragment<JamiAccountCreationPrese
         val parent = parentFragment as JamiAccountCreationFragment?
         if (parent != null) {
             parent.scrollPagerFragment()
-            val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(binding!!.inputUsername.windowToken, 0)
+            val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+            imm?.hideSoftInputFromWindow(binding!!.inputUsername.windowToken, 0)
         }
     }
 
