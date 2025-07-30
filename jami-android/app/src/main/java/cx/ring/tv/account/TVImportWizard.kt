@@ -137,7 +137,7 @@ class TVImportWizard : AppCompatActivity(), OnResultCallback {
                 ?: ImportSideStep3Fragment().also {
                     supportFragmentManager.beginTransaction()
                         .replace(android.R.id.content, it)
-                        .commitNow()
+                        .commitNowAllowingStateLoss()
                 }
         if (error == null) {
             fragment.showDone()
