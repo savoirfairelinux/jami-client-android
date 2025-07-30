@@ -18,9 +18,11 @@ package net.jami.services
 
 import com.google.gson.JsonParser
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.processors.PublishProcessor
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -170,7 +172,9 @@ class AccountService(
         }
         .share()
     private val messageSubject: Subject<Interaction> = PublishSubject.create()
-    val dataTransfers: Subject<DataTransfer> = PublishSubject.create()
+    private val dataTransfersProcessor = PublishProcessor.create<DataTransfer>()
+    val dataTransfers: Flowable<DataTransfer>
+        get() = dataTransfersProcessor
     private val incomingRequestsSubject: Subject<TrustRequest> = PublishSubject.create()
 
     enum class LookupState(state: Int) {
@@ -1511,7 +1515,7 @@ class AccountService(
                 if (isIncoming)
                     incomingSwarmMessageSubject.onNext(interaction)
                 if (interaction is DataTransfer)
-                    dataTransfers.onNext(interaction)
+                    dataTransfersProcessor.onNext(interaction)
             }
         }}
     }
@@ -1582,7 +1586,7 @@ class AccountService(
         )
         override fun run() {
             synchronized(toUpdate) {
-                if (toUpdate.transferStatus == Interaction.TransferStatus.TRANSFER_ONGOING) {
+                if (toUpdate.transferStatus == TransferStatus.TRANSFER_ONGOING) {
                     dataTransferEvent(account, conversation, toUpdate.messageId, toUpdate.fileId!!, 5)
                 } else {
                     scheduledTask.cancel(false)
@@ -1633,7 +1637,7 @@ class AccountService(
                 return
         }
         Log.d(TAG, "Data Transfer dataTransferSubject.onNext")
-        dataTransfers.onNext(transfer)
+        dataTransfersProcessor.onNext(transfer)
     }
 
     fun setProxyEnabled(enabled: Boolean) {

@@ -794,8 +794,10 @@ class ConversationFacade(
             .subscribe({}) { e: Throwable -> Log.e(TAG, "Error updating text message", e) })
 
         mDisposableBag.add(mAccountService.dataTransfers
-                .subscribe({ transfer: DataTransfer -> handleDataTransferEvent(transfer) },
-                     { e: Throwable -> Log.e(TAG, "Error adding data transfer", e) }))
+            .observeOn(Schedulers.computation())
+            .onBackpressureLatest()
+            .subscribe({ transfer: DataTransfer -> handleDataTransferEvent(transfer) },
+                 { e: Throwable -> Log.e(TAG, "Error adding data transfer", e) }))
         mDisposableBag.add(
             mAccountService.activeCallsObservable.subscribe(
                 { conversationActiveCall ->
