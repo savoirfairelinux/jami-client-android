@@ -17,6 +17,9 @@
 package net.jami.model
 
 import net.jami.model.Uri.Companion.fromString
+import net.jami.model.interaction.CallHistory
+import net.jami.model.interaction.DataTransfer
+import net.jami.model.interaction.TextMessage
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -80,13 +83,12 @@ class ConversationTest {
     fun addHistoryCall() {
         val oldSize = conversation!!.aggregateHistory.size
         conversation!!.addCall(
-            Call(
+            CallHistory(
                 "Coucou",
                 "ring:test",
                 "1",
-                conversation,
-                conversation!!.contact,
-                Call.Direction.INCOMING
+                Call.Direction.INCOMING,
+                0L
             )
         )
         val newSize = conversation!!.aggregateHistory.size
@@ -163,7 +165,18 @@ class ConversationTest {
     @Throws(Exception::class)
     fun addFileTransfer() {
         val oldSize = conversation!!.aggregateHistory.size
-        conversation!!.addFileTransfer(DataTransfer("1", "Coucoou", "ring:sfvfv", "photo.jpg", true, 10L, 0L, 0L))
+        conversation!!.addFileTransfer(
+            DataTransfer(
+                "1",
+                "Coucoou",
+                "ring:sfvfv",
+                "photo.jpg",
+                true,
+                10L,
+                0L,
+                0L
+            )
+        )
         val newSize = conversation!!.aggregateHistory.size
         Assert.assertEquals(0, oldSize.toLong())
         Assert.assertEquals(oldSize.toLong(), (newSize - 1).toLong())
