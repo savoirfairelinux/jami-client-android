@@ -22,6 +22,7 @@ import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.views.AvatarView
@@ -52,8 +53,9 @@ object ActionHelper {
             context.startActivity(
                 Intent(Intent.ACTION_VIEW, context.getString(R.string.donation_url).toUri())
             )
-        } catch (e: ActivityNotFoundException) {
-            Log.e(TAG, "Error opening web page", e)
+        } catch (_: ActivityNotFoundException) {
+            Toast.makeText(context, context.getString(R.string.error_open_no_app_found, context.getString(R.string.donation_url)),
+                Toast.LENGTH_LONG).show()
         }
     }
 
