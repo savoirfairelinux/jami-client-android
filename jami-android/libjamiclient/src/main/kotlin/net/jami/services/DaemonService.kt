@@ -292,7 +292,7 @@ class DaemonService(
         }
 
         override fun newBuddyNotification(accountId: String, buddyUri: String, status: Int, lineStatus: String) {
-            mAccountService.getAccount(accountId)?.presenceUpdate(buddyUri, status)
+            mExecutor.submit { mAccountService.getAccount(accountId)?.presenceUpdate(buddyUri, status) }
         }
 
         override fun subscriptionStateChanged(accountId: String, buddyUri: String, state: Int) {
