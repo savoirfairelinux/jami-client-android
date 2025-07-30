@@ -18,6 +18,7 @@ package cx.ring.tv.account
 
 import android.app.Activity
 import android.app.Instrumentation
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -121,7 +122,16 @@ class TVHomeAccountCreationFragment : JamiGuidedStepFragment<HomeAccountCreation
     override fun onGuidedActionClicked(action: GuidedAction) {
         when (action.id) {
             LINK_ACCOUNT -> presenter.clickOnLinkAccount()
-            LINK_BACKUP_ACCOUNT -> selectFile.launch("*/*")
+            LINK_BACKUP_ACCOUNT -> try {
+                selectFile.launch("*/*")
+            } catch (e: ActivityNotFoundException) {
+                Log.e(TAG, "Error selecting file", e)
+                Snackbar.make(
+                    requireView(),
+                    getString(R.string.import_archive_error),
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
             CREATE_ACCOUNT -> presenter.clickOnCreateAccount()
             CREATE_JAMS_ACCOUNT -> presenter.clickOnConnectAccount()
             else -> requireActivity().finish()
