@@ -662,16 +662,22 @@ class ConversationFacade(
             }
     }
 
-    fun removeConversation(accountId: String, conversationUri: Uri): Completable {
+    fun removeConversation(
+        accountId: String, conversationUri: Uri, shouldClearConversation: Boolean = false
+    ): Completable {
         val account = mAccountService.getAccount(accountId) ?: return Completable.error(IllegalArgumentException("Unknown account"))
         return if (conversationUri.isSwarm) {
             // For a one to one conversation, contact is strongly related, so remove the contact.
             // This will remove related conversations
             val conversation = account.getSwarm(conversationUri.rawRingId)
             if (conversation != null && conversation.mode.blockingFirst() === Conversation.Mode.OneToOne) {
-                val contact = conversation.contact
-                mAccountService.removeContact(accountId, contact!!.uri.rawRingId, false)
-                Completable.complete()
+                if (!shouldClearConversation) {
+                    val contact = conversation.contact
+                    mAccountService.removeContact(accountId, contact!!.uri.rawRingId, false)
+                    Completable.complete()
+                } else {
+                    mAccountService.removeConversation(accountId, conversationUri)
+                }
             } else {
                 mAccountService.removeConversation(accountId, conversationUri)
             }
