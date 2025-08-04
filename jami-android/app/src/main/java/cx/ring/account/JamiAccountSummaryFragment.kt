@@ -720,6 +720,7 @@ class JamiAccountSummaryFragment :
             arguments = Bundle().apply {
                 putString(RenameDeviceDialog.DEVICENAME_KEY, presenter.deviceName)
                 putString(RenameDeviceDialog.DEVICEID_KEY, mAccount?.deviceId)
+                putString(RenameDeviceDialog.ACCOUNTID_KEY, mAccount?.accountId)
             }
             setListener(this@JamiAccountSummaryFragment)
         }.show(parentFragmentManager, FRAGMENT_DIALOG_RENAME)

@@ -39,6 +39,7 @@ class RenameDeviceDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = DialogDeviceRenameBinding.inflate(layoutInflater)
         binding!!.deviceId.text = requireArguments().getString(DEVICEID_KEY) ?: "Unknown"
+        binding!!.accountId.text = requireArguments().getString(ACCOUNTID_KEY) ?: "Unknown"
         binding!!.ringDeviceNameTxt.setText(requireArguments().getString(DEVICENAME_KEY))
         binding!!.ringDeviceNameTxt.setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -107,5 +108,6 @@ class RenameDeviceDialog : DialogFragment() {
     companion object {
         const val DEVICENAME_KEY = "devicename_key"
         const val DEVICEID_KEY = "deviceid_key"
+        const val ACCOUNTID_KEY = "accountid_key"
     }
 }
