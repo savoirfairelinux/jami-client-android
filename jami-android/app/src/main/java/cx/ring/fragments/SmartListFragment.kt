@@ -197,8 +197,9 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                     .setItems(R.array.swarm_one_to_one_actions) { _, which ->
                         when (which) {
                             0 -> presenter.copyNumber(item)
-                            1 -> presenter.removeConversation(item)
-                            2 -> presenter.blockContact(item)
+                            1 -> presenter.clearConversation(item)
+                            2 -> presenter.removeConversation(item)
+                            3 -> presenter.blockContact(item)
                         }
                     }
                     .show()

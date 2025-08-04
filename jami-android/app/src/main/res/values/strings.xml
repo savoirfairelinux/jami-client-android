@@ -323,6 +323,12 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="conversation_action_remove_this_title">Delete this contact?</string>
     <string name="conversation_action_remove_this_message">This will delete the contact and definitely clear the conversation history.</string>
     <string name="conversation_action_add_this_message">This will send a connection request.</string>
+    <string name="remove_conversation">Remove conversation</string>
+    <string name="conversation_action_remove_title">Remove this conversation?</string>
+    <string name="conversation_action_remove_message">
+        This will remove the conversation and create a new conversation
+        if no other conversation exists with this contact.
+    </string>
     <string name="swarm_group_action_leave">Leave group</string>
     <string name="swarm_group_action_leave_title">Leave this group?</string>
     <string name="swarm_group_action_leave_message">This will remove the conversation from your conversations list</string>

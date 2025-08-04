@@ -24,6 +24,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     </string-array>
     <string-array name="swarm_one_to_one_actions">
         <item>@string/conversation_action_copy_peer_number</item>
+        <item>@string/remove_conversation</item>
         <item>@string/delete_contact</item>
         <item>@string/conversation_action_block_this</item>
     </string-array>
