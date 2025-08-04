@@ -67,9 +67,16 @@ class SmartListPresenter @Inject constructor(
     }
 
     fun clearConversation(accountId: String, uri: Uri) {
-        mCompositeDisposable.add(conversationFacade
-            .clearHistory(accountId, uri)
-            .subscribeOn(Schedulers.computation()).subscribe())
+        if (!uri.isSwarm) {
+            mCompositeDisposable.add(
+                conversationFacade
+                    .clearHistory(accountId, uri)
+                    .subscribeOn(Schedulers.computation()).subscribe()
+            )
+        } else {
+            mCompositeDisposable.add(conversationFacade.removeConversation(accountId, uri, true)
+                .subscribe())
+        }
     }
 
     fun blockContact(conversation: Conversation) =
