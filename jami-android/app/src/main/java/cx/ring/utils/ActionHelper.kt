@@ -81,9 +81,11 @@ object ActionHelper {
     }
 
     fun launchClearAction(context: Context, accountId: String, uri: Uri, callback: ConversationActionCallback) {
+        val title = if (uri.isSwarm) R.string.conversation_action_remove_title else R.string.conversation_action_history_clear_title
+        val message = if (uri.isSwarm) R.string.conversation_action_remove_message else R.string.conversation_action_history_clear_message
         MaterialAlertDialogBuilder(context)
-            .setTitle(R.string.conversation_action_history_clear_title)
-            .setMessage(R.string.conversation_action_history_clear_message)
+            .setTitle(title)
+            .setMessage(message)
             .setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, whichButton: Int ->
                 callback.clearConversation(accountId, uri)
             }
