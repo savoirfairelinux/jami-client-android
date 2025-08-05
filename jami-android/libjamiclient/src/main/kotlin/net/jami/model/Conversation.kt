@@ -836,6 +836,15 @@ class Conversation : ConversationHistory {
             get() = this == AdminInvitesOnly || this == InvitesOnly || this == Public
     }
 
+    // Over if all other members left or are blocked
+    val isOver: Observable<Boolean>
+        get() = mContactSubject
+            .map { contacts ->
+                val user = contacts.firstOrNull { it.isUser }
+                roles.filterKeys { it != user?.uri?.uri }
+                    .values.all { it == MemberRole.BLOCKED || it == MemberRole.LEFT }
+            }
+
     interface ConversationActionCallback {
         fun removeConversation(accountId: String, conversationUri: Uri)
         fun clearConversation(accountId: String, conversationUri: Uri)
