@@ -338,10 +338,26 @@ abstract class CallService(
             unholdConference(conf.accountId, conf.id)
     }
 
+    fun hold(call: Call) {
+        if (call.id != null) {
+            hold(call.account, call.id)
+        } else if (call.confId != null) {
+            holdConference(call.account, call.confId!!)
+        }
+    }
+
     fun hold(accountId:String, callId: String) {
         mExecutor.execute {
             Log.i(TAG, "hold() running… $callId")
             JamiService.hold(accountId, callId)
+        }
+    }
+
+    fun unhold(call: Call) {
+        if (call.id != null) {
+            unhold(call.account, call.id)
+        } else if (call.confId != null) {
+            unholdConference(call.account, call.confId!!)
         }
     }
 
