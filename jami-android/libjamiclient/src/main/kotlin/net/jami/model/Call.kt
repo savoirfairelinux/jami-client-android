@@ -21,10 +21,6 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.SingleSubject
 import io.reactivex.rxjava3.subjects.Subject
-import net.jami.model.Contact
-import net.jami.model.ConversationHistory
-import net.jami.model.Media
-import net.jami.model.interaction.Interaction
 import net.jami.services.CallService
 import net.jami.utils.Log
 import java.util.*
