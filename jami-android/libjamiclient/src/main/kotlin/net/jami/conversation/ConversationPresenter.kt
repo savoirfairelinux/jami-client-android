@@ -257,6 +257,21 @@ class ConversationPresenter @Inject constructor(
                 Log.e(TAG, "getLocationUpdates: update")
                 this.view?.showMap(c.accountId, c.uri.uri, false)
             })
+
+        disposable.add(c.isOver
+            .observeOn(uiScheduler)
+            .subscribe(
+                { isConversationOver ->
+                    val v = this.view ?: return@subscribe
+                    if (isConversationOver) {
+                        v.switchToEndedView()
+                    }
+                },
+                { error ->
+                    Log.e(TAG, "Error observing isOver state for ${c.uri}", error)
+                }
+            )
+        )
     }
 
     fun loadMore() {

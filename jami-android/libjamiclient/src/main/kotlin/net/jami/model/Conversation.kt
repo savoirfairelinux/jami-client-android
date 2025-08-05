@@ -176,8 +176,8 @@ class Conversation : ConversationHistory {
         mContactSubject.onNext(contacts)
     }
 
-    fun removeContact(contact: Contact) {
-        roles.remove(contact.uri.uri)
+    fun removeContact(contact: Contact, memberRole: MemberRole? = null) {
+        memberRole?.let { roles[contact.uri.uri] = it }
         contacts.remove(contact)
         mContactSubject.onNext(contacts)
     }
@@ -835,6 +835,34 @@ class Conversation : ConversationHistory {
         val isGroup: Boolean
             get() = this == AdminInvitesOnly || this == InvitesOnly || this == Public
     }
+
+    // Over if all other members left or are blocked
+    val isOver: Observable<Boolean>
+        get() = mContactSubject
+            .map { contacts ->
+                val user = contacts.firstOrNull { it.isUser }
+                val nonUserRoles = roles.filterKeys { it != user?.uri?.uri }.values
+                if (nonUserRoles.isEmpty()) {
+                    return@map false
+                }
+
+                val allPeersGone = nonUserRoles.all { it == MemberRole.LEFT || it == MemberRole.BLOCKED }
+                if (!allPeersGone) {
+                    return@map false
+                }
+
+                if (!this.isSwarmGroup()) {
+                    return@map true
+                }
+
+                return@map !this.isUserGroupAdmin()
+            }
+            .doOnNext { isOverResult ->
+                Log.i(TAG, "isOver: Emitting value: $isOverResult for conversation ${this.uri}")
+            }
+            .doOnError { error ->
+                Log.e(TAG, "isOver: Error in stream for conversation ${this.uri}", error)
+            }
 
     interface ConversationActionCallback {
         fun removeConversation(accountId: String, conversationUri: Uri)
