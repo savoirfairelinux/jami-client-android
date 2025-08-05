@@ -136,7 +136,9 @@ class ConversationPresenter @Inject constructor(
     private fun initContact(account: Account, c: ConversationItemViewModel, view: ConversationView) {
         if (account.isJami) {
             Log.w(TAG, "initContact ${c.uri} mode: ${c.mode}")
-            if (c.mode === Conversation.Mode.Syncing) {
+            if (c.isEnded) {
+                view.switchToEndedView()
+            } else if (c.mode === Conversation.Mode.Syncing) {
                 view.switchToSyncingView()
             } else if (c.mode == Conversation.Mode.Request) {
                 view.switchToIncomingTrustRequestView(c.uriTitle, c.request!!.mode)

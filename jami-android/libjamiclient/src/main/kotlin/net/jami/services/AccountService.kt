@@ -428,7 +428,7 @@ class AccountService(
             for (member in initialMembers) {
                 Log.w(TAG, "addConversationMember $member")
                 JamiService.addConversationMember(accountId, id, member)
-                conversation.addContact(account.getContactFromCache(member))
+                conversation.addContact(account.getContactFromCache(member), MemberRole.INVITED)
             }
             account.conversationStarted(conversation)
             Log.w(TAG, "loadConversationMessages")
@@ -1420,9 +1420,9 @@ class AccountService(
                     }
                 }
                 ConversationMemberEvent.Remove, ConversationMemberEvent.Block -> {
-                    if (conversation.mode.blockingFirst() != Conversation.Mode.OneToOne) {
-                        conversation.findContact(uri)?.let { contact -> conversation.removeContact(contact) }
-                    }
+                    val role = if (memberEvent == ConversationMemberEvent.Remove)
+                        MemberRole.LEFT else MemberRole.BLOCKED
+                    conversation.findContact(uri)?.let { contact -> conversation.removeContact(contact, role) }
                 }
             }
         }}

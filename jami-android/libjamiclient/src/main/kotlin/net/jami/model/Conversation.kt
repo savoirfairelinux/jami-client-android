@@ -176,8 +176,8 @@ class Conversation : ConversationHistory {
         mContactSubject.onNext(contacts)
     }
 
-    fun removeContact(contact: Contact) {
-        roles.remove(contact.uri.uri)
+    fun removeContact(contact: Contact, memberRole: MemberRole? = null) {
+        memberRole?.let { roles[contact.uri.uri] = it }
         contacts.remove(contact)
         mContactSubject.onNext(contacts)
     }
@@ -835,6 +835,26 @@ class Conversation : ConversationHistory {
         val isGroup: Boolean
             get() = this == AdminInvitesOnly || this == InvitesOnly || this == Public
     }
+
+    val isEnded: Boolean
+        get() {
+            val user = contacts.firstOrNull { it.isUser }
+            val nonUserRoles = roles.filterKeys { it != user?.uri?.uri }.values
+            if (nonUserRoles.isEmpty()) {
+                return false
+            }
+
+            val allPeersGone = nonUserRoles.all { it == MemberRole.LEFT || it == MemberRole.BLOCKED }
+            if (!allPeersGone) {
+                return false
+            }
+
+            if (!this.isSwarmGroup()) {
+                return true
+            }
+
+            return !this.isUserGroupAdmin()
+        }
 
     interface ConversationActionCallback {
         fun removeConversation(accountId: String, conversationUri: Uri)
