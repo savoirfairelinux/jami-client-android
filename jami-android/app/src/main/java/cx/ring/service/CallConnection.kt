@@ -122,13 +122,13 @@ class CallConnection(
     override fun onHold() {
         Log.w(TAG, "onHold")
         val call = call ?: return
-        service.callService.hold(call.account, call.id!!)
+        service.callService.hold(call)
     }
 
     override fun onUnhold() {
         Log.w(TAG, "onUnhold")
         val call = call ?: return
-        service.callService.unhold(call.account, call.id!!)
+        service.callService.unhold(call)
     }
 
     override fun onSilence() {
