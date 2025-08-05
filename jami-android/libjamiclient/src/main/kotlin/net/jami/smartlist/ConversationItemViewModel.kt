@@ -53,6 +53,8 @@ class ConversationItemViewModel(
         private set
     val request: TrustRequest? = conversation.request
 
+    val isEnded = conversation.isEnded
+
     enum class Title {
         None, Conversations, PublicDirectory
     }

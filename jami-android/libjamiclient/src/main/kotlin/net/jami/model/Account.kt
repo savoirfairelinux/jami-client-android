@@ -652,7 +652,7 @@ class Account(
                             if (request.mode == Conversation.Mode.OneToOne && !conversationUri.blockingFirst().isSwarm)
                                 setConversationUri(request.conversationUri)
                         }
-                        addContact(contact)
+                        addContact(contact, MemberRole.ADMIN)
                         addContactEvent(ContactEvent(accountId, contact, request))
                     }
                 else
