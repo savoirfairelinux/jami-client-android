@@ -698,6 +698,10 @@ class Account(
                     if (contact.conversationUri.blockingFirst() == request.conversationUri)
                         contact.setConversationUri(contact.uri)
                 }
+
+                if (conversation.isSwarm) {
+                    conversation.request = null
+                }
                 pendingChanged()
             }
             return request
