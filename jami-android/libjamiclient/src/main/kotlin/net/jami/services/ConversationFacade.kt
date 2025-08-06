@@ -16,6 +16,7 @@
  */
 package net.jami.services
 
+import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
@@ -590,13 +591,13 @@ class ConversationFacade(
         Log.d(TAG, "onConfStateChange Thread id: " + Thread.currentThread().id)
     }
 
-    private fun onCallStateChange(call: Call) {
+    private fun onCallStateChange(call: Call): Completable {
         /* Ignore updates to host call connection (null callId) */
         if (call.id == null && call.confId == null)
-            return
+            return Completable.complete()
         val newState = call.callStatus
         val incomingCall = newState === CallStatus.RINGING && call.isIncoming
-        val account = mAccountService.getAccount(call.account) ?: return
+        val account = mAccountService.getAccount(call.account) ?: return Completable.complete()
         val contact = call.contact
         val conversationUri = call.conversationUri
         Log.w(TAG, "CallStateChange ${call.id}->$newState conversationId:$conversationUri contact:$contact ${contact?.conversationUri?.blockingFirst()}")
@@ -608,7 +609,7 @@ class ConversationFacade(
         else
             account.getByUri(conversationUri)
         val conference = if (conversation != null) (conversation.getConference(call.confId ?: call.id) ?: Conference(call).apply {
-            if (newState === CallStatus.OVER) return@onCallStateChange
+            if (newState === CallStatus.OVER) return@onCallStateChange Completable.complete()
             conversation.addConference(this)
             account.updated(conversation)
         }) else null
@@ -618,16 +619,17 @@ class ConversationFacade(
         if ((newState.isRinging || newState === CallStatus.CURRENT) && call.timestamp == 0L) {
             call.timestamp = System.currentTimeMillis()
         }
+        var notificationCompletable: Completable = Completable.complete()
         if (incomingCall) {
-            mNotificationService.handleCallNotification(conference!!, false)
+            notificationCompletable = mNotificationService.handleCallNotification(conference!!, false)
             mHardwareService.setPreviewSettings()
-        } else if (newState === CallStatus.CURRENT || newState === CallStatus.RINGING && !call.isIncoming) {
-            mNotificationService.handleCallNotification(conference!!, false)
+        } else if (newState === CallStatus.CURRENT || newState === CallStatus.RINGING) {
+            notificationCompletable = mNotificationService.handleCallNotification(conference!!, false)
         } else if (newState.isOver) {
-            if (conference != null)
+            notificationCompletable = if (conference != null)
                 mNotificationService.handleCallNotification(conference, true)
             else {
-                mNotificationService.removeCallNotification()
+                Completable.fromAction { mNotificationService.removeCallNotification() }
             }
             mHardwareService.closeAudioState()
             val now = System.currentTimeMillis()
@@ -640,17 +642,21 @@ class ConversationFacade(
             if (conference != null && conference.removeParticipant(call) && conversation != null && !conversation.isSwarm) {
                 Log.w(TAG, "Adding call history for conversation " + conversation.uri)
                 val callHistory = CallHistory(call)
-                mHistoryService.insertInteraction(account.accountId, conversation, callHistory).subscribe()
-                conversation.addCall(callHistory)
-                if (call.isIncoming && call.isMissed) {
-                    mNotificationService.showMissedCallNotification(call)
-                }
-                account.updated(conversation)
+                notificationCompletable = notificationCompletable.andThen(
+                    mHistoryService.insertInteraction(account.accountId, conversation, callHistory)
+                        .doOnComplete {
+                            conversation.addCall(callHistory)
+                            if (call.isIncoming && call.isMissed) {
+                                mNotificationService.showMissedCallNotification(call)
+                            }
+                            account.updated(conversation)
+                        })
             }
             if (conversation != null && conference != null && conference.participants.isEmpty() && conference.hostCall == null) {
                 conversation.removeConference(conference)
             }
         }
+        return notificationCompletable
     }
 
     fun cancelFileTransfer(accountId: String, conversationId: Uri, messageId: String?, fileId: String?) {
@@ -716,9 +722,10 @@ class ConversationFacade(
     }
 
     init {
-        mDisposableBag.add(mCallService.callsUpdates.subscribe { call: Call ->
-            onCallStateChange(call)
-        })
+        mDisposableBag.add(mCallService.callsUpdates
+            .toFlowable(BackpressureStrategy.LATEST)
+            .flatMapCompletable(this::onCallStateChange)
+            .subscribe())
 
         /*mDisposableBag.add(mCallService.getConnectionUpdates()
                     .subscribe(mNotificationService::onConnectionUpdate));*/

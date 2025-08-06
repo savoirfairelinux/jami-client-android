@@ -16,6 +16,7 @@
  */
 package net.jami.services
 
+import io.reactivex.rxjava3.core.Completable
 import net.jami.model.*
 import net.jami.model.interaction.DataTransfer
 
@@ -23,7 +24,7 @@ interface NotificationService {
     fun showCallNotification(notifId: Int): Any?
     fun cancelCallNotification()
     fun removeCallNotification()
-    fun handleCallNotification(conference: Conference, remove: Boolean, startScreenshare: Boolean = false)
+    fun handleCallNotification(conference: Conference, remove: Boolean, startScreenshare: Boolean = false): Completable
     fun preparePendingScreenshare(conference: Conference, callback: () -> Unit)
     fun startPendingScreenshare(confId: String)
     fun showMissedCallNotification(call: Call)
