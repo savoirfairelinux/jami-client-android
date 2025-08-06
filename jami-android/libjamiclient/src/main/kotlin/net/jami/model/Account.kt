@@ -698,6 +698,7 @@ class Account(
                     if (contact.conversationUri.blockingFirst() == request.conversationUri)
                         contact.setConversationUri(contact.uri)
                 }
+                conversation.request = null
                 pendingChanged()
             }
             return request
