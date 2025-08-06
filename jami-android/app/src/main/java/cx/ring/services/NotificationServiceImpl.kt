@@ -61,6 +61,9 @@ import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
 import cx.ring.views.AvatarFactory.toAdaptiveIcon
 import cx.ring.views.AvatarFactory.toBitmap
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.call.CallPresenter
 import net.jami.model.*
@@ -114,100 +117,102 @@ class NotificationServiceImpl(
                 .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_USER_ACTION))
     }
 
-    private fun buildCallNotification(conference: Conference): Notification? {
-        val ongoingConference = currentCalls.values.firstOrNull { it !== conference && it.state == Call.CallStatus.CURRENT }
-        val call = conference.firstCall!!
+    private fun buildCallNotification(conference: Conference): Maybe<Notification> {
+        val call = conference.firstCall ?: return Maybe.empty()
         val accountId = call.account
-        val callClass = if (DeviceUtils.isTv(mContext)) TVCallActivity::class.java else CallActivity::class.java
-        val viewIntent = PendingIntent.getActivity(mContext, random.nextInt(), Intent(Intent.ACTION_VIEW)
-            .setClass(mContext, callClass)
-            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            .putExtra(NotificationService.KEY_CALL_ID, call.id), ContentUri.immutable())
+        val peer = call.contact ?: return Maybe.empty()
+        return getProfileSingle(accountId, peer)
+            .flatMapMaybe { contact ->
+                val callClass = if (DeviceUtils.isTv(mContext)) TVCallActivity::class.java else CallActivity::class.java
+                val viewIntent = PendingIntent.getActivity(mContext, random.nextInt(), Intent(Intent.ACTION_VIEW)
+                    .setClass(mContext, callClass)
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .putExtra(NotificationService.KEY_CALL_ID, call.id), ContentUri.immutable())
 
-        val contact = getProfile(accountId, call.contact!!)
-        val caller = Person.Builder()
-            .setName(contact.displayName)
-            .setKey(ConversationPath.toKey(accountId, contact.contact.uri.uri))
-            .setIcon(getAdaptiveContactPicture(contact))
-            .setImportant(true)
-            .build()
+                val caller = Person.Builder()
+                    .setName(contact.displayName)
+                    .setKey(ConversationPath.toKey(accountId, contact.contact.uri.uri))
+                    .setIcon(getAdaptiveContactPicture(contact))
+                    .setImportant(true)
+                    .build()
 
-        val hasVideo = conference.hasVideo()
+                val hasVideo = conference.hasVideo()
 
-        val messageNotificationBuilder: NotificationCompat.Builder
-        if (conference.isOnGoing) {
-            messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS)
-                .setContentTitle(mContext.getString(R.string.notif_current_call_title, contact.displayName))
-                .setContentText(mContext.getText(R.string.notif_current_call))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(viewIntent)
-                .setSound(null)
-                .setVibrate(null)
-                .setColorized(true)
-                .setUsesChronometer(true)
-                .setWhen(conference.timestampStart)
-                .setColor(ContextCompat.getColor(mContext, R.color.color_primary_light))
-                .setStyle(
-                    NotificationCompat.CallStyle.forOngoingCall(caller, PendingIntent.getService(mContext, random.nextInt(),
-                        Intent(DRingService.ACTION_CALL_END)
-                            .setClass(mContext, DRingService::class.java)
-                            .putExtra(NotificationService.KEY_CALL_ID, call.id)
-                            .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId),
-                        ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)))
-                    .setIsVideo(hasVideo))
-        } else if (conference.isRinging) {
-            if (conference.isIncoming) {
-                messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_INCOMING_CALL)
-                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.displayName))
-                    .setPriority(NotificationCompat.PRIORITY_MAX)
-                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                    .setContentText(mContext.getText(R.string.notif_incoming_call))
-                    .setContentIntent(viewIntent)
-                    .setSound(null)
-                    .setVibrate(null)
-                    .setFullScreenIntent(viewIntent, true)
-                    .setStyle(
-                        NotificationCompat.CallStyle.forIncomingCall(caller,
-                            PendingIntent.getService(mContext, random.nextInt(), Intent(DRingService.ACTION_CALL_REFUSE)
-                                .setClass(mContext, DRingService::class.java)
-                                .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId)
-                                .putExtra(NotificationService.KEY_CALL_ID, call.id), ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)),
-                            PendingIntent.getActivity(mContext, random.nextInt(), Intent(DRingService.ACTION_CALL_ACCEPT)
-                                .setClass(mContext, callClass)
-                                .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId)
-                                .putExtra(NotificationService.KEY_CALL_ID, call.id)
-                                .putExtra(CallPresenter.KEY_ACCEPT_OPTION, CallPresenter.ACCEPT_HOLD)
-                                .putExtra(CallFragment.KEY_HAS_VIDEO, hasVideo), ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)))
+                val messageNotificationBuilder: NotificationCompat.Builder
+                if (conference.isOnGoing) {
+                    messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS)
+                        .setContentTitle(mContext.getString(R.string.notif_current_call_title, contact.displayName))
+                        .setContentText(mContext.getText(R.string.notif_current_call))
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setContentIntent(viewIntent)
+                        .setSound(null)
+                        .setVibrate(null)
+                        .setColorized(true)
+                        .setUsesChronometer(true)
+                        .setWhen(conference.timestampStart)
+                        .setColor(ContextCompat.getColor(mContext, R.color.color_primary_light))
+                        .setStyle(
+                            NotificationCompat.CallStyle.forOngoingCall(caller, PendingIntent.getService(mContext, random.nextInt(),
+                                Intent(DRingService.ACTION_CALL_END)
+                                    .setClass(mContext, DRingService::class.java)
+                                    .putExtra(NotificationService.KEY_CALL_ID, call.id)
+                                    .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId),
+                                ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)))
                             .setIsVideo(hasVideo))
-            } else {
-                messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS)
-                    .setContentTitle(mContext.getString(R.string.notif_outgoing_call_title, contact.displayName))
-                    .setContentText(mContext.getText(R.string.notif_outgoing_call))
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setContentIntent(viewIntent)
-                    .setSound(null)
-                    .setVibrate(null)
-                    .setColorized(true)
-                    .setStyle(
-                        NotificationCompat.CallStyle.forOngoingCall(caller, PendingIntent.getService(mContext, random.nextInt(),
-                            Intent(DRingService.ACTION_CALL_END)
-                                .setClass(mContext, DRingService::class.java)
-                                .putExtra(NotificationService.KEY_CALL_ID, call.id)
-                                .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId),
-                            ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)))
-                        .setIsVideo(hasVideo))
-                    .setColor(ContextCompat.getColor(mContext, R.color.color_primary_light))
-            }
-        } else {
-            return null
-        }
-        messageNotificationBuilder.setOngoing(true)
-            .setCategory(NotificationCompat.CATEGORY_CALL)
-            .setSmallIcon(R.drawable.ic_ring_logo_white)
-        setContactPicture(contact, messageNotificationBuilder)
-        return messageNotificationBuilder.build().apply {
-            if (conference.isRinging)
-                flags = flags or NotificationCompat.FLAG_INSISTENT
+                } else if (conference.isRinging) {
+                    if (conference.isIncoming) {
+                        messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_INCOMING_CALL)
+                        messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.displayName))
+                            .setPriority(NotificationCompat.PRIORITY_MAX)
+                            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                            .setContentText(mContext.getText(R.string.notif_incoming_call))
+                            .setContentIntent(viewIntent)
+                            .setSound(null)
+                            .setVibrate(null)
+                            .setFullScreenIntent(viewIntent, true)
+                            .setStyle(
+                                NotificationCompat.CallStyle.forIncomingCall(caller,
+                                    PendingIntent.getService(mContext, random.nextInt(), Intent(DRingService.ACTION_CALL_REFUSE)
+                                        .setClass(mContext, DRingService::class.java)
+                                        .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId)
+                                        .putExtra(NotificationService.KEY_CALL_ID, call.id), ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)),
+                                    PendingIntent.getActivity(mContext, random.nextInt(), Intent(DRingService.ACTION_CALL_ACCEPT)
+                                        .setClass(mContext, callClass)
+                                        .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId)
+                                        .putExtra(NotificationService.KEY_CALL_ID, call.id)
+                                        .putExtra(CallPresenter.KEY_ACCEPT_OPTION, CallPresenter.ACCEPT_HOLD)
+                                        .putExtra(CallFragment.KEY_HAS_VIDEO, hasVideo), ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)))
+                                    .setIsVideo(hasVideo))
+                    } else {
+                        messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS)
+                            .setContentTitle(mContext.getString(R.string.notif_outgoing_call_title, contact.displayName))
+                            .setContentText(mContext.getText(R.string.notif_outgoing_call))
+                            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                            .setContentIntent(viewIntent)
+                            .setSound(null)
+                            .setVibrate(null)
+                            .setColorized(true)
+                            .setStyle(
+                                NotificationCompat.CallStyle.forOngoingCall(caller, PendingIntent.getService(mContext, random.nextInt(),
+                                    Intent(DRingService.ACTION_CALL_END)
+                                        .setClass(mContext, DRingService::class.java)
+                                        .putExtra(NotificationService.KEY_CALL_ID, call.id)
+                                        .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId),
+                                    ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)))
+                                .setIsVideo(hasVideo))
+                            .setColor(ContextCompat.getColor(mContext, R.color.color_primary_light))
+                    }
+                } else {
+                    return@flatMapMaybe Maybe.empty()
+                }
+                messageNotificationBuilder.setOngoing(true)
+                    .setCategory(NotificationCompat.CATEGORY_CALL)
+                    .setSmallIcon(R.drawable.ic_ring_logo_white)
+                setContactPicture(contact, messageNotificationBuilder)
+                Maybe.just(messageNotificationBuilder.build().apply {
+                    if (conference.isRinging)
+                        flags = flags or NotificationCompat.FLAG_INSISTENT
+                })
         }
     }
 
@@ -265,7 +270,7 @@ class NotificationServiceImpl(
      * @param conference the conference object for the notification
      * @param remove     true if it should be removed from current calls
      */
-    override fun handleCallNotification(conference: Conference, remove: Boolean, startScreenshare: Boolean) {
+    override fun handleCallNotification(conference: Conference, remove: Boolean, startScreenshare: Boolean): Completable {
         val contact = conference.call?.contact
         val conversationUri = conference.call?.conversationUri
         val account = mAccountService.getAccount(conference.accountId)!!
@@ -273,7 +278,7 @@ class NotificationServiceImpl(
             if (conversationUri == null)
                 if (contact == null) {
                     Log.e(TAG, "Unable to show notification. contact and conversationId are null")
-                    return
+                    return Completable.complete()
                 } else
                     account.getByUri(contact.conversationUri.blockingFirst())
                         ?: account.getByUri(contact.uri)
@@ -282,79 +287,91 @@ class NotificationServiceImpl(
 
         // Ignore new notification if conversation is muted.
         // Always try to remove notification (case where conversation is muted during a call).
-        if (!remove && !conversation!!.isNotificationEnabled) return
+        if (!remove && !conversation!!.isNotificationEnabled) return Completable.complete()
 
         if (!remove && conference.isIncoming && conference.state == Call.CallStatus.RINGING) {
             // Filter case where state is ringing but we haven't receive the media list yet
-            val call = conference.call ?: return
-            if (call.mediaList == null)
-                return
-            mCallService.requestIncomingCall(call).subscribe { result ->
-                Log.w(TAG, "Telecom API: requestIncomingCall result ${result.allowed}")
-                if (result.allowed) {
-                    result.setCall(call)
-                    manageCallNotification(conference, remove, startScreenshare)
+            val call = conference.call ?: return Completable.complete()
+            if (call.mediaList.isEmpty())
+                return Completable.complete()
+            return mCallService.requestIncomingCall(call)
+                .flatMapCompletable { result ->
+                    Log.w(TAG, "Telecom API: requestIncomingCall result ${result.allowed}")
+                    if (result.allowed) {
+                        result.setCall(call)
+                        manageCallNotification(conference, remove, startScreenshare)
+                    } else
+                        Completable.complete()
                 }
-            }
         } else {
-            manageCallNotification(conference, remove, startScreenshare)
+            return manageCallNotification(conference, remove, startScreenshare)
         }
     }
-    private fun manageCallNotification(conference: Conference, remove: Boolean, startScreenshare: Boolean) {
+
+    private fun manageCallNotification(conference: Conference, remove: Boolean, startScreenshare: Boolean): Completable {
         if (DeviceUtils.isTv(mContext)) {
             if (!remove) startCallActivity(conference.id)
-            return
+            return Completable.complete()
         }
-        var notification: Notification? = null
 
-        // Build notification
         val id = conference.id
         currentCalls.remove(id)
         if (!remove) {
             currentCalls[id] = conference
-            notification = buildCallNotification(conference)
-        }
-        if (notification == null && currentCalls.isNotEmpty()) {
-            // Build notification for other calls if any remains
-            //for (c in currentCalls.values) conference = c
-            notification = buildCallNotification(currentCalls.values.last())
         }
 
-        // Send notification to the  Service
-        Log.w(TAG, "showCallNotification $notification")
-        if (notification != null) {
-            val nid = random.nextInt()
-            callNotifications[nid] = notification
-            val start = {
-                ContextCompat.startForegroundService(mContext,
-                    Intent(CallNotificationService.ACTION_START, null, mContext, CallNotificationService::class.java)
-                        .putExtra(NotificationService.KEY_NOTIFICATION_ID, nid)
-                        .putExtra(NotificationService.KEY_SCREENSHARE, startScreenshare)
-                        .putExtra(NotificationService.KEY_CALL_ID, id)
-                )
-            }
-            try {
-                start()
-            }
-            catch (e: Exception) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    if (e is ForegroundServiceStartNotAllowedException) {
-                        pingPush(conference.accountId, start)
+        val notificationMaybe = if (!remove) {
+            buildCallNotification(conference)
+        } else {
+            Maybe.empty()
+        }
+
+        return notificationMaybe
+            .switchIfEmpty(Maybe.defer {
+                if (currentCalls.isNotEmpty()) {
+                    buildCallNotification(currentCalls.values.last())
+                } else {
+                    Maybe.empty()
+                }
+            })
+            .flatMapCompletable { notification ->
+                Log.w(TAG, "showCallNotification $notification")
+                val nid = random.nextInt()
+                callNotifications[nid] = notification
+                val start = {
+                    ContextCompat.startForegroundService(mContext,
+                        Intent(CallNotificationService.ACTION_START, null, mContext, CallNotificationService::class.java)
+                            .putExtra(NotificationService.KEY_NOTIFICATION_ID, nid)
+                            .putExtra(NotificationService.KEY_SCREENSHARE, startScreenshare)
+                            .putExtra(NotificationService.KEY_CALL_ID, id)
+                    )
+                }
+                try {
+                    start()
+                } catch (e: Exception) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        if (e is ForegroundServiceStartNotAllowedException) {
+                            pingPush(conference.accountId, start)
+                        } else {
+                            Log.w(TAG, "Can't show call notification", e)
+                        }
                     } else {
                         Log.w(TAG, "Can't show call notification", e)
                     }
-                } else {
-                    Log.w(TAG, "Can't show call notification", e)
+                }
+                Completable.complete()
+            }
+            .onErrorComplete()
+            .doOnComplete {
+                if (currentCalls.isEmpty()) {
+                    removeCallNotification()
                 }
             }
-        } else {
-            removeCallNotification()
-        }
     }
 
     override fun preparePendingScreenshare(conference: Conference, callback: () -> Unit) {
         pendingScreenshareCallbacks[conference.id] = callback
-        handleCallNotification(conference, false, true)
+        handleCallNotification(conference, remove = false, startScreenshare = true)
     }
 
     /**
@@ -1064,7 +1081,10 @@ class NotificationServiceImpl(
             .toBitmap(avatarSize), vm.title)
 
     private fun getProfile(accountId:String, contact: Contact): ContactViewModel =
-        mContactService.getLoadedContact(accountId, contact).blockingGet()
+        getProfileSingle(accountId, contact).blockingGet()
+
+    private fun getProfileSingle(accountId:String, contact: Contact): Single<ContactViewModel> =
+        mContactService.getLoadedContact(accountId, contact)
 
     private fun setContactPicture(contact: ContactViewModel, messageNotificationBuilder: NotificationCompat.Builder) {
         getContactPicture(contact)?.let { pic -> messageNotificationBuilder.setLargeIcon(pic) }
