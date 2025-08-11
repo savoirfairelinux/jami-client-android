@@ -251,6 +251,7 @@
   <string name="account_device_name_empty">设备名不可为空</string>
   <string name="account_device_this_indicator">此裝置</string>
   <string name="account_disabled_indicator">已停用</string>
+  <string name="account_device_id">设备标识符</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">不支援此格式。</string>
   <string name="account_link_info">在新设备上的 Jami 应用中，扫描二维码或手动输入验证码。</string>

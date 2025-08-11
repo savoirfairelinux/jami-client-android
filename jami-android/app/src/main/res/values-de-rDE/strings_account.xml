@@ -97,6 +97,7 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="rename_device_message">Geben Sie den Gerätenamen ein, um dieses Gerät in Ihrem Jami-Konto zu identifizieren</string>
   <string name="account_device_name_empty">Der Gerätename darf nicht leer sein.</string>
   <string name="account_disabled_indicator">Deaktiviert</string>
+  <string name="account_device_id">Geräte-ID</string>
   <!--Link a new device-->
   <string name="account_link_info">Scannen Sie in der Jami-App auf dem neuen Gerät den QR-Code oder geben Sie den Authentifizierungscode manuell ein.</string>
   <string name="account_link_password">Dieses Konto ist passwortverschlüsselt. Geben Sie das Passwort ein, um den Authentifizierungscode zu generieren.</string>

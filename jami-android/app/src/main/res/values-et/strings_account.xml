@@ -251,6 +251,7 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_device_name_empty">Seadme nimi ei saa olla tühi</string>
   <string name="account_device_this_indicator">See seade</string>
   <string name="account_disabled_indicator">Väljalülitatud</string>
+  <string name="account_device_id">Seadme tunnus</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">See vorming pole toetatud</string>
   <string name="account_link_info">Skaneeri uue nutiseadme Jami rakenduses QR-koodi või sisesta tuvastuskood käsitsi.</string>

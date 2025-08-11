@@ -251,6 +251,7 @@
   <string name="account_device_name_empty">El nombre del dispositivo no puede estar vacío.</string>
   <string name="account_device_this_indicator">Este dispositivo</string>
   <string name="account_disabled_indicator">Deshabilitado</string>
+  <string name="account_device_id">ID de dispositivo</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Este formato no está soportado.</string>
   <string name="account_link_info">En la aplicación Jami en el nuevo dispositivo, escanee el código QR o ingrese el código de autenticación manualmente.</string>

@@ -225,7 +225,7 @@
   <string name="unknown_error">Ismeretlen hiba történt. Kérjük, ellenőrizze a hálózati kapcsolatot.</string>
   <string name="looking_for_username_availability">Felhasználónév elérhetőségének ellenőrzése…</string>
   <string name="account_status_connecting">Kapcsolódás</string>
-  <string name="account_status_connection_error">Kapcsolódási hiba</string>
+  <string name="account_status_connection_error">Kapcsolati hiba</string>
   <string name="account_status_online">Elérhető</string>
   <string name="account_status_unknown">Ismeretlen</string>
   <string name="account_status_offline">Nem elérhető</string>
@@ -251,6 +251,7 @@
   <string name="account_device_name_empty">Az eszköznév nem lehet üres.</string>
   <string name="account_device_this_indicator">Ez az eszköz</string>
   <string name="account_disabled_indicator">Letiltva</string>
+  <string name="account_device_id">Eszközazonosító</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Ez a formátum nem támogatott</string>
   <string name="account_link_info">Az új eszközön található Jami alkalmazásban olvasd be a QR-kódot, vagy írd be kézzel a hitelesítési kódot.</string>

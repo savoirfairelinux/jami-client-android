@@ -251,6 +251,7 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <string name="account_device_name_empty">Le nom d\'appareil ne peut être vide.</string>
   <string name="account_device_this_indicator">Cet appareil</string>
   <string name="account_disabled_indicator">Désactivé</string>
+  <string name="account_device_id">Identifiant d\'appareil</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Ce format n\'est pas supporté.</string>
   <string name="account_link_info">Dans Jami, sur le nouvel appareil, scanner le code QR ou bien entrer le code d\'authentification manuellement.</string>

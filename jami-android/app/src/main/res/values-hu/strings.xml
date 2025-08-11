@@ -481,7 +481,7 @@ A fiókexportálási művelet folytatásához kattintson a Megerősítés gombra
   <string name="export_side_step2_confirm">Megerősítés</string>
   <string name="export_side_step2_password">A fiók jelszóval védett. A folytatáshoz hitelesítsen az új eszközön.</string>
   <string name="export_side_step3_body_loading">Fiók exportálási műveletét az új eszközre folyamatban van. Kérjük, várjon…</string>
-  <string name="export_side_step3_body_done">A fiók importálása sikerült az új eszközön.</string>
+  <string name="export_side_step3_body_done">Megtörtént a fiók importálása az új eszközön.</string>
   <string name="export_side_step3_exit">Befejezés</string>
   <string name="import_side_step1_advice_qr">A forráseszközön indítsa el a fiók exportálásának műveletét.\nJelölje ki a <b>Fiók → Fiókbeállítások → Új eszköz összekapcsolása</b>\nHa készen áll, olvassa be a következő QR-kódot.</string>
   <string name="import_side_step1_advice_code">A forráseszközön indítsa el a fiók exportálásának műveletét.\nJelölje ki a <b>Fiók → Fiókbeállítások → Új eszköz összekapcsolása</b>\nHa készen áll, írja be a következő kódot.</string>

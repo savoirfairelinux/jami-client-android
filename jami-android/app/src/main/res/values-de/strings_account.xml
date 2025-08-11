@@ -251,6 +251,7 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="account_device_name_empty">Der Gerätename darf nicht leer sein.</string>
   <string name="account_device_this_indicator">Dieses Gerät</string>
   <string name="account_disabled_indicator">Deaktiviert</string>
+  <string name="account_device_id">Geräte-ID</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Dieses Format wird nicht unterstützt.</string>
   <string name="account_link_info">Scannen Sie in der Jami-App auf dem neuen Gerät den QR-Code oder geben Sie den Authentifizierungscode manuell ein.</string>

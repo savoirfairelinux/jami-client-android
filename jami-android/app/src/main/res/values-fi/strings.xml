@@ -247,6 +247,7 @@
   <string name="help_password_choose">Valitse muistettava, vahva salasana jota käytät Jami-tilin suojaamiseen.</string>
   <string name="help_password_enter">Anna Jami-tilisi pääsalasana.</string>
   <string name="help_server_enter">Anna hallintapalvelimen URL.</string>
+  <string name="pin_copied">Todennuskoodi kopioitu leikepöydälle.</string>
   <string name="copied_clipboard">Kopioitu leikepöydälle</string>
   <string name="wizard_next">Seuraava</string>
   <string name="wizard_back">Takaisin</string>
@@ -325,6 +326,7 @@
   <string name="file_transfer_status_error">Tiedostoa siirrettäessä tapahtui virhe.</string>
   <string name="file_transfer_status_timed_out">Toiminto on aikakatkaistu.</string>
   <string name="file_saved_in">Tiedosto tallennettu %s.</string>
+  <string name="file_saved_successfully">Tiedosto tallennettiin onnistuneesti.</string>
   <string name="file_download">Lataa</string>
   <string name="no_space_left_on_device">Laitteessa ei ole tallennustilaa.</string>
   <string name="title_media_viewer">Katseluohjelma</string>
@@ -458,9 +460,12 @@
   <string name="unable_to_load">Ei voida ladata %1$s</string>
   <string name="load_success">%1$s: käytössä</string>
   <string name="unload_success">%1$s: poistettu</string>
+  <string name="install_success">Laajennus %1$s asennettiin onnistuneesti.</string>
   <string name="install_error">Laajennuksen tuonnissa tapahtui virhe.</string>
   <string name="export_side_main_title">Vie tunnus</string>
   <string name="import_side_main_title">Tuo tunnus</string>
+  <string name="link_device_dialog_stop_title">Haluatko pysäyttää laitelinkin?</string>
+  <string name="link_device_dialog_stop_export_body">Pysäyttäminen peruuttaa tilin vientitoiminnon.</string>
   <string name="link_device_dialog_stop_import_body">Lopettaminen peruuttaa tilin tuontitoiminnon.</string>
   <string name="export_side_step1_advice_qr">Luo uusi tili uudella laitteella.\nValitse&gt; <b>Lisää tili&gt; Yhdistä toisesta laitteesta.</b>\nKun olet valmis, skannaa QR-koodi.</string>
   <string name="export_side_step1_switch_to_code">tai paina painiketta kirjoita todennuskoodi käsin.</string>
@@ -473,6 +478,8 @@
   <string name="export_side_step2_cancel">Peruuta</string>
   <string name="export_side_step2_confirm">Vahvista</string>
   <string name="export_side_step2_password">Tili on suojattu salasanalla.\nJatka todentamalla uudella laitteella.</string>
+  <string name="export_side_step3_body_loading">Tilin vienti uuteen laitteeseen on meneillään. Odota…</string>
+  <string name="export_side_step3_body_done">Tilin tuonti uuteen laitteeseen onnistui.</string>
   <string name="export_side_step3_exit">Valmis</string>
   <string name="import_side_step1_advice_qr">Aloita vienti laitteellasi\n<b>Valitse Tili &gt; Tilin asetukset &gt; Linkitä uusi laite</b>\nKun olet valmis, skannaa QR-koodi.</string>
   <string name="import_side_step1_advice_code">Aloita vienti laitteellasi\n<b>Valitse Tili &gt; Tilin asetukset &gt; Linkitä uusi laite</b>\nKun olet valmis, kirjoita koodi.</string>
@@ -485,10 +492,15 @@
   <string name="import_side_step2_password_import">Tuo</string>
   <string name="import_side_step2_password_unlocking">Avataan tiliä…</string>
   <string name="import_side_step2_action_required">Toimenpiteitä tarvitaan. Vahvista tili toisella laitteella.</string>
+  <string name="import_side_step3_body_loading">Tiliä tuodaan uudelle laitteelle. Odota...</string>
   <string name="import_side_step3_body_done">Tili tuotiin onnistuneesti.</string>
+  <string name="import_side_step3_go_to_account">Siirry uudelle tilille</string>
   <string name="import_side_step3_exit">Valmis</string>
+  <string name="link_device_share_title">Jaa todennuskoodi</string>
+  <string name="link_device_error_network">Laitteen yhdistämisessä tapahtui verkkovirhe. Tarkista yhteys ja yritä uudelleen.</string>
   <string name="link_device_error_authentication">Yhdistämisessä tapahtui todennusvirhe. Tarkista kirjautumistiedot ja yritä uudelleen.</string>
   <string name="link_device_error_timeout">Toiminto on aikakatkaistu.</string>
+  <string name="link_device_error_canceled">Käyttäjä peruutti toimenpiteen.</string>
   <string name="link_device_error_unknown">Tapahtui virhe.</string>
   <string name="link_device_error_bad_password">Tarkista kirjautumistiedot ja yritä uudelleen.</string>
 </resources>

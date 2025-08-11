@@ -86,6 +86,8 @@ Voit muokata tiliäsi myöhemmin</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Lisäasetukset</string>
   <string name="account_chat_settings_title">Chat-asetukset</string>
+  <string name="account_read_receipts_label">Lukukuittaukset</string>
+  <string name="account_read_receipts_summary">Lähetä tai pyydä lukukuittauksia, kun viestit on toimitettu tai luettu.</string>
   <string name="account_call_settings_title">Puheluasetukset</string>
   <string name="account_dht_public_in_calls_label">Salli tuntemattomien henkilöiden puhelut</string>
   <string name="account_registration_exp_label">Rekistöröinti vanhentuu</string>
@@ -197,6 +199,7 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_link_export_button">Linkitä uusi laite</string>
   <string name="account_link_show_button">Näytä %d muuta linkitettyä laitetta</string>
   <string name="account_link_hide_button">Piilota linkitetty laite</string>
+  <string name="account_start_export_button">Luo todennuskoodi</string>
   <string name="account_end_export_button">sulje</string>
   <string name="account_export_title">Linkitä tunnus toisesta laitteesta</string>
   <string name="account_connect_server_button">Yhteyden muodostaminen hallintapalvelimeen</string>
@@ -248,13 +251,21 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_device_name_empty">Laitteen nimi ei voi olla tyhjä.</string>
   <string name="account_device_this_indicator">Tämä laite</string>
   <string name="account_disabled_indicator">Poistettu</string>
+  <string name="account_device_id">Laite id</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Tätä tiedostomuotoa ei tueta.</string>
+  <string name="account_link_info">Lue QR-koodi uuden laitteen Jami-sovelluksessa tai anna koodi käsin.</string>
   <string name="account_link_device_title">Linkitä uusi laite</string>
+  <string name="account_link_password">Tili on salasanalla salattu. Anna salasana ja luo todennuskoodi.</string>
   <string name="account_link_generate_button">Luo</string>
+  <string name="account_link_time_valid">Koodi ei kelpaa: %1$s</string>
+  <string name="account_link_device_info">Valitse toisesta Jami-sovelluksesta \"Linkitä uusi laite\" saadaksesi QR-koodin tai todennuskoodin.</string>
   <string name="account_generate_export_device">Toisella laitteella</string>
   <string name="account_generate_export_info">Asenna ja käynnistä Jami. Valitse \"Tuo toiselta laitteelta\" ja skannaa QR-koodi tai anna PIN-koodi käsin.</string>
   <string name="content_description_qr_generated">Tilin QR-koodi</string>
+  <string name="account_generate_export_invalid">Koodi ei ole enää voimassa.\nAnna salasana ja luo uusi koodi linkittääksesi uuden laitteen.</string>
+  <string name="account_generate_export_invalid_two">Koodi ei ole enää voimassa.\nLuo uusi koodi linkittääksesi uuden laitteen.</string>
+  <string name="help_pin_info">Pakollinen, jos tili on salasanalla salattu.</string>
   <string name="account_link_device_button">Yhdistä</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Avaa Jami-tilin lukitus</string>
@@ -267,5 +278,6 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_biometry_enroll_auth_message">Lisää suojattu biometrinen tai laitetodennus vaihtoehtona salasanallesi</string>
   <string name="account_auth_error">Todennusvirhe: %1$s</string>
   <string name="account_auth_success">Todennus onnistui</string>
+  <string name="account_auth_key_error">Tiliavaimen salausta purettaessa tapahtui virhe.</string>
   <string name="account_auth_password">Käytä tilin salasanaa</string>
 </resources>
