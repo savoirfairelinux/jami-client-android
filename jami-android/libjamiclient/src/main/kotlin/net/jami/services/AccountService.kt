@@ -308,7 +308,7 @@ class AccountService(
                     var contact = conversation.findContact(uri)
                     if (contact == null) {
                         contact = account.getContactFromCache(uri)
-                        if (role != MemberRole.BLOCKED) conversation.addContact(contact, role)
+                        conversation.addContact(contact, role)
                     }
                     if (!lastDisplayed.isNullOrEmpty()) {
                         if (contact.isUser) {
@@ -1461,7 +1461,7 @@ class AccountService(
                 var contact = conversation.findContact(memberUri)
                 if (contact == null) {
                     contact = account.getContactFromCache(memberUri)
-                    if (role != MemberRole.BLOCKED) conversation.addContact(contact, role)
+                    conversation.addContact(contact, role)
                 }
             }
             if (!conversation.lastElementLoadedSubject.hasValue())
