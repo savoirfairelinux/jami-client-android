@@ -172,13 +172,31 @@ class Conversation : ConversationHistory {
 
     fun addContact(contact: Contact, memberRole: MemberRole? = null) {
         memberRole?.let { roles[contact.uri.uri] = it }
-        contacts.add(contact)
+        var allowContactAdding = false
+
+        if (mode.blockingFirst() == Mode.OneToOne) {
+            if (memberRole != MemberRole.BLOCKED) {
+                allowContactAdding = true
+            }
+        } else {
+            if (memberRole != MemberRole.BLOCKED && memberRole != MemberRole.LEFT) {
+                allowContactAdding = true
+            }
+        }
+
+        if (allowContactAdding) {
+            contacts.add(contact)
+        }
+
         mContactSubject.onNext(contacts)
     }
 
+
     fun removeContact(contact: Contact, memberRole: MemberRole? = null) {
         memberRole?.let { roles[contact.uri.uri] = it }
-        contacts.remove(contact)
+        if (mode.blockingFirst() != Mode.OneToOne) {
+            contacts.remove(contact)
+        }
         mContactSubject.onNext(contacts)
     }
 
@@ -841,7 +859,7 @@ class Conversation : ConversationHistory {
             val user = contacts.firstOrNull { it.isUser }
             val nonUserRoles = roles.filterKeys { it != user?.uri?.uri }.values
             if (nonUserRoles.isEmpty()) {
-                return false
+                return this.isSwarmGroup() && !this.isUserGroupAdmin()
             }
 
             val allPeersGone = nonUserRoles.all { it == MemberRole.LEFT || it == MemberRole.BLOCKED }
