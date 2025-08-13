@@ -127,6 +127,29 @@ object ActionHelper {
             .setNegativeButton(android.R.string.cancel) { _, _ -> }.show()
     }
 
+    fun launchClearAction(
+        context: Context,
+        accountId: String,
+        uri: Uri,
+        callback: (accountId: String, uri: Uri) -> Unit,
+    ) {
+        val title = if (uri.isSwarm) {
+            R.string.conversation_action_remove_title
+        } else {
+            R.string.conversation_action_history_clear_title
+        }
+        val message = if (uri.isSwarm) {
+            R.string.conversation_action_remove_message
+        } else {
+            R.string.conversation_action_history_clear_message
+        }
+        MaterialAlertDialogBuilder(context)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton(android.R.string.ok) { _, _ -> callback(accountId, uri) }
+            .setNegativeButton(android.R.string.cancel) { _, _ -> }.show()
+    }
+
     fun launchDeleteSwarmOneToOneAction(
         context: Context,
         accountId: String,
