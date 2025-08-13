@@ -289,9 +289,25 @@ class ConversationActionsFragment : Fragment() {
                     }
             }
 
+            conversationRemove.setOnClickListener {
+                ActionHelper.launchClearAction(
+                    context = requireContext(),
+                    accountId = mAccountService.currentAccount!!.accountId,
+                    uri = conversation.uri,
+                    callback = { accountId: String, conversationUri: Uri ->
+                        mConversationFacade.removeConversation(accountId, conversationUri, true)
+                            .subscribe().apply { mDisposableBag.add(this) }
+                        val resultIntent = Intent()
+                            .putExtra(EXIT_REASON, ExitReason.CONVERSATION_LEFT.toString())
+                        requireActivity().setResult(Activity.RESULT_OK, resultIntent)
+                        requireActivity().finish()
+                    })
+            }
+
             // Hide details not useful for blocked contact
             if (conversation.contact!!.isBlocked) {
                 conversationDelete.isVisible = false
+                conversationRemove.isVisible = false
                 blockContact.text = resources.getString(R.string.conversation_action_unblock_this)
                 conversationDetailsPanel.visibility = View.GONE
                 conversationActionsPanel.visibility = View.GONE
@@ -300,6 +316,7 @@ class ConversationActionsFragment : Fragment() {
             // Also going there for SIP account
             if (conversation.isLegacy()) {
                 blockContact.isVisible = false
+                conversationRemove.isVisible = false
                 conversationActionsPanel.visibility = View.GONE
                 conversationDetailsPanel.visibility = View.GONE
                 conversationDelete.isVisible = !mAccountService.currentAccount!!.isSip
@@ -307,6 +324,7 @@ class ConversationActionsFragment : Fragment() {
             } else if (conversation.mode.blockingFirst() == Conversation.Mode.Request) {
                 conversationDelete.text = resources.getString(R.string.accept_invitation)
                 conversationActionsPanel.visibility = View.GONE
+                conversationRemove.isVisible = false
             } else {
                 conversationDelete.text = resources.getString(R.string.delete_contact)
             }
@@ -347,6 +365,7 @@ class ConversationActionsFragment : Fragment() {
             }
 
             blockContact.isVisible = false
+            conversationRemove.isVisible = false
         }
 
         @StringRes val infoString =
