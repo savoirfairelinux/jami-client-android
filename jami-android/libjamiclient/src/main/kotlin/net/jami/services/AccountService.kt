@@ -1422,7 +1422,13 @@ class AccountService(
                 ConversationMemberEvent.Remove, ConversationMemberEvent.Block -> {
                     val role = if (memberEvent == ConversationMemberEvent.Remove)
                         MemberRole.LEFT else MemberRole.BLOCKED
-                    conversation.findContact(uri)?.let { contact -> conversation.removeContact(contact, role) }
+                    conversation.findContact(uri)?.let { contact ->
+                        if (conversation.mode.blockingFirst() != Conversation.Mode.OneToOne) {
+                            conversation.removeContact(contact, role)
+                        } else {
+                            conversation.updateContact(contact, role)
+                        }
+                    }
                 }
             }
         }}

@@ -182,6 +182,10 @@ class Conversation : ConversationHistory {
         mContactSubject.onNext(contacts)
     }
 
+    fun updateContact(contact: Contact, memberRole: MemberRole? = null) {
+        memberRole?.let { roles[contact.uri.uri] = it }
+    }
+
     @Synchronized
     fun readMessages(): List<Interaction> {
         val interactions = ArrayList<Interaction>()
