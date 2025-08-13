@@ -172,14 +172,18 @@ class Conversation : ConversationHistory {
 
     fun addContact(contact: Contact, memberRole: MemberRole? = null) {
         memberRole?.let { roles[contact.uri.uri] = it }
-        contacts.add(contact)
-        mContactSubject.onNext(contacts)
+        if (memberRole != MemberRole.BLOCKED) {
+            contacts.add(contact)
+            mContactSubject.onNext(contacts)
+        }
     }
 
     fun removeContact(contact: Contact, memberRole: MemberRole? = null) {
         memberRole?.let { roles[contact.uri.uri] = it }
-        contacts.remove(contact)
-        mContactSubject.onNext(contacts)
+        if (mode.blockingFirst() != Mode.OneToOne) {
+            contacts.remove(contact)
+            mContactSubject.onNext(contacts)
+        }
     }
 
     @Synchronized
