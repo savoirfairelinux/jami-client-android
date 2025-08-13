@@ -161,7 +161,6 @@ class Account(
                     Log.w(TAG, "removeSwarm: adding back contact conversation " + contact + " " + contact!!.conversationUri.blockingFirst() + " " + c.uri)
                     if (contact.conversationUri.blockingFirst() == c.uri) {
                         contact.setConversationUri(contact.uri)
-                        contactAdded(contact)
                     }
                 } catch (_: Exception) {
                 }
@@ -773,28 +772,10 @@ class Account(
 
     private fun contactAdded(contact: Contact) {
         val uri = contact.uri
-        val key = uri.uri
         //Log.w(TAG, "contactAdded " + accountId + " " + uri + " " + contact.conversationUri.blockingFirst())
         if (contact.conversationUri.blockingFirst() != uri) {
             conversationChanged() // Useful for unblock contact case.
-            return
         }
-        synchronized(conversations) {
-            if (conversations.containsKey(key)) return
-            synchronized(pending) {
-                var pendingConversation = pending[key]
-                if (pendingConversation == null) {
-                    pendingConversation = getByKey(uri)
-                    conversations[key] = pendingConversation
-                } else {
-                    pending.remove(key)
-                    conversations[key] = pendingConversation
-                    pendingChanged()
-                }
-                pendingConversation.addContactEvent(contact)
-            }
-        }
-        conversationChanged()
     }
 
     private fun contactRemoved(uri: Uri, conversationUri: Uri) {
