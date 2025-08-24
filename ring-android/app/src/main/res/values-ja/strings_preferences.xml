@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_category_network">ネットワーク</string>
+  <string name="pref_category_contacts">連絡先</string>
+  <string name="pref_category_system">システム</string>
+  <string name="pref_category_privacy">プライバシー</string>
+  <string name="pref_mobileData_title">モバイル通信</string>
+  <string name="pref_mobileData_summary">Wi-Fiに加えて3G/LTEネットワークでRingを許可します</string>
+  <string name="pref_systemContacts_title">システムの連絡先を使用する</string>
+  <string name="pref_systemContacts_summary">システムの連絡先を使用して通話先の詳細を表示します。</string>
+  <string name="pref_systemDialer_title">Ringを使用してシステムの通話を行う</string>
+  <string name="pref_systemDialer_summary">可能であれば、Ringを使用してシステムの通話を行います。</string>
+  <string name="pref_startOnBoot_title">起動時にRingを開始する</string>
+  <string name="pref_startOnBoot_summary">システムの起動時にバックグラウンドでRingを実行します。</string>
+  <string name="pref_clearHistory_title">履歴をクリア</string>
+  <string name="pref_clearHistory_summary">会話の履歴をすべてクリアします。 この操作を元に戻すことはできません。</string>
+</resources>
