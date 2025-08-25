@@ -86,6 +86,8 @@ Si potra modificare questo account più tardi.</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avanzate</string>
   <string name="account_chat_settings_title">Impostazioni chat</string>
+  <string name="account_read_receipts_label">Conferme di lettura</string>
+  <string name="account_read_receipts_summary">Inviare e richiedere l\'invio di conferme di recapito e di lettura quando i messaggi vengono recapitati o letti.</string>
   <string name="account_call_settings_title">Impostazioni di chiamata</string>
   <string name="account_dht_public_in_calls_label">Ricevi chiamate sconosciute</string>
   <string name="account_registration_exp_label">Scadenza registrazione</string>

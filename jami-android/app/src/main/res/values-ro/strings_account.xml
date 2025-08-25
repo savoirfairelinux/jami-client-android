@@ -251,6 +251,7 @@
   <string name="account_device_name_empty">Numele aparatului trebuie pus.</string>
   <string name="account_device_this_indicator">Acest aparat</string>
   <string name="account_disabled_indicator">Dezactivat</string>
+  <string name="account_device_id">ID-ul aparatului</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Acest format nu este acceptat.</string>
   <string name="account_link_info">În aplicația Jami din noul aparat, scanează codul QR sau introdu manual codul de autentificare.</string>
