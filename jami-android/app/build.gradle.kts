@@ -15,12 +15,12 @@ plugins {
 
 android {
     namespace = "cx.ring"
-    compileSdk = 35
-    buildToolsVersion = "35.0.1"
+    compileSdk = 36
+    buildToolsVersion = "36.0.0"
     ndkVersion = "28.0.13004108"
     defaultConfig {
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 464
         versionName = "20250730-01"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -98,27 +98,27 @@ val markwon_version = "4.6.2"
 dependencies {
     implementation (project(":libjamiclient"))
     implementation ("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
-    implementation ("androidx.core:core-ktx:1.16.0")
-    implementation ("androidx.appcompat:appcompat:1.7.0")
+    implementation ("androidx.core:core-ktx:1.17.0")
+    implementation ("androidx.appcompat:appcompat:1.7.1")
     implementation ("androidx.constraintlayout:constraintlayout:2.2.1")
     implementation ("androidx.cardview:cardview:1.0.0")
     implementation ("androidx.preference:preference-ktx:1.2.1")
     implementation ("androidx.recyclerview:recyclerview:1.4.0")
     implementation ("androidx.leanback:leanback:1.2.0")
     implementation ("androidx.leanback:leanback-preference:1.2.0")
-    implementation ("androidx.car.app:app:1.4.0")
+    implementation ("androidx.car.app:app:1.7.0")
     implementation ("androidx.tvprovider:tvprovider:1.1.0")
-    implementation ("androidx.media:media:1.7.0")
+    implementation ("androidx.media:media:1.7.1")
     implementation ("androidx.sharetarget:sharetarget:1.2.0")
     implementation ("androidx.emoji2:emoji2:1.5.0")
     implementation ("androidx.viewpager2:viewpager2:1.1.0")
     implementation ("androidx.emoji2:emoji2-emojipicker:1.5.0")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
-    implementation ("androidx.window:window:1.3.0")
-    implementation ("com.google.android.material:material:1.13.0-alpha13")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.2")
+    implementation ("androidx.window:window:1.4.0")
+    implementation ("com.google.android.material:material:1.13.0-rc01")
     implementation ("androidx.biometric:biometric:1.1.0")
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
-    implementation ("com.google.protobuf:protobuf-javalite:4.30.2")
+    implementation ("com.google.protobuf:protobuf-javalite:4.32.0")
     implementation("androidx.annotation:annotation-jvm:1.9.1")
 
     // ORM
@@ -133,14 +133,14 @@ dependencies {
     ksp("com.google.dagger:hilt-android-compiler:$hilt_version")
 
     // Espresso Unit Tests
-    androidTestImplementation("androidx.test.ext:junit-ktx:1.2.1")
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
-    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.6.1")
-    androidTestImplementation("androidx.test:rules:1.6.1")
-    androidTestImplementation("com.squareup.okhttp3:okhttp:4.12.0")
-    androidTestImplementation("androidx.test.espresso:espresso-intents:3.6.1")
-    androidTestImplementation("androidx.test:core:1.6.1")
+    androidTestImplementation("androidx.test.ext:junit-ktx:1.3.0")
+    androidTestImplementation("androidx.test.ext:junit:1.3.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.7.0")
+    androidTestImplementation("androidx.test:rules:1.7.0")
+    androidTestImplementation("com.squareup.okhttp3:okhttp:5.1.0")
+    androidTestImplementation("androidx.test.espresso:espresso-intents:3.7.0")
+    androidTestImplementation("androidx.test:core:1.7.0")
 
     // Glide
     implementation ("com.github.bumptech.glide:glide:4.16.0")
@@ -150,7 +150,7 @@ dependencies {
 
     // RxAndroid
     implementation ("io.reactivex.rxjava3:rxandroid:3.0.2")
-    implementation ("io.reactivex.rxjava3:rxjava:3.1.10")
+    implementation ("io.reactivex.rxjava3:rxjava:3.1.11")
 
     // Open Street Map
     implementation ("org.osmdroid:osmdroid-android:6.1.20")
