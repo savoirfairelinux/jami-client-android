@@ -463,4 +463,5 @@
   <string name="export_side_step2_confirm">Conferma</string>
   <string name="import_side_step1_share">Condividi</string>
   <string name="import_side_step2_password_import">Importa</string>
+  <string name="import_side_step3_body_done">L\'account è stato importato correttamente.</string>
 </resources>
