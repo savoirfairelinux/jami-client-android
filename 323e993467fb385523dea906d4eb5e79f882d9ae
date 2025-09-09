@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66d46a1a_d275a8d1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 22
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2025-09-09T17:33:29Z",
+      "side": 1,
+      "message": "This change might not be required since rdv uri handling is done in the daemon.",
+      "revId": "323e993467fb385523dea906d4eb5e79f882d9ae",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
