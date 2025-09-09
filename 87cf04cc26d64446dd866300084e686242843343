@@ -22,6 +22,30 @@
       },
       "revId": "87cf04cc26d64446dd866300084e686242843343",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10f75269_579d1063",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2025-09-09T17:22:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91ba7dd0_e2119228",
+      "range": {
+        "startLine": 190,
+        "startChar": 12,
+        "endLine": 190,
+        "endChar": 97
+      },
+      "revId": "87cf04cc26d64446dd866300084e686242843343",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
