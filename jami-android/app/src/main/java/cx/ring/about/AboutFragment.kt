@@ -38,7 +38,7 @@ class AboutFragment : Fragment() {
              release.text = getString(R.string.app_release, BuildConfig.VERSION_NAME)
              logo.setOnClickListener { visitWebpage(getString(R.string.app_website)) }
              sflLogo.setOnClickListener { visitWebpage(getString(R.string.savoirfairelinux_website)) }
-             contributeContainer.setOnClickListener { visitWebpage(getString(R.string.ring_contribute_website)) }
+             contributeContainer.setOnClickListener { visitWebpage(getString(R.string.app_website_contribute)) }
              licenseContainer.setOnClickListener { visitWebpage(getString(R.string.gnu_license_website)) }
              submitIssueContainer
                  .setOnClickListener { visitWebpage(getString(R.string.submit_issue_link)) }
