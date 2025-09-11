@@ -30,7 +30,6 @@ import android.os.*
 import android.provider.ContactsContract
 import android.util.Log
 import androidx.core.app.RemoteInput
-import androidx.legacy.content.WakefulBroadcastReceiver
 import cx.ring.BuildConfig
 import cx.ring.application.JamiApplication
 import cx.ring.client.CallActivity
@@ -209,7 +208,6 @@ class DRingService : Service() {
         // Log.i(TAG, "onStartCommand " + (intent == null ? "null" : intent.getAction()) + " " + flags + " " + startId);
         if (intent != null) {
             parseIntent(intent)
-            WakefulBroadcastReceiver.completeWakefulIntent(intent)
         }
         return START_STICKY /* started and stopped explicitly */
     }

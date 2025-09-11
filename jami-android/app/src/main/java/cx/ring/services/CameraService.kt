@@ -576,7 +576,7 @@ class CameraService internal constructor(c: Context) {
                         }
                     }
                 }, handler
-            ))
+            )!!)
         } catch (e: Exception) {
             Log.e(TAG, "Exception creating virtual display", e)
             if (codec != null) {
