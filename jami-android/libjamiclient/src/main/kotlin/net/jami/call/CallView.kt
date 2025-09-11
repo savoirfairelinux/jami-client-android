@@ -50,5 +50,5 @@ interface CallView {
     fun displayExtensionsButton(): Boolean
     fun updateConfInfo(conf: Conference, info: List<ParticipantInfo>)
     fun updateParticipantRecording(contacts: List<ContactViewModel>)
-    fun getMediaProjection(resultCode: Int, data: Any): Any
+    fun getMediaProjection(resultCode: Int, data: Any): Any?
 }
