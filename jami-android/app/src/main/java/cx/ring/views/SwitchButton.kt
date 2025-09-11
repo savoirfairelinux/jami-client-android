@@ -395,7 +395,7 @@ class SwitchButton(context: Context, attrs: AttributeSet? = null, defStyle: Int 
         mThumbSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_THUMB_SIZE_DP.toFloat(), resources.displayMetrics).toInt()
         // sync checked status
         progress = if (isChecked) 1f else 0f
-        super.setOnCheckedChangeListener { buttonView: CompoundButton?, isChecked: Boolean ->
+        super.setOnCheckedChangeListener { buttonView: CompoundButton, isChecked: Boolean ->
             if (mChangingState) return@setOnCheckedChangeListener
             mChildOnCheckedChangeListener?.onCheckedChanged(buttonView, isChecked)
         }
