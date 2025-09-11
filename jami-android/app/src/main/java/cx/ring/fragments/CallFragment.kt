@@ -1351,7 +1351,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         return JamiService.getPluginsEnabled() && JamiService.getCallMediaHandlers().size > 0
     }
 
-    override fun getMediaProjection(resultCode: Int, data: Any): MediaProjection {
+    override fun getMediaProjection(resultCode: Int, data: Any): MediaProjection? {
         val dataIntent = data as Intent
         return mProjectionManager.getMediaProjection(resultCode, dataIntent)
     }
