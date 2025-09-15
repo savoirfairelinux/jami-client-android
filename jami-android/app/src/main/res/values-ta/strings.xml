@@ -142,6 +142,7 @@
   <string name="delete_contact">தொடர்புகளை நீக்கவும்</string>
   <string name="conversation_action_remove_this_title">இந்த தொடர்பு நீக்க?</string>
   <string name="conversation_action_remove_this_message">இது தொடர்பு நீக்கி உரையாடல் வரலாற்றை அழிக்கும்.</string>
+  <string name="remove_conversation">உரையாடலை நீக்கு</string>
   <string name="conversation_action_select_peer_number">ஒரு எண்ணைத் தேர்ந்தெடுக்கவும்</string>
   <string name="conversation_action_block_this">பிளாக் தொடர்பு</string>
   <string name="conversation_action_unblock_this">தொடர்புகளைத் திறக்கவும்</string>

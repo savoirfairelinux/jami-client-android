@@ -142,6 +142,7 @@
   <string name="delete_contact">Slet kontakt</string>
   <string name="conversation_action_remove_this_title">Slet kontakten?</string>
   <string name="conversation_action_remove_this_message">Det vil slette kontakten og helt sikkert rydde samtalehistorikken.</string>
+  <string name="remove_conversation">Fjern samtalen</string>
   <string name="conversation_action_select_peer_number">Vælg et nummer</string>
   <string name="conversation_action_block_this">Bloker kontakt</string>
   <string name="conversation_action_unblock_this">Ublokere kontakt</string>

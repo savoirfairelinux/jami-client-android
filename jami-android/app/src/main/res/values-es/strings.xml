@@ -182,6 +182,7 @@
   <string name="conversation_action_remove_this_title">¿Eliminar este contacto?</string>
   <string name="conversation_action_remove_this_message">Esto eliminará el contacto y borrará definitivamente el historial de conversación.</string>
   <string name="conversation_action_add_this_message">Esto enviará una solicitud de conexión.</string>
+  <string name="remove_conversation">Eliminar conversación</string>
   <string name="swarm_group_action_leave">Salir del grupo</string>
   <string name="swarm_group_action_leave_title">¿Dejar este grupo?</string>
   <string name="swarm_group_action_leave_message">Esto eliminará la conversación de tu lista de conversaciones.</string>

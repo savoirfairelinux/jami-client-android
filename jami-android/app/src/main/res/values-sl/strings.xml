@@ -178,6 +178,7 @@
   <string name="delete_contact">Izbriši stik</string>
   <string name="conversation_action_remove_this_title">Ali želite izbrisati ta stik?</string>
   <string name="conversation_action_remove_this_message">To bo izbrisalo stik in dokončno počistilo zgodovino pogovora.</string>
+  <string name="remove_conversation">Odstrani pogovor</string>
   <string name="swarm_group_action_leave">Zapusti skupino</string>
   <string name="swarm_group_action_leave_title">Ali želite zapustiti to skupino?</string>
   <string name="conversation_action_select_peer_number">Izberi številko</string>

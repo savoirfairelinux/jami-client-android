@@ -142,6 +142,7 @@
   <string name="delete_contact">ลบผู้ติดต่อ</string>
   <string name="conversation_action_remove_this_title">ลบรายชื่อติดต่อนี้ไหม</string>
   <string name="conversation_action_remove_this_message">การดำเนินการนี้จะลบผู้ติดต่อและล้างประวัติการสนทนาอย่างแน่นอน</string>
+  <string name="remove_conversation">ยกเลิกการพูดคุย</string>
   <string name="conversation_action_select_peer_number">เลือกหมายเลข</string>
   <string name="conversation_action_block_this">บล็อคการติดต่อ</string>
   <string name="conversation_action_unblock_this">กดติดต่อ</string>

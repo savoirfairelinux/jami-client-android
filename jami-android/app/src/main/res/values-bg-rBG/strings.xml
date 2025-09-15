@@ -143,6 +143,7 @@
   <string name="delete_contact">Изтриване на контакт</string>
   <string name="conversation_action_remove_this_title">Изтриване на този контакт?</string>
   <string name="conversation_action_remove_this_message">Това определено ще изтрие този контакт и ще изчисти историята на повикванията.</string>
+  <string name="remove_conversation">Премахване на разговора</string>
   <string name="conversation_action_select_peer_number">Изберете номер</string>
   <string name="conversation_action_block_this">Блокиране на контакт</string>
   <string name="conversation_action_unblock_this">Деблокиране на контакта</string>

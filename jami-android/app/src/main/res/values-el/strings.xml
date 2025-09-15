@@ -144,6 +144,7 @@
   <string name="delete_contact">Διαγραφή επαφής</string>
   <string name="conversation_action_remove_this_title">Διαγραφή αυτής της επαφής;</string>
   <string name="conversation_action_remove_this_message">Αυτό θα διαγράψει την επαφή και σίγουρα και το ιστορικό συνομιλίας.</string>
+  <string name="remove_conversation">Διαγραφή συνομιλίας</string>
   <string name="conversation_action_select_peer_number">Επιλέξτε αριθμό </string>
   <string name="conversation_action_block_this">Μπλοκάρισμα επαφής</string>
   <string name="conversation_action_unblock_this">Ανοίξτε την επαφή</string>

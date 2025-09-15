@@ -150,6 +150,7 @@
   <string name="delete_contact">संपर्क हटाएँ</string>
   <string name="conversation_action_remove_this_title">इस संपर्क को हटा दें?</string>
   <string name="conversation_action_remove_this_message">यह संपर्क को हटा देगा और बातचीत इतिहास को निश्चित रूप से साफ कर देगा।</string>
+  <string name="remove_conversation">बातचीत को हटा दें</string>
   <string name="conversation_action_select_peer_number">एक संख्या चुनें</string>
   <string name="conversation_action_block_this">ब्लॉक संपर्क</string>
   <string name="conversation_action_unblock_this">संपर्क अवरोधित करें</string>

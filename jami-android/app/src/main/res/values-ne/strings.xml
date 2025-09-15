@@ -142,6 +142,7 @@
   <string name="delete_contact">सम्पर्क हटाउने</string>
   <string name="conversation_action_remove_this_title">यो सम्पर्क मेटाउन?</string>
   <string name="conversation_action_remove_this_message">यसले सम्पर्क मेटाउँछ र वार्तालाप इतिहासलाई निश्चित रूपमा मेटाउँछ।</string>
+  <string name="remove_conversation">वार्तालाप हटाउनुहोस्</string>
   <string name="conversation_action_select_peer_number">एउटा नम्बर चयन गर्नुहोस्</string>
   <string name="conversation_action_block_this">सम्पर्कको अवरोध</string>
   <string name="conversation_action_unblock_this">सम्पर्क रोक्न</string>

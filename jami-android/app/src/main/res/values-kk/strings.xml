@@ -142,6 +142,7 @@
   <string name="delete_contact">Байланысты өшіру</string>
   <string name="conversation_action_remove_this_title">Бұл байланысты өшіру?</string>
   <string name="conversation_action_remove_this_message">Бұл байланыстарды өшіріп, әңгіме тарихын мүлдем өшіреді.</string>
+  <string name="remove_conversation">Әңгімелерді алып тастау</string>
   <string name="conversation_action_select_peer_number">Санды таңдау</string>
   <string name="conversation_action_block_this">Блок контакт</string>
   <string name="conversation_action_unblock_this">Байланысты бұғаттау</string>

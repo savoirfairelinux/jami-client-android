@@ -164,6 +164,7 @@
   <string name="delete_contact">Esborrar contacte</string>
   <string name="conversation_action_remove_this_title">Esborrar aquest contacte?</string>
   <string name="conversation_action_remove_this_message">Això esborrarà el contacte i netejarà definitivament l\'historial de converses.</string>
+  <string name="remove_conversation">Esborra conversa</string>
   <string name="conversation_action_select_peer_number">Seleccioneu un número</string>
   <string name="conversation_action_block_this">Bloqueja el contacte</string>
   <string name="conversation_action_unblock_this">Desbloca contacte</string>

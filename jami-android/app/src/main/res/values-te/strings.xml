@@ -142,6 +142,7 @@
   <string name="delete_contact">పరిచయాన్ని తొలగించు</string>
   <string name="conversation_action_remove_this_title">ఈ పరిచయం తొలగించడానికి?</string>
   <string name="conversation_action_remove_this_message">ఇది పరిచయాన్ని తొలగిస్తుంది మరియు సంభాషణ చరిత్రను ఖచ్చితంగా క్లియర్ చేస్తుంది.</string>
+  <string name="remove_conversation">సంభాషణను తొలగించు</string>
   <string name="conversation_action_select_peer_number">ఒక సంఖ్యను ఎంచుకోండి</string>
   <string name="conversation_action_block_this">బ్లాక్ కాంటాక్ట్</string>
   <string name="conversation_action_unblock_this">పరిచయాలను అన్బ్లాక్ చేయండి</string>

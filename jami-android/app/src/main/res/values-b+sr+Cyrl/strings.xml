@@ -171,6 +171,7 @@
   <string name="delete_contact">Избриши контакт</string>
   <string name="conversation_action_remove_this_title">Желите ли да избришете овај контакт?</string>
   <string name="conversation_action_remove_this_message">Ово ће избрисати контакт и дефинитивно избрисати историју разговора.</string>
+  <string name="remove_conversation">Убризи разговор</string>
   <string name="swarm_group_action_leave">Napusti grupu</string>
   <string name="conversation_action_copy_peer_number">Kopirajte identifikator kontakta</string>
   <string name="conversation_action_select_peer_number">Изабери број</string>

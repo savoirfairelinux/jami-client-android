@@ -139,6 +139,7 @@
   <string name="delete_contact">Ištrinti adresatą</string>
   <string name="conversation_action_remove_this_title">Ištrinti šį adresatą?</string>
   <string name="conversation_action_remove_this_message">Tai ištrins adresatą ir išvalys pokalbio istoriją.</string>
+  <string name="remove_conversation">Šalinti pokalbį</string>
   <string name="swarm_group_action_leave">Išeiti iš grupės</string>
   <string name="swarm_group_action_leave_title">Išeiti iš šios grupės?</string>
   <string name="swarm_group_action_leave_message">Tai pašalins pokalbį iš jūsų pokalbių sąrašo</string>

@@ -180,6 +180,7 @@
   <string name="conversation_action_remove_this_title">刪除此聯絡人？</string>
   <string name="conversation_action_remove_this_message">這將會刪除聯絡人並完全清除對話歷史。</string>
   <string name="conversation_action_add_this_message">这将发送连接请求。</string>
+  <string name="remove_conversation">移除對話</string>
   <string name="swarm_group_action_leave">离开群组</string>
   <string name="swarm_group_action_leave_title">离开这个群组？</string>
   <string name="swarm_group_action_leave_message">这将从您的对话列表中删除该对话</string>

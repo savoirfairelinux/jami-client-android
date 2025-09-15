@@ -89,6 +89,7 @@
   <string name="contact_details">פרטי קשר</string>
   <string name="leave_conversation">עזוב את השיחה</string>
   <string name="conversation_action_history_clear">היסטוריה ברורה</string>
+  <string name="remove_conversation">תבטל את השיחה</string>
   <string name="conversation_action_block_this">פגע בלוק</string>
   <string name="conversation_action_incoming_call">שיחה נכנסת</string>
   <string name="conversation_action_latest">גלול לקצה השיחה</string>

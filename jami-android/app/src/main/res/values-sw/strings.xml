@@ -142,6 +142,7 @@
   <string name="delete_contact">Kufuta mawasiliano</string>
   <string name="conversation_action_remove_this_title">Kufuta mawasiliano haya?</string>
   <string name="conversation_action_remove_this_message">Hii itafuta mawasiliano na dhahiri kufuta historia ya mazungumzo.</string>
+  <string name="remove_conversation">Ondoa mazungumzo</string>
   <string name="conversation_action_select_peer_number">Chagua namba</string>
   <string name="conversation_action_block_this">Kuzuia mawasiliano</string>
   <string name="conversation_action_unblock_this">Kufungua mawasiliano</string>

@@ -170,6 +170,7 @@ contact@jami.net</string>
   <string name="delete_contact">مخاطب را حذف کنید</string>
   <string name="conversation_action_remove_this_title">حذف این مخاطب؟</string>
   <string name="conversation_action_remove_this_message">این باعث حذف مخاطب شده و قطعا تاریخچه گفتگو را پاک خواهد کرد.</string>
+  <string name="remove_conversation">حذف گفتگو</string>
   <string name="swarm_group_action_leave_title">گروه را ترک می کنید ؟</string>
   <string name="swarm_group_action_leave_message">این باعث حذف مکالمه از فهرست مکالمات شما خواهد شد.</string>
   <string name="conversation_action_select_peer_number">گزینش یک شماره</string>

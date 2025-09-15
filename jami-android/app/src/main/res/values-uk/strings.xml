@@ -183,6 +183,7 @@
   <string name="conversation_action_remove_this_title">Видалити цей контакт?</string>
   <string name="conversation_action_remove_this_message">Це видалить контакт і остаточно очистить історію розмов.</string>
   <string name="conversation_action_add_this_message">Це надішле запит на з\'єднання.</string>
+  <string name="remove_conversation">Вилучити розмову</string>
   <string name="swarm_group_action_leave">Покинути групу</string>
   <string name="swarm_group_action_leave_title">Покинути групу?</string>
   <string name="swarm_group_action_leave_message">Це видалить розмову зі списку ваших розмов</string>

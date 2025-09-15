@@ -181,6 +181,7 @@
   <string name="conversation_action_remove_this_title">Poistetaanko tämä henkilö?</string>
   <string name="conversation_action_remove_this_message">Tämä poistaa henkilön ja keskustelut tämän kanssa.</string>
   <string name="conversation_action_add_this_message">Tämä lähettää yhteyspyynnön.</string>
+  <string name="remove_conversation">Poista keskustelu</string>
   <string name="swarm_group_action_leave">Poistu ryhmästä</string>
   <string name="swarm_group_action_leave_title">Lähdetkö ryhmästä?</string>
   <string name="swarm_group_action_leave_message">Tämä poistaa keskustelun luettelostasi</string>

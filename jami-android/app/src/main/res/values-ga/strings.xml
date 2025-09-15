@@ -77,6 +77,7 @@
   <string name="contact_details">sonraí teagmhála</string>
   <string name="leave_conversation">Cinnigh comhrá</string>
   <string name="conversation_action_history_clear">Tuairiscí soiléir</string>
+  <string name="remove_conversation">Scrios an comhrá</string>
   <string name="conversation_action_block_this">Contae Bloc</string>
   <string name="conversation_action_incoming_call">Glacadh isteach</string>
   <string name="conversation_members">Comhaltaí</string>

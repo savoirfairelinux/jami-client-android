@@ -30,6 +30,8 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="account_read_receipts_summary">Senden und fordern Sie Übermittlungs- und Lesebestätigungen an, die gesendet werden sollen, wenn Nachrichten übermittelt oder gelesen werden.</string>
   <string name="account_stun_enable_label">STUN benutzen</string>
   <string name="account_stun_server_label">STUN-Server</string>
+  <string name="account_accept_files">Eingehende Dateien automatisch annehmen</string>
+  <string name="account_accept_files_max_size">Maximale Dateigröße für das automatischen Annehmen</string>
   <string name="account_accept_files_never">Niemals automatisch annehmen</string>
   <string name="account_accept_files_always">Immer automatisch annehmen</string>
   <string name="account_connectivity_label">Peer-to-Peer-Konnektivität</string>

@@ -144,6 +144,7 @@
   <string name="delete_contact">Izbriši kontakt</string>
   <string name="conversation_action_remove_this_title">Obrisati ovaj kontakt?</string>
   <string name="conversation_action_remove_this_message">Ovo će obrisati kontakt i definitivno obrisati povijest razgovora.</string>
+  <string name="remove_conversation">Uklonite razgovor</string>
   <string name="conversation_action_select_peer_number">Odaberite broj</string>
   <string name="conversation_action_block_this">Blokiraj kontakt</string>
   <string name="conversation_action_unblock_this">Otključaj kontakt</string>

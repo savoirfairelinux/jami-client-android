@@ -142,6 +142,7 @@
   <string name="delete_contact">La so direición de la páxina web</string>
   <string name="conversation_action_remove_this_title">¿Borrear esti contautu?</string>
   <string name="conversation_action_remove_this_message">Esto borrará\'l contautu y definitivamente borrará\'l historial de conversaciones.</string>
+  <string name="remove_conversation">La conversación ye desactivada.</string>
   <string name="conversation_action_select_peer_number">Seleccione un númberu</string>
   <string name="conversation_action_block_this">Bloquear el contacto</string>
   <string name="conversation_action_unblock_this">Desbloquear el contacto</string>

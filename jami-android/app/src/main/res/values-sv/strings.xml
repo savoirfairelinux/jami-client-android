@@ -144,6 +144,7 @@
   <string name="delete_contact">Ta bort kontakt</string>
   <string name="conversation_action_remove_this_title">Ta bort den här kontakten?</string>
   <string name="conversation_action_remove_this_message">Detta kommer att ta bort kontakten och rensa konversationshistoriken för gott.</string>
+  <string name="remove_conversation">Ta bort konversationen</string>
   <string name="conversation_action_select_peer_number">Välj ett nummer</string>
   <string name="conversation_action_block_this">Blockera kontakt</string>
   <string name="conversation_action_unblock_this">Avblockera kontakt</string>

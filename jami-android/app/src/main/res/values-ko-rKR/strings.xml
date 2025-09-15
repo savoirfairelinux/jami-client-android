@@ -146,6 +146,7 @@
   <string name="delete_contact">연락처 삭제</string>
   <string name="conversation_action_remove_this_title">이 연락처를 삭제하세요?</string>
   <string name="conversation_action_remove_this_message">이것은 연락처를 삭제하고 대화 역사를 확실히 삭제합니다.</string>
+  <string name="remove_conversation">대화 를 삭제</string>
   <string name="conversation_action_select_peer_number">번호를 선택</string>
   <string name="conversation_action_block_this">차단 접촉</string>
   <string name="conversation_action_unblock_this">연결 차단</string>

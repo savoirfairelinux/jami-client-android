@@ -78,6 +78,7 @@
   <string name="contact_details">Кантактныя дадзеныя</string>
   <string name="leave_conversation">Пакіньце размову</string>
   <string name="conversation_action_history_clear">Ясная гісторыя</string>
+  <string name="remove_conversation">Выключыць размову</string>
   <string name="conversation_action_block_this">Блокальны кантакт</string>
   <string name="conversation_action_incoming_call">Паступны званок</string>
   <string name="conversation_members">Члены</string>

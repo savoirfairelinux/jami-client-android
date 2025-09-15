@@ -39,7 +39,7 @@
   <string name="pref_blackList_title">Blockierte Kontakte</string>
   <string name="pref_blackList_summary">Überprüfen Sie Ihre Blockliste.</string>
   <string name="pref_delete_account_title">Konto löschen</string>
-  <string name="pref_delete_account_summary">Delete account from this device</string>
+  <string name="pref_delete_account_summary">Konto von diesem Gerät löschen</string>
   <string name="pref_persistNotification_title">Im Hintergrund ausführen</string>
   <string name="pref_persistNotification_summary">Ausführung im Hintergrund erlauben, um Anrufe und Nachrichten zu empfangen.</string>
   <string name="pref_newGroup_title">Gruppenchat aktivieren</string>

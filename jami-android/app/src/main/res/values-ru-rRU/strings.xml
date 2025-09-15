@@ -184,6 +184,7 @@
   <string name="conversation_action_remove_this_title">Удалить этот контакт? </string>
   <string name="conversation_action_remove_this_message">Это удалит контакт и историю переписки.</string>
   <string name="conversation_action_add_this_message">Будет отправлен запрос на подключение.</string>
+  <string name="remove_conversation">Удалить диалог</string>
   <string name="swarm_group_action_leave">Покинуть группу</string>
   <string name="swarm_group_action_leave_title">Покинуть эту группу?</string>
   <string name="swarm_group_action_leave_message">Будет удалена беседа из вашего списка бесед.</string>

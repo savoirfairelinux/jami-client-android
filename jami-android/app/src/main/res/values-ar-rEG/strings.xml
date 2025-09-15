@@ -139,6 +139,7 @@
   <string name="delete_contact">حذف جهة إتصال</string>
   <string name="conversation_action_remove_this_title">حذف جهة الإتصال؟</string>
   <string name="conversation_action_remove_this_message">هذا سيزيل جهة الإتصال و بالتأكيد سيزيل تاريخ المحادثة.</string>
+  <string name="remove_conversation">إزالة المحادثة</string>
   <string name="conversation_action_select_peer_number">إختيار رقم</string>
   <string name="conversation_action_block_this">حظر جهة إتصال</string>
   <string name="conversation_action_unblock_this">فك الحظر على الاتصال</string>

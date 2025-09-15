@@ -101,6 +101,7 @@
   <string name="contact_details">Thông tin liên lạc</string>
   <string name="leave_conversation">Để lại cuộc trò chuyện</string>
   <string name="conversation_action_history_clear">Lịch sử rõ ràng</string>
+  <string name="remove_conversation">Tháo cuộc trò chuyện</string>
   <string name="conversation_action_block_this">Chặn liên hệ</string>
   <string name="conversation_action_unblock_this">Bỏ chặn liên hệ</string>
   <string name="conversation_action_incoming_call">Tiếp tục gọi</string>

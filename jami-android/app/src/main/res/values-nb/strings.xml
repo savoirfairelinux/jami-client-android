@@ -144,6 +144,7 @@
   <string name="delete_contact">Slett kontakt</string>
   <string name="conversation_action_remove_this_title">Slett denne kontakten?</string>
   <string name="conversation_action_remove_this_message">Dette vil slette denne kontakten og permanent nullstille samtalehistorikken.</string>
+  <string name="remove_conversation">Slett samtale</string>
   <string name="conversation_action_select_peer_number">Velg et nummer</string>
   <string name="conversation_action_block_this">Blokker kontakt</string>
   <string name="conversation_action_unblock_this">Fjern kontaktblokkering</string>

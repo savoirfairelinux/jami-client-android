@@ -140,6 +140,7 @@
   <string name="conversation_action_delete_this_message">Diese Aktion kann nicht rückgängig gemacht werden.</string>
   <string name="delete_contact">Kontakt löschen</string>
   <string name="conversation_action_add_this_message">Dadurch wird eine Verbindungsanfrage gesendet.</string>
+  <string name="remove_conversation">Entferne Gespräch</string>
   <string name="swarm_group_action_leave">Gruppe verlassen</string>
   <string name="swarm_group_action_leave_title">Diese Gruppe verlassen?</string>
   <string name="swarm_group_action_leave_message">Dadurch wird die Unterhaltung aus Ihrer Unterhaltungsliste entfernt</string>

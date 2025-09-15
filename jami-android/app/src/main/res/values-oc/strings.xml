@@ -143,6 +143,7 @@
   <string name="delete_contact">Eliminar lo contacte</string>
   <string name="conversation_action_remove_this_title">Eliminar aquel contacte?</string>
   <string name="conversation_action_remove_this_message">Aquò eliminarà lo contacte e eliminatz definitivament l\'istòria de la conversacion.</string>
+  <string name="remove_conversation">Suprimir discutida</string>
   <string name="conversation_action_select_peer_number">Seleccionar un nombre</string>
   <string name="conversation_action_block_this">Blocar contacte</string>
   <string name="conversation_action_unblock_this">Desblocar contacte</string>

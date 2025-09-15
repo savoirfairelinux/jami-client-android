@@ -177,6 +177,7 @@
   <string name="conversation_action_remove_this_title">Smazat toto spojení?</string>
   <string name="conversation_action_remove_this_message">Toto smaže kontakt a s konečnou platností vymaže konverzační historii.</string>
   <string name="conversation_action_add_this_message">Toto odešle požadavek na připojení.</string>
+  <string name="remove_conversation">Odstranit konverzaci</string>
   <string name="swarm_group_action_leave">Opustit skupinu</string>
   <string name="swarm_group_action_leave_title">Opustit tuto skupinu?</string>
   <string name="swarm_group_action_leave_message">Toto smaže konverzaci s vašeho seznamu konverzací</string>

@@ -143,6 +143,7 @@
   <string name="delete_contact">যোগাযোগ মুছে ফেলুন</string>
   <string name="conversation_action_remove_this_title">এই যোগাযোগ মুছে ফেলুন?</string>
   <string name="conversation_action_remove_this_message">এটি যোগাযোগ মুছে ফেলবে এবং কথোপকথনের ইতিহাস অবশ্যই মুছে ফেলবে।</string>
+  <string name="remove_conversation">কথোপকথন মুছে ফেলুন</string>
   <string name="conversation_action_select_peer_number">একটি নম্বর নির্বাচন করুন</string>
   <string name="conversation_action_block_this">ব্লক যোগাযোগ</string>
   <string name="conversation_action_unblock_this">যোগাযোগ বন্ধ করুন</string>

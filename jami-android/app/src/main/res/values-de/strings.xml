@@ -181,6 +181,7 @@
   <string name="conversation_action_remove_this_title">Diesen Kontakt löschen?</string>
   <string name="conversation_action_remove_this_message">Das wird den Kontakt und den Unterhaltungsverlauf endgültig löschen.</string>
   <string name="conversation_action_add_this_message">Dadurch wird eine Verbindungsanfrage gesendet.</string>
+  <string name="remove_conversation">Unterhaltung entfernen</string>
   <string name="swarm_group_action_leave">Gruppe verlassen</string>
   <string name="swarm_group_action_leave_title">Diese Gruppe verlassen?</string>
   <string name="swarm_group_action_leave_message">Dadurch wird die Unterhaltung aus Ihrer Unterhaltungsliste entfernt</string>

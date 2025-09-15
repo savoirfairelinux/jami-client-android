@@ -143,6 +143,7 @@
   <string name="delete_contact">Ezabatu kontaktua</string>
   <string name="conversation_action_remove_this_title">Ezabatu kontaktu hau?</string>
   <string name="conversation_action_remove_this_message">Honek kontaktu hau ezabatuko du eta behin betiko garbituko du elkarrizketa-historiala.</string>
+  <string name="remove_conversation">Elkarrizketa ezabatu</string>
   <string name="conversation_action_select_peer_number">Hautatu zenbaki bat</string>
   <string name="conversation_action_block_this">Blokeatu kontaktua</string>
   <string name="conversation_action_unblock_this">Kontaktuak desblokeatu</string>

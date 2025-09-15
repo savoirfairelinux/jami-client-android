@@ -142,6 +142,7 @@
   <string name="delete_contact">Forigi kontakton</string>
   <string name="conversation_action_remove_this_title">Forviŝi tiun kontakton?</string>
   <string name="conversation_action_remove_this_message">Tio forviŝos la kontakton kaj definitive forviŝos la konversacian historion.</string>
+  <string name="remove_conversation">Forigu konversacion</string>
   <string name="conversation_action_select_peer_number">Elektu numeron</string>
   <string name="conversation_action_block_this">Kontakto blokita</string>
   <string name="conversation_action_unblock_this">Malblokigu kontakton</string>

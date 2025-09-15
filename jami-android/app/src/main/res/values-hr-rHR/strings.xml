@@ -60,6 +60,7 @@
   <string name="leave_conversation">Ostavi razgovor</string>
   <string name="conversation_action_delete_this_message">Ova akcija se ne može poništiti.</string>
   <string name="delete_contact">Izbriši kontakt</string>
+  <string name="remove_conversation">Uklonite razgovor</string>
   <string name="conversation_action_unblock_this">Otključaj kontakt</string>
   <string name="conversation_action_incoming_call">Dolazni poziv</string>
   <string name="conversation_action_latest">Pomicanje na kraj razgovora</string>

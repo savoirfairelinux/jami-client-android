@@ -149,6 +149,7 @@
   <string name="delete_contact">Contact verwijderen</string>
   <string name="conversation_action_remove_this_title">Dit contact verwijderen?</string>
   <string name="conversation_action_remove_this_message">Dit zal het contact verwijderen en de gespreksgeschiedenis voorgoed wissen.</string>
+  <string name="remove_conversation">Gesprek verwijderen</string>
   <string name="conversation_action_select_peer_number">Kies een nummer</string>
   <string name="conversation_action_block_this">Contact blokkeren</string>
   <string name="conversation_action_unblock_this">Contact deblokkeren</string>

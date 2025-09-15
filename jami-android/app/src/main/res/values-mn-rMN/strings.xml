@@ -143,6 +143,7 @@
   <string name="delete_contact">Байрлагыг устгах</string>
   <string name="conversation_action_remove_this_title">Энэ холбоосыг устгах уу?</string>
   <string name="conversation_action_remove_this_message">Энэ нь холбоосыг устгаж, ярианы түүхийг арилгана.</string>
+  <string name="remove_conversation">Хэлэлцүүлгийг устгах</string>
   <string name="conversation_action_select_peer_number">Үргэлж</string>
   <string name="conversation_action_block_this">Блок-тай холбоо тогтоох</string>
   <string name="conversation_action_unblock_this">Байлгын сүлжээг буулгах</string>

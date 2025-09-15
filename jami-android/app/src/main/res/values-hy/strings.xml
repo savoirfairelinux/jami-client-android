@@ -143,6 +143,7 @@
   <string name="delete_contact">Հեռացնել շփումը</string>
   <string name="conversation_action_remove_this_title">Սրբել այս շփումը:</string>
   <string name="conversation_action_remove_this_message">Սա կսահմանի կոնտակտը եւ հաստատ կսահմանի զրույցի պատմությունը:</string>
+  <string name="remove_conversation">Հեռացնել զրույցը</string>
   <string name="conversation_action_select_peer_number">Ընտրեք մի թիվ</string>
   <string name="conversation_action_block_this">Բլոկային շփումը</string>
   <string name="conversation_action_unblock_this">Բաց թողնել շփումը</string>

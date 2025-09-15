@@ -183,6 +183,7 @@
   <string name="conversation_action_remove_this_title">Usunąć ten kontakt?</string>
   <string name="conversation_action_remove_this_message">To usunie kontakt i całkowicie wyczyści historię rozmowy.</string>
   <string name="conversation_action_add_this_message">Wyślij żądanie połączenia.</string>
+  <string name="remove_conversation">Usuń rozmowę</string>
   <string name="swarm_group_action_leave">Opuść grupę</string>
   <string name="swarm_group_action_leave_title">Wyjść z tej grupy?</string>
   <string name="swarm_group_action_leave_message">Usunąć tą rozmowę z listy rozmów?</string>

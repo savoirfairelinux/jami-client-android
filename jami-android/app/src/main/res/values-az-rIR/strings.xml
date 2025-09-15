@@ -142,6 +142,7 @@
   <string name="delete_contact">تماس لری سنده</string>
   <string name="conversation_action_remove_this_title">بو تماسو سينديرماق؟</string>
   <string name="conversation_action_remove_this_message">بو تماسو سينديرار و دانیشما تاريخيني قطعن پاک ائدر.</string>
+  <string name="remove_conversation">مکالمه لری حذف ائدیر</string>
   <string name="conversation_action_select_peer_number">ساییچ سئچیب</string>
   <string name="conversation_action_block_this">بلاک کنتاکت</string>
   <string name="conversation_action_unblock_this">تماس رو باز کن</string>

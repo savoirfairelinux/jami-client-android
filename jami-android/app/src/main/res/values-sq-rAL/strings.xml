@@ -181,6 +181,7 @@
   <string name="conversation_action_remove_this_title">Të fshihet ky kontakt?</string>
   <string name="conversation_action_remove_this_message">Kjo do të shkaktojë fshirjen e kontaktit dhe përfundimisht fshirjen e historikut të bisedave.</string>
   <string name="conversation_action_add_this_message">Kjo do të dërgojë një kërkesë për lidhje.</string>
+  <string name="remove_conversation">Hiqe bisedën</string>
   <string name="swarm_group_action_leave">Braktise grupin</string>
   <string name="swarm_group_action_leave_title">Të braktiset ky grup?</string>
   <string name="swarm_group_action_leave_message">Kjo do ta heqë bisedën nga lista e bisedave tuaja </string>
