@@ -622,7 +622,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="donation_donate">Donate</string>
     <string name="donation_setting_title">Donation reminder</string>
     <string name="donation_setting_description">Enable the donation reminder</string>
-    <string name="donation_url" translatable="false">https://crowdfunding.lfx.linuxfoundation.org/projects/jami-a-gnu-package</string>
+    <string name="donation_url" translatable="false">https://jami.net</string>
 
     <!--  Extension  -->
     <string name="unable_to_load">Unable to load %1$s</string>
