@@ -182,6 +182,8 @@
   <string name="conversation_action_remove_this_message">Ez törölni fogja a kapcsolatot és a hozzá kapcsolódó beszélgetések előzményeit</string>
   <string name="conversation_action_add_this_message">Ez kapcsolódási kérelmet fog küldeni.</string>
   <string name="remove_conversation">Beszélgetés törlése</string>
+  <string name="conversation_action_remove_title">Beszélgetés eltávolítása?</string>
+  <string name="conversation_action_remove_message">Ez eltávolítja ezt a beszélgetést a kapcsolattartó eltávolítása nélkül.</string>
   <string name="swarm_group_action_leave">Kilépés a csoportból</string>
   <string name="swarm_group_action_leave_title">Kilép ebből a csoportból?</string>
   <string name="swarm_group_action_leave_message">Ez eltávolít a beszélgetést a beszélgetéslistájáról.</string>
