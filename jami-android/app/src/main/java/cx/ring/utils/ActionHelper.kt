@@ -30,6 +30,7 @@ import net.jami.model.Conversation
 import net.jami.model.Conversation.ConversationActionCallback
 import net.jami.model.Uri
 import java.util.*
+import androidx.core.net.toUri
 
 object ActionHelper {
     val TAG = ActionHelper::class.simpleName!!
@@ -47,9 +48,13 @@ object ActionHelper {
         setPadding(padding.pixelsLeft, padding.pixelsTop, padding.pixelsRight, padding.pixelsBottom)
 
     fun openJamiDonateWebPage(context: Context) {
-        context.startActivity(
-            Intent(Intent.ACTION_VIEW, android.net.Uri.parse(context.getString(R.string.donation_url)))
-        )
+        try {
+            context.startActivity(
+                Intent(Intent.ACTION_VIEW, context.getString(R.string.donation_url).toUri())
+            )
+        } catch (e: ActivityNotFoundException) {
+            Log.e(TAG, "Error opening web page", e)
+        }
     }
 
     /**
