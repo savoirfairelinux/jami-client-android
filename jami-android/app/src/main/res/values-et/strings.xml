@@ -182,6 +182,8 @@
   <string name="conversation_action_remove_this_message">Järgnevaga üheselt kustutatakse kontakt ja temaga peetud vestluste ajalugu.</string>
   <string name="conversation_action_add_this_message">Järgnevaga saadad kontaktipäringu</string>
   <string name="remove_conversation">Kustuta vestlus</string>
+  <string name="conversation_action_remove_title">Kas kustutame vestluse?</string>
+  <string name="conversation_action_remove_message">Sellega eemaldad vestluse vestluste loendist, kuid ei kustuta kontakti.</string>
   <string name="swarm_group_action_leave">Lahku vestlusgrupist</string>
   <string name="swarm_group_action_leave_title">Kas lahkud sellest vestlusgrupist?</string>
   <string name="swarm_group_action_leave_message">Sellega eemaldad vestluse vestluste loendist</string>

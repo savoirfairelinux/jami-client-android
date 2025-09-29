@@ -178,6 +178,8 @@
   <string name="conversation_action_remove_this_message">这将删除联系人并彻底清除会话历史记录。</string>
   <string name="conversation_action_add_this_message">这将发送连接请求。</string>
   <string name="remove_conversation">移除会话</string>
+  <string name="conversation_action_remove_title">删除对话？</string>
+  <string name="conversation_action_remove_message">这将删除此对话，但不会删除联系人。</string>
   <string name="swarm_group_action_leave">离开群组</string>
   <string name="swarm_group_action_leave_title">离开这个群组？</string>
   <string name="swarm_group_action_leave_message">这将从您的对话列表中删除该对话</string>
