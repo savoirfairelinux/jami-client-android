@@ -2,7 +2,7 @@
 #
 # cqfd - a tool to wrap commands in controlled Docker containers
 #
-# Copyright (C) 2015-2018 Savoir-faire Linux, Inc.
+# Copyright (C) 2015-2025 Savoir-faire Linux, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -226,7 +226,7 @@ make_archive() {
 
 	for file in $release_files; do
 		if [ ! -e $file ]; then
-			die "Cannot release: can't find $file"
+			die "Unable to release: unable to find $file"
 		fi
 	done
 
