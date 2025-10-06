@@ -473,6 +473,7 @@
   <string name="export_side_step2_cancel">Anuloje</string>
   <string name="export_side_step2_confirm">Ripohoje</string>
   <string name="export_side_step2_password">Llogaria është e mbrojtur me fjalëkalim.\nQë të vazhdohet, bëni mirëfilltësimin ete pajisja e re.</string>
+  <string name="export_side_step3_body_done">Llogaria u importua me sukses te pajisja e re.</string>
   <string name="export_side_step3_exit">Përfundoje</string>
   <string name="import_side_step1_advice_qr">Filloni eksportimin te pajisja burim.\n<b>Përzgjidhni Llogari &gt; Rregullime Llogarie &gt; Lidhni pajisje të re</b>\nKur të jeni gati, skanoni kodin QR më poshtë.</string>
   <string name="import_side_step1_advice_code">Filloni eksportimin te pajisja burim.\n<b>Përzgjidhni Llogari &gt; Rregullime Llogarie &gt; Lidhni pajisje të re</b>\nKur të jeni gati, jepni kodin më poshtë.</string>
