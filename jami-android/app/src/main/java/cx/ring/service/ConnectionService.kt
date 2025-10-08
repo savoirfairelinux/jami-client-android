@@ -22,6 +22,7 @@ import android.telecom.ConnectionRequest
 import android.telecom.ConnectionService
 import android.telecom.PhoneAccountHandle
 import android.telecom.TelecomManager
+import android.telecom.DisconnectCause
 import android.util.Log
 import androidx.annotation.RequiresApi
 import cx.ring.services.CallServiceImpl
@@ -37,6 +38,7 @@ import net.jami.services.NotificationService
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import androidx.core.net.toUri
+import cx.ring.application.JamiApplication
 
 @RequiresApi(CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY)
 @AndroidEntryPoint
@@ -51,6 +53,11 @@ class ConnectionService : ConnectionService() {
     lateinit var notificationService: NotificationService
     @Inject
     lateinit var deviceRuntimeService: DeviceRuntimeService
+
+    override fun onCreate() {
+        super.onCreate()
+        JamiApplication.instance?.startDaemon(this)
+    }
 
     private fun buildConnection(request: ConnectionRequest, showIncomingCallUi: ((CallConnection, CallRequestResult) -> Unit)? = null): CallConnection =
         CallConnection(this, request, showIncomingCallUi).apply {
@@ -78,8 +85,12 @@ class ConnectionService : ConnectionService() {
 
     override fun onCreateOutgoingConnection(
         account: PhoneAccountHandle?, request: ConnectionRequest
-    ): Connection = buildConnection(request).apply {
-        (callService as CallServiceImpl).onPlaceCallResult(request.address, request.extras, this)
+    ): Connection = try {
+        buildConnection(request).apply {
+            (callService as CallServiceImpl).onPlaceCallResult(request.address, request.extras, this)
+        }
+    } catch (e: Exception) {
+        Connection.createFailedConnection(DisconnectCause(DisconnectCause.ERROR, e.localizedMessage))
     }
 
     override fun onCreateOutgoingConnectionFailed(
