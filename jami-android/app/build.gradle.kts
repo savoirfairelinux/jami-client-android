@@ -116,12 +116,12 @@ dependencies {
     implementation ("androidx.emoji2:emoji2:1.6.0")
     implementation ("androidx.viewpager2:viewpager2:1.1.0")
     implementation ("androidx.emoji2:emoji2-emojipicker:1.6.0")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.3")
-    implementation ("androidx.window:window:1.4.0")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.4")
+    implementation ("androidx.window:window:1.5.0")
     implementation ("com.google.android.material:material:1.13.0")
     implementation ("androidx.biometric:biometric:1.1.0")
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
-    implementation ("com.google.protobuf:protobuf-javalite:4.32.0")
+    implementation ("com.google.protobuf:protobuf-javalite:4.32.1")
     implementation("androidx.annotation:annotation-jvm:1.9.1")
 
     // ORM
@@ -146,14 +146,14 @@ dependencies {
     androidTestImplementation("androidx.test:core:1.7.0")
 
     // Glide
-    implementation ("com.github.bumptech.glide:glide:5.0.4")
-    ksp("com.github.bumptech.glide:ksp:5.0.4")
+    implementation ("com.github.bumptech.glide:glide:5.0.5")
+    ksp("com.github.bumptech.glide:ksp:5.0.5")
     // Android SVG
     implementation ("com.caverock:androidsvg-aar:1.4")
 
     // RxAndroid
     implementation ("io.reactivex.rxjava3:rxandroid:3.0.2")
-    implementation ("io.reactivex.rxjava3:rxjava:3.1.11")
+    implementation ("io.reactivex.rxjava3:rxjava:3.1.12")
 
     // Open Street Map
     implementation ("org.osmdroid:osmdroid-android:6.1.20")
