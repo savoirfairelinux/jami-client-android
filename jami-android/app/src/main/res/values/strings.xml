@@ -51,13 +51,16 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="community_management">Community Management</string>
     <string name="special_thanks">Special thanks to</string>
     <string name="credits_developer" translatable="false">
-        Abhishek Ojha
+        alexenderwt
+        \nAbhishek Ojha
         \nAdrien Béraud
+        \nAlassane Yattara
         \nAlbert Babí
         \nAlexander Lussier-Cullen
         \nAlexandr Sergheev
         \nAlexandre Eberhardt
         \nAlexandre Lision
+        \nAlexandre Savard
         \nAlexandre Viau
         \nAline Bonnet
         \nAline Gondim Santos
@@ -65,6 +68,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         \nAmin Bandali
         \nAmirHossein Naghshzan
         \nAmna Snene
+        \nAndreas Hatziiliou
         \nAndreas Traczyk
         \nAnthony Léonard
         \nBrando Tovar
@@ -72,12 +76,16 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         \nCharles-Francis Damedey
         \nChristophe Villemer
         \nCyrille Béraud
+        \nDorina Mosku
         \nEden Abitbol
-        \nEdric Milaret
+        \nÉdric Milaret
         \nÉloi Bail
         \nEmma Falkiewitz
         \nEmmanuel Lepage-Vallée
+        \nEmmanuel Milou
+        \nEric Bjarstal
         \nFadi Shehadeh
+        \nFélix Boucher
         \nFranck Laurent
         \nFrançois-Simon Fauteux-Chapleau
         \nFrédéric Guimont
@@ -85,35 +93,45 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         \nGuillaume Roguez
         \nHadrien De Sousa
         \nHugo Lefeuvre
+        \nHussein Abdallah
+        \nIlyas Erdogan
+        \nJérôme Lamy
         \nJulien Grossholtz
         \nJulien Robert
         \nKateryna Kostiuk
         \nKessler DuPont-Teevin
+        \nLanius-collaris
         \nLéo Banno-Cloutier
         \nLéopold Chappuis
         \nLiam Courdoson
         \nLoïc Siret
         \nLouis Maillard
         \nMathéo Joseph
+        \nMaxim Cournoyer
         \nMichel Schmit
         \nMingrui Zhang
-        \nMohamed Chibani
         \nMohamed Amine Younes Bouacida
+        \nMohamed Chibani
+        \nNghia Dam
         \nNicolas Jäger
         \nNicolas Reynaud
         \nNicolas Vengeon
         \nOlivier Gregoire
         \nOlivier Soldano
+        \nPage Magnier-Slimani
         \nPatrick Keroulas
+        \nPavan Koushik Nellore
         \nPeymane Marandi
         \nPhilippe Gorley
         \nPierre Duchemin
         \nPierre Lespagnol
         \nPierre Nicolas
         \nRaphaël Brulé
+        \nRawaha El Houssayni
         \nRayan Osseiran
         \nRomain Bertozzi
         \nSaher Azer
+        \nSamuel Kayode
         \nSébastien Blin
         \nSeva Ivanov
         \nSilbino Gonçalves Matado
