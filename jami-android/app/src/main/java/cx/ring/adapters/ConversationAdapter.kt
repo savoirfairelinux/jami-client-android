@@ -1364,7 +1364,12 @@ class ConversationAdapter(
         if (StringUtils.isOnlyEmoji(message) && !isReplying) {
             messageBubble.updateEmoji(message, messageTime, isEdited)
         } else {
-            messageBubble.updateStandard(markwon.toMarkdown(message), messageTime, isEdited)
+            val markdown = try {
+                markwon.toMarkdown(message)
+            } catch (_: Exception) {
+                message
+            }
+            messageBubble.updateStandard(markdown, messageTime, isEdited)
 
             // Manage layout for message with a link inside.
             if (showLinkPreviews && !isDeleted) {

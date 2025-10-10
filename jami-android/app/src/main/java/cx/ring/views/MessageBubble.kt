@@ -126,7 +126,7 @@ class MessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context,
     /**
      * Updates the view to display a standard message.
      */
-    fun updateStandard(message: Spanned, time: String, messageIsEdited: Boolean) {
+    fun updateStandard(message: CharSequence, time: String, messageIsEdited: Boolean) {
         messageEdited.isVisible = messageIsEdited
         messageText.apply {
             setTextSize(TypedValue.COMPLEX_UNIT_PX, defaultTextSize)
