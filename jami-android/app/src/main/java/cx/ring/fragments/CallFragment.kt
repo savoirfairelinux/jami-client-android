@@ -828,21 +828,16 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 else call?.conversationUri ?: call?.contact?.conversationUri?.blockingFirst()
                 val confId = conf.id
                 if (conversationUri != null) {
-                activity.intent = Intent(
-                    Intent.ACTION_VIEW,
-                    ConversationPath.toUri(conf.accountId, conversationUri), context, CallActivity::class.java
-                )
-                    .apply { putExtra(NotificationService.KEY_CALL_ID, confId) }
-
-                arguments = Bundle().apply {
-                    putString(KEY_ACTION, Intent.ACTION_VIEW)
-                    putString(NotificationService.KEY_CALL_ID, confId)
+                    activity.intent = Intent(
+                        Intent.ACTION_VIEW,
+                        ConversationPath.toUri(conf.accountId, conversationUri), context, CallActivity::class.java
+                    )
+                        .apply { putExtra(NotificationService.KEY_CALL_ID, confId) }
+                    arguments = Bundle().apply {
+                        putString(KEY_ACTION, Intent.ACTION_VIEW)
+                        putString(NotificationService.KEY_CALL_ID, confId)
+                    }
                 }
-                } else {
-                    Log.w(TAG, "DEBUG null conversationUri")
-                }
-            } else {
-                Log.w(TAG, "DEBUG null activity")
             }
             if (hasProfileName) {
                 binding.contactBubbleNumTxt.visibility = View.VISIBLE
@@ -852,13 +847,11 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 binding.contactBubbleNumTxt.visibility = View.GONE
                 binding.contactBubbleTxt.text = username
             }
-            binding.contactBubble.setImageDrawable(
-                AvatarDrawable.Builder()
-                    .withContact(participantInfo[0].contact)
-                    .withCircleCrop(true)
-                    .withPresence(false)
-                    .build(requireActivity())
-            )
+            binding.contactBubble.setAvatar(AvatarDrawable.Builder()
+                .withContact(participantInfo[0].contact)
+                .withCircleCrop(true)
+                .withPresence(false)
+                .build(requireActivity()))
             generateParticipantOverlay(participantInfo)
             presenter.prepareBottomSheetButtonsStatus()
         }

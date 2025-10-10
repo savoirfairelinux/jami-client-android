@@ -128,12 +128,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="230dp"
                 android:layout_height="230dp">
 
-                <ImageView
+                <cx.ring.views.AvatarView
                     android:id="@+id/contact_bubble"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
                     android:layout_centerInParent="true"
-                    tools:src="@drawable/ic_contact_picture_fallback" />
+                    tools:uri="@tools:sample/first_names"
+                    tools:avatar="@tools:sample/avatars" />
             </RelativeLayout>
 
             <LinearLayout
@@ -152,8 +153,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:paddingEnd="32dp"
                     android:singleLine="true"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/white"
-                    tools:text="Contact Name" />
+                    android:textColor="@android:color/white"
+                    tools:text="@tools:sample/full_names" />
 
                 <TextView
                     android:id="@+id/contact_bubble_num_txt"
@@ -165,9 +166,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:paddingEnd="32dp"
                     android:singleLine="true"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/white"
+                    android:textColor="@android:color/white"
                     android:visibility="gone"
-                    tools:text="ring:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                    tools:text="jami:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
                     tools:visibility="visible" />
 
                 <TextView
@@ -177,7 +178,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:gravity="center_horizontal"
                     android:paddingStart="32dp"
                     android:paddingEnd="32dp"
-                    android:textColor="@color/white"
+                    android:textColor="@android:color/white"
                     android:textSize="16sp"
                     tools:text="Connecting" />
 
@@ -203,7 +204,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         app:pressedTranslationZ="12dp"
                         app:rippleColor="@android:color/white"
                         app:srcCompat="@drawable/baseline_call_end_24"
-                        app:tint="@color/white"
+                        app:tint="@android:color/white"
                         tools:visibility="visible" />
 
                     <TextView
@@ -240,7 +241,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         app:pressedTranslationZ="12dp"
                         app:rippleColor="@android:color/white"
                         app:srcCompat="@drawable/baseline_call_24"
-                        app:tint="@color/white"
+                        app:tint="@android:color/white"
                         tools:visibility="visible" />
 
                     <TextView
@@ -254,7 +255,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:singleLine="true"
                         android:text="@string/action_call_accept_audio"
                         android:textAlignment="center"
-                        android:textColor="@color/white"
+                        android:textColor="@android:color/white"
                         android:textSize="11sp"
                         app:layout_constraintEnd_toEndOf="@id/call_accept_audio_btn"
                         app:layout_constraintStart_toStartOf="@id/call_accept_audio_btn"
@@ -277,6 +278,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         app:pressedTranslationZ="12dp"
                         app:rippleColor="@android:color/white"
                         app:srcCompat="@drawable/baseline_videocam_24"
+                        app:tint="@android:color/white"
                         tools:visibility="visible" />
 
                     <TextView
@@ -355,7 +357,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:visibility="gone"
             app:behavior_fitToContents="false"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraint_bs_container"
