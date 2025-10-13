@@ -209,6 +209,10 @@
   <string name="conversation_type_contact">Stik Jami</string>
   <string name="conversation_type_private">Zasebno</string>
   <string name="conversation_type_group">Skupina</string>
+  <string name="conversation_contact_added">%1$s se je pridružil/a pogovoru.</string>
+  <string name="conversation_contact_left">%1$s je zapustil/a pogovor.</string>
+  <string name="conversation_contact_blocked">%1$s je blokiran/a v pogovoru.</string>
+  <string name="conversation_contact_unblocked">%1$s je odblokiran/a v pogovoru.</string>
   <string name="conversation_search_hint">Poišči pogovor</string>
   <string name="audio_recorder_error">Programa za snemanje zvoka ni možno najti.</string>
   <string name="video_recorder_error">Programa za snemanje videa ni možno najti.</string>
@@ -266,6 +270,7 @@
   <string name="share_message">Preberi kodo z Jamijem.</string>
   <string name="share_message_no_account">Izberite račun, ki ga želite deliti.</string>
   <string name="share_your_account_information">Deli podatke o mojem stiku</string>
+  <string name="share_contact_information">Deli podatke o stiku</string>
   <string name="share_label">Deli</string>
   <string name="generic_error_migration">Napaka</string>
   <string name="generic_error_migration_message">Pri migraciji računa je prišlo do napake.</string>
@@ -423,6 +428,7 @@
   <string name="install_error">Pri uvozu razširitve je prišlo do napake.</string>
   <string name="export_side_main_title">Izvozi račun</string>
   <string name="export_side_step1_code_connect">Poveži</string>
+  <string name="export_side_step2_ip_only">Nov naslov IP naprave: %1$s</string>
   <string name="export_side_step2_cancel">Prekliči</string>
   <string name="export_side_step2_confirm">Potrdi</string>
   <string name="export_side_step3_exit">Dokončaj</string>
