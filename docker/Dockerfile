@@ -89,7 +89,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Install Spoon (test manager).
 ENV SPOON_RUNNER_PATH=/spoon-runner.jar
-RUN wget -O /spoon-runner.jar "https://search.maven.org/remote_content?g=com.squareup.spoon&a=spoon-runner&v=LATEST&c=jar-with-dependencies"
+RUN wget -O /spoon-runner.jar \
+  "https://repo1.maven.org/maven2/com/squareup/spoon/spoon-runner/1.7.1/spoon-runner-1.7.1-jar-with-dependencies.jar"
 
 # Install android SDK libraries for emulation.
 ARG API_LEVEL="36"
