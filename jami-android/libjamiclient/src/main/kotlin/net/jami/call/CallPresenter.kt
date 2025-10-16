@@ -456,7 +456,7 @@ class CallPresenter @Inject constructor(
             } else {
                 mOnGoingCall = false
                 view.updateCallStatus(scall.callStatus)
-                view.initOutGoingCallDisplay()
+                view.initOutGoingCallDisplay(hasVideo)
             }
         } else if (call.conversationId != null) {
             Log.w(TAG, "confUpdate swarm host")
