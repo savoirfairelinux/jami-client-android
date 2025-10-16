@@ -323,7 +323,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         }
     }
 
-    override fun initOutGoingCallDisplay() {
+    override fun initOutGoingCallDisplay(hasVideo: Boolean) {
         binding?.apply {
             callAcceptBtn.visibility = View.GONE
             callRefuseBtn.visibility = View.VISIBLE
