@@ -1133,7 +1133,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
-    override fun initOutGoingCallDisplay() {
+    override fun initOutGoingCallDisplay(hasVideo: Boolean) {
         Log.w(TAG, "initOutGoingCallDisplay")
         binding?.apply {
             callAcceptBtn.isVisible = false
@@ -1143,6 +1143,11 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             callRefuseBtn.isVisible = true
             callRefuseBtnText.isVisible = true
             contactBubbleLayout.isVisible = true
+            if (hasVideo) {
+                fullscreenCameraPreview.visibility = View.VISIBLE
+            } else {
+                fullscreenCameraPreview.visibility = View.GONE
+            }
         }
     }
 
