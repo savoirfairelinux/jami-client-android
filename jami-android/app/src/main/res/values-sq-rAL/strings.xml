@@ -182,6 +182,8 @@
   <string name="conversation_action_remove_this_message">Kjo do të shkaktojë fshirjen e kontaktit dhe përfundimisht fshirjen e historikut të bisedave.</string>
   <string name="conversation_action_add_this_message">Kjo do të dërgojë një kërkesë për lidhje.</string>
   <string name="remove_conversation">Hiqe bisedën</string>
+  <string name="conversation_action_remove_title">Të hiqet biseda?</string>
+  <string name="conversation_action_remove_message">Kjo do të heqë bisedën pa hequr kontaktin.</string>
   <string name="swarm_group_action_leave">Braktise grupin</string>
   <string name="swarm_group_action_leave_title">Të braktiset ky grup?</string>
   <string name="swarm_group_action_leave_message">Kjo do ta heqë bisedën nga lista e bisedave tuaja </string>
@@ -248,6 +250,7 @@
   <string name="help_password_choose">Për të mbrojtur llogarinë tuaj Jami, zgjidhni fjalëkalim të fuqishëm që do ta mbani mend.</string>
   <string name="help_password_enter">Jepni fjalëkalimin e llogarisë tuaj kryesore Jami.</string>
   <string name="help_server_enter">Jepni URL-në e shërbyesit të administrimeve.</string>
+  <string name="pin_copied">Kodi i mirëfilltësimit u kopjua në të papastër.</string>
   <string name="copied_clipboard">U kopjua në të papastër.</string>
   <string name="wizard_next">Pasuesi</string>
   <string name="wizard_back">Mbrapsht</string>
@@ -326,6 +329,7 @@
   <string name="file_transfer_status_error">Ndodhi një gabim teksa shpërngulej kartela.</string>
   <string name="file_transfer_status_timed_out">Veprimit i mbaroi koha.</string>
   <string name="file_saved_in">Kartela u ruajt te %s.</string>
+  <string name="file_saved_successfully">Kartela u ruajt me sukses.</string>
   <string name="file_download">Shkarkoje</string>
   <string name="no_space_left_on_device">S’ka hapësirë depozitimi në këtë pajisje.</string>
   <string name="title_media_viewer">Parës mediash</string>
@@ -458,9 +462,12 @@
   <string name="unable_to_load">S’arrihet të ngarkohet %1$s</string>
   <string name="load_success">%1$s: e aktivizuar</string>
   <string name="unload_success">%1$s: e çaktivizuar</string>
+  <string name="install_success">Zgjerimi %1$s u instalua me sukses.</string>
   <string name="install_error">Ndodhi një gabim teksa importohej zgjerimi.</string>
   <string name="export_side_main_title">Eksportoni llogari</string>
   <string name="import_side_main_title">Importoni llogari</string>
+  <string name="link_device_dialog_stop_title">Doni të reshtet së lidhur pajisja?</string>
+  <string name="link_device_dialog_stop_export_body">Ndalja do të anulojë veprimin e eksportimit të llogarinë.</string>
   <string name="link_device_dialog_stop_import_body">Ndalja do të anulojë veprimin e importimit të llogarisë.</string>
   <string name="export_side_step1_advice_qr">Në pajisjen e re, krijoni një llogari të re.\nPërzgjidhni <b>Llogari &gt; Shtoni Llogari &gt; Lidhni prej pajisjeje tjetër</b>\nKur të jeni gati, skanoni kodin QR</string>
   <string name="export_side_step1_switch_to_code">Ose klikoni këtu që të jepni kodin e mirëfilltësimit</string>
@@ -473,6 +480,7 @@
   <string name="export_side_step2_cancel">Anuloje</string>
   <string name="export_side_step2_confirm">Ripohoje</string>
   <string name="export_side_step2_password">Llogaria është e mbrojtur me fjalëkalim.\nQë të vazhdohet, bëni mirëfilltësimin ete pajisja e re.</string>
+  <string name="export_side_step3_body_loading">Veprimi i eksportimit të llogarisë te pajisja e re është në kryerje e sipër. Ju lutemi, prisni…</string>
   <string name="export_side_step3_body_done">Llogaria u importua me sukses te pajisja e re.</string>
   <string name="export_side_step3_exit">Përfundoje</string>
   <string name="import_side_step1_advice_qr">Filloni eksportimin te pajisja burim.\n<b>Përzgjidhni Llogari &gt; Rregullime Llogarie &gt; Lidhni pajisje të re</b>\nKur të jeni gati, skanoni kodin QR më poshtë.</string>
@@ -486,10 +494,15 @@
   <string name="import_side_step2_password_import">Importoje</string>
   <string name="import_side_step2_password_unlocking">Po shkyçet pajisja…</string>
   <string name="import_side_step2_action_required">Lypset veprim. Ju lutemi, ripohoni llogarinë në pajisjen burim.</string>
+  <string name="import_side_step3_body_loading">Llogaria po importohet te pajisja e re. Ju lutemi, prisni…</string>
   <string name="import_side_step3_body_done">Llogaria u importua me sukses.</string>
+  <string name="import_side_step3_go_to_account">Kalo te llogaria e re</string>
   <string name="import_side_step3_exit">Përfundoje</string>
+  <string name="link_device_share_title">Ndani me të tjerë kod mirëfilltësimi</string>
+  <string name="link_device_error_network">Ndodhi një gabim teksa lidhej pajisja. Ju lutemi, verifikoni lidhjen tuaj dhe riprovoni.</string>
   <string name="link_device_error_authentication">Ndodhi një gabim mirëfilltësimi teksa lidhej pajisja. Ju lutemi, kontrolloni kredencialet dhe riprovoni.</string>
   <string name="link_device_error_timeout">Veprimit i mbaroi koha.</string>
+  <string name="link_device_error_canceled">Veprimi u anulua nga përdoruesi.</string>
   <string name="link_device_error_unknown">Ndodhi një gabim.</string>
   <string name="link_device_error_bad_password">Ju lutemi, kontrolloni kredencialet dhe riprovoni.</string>
 </resources>

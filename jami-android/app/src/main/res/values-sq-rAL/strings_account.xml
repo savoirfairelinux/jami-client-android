@@ -86,6 +86,8 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Të mëtejshme</string>
   <string name="account_chat_settings_title">Rregullime fjalosjeje</string>
+  <string name="account_read_receipts_label">Dëshmi leximi</string>
+  <string name="account_read_receipts_summary">Dërgoni dhe kërkoni që të dërgohet dëshmi dërgimi dhe leximi, kur mesazhet dorëzohen, ose lexohen.</string>
   <string name="account_call_settings_title">Rregullime për thirrjet</string>
   <string name="account_dht_public_in_calls_label">Lejo thirrje ardhëse prej kontaktesh të panjohur</string>
   <string name="account_registration_exp_label">Skadim Regjistrimi</string>
@@ -197,6 +199,7 @@
   <string name="account_link_export_button">Lidhni pajisje të re</string>
   <string name="account_link_show_button">Shfaq %d pajisje të tjera të lidhura</string>
   <string name="account_link_hide_button">Fshihe pajisjen e lidhur</string>
+  <string name="account_start_export_button">Prodho kod mirëfilltësimi</string>
   <string name="account_end_export_button">mbylle</string>
   <string name="account_export_title">Lidheni llogarinë te pajisje të tjera</string>
   <string name="account_connect_server_button">Lidhu me shërbyesin e administrimit</string>
@@ -248,13 +251,21 @@
   <string name="account_device_name_empty">Emri i pajisjes s\’mund të jetë i zbrazët</string>
   <string name="account_device_this_indicator">Këtë pajisje</string>
   <string name="account_disabled_indicator">Çaktivizuar</string>
+  <string name="account_device_id">ID Pajisjeje</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Ky format nuk mbulohet.</string>
+  <string name="account_link_info">Te aplikacioni Jami në pajisjen e re, skanoni kodin QR, ose jepeni dorazi kodin e mirëfilltësimit.</string>
   <string name="account_link_device_title">Lidhni një pajisje të re</string>
+  <string name="account_link_password">Kjo llogari është e fshehtëzuar me fjalëkalim, jepni fjalëkalimin që të prodhohet kodi i mirëfilltësimit.</string>
   <string name="account_link_generate_button">Prodhoje</string>
+  <string name="account_link_time_valid">Kodi i mirëfilltësimit do të jetë i pavlefshëm: %1$s.</string>
+  <string name="account_link_device_info">Zgjidhni “Lidhni një pajisje të re”, që nga aplikacioni tjetër Jami, që të shfaqet kodi QR, ose kodi i mirëfilltësimit.</string>
   <string name="account_generate_export_device">Te pajisja tjetër</string>
   <string name="account_generate_export_info">Instaloni dhe nisni Jami-n. Përzgjidhni “Importo prej pajisje tjetër” dhe skanoni kodin QR. Ndryshe jepeni kodin PIN dorazi.</string>
   <string name="content_description_qr_generated">Kod QR llogarie</string>
+  <string name="account_generate_export_invalid">Kodi i mirëfilltësimit s’është më i vlefshëm.\n Që të lidhni pajisjen e re, jepni fjalëkalimin dhe prodhoni një tjetër.</string>
+  <string name="account_generate_export_invalid_two">Kodi i mirëfilltësimit s’është më i vlefshëm.\nQë të lidhni pajisjen e re, prodhoni një tjetër.</string>
+  <string name="help_pin_info">E domosdoshme, nëse llogaria është e fshehtëzuar me fjalëkalim.</string>
   <string name="account_link_device_button">Lidhu</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Shkyçni llogari Jami</string>
@@ -268,5 +279,6 @@ Mirëfilltësimi biometrik, ose përmes pajisjes, shton një rrugë të leverdis
   <string name="account_biometry_enroll_auth_message">Shtoni mirëfilltësim të siguruar biometrik, ose përmes pajisjes, si një alternativë e fjalëkalimit tuaj</string>
   <string name="account_auth_error">Gabim mirëfilltësimi: %1$s</string>
   <string name="account_auth_success">Mirëfilltësimi pat sukses</string>
+  <string name="account_auth_key_error">Ndodhi një gabim teksa shfshehtëzohej kyçi i llogarisë.</string>
   <string name="account_auth_password">Përdorni fjalëkalim llogarie</string>
 </resources>

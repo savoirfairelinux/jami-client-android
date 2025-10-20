@@ -196,6 +196,7 @@
   <string name="account_link_export_button">Poveži novo napravo</string>
   <string name="account_link_show_button">Prikaži %d več povezanih naprav</string>
   <string name="account_link_hide_button">Skrij povezano napravo</string>
+  <string name="account_start_export_button">Tvori overitveno kodo</string>
   <string name="account_end_export_button">zapri</string>
   <string name="account_export_title">Poveži račun z drugimi napravami</string>
   <string name="account_connect_server_button">Povezava na upravljalni strežnik</string>
@@ -246,12 +247,20 @@
   <string name="account_device_name_empty">Ime naprave ne more biti prazno.</string>
   <string name="account_device_this_indicator">Ta naprava</string>
   <string name="account_disabled_indicator">Onemogočeno</string>
+  <string name="account_device_id">ID naprave</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Format ni podprt.</string>
   <string name="account_link_device_title">Poveži novo napravo</string>
+  <string name="account_link_password">Ta račun je šifriran z geslom, vnesite geslo, da tvorite kodo overjanja.</string>
   <string name="account_link_generate_button">Tvori</string>
+  <string name="account_link_time_valid">Koda overjanja bo neveljavna: %1$s.</string>
+  <string name="account_link_device_info">Izberite \"Poveži novo napravo\" v drugem programu Jami, da prikažete QR-kodo ali overitveno kodo.</string>
   <string name="account_generate_export_device">Na drugi napravi</string>
+  <string name="account_generate_export_info">Namestite in zaženite Jami, izberite uvoz iz druge naprave in optično preberite kodo QR. Lahko tudi ročno vnesete kodo PIN.</string>
   <string name="content_description_qr_generated">QR-koda računa</string>
+  <string name="account_generate_export_invalid">Overitvena koda ni več veljavna.\n Vnesite geslo in tvorite novo kodo, da povežete novo napravo.</string>
+  <string name="account_generate_export_invalid_two">Overitvena koda ni več veljavna.\n Tvorite novo, da povežete novo napravo.</string>
+  <string name="help_pin_info">Obvezno, če je račun zaščiten z geslom.</string>
   <string name="account_link_device_button">Poveži</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Odkleni račun Jami</string>
@@ -265,5 +274,6 @@ Biometrično overjanje ali overjanje lastno napravi dodaja priročen način za k
   <string name="account_biometry_enroll_auth_message">Dodajte varno biometrično overjanje ali napravi lastno overjanje kot alternativo za svoje geslo</string>
   <string name="account_auth_error">Napaka overjanja: %1$s</string>
   <string name="account_auth_success">Overjanje je uspelo</string>
+  <string name="account_auth_key_error">Pri dešifriranju ključa računa je prišlo do napake.</string>
   <string name="account_auth_password">Uporabi geslo računa</string>
 </resources>

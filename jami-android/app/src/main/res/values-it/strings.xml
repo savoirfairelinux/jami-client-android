@@ -459,6 +459,7 @@
   <string name="unload_success">%1$s: disattivato</string>
   <string name="install_error">Si è verificato un errore durante l\'importazione dell\'estensione.</string>
   <string name="export_side_main_title">Esporta account</string>
+  <string name="import_side_main_title">Importa account</string>
   <string name="export_side_step1_code_connect">Connetti</string>
   <string name="export_side_step2_cancel">Annulla</string>
   <string name="export_side_step2_confirm">Conferma</string>
