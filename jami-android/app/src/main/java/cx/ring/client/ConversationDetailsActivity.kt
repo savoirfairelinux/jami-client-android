@@ -291,6 +291,12 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
 
         binding.toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
         binding.addMember.setOnClickListener { ContactPickerFragment(conversation.contacts).show(supportFragmentManager, ContactPickerFragment.TAG) }
+        binding.certificate.setOnClickListener {
+            startActivity(
+                Intent(Intent.ACTION_VIEW, ConversationPath.toUri(conversation.accountId, conversation.contact!!.uri.rawRingId))
+                    .setClass(applicationContext, CertificateViewerActivity::class.java)
+            )
+        }
     }
 
     private fun profileImageClicked(contact: Contact?, isGroup: Boolean) {
