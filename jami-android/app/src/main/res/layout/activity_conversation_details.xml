@@ -58,7 +58,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/conversation_avatar"
-                    tools:text="12345, @User" />
+                    tools:text="@tools:sample/full_names" />
 
                 <LinearLayout
                     android:id="@+id/btn_panel"
@@ -105,11 +105,6 @@
                         android:padding="8dp"
                         android:src="@drawable/outline_person_add_24"
                         app:tint="@color/icon_tint" />
-
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="2" />
 
                 </LinearLayout>
 

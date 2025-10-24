@@ -218,6 +218,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                 android:id="@+id/secure_p2p_connection"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:background="?selectableItemBackground"
                 android:drawablePadding="12dp"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="12dp"

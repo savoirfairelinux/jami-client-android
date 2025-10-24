@@ -26,6 +26,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
+import cx.ring.client.CertificateViewerActivity
 import cx.ring.client.ColorChooserBottomSheet
 import cx.ring.client.ConversationDetailsActivity.Companion.EXIT_REASON
 import cx.ring.client.ConversationDetailsActivity.Companion.ExitReason
@@ -203,6 +204,12 @@ class ConversationActionsFragment : Fragment() {
                         userNamePanel.isVisible = registeredName.isNotEmpty()
                         userName.text = registeredName
                         this.identifier.text = identifier.uri
+                        secureP2pConnection.setOnClickListener {
+                            startActivity(Intent(Intent.ACTION_VIEW, ConversationPath.toUri(
+                                conversation.accountId,
+                                identifier.rawRingId
+                            )).setClass(requireContext(), CertificateViewerActivity::class.java))
+                        }
                         shareButton.setOnClickListener {
                             shareContact(registeredName.ifEmpty { identifier.uri })
                         }
