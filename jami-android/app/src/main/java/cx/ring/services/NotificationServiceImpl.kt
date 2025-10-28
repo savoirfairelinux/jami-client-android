@@ -372,6 +372,10 @@ class NotificationServiceImpl(
     override fun preparePendingScreenshare(conference: Conference, callback: () -> Unit) {
         pendingScreenshareCallbacks[conference.id] = callback
         handleCallNotification(conference, remove = false, startScreenshare = true)
+            .subscribe(
+                { },
+                { error -> Log.e(TAG, "Error handling screen share notification", error) }
+            )
     }
 
     /**
