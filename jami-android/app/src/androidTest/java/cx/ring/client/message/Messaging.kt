@@ -24,6 +24,8 @@ import androidx.test.espresso.action.ViewActions.clearText
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.action.ViewActions.longClick
+import androidx.test.espresso.action.ViewActions.scrollTo
+import androidx.test.espresso.action.ViewActions.swipeUp
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -430,9 +432,11 @@ class Messaging {
 
         // Click on change symbol button. Select a symbol.
         onView(withText(R.string.conversation_details)).perform(click())
-        onView(withText(R.string.conversation_preference_emoji)).perform(click())
+        onView(isRoot()).perform(swipeUp())
+        onView(withId(R.id.emoji_pick_panel)).perform(click())
         // Position 4 = R.array.conversation_emojis[4] = R.string.default_emoji_5 = 👻
         onView(withId(R.id.emoji_chooser)).perform(
+            waitUntil(isDisplayed()),
             RecyclerViewActions
                 .actionOnItemAtPosition<EmojiChooserBottomSheet.EmojiView>(4, click())
         )
