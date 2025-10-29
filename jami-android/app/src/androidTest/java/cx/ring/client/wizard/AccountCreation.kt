@@ -167,7 +167,7 @@ class AccountCreation {
         onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
 
         onView(allOf(withId(R.id.username), isDisplayed()))
-            .perform(replaceText("Bonjour"), closeSoftKeyboard())
+            .perform(replaceText("Bonjour"))
 
         onView(allOf(withId(R.id.next_create_account), isDisplayed())).perform(click())
 
