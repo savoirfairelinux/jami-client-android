@@ -11,7 +11,7 @@
   <string name="no_browser_app_installed">未找到web浏览器应用程序，请安装一个以查看此页面。</string>
   <string name="website_chooser_title">使用…浏览网站</string>
   <string name="license">本软件由版权持有人及其他责任者“按原样”提供，不提供任何形式的担保。详细信息请参阅 <u>GNU 通用公共许可证版本 3 或更新</u></string>
-  <string name="description">Jami 是一种自由通信软件，它尊重用户的自由和隐私。</string>
+  <string name="description">Jami 是一款用于通用通信的自由软件，它尊重用户的自由和隐私。</string>
   <string name="credits">致谢</string>
   <string name="pip_title">Jami 会议</string>
   <string name="call_service_description">这项服务对于保持您的通话在前台运行是必要的。它仅在您通话时运行。</string>
@@ -43,7 +43,7 @@
   <string name="dial_number">拨号</string>
   <!--History Fragment-->
   <!--Home Fragment-->
-  <string name="invitation_card_title">邀请已发送</string>
+  <string name="invitation_card_title">收到邀请</string>
   <plurals name="home_conferences_title">
     <item quantity="other">%d个会话</item>
   </plurals>
@@ -75,9 +75,9 @@
   <string name="notif_inprogress_group_call">通话中</string>
   <string name="notif_background_service">Jami 正在后台运行</string>
   <string name="notif_mark_as_read">标为已读</string>
-  <string name="notif_dismiss">解散</string>
+  <string name="notif_dismiss">移除</string>
   <string name="notif_reply">回复</string>
-  <string name="notif_incoming_file_transfer_title">从%1$s收到的文件</string>
+  <string name="notif_incoming_file_transfer_title">从%1$s收到文件</string>
   <string name="notif_outgoing_file_transfer_title">发送文件到%1$s</string>
   <string name="notif_incoming_picture">来自%1$s的图片</string>
   <string name="notif_sync_title">正在同步数据...</string>
@@ -139,7 +139,7 @@
   <string name="conversation_share_location">分享位置</string>
   <string name="ongoing_group_call">正在通话</string>
   <string name="started_call">通话已开始</string>
-  <string name="in_reply_to">在回复中</string>
+  <string name="in_reply_to">回复</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">摄像头使用权限</string>
   <string name="permission_dialog_camera_message">视频对话需要相机权限。相机权限已禁用。在设备设置中启用它以使用此功能。</string>
@@ -198,33 +198,33 @@
   <string name="clip_contact_uri">联系人地址</string>
   <string name="clip_message">消息内容</string>
   <string name="block_contact_dialog_title">屏蔽%1$s？</string>
-  <string name="block_contact_dialog_message">您将不能联系%1$s直到您解除屏蔽。</string>
+  <string name="block_contact_dialog_message">在您解除屏蔽之前 %1$s将不能联系您。</string>
   <string name="block_contact_completed">%1$s已被屏蔽。</string>
-  <string name="unblock_contact_dialog_title">解锁%1$s?</string>
-  <string name="unblock_contact_dialog_message">%1$s将能够再次联系您.</string>
-  <string name="unblock_contact_completed">没有阻止了%1$s.</string>
+  <string name="unblock_contact_dialog_title">解除屏蔽%1$s?</string>
+  <string name="unblock_contact_dialog_message">%1$s将能够再次联系您。</string>
+  <string name="unblock_contact_completed">已解除屏蔽 %1$s。</string>
   <string name="conversation_contact_is_typing">联系人正在输入...</string>
   <string name="conversation_info_contact_you">您</string>
   <string name="conversation_members">成员</string>
   <string name="conversation_syncing">正在从 Peer 下载对话</string>
-  <string name="conversation_blocked">这种联系是被封闭的.</string>
-  <string name="conversation_ended">对话中止</string>
+  <string name="conversation_blocked">该联系人已被屏蔽。</string>
+  <string name="conversation_ended">对话已终止</string>
   <string name="conversation_message_deleted">%s删除了一条消息</string>
   <string name="conversation_reply_you">您</string>
   <string name="video_not_found">未找到视频文件</string>
-  <string name="conversation_preference_color">对话框颜色</string>
+  <string name="conversation_preference_color">对话颜色</string>
   <string name="conversation_preference_emoji">对话表情</string>
   <string name="conversation_type_contact">Jami 联系人</string>
   <string name="conversation_type_private">私人</string>
   <string name="conversation_type_group">组</string>
-  <string name="conversation_contact_invited">%1$s被邀请加入对话。</string>
-  <string name="conversation_contact_added">%1$s已加入对话。</string>
+  <string name="conversation_contact_invited">%1$s 被邀请加入对话。</string>
+  <string name="conversation_contact_added">%1$s 已加入对话。</string>
   <string name="conversation_contact_left">%1$s已退出对话。</string>
   <string name="conversation_contact_blocked">%1$s被这个群组屏蔽。</string>
   <string name="conversation_contact_unblocked">%1$s被这个群组解除屏蔽。</string>
   <string name="conversation_search_hint">搜索对话记录</string>
-  <string name="audio_recorder_error">找不到录音机</string>
-  <string name="video_recorder_error">找不到相机</string>
+  <string name="audio_recorder_error">找不到录音机应用</string>
+  <string name="video_recorder_error">找不到相机应用</string>
   <string name="taking_picture_error">拍照时出错</string>
   <string name="find_picture_error">查找图片时出错</string>
   <string name="open_camera_error">打开相机时出错</string>
@@ -243,7 +243,7 @@
   <string name="prompt_new_password">新密码</string>
   <string name="prompt_new_password_optional">新的密码（可选）</string>
   <string name="prompt_new_password_repeat">确认新密码</string>
-  <string name="account_create_title">建立 Jami 帳號</string>
+  <string name="account_create_title">创建 Jami 账号</string>
   <string name="prompt_new_username">输入新用户名</string>
   <string name="prompt_hint_username">用户名</string>
   <string name="help_password_choose">为了保护您的 Jami 账户，请使用一个强密码并牢记。</string>
@@ -293,7 +293,7 @@
   <string name="block">屏蔽</string>
   <string name="decline_invitation">拒绝邀请</string>
   <string name="accept_invitation">接受邀请</string>
-  <string name="accept_invitation_body">聊天邀请来自%s</string>
+  <string name="accept_invitation_body">收到来自%s 的聊天邀请。</string>
   <string name="new_invitation_request_title">新邀请</string>
   <string name="invitation_message">您有 %1$d 个联系人请求</string>
   <string name="no_invitations">没有要显示的邀请。</string>
@@ -432,13 +432,13 @@
   <string name="share_contact_intent_title">在Jami上添加此联系人！</string>
   <string name="share_contact_intent_body">您可以在Jami分布式通信平台上添加此联系人“%1$s”：%2$s</string>
   <!--JamiId-->
-  <string name="jami_id_copy">复制JamiID</string>
-  <string name="jami_id_share">分享jami的ID</string>
+  <string name="jami_id_copy">复制 JamiId</string>
+  <string name="jami_id_share">分享 JamiId</string>
   <string name="jami_id_validate">注册用户名</string>
   <string name="jami_id_available">用户名可用。</string>
   <string name="jami_id_not_available">用户名不可用。</string>
   <string name="jami_id_info">• 最多32字符\n• 允许使用的特殊字符：破折号（-），下划线（_）</string>
-  <string name="jami_id_looking_for_availability">检查用户名是否可用...</string>
+  <string name="jami_id_looking_for_availability">正在检查用户名是否可用...</string>
   <string name="jami_id_choose_username">选择一个用户名</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">欢迎使用 Jami</string>
@@ -453,7 +453,7 @@
   <string name="show_certificate">显示证书</string>
   <string name="mute_conversation">静音对话</string>
   <!--Donation-->
-  <string name="donation_card_description">如果您喜欢使用 Jami 并相信我们的使命，您愿意捐款吗？</string>
+  <string name="donation_card_description">如果您喜欢使用 Jami 并相信我们的使命的话，您是否愿意捐款支持我们？</string>
   <string name="donation_card_not_now">现在不要</string>
   <string name="donation_donate">捐助</string>
   <string name="donation_setting_title">捐赠提醒</string>
@@ -491,8 +491,8 @@
   <string name="import_side_step1_connecting">正在连接到源设备…</string>
   <string name="import_side_step1_preparing_device">准备设备...</string>
   <string name="import_side_step2_password_prompt">该帐户受密码保护。\n解除锁定以继续。</string>
-  <string name="import_side_step2_password_import">倒入</string>
-  <string name="import_side_step2_password_unlocking">解锁帐户...</string>
+  <string name="import_side_step2_password_import">导入</string>
+  <string name="import_side_step2_password_unlocking">正在解锁帐户...</string>
   <string name="import_side_step2_action_required">需要进行操作。请在原设备上确认账户。</string>
   <string name="import_side_step3_body_loading">账户正在导入到新设备。请稍候…</string>
   <string name="import_side_step3_body_done">已成功导入帐户。</string>

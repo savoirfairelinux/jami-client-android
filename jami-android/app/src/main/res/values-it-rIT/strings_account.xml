@@ -192,7 +192,7 @@ Si potra modificare questo account più tardi.</string>
   <string name="tv_about_license">Licenza</string>
   <string name="tv_about_author">Diritti d\'autore</string>
   <string name="tv_about_credits">Crediti</string>
-  <string name="account_link_device">Connettiti da un altro dispositivo</string>
+  <string name="account_link_device">Connetti da un altro dispositivo</string>
   <string name="account_link_button">Connetti dalla rete</string>
   <string name="account_link_archive_button">Connetti dal backup</string>
   <string name="account_new_button">Crea un account Jami</string>
@@ -203,6 +203,7 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_export_title">Associa l\'account ad altri dispositivi</string>
   <string name="account_connect_server_button">Connetti al server di gestione</string>
   <string name="account_connect_button">Connetti</string>
+  <string name="prompt_server">URL del server di gestione</string>
   <string name="help_credentials_enter">Inserisci le credenziali della tua organizzazione</string>
   <string name="help_connect_password_enter">Inserisci la password della tua organizzazione</string>
   <string name="account_connect_prompt_username">Utente</string>
@@ -254,6 +255,7 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_link_device_title">Associa un altro dispositivo</string>
   <string name="account_link_generate_button">Genera</string>
   <string name="account_generate_export_device">Nell\'altro dispositivo</string>
+  <string name="account_generate_export_info">Installa e avvia Jami, seleziona \"Importa da un altro dispositivo\" e scansiona il codice QR oppure inserire manualmente il codice PIN.</string>
   <string name="content_description_qr_generated">Codice QR dell\'account</string>
   <string name="account_link_device_button">Connetti</string>
   <!--Biometry-->

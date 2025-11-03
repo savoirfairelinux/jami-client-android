@@ -54,6 +54,7 @@
   <string name="pref_push_notifications_logs_summary">Mostra i registri acquisiti dalle
         notifiche.</string>
   <string name="pref_typing_title">Indicatori di scrittura</string>
+  <string name="pref_typing_summary">Indica quando si sta scrivendo un messaggio.</string>
   <string name="pref_block_record_title">Blocca schermata e registrazione</string>
   <string name="pref_block_record_summary">Blocca l\'acquisizione di schermate o registrazione video.</string>
   <string name="pref_link_preview_title">Anteprime collegamenti Web</string>

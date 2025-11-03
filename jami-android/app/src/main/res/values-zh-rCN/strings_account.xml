@@ -8,7 +8,7 @@
   <string name="account_selection">选择帐户</string>
   <string name="add_ring_account_title">添加账户</string>
   <string name="add_sip_account_title">添加 SIP 账户</string>
-  <string name="ring_account_default_name">Jami 用户%1$s</string>
+  <string name="ring_account_default_name">Jami 账户%1$s</string>
   <string name="account_creation_error">创建帐户时出错</string>
   <string name="prompt_alias">别名</string>
   <string name="prompt_hostname">主机名</string>
@@ -49,7 +49,7 @@
   <string name="account_password_change">更改密码</string>
   <string name="account_password_set">设置密码</string>
   <string name="account_password_summary">管理您的账户密码</string>
-  <string name="account_password_change_wait_message">更改用户密码</string>
+  <string name="account_password_change_wait_message">更改账户密码</string>
   <string name="account_biometric_disable">禁用生物特征识别</string>
   <string name="account_biometric_set">启用生物特征识别</string>
   <string name="account_biometric_summary">管理你帐户的生物特征识别</string>
@@ -94,7 +94,7 @@
   <string name="account_local_interface_label">本地接口</string>
   <string name="account_local_port_label">本地端口</string>
   <string name="account_stun_enable_label">使用 STUN</string>
-  <string name="account_stun_server_label">Stun服务器</string>
+  <string name="account_stun_server_label">STUN 服务器</string>
   <string name="account_accept_files">自动接收传入的文件</string>
   <string name="account_conversation_settings_title">会话设置</string>
   <string name="account_accept_files_max_size">允许自动接收文件的最大大小</string>
@@ -114,7 +114,7 @@
   <string name="default_value">默认</string>
   <string name="account_proxy_label">DHT 代理</string>
   <string name="account_proxy_enable_label">使用 DHT 代理</string>
-  <string name="account_proxy_list_enable_label">使用DHT代理列表</string>
+  <string name="account_proxy_list_enable_label">使用 DHT 代理列表</string>
   <string name="account_proxy_server_label">DHT 代理地址</string>
   <string name="account_proxy_server_list_label">DHT 代理列表 URL </string>
   <string name="account_proxy_server_used">使用：%1$s</string>
@@ -132,7 +132,7 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">使用 TLS 通讯</string>
-  <string name="account_tls_port_label">TLS监听端口</string>
+  <string name="account_tls_port_label">TLS 监听端口</string>
   <string name="account_tls_certificate_list_label">证书颁发机构</string>
   <string name="account_tls_certificate_file_label">证书文件</string>
   <string name="account_tls_private_key_file_label">私钥文件</string>
@@ -152,7 +152,7 @@
   <string name="error_password_char_count">最少 6 字符</string>
   <string name="error_passwords_not_equals">密码不匹配。</string>
   <string name="export_account_wait_title">请稍等…</string>
-  <string name="export_account_wait_message">导出用户信息</string>
+  <string name="export_account_wait_message">导出账户信息</string>
   <string name="account_export_file">备份账户</string>
   <string name="account_export_file_summary">备份您设备上的账户以便恢复</string>
   <string name="account_export_end_decryption_message">使用该密码无法解锁您的账户。</string>
@@ -193,15 +193,15 @@
   <string name="tv_about_author">作者权利</string>
   <string name="tv_about_credits">致谢</string>
   <string name="account_link_device">从另一台设备连接</string>
-  <string name="account_link_button">从网络关联</string>
-  <string name="account_link_archive_button">从备份文件关联</string>
-  <string name="account_new_button">建立 Jami 帳號</string>
+  <string name="account_link_button">从网络连接</string>
+  <string name="account_link_archive_button">从备份文件连接</string>
+  <string name="account_new_button">创建 Jami 账户</string>
   <string name="account_link_export_button">关联新设备</string>
   <string name="account_link_show_button">再显示 %d 个关联设备</string>
   <string name="account_link_hide_button">隐藏关联设备</string>
   <string name="account_start_export_button">生成验证码</string>
   <string name="account_end_export_button">关闭</string>
-  <string name="account_export_title">将账号关联至其他设备</string>
+  <string name="account_export_title">将账户关联至其他设备</string>
   <string name="account_connect_server_button">连接到管理服务器</string>
   <string name="account_connect_button">连接</string>
   <string name="prompt_server">管理服务器 URL</string>

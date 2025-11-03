@@ -7,6 +7,7 @@
   <string name="no_browser_app_installed">未找到web浏览器应用程序，请安装一个以查看此页面。</string>
   <string name="website_chooser_title">使用…浏览网站</string>
   <string name="license">本软件由版权持有人及其他责任者“按原样”提供，不提供任何形式的担保。详细信息请参阅 <u>GNU 通用公共许可证版本 3 或更新</u></string>
+  <string name="description">Jami 是一款用于通用通信的自由软件，它尊重用户的自由和隐私。</string>
   <!--About dialog-->
   <string name="thank_note">我们要感谢我们的贡献者，他们多年来的努力使这个软件成为现在的样子。</string>
   <string name="developers">开发者</string>
@@ -49,6 +50,8 @@
   <string name="notif_inprogress_group_call">通话中</string>
   <string name="notif_background_service">Jami 正在后台运行</string>
   <string name="notif_mark_as_read">标记为已读</string>
+  <string name="notif_dismiss">移除</string>
+  <string name="notif_incoming_file_transfer_title">从%1$s收到文件</string>
   <string name="notif_sync_title">正在同步数据……</string>
   <!--Call Fragment-->
   <string name="action_call_minimize">缩小</string>
@@ -79,6 +82,7 @@
   <string name="select_media">打开相册</string>
   <string name="ongoing_group_call">尚在進行中的通話</string>
   <string name="started_call">通话已开始</string>
+  <string name="in_reply_to">回复</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">相机权限</string>
   <string name="permission_dialog_camera_message">视频会话需要使用摄像头，请设置相应权限。</string>
@@ -122,6 +126,10 @@
   <string name="conversation_action_incoming_call">来电</string>
   <string name="conversation_open_file_error">没有适合打开这种文件类型的应用。</string>
   <string name="clip_message">消息内容</string>
+  <string name="block_contact_dialog_message">在您解除屏蔽之前 %1$s将不能联系您。</string>
+  <string name="unblock_contact_dialog_title">解除屏蔽%1$s?</string>
+  <string name="unblock_contact_dialog_message">%1$s将能够再次联系您。</string>
+  <string name="unblock_contact_completed">已解除屏蔽 %1$s。</string>
   <string name="conversation_syncing">正在从对等端下载对话</string>
   <string name="conversation_blocked">此联系人已屏蔽。</string>
   <string name="conversation_ended">对话中止</string>
