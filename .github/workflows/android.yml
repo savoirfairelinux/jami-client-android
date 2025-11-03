@@ -21,9 +21,16 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
         with:
-          api-levels: 33
-          cmake: false
-          ndk: false
+          # можно явно указать версию cmdline-tools (или "latest")
+          cmdline-tools-version: "latest"
+          # список пакетов, которые нужно установить
+          packages: |
+            platform-tools
+            platforms;android-33
+            build-tools;33.0.2
+          # автоматически принять лицензионные соглашения
+          accept-android-sdk-licenses: true
+
 
       - name: Grant Gradle permission
         run: chmod +x ./gradlew
