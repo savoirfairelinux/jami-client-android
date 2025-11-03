@@ -1,0 +1,111 @@
+name: Build Jami Android (manual SDK install, fixed env)
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # безопасно указываем версии (строки)
+    env:
+      ANDROID_CMDLINE_TOOLS_VERSION: "109.0.0"
+      ANDROID_API: "33"
+      BUILD_TOOLS_VERSION: "33.0.2"
+      NDK_VERSION: "23.1.7779620"
+      CMAKE_VERSION: "3.22.1"
+      # используем github.workspace, а не runner.home
+      ANDROID_SDK_ROOT: ${{ github.workspace }}/android-sdk
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Install prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y unzip wget libc6-dev build-essential pkg-config
+
+      - name: Prepare Android SDK dirs
+        run: |
+          mkdir -p "${ANDROID_SDK_ROOT}"
+          mkdir -p "${ANDROID_SDK_ROOT}/cmdline-tools"
+          echo "ANDROID_SDK_ROOT = ${ANDROID_SDK_ROOT}"
+        shell: bash
+
+      - name: Download Android command line tools
+        run: |
+          CMD_ZIP="/tmp/commandlinetools.zip"
+          # Попытка скачать по версии, если не доступно — попытается latest
+          wget -q -O "${CMD_ZIP}" "https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_CMDLINE_TOOLS_VERSION}_latest.zip" || \
+            wget -q -O "${CMD_ZIP}" "https://dl.google.com/android/repository/commandlinetools-linux-latest.zip"
+          unzip -q "${CMD_ZIP}" -d "${ANDROID_SDK_ROOT}/cmdline-tools-temp"
+          mkdir -p "${ANDROID_SDK_ROOT}/cmdline-tools/latest"
+          mv "${ANDROID_SDK_ROOT}/cmdline-tools-temp"/cmdline-tools/* "${ANDROID_SDK_ROOT}/cmdline-tools/latest/" || true
+          rm -rf "${ANDROID_SDK_ROOT}/cmdline-tools-temp" "${CMD_ZIP}"
+        shell: bash
+
+      - name: Add sdkmanager to PATH and accept licenses
+        run: |
+          export PATH="${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
+          yes | "${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager" --sdk_root="${ANDROID_SDK_ROOT}" --licenses
+        shell: bash
+
+      - name: Install Android SDK packages
+        run: |
+          export PATH="${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
+          "${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager" --sdk_root="${ANDROID_SDK_ROOT}" "platform-tools" \
+            "platforms;android-${ANDROID_API}" \
+            "build-tools;${BUILD_TOOLS_VERSION}" \
+            "tools" \
+            "ndk;${NDK_VERSION}" \
+            "cmake;${CMAKE_VERSION}" || true
+          "${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager" --sdk_root="${ANDROID_SDK_ROOT}" --list_installed || true
+        shell: bash
+
+      - name: Export Android env vars for subsequent steps
+        run: |
+          echo "ANDROID_SDK_ROOT=${ANDROID_SDK_ROOT}" >> $GITHUB_ENV
+          echo "ANDROID_HOME=${ANDROID_SDK_ROOT}" >> $GITHUB_ENV
+          echo "PATH=${ANDROID_SDK_ROOT}/platform-tools:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${PATH}" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Grant gradlew execute permission
+        run: chmod +x ./gradlew
+
+      - name: Show Gradle and environment info
+        run: |
+          echo "JAVA_HOME=$JAVA_HOME"
+          java -version || true
+          echo "Gradle wrapper version:"
+          ./gradlew --version || true
+
+      - name: Build debug APK (module autodetect)
+        run: |
+          # Попытаемся собрать популярные конфигурации модулей
+          if [ -f "./jami-android/gradlew" ] || [ -d "./jami-android" ]; then
+            ./gradlew :jami-android:assembleDebug --no-daemon || ./gradlew :app:assembleDebug --no-daemon || ./gradlew assembleDebug --no-daemon
+          else
+            ./gradlew :app:assembleDebug --no-daemon || ./gradlew assembleDebug --no-daemon
+          fi
+        timeout-minutes: 30
+        shell: bash
+
+      - name: List APKs
+        run: find . -type f -name "*.apk" -print || true
+        shell: bash
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: jami-debug
+          path: |
+            **/build/outputs/**/*.apk
