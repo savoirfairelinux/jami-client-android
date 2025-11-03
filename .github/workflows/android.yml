@@ -1,9 +1,17 @@
-name: Build Jami Android
+name: Build Jami Android (manual SDK install)
 
 on:
   push:
     branches: [ main ]
   workflow_dispatch:
+
+env:
+  ANDROID_SDK_ROOT: ${{ runner.home }}/android-sdk  # можно изменить
+  ANDROID_CMDLINE_TOOLS_VERSION: "109.0.0"          # версия commandline-tools, можно обновить
+  ANDROID_API: "33"                                 # compile/target API
+  BUILD_TOOLS_VERSION: "33.0.2"                     # build-tools
+  NDK_VERSION: "23.1.7779620"                       # если нужен NDK (пример)
+  CMAKE_VERSION: "3.22.1"                           # если нужен CMake (пример)
 
 jobs:
   build:
@@ -12,34 +20,97 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Set up Java
+      - name: Set up Java 17
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: temurin
+          java-version: 17
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-        with:
-          # можно явно указать версию cmdline-tools (или "latest")
-          cmdline-tools-version: "latest"
-          # список пакетов, которые нужно установить
-          packages: |
-            platform-tools
-            platforms;android-33
-            build-tools;33.0.2
-          # автоматически принять лицензионные соглашения
-          accept-android-sdk-licenses: true
+      - name: Install prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y unzip wget libc6-dev build-essential pkg-config
+          # ensure JAVA_HOME is available (actions/setup-java sets it)
+      - name: Prepare Android SDK dirs
+        run: |
+          mkdir -p "${ANDROID_SDK_ROOT}"
+          mkdir -p "${ANDROID_SDK_ROOT}/cmdline-tools"
+          echo "ANDROID_SDK_ROOT = ${ANDROID_SDK_ROOT}"
+        shell: bash
 
+      - name: Download Android command line tools
+        run: |
+          # choose a commandlinetools archive URL appropriate for linux
+          # if the URL becomes outdated update the link to latest available on Google's site
+          CMD_ZIP="/tmp/commandlinetools.zip"
+          wget -q -O "${CMD_ZIP}" "https://dl.google.com/android/repository/commandlinetools-linux-${{ env.ANDROID_CMDLINE_TOOLS_VERSION }}_latest.zip" || \
+            wget -q -O "${CMD_ZIP}" "https://dl.google.com/android/repository/commandlinetools-linux-latest.zip"
+          unzip -q "${CMD_ZIP}" -d "${ANDROID_SDK_ROOT}/cmdline-tools-temp"
+          # move into expected dir structure: $ANDROID_SDK_ROOT/cmdline-tools/latest
+          mkdir -p "${ANDROID_SDK_ROOT}/cmdline-tools/latest"
+          mv "${ANDROID_SDK_ROOT}/cmdline-tools-temp"/cmdline-tools/* "${ANDROID_SDK_ROOT}/cmdline-tools/latest/" || true
+          rm -rf "${ANDROID_SDK_ROOT}/cmdline-tools-temp" "${CMD_ZIP}"
+        shell: bash
 
-      - name: Grant Gradle permission
+      - name: Add sdkmanager to PATH and accept licenses
+        run: |
+          export PATH="${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
+          yes | sdkmanager --licenses
+        env:
+          ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT }}
+        shell: bash
+
+      - name: Install Android SDK packages (platform-tools, platforms, build-tools, ndk, cmake)
+        run: |
+          export PATH="${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
+          sdkmanager --sdk_root="${ANDROID_SDK_ROOT}" "platform-tools" \
+            "platforms;android-${{ env.ANDROID_API }}" \
+            "build-tools;${{ env.BUILD_TOOLS_VERSION }}" \
+            "tools" \
+            "ndk;${{ env.NDK_VERSION }}" \
+            "cmake;${{ env.CMAKE_VERSION }}" || true
+
+          echo "Installed packages:"
+          sdkmanager --sdk_root="${ANDROID_SDK_ROOT}" --list_installed || true
+        env:
+          ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT }}
+        shell: bash
+
+      - name: Export Android env vars for subsequent steps
+        run: |
+          echo "ANDROID_SDK_ROOT=${ANDROID_SDK_ROOT}" >> $GITHUB_ENV
+          echo "ANDROID_HOME=${ANDROID_SDK_ROOT}" >> $GITHUB_ENV
+          echo "PATH=${ANDROID_SDK_ROOT}/platform-tools:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${PATH}" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Grant gradlew execute permission
         run: chmod +x ./gradlew
 
-      - name: Build APK
-        run: ./gradlew assembleDebug --no-daemon
+      - name: Show Gradle and environment info
+        run: |
+          echo "JAVA_HOME=$JAVA_HOME"
+          java -version || true
+          echo "Gradle wrapper version:"
+          ./gradlew --version
 
-      - name: Upload APK
+      - name: Build debug APK (module autodetect)
+        run: |
+          # Try common module locations in order; adapt if your repo layout differs
+          if [ -f "./jami-android/gradlew" ] || [ -d "./jami-android" ]; then
+            echo "Detected module jami-android"
+            ./gradlew :jami-android:assembleDebug --no-daemon || ./gradlew :app:assembleDebug --no-daemon || ./gradlew assembleDebug --no-daemon
+          else
+            ./gradlew :app:assembleDebug --no-daemon || ./gradlew assembleDebug --no-daemon
+          fi
+        timeout-minutes: 30
+
+      - name: List APKs
+        run: |
+          find . -type f -name "*.apk" -print || true
+
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: jami-debug
-          path: jami-android/app/build/outputs/apk/debug/*.apk
+          path: |
+            **/build/outputs/**/*.apk
