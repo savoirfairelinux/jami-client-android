@@ -1,19 +1,20 @@
 /*
- *  Copyright (C) 2004-2025 Savoir-faire Linux Inc.
+ * Copyright (C) 2004-2025 Savoir-faire Linux Inc.
  *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program. If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
+
 package net.jami.model
 
 import io.reactivex.rxjava3.core.Observable
@@ -105,7 +106,7 @@ class Call(
     }
 
     fun setDetails(details: Map<String, String>) {
-        isPeerHolding = details[KEY_PEER_HOLDING].toBoolean()
+        isPeerHolding = details[KEY_PEER_HOLD].toBoolean()
         isAudioMuted = details[KEY_AUDIO_MUTED].toBoolean()
         isVideoMuted = details[KEY_VIDEO_MUTED].toBoolean()
         audioCodec = details[KEY_AUDIO_CODEC]
@@ -156,12 +157,12 @@ class Call(
     }
 
     enum class CallStatus {
-        NONE, SEARCHING, CONNECTING, RINGING, CURRENT, HUNGUP, BUSY, FAILURE, HOLD, UNHOLD, INACTIVE, OVER;
+        NONE, SEARCHING, CONNECTING, RINGING, CURRENT, HUNGUP, BUSY, FAILURE, HOLD, RESUME, INACTIVE, OVER;
 
         val isRinging: Boolean
             get() = this == CONNECTING || this == RINGING || this == NONE || this == SEARCHING
         val isOnGoing: Boolean
-            get() = this == CURRENT || this == HOLD || this == UNHOLD
+            get() = this == CURRENT || this == HOLD || this == RESUME
         val isOver: Boolean
             get() = this == HUNGUP || this == BUSY || this == FAILURE || this == OVER
 
@@ -176,7 +177,7 @@ class Call(
                     "BUSY" -> BUSY
                     "FAILURE" -> FAILURE
                     "HOLD" -> HOLD
-                    "UNHOLD" -> UNHOLD
+                    "RESUME" -> RESUME
                     "INACTIVE" -> INACTIVE
                     "OVER" -> OVER
                     "NONE" -> NONE
@@ -211,7 +212,7 @@ class Call(
         const val KEY_CALL_TYPE = "CALL_TYPE"
         const val KEY_CALL_STATE = "CALL_STATE"
         const val KEY_PEER_NUMBER = "PEER_NUMBER"
-        const val KEY_PEER_HOLDING = "PEER_HOLDING"
+        const val KEY_PEER_HOLD = "PEER_HOLD"
         const val KEY_AUDIO_MUTED = "AUDIO_MUTED"
         const val KEY_VIDEO_MUTED = "VIDEO_MUTED"
         const val KEY_AUDIO_CODEC = "AUDIO_CODEC"
