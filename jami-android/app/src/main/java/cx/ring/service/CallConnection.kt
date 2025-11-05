@@ -1,19 +1,20 @@
 /*
- *  Copyright (C) 2004-2025 Savoir-faire Linux Inc.
+ * Copyright (C) 2004-2025 Savoir-faire Linux Inc.
  *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program. If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
+
 package cx.ring.service
 
 import android.telecom.CallAudioState
@@ -78,7 +79,7 @@ class CallConnection(
                         when (status) {
                             CallStatus.RINGING -> if (call.isIncoming) setRinging() else setDialing()
                             CallStatus.CURRENT -> setActive()
-                            CallStatus.HOLD -> setOnHold()
+                            CallStatus.HOLD -> setHold()
                             CallStatus.INACTIVE -> setDisconnected(DisconnectCause(DisconnectCause.LOCAL))
                             CallStatus.FAILURE -> setDisconnected(DisconnectCause(DisconnectCause.ERROR))
                             CallStatus.BUSY,
@@ -126,10 +127,10 @@ class CallConnection(
         service.callService.hold(call)
     }
 
-    override fun onUnhold() {
-        Log.w(TAG, "onUnhold")
+    override fun onResume() {
+        Log.w(TAG, "onResume")
         val call = call ?: return
-        service.callService.unhold(call)
+        service.callService.resume(call)
     }
 
     override fun onSilence() {
