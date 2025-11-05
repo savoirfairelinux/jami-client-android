@@ -1,19 +1,20 @@
 /*
- *  Copyright (C) 2004-2025 Savoir-faire Linux Inc.
+ * Copyright (C) 2004-2025 Savoir-faire Linux Inc.
  *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program. If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
+
 package net.jami.services
 
 import io.reactivex.rxjava3.core.Completable
@@ -331,11 +332,11 @@ abstract class CallService(
         else
             holdConference(conf.accountId, conf.id)
     }
-    fun unholdCallOrConference(conf: Conference) {
+    fun resumeCallOrConference(conf: Conference) {
         if (conf.isSimpleCall)
-            unhold(conf.accountId, conf.id)
+            resume(conf.accountId, conf.id)
         else
-            unholdConference(conf.accountId, conf.id)
+            resumeConference(conf.accountId, conf.id)
     }
 
     fun hold(call: Call) {
@@ -353,18 +354,18 @@ abstract class CallService(
         }
     }
 
-    fun unhold(call: Call) {
+    fun resume(call: Call) {
         if (call.id != null) {
-            unhold(call.account, call.id)
+            resume(call.account, call.id)
         } else if (call.confId != null) {
-            unholdConference(call.account, call.confId!!)
+            resumeConference(call.account, call.confId!!)
         }
     }
 
-    fun unhold(accountId:String, callId: String) {
+    fun resume(accountId:String, callId: String) {
         mExecutor.execute {
-            Log.i(TAG, "unhold() running… $callId")
-            JamiService.unhold(accountId, callId)
+            Log.i(TAG, "resume() running… $callId")
+            JamiService.resume(accountId, callId)
         }
     }
 
@@ -725,8 +726,8 @@ abstract class CallService(
         mExecutor.execute { JamiService.holdConference(accountId, confId) }
     }
 
-    fun unholdConference(accountId: String, confId: String) {
-        mExecutor.execute { JamiService.unholdConference(accountId, confId) }
+    fun resumeConference(accountId: String, confId: String) {
+        mExecutor.execute { JamiService.resumeConference(accountId, confId) }
     }
 
     private fun getConference(call: Call): Conference = addConference(call)
