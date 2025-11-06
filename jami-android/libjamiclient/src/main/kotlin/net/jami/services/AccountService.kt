@@ -444,7 +444,7 @@ class AccountService(
 
 
     fun loadMore(conversation: Conversation, n: Int = 32): Single<Conversation> {
-        synchronized(conversation) {
+        synchronized(conversation.loadingLock()) {
             val mode = conversation.mode.blockingFirst()
             if (mode == Conversation.Mode.Syncing || mode == Conversation.Mode.Request) {
                 Log.w(TAG, "loadMore: conversation is syncing")

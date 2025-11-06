@@ -249,7 +249,7 @@ class ConversationFacade(
      * @return a conversation single
      */
     fun loadConversationHistory(conversation: Conversation): Single<Conversation> {
-        synchronized(conversation) {
+        synchronized(conversation.loadingLock()) {
             if ((!conversation.isSwarm && conversation.id == null) || (conversation.isSwarm && conversation.mode.blockingFirst() == Conversation.Mode.Request)) {
                 return Single.just(conversation)
             }

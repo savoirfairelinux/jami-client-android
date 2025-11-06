@@ -840,6 +840,11 @@ class Conversation : ConversationHistory {
     fun setActiveCalls(activeCalls: List<ActiveCall>) =
         activeCallsSubject.onNext(activeCalls)
 
+    /**
+     * Return the lock object used to synchronize loading
+     */
+    fun loadingLock(): Any = lastElementLoadedSubject
+
     private val conferenceStarted: MutableMap<String, CallHistory> = HashMap()
     private val conferenceEnded: MutableMap<String, CallHistory> = HashMap()
 
