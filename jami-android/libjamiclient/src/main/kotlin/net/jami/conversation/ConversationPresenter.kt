@@ -322,11 +322,13 @@ class ConversationPresenter @Inject constructor(
     }
 
     fun acceptFile(transfer: DataTransfer) {
-        view?.acceptFile(mConversation!!.accountId, mConversationUri!!, transfer)
+        val conversation = mConversation ?: return
+        view?.acceptFile(conversation.accountId, mConversationUri ?: conversation.uri, transfer)
     }
 
     fun goToGroupCall(media: Boolean) {
-        view?.goToGroupCall(mConversation!!, mConversation!!.uri, media)
+        val conversation = mConversation ?: return
+        view?.goToGroupCall(conversation, conversation.uri, media)
     }
 
     fun goToSwarmCall(callHistory: CallHistory, withVideo: Boolean) {
@@ -339,12 +341,14 @@ class ConversationPresenter @Inject constructor(
     }
 
     fun deleteConversationItem(element: Interaction) {
-        conversationFacade.deleteConversationItem(mConversation!!, element)
+        val conversation = mConversation ?: return
+        conversationFacade.deleteConversationItem(conversation, element)
     }
 
     fun deleteConversationFile(element: Interaction) {
+        val conversation = mConversation ?: return
         if (element is DataTransfer)
-            conversationFacade.deleteConversationFile(mConversation!!, element)
+            conversationFacade.deleteConversationFile(conversation, element)
     }
 
     fun startReplyTo(interaction: Interaction) {
