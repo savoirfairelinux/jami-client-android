@@ -155,11 +155,11 @@ class AccountService(
                 if (obj.size() < 2) return@flatMapMaybe Maybe.empty<Location>()
                 Maybe.just(Location(msg.accountId, msg.callId, Uri.fromId(msg.author), obj["time"].asLong).apply {
                     val t = obj["type"]
-                    if (t == null || t.asString.lowercase() == Location.Type.Position.toString().lowercase()) {
+                    if (t == null || t.asString.equals(Location.Type.Position.toString(), ignoreCase = true)) {
                         type = Location.Type.Position
                         latitude = obj["lat"].asDouble
                         longitude = obj["long"].asDouble
-                    } else if (t.asString.lowercase() == Location.Type.Stop.toString().lowercase()) {
+                    } else if (t.asString.equals(Location.Type.Stop.toString(), ignoreCase = true)) {
                         type = Location.Type.Stop
                     }
                 })
@@ -991,11 +991,11 @@ class AccountService(
     }
 
     fun setPushNotificationToken(pushNotificationToken: String) {
-        Log.i(TAG, "setPushNotificationToken()");
+        Log.i(TAG, "setPushNotificationToken()")
         mExecutor.execute { JamiService.setPushNotificationToken(pushNotificationToken) }
     }
     fun setPushNotificationConfig(token: String = "", topic: String = "", platform: String = "") {
-        Log.i(TAG, "setPushNotificationConfig() $token $topic $platform");
+        Log.i(TAG, "setPushNotificationConfig() $token $topic $platform")
         mExecutor.execute { JamiService.setPushNotificationConfig(StringMap().apply {
             put("token", token)
             put("topic", topic)
@@ -1582,7 +1582,7 @@ class AccountService(
         )
         override fun run() {
             synchronized(toUpdate) {
-                if (toUpdate.transferStatus == Interaction.TransferStatus.TRANSFER_ONGOING) {
+                if (toUpdate.transferStatus == TransferStatus.TRANSFER_ONGOING) {
                     dataTransferEvent(account, conversation, toUpdate.messageId, toUpdate.fileId!!, 5)
                 } else {
                     scheduledTask.cancel(false)
@@ -1616,7 +1616,7 @@ class AccountService(
             transfer.transferStatus = transferStatus
             transfer.bytesProgress = progress
             if (oldState != transferStatus) {
-                if (transferStatus == Interaction.TransferStatus.TRANSFER_ONGOING) {
+                if (transferStatus == TransferStatus.TRANSFER_ONGOING) {
                     DataTransferRefreshTask(account, conversation, transfer)
                 } else if (transferStatus.isError) {
                     if (!transfer.isOutgoing) {
