@@ -460,10 +460,17 @@
   <string name="install_error">Si è verificato un errore durante l\'importazione dell\'estensione.</string>
   <string name="export_side_main_title">Esporta account</string>
   <string name="import_side_main_title">Importa account</string>
+  <string name="link_device_dialog_stop_import_body">L\'interruzione annullerà l\'operazione di importazione dell\'account.</string>
+  <string name="export_side_step1_error_malformed">Identificativo del nuovo dispositivo non riconosciuto. Seguire le istruzioni sopra riportate.</string>
   <string name="export_side_step1_code_connect">Connetti</string>
+  <string name="export_side_step2_ip_only">Nuovo indirizzo IP del dispositivo: %1$s</string>
   <string name="export_side_step2_cancel">Annulla</string>
   <string name="export_side_step2_confirm">Conferma</string>
+  <string name="export_side_step3_body_done">L\'account è stato importato correttamente nel nuovo dispositivo.</string>
   <string name="import_side_step1_share">Condividi</string>
   <string name="import_side_step2_password_import">Importa</string>
+  <string name="import_side_step2_action_required">Azione richiesta. Conferma l\'account sul dispositivo sorgente.</string>
   <string name="import_side_step3_body_done">L\'account è stato importato correttamente.</string>
+  <string name="link_device_error_authentication">Si è verificato un errore di autenticazione durante l\'associazione del dispositivo. Controllare le credenziali e riprovare.</string>
+  <string name="link_device_error_canceled">L\'operazione è stata annullata dal utente.</string>
 </resources>

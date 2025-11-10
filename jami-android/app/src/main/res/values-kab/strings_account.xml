@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account edition screen-->
+  <!--Strings related to account creation-->
+  <string name="action_settings">Iɣewwaṛen</string>
+  <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_message">Ur tezmireḍ ara ad tesfesxeḍ tigawt-agi.</string>
+  <!--AccountManagementFragment-->
+  <!--Basic Details-->
+  <!--Extension Details-->
+  <!--Audio Details-->
+  <string name="account_preferences_media_tab">Amidya</string>
+  <!--Video Details-->
+  <!--Advanced Details-->
+  <!--Security Details-->
+  <!--SRTP Details-->
+  <!--SIP-->
+  <!--TLS Details-->
+  <!--restore/backup-->
+  <!--TV-->
+  <string name="account_tv_about"> Ɣef Jami</string>
+  <string name="tv_about_version">Leqqem</string>
+  <string name="tv_about_license">Turagt</string>
+  <string name="tv_about_credits">Ismaden</string>
+  <!--Name registration-->
+  <string name="account_status_error">Tuccḍa</string>
+  <!--Create account-->
+  <!--Edit profile-->
+  <!--Devices-->
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Amasal-agi ur yettusefrak ara</string>
+  <!--Biometry-->
+</resources>

@@ -1,0 +1,189 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="submit_issue_title">Azen ugur</string>
+  <string name="section_license">Turagt</string>
+  <string name="sponsor_section">Jami d aseɣẓan ilelli yettwasneflin yerna yettusefrak sɣur</string>
+  <string name="copyright_section">Izerfan n umeskar</string>
+  <string name="contribute_section"> Ttekki </string>
+  <string name="version_section">Leqem</string>
+  <string name="no_browser_app_installed">Ulac asnas n iminig, sebded yiwen i uskan n usebter-agi.</string>
+  <string name="website_chooser_title">Ẓer asmel web s useqdec n...</string>
+  <string name="license">Aseɣẓan-a ttaken-t-id \"am akken yella\", war aḍman. I ttfaṣil, ẓer<u> alqem amatu n Turagt tazayezt n GNU 3 neɣ syin d asawen</u></string>
+  <string name="description">Jami d aseɣẓan ilelli i teywalt tameɣraḍant yettqadaren tilelliyin d tbaḍnit n yiseqdacen-is.</string>
+  <string name="credits">Ismaden</string>
+  <string name="pip_title">Asarag n Jami</string>
+  <string name="call_service_description">Ameẓlu-a yettwasra akken ad yeǧǧ tiɣra-nnek tettuddu deg uɣawas amezwaru. iteddu kan mi ara llint tiɣriwin.</string>
+  <string name="data_transfer_service_description">Ameẓlu-a yettwasra akken ad d-yesken ilɣa yezgan deg usiweḍ n yifuyla. Iteddu kan deg usiweḍ n yifuyla.</string>
+  <!--About dialog-->
+  <string name="thank_note">Nebɣa ad nesnemmer imttekkiyen-nneɣ, s ussisen-nsen ɣef teɣzi n waṭas n yiseggasen, i d-yesbedden aseɣẓan-a akken yella.</string>
+  <string name="developers">Ineflayen</string>
+  <string name="media">Amidya</string>
+  <string name="community_management">Asefrek n tmezdagnut</string>
+  <string name="special_thanks"> Tanemmirt tameqqrant i</string>
+  <string name="end_note">Wagi d umuɣ n yimdanen i ixedmen asefti s wazal-is deg wakud, s yigmaḍ iggarzen, ɣer Jami. Wid yettekkan am wi ay yebɣan ad rnun ɣer wumuɣ-nni, yessefk ad ssiwlen ɣer teɣlamt n Jami deg contact@jami.net.</string>
+  <!--RingActivity-->
+  <string name="error_no_network">Ulac tuqqna n uẓeṭṭa</string>
+  <string name="error_account_offline">Amiḍan ur yeqqin ara </string>
+  <!--AB menus-->
+  <string name="ab_action_chat">Izen n uḍris</string>
+  <!--Sections-->
+  <string name="menu_item_contact_request">Issutren n unermis</string>
+  <string name="menu_item_accounts">Sefrek imiḍanen</string>
+  <string name="menu_item_account">Sefrek amiḍan</string>
+  <string name="menu_item_settings">Iɣewwaṛen</string>
+  <string name="menu_item_app_settings">Iɣewwaṛen n usnas</string>
+  <string name="menu_item_account_settings">Iɣewwaṛen n umiḍan</string>
+  <string name="menu_item_extension_list">Iɣewwaṛen n yisiɣzaf</string>
+  <string name="menu_item_share">Bḍu amiḍan-iw</string>
+  <string name="menu_item_about"> Ɣef Jami</string>
+  <string name="video_setting_title">Iɣewwaṛen n tvidyut</string>
+  <!--Dialing Fragment-->
+  <string name="dial_number">Uṭṭun n udiwenni</string>
+  <!--History Fragment-->
+  <!--Home Fragment-->
+  <string name="invitation_card_title">Ttwaṭṭfent-d tinnubga</string>
+  <!--ContactList Fragment-->
+  <string name="searchbar_hint">Nadi isem neɣ adiwenni...</string>
+  <string name="choose_number">Fren uṭṭun</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <string name="notif_missed_incoming_call">Tiɣri n unekcum tettwazgel</string>
+  <string name="notif_missed_outgoing_call">Tiɣri tuffiɣt tettwazgel</string>
+  <string name="notif_incoming_call_title">Tiɣri i d-ikecmen seg %1$s</string>
+  <string name="notif_incoming_call">Tiɣri i d-ikecmen</string>
+  <string name="notif_outgoing_call_title">Tiɣri yeffɣen ɣer %1$s</string>
+  <string name="notif_outgoing_call">Tiɣri yeffɣen </string>
+  <string name="notif_current_call_title">Tiɣri tetteddu d %1$s</string>
+  <string name="notif_current_call">Tiɣri iteddun</string>
+  <string name="notif_channel_call_in_progress">Tiɣri deg tikli</string>
+  <string name="notif_channel_calls">tiɣriwin</string>
+  <string name="notif_channel_missed_calls">Tiɣriwin yettwazeglen </string>
+  <string name="notif_channel_incoming_calls">Tiɣriwin i d-ikeččmen</string>
+  <string name="notif_channel_messages">Iznan</string>
+  <string name="notif_channel_requests">Isutren</string>
+  <string name="notif_channel_file_transfer">Asiweḍ n ufaylu</string>
+  <string name="notif_channel_sync">Mtawi n yisefka</string>
+  <string name="notif_channel_background_service">Tanfa n ugilal</string>
+  <string name="notif_channel_background_service_descr">Sireg tuṭṭfa n tiɣriwin d yiznan deg yal akud.</string>
+  <string name="notif_group_calls">Tiɣriwin</string>
+  <string name="notif_inprogress_group_call">Tiɣri deg tikli</string>
+  <string name="notif_background_service">Jami iteddu akka tura deg ugilal</string>
+  <string name="notif_mark_as_read">Creḍ amzun yettwaɣra</string>
+  <string name="notif_dismiss">Agi</string>
+  <string name="notif_reply">Err</string>
+  <string name="notif_incoming_file_transfer_title">Afaylu i d-ikeččmen seg %1$s</string>
+  <string name="notif_outgoing_file_transfer_title">Azen n ufaylu ɣer %1$s</string>
+  <string name="notif_incoming_picture">Tugna seg %1$s</string>
+  <string name="notif_sync_title">Amtawi n yisefka...</string>
+  <string name="notif_location_title">Bḍu adig akked %1$s</string>
+  <string name="location_share_contact">%1$s yebḍa yid-k adeg</string>
+  <string name="notif_location_multi_title">Bḍu adig akked %1$d n yinermisen</string>
+  <string name="notif_location_remaining">%1$d n tesdatin i d-yeqqimen</string>
+  <string name="notif_location_action_stop">Ḥbes abḍu n wadig</string>
+  <string name="location_share_action_start">Bdu abḍu</string>
+  <string name="location_share_action_stop">Ḥbes abḍu</string>
+  <string name="location_share_about_title">Talɣut ɣef tkarḍa</string>
+  <!--Call Fragment-->
+  <string name="you_txt_prefix">Kečč:</string>
+  <string name="action_call_hangup">Senser</string>
+  <string name="action_call_maximize">Semɣer</string>
+  <string name="action_call_minimize">Senqes</string>
+  <string name="action_call_mute"> Sgugem</string>
+  <string name="action_call_unmute">Kkes agugem </string>
+  <string name="ongoing_call">Tiɣri iteddun</string>
+  <string name="hist_in_call">Tiɣri i d-ikecmen n %1$s</string>
+  <string name="hist_out_call">Tiɣri yeffɣen n %1$s</string>
+  <string name="call_duration">Yeqqim %s</string>
+  <string name="start_error_title">Ur izmir ara ad isker jami</string>
+  <string name="action_call_accept">Qbel tiɣri</string>
+  <string name="action_call_accept_audio">Qbel s umeslaw</string>
+  <string name="action_call_accept_video">Qbel s tvidyut</string>
+  <string name="action_call_hold_accept">Qbel tiɣri i d-ikeččmen s ṣṣut kan u sbedd deg laɛḍil tiɣri tamirant</string>
+  <string name="action_call_hold_accept_video">Qbel tiɣri i d-ikeččmen s tviduyt kan u sbedd deg laɛḍil tiɣri tamirant</string>
+  <string name="action_call_end_accept">Qbel tiɣri i d-ikeččmen u fakk tiɣri n tamirant</string>
+  <string name="action_call_decline">Agi</string>
+  <string name="action_call_mic_mute">Sgugem amikrufun</string>
+  <string name="action_load_extension">Sali asiɣzef</string>
+  <string name="ab_action_speakerphone">Rmed amsawal</string>
+  <string name="ab_action_contact_add">Rnu ɣer inermisen</string>
+  <string name="ab_action_contact_add_question">Rnu ɣer inermisen? </string>
+  <string name="ab_action_audio_call">Bdu tiɣri s ṣṣut</string>
+  <string name="ab_action_video_call">Bdu tiɣri s tvidyut</string>
+  <string name="ab_action_change_screen_orientation">Beddel lewhi n ugdil</string>
+  <string name="share_via">Bḍu s </string>
+  <string name="write_a_message">Aru izen</string>
+  <string name="scan_qr">Ḍumm tangalt QR</string>
+  <string name="qr_code">Tangalt QR</string>
+  <string name="qr_code_not_contact">Mačči d tangalt QR n Jami</string>
+  <string name="new_group">Rnu agraw amaynut</string>
+  <string name="ab_action_flipcamera">Zzi takamirat</string>
+  <string name="ab_action_hidepreview">Ffer taskant</string>
+  <string name="remote_recording">%s Usekles...</string>
+  <!--Text messages-->
+  <string name="send_message">Azen izen</string>
+  <string name="message_sending"> Tuzna n yizen</string>
+  <string name="message_failed">Ur yeddi ara</string>
+  <string name="time_just_now">Tura kan</string>
+  <string name="send_file">Azen afaylu</string>
+  <string name="select_media">Ldi timidelt</string>
+  <string name="hist_file_sent">Afaylu yettwazen</string>
+  <string name="hist_file_received">Afaylu yettwarmes</string>
+  <string name="conversation_send_audio">Asekles n uklip ameslaw</string>
+  <string name="conversation_send_video">Asekles n uklip avidyu</string>
+  <string name="conversation_share_location">Bḍu adig</string>
+  <string name="ongoing_group_call">Tiɣri iteddun</string>
+  <string name="started_call">Tebda teɣri</string>
+  <string name="in_reply_to">D tririt i </string>
+  <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">Tasiregt takamirat</string>
+  <string name="permission_dialog_camera_message">Adiwenni n teẓrit yesra tasiregt n tkamra. Tasiregt n tkamra tensa. Rmed-itt deg yiɣewwaren n yibenk akken ad tesqedceḍ tamahilt-a.</string>
+  <string name="camera_error">Teḍra-d tuccḍa deg usenker n tkamirat</string>
+  <!--Ringtone activity-->
+  <string name="ringtone_error_title">Tuccḍa</string>
+  <string name="ringtone_error_format_not_supported">Amasal-agi ur yettusefrak ara</string>
+  <string name="ringtone_error_size_too_big">Afaylu-a meqqer aṭas. Tiddit tafellayt d %1$d yibitin.</string>
+  <string name="ringtone_custom_prompt">Sbedd taṭenṭant tudmawant</string>
+  <string name="ringtone_custom_label">Tudmawant</string>
+  <string name="ringtone_jami_tones">Tiṭenṭanin n Jami</string>
+  <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jami yesra asireg “ ɣer inermisen ”. Rmed-it deg yiɣewwaren n yibenk akken ad tesqedceḍ tamahilt-a. </string>
+  <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jami yesra asiregt \"Aru aɣmis n usiwel\". Rmed-it deg yiɣewwaren n yibenk akken ad tesqedceḍ tamahilt-a. </string>
+  <!--QRCode Scan-->
+  <string name="scan_qr_account_message">Ḍumm tangalt QR n umiḍan i tebɣiḍ ad ternuḍ.</string>
+  <string name="title_activity_qrcode">Bḍu amiḍan-iw</string>
+  <string name="tab_code">Tangalt-iw</string>
+  <string name="tab_scan">Ḍumm tangalt</string>
+  <!--Settings-->
+  <string name="clear_history_dialog_title">Sfeḍ amazray?</string>
+  <string name="clear_history_dialog_message">Ur tezmireḍ ara ad tesfesxeḍ tigawt-agi.</string>
+  <string name="clear_history_completed"> Amazray yettwasfeḍ.</string>
+  <string name="clear_history">Sfeḍ</string>
+  <!--Conversation-->
+  <string name="conversation_action_delete_this_message">Ur tezmireḍ ara ad tesfesxeḍ tigawt-agi.</string>
+  <string name="conversation_action_incoming_call">Tiɣri i d-ikecmen</string>
+  <string name="starting_camera_error">Teḍra-d tuccḍa deg usenker n tkamirat</string>
+  <!--Contacts-->
+  <!--Account summary-->
+  <!--Share fragment-->
+  <string name="generic_error_migration">Tuccḍa</string>
+  <!--Pending invitations-->
+  <string name="decline">Agwi</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
+  <!--File Transfer-->
+  <string name="menu_message_reply">Err</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
+  <!--Wizard-->
+  <!--Bottom sheet-->
+  <!--Swarm Details-->
+  <string name="tab_settings">Iɣewwaṛen</string>
+  <!--JamiId-->
+  <!--WelcomeJami-->
+  <!--Conversation details-->
+  <!--Donation-->
+  <!--Extension-->
+</resources>

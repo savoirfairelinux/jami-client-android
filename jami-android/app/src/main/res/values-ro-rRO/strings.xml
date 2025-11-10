@@ -182,12 +182,12 @@
   <string name="conversation_action_remove_this_title">Ștergi acest contact?</string>
   <string name="conversation_action_remove_this_message">Aceasta va șterge contactul și va elimina definitiv cronologia conversației.</string>
   <string name="conversation_action_add_this_message">Se va trimite o cerere de conectare.</string>
-  <string name="remove_conversation">Elimină conversația</string>
-  <string name="conversation_action_remove_title">Se elimină conversația?</string>
+  <string name="remove_conversation">Șterge conversația</string>
+  <string name="conversation_action_remove_title">Se șterge conversația?</string>
   <string name="conversation_action_remove_message">Aceasta va șterge conversația fără să elimine contactul.</string>
   <string name="swarm_group_action_leave">Părăsește grupul</string>
   <string name="swarm_group_action_leave_title">Părăsești acest grup?</string>
-  <string name="swarm_group_action_leave_message">Aceasta va elimina conversația din lista conversațiilor</string>
+  <string name="swarm_group_action_leave_message">Aceasta va șterge conversația din lista conversațiilor</string>
   <string name="conversation_action_copy_peer_number">Copiază identificatorul contactului</string>
   <string name="copied_to_clipboard">%1$s copiat în memorie.</string>
   <string name="conversation_action_select_peer_number">Alege un număr</string>
