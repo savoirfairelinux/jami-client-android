@@ -105,6 +105,7 @@ class Account(
         synchronized(conversations) {
             if (conversation.isSwarm) {
                 removeRequest(conversation.uri)
+                conversation.clearHistory(true)
                 swarmConversations[conversation.uri.rawRingId] = conversation
             }
             conversations[conversation.uri.uri] = conversation
