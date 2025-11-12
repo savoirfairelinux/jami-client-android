@@ -652,7 +652,6 @@ class Account(
                                 setConversationUri(request.conversationUri)
                         }
                         addContact(contact, MemberRole.ADMIN)
-                        addContactEvent(ContactEvent(accountId, contact, request))
                     }
                 else
                     getByKey(key)

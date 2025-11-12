@@ -346,16 +346,6 @@ class Conversation : ConversationHistory {
         updatedElementSubject.onNext(Pair(event, ElementStatus.ADD))
     }
 
-    fun addContactEvent(contact: Contact) {
-        addContactEvent(ContactEvent(accountId, contact))
-    }
-
-    fun addContactEvent(contactEvent: ContactEvent) {
-        mDirty = true
-        aggregateHistory.add(contactEvent)
-        updatedElementSubject.onNext(Pair(contactEvent, ElementStatus.ADD))
-    }
-
     fun addFileTransfer(dataTransfer: DataTransfer) {
         if (aggregateHistory.contains(dataTransfer)) {
             return
@@ -589,7 +579,6 @@ class Conversation : ConversationHistory {
         when (interaction.type) {
             Interaction.InteractionType.TEXT -> addTextMessage(TextMessage(interaction))
             Interaction.InteractionType.CALL -> addCall(CallHistory(interaction))
-            Interaction.InteractionType.CONTACT -> addContactEvent(ContactEvent(interaction))
             Interaction.InteractionType.DATA_TRANSFER -> addFileTransfer(DataTransfer(interaction))
             else -> {}
         }
