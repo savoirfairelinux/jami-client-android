@@ -352,6 +352,7 @@ class Conversation : ConversationHistory {
 
     fun addContactEvent(contactEvent: ContactEvent) {
         mDirty = true
+        if (isSwarm) contactEvent.setSwarmInfo(uri.rawRingId, uri.rawRingId, null)
         aggregateHistory.add(contactEvent)
         updatedElementSubject.onNext(Pair(contactEvent, ElementStatus.ADD))
     }
