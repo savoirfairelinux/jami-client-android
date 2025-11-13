@@ -1498,7 +1498,6 @@ class ConversationAdapter(
             }
         }
         val timestamp = TextUtils.timestampToTime(context, formatter, event.timestamp)
-
         if (interaction.isSwarm) {
             viewHolder.compositeDisposable.add(
                 presenter.contactService.observeContact(event.account!!, event.contact!!, false)
@@ -1510,12 +1509,13 @@ class ConversationAdapter(
                         ContactEvent.Event.REMOVED -> R.string.conversation_contact_left
                         ContactEvent.Event.BLOCKED -> R.string.conversation_contact_blocked
                         ContactEvent.Event.UNBLOCKED -> R.string.conversation_contact_unblocked
+                        ContactEvent.Event.INCOMING_REQUEST -> R.string.conversation_contact_incoming_request
                         else -> R.string.hist_contact_added
                     }, vm.displayName)
                     viewHolder.mMsgTxt?.text = "$eventString, $timestamp"
                 })
         } else {
-            val eventString = when (event.event) {
+            val eventString = context.getString(when (event.event) {
                 ContactEvent.Event.ADDED -> R.string.hist_contact_added
                 ContactEvent.Event.INVITED -> R.string.hist_contact_invited
                 ContactEvent.Event.REMOVED -> R.string.hist_contact_left
@@ -1523,7 +1523,7 @@ class ConversationAdapter(
                 ContactEvent.Event.UNBLOCKED -> R.string.hist_contact_unblocked
                 ContactEvent.Event.INCOMING_REQUEST -> R.string.hist_invitation_received
                 else -> R.string.hist_contact_added
-            }
+            })
             viewHolder.mMsgTxt?.text = "$eventString, $timestamp"
         }
     }

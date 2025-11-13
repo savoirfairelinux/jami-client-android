@@ -386,6 +386,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="conversation_contact_left">%1$s has left the conversation.</string>
     <string name="conversation_contact_blocked">%1$s was blocked from the conversation.</string>
     <string name="conversation_contact_unblocked">%1$s was unblocked from the conversation.</string>
+    <string name="conversation_contact_incoming_request">%1$s sent you a conversation invitation.</string>
     <string name="conversation_search_hint">Search conversation</string>
 
     <string name="audio_recorder_error">Audio recorder app was not found.</string>
