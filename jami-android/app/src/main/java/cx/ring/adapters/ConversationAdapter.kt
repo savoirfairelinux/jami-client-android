@@ -1515,7 +1515,7 @@ class ConversationAdapter(
                     viewHolder.mMsgTxt?.text = "$eventString, $timestamp"
                 })
         } else {
-            val eventString = when (event.event) {
+            val eventString = context.getString(when (event.event) {
                 ContactEvent.Event.ADDED -> R.string.hist_contact_added
                 ContactEvent.Event.INVITED -> R.string.hist_contact_invited
                 ContactEvent.Event.REMOVED -> R.string.hist_contact_left
@@ -1523,7 +1523,7 @@ class ConversationAdapter(
                 ContactEvent.Event.UNBLOCKED -> R.string.hist_contact_unblocked
                 ContactEvent.Event.INCOMING_REQUEST -> R.string.hist_invitation_received
                 else -> R.string.hist_contact_added
-            }
+            })
             viewHolder.mMsgTxt?.text = "$eventString, $timestamp"
         }
     }
