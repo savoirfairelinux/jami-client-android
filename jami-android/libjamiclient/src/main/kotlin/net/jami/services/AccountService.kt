@@ -1556,7 +1556,8 @@ class AccountService(
                 conversation.getMessage(messageId!!) as DataTransfer?
             else
                 account.getDataTransfer(fileId)
-            acceptFileTransfer(conversation, fileId, transfer!!)
+            if (transfer == null) return
+            acceptFileTransfer(conversation, fileId, transfer)
         }}
     }
 
