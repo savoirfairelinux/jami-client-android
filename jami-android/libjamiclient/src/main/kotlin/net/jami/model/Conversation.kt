@@ -83,6 +83,10 @@ class Conversation(
 
     val mode: Observable<Mode>
         get() = mMode
+
+    var requestMode: Mode? = null
+        internal set
+
     val isSwarm: Boolean
         get() = Uri.SWARM_SCHEME == uri.scheme
 
