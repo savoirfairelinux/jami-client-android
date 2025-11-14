@@ -129,7 +129,7 @@ dependencies {
 
     // Barcode scanning
     implementation("com.journeyapps:zxing-android-embedded:4.3.0") { isTransitive = false }
-    implementation ("com.google.zxing:core:3.5.3")
+    implementation ("com.google.zxing:core:3.5.4")
 
     // Dagger dependency injection
     implementation("com.google.dagger:hilt-android:$hilt_version")
@@ -141,7 +141,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
     androidTestImplementation("androidx.test.espresso:espresso-contrib:3.7.0")
     androidTestImplementation("androidx.test:rules:1.7.0")
-    androidTestImplementation("com.squareup.okhttp3:okhttp:5.2.1")
+    androidTestImplementation("com.squareup.okhttp3:okhttp:5.3.0")
     androidTestImplementation("androidx.test.espresso:espresso-intents:3.7.0")
     androidTestImplementation("androidx.test:core:1.7.0")
 

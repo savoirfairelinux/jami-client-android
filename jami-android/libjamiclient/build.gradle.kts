@@ -18,7 +18,7 @@ dependencies {
         exclude(group= "com.fasterxml.jackson.core", module= "jackson-core")
     }
     // QRCode encoding
-    implementation ("com.google.zxing:core:3.5.3")
+    implementation ("com.google.zxing:core:3.5.4")
     // dependency injection
     implementation( "javax.inject:javax.inject:1")
     // ORM
