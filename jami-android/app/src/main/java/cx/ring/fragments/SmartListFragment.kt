@@ -182,15 +182,31 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
 
     override fun onItemLongClick(item: Conversation) {
         if (item.isSwarm) {
-            // Don't display same menu item if swarm group or if swarm one to one.
-            if (item.isSwarmGroup()) {
-                ActionListBottomSheet(R.array.swarm_group_actions, R.array.swarm_group_action_icons) { which ->
+            val currentMode = item.mode.blockingFirst()
+            val effectiveMode = if (currentMode == Conversation.Mode.Syncing) {
+                item.requestMode ?: Conversation.Mode.OneToOne
+            } else {
+                currentMode
+            }
+
+            val isGroup = effectiveMode == Conversation.Mode.AdminInvitesOnly ||
+                    effectiveMode == Conversation.Mode.InvitesOnly ||
+                    effectiveMode == Conversation.Mode.Public
+
+            if (isGroup) {
+                ActionListBottomSheet(
+                    R.array.swarm_group_actions,
+                    R.array.swarm_group_action_icons
+                ) { which ->
                     when (which) {
                         0 -> presenter.removeConversation(item)
                     }
                 }.show(childFragmentManager, "SmartListFragment")
             } else {
-                ActionListBottomSheet(R.array.swarm_one_to_one_actions, R.array.swarm_one_to_one_action_icons) { which ->
+                ActionListBottomSheet(
+                    R.array.swarm_one_to_one_actions,
+                    R.array.swarm_one_to_one_action_icons
+                ) { which ->
                     when (which) {
                         0 -> presenter.copyNumber(item)
                         1 -> presenter.clearConversation(item)
@@ -200,7 +216,10 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                 }.show(childFragmentManager, "SmartListFragment")
             }
         } else {
-            ActionListBottomSheet(R.array.conversation_actions, R.array.conversation_action_icons) { which ->
+            ActionListBottomSheet(
+                R.array.conversation_actions,
+                R.array.conversation_action_icons
+            ) { which ->
                 when (which) {
                     ActionHelper.ACTION_COPY -> presenter.copyNumber(item)
                     ActionHelper.ACTION_CLEAR -> presenter.clearConversation(item)
