@@ -648,6 +648,7 @@ class Account(
             if (pending[uriString] == null) {
                 val conversation = if (request.conversationUri.isSwarm)
                     Conversation(accountId, request.conversationUri, Conversation.Mode.Request).apply {
+                        requestMode = request.mode
                         val contact = getContactFromCache(request.from).apply {
                             if (request.mode == Conversation.Mode.OneToOne && !conversationUri.blockingFirst().isSwarm)
                                 setConversationUri(request.conversationUri)

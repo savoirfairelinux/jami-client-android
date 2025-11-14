@@ -286,8 +286,16 @@ class AccountService(
             try {
                 val info: Map<String, String> = JamiService.conversationInfos(account.accountId, conversationId).toNativeFromUtf8()
                 //info.forEach { (key, value) -> Log.w(TAG, "conversation info: $key $value") }
-                val mode = if ("true" == info["syncing"]) Conversation.Mode.Syncing else Conversation.Mode.entries[info["mode"]?.toInt() ?: Conversation.Mode.Syncing.ordinal]
+                val isSyncing = "true" == info["syncing"]
+                val mode = if (isSyncing) Conversation.Mode.Syncing
+                    else Conversation.Mode.entries[info["mode"]?.toInt() ?: Conversation.Mode.Syncing.ordinal]
                 val conversation = account.newSwarm(conversationId, mode)
+                if (isSyncing) {
+                    conversation.requestMode =
+                        info["mode"]?.toIntOrNull()?.let {
+                            Conversation.Mode.entries.getOrNull(it)
+                        } ?: Conversation.Mode.OneToOne
+                }
                 conversation.setProfile(mVCardService.loadConversationProfile(info))
                 if (mode == Conversation.Mode.Syncing) {
                     val created = (info["created"]?.toLong() ?: 0) * 1000L
