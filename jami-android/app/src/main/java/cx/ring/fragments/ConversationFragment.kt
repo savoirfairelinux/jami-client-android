@@ -1147,6 +1147,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 shareLocation()
             }
         }
+        // After consuming the intent, replace it to prevent it from being handled again
+        intent.action = Intent.ACTION_VIEW
+        activity?.intent = intent
     }
 
     /**
