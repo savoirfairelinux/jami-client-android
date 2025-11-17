@@ -45,27 +45,33 @@ class AdvancedAccountPresenter @Inject constructor(
     }
 
     fun twoStatePreferenceChanged(configKey: ConfigKey, newValue: Any) {
-        mAccount!!.setDetail(configKey, newValue.toString())
+        mAccount?.setDetail(configKey, newValue.toString())
         updateAccount()
     }
 
     fun passwordPreferenceChanged(configKey: ConfigKey, newValue: Any) {
-        mAccount!!.setDetail(configKey, newValue.toString())
+        mAccount?.setDetail(configKey, newValue.toString())
         updateAccount()
     }
 
     fun preferenceChanged(configKey: ConfigKey, newValue: Any) {
-        var newValue = newValue
-        if (configKey === ConfigKey.AUDIO_PORT_MAX || configKey === ConfigKey.AUDIO_PORT_MIN) {
-            newValue = adjustRtpRange(Integer.valueOf(newValue as String))
+        val value = if (configKey === ConfigKey.AUDIO_PORT_MAX || configKey === ConfigKey.AUDIO_PORT_MIN) {
+            try {
+                adjustRtpRange(Integer.valueOf(newValue as String))
+            } catch (_: NumberFormatException) {
+                return
+            }
+        } else {
+            newValue.toString()
         }
-        mAccount!!.setDetail(configKey, newValue.toString())
+        mAccount?.setDetail(configKey, value)
         updateAccount()
     }
 
     private fun updateAccount() {
-        accountService.setCredentials(mAccount!!.accountId, mAccount!!.credentialsHashMapList)
-        accountService.setAccountDetails(mAccount!!.accountId, mAccount!!.details)
+        val account = mAccount ?: return
+        accountService.setCredentials(account.accountId, account.credentialsHashMapList)
+        accountService.setAccountDetails(account.accountId, account.details)
     }
 
     private fun adjustRtpRange(newValue: Int): String {
