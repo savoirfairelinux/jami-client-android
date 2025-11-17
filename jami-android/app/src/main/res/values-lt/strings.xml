@@ -84,6 +84,7 @@
   <string name="action_call_decline">Atmesti</string>
   <string name="action_call_mic_mute">Išjungti mikrofoną</string>
   <string name="action_load_extension">Įkelti plėtinį</string>
+  <string name="ab_action_speakerphone">Įjungti garsiakalbį</string>
   <string name="ab_action_contact_add">Pridėti prie adresatų</string>
   <string name="ab_action_contact_add_question">Pridėti prie adresatų?</string>
   <string name="ab_action_audio_call">Pradėti garso skambutį</string>

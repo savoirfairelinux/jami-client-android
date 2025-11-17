@@ -1,5 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="pref_category_contacts">Inermisen</string>
+  <string name="pref_category_video">tavidyut </string>
+  <string name="pref_category_extensions">Isiɣzaf</string>
+  <string name="pref_clearHistory_title">Sfeḍ amazray</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">Tudmawant</string>
   <!--Extension-->

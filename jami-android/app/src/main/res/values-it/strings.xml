@@ -183,6 +183,8 @@
   <string name="conversation_action_remove_this_message">Questo eliminerà il contatto e cancellerà definitivamente la cronologia della conversazione.</string>
   <string name="conversation_action_add_this_message">Sarà inviata una richiesta di connessione.</string>
   <string name="remove_conversation">Rimuovi conversazione</string>
+  <string name="conversation_action_remove_title">Rimuovere la conversazione?</string>
+  <string name="conversation_action_remove_message">Questa operazione rimuoverà la conversazione senza rimuovere il contatto.</string>
   <string name="swarm_group_action_leave">Lascia il gruppo</string>
   <string name="swarm_group_action_leave_title">Lasciare questo gruppo?</string>
   <string name="swarm_group_action_leave_message">Ciò rimuoverà la conversazione dall\'elenco delle conversazioni</string>
@@ -211,6 +213,7 @@
   <string name="conversation_ended">Conversazione terminata.</string>
   <string name="conversation_message_deleted">%s ha cancellato il messaggio</string>
   <string name="conversation_reply_you">Tu</string>
+  <string name="video_not_found">File video non trovato</string>
   <string name="conversation_preference_color">Colore della conversazione</string>
   <string name="conversation_preference_emoji">Emoji conversazione</string>
   <string name="conversation_type_contact">Contatto Jami</string>
@@ -248,6 +251,7 @@
   <string name="help_password_choose">Scegli una password sicura che ricorderai per proteggere il tuo account Jami.</string>
   <string name="help_password_enter">Inserisci la password del tuo account principale Jami.</string>
   <string name="help_server_enter">Inserire l\'URL del server di gestione.</string>
+  <string name="pin_copied">Codice di autenticazione copiato negli appunti.</string>
   <string name="copied_clipboard">Copiato negli appunti.</string>
   <string name="wizard_next">Seguente</string>
   <string name="wizard_back">Indietro</string>
@@ -296,6 +300,7 @@
   <string name="invitation_message">Hai %1$d richieste di contatto</string>
   <string name="no_invitations">Non ci sono inviti da visualizzare.</string>
   <string name="invitation_received_message">Invito ricevuto da %s.\nAccettare o rifiutare l\'invito?</string>
+  <string name="outgoing_contact_invitation_message">Questo contatto non è presente nella tua rubrica.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Nessun contatto bloccato</string>
   <!--Smartlist-->
@@ -323,7 +328,9 @@
   <string name="file_transfer_status_unjoinable_peer">Utente irraggiungibile</string>
   <string name="file_transfer_status_canceled">Annullato</string>
   <string name="file_transfer_status_error">Si è verificato un errore durante il trasferimento del file.</string>
+  <string name="file_transfer_status_timed_out">L\'operazione è scaduta.</string>
   <string name="file_saved_in">File salvato in %s.</string>
+  <string name="file_saved_successfully">File salvato con successo.</string>
   <string name="file_download">Scarica</string>
   <string name="no_space_left_on_device">Spazio esaurito sul dispositivo.</string>
   <string name="title_media_viewer">Visualizzatore media</string>
@@ -457,20 +464,47 @@
   <string name="unable_to_load">Impossibile caricare %1$s</string>
   <string name="load_success">%1$s: attivato</string>
   <string name="unload_success">%1$s: disattivato</string>
+  <string name="install_success">L\'estensione %1$s è stata installata con successo.</string>
   <string name="install_error">Si è verificato un errore durante l\'importazione dell\'estensione.</string>
   <string name="export_side_main_title">Esporta account</string>
   <string name="import_side_main_title">Importa account</string>
+  <string name="link_device_dialog_stop_title">Vuoi interrompere l\'associazione del dispositivo?</string>
+  <string name="link_device_dialog_stop_export_body">L\'interruzione annullerà l\'operazione di esportazione dell\'account.</string>
   <string name="link_device_dialog_stop_import_body">L\'interruzione annullerà l\'operazione di importazione dell\'account.</string>
+  <string name="export_side_step1_advice_qr">Sul nuovo dispositivo, crea un nuovo account.\nSeleziona <b>Account &gt;Aggiungi account &gt; Connetti da un altro dispositivo</b>\nQuando sei pronto, scansiona il codice QR</string>
+  <string name="export_side_step1_switch_to_code">Oppure clicca qui per inserire il codice di autenticazione</string>
+  <string name="export_side_step1_switch_to_qr">Oppure clicca qui per scansionare il codice QR</string>
   <string name="export_side_step1_error_malformed">Identificativo del nuovo dispositivo non riconosciuto. Seguire le istruzioni sopra riportate.</string>
   <string name="export_side_step1_code_connect">Connetti</string>
+  <string name="export_side_step2_advice">Il nuovo dispositivo si trova qui. Sei tu?\nPer continuare l\'operazione di esportazione dell\'account, fai clic su Conferma.</string>
+  <string name="export_side_step2_advice_ip_only">Nuovo dispositivo connesso all\'indirizzo sottostante. Sei tu?\nPer continuare a esportare l\'account, fai clic su Conferma.</string>
   <string name="export_side_step2_ip_only">Nuovo indirizzo IP del dispositivo: %1$s</string>
   <string name="export_side_step2_cancel">Annulla</string>
   <string name="export_side_step2_confirm">Conferma</string>
+  <string name="export_side_step2_password">L\'account è protetto da password.\nPer continuare, autenticati sul nuovo dispositivo.</string>
+  <string name="export_side_step3_body_loading">L\'operazione di esportazione dell\'account sul nuovo dispositivo è in corso. Attendere…</string>
   <string name="export_side_step3_body_done">L\'account è stato importato correttamente nel nuovo dispositivo.</string>
+  <string name="export_side_step3_exit">Fine</string>
+  <string name="import_side_step1_advice_qr">Avvia l\'esportazione sul dispositivo di origine.\n<b>Seleziona Account &gt; Impostazioni account &gt; Associa nuovo dispositivo</b>\nQuando sei pronto, scansiona il codice QR qui sotto.</string>
+  <string name="import_side_step1_advice_code">Avvia l\'esportazione sul dispositivo di origine.\n<b>Seleziona Account &gt; Impostazioni account &gt; Associa nuovo dispositivo</b>\nQuando sei pronto, inserisci il codice qui sotto.</string>
   <string name="import_side_step1_share">Condividi</string>
+  <string name="import_side_step1_switch_to_code">Oppure clicca qui per visualizzare il codice di autenticazione</string>
+  <string name="import_side_step1_switch_to_qr">Oppure clicca qui per visualizzare il codice QR</string>
+  <string name="import_side_step1_connecting">Connessione al dispositivo di origine…</string>
+  <string name="import_side_step1_preparing_device">Preparazione del dispositivo…</string>
+  <string name="import_side_step2_password_prompt">L\'account è protetto da password.\nSbloccalo per continuare.</string>
   <string name="import_side_step2_password_import">Importare</string>
+  <string name="import_side_step2_password_unlocking">Sblocco dell\'account…</string>
   <string name="import_side_step2_action_required">Azione richiesta. Conferma l\'account sul dispositivo sorgente.</string>
+  <string name="import_side_step3_body_loading">L\'account viene importato sul nuovo dispositivo. Attendere…</string>
   <string name="import_side_step3_body_done">L\'account è stato importato correttamente.</string>
+  <string name="import_side_step3_go_to_account">Vai al nuovo account</string>
+  <string name="import_side_step3_exit">Fine</string>
+  <string name="link_device_share_title">Condividi il codice di autenticazione</string>
+  <string name="link_device_error_network">Si è verificato un errore di rete durante l\'associazione del dispositivo. Verificare la connessione e riprovare.</string>
   <string name="link_device_error_authentication">Si è verificato un errore di autenticazione durante l\'associazione del dispositivo. Controllare le credenziali e riprovare.</string>
+  <string name="link_device_error_timeout">L\'operazione è scaduta.</string>
   <string name="link_device_error_canceled">L\'operazione è stata annullata dal utente.</string>
+  <string name="link_device_error_unknown">C\'è stato un errore.</string>
+  <string name="link_device_error_bad_password">Controllare le credenziali e riprovare.</string>
 </resources>
