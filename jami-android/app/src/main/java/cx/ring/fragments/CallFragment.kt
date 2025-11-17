@@ -443,7 +443,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     //todo: enable pip when only our video is displayed
     override fun enterPipMode(accountId: String, callId: String?) {
         val context = requireContext()
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N || !context.packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE))
+        if (!context.packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE))
             return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val binding = binding ?: return
@@ -814,31 +814,31 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         val binding = binding ?: return
         mConferenceMode = participantInfo.size > 1
 
+        val activity = activity
+        if (activity != null) {
+            val call = if (participantInfo.isNotEmpty()) participantInfo[0].call else conf.firstCall
+            val conversationUri = conf.conversationId?.let { Uri(Uri.SWARM_SCHEME, it) }
+                ?: call?.conversationUri ?: call?.contact?.conversationUri?.blockingFirst()
+            val confId = conf.id
+            if (conversationUri != null) {
+                activity.intent = Intent(
+                    Intent.ACTION_VIEW,
+                    ConversationPath.toUri(conf.accountId, conversationUri), context, CallActivity::class.java
+                )
+                    .apply { putExtra(NotificationService.KEY_CALL_ID, confId) }
+                arguments = Bundle().apply {
+                    putString(KEY_ACTION, Intent.ACTION_VIEW)
+                    putString(NotificationService.KEY_CALL_ID, confId)
+                }
+            }
+        }
+
         if (participantInfo.isNotEmpty()) {
             val username = if (participantInfo.size > 1)
                 "Conference with ${participantInfo.size} people"
             else participantInfo[0].contact.displayName
             val displayName = if (participantInfo.size > 1) null else participantInfo[0].contact.displayName
             val hasProfileName = displayName != null && !displayName.contentEquals(username)
-            val activity = activity
-            if (activity != null) {
-                val call = participantInfo[0].call
-                val conversationUri = if (conf.conversationId != null)
-                    Uri(Uri.SWARM_SCHEME, conf.conversationId!!)
-                else call?.conversationUri ?: call?.contact?.conversationUri?.blockingFirst()
-                val confId = conf.id
-                if (conversationUri != null) {
-                    activity.intent = Intent(
-                        Intent.ACTION_VIEW,
-                        ConversationPath.toUri(conf.accountId, conversationUri), context, CallActivity::class.java
-                    )
-                        .apply { putExtra(NotificationService.KEY_CALL_ID, confId) }
-                    arguments = Bundle().apply {
-                        putString(KEY_ACTION, Intent.ACTION_VIEW)
-                        putString(NotificationService.KEY_CALL_ID, confId)
-                    }
-                }
-            }
             if (hasProfileName) {
                 binding.contactBubbleNumTxt.visibility = View.VISIBLE
                 binding.contactBubbleTxt.text = displayName

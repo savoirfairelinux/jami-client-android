@@ -75,6 +75,11 @@ class CallActivity : AppCompatActivity() {
                     showSystemUI()
             }
         }
+
+    }
+
+    override fun onStart() {
+        super.onStart()
         intent?.let { handleNewIntent(it) }
     }
 
@@ -114,7 +119,8 @@ class CallActivity : AppCompatActivity() {
                 val contactId = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER)
                 val callFragment = CallFragment.newInstance(action, fromIntent(intent), contactId, wantVideo, acceptOption)
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit()
+                    .replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG)
+                    .commitNow()
             }
             Intent.ACTION_VIEW,
             DRingService.ACTION_CALL_ACCEPT -> {
@@ -122,7 +128,8 @@ class CallActivity : AppCompatActivity() {
                 if (currentId != confId) {
                     val callFragment = CallFragment.newInstance(action, confId, wantVideo, acceptOption)
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit()
+                        .replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG)
+                        .commitNow()
                 } else if (action != Intent.ACTION_VIEW) {
                     callFragment?.handleAcceptIntent(acceptOption, confId, wantVideo)
                 }
@@ -151,12 +158,11 @@ class CallActivity : AppCompatActivity() {
         callFragment?.onUserLeave()
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         if (currentOrientation != newConfig.orientation) {
             currentOrientation = newConfig.orientation
-            if (!(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && isInPictureInPictureMode) && !isFullscreen) {
+            if (!isInPictureInPictureMode && !isFullscreen) {
                 mMainView?.let {
                     when (currentOrientation) {
                         Configuration.ORIENTATION_LANDSCAPE -> WindowInsetsControllerCompat(window, it).hide(
