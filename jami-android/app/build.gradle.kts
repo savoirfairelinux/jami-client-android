@@ -115,12 +115,12 @@ dependencies {
     implementation ("androidx.emoji2:emoji2:1.6.0")
     implementation ("androidx.viewpager2:viewpager2:1.1.0")
     implementation ("androidx.emoji2:emoji2-emojipicker:1.6.0")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.4")
-    implementation ("androidx.window:window:1.5.0")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0")
+    implementation ("androidx.window:window:1.5.1")
     implementation ("com.google.android.material:material:1.13.0")
     implementation ("androidx.biometric:biometric:1.1.0")
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
-    implementation ("com.google.protobuf:protobuf-javalite:4.32.1")
+    implementation ("com.google.protobuf:protobuf-javalite:4.33.1")
     implementation("androidx.annotation:annotation-jvm:1.9.1")
 
     // ORM
@@ -140,7 +140,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
     androidTestImplementation("androidx.test.espresso:espresso-contrib:3.7.0")
     androidTestImplementation("androidx.test:rules:1.7.0")
-    androidTestImplementation("com.squareup.okhttp3:okhttp:5.3.0")
+    androidTestImplementation("com.squareup.okhttp3:okhttp:5.3.2")
     androidTestImplementation("androidx.test.espresso:espresso-intents:3.7.0")
     androidTestImplementation("androidx.test:core:1.7.0")
 
