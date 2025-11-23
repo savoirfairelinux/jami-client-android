@@ -20,6 +20,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.leanback.widget.*
 import cx.ring.R
@@ -46,6 +47,13 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
     private var iconSize = -1
     private lateinit var mConversationPath: ConversationPath
 
+    private val moreContactLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == TVContactMoreFragment.DELETE) {
+                finishView()
+            }
+        }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mConversationPath = if (arguments != null)
@@ -59,11 +67,13 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
 
     private fun setupAdapter() {
         // Set detail background and style.
-        val detailsPresenter =  FullWidthDetailsOverviewRowPresenter(TVContactDetailPresenter(), DetailsOverviewLogoPresenter()).apply {
-            backgroundColor = ContextCompat.getColor(requireContext(), R.color.tv_contact_background)
-            actionsBackgroundColor = ContextCompat.getColor(requireContext(), R.color.tv_contact_row_background)
-            initialState = FullWidthDetailsOverviewRowPresenter.STATE_HALF
-        }
+        val detailsPresenter =
+            FullWidthDetailsOverviewRowPresenter(TVContactDetailPresenter(), DetailsOverviewLogoPresenter()).apply {
+                backgroundColor = ContextCompat.getColor(requireContext(), R.color.tv_contact_background)
+                actionsBackgroundColor =
+                    ContextCompat.getColor(requireContext(), R.color.tv_contact_row_background)
+                initialState = FullWidthDetailsOverviewRowPresenter.STATE_HALF
+            }
 
         // Hook up transition element.
         val activity: Activity? = activity
@@ -81,8 +91,13 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
                 ACTION_ACCEPT -> presenter.acceptTrustRequest()
                 ACTION_REFUSE -> presenter.refuseTrustRequest()
                 ACTION_BLOCK -> presenter.blockTrustRequest()
-                ACTION_MORE -> startActivityForResult(Intent(getActivity(), TVContactMoreActivity::class.java)
-                        .setDataAndType(mConversationPath.toUri(), TVContactMoreActivity.CONTACT_REQUEST_URI), REQUEST_CODE)
+                ACTION_MORE -> moreContactLauncher.launch(
+                    Intent(
+                        requireActivity(),
+                        TVContactMoreActivity::class.java
+                    )
+                        .setDataAndType(mConversationPath.toUri(), TVContactMoreActivity.CONTACT_REQUEST_URI)
+                )
             }
         }
         mAdapter?.clear()
@@ -91,13 +106,6 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
             addClassPresenter(ListRow::class.java, ListRowPresenter())
         })
         adapter = mAdapter
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == TVContactMoreFragment.DELETE) finishView()
-        }
     }
 
     override fun onResume() {
@@ -120,8 +128,22 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
             adapter.add(Action(ACTION_REFUSE, resources.getString(R.string.decline)))
             adapter.add(Action(ACTION_BLOCK, resources.getString(R.string.block)))
         } else if (model.isSwarm || account.isContact(model.uri)) {
-            adapter.add(Action(ACTION_CALL, resources.getString(R.string.ab_action_video_call), null, context.getDrawable(R.drawable.baseline_videocam_24)))
-            adapter.add(Action(ACTION_MORE, resources.getString(R.string.tv_action_more), null, context.getDrawable(R.drawable.baseline_more_vert_24)))
+            adapter.add(
+                Action(
+                    ACTION_CALL,
+                    resources.getString(R.string.ab_action_video_call),
+                    null,
+                    context.getDrawable(R.drawable.baseline_videocam_24)
+                )
+            )
+            adapter.add(
+                Action(
+                    ACTION_MORE,
+                    resources.getString(R.string.tv_action_more),
+                    null,
+                    context.getDrawable(R.drawable.baseline_more_vert_24)
+                )
+            )
         } else {
             if (model.request == null) {
                 adapter.add(Action(ACTION_ADD_CONTACT, resources.getString(R.string.ab_action_contact_add)))
@@ -137,16 +159,20 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
     }
 
     override fun callContact(accountId: String, conversationUri: Uri, uri: Uri) {
-        startActivity(Intent(Intent.ACTION_CALL)
-            .setClass(requireContext(), TVCallActivity::class.java)
-            .putExtras(ConversationPath.toBundle(accountId, conversationUri))
-            .putExtra(Intent.EXTRA_PHONE_NUMBER, uri.uri)
-            .putExtra(CallFragment.KEY_HAS_VIDEO, true))
+        startActivity(
+            Intent(Intent.ACTION_CALL)
+                .setClass(requireContext(), TVCallActivity::class.java)
+                .putExtras(ConversationPath.toBundle(accountId, conversationUri))
+                .putExtra(Intent.EXTRA_PHONE_NUMBER, uri.uri)
+                .putExtra(CallFragment.KEY_HAS_VIDEO, true)
+        )
     }
 
     override fun goToCallActivity(id: String) {
-        startActivity(Intent(requireContext(), TVCallActivity::class.java)
-            .putExtra(NotificationService.KEY_CALL_ID, id))
+        startActivity(
+            Intent(requireContext(), TVCallActivity::class.java)
+                .putExtra(NotificationService.KEY_CALL_ID, id)
+        )
     }
 
     override fun switchToConversationView() {
@@ -170,6 +196,5 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
         private const val ACTION_BLOCK = 3L
         private const val ACTION_ADD_CONTACT = 4L
         private const val ACTION_MORE = 5L
-        private const val REQUEST_CODE = 100
     }
 }
