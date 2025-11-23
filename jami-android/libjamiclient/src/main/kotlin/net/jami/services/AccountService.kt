@@ -1553,7 +1553,7 @@ class AccountService(
     fun acceptFileTransfer(accountId: String, conversationUri: Uri, messageId: String?, fileId: String) {
         getAccount(accountId)?.let { account -> account.getByUri(conversationUri)?.let { conversation ->
             val transfer = if (conversation.isSwarm)
-                conversation.getMessage(messageId!!) as DataTransfer?
+                conversation.getMessage(messageId ?: return) as DataTransfer?
             else
                 account.getDataTransfer(fileId)
             if (transfer == null) return
