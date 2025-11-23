@@ -31,13 +31,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.account.HomeAccountCreationFragment
-import cx.ring.account.JamiImportBackupFragment
 import cx.ring.utils.AndroidFileUtils.getCacheFile
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.account.HomeAccountCreationPresenter
 import net.jami.account.HomeAccountCreationView
-import net.jami.model.AccountCreationModel
 import java.io.File
 
 @AndroidEntryPoint
