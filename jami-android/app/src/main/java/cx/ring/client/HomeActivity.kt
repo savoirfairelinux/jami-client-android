@@ -16,7 +16,9 @@
  */
 package cx.ring.client
 
+import androidx.core.content.IntentSanitizer
 import android.app.SearchManager
+import android.content.ComponentName
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Configuration
@@ -40,6 +42,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import cx.ring.BuildConfig
 import cx.ring.R
 import cx.ring.about.AboutFragment
 import cx.ring.account.AccountEditionFragment
@@ -282,12 +285,13 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             }
 
             Intent.ACTION_SEND, Intent.ACTION_SEND_MULTIPLE -> {
-                val path = ConversationPath.fromBundle(intent.extras)
+                val safeIntent = shareIntentSanitizer.sanitizeByFiltering(intent)
+                val path = ConversationPath.fromBundle(safeIntent.extras)
                 if (path != null) {
-                    startConversation(path, intent)
+                    startConversation(path, safeIntent)
                 } else {
-                    intent.setClass(applicationContext, ShareActivity::class.java)
-                    startActivity(intent)
+                    safeIntent.setClass(applicationContext, ShareActivity::class.java)
+                    startActivity(safeIntent)
                 }
             }
 
@@ -612,6 +616,25 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         const val REQUEST_PERMISSION_CAMERA = 113
         const val REQUEST_PERMISSION_READ_STORAGE = 114
         private const val CONVERSATIONS_CATEGORY = "conversations"
+        val shareIntentSanitizer = IntentSanitizer.Builder()
+            .allowAction(Intent.ACTION_SEND)
+            .allowAction(Intent.ACTION_SEND_MULTIPLE)
+            .allowComponent(ComponentName(BuildConfig.APPLICATION_ID, HomeActivity::class.java.name))
+            .allowComponent(ComponentName(BuildConfig.APPLICATION_ID, ShareActivity::class.java.name))
+            .allowData { true }
+            .allowType { true }
+            .allowClipDataText()
+            .allowClipDataUri { true }
+            .allowExtra(Intent.EXTRA_TEXT, String::class.java)
+            .allowExtra(Intent.EXTRA_TITLE, String::class.java)
+            .allowExtra(Intent.EXTRA_SUBJECT, String::class.java)
+            .allowExtra(ConversationPath.KEY_ACCOUNT_ID, String::class.java)
+            .allowExtra(ConversationPath.KEY_CONVERSATION_URI, String::class.java)
+            .allowExtra(ShortcutManagerCompat.EXTRA_SHORTCUT_ID, String::class.java)
+            .allowExtra(Intent.EXTRA_STREAM) {
+                it is android.net.Uri || (it is ArrayList<*> && it.all { item -> item is android.net.Uri })
+            }
+            .build()
     }
 
 }

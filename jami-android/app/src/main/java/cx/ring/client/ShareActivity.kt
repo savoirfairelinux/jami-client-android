@@ -27,7 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ShareActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val intent = intent
+        val intent = HomeActivity.shareIntentSanitizer.sanitizeByFiltering(intent)
         val extra = intent.extras
         if (ConversationPath.fromBundle(extra) != null) {
             intent.setClass(this, HomeActivity::class.java)
