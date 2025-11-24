@@ -15,5 +15,27 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 -->
 <resources>
+    <!-- Call error -->
+    <string name="call_error">Teḍra-d tuccḍa deg usenker n tiɣri. </string>
+    <string name="call_error_no_microphone">Tiɣri yettwasfesxen. Ulac amikrufun yettwafen.</string>
+    <string name="call_error_no_camera_no_microphone">Tiɣri yettwasfesxen. Ulac takamiṛat neɣ amikrufun yettwafen.</string>
+    <string name="screen_sharing_error">Teḍra-d tuccḍa deg usenker n beṭṭu n ugdil.</string>
+
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">Anadi</string>
+    <string name="call_human_state_incoming">unekcum</string>
+    <string name="call_human_state_connecting">Tuqqna</string>
+    <string name="call_human_state_ringing">Asṭenṭen</string>
+    <string name="call_human_state_current">Ameslay</string>
+    <string name="call_human_state_hungup">Yekfa</string>
+    <string name="call_human_state_busy">Yecɣel</string>
     <string name="call_human_state_failure">Ur yeddi ara</string>
-    </resources>
+    <string name="call_human_state_hold">Tettṛaǧu</string>
+    <string name="call_human_state_unhold">Tukksa n rǧu</string>
+    <string name="call_human_state_over">Yekfa</string>
+    <!-- Conferences -->
+    <string name="call_moderator">amḍebbeṛ</string>
+    <string name="call_muted">Yettwasgugem</string>
+    <string name="call_handRaised">Yerfed ufus.</string>
+
+</resources>

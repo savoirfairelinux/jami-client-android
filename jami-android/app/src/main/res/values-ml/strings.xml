@@ -84,6 +84,7 @@
   <string name="ongoing_call">തുടര് ന്ന വിളി</string>
   <string name="hist_in_call">%1$s എന്ന പേരിൽ വരുന്ന കോൾ</string>
   <string name="hist_out_call">%1$s എന്നതിന്റെ ഔട്ട്ഗോയിംഗ് കോൾ</string>
+  <string name="action_call_accept">കോൾ സ്വീകരിക്കുക</string>
   <string name="action_call_accept_audio">ഓഡിയൊ വഴി സ്വീകരിക്കുക</string>
   <string name="action_call_accept_video">വീഡിയൊ വഴി സ്വീകരിക്കുക</string>
   <string name="action_call_decline">കുറവ്</string>
@@ -113,6 +114,7 @@
   <string name="conversation_send_video">വീഡിയോ ക്ലിപ്പ് റെക്കോർഡ് ചെയ്യുക</string>
   <string name="conversation_share_location">പങ്കിടൽ സ്ഥാനം</string>
   <string name="ongoing_group_call">തുടര് ന്ന വിളി</string>
+  <string name="started_call">കോൾ തുടങ്ങി</string>
   <string name="in_reply_to">ഇതിന് മറുപടിയായി</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">ക്യാമറ അനുമതി</string>
@@ -147,6 +149,7 @@
   <string name="conversation_action_remove_this_title">ഈ കോൺടാക്റ്റ് ഇല്ലാതാക്കണോ?</string>
   <string name="conversation_action_remove_this_message">ഇത് ബന്ധം ഇല്ലാതാക്കുകയും സംഭാഷണ ചരിത്രം മായ്ക്കുകയും ചെയ്യും.</string>
   <string name="remove_conversation">സംഭാഷണം നീക്കം ചെയ്യുക</string>
+  <string name="swarm_group_action_leave">ഗ്രൂപ്പ് വിടുക</string>
   <string name="conversation_action_select_peer_number">ഒരു നമ്പര് തിരഞ്ഞെടുക്കുക</string>
   <string name="conversation_action_block_this">തടയൽ കോൺടാക്റ്റ്</string>
   <string name="conversation_action_unblock_this">കോൺടാക്റ്റ് തടയുക</string>

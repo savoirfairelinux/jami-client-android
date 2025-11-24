@@ -17,10 +17,12 @@
   <string name="call_service_description">Ta storitev je nujna za delovanje vaših klicev v ospredju. Deluje le med klici.</string>
   <string name="data_transfer_service_description">Ta storitev je nujna za prikaz obstojnih sporočil med prenosom datotek. Deluje le med prenašanjem datotek.</string>
   <!--About dialog-->
+  <string name="thank_note">Želimo se zahvaliti avtorjem prispevkov, katerih prizadevanja so skozi vrsto let naredili to programje, kakršno je.</string>
   <string name="developers">Razvijalci</string>
   <string name="media">Medij</string>
   <string name="community_management">Upravljanje skupnosti</string>
   <string name="special_thanks">Posebne zahvale</string>
+  <string name="end_note">To je seznam vseh, ki so pomembno prispevali svoj čas in napore ter doprinesli k projektu Jami. Vsi, ki zaradi svojega prispevka pogrešate svoje ime na seznamu, stopite v stik z nami na naslovu contact@jami.net.</string>
   <!--RingActivity-->
   <string name="error_no_network">Ni omrežne povezave</string>
   <string name="error_account_offline">Račun ni povezan</string>
@@ -143,6 +145,7 @@
   <string name="in_reply_to">Kot odgovor</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Dovoljenja za kamero</string>
+  <string name="permission_dialog_camera_message">Video pogovori potrebujejo dovoljenje za dostop do kamere. Dostop do kamere je onemogočen Omogočite ga v nastavitvah naprave, če želite do te funkcije dostopati.</string>
   <string name="camera_error">Pri zagonu kamere je prišlo do napake.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Napaka</string>
@@ -178,9 +181,15 @@
   <string name="delete_contact">Izbriši stik</string>
   <string name="conversation_action_remove_this_title">Ali želite izbrisati ta stik?</string>
   <string name="conversation_action_remove_this_message">To bo izbrisalo stik in dokončno počistilo zgodovino pogovora.</string>
+  <string name="conversation_action_add_this_message">S tem boste poslali zahtevo za povezavo.</string>
   <string name="remove_conversation">Odstrani pogovor</string>
+  <string name="conversation_action_remove_title">Ali želite odstraniti pogovor?</string>
+  <string name="conversation_action_remove_message">To bo izbrisalo ta pogovor brez odstranjevanja stika.</string>
   <string name="swarm_group_action_leave">Zapusti skupino</string>
   <string name="swarm_group_action_leave_title">Ali želite zapustiti to skupino?</string>
+  <string name="swarm_group_action_leave_message">To bo izbrisalo pogovor s seznama vaših pogovorov.</string>
+  <string name="conversation_action_copy_peer_number">Kopiraj identifikator stika</string>
+  <string name="copied_to_clipboard">%1$s kopirano na odložišče.</string>
   <string name="conversation_action_select_peer_number">Izberi številko</string>
   <string name="conversation_action_block_this">Blokiraj stik</string>
   <string name="conversation_action_unblock_this">Odblokiraj stik</string>
@@ -204,11 +213,13 @@
   <string name="conversation_ended">Pogovor končan.</string>
   <string name="conversation_message_deleted">%s je izbrisal/a sporočilo</string>
   <string name="conversation_reply_you">Vi</string>
+  <string name="video_not_found">Videodatoteke ni možno najti</string>
   <string name="conversation_preference_color">Barva pogovora</string>
   <string name="conversation_preference_emoji">Emoji pogovora</string>
   <string name="conversation_type_contact">Stik Jami</string>
   <string name="conversation_type_private">Zasebno</string>
   <string name="conversation_type_group">Skupina</string>
+  <string name="conversation_contact_invited">%1$s je povabljen/a, da se pridruži pogovoru.</string>
   <string name="conversation_contact_added">%1$s se je pridružil/a pogovoru.</string>
   <string name="conversation_contact_left">%1$s je zapustil/a pogovor.</string>
   <string name="conversation_contact_blocked">%1$s je blokiran/a v pogovoru.</string>
@@ -240,6 +251,7 @@
   <string name="help_password_choose">Izberite močno geslo, ki si ga boste zapomnili in z njim zaščitili svoj račun Jami.</string>
   <string name="help_password_enter">Vnesite glavno geslo svojega Jami računa.</string>
   <string name="help_server_enter">Vnesite URL upravljalnega strežnika.</string>
+  <string name="pin_copied">Overitvena koda je kopirana na odložišče.</string>
   <string name="copied_clipboard">Kopirano na odložišče.</string>
   <string name="wizard_next">Naprej</string>
   <string name="wizard_back">Nazaj</string>
@@ -254,8 +266,10 @@
   <string name="profile">Profil</string>
   <string name="profile_name">Ime profila</string>
   <string name="profile_message_warning">Profil se deli le s stiki</string>
+  <string name="custom_profile_message_warning">Profil po meri je viden samo računom na tej napravi</string>
   <string name="open_the_gallery">Odpri galerijo</string>
   <string name="take_a_photo">Slikaj</string>
+  <string name="remove_photo">Odstrani fotografijo</string>
   <string name="profile_name_hint">Vnesite svoje ime</string>
   <string name="registered_name">Registrirano ime</string>
   <string name="no_registered_name">Ni registriranega imena</string>
@@ -281,8 +295,11 @@
   <string name="block">Blokiraj</string>
   <string name="decline_invitation">Zavrni povabilo</string>
   <string name="accept_invitation">Sprejmi povabilo</string>
+  <string name="accept_invitation_body">Prejeto povabilo %s.</string>
   <string name="new_invitation_request_title">Novo povabilo</string>
   <string name="invitation_message">Imate%1$d zahtev za stik</string>
+  <string name="no_invitations">Ni povabil za prikaz.</string>
+  <string name="invitation_received_message">Prejeto povabilo %s.\nAli želite sprejeti ali zavrniti povabilo?</string>
   <string name="outgoing_contact_invitation_message">Ta stik ni na seznamu vaših stikov.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Ni blokiranih stikov</string>
@@ -301,10 +318,21 @@
   <string name="not_able_to_write_file">Ne možno zapisati datoteke.</string>
   <string name="file_transfer_status_created">Zaganjam</string>
   <string name="file_transfer_status_unsupported">ni podprto</string>
+  <string name="file_transfer_status_wait_peer_acceptance">Čakanje vrstnika na sprejem ...</string>
+  <string name="file_transfer_status_wait_host_acceptance">Čakanje gostitelja na sprejem ...</string>
+  <string name="file_transfer_status_ongoing">Se izvaja</string>
+  <string name="file_transfer_status_finished">Dokončano</string>
+  <string name="file_transfer_status_closed_by_host">Zaprto s strani gostitelja</string>
+  <string name="file_transfer_status_closed_by_peer">Zaprto s strani soležnika</string>
   <string name="file_transfer_status_invalid_file">Napačna datoteka</string>
   <string name="file_transfer_status_unjoinable_peer">Nedosegljiv soležnik</string>
   <string name="file_transfer_status_canceled">Preklicano</string>
+  <string name="file_transfer_status_error">Pri prenosu datoteke je prišlo do napake.</string>
+  <string name="file_transfer_status_timed_out">Operacija je časovno potekla.</string>
+  <string name="file_saved_in">Datoteka je shranjena v %s</string>
+  <string name="file_saved_successfully">Datoteka je bila uspešno shranjena</string>
   <string name="file_download">Prenesi</string>
+  <string name="no_space_left_on_device">Na tej napravi ni več prostora za hrambo.</string>
   <string name="title_media_viewer">Prikazovalnik vsebin</string>
   <string name="menu_file_open">Odpri datoteko</string>
   <string name="menu_file_download">Prenesi datoteko</string>
@@ -339,7 +367,11 @@
   <string name="tv_send_video">Pošlji medij</string>
   <string name="tv_action_more">Dodatno</string>
   <string name="conversation_input_speech_hint">Recite nekaj ...</string>
+  <string name="audio_permission_denied">Dostop do mikrofona je onemogočen. Omogočite ga v nastavitvah naprave, če želite uporabljati to funkcijo.</string>
+  <string name="camera_permission_denied">Dostop do kamere je onemogočen. Omogočite ga v nastavitvah naprave, če želite uporabljati to funkcijo.</string>
+  <string name="speech_recogniton_unavailable">Razpoznavanje govora ni na voljo.</string>
   <string name="audio_permission_rationale_title">Zahtevano je dovoljenje za zvok</string>
+  <string name="camera_permission_rationale_title">Zahtevano je dovoljenje za kamero</string>
   <string name="audio_permission_rationale_message">Jami zahteva dovoljenje mikrofona za uporabo funkcije govor-v-besedilo in za funkcije snemanja zvoka. O tem boste povprašani v naslednjem koraku.</string>
   <string name="camera_permission_rationale_message">Jami zahteva dovoljenje kamere za snemanje videa in za vzpostavljanje videoklica. O tem boste povprašani v naslednjem koraku.</string>
   <string name="unable_to_start_recorder">Snemanja zvoka ni možno sprožiti.</string>
@@ -374,15 +406,19 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Zvoki</string>
   <string name="bottomSheet_raiseHand_btn">Dvigni roko</string>
+  <string name="open_account_extension_settings">Odpri nastavitve razširitev računa</string>
+  <string name="open_general_extension_settings">Odpri splošne nastavitve razširitev</string>
   <string name="uninstall">Odnamesti</string>
   <string name="reset">Ponastavi</string>
   <!--Swarm Details-->
   <string name="rename_btn">Potrdi</string>
+  <string name="rename_error">ne sme biti prazno.</string>
   <string name="swarm_description">Dodaj opis</string>
   <string name="tab_members">Člani</string>
   <string name="tab_files">Datoteke</string>
   <string name="tab_settings">Nastavitve</string>
   <string name="not_admin_toast">Samo skrbniki lahko urejajo podatke te skupine</string>
+  <string name="dialog_title_contact">Uredi pojavno ime</string>
   <string name="dialogtitle_title">Uredi naziv skupine</string>
   <string name="dialogtitle_description">Uredi opis skupine</string>
   <string name="dialog_hint_title">Naslov</string>
@@ -396,11 +432,13 @@
   <string name="swarm_detail_no_document">Trenutno še nimate dokumentov.</string>
   <string name="group_admin">Skrbnik</string>
   <string name="share_contact_intent_title">Dodaj stik v Jami!</string>
+  <string name="share_contact_intent_body">Ta stik %1$s lahko dodate na razpršeno komunikacijsko platformo Jami: %2$s</string>
   <!--JamiId-->
   <string name="jami_id_copy">Kopiraj JamiId</string>
   <string name="jami_id_share">Deli JamiId</string>
   <string name="jami_id_validate">Registriraj uporabniško ime</string>
   <string name="jami_id_available">Uporabniško ime je na voljo.</string>
+  <string name="jami_id_not_available">Uporabniško ime ni na voljo.</string>
   <string name="jami_id_info">• Največ 32 znakov\n• Dovoljena posebna znaka: vezaj (-), podčrtaj (_)</string>
   <string name="jami_id_looking_for_availability">Poteka preverjanje, ali je uporabniško ime na voljo ...</string>
   <string name="jami_id_choose_username">Izberite uporabniško ime</string>
@@ -409,6 +447,7 @@
   <string name="welcome_jami_description">Delite svoj identifikator Jami, da vas lažje najdejo!</string>
   <!--Conversation details-->
   <string name="details">Detajli</string>
+  <string name="secure_p2p_connection">Varna povezava med vrstniki</string>
   <string name="swarm_type">Vrsta pogovora</string>
   <string name="Private">Zasebno</string>
   <string name="swarm_id">ID roja</string>
@@ -425,16 +464,44 @@
   <string name="unable_to_load">Ni možno naložiti %1$s</string>
   <string name="load_success">%1$s: omogočeno</string>
   <string name="unload_success">%1$s: onemogočeno</string>
+  <string name="install_success">Razširitev %1$s je uspešno nameščena.</string>
   <string name="install_error">Pri uvozu razširitve je prišlo do napake.</string>
   <string name="export_side_main_title">Izvozi račun</string>
+  <string name="import_side_main_title">Uvozi račun</string>
+  <string name="link_device_dialog_stop_title">Ali želite ustaviti povezovanje z napravo?</string>
+  <string name="link_device_dialog_stop_export_body">Z ustavljanjem boste preklicali operacijo izvoza računa.</string>
+  <string name="link_device_dialog_stop_import_body">Z ustavljanjem boste preklicali operacijo uvoza računa.</string>
+  <string name="export_side_step1_switch_to_code">Ali kliknite semkaj za vnos overitvene kode</string>
+  <string name="export_side_step1_switch_to_qr">Ali kliknite semkaj za skeniranje QR-kode</string>
+  <string name="export_side_step1_error_malformed">Ne prepoznani identifikator nove naprave. Sledite spodnjim navodilom.</string>
   <string name="export_side_step1_code_connect">Poveži</string>
+  <string name="export_side_step2_advice">Nova naprava se nahaja tukaj. Ste to vi?\nZa nadaljevanje operacije izvoza računa kliknite Potrdi.
+ </string>
+  <string name="export_side_step2_advice_ip_only">Nova naprava je povezana na spodnji naslov. Ste to vi?\nZa nadaljevanje operacije izvoza računa kliknite Potrdi.</string>
   <string name="export_side_step2_ip_only">Nov naslov IP naprave: %1$s</string>
   <string name="export_side_step2_cancel">Prekliči</string>
   <string name="export_side_step2_confirm">Potrdi</string>
+  <string name="export_side_step2_password">Račun je zaščiten z geslom.\nZa nadaljevanje ga overite na novi napravi.</string>
+  <string name="export_side_step3_body_loading">Izvoz računa na novo napravo je v teku. Počakajte trenutek ...</string>
+  <string name="export_side_step3_body_done">Račun je bil uspešno uvožen na novo napravo.</string>
   <string name="export_side_step3_exit">Dokončaj</string>
   <string name="import_side_step1_share">Deli</string>
+  <string name="import_side_step1_switch_to_code">Ali kliknite semkaj za prikaz overitvene kode</string>
+  <string name="import_side_step1_switch_to_qr">Ali kliknite semkaj za prikaz QR-kode</string>
+  <string name="import_side_step1_connecting">Povezovanje z izvorno napravo ...</string>
+  <string name="import_side_step1_preparing_device">Pripravljanje naprave ...</string>
+  <string name="import_side_step2_password_prompt">Račun je zaščiten z geslom..\nZa nadaljevanje ga odklenite.</string>
   <string name="import_side_step2_password_import">Uvoz</string>
+  <string name="import_side_step2_password_unlocking">Odklepanje računa ...</string>
+  <string name="import_side_step3_body_loading">Račun se uvaža na novo napravo. Počakajte trenutek ...</string>
   <string name="import_side_step3_body_done">Račun je bil uspešno uvožen.</string>
+  <string name="import_side_step3_go_to_account">Pojdi na novi račun</string>
   <string name="import_side_step3_exit">Dokončaj</string>
+  <string name="link_device_share_title">Delite overitveno kodo</string>
+  <string name="link_device_error_network">Pri povezovanju naprave je prišlo do omrežne napake. Preverite svojo povezavo in poskusite znova.</string>
   <string name="link_device_error_authentication">Pri povezovanju naprave je prišlo do napake overjanja. Prevrite svoje poverilnice in poskusite znova.</string>
+  <string name="link_device_error_timeout">Operacija je časovno potekla.</string>
+  <string name="link_device_error_canceled">Uporabnik je preklical operacijo.</string>
+  <string name="link_device_error_unknown">Prišlo je do napake.</string>
+  <string name="link_device_error_bad_password">Preverite poverilnice in poskusite znova.</string>
 </resources>

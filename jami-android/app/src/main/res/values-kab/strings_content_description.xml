@@ -1,8 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">Tiɣri s lemɣawla</string>
+  <string name="contact_picture_description">Tugna n unermas</string>
+  <string name="dial_numeric_pad">Anasiw n wuṭṭunen umḍin</string>
+  <string name="contact_unblock">Kkes asewḥel </string>
+  <string name="video_extensions">Isiɣzaf n tvidyut</string>
   <string name="file_download_button">Sider</string>
   <string name="control_play">Urar</string>
+  <string name="control_replay">Tulsa n tɣuri</string>
   <string name="control_pause">Sgunfu</string>
   <string name="searchbar_navigation_account">Fren amiḍan</string>
+  <string name="add_conversation_member">Rnu aɛeggal n udiwenni</string>
+  <string name="qrcode_to_scan">Tangalt QR ara yettwaḍummen</string>
 </resources>

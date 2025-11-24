@@ -45,7 +45,7 @@
   <!--Home Fragment-->
   <string name="invitation_card_title">Ttwaṭṭfent-d tinnubga</string>
   <plurals name="home_conferences_title">
-    <item quantity="one">%d Idiwenniyen</item>
+    <item quantity="one">%d Adiwenni</item>
     <item quantity="other">%d Idiwenniyen</item>
   </plurals>
   <!--ContactList Fragment-->
@@ -91,7 +91,7 @@
   <string name="location_share_action_stop">Ḥbes abḍu</string>
   <string name="location_share_about_title">Talɣut ɣef tkarḍa</string>
   <!--Call Fragment-->
-  <string name="you_txt_prefix">Kečč-Kem:</string>
+  <string name="you_txt_prefix">Kečč-Kemm:</string>
   <string name="action_call_hangup">Senser</string>
   <string name="action_call_maximize">Semɣer</string>
   <string name="action_call_minimize">Senqes</string>
@@ -205,13 +205,13 @@
   <string name="unblock_contact_dialog_message">%1$sad yizmir ad k-kem-yinermes tikelt nniḍen.</string>
   <string name="unblock_contact_completed">%1$s yettwaserreḥ.</string>
   <string name="conversation_contact_is_typing">Anermis ayettaru...</string>
-  <string name="conversation_info_contact_you">Kečč-Kem</string>
+  <string name="conversation_info_contact_you">Kečč-Kemm</string>
   <string name="conversation_members">Iɛeggalen</string>
   <string name="conversation_syncing">Asider n udiwenni seg ayugan</string>
   <string name="conversation_blocked">Anermis-agi yewḥel.</string>
   <string name="conversation_ended">Yekfa udiwenni.</string>
   <string name="conversation_message_deleted">%s yekkes izen</string>
-  <string name="conversation_reply_you">Kečč-Kem</string>
+  <string name="conversation_reply_you">Kečč-Kemm</string>
   <string name="video_not_found">Ulac-it ufaylu n tvidyut</string>
   <string name="conversation_preference_color">Ini n udiwenni</string>
   <string name="conversation_preference_emoji">Imujiyin n udiwenni</string>

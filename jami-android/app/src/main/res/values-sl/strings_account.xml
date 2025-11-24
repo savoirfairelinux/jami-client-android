@@ -86,6 +86,8 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Napredno</string>
   <string name="account_chat_settings_title">Nastavitve klepeta</string>
+  <string name="account_read_receipts_label">Potrditve branja</string>
+  <string name="account_read_receipts_summary">Pošiljajte in prejemajte potrditve dostave in branja, poslana, ko so sporočila dostavljena ali prebrana.</string>
   <string name="account_call_settings_title">Nastavitve klicev</string>
   <string name="account_dht_public_in_calls_label">Dovoli klice neznanih stikov</string>
   <string name="account_registration_exp_label">Registracija poteče</string>
@@ -106,6 +108,7 @@
   <string name="account_published_same_as_local_label">Objavljen enako kot krajevni</string>
   <string name="account_published_port_label">Objavljena vrata</string>
   <string name="account_published_address_label">Objavljeni naslov</string>
+  <string name="account_connectivity_label">Povezljivost med vrstniki</string>
   <string name="disabled">Onemogočeno</string>
   <string name="enabled">Omogočeno</string>
   <string name="default_value">Privzeto</string>
@@ -201,6 +204,7 @@
   <string name="account_export_title">Poveži račun z drugimi napravami</string>
   <string name="account_connect_server_button">Povezava na upravljalni strežnik</string>
   <string name="account_connect_button">Poveži</string>
+  <string name="prompt_server">URL upravljalnega strežnika</string>
   <string name="help_credentials_enter">Vnesite podatke o svoji organizaciji</string>
   <string name="help_connect_password_enter">Vnesite geslo svoje organizacije</string>
   <string name="account_connect_prompt_username">Uporabnik</string>
@@ -250,6 +254,7 @@
   <string name="account_device_id">ID naprave</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Format ni podprt.</string>
+  <string name="account_link_info">V aplikaciji Jami na novi napravi skenirajte kodo QR ali ročno vnesite overitveno kodo.</string>
   <string name="account_link_device_title">Poveži novo napravo</string>
   <string name="account_link_password">Ta račun je šifriran z geslom, vnesite geslo, da tvorite kodo overjanja.</string>
   <string name="account_link_generate_button">Tvori</string>
