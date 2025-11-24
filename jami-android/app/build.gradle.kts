@@ -3,7 +3,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val kotlin_version: String by rootProject.extra
 val hilt_version: String by rootProject.extra
-val dokka_version: String by rootProject.extra
 val buildFirebase = project.hasProperty("buildFirebase") || gradle.startParameter.taskRequests.toString().contains("Firebase")
 
 plugins {
