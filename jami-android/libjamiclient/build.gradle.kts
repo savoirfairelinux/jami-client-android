@@ -1,13 +1,10 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-val kotlin_version: String by rootProject.extra
 val hilt_version: String by rootProject.extra
-val dokka_version: String by rootProject.extra
 
 plugins {
-    id("kotlin")
-    id("java")
-    kotlin("kapt")
+    id("java-library")
+    id("org.jetbrains.kotlin.jvm")
 }
 
 dependencies {
@@ -30,7 +27,7 @@ dependencies {
     implementation ("io.reactivex.rxjava3:rxjava:3.1.12")
     // gson
     implementation ("com.google.code.gson:gson:2.13.2")
-    api("com.google.dagger:dagger:$hilt_version")
+    implementation("com.google.dagger:dagger:$hilt_version")
     kapt("com.google.dagger:dagger-compiler:$hilt_version")
 }
 
