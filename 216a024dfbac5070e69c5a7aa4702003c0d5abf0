@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d79e6de7_20da7e0b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-11-26T21:37:40Z",
+      "side": 1,
+      "message": "external dependency.\nUpdated by\nhttps://review.jami.net/c/jami-client-android/+/32497",
+      "revId": "216a024dfbac5070e69c5a7aa4702003c0d5abf0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
