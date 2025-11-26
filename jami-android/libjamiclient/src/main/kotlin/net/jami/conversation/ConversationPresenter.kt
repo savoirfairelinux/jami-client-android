@@ -104,8 +104,8 @@ class ConversationPresenter @Inject constructor(
     }
 
     private fun setConversation(account: Account, conversation: Conversation) {
-        Log.w(TAG, "setConversation ${conversation.aggregateHistory.size}")
         if (mConversation == conversation) return
+        Log.w(TAG, "setConversation ${conversation.uri}")
         mConversation = conversation
         mConversationSubject.onNext(conversation)
         view?.let { initView(account, conversation, it) }
