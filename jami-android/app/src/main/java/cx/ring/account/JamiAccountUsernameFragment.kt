@@ -44,6 +44,7 @@ class JamiAccountUsernameFragment : BaseSupportFragment<JamiAccountCreationPrese
     JamiAccountCreationView {
     private val model: AccountCreationViewModel by activityViewModels()
     private var binding: FragAccJamiUsernameBinding? = null
+    private var imm: InputMethodManager? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccJamiUsernameBinding.inflate(inflater, container, false).apply {
@@ -60,11 +61,10 @@ class JamiAccountUsernameFragment : BaseSupportFragment<JamiAccountCreationPrese
                     presenter.userNameChanged(s.toString())
                 }
             })
-            inputUsername.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
-                if (actionId == EditorInfo.IME_ACTION_DONE && binding!!.createAccountUsername.isEnabled) {
-                    val inputMethodManager =
-                        requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-                    inputMethodManager.hideSoftInputFromWindow(requireActivity().currentFocus!!.windowToken, 0)
+            inputUsername.setOnEditorActionListener(OnEditorActionListener { _, actionId, _ ->
+                val binding = binding ?: return@OnEditorActionListener false
+                if (actionId == EditorInfo.IME_ACTION_DONE && binding.createAccountUsername.isEnabled) {
+                    imm?.hideSoftInputFromWindow(binding.inputUsername.windowToken, 0)
                     presenter.createAccount()
                     return@OnEditorActionListener true
                 }
@@ -76,13 +76,15 @@ class JamiAccountUsernameFragment : BaseSupportFragment<JamiAccountCreationPrese
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+        imm = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding!!.inputUsername.requestFocus()
-        val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(binding!!.inputUsername, InputMethodManager.SHOW_IMPLICIT)
+        val binding = binding ?: return
+        binding.inputUsername.requestFocus()
+        imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        imm?.showSoftInput(binding.inputUsername, InputMethodManager.SHOW_IMPLICIT)
         presenter.init(model.model)
         presenter.setPush(true)
     }
@@ -132,15 +134,16 @@ class JamiAccountUsernameFragment : BaseSupportFragment<JamiAccountCreationPrese
     override fun showInvalidPasswordError(display: Boolean) {}
     override fun showNonMatchingPasswordError(display: Boolean) {}
     override fun enableNextButton(enabled: Boolean) {
-        binding!!.createAccountUsername.isEnabled = enabled
+        val binding = binding ?: return
+        binding.createAccountUsername.isEnabled = enabled
     }
 
     override fun goToAccountCreation() {
         val parent = parentFragment as JamiAccountCreationFragment?
         if (parent != null) {
             parent.scrollPagerFragment()
-            val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-            imm?.hideSoftInputFromWindow(binding!!.inputUsername.windowToken, 0)
+            val binding = binding ?: return
+            imm?.hideSoftInputFromWindow(binding.inputUsername.windowToken, 0)
         }
     }
 

@@ -30,11 +30,20 @@ import cx.ring.views.ParticipantView
 import net.jami.model.Conference.ParticipantInfo
 import java.util.*
 
-class ConfParticipantAdapter(private var calls: List<ParticipantInfo>, private val onSelectedCallback: ConfParticipantSelected) :
+class ConfParticipantAdapter(
+    private var calls: List<ParticipantInfo>,
+    private val onSelectedCallback: ConfParticipantSelected
+) :
     RecyclerView.Adapter<ParticipantView>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParticipantView {
-        return ParticipantView(participantBinding = ItemConferenceParticipantBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return ParticipantView(
+            participantBinding = ItemConferenceParticipantBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ParticipantView, position: Int) {
@@ -44,12 +53,18 @@ class ConfParticipantAdapter(private var calls: List<ParticipantInfo>, private v
         val context = holder.itemView.context
         val call = info.call
         val participantBinding = holder.participantBinding
-        val displayName = TextUtils.ellipsize(contact.displayName,
+        val displayName = TextUtils.ellipsize(
+            contact.displayName,
             participantBinding.displayName.paint,
             participantBinding.displayName.maxWidth.toFloat(),
-            TextUtils.TruncateAt.MIDDLE)
+            TextUtils.TruncateAt.MIDDLE
+        )
         if (call != null && info.pending) {
-            participantBinding.displayName.text = String.format("%s\n%s", displayName, context.getText(CallFragment.callStateToHumanState(call.callStatus)))
+            participantBinding.displayName.text = String.format(
+                "%s\n%s",
+                displayName,
+                context.getText(CallFragment.callStateToHumanState(call.callStatus))
+            )
             participantBinding.photo.alpha = .5f
         } else {
             participantBinding.displayName.text = displayName
@@ -62,21 +77,29 @@ class ConfParticipantAdapter(private var calls: List<ParticipantInfo>, private v
         participantBinding.kickParticipant.isVisible = isConference
 
         holder.disposable?.dispose()
-        participantBinding.photo.setImageDrawable(AvatarDrawable.Builder()
-            .withContact(contact)
-            .withCircleCrop(true)
-            .withPresence(false)
-            .build(context))
+        participantBinding.photo.setImageDrawable(
+            AvatarDrawable.Builder()
+                .withContact(contact)
+                .withCircleCrop(true)
+                .withPresence(false)
+                .build(context)
+        )
 
-        participantBinding.muteParticipant.let {
-            it.setImageResource(if (info.audioModeratorMuted || info.audioLocalMuted) R.drawable.baseline_mic_off_24 else R.drawable.baseline_mic_on_24)
-        }
+        participantBinding.muteParticipant.setImageResource(
+            if (info.audioModeratorMuted || info.audioLocalMuted)
+                R.drawable.baseline_mic_off_24
+            else
+                R.drawable.baseline_mic_on_24
+        )
 
         participantBinding.muteParticipant.setOnClickListener {
             onSelectedCallback.onParticipantSelected(info, ParticipantAction.Mute)
-            participantBinding.muteParticipant.let {
-                it.setImageResource(if (info.audioModeratorMuted || info.audioLocalMuted) R.drawable.baseline_mic_off_24 else R.drawable.baseline_mic_on_24)
-            }
+            participantBinding.muteParticipant.setImageResource(
+                if (info.audioModeratorMuted || info.audioLocalMuted)
+                    R.drawable.baseline_mic_off_24
+                else
+                    R.drawable.baseline_mic_on_24
+            )
         }
 
         participantBinding.extendParticipant.setOnClickListener {

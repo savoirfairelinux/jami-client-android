@@ -84,6 +84,7 @@ import net.jami.services.NotificationService
 import net.jami.smartlist.ConversationItemViewModel
 import java.io.File
 import java.util.*
+import androidx.core.content.edit
 
 @AndroidEntryPoint
 class ConversationFragment : BaseSupportFragment<ConversationPresenter, ConversationView>(),
@@ -273,8 +274,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     }
                     mPreferences?.let { preferences ->
                         if (hasMessage)
-                            preferences.edit().putString(KEY_PREFERENCE_PENDING_MESSAGE, message).apply()
-                        else preferences.edit().remove(KEY_PREFERENCE_PENDING_MESSAGE).apply()
+                            preferences.edit { putString(KEY_PREFERENCE_PENDING_MESSAGE, message) }
+                        else preferences.edit { remove(KEY_PREFERENCE_PENDING_MESSAGE) }
                     }
                 }
             })
