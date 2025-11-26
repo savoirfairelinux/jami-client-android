@@ -206,6 +206,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <receiver
             android:name=".service.OutgoingCallHandler"
+            android:permission="android.permission.PROCESS_OUTGOING_CALLS"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
@@ -215,6 +216,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </receiver>
         <receiver
             android:name=".service.BootReceiver"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
