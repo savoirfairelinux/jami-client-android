@@ -2,19 +2,27 @@
 <resources>
   <!--About-->
   <string name="submit_issue_title">പ്രശ്നം സബ്മിറ്റു ചെയ്യുക</string>
+  <string name="submit_issue_action_description"><u>പുതിയ പ്രശ്നം നിർമ്മിക്കുക</u></string>
   <string name="section_license">ലൈസൻസ്</string>
+  <string name="sponsor_section">ജാമി ഒരു സ്വതന്ത്ര സോഫ്റ്റ്‍വെയറാണ്. ഇതു ഡവലപ്പു ചെയ്യുകയും പിന്തുണയ്ക്കുകയും ചെയ്യുന്ന കമ്പനിയാണ്</string>
   <string name="copyright_section">പകർപ്പവകാശം</string>
-  <string name="contribute_section">സംഭാവന ചെയ്യുക</string>
+  <string name="contribute_section">കോൺട്രിബ്യൂട് ചെയ്യുക</string>
   <string name="version_section">പതിപ്പ്</string>
+  <string name="no_browser_app_installed">വെബ് ബ്രൗസർ ഒന്നും കാണാനില്ല, ഈ പേജ് കാണുവാൻ ഒന്ന് ഇൻസ്റ്റാൾ ചെയ്യുക.</string>
   <string name="website_chooser_title">വെബ്സൈറ്റ് കാണുക.</string>
-  <string name="license">ഈ സോഫ്റ്റ്വെയർ \"അത് പോലെ തന്നെ\" നൽകുന്നു, യാതൊരു തരത്തിലുള്ള ഗ്യാരണ്ടിയും ഇല്ലാതെ. വിശദാംശങ്ങൾക്കായി, കാണുക <u>GNU ജനറൽ പബ്ലിക് ലൈസൻസ് പതിപ്പ് 3 അല്ലെങ്കിൽ അതിനുശേഷമുള്ളത്</u></string>
-  <string name="description">ജാമി എന്നത് സാർവത്രിക ആശയവിനിമയത്തിനുള്ള ഒരു സ്വതന്ത്ര സോഫ്റ്റ്വെയറാണ്. അത് ഉപയോക്താക്കളുടെ സ്വതന്ത്രതയും സ്വകാര്യതയും ബഹുമാനിക്കുന്നു.</string>
+  <string name="license">ഈ സോഫ്റ്റ്‍വെയർ യാതൊരു തരത്തിലുള്ള ഗ്യാരണ്ടിയും ഇല്ലാതെ \"അത് പോലെ തന്നെ\" നൽകുന്നു. വിശദാംശങ്ങൾക്കായി, <u>GNU ജനറൽ പബ്ലിക് ലൈസൻസ് പതിപ്പ് 3 അല്ലെങ്കിൽ അതിനുശേഷമുള്ളത്</u> കാണുക</string>
+  <string name="description">ജാമി എന്നത് സാർവത്രിക ആശയവിനിമയത്തിനുള്ള ഒരു സ്വതന്ത്ര സോഫ്റ്റ്‍വെയർ ആണ്. അത് ഉപയോക്താക്കളുടെ സ്വാതന്ത്ര്യവും സ്വകാര്യതയും ബഹുമാനിക്കുന്നു.</string>
   <string name="credits">ക്രെഡിറ്റുകൾ</string>
-  <string name="pip_title">ജാമി സമ്മേളനം</string>
-  <string name="call_service_description">നിങ്ങളുടെ കോളുകള് മുൻപന്തിയില് വയ്ക്കുന്നതിന് ഈ സേവനം ആവശ്യമാണ്. ഇത് കോളുകള് സമയത്ത് മാത്രം പ്രവർത്തിക്കുന്നു.</string>
-  <string name="data_transfer_service_description">ഫയൽ കൈമാറ്റങ്ങൾ സമയത്ത് സ്ഥിരമായ അറിയിപ്പുകൾ പ്രദർശിപ്പിക്കുന്നതിന് ഈ സേവനം ആവശ്യമാണ്. ഫയൽ കൈമാറ്റങ്ങൾ സമയത്ത് മാത്രമേ ഇത് പ്രവർത്തിക്കൂ.</string>
+  <string name="pip_title">ജാമി കോൺഫെറൻസ്</string>
+  <string name="call_service_description">താങ്കളുടെ കോളുകൾ ഫോർഗ്രൗണ്ടിൽ പ്രവർത്തിക്കുന്നതിന് ഈ സേവനം ആവശ്യമാണ്. കോളുകളുടെ സമയത്ത് മാത്രമേ ഇതു പ്രവർത്തിക്കൂ.</string>
+  <string name="data_transfer_service_description">ഫയൽ കൈമാറ്റങ്ങളുടെ സമയത്ത് സ്ഥിരമായ അറിയിപ്പുകൾ പ്രദർശിപ്പിക്കുന്നതിന് ഈ സേവനം ആവശ്യമാണ്. ഫയൽ കൈമാറ്റങ്ങളുടെ സമയത്ത് മാത്രമേ ഇത് പ്രവർത്തിക്കൂ.</string>
   <!--About dialog-->
+  <string name="thank_note">ഈ സോഫ്റ്റ്‍വെയറിനെ ഇവിടെ വരെ എത്തിച്ച എല്ലാ കോൺട്രിബ്യൂട്ടർമാർക്കും ഞങ്ങളുടെ നന്ദി.</string>
+  <string name="developers">ഡവലപ്പർമാർ</string>
   <string name="media">മാധ്യമങ്ങൾ</string>
+  <string name="community_management">കമ്മ്യൂണിറ്റി മാനേജ്മെന്റ്</string>
+  <string name="special_thanks">പ്രത്യേക നന്ദി</string>
+  <string name="end_note">ജാമിക്കു വേണ്ടി ഒരുപാടു സമയം ചിലവഴിക്കുകയും ഫലപ്രദമായ സംഭാവനകൾ ചെയ്യുകയും ചെയ്ത ആളുകളുടെ പട്ടികയാണിത്. ഈ പട്ടികയിലേക്കു ചേരണമെന്ന് ആഗ്രഹിക്കുന്ന ഇത്തരം കോൺട്രിബ്യൂട്ടർമാർ contact@jami.net എന്ന വിലാസത്തിൽ ബന്ധപ്പെടേണ്ടതാണ്.</string>
   <!--RingActivity-->
   <string name="error_no_network">നെറ്റ് വർക്ക് കണക്റ്റിവിറ്റി ഇല്ല</string>
   <string name="error_account_offline">അക്കൌണ്ട് ഓഫ് ചെയ്തിരിക്കുന്നു</string>
@@ -25,18 +33,23 @@
   <string name="menu_item_accounts">അക്കൌണ്ടുകൾ നിയന്ത്രിക്കുക</string>
   <string name="menu_item_account">അക്കൌണ്ട് മാനേജുചെയ്യുക</string>
   <string name="menu_item_settings">ക്രമീകരണങ്ങൾ</string>
+  <string name="menu_item_app_settings">ആപ്പ് സെറ്റിങ്സ്</string>
   <string name="menu_item_account_settings">അക്കൌണ്ട് ക്രമീകരണങ്ങൾ</string>
+  <string name="menu_item_extension_list">എക്സ്റ്റൻഷനുകളുടെ സെറ്റിങ്സ്</string>
   <string name="menu_item_share">എന്റെ അക്കൌണ്ട് പങ്കുവെക്കുക</string>
   <string name="menu_item_about">ജാമിയെ കുറിച്ച്</string>
   <string name="video_setting_title">വീഡിയോ ക്രമീകരണങ്ങൾ</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">നമ്പർ ഡയൽ ചെയ്യുക</string>
   <!--History Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">ക്ഷണങ്ങൾ വന്നിരിക്കുന്നു</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d സംഭാഷണം</item>
     <item quantity="other">%d സംഭാഷണങ്ങൾ</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">സംഭാഷണമോ പേരോ തിരയുക...</string>
   <string name="choose_number">ഒരു നമ്പര് തിരഞ്ഞെടുക്കുക</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -49,6 +62,7 @@
   <string name="notif_outgoing_call">പുറപ്പെടുന്ന വിളി</string>
   <string name="notif_current_call_title">%1$s എന്ന പേരിൽ നിലവിലുള്ള കോൾ</string>
   <string name="notif_current_call">തുടര് ന്ന വിളി</string>
+  <string name="notif_channel_call_in_progress">കോൾ നടക്കുന്നു</string>
   <string name="notif_channel_calls">വിളി</string>
   <string name="notif_channel_missed_calls">വിളി നഷ്ടപ്പെട്ടത്</string>
   <string name="notif_channel_incoming_calls">വരാനിരിക്കുന്ന കോളുകൾ</string>
@@ -59,6 +73,8 @@
   <string name="notif_channel_background_service">പശ്ചാത്തല സേവനം</string>
   <string name="notif_channel_background_service_descr">ഏതു സമയത്തും കോളുകളും സന്ദേശങ്ങളും സ്വീകരിക്കാൻ അനുവദിക്കുന്നു.</string>
   <string name="notif_group_calls">വിളി</string>
+  <string name="notif_inprogress_group_call">കോൾ നടക്കുന്നു</string>
+  <string name="notif_background_service">ജാമി ഇപ്പോൾ ബാക്ക്ഗ്രൗണ്ടിൽ പ്രവർത്തിക്കുന്നു</string>
   <string name="notif_mark_as_read">വായിക്കുന്നതു പോലെ അടയാളപ്പെടുത്തുക</string>
   <string name="notif_dismiss">വിസമ്മതിക്കുക</string>
   <string name="notif_reply">മറുപടി</string>
@@ -84,19 +100,28 @@
   <string name="ongoing_call">തുടര് ന്ന വിളി</string>
   <string name="hist_in_call">%1$s എന്ന പേരിൽ വരുന്ന കോൾ</string>
   <string name="hist_out_call">%1$s എന്നതിന്റെ ഔട്ട്ഗോയിംഗ് കോൾ</string>
+  <string name="call_duration">%s നീണ്ടുനിന്നു</string>
+  <string name="start_error_title">ജാമി തുറക്കാൻ കഴിയുന്നില്ല</string>
   <string name="action_call_accept">കോൾ സ്വീകരിക്കുക</string>
   <string name="action_call_accept_audio">ഓഡിയൊ വഴി സ്വീകരിക്കുക</string>
   <string name="action_call_accept_video">വീഡിയൊ വഴി സ്വീകരിക്കുക</string>
+  <string name="action_call_hold_accept">നിലവിലുള്ള കോൾ ഹോൾഡ് ചെയ്ത് വരുന്ന കോൾ ഓഡിയോയിലൂടെ മാത്രം സ്വീകരിക്കുക</string>
+  <string name="action_call_hold_accept_video">നിലവിലുള്ള കോൾ ഹോൾഡ് ചെയ്ത് വരുന്ന കോൾ വീഡിയോയിലൂടെ സ്വീകരിക്കുക</string>
+  <string name="action_call_end_accept">നിലവിലുള്ള കോൾ നിർത്തി വരുന്ന കോൾ സ്വീകരിക്കുക</string>
   <string name="action_call_decline">കുറവ്</string>
   <string name="action_call_mic_mute">മിണ്ടാത്ത മൈക്രോഫോൺ</string>
+  <string name="action_load_extension">എക്സ്റ്റൻഷൻ ലോഡു ചെയ്യുക</string>
+  <string name="ab_action_speakerphone">സ്പീക്കർ ഓണാക്കുക</string>
   <string name="ab_action_contact_add">കോൺടാക്റ്റുകളിലേക്ക് ചേർക്കുക</string>
   <string name="ab_action_contact_add_question">ബന്ധുക്കളെ കൂട്ടിച്ചേർക്കണോ?</string>
   <string name="ab_action_audio_call">ഓഡിയോ കോൾ ആരംഭിക്കുക</string>
   <string name="ab_action_video_call">വീഡിയോ കോൾ ആരംഭിക്കുക</string>
   <string name="ab_action_change_screen_orientation">സ്ക്രീനിന്റെ ഓറിയന്റേഷൻ മാറ്റുക</string>
   <string name="share_via">∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ </string>
+  <string name="write_a_message">സന്ദേശം എഴുതുക</string>
   <string name="scan_qr">ക്യുആർ കോഡ് സ്കാൻ ചെയ്യുക</string>
   <string name="qr_code">ക്യുആർ കോഡ്</string>
+  <string name="qr_code_not_contact">ഒരു ജാമി കോണ്ടാക്ടിന്റെ QR കോഡല്ല</string>
   <string name="new_group">പുതിയ ഗ്രൂപ്പ് നിർമ്മിക്കുക</string>
   <string name="ab_action_flipcamera">ഫ്ലിപ്പ് ക്യാമറ</string>
   <string name="ab_action_hidepreview">പ്രിവ്യൂ മറയ്ക്കുക</string>
@@ -118,17 +143,23 @@
   <string name="in_reply_to">ഇതിന് മറുപടിയായി</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">ക്യാമറ അനുമതി</string>
+  <string name="permission_dialog_camera_message">വീഡിയോ സംഭാഷണങ്ങൾക്ക് ക്യാമറ അനുമതി വേണം. ക്യാമറ അനുമതി അസാധ്യമാക്കിയിട്ടാണുള്ളത്. ഈ സവിശേഷത ഉപയോഗിക്കാനായി ഡിവൈസ് സെറ്റിങ്സിൽ അത് സാധ്യമാക്കുക.</string>
+  <string name="camera_error">ക്യാമറ തുറന്നപ്പോൾ ഒരു പ്രശ്നം വന്നിരിക്കുന്നു.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">പിശക്</string>
   <string name="ringtone_error_format_not_supported">ഈ ഫോർമാറ്റിന് പിന്തുണയില്ല.</string>
   <string name="ringtone_error_size_too_big">ഈ ഫയൽ വളരെ വലുതാണ്. പരമാവധി വലുപ്പം %1$dkB ആണ്.</string>
   <string name="ringtone_custom_prompt">ഇഷ്ടാനുസൃത റിംഗ്ടോൺ സജ്ജമാക്കുക</string>
   <string name="ringtone_custom_label">കസ്റ്റംസ്</string>
+  <string name="ringtone_jami_tones">ജാമി റിങ്ടോണുകൾ</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">ജാമിക്ക് “Read contacts” അനുമതി ആവശ്യമാണ്. ഈ സവിശേഷത ഉപയോഗിക്കാനായി ഡിവൈസ് സെറ്റിങ്സിൽ അതു സാധ്യമാക്കുക.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">ജാമിക്ക് “Write call log” അനുമതി ആവശ്യമാണ്. ഈ സവിശേഷത ഉപയോഗിക്കാനായി ഡിവൈസ് സെറ്റിങ്സിൽ അതു സാധ്യമാക്കുക.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">നിങ്ങൾ ചേർക്കാൻ ആഗ്രഹിക്കുന്ന അക്കൌണ്ടിന്റെ ക്യുആര് കോഡ് സ്കാൻ ചെയ്യുക.</string>
   <string name="title_activity_qrcode">എന്റെ അക്കൌണ്ട് പങ്കുവെക്കുക</string>
+  <string name="error_scan_no_camera_permissions"> QR സ്കാനറിന് ക്യാമറ അനുമതി ആവശ്യമാണ്. ക്യാമറ അനുമതി അസാധ്യമാക്കിയിട്ടാണുള്ളത്. ഈ സവിശേഷത ഉപയോഗിക്കാനായി ഡിവൈസ് സെറ്റിങ്സിൽ അത് സാധ്യമാക്കുക.</string>
   <string name="tab_code">എന്റെ കോഡ്</string>
   <string name="tab_scan">സ്കാൻ കോഡ്</string>
   <!--Settings-->
@@ -140,6 +171,7 @@
   <string name="conversation_details">സംഭാഷണ വിശദാംശങ്ങള്</string>
   <string name="contact_details">ബന്ധപ്പെടാനുള്ള വിവരങ്ങൾ</string>
   <string name="conversation_action_delete_this">ഈ സംഭാഷണം ഇല്ലാതാക്കുക</string>
+  <string name="conversation_action_delete_this_title">ഈ സംഭാഷണം മായിക്കണമോ?</string>
   <string name="leave_conversation">സംഭാഷണം ഉപേക്ഷിക്കുക</string>
   <string name="conversation_action_delete_this_message">ഈ നടപടി മാറ്റാന് കഴിയില്ല.</string>
   <string name="conversation_action_history_clear">വ്യക്തമായ ചരിത്രം</string>
@@ -148,8 +180,15 @@
   <string name="delete_contact">ബന്ധം ഇല്ലാതാക്കുക</string>
   <string name="conversation_action_remove_this_title">ഈ കോൺടാക്റ്റ് ഇല്ലാതാക്കണോ?</string>
   <string name="conversation_action_remove_this_message">ഇത് ബന്ധം ഇല്ലാതാക്കുകയും സംഭാഷണ ചരിത്രം മായ്ക്കുകയും ചെയ്യും.</string>
+  <string name="conversation_action_add_this_message">ഇത് ഒരു കണക്ഷൻ അഭ്യർത്ഥന അയക്കും.</string>
   <string name="remove_conversation">സംഭാഷണം നീക്കം ചെയ്യുക</string>
+  <string name="conversation_action_remove_title">സംഭാഷണം നീക്കം ചെയ്യണമോ?</string>
+  <string name="conversation_action_remove_message">ഇത് കോണ്ടാക്റ്റ് കളയാതെ ഈ സംഭാഷണം കളയും.</string>
   <string name="swarm_group_action_leave">ഗ്രൂപ്പ് വിടുക</string>
+  <string name="swarm_group_action_leave_title">ഗ്രൂപ്പ് വിടണമോ?</string>
+  <string name="swarm_group_action_leave_message">ഇത് ഈ സംഭാഷണത്തെ താങ്കളുടെ സംഭാഷണങ്ങളുടെ പട്ടികയിൽ നിന്നും കളയും</string>
+  <string name="conversation_action_copy_peer_number">കോണ്ടാക്റ്റ് ഐഡന്റിഫയർ കോപ്പി ചെയ്യുക</string>
+  <string name="copied_to_clipboard">%1$s ക്ലിപ്ബോർഡിലേക്ക് കോപ്പി ചെയ്തു.</string>
   <string name="conversation_action_select_peer_number">ഒരു നമ്പര് തിരഞ്ഞെടുക്കുക</string>
   <string name="conversation_action_block_this">തടയൽ കോൺടാക്റ്റ്</string>
   <string name="conversation_action_unblock_this">കോൺടാക്റ്റ് തടയുക</string>
@@ -158,6 +197,7 @@
   <string name="conversation_action_latest">സംഭാഷണത്തിന്‍റെ അവസാനത്തിലേക്ക് സ്‌ക്രോൾ ചെയ്യുക</string>
   <string name="conversation_open_file_error">ഈ ഫയൽ തരം തുറക്കാൻ സാധിക്കുന്ന ഒരു അപ്ലിക്കേഷനും ഇൻസ്റ്റാൾ ചെയ്തിട്ടില്ല.</string>
   <string name="clip_contact_uri">ബന്ധപ്പെടാനുള്ള വിലാസം</string>
+  <string name="clip_message">സന്ദേശത്തിന്റെ ഉള്ളടക്കം</string>
   <string name="block_contact_dialog_title">%1$s തടയണോ?</string>
   <string name="block_contact_dialog_message">%1$s-ന് നിങ്ങളെ ബന്ധപ്പെടാൻ കഴിയില്ല, അത് അൺബ്ലോക്ക് ചെയ്യുന്നതുവരെ.</string>
   <string name="block_contact_completed">%1$s തടഞ്ഞു.</string>
@@ -170,12 +210,33 @@
   <string name="conversation_syncing">സഹപ്രവർത്തകരുടെ സംഭാഷണം ഡൌൺലോഡ് ചെയ്യുക</string>
   <string name="conversation_blocked">ഈ സമ്പർക്കം തടഞ്ഞിരിക്കുന്നു.</string>
   <string name="conversation_ended">സംഭാഷണം അവസാനിച്ചു.</string>
+  <string name="conversation_message_deleted">%s ഒരു സന്ദേശം മായിച്ചു</string>
   <string name="conversation_reply_you">നീ</string>
+  <string name="video_not_found">വീഡിയോ ഫയൽ കാണുന്നില്ല</string>
   <string name="conversation_preference_color">സംഭാഷണ നിറം</string>
   <string name="conversation_preference_emoji">സംഭാഷണ ഇമോജി</string>
   <string name="conversation_type_contact">ജാമി കോൺടാക്ട്</string>
   <string name="conversation_type_private">സ്വകാര്യ</string>
+  <string name="conversation_type_group">ഗ്രൂപ്പ്</string>
+  <string name="conversation_contact_invited">%1$s സംഭാഷണത്തിൽ ചേരാനായി ക്ഷണിക്കപ്പെട്ടിട്ടുണ്ട്.</string>
+  <string name="conversation_contact_added">%1$s സംഭാഷണത്തിൽ ചേർന്നിരിക്കുന്നു.</string>
+  <string name="conversation_contact_left">%1$s സംഭാഷണത്തിൽ നിന്നു പോയിരിക്കുന്നു.</string>
+  <string name="conversation_contact_blocked">%1$s സംഭാഷണത്തിൽ നിന്നും തടയപ്പെട്ടു.</string>
+  <string name="conversation_contact_unblocked">%1$s-ന്/ക്ക് സംഭാഷണത്തിൽ നിന്നുമുള്ള തടസം മാറ്റിയിരിക്കുന്നു.</string>
   <string name="conversation_search_hint">തിരയൽ സംഭാഷണം</string>
+  <string name="audio_recorder_error">ഓഡിയോ റെക്കോർഡർ ആപ്പ് കാണുന്നില്ല.</string>
+  <string name="video_recorder_error">വീഡിയോ റെക്കോർഡർ ആപ്പ് കാണുന്നില്ല.</string>
+  <string name="taking_picture_error">ചിത്രം എടുക്കുമ്പോൾ ഒരു പ്രശ്നം വന്നിരിക്കുന്നു.</string>
+  <string name="find_picture_error">ചിത്രം തിരയുമ്പോൾ ഒരു പ്രശ്നം വന്നിരിക്കുന്നു.</string>
+  <string name="open_camera_error">ക്യാമറ തുറക്കുമ്പോൾ ഒരു പ്രശ്നം വന്നിരിക്കുന്നു.</string>
+  <string name="starting_recorder_error">റെക്കോർഡർ തുറന്നപ്പോൾ ഒരു പ്രശ്നം വന്നിരിക്കുന്നു.</string>
+  <string name="starting_camera_error">ക്യാമറ തുറന്നപ്പോൾ ഒരു പ്രശ്നം വന്നിരിക്കുന്നു.</string>
+  <string name="browser_error">ഫയൽ ബ്രൗസർ ഈ ഡിവൈസിൽ ലഭ്യമല്ല.</string>
+  <string name="import_archive_error">ആർക്കൈവ് ഇമ്പോർട്ട് ചെയ്യുമ്പോൾ ഒരു പ്രശ്നം വന്നിരിക്കുന്നു.</string>
+  <string name="export_archive_error">ആർക്കൈവ് എക്സ്പോർട്ട് ചെയ്യുമ്പോൾ ഒരു പ്രശ്നം വന്നിരിക്കുന്നു.</string>
+  <string name="load_ringtone_error">റിങ്ടോൺ ലോഡു ചെയ്യുമ്പോൾ ഒരു പ്രശ്നം വന്നിരിക്കുന്നു.</string>
+  <string name="sharing_log_error">ലോഗുകൾ പങ്കിടുമ്പോൾ ഒരു പ്രശ്നം വന്നിരിക്കുന്നു.</string>
+  <string name="no_native_crash">സമീപകാല നേറ്റീവ് ക്രാഷ് ഒന്നും ഇല്ല</string>
   <string name="today">ഇന്ന്</string>
   <string name="yesterday">ഇന്നലെ</string>
   <!--Contacts-->
@@ -189,6 +250,7 @@
   <string name="help_password_choose">ജാമി അക്കൌണ്ട് പരിരക്ഷിക്കുന്നതിന് നിങ്ങള് ക്ക് ഓർമ്മയുണ്ടാകുന്ന ശക്തമായ പാസ്വേഡ് തിരഞ്ഞെടുക്കുക.</string>
   <string name="help_password_enter">നിങ്ങളുടെ പ്രധാന ജാമി അക്കൌണ്ട് പാസ്വേഡ് നൽകുക.</string>
   <string name="help_server_enter">മാനേജ്മെന്റ് സെർവറിന്റെ URL നൽകുക.</string>
+  <string name="pin_copied">ഒതന്റിക്കേഷൻ കോഡ് ക്ലിപ്ബോർഡിലേക്ക് കോപ്പി ചെയ്തു.</string>
   <string name="copied_clipboard">ക്ലിപ്‍ബോർഡിലേക്ക് കോപ്പി ചെയ്യുക.</string>
   <string name="wizard_next">അടുത്തത്</string>
   <string name="wizard_back">തിരിച്ചുപോവുക</string>
@@ -196,12 +258,17 @@
   <string name="hist_contact_invited">ബന്ധപ്പെടാൻ ക്ഷണിച്ചു</string>
   <string name="hist_contact_added">കോണ്ടാക്ട് ചേർത്തു</string>
   <string name="hist_contact_left">ഇടതുവശത്തുള്ള കോൺടാക്ട്</string>
+  <string name="hist_contact_blocked">കോണ്ടാക്ടിനെ തടഞ്ഞു</string>
+  <string name="hist_contact_unblocked">കോണ്ടാക്ടിന്റെ തടസം മാറ്റി</string>
   <string name="hist_invitation_received">ക്ഷണം ലഭിച്ചത്</string>
   <!--Account summary-->
   <string name="profile">പ്രൊഫൈല്</string>
+  <string name="profile_name">പ്രൊഫൈൽ പേര്</string>
   <string name="profile_message_warning">പ്രൊഫൈല് കോൺടാക്റ്റുകളുമായി മാത്രമേ പങ്കിടാന് കഴിയൂ</string>
+  <string name="custom_profile_message_warning">ഈ പ്രൊഫൈൽ ഈ ഡിവൈസിലെ അക്കൗണ്ടിന് മാത്രമേ കാണുകയുള്ളൂ.</string>
   <string name="open_the_gallery">ഗാലറി തുറക്കുക</string>
   <string name="take_a_photo">ഫോട്ടോ എടുക്കൂ</string>
+  <string name="remove_photo">ഫോട്ടോ കളയുക</string>
   <string name="profile_name_hint">നിങ്ങളുടെ പേര് നൽകുക</string>
   <string name="registered_name">രജിസ്റ്റർ ചെയ്ത പേര്</string>
   <string name="no_registered_name">രജിസ്റ്റർ ചെയ്തിട്ടില്ല</string>
@@ -216,8 +283,10 @@
   <string name="share_message">ജാമിയുമായി ഈ കോഡ് സ്കാൻ ചെയ്യുക</string>
   <string name="share_message_no_account">പങ്കുവയ്ക്കാൻ ഒരു അക്കൌണ്ട് തിരഞ്ഞെടുക്കുക.</string>
   <string name="share_your_account_information">എന്റെ ബന്ധപ്പെടാനുള്ള വിവരങ്ങൾ പങ്കുവെക്കുക</string>
+  <string name="share_contact_information">കോണ്ടാക്റ്റ് ചെയ്യാനുള്ള വിവരങ്ങൾ പങ്കിടുക</string>
   <string name="share_label">പങ്കിടുക</string>
   <string name="generic_error_migration">പിശക്</string>
+  <string name="generic_error_migration_message">അക്കൗണ്ട് മാറ്റുമ്പോൾ ഒരു പ്രശ്നം വന്നിരിക്കുന്നു.</string>
   <string name="title_share_with">പങ്കുവെക്കുക.</string>
   <!--Pending invitations-->
   <string name="accept">അംഗീകരിക്കുക</string>
@@ -225,7 +294,12 @@
   <string name="block">തടയൽ</string>
   <string name="decline_invitation">ക്ഷണം നിരസിക്കുക</string>
   <string name="accept_invitation">ക്ഷണം സ്വീകരിക്കുക</string>
+  <string name="accept_invitation_body">%s-ൽ നിന്നും ക്ഷണം വന്നു.</string>
+  <string name="new_invitation_request_title">പുതിയ ക്ഷണം</string>
   <string name="invitation_message">%1$d കോൺടാക്റ്റ് അഭ്യർത്ഥനകൾ</string>
+  <string name="no_invitations">ക്ഷണങ്ങളൊന്നും ഇല്ല.</string>
+  <string name="invitation_received_message">%s-ൽനിന്നും ക്ഷണം വന്നിട്ടുണ്ട്.\nഈ ക്ഷണം സ്വീകരിക്കണോ നിരസിക്കണോ?</string>
+  <string name="outgoing_contact_invitation_message">ഈ കോണ്ടാക്റ്റ് താങ്കളുടെ കോണ്ടാക്റ്റുകളിൽ ഇല്ല.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">തടഞ്ഞ ബന്ധങ്ങളില്ല</string>
   <!--Smartlist-->
@@ -237,10 +311,27 @@
   <string name="tv_contact_row_header">ബന്ധുക്കൾ</string>
   <string name="gallery_error_title">ഗാലറി ആപ്ലിക്കേഷൻ കണ്ടെത്തിയില്ല</string>
   <string name="gallery_error_message">ഗാലറി തുറക്കുന്നതിനുള്ള ഉപകരണത്തിൽ ഒരു ആപ്ലിക്കേഷനും കണ്ടെത്തിയില്ല</string>
+  <string name="generic_error">അജ്ഞാതമായ ഒരു പ്രശ്നം വന്നു.</string>
   <!--File Transfer-->
+  <string name="invalid_file">അസാധുവായ ഫയൽ</string>
+  <string name="not_able_to_write_file">ഫയൽ എഴുതാൻ കഴിയുന്നില്ല.</string>
+  <string name="file_transfer_status_created">തുടങ്ങുന്നു</string>
+  <string name="file_transfer_status_unsupported">സപ്പോർട്ടില്ല</string>
+  <string name="file_transfer_status_wait_peer_acceptance">പിയ‍ർ സ്വീകരിക്കാനായി കാത്തിരിക്കുന്നു...</string>
+  <string name="file_transfer_status_wait_host_acceptance">ഹോസ്റ്റ് സ്വീകരിക്കാനായി കാത്തിരിക്കുന്നു...</string>
+  <string name="file_transfer_status_ongoing">നടക്കുന്നു</string>
+  <string name="file_transfer_status_finished">കഴിഞ്ഞു</string>
+  <string name="file_transfer_status_closed_by_host">ഹോസ്റ്റ് നിർത്തിയിരിക്കുന്നു</string>
+  <string name="file_transfer_status_closed_by_peer">പിയ‍ർ നിർത്തിയിരിക്കുന്നു</string>
   <string name="file_transfer_status_invalid_file">അസാധുവായ ഫയൽ</string>
+  <string name="file_transfer_status_unjoinable_peer">എത്താനാകാത്ത പിയ‍ർ</string>
   <string name="file_transfer_status_canceled">റദ്ദാക്കി</string>
+  <string name="file_transfer_status_error">ഫയൽ കൈമാറുമ്പോൾ ഒരു പ്രശ്നം വന്നിരിക്കുന്നു.</string>
+  <string name="file_transfer_status_timed_out">ഓപ്പറേഷനുള്ള സമയം കഴിഞ്ഞു.</string>
+  <string name="file_saved_in">ഫയൽ %s-ൽ സേവ് ചെയ്തു</string>
+  <string name="file_saved_successfully">ഈ ഫയൽ വിജയകരമായി സേവു ചെയ്തു.</string>
   <string name="file_download">ഡൌൺലോഡ് ചെയ്യുക</string>
+  <string name="no_space_left_on_device">ഈ ഉപകരണത്തിൽ സ്റ്റോറേജ് സ്പേസില്ല.</string>
   <string name="title_media_viewer">മാധ്യമ കാഴ്ചക്കാരൻ</string>
   <string name="menu_file_open">തുറന്ന ഫയൽ</string>
   <string name="menu_file_download">ഫയൽ ഡൌൺലോഡ് ചെയ്യുക</string>
@@ -249,6 +340,7 @@
   <string name="menu_file_share">ഫയൽ പങ്കിടുക</string>
   <string name="menu_message_copy">കോപ്പി</string>
   <string name="menu_message_edit">സന്ദേശം തിരുത്തുക</string>
+  <string name="menu_message_history">സന്ദേശ ചരിത്രം</string>
   <string name="menu_message_delete">സന്ദേശം ഇല്ലാതാക്കുക</string>
   <string name="menu_message_cancel">സന്ദേശം റദ്ദാക്കുക</string>
   <string name="menu_message_reply">മറുപടി</string>
@@ -274,6 +366,12 @@
   <string name="tv_send_video">മാധ്യമങ്ങൾ അയയ്ക്കുക</string>
   <string name="tv_action_more">കൂടുതൽ</string>
   <string name="conversation_input_speech_hint">എന്തെങ്കിലും പറയൂ.</string>
+  <string name="audio_permission_denied">മൈക്കിനുള്ള അനുമതി അസാധ്യമാക്കിയിട്ടാണുള്ളത്. ഈ സവിശേഷത ഉപയോഗിക്കാനായി ഡിവൈസ് സെറ്റിങ്സിൽ അത് സാധ്യമാക്കുക.</string>
+  <string name="camera_permission_denied">ക്യാമറ അനുമതി അസാധ്യമാക്കിയിട്ടാണുള്ളത്. ഈ സവിശേഷത ഉപയോഗിക്കാനായി ഡിവൈസ് സെറ്റിങ്സിൽ അത് സാധ്യമാക്കുക.</string>
+  <string name="audio_permission_rationale_title">ഓഡിയോ അനുമതി ആവശ്യമാണ്</string>
+  <string name="camera_permission_rationale_title">ക്യാമറ അനുമതി ആവശ്യമാണ്</string>
+  <string name="error_sharing_file">ഫയൽ പങ്കിടുമ്പോൾ ഒരു പ്രശ്നം വന്നിരിക്കുന്നു.</string>
+  <string name="error_opening_file">ഫയൽ തുറക്കുമ്പോൾ ഒരു പ്രശ്നം വന്നിരിക്കുന്നു.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">ശുപാർശ</string>
   <string name="wizard_status_optional">ഓപ്ഷണൽ</string>
@@ -291,6 +389,7 @@
   <string name="wizard_profile_button">പ്രൊഫൈൽ സംരക്ഷിക്കുക</string>
   <string name="wizard_profile_skip">ഇത് പിന്നീട് ചെയ്യൂ</string>
   <string name="fab_path_choose">മറ്റൊരു ഫയൽ തിരഞ്ഞെടുക്കുക</string>
+  <string name="chat_extensions">ചാറ്റ് എക്സ്റ്റൻഷനുകൾ</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">പങ്കിടുക</string>
   <string name="bottomSheet_dialpad_btn">ഡയല് പഡ്</string>
@@ -306,16 +405,19 @@
   <string name="reset">പുനഃ സജ്ജീകരണം</string>
   <!--Swarm Details-->
   <string name="rename_btn">സ്ഥിരീകരണം</string>
+  <string name="rename_error">ഒഴിച്ചുവിടാൻ പാടില്ല.</string>
   <string name="swarm_description">വിവരണം ചേർക്കുക</string>
   <string name="tab_members">അംഗങ്ങള്</string>
   <string name="tab_files">ഫയലുകൾ</string>
   <string name="tab_settings">ക്രമീകരണങ്ങൾ</string>
+  <string name="dialog_title_contact">ഡിസ്പ്ലേ പേര് എഡിറ്റു ചെയ്യുക</string>
   <string name="dialog_hint_title">തലക്കെട്ട്</string>
   <string name="dialog_hint_description">വിവരണം</string>
   <string name="picker_title">കോൺടാക്റ്റുകൾ തിരഞ്ഞെടുക്കുക</string>
   <string name="picker_btn">കോൺടാക്റ്റുകൾ തിരഞ്ഞെടുക്കുക</string>
   <string name="bottomsheet_contact">ജാമി %1$s നെ ബന്ധപ്പെടുക</string>
   <string name="bottomsheet_remove">അംഗത്തെ നീക്കം ചെയ്യുക</string>
+  <string name="group_admin">അഡ്മിൻ</string>
   <!--JamiId-->
   <string name="jami_id_validate">ഉപയോക്തൃനാമം രജിസ്റ്റർ ചെയ്യുക</string>
   <string name="jami_id_choose_username">ഒരു ഉപയോക്തൃനാമം തിരഞ്ഞെടുക്കുക</string>
@@ -332,12 +434,17 @@
   <string name="donation_card_not_now">ഇപ്പോൾ വേണ്ട</string>
   <string name="donation_donate">സംഭാവന ചെയ്യുക</string>
   <!--Extension-->
+  <string name="export_side_step1_error_malformed">തിരിച്ചറിയാത്ത പുതിയ ഡിവൈസ് ഐഡന്റിഫയർ. മുകളിൽ കൊടുത്ത നിർദ്ദേശങ്ങൾ പിന്തുടരുക.</string>
   <string name="export_side_step1_code_connect">ബന്ധിപ്പിക്കുക</string>
   <string name="export_side_step2_cancel">റദ്ദാക്കുക</string>
   <string name="export_side_step2_confirm">സ്ഥിരീകരണം</string>
   <string name="import_side_step1_share">പങ്കിടുക</string>
+  <string name="import_side_step1_switch_to_code">അല്ലെങ്കിൽ ഇവിടെ ക്ലിക്കു ചെയ്ത് ഒതന്റിക്കേഷൻ കോഡ് നോക്കുക</string>
+  <string name="import_side_step1_switch_to_qr">അല്ലെങ്കിൽ ഇവിടെ ക്ലിക്കു ചെയ്ത് QR കോഡ് നോക്കുക</string>
   <string name="import_side_step2_password_import">ഇറക്കുമതി</string>
   <string name="import_side_step2_action_required">ചെയ്യാനുണ്ട്. സോഴ്സ് ഡിവൈസിലെ അക്കൗണ്ട് ദയവായി സ്ഥിരീകരിക്കുക.</string>
   <string name="import_side_step3_body_done">ഈ അക്കൗണ്ട് വിജയകരമായി ഇമ്പോർട്ട് ചെയ്തു.</string>
   <string name="link_device_error_authentication">ഈ ഡിവൈസുമായി ബന്ധിപ്പിക്കുമ്പോൾ ആധികാരികത സംബന്ധിച്ചുള്ള പ്രശ്നം വന്നിരിക്കുന്നു. ക്രഡെൻഷലുകൾ പരിശോധിച്ച് ദയവായി വീണ്ടും ശ്രമിക്കുക.</string>
+  <string name="link_device_error_timeout">ഓപ്പറേഷനുള്ള സമയം കഴിഞ്ഞു.</string>
+  <string name="link_device_error_canceled">യൂസർ ഓപ്പറേഷൻ റദ്ദാക്കി.</string>
 </resources>
