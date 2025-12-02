@@ -20,17 +20,19 @@ import android.content.Context
 import android.util.Log
 import dagger.hilt.android.HiltAndroidApp
 import org.unifiedpush.android.connector.UnifiedPush
+import org.unifiedpush.android.connector.ui.SelectDistributorDialogsBuilder
+import org.unifiedpush.android.connector.ui.UnifiedPushFunctions
 
 @HiltAndroidApp
 class JamiApplicationUnifiedPush : JamiApplication() {
     override val pushPlatform: String = PUSH_PLATFORM
 
-    override var pushToken: String = ""
+    override var pushToken: Pair<String, String> = Pair("", "")
         set(token) {
             Log.d(TAG, "setPushToken: $token");
             field = token
             if (mPreferencesService.settings.enablePushNotifications) {
-                mAccountService.setPushNotificationConfig(token, "", PUSH_PLATFORM)
+                mAccountService.setPushNotificationConfig(token.first, token.second, PUSH_PLATFORM)
             } else {
                 mAccountService.setPushNotificationToken("")
             }
@@ -39,7 +41,25 @@ class JamiApplicationUnifiedPush : JamiApplication() {
     override fun activityInit(activityContext: Context) {
         try {
             Log.w(TAG, "onCreate()")
-            UnifiedPush.registerAppWithDialog(activityContext)
+            SelectDistributorDialogsBuilder(
+                activityContext,
+                object : UnifiedPushFunctions {
+                    override fun tryUseDefaultDistributor(callback: (Boolean) -> Unit) =
+                        UnifiedPush.tryUseDefaultDistributor(activityContext, callback)
+
+                    override fun getAckDistributor(): String? =
+                        UnifiedPush.getAckDistributor(activityContext)
+
+                    override fun getDistributors(): List<String> =
+                        UnifiedPush.getDistributors(activityContext)
+
+                    override fun register(instance: String) =
+                        UnifiedPush.register(activityContext, instance)
+
+                    override fun saveDistributor(distributor: String) =
+                        UnifiedPush.saveDistributor(activityContext, distributor)
+                }
+            ).run()
         } catch (e: Exception) {
             Log.e(TAG, "Can't start service", e)
         }
@@ -48,7 +68,6 @@ class JamiApplicationUnifiedPush : JamiApplication() {
     fun onMessage(remoteMessage: Map<String, String>) {
         //Log.d(TAG, "onMessage: from:${remoteMessage.from} priority:${remoteMessage.priority} (was ${remoteMessage.originalPriority})")
         mAccountService.pushNotificationReceived("", remoteMessage)
-        //mNotificationService.processPush()
     }
 
     companion object {

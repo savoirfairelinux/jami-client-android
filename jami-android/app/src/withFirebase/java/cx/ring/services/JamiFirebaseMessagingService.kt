@@ -43,6 +43,6 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
     override fun onNewToken(refreshedToken: String) {
         Log.w("JamiFirebaseMessaging", "onNewToken $refreshedToken")
         val app = JamiApplication.instance as JamiApplicationFirebase?
-        app?.pushToken = refreshedToken
+        app?.pushToken = Pair(refreshedToken, "")
     }
 }

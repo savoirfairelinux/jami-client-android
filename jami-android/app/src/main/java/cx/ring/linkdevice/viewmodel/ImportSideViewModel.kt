@@ -87,7 +87,7 @@ class ImportSideViewModel @Inject constructor(
             .subscribe(this::updateDeviceAuthState)
             .apply { compositeDisposable.add(this) }
 
-        if (mDeviceService.pushToken.isNotEmpty()) {
+        mDeviceService.pushToken?.let {
             val settings = mPreferencesService.settings
             if (!settings.enablePushNotifications) {
                 mPreferencesService.settings = settings.copy(enablePushNotifications = true)
@@ -97,9 +97,9 @@ class ImportSideViewModel @Inject constructor(
 
     private fun setProxyDetails(details: MutableMap<String, String>) {
         details[ConfigKey.PROXY_ENABLED.key] = AccountConfig.TRUE_STR
-        val pushToken = mDeviceService.pushToken
-        if (pushToken.isNotEmpty()) {
+        mDeviceService.pushToken?.let { (pushToken, pushTopic) ->
             details[ConfigKey.PROXY_PUSH_TOKEN.key] = pushToken
+            details[ConfigKey.PROXY_PUSH_TOPIC.key] = pushTopic
             details[ConfigKey.PROXY_PUSH_PLATFORM.key] = mDeviceService.pushPlatform
         }
     }
