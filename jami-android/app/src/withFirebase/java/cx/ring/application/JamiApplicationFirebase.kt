@@ -29,12 +29,12 @@ import java.util.Locale
 class JamiApplicationFirebase : JamiApplication() {
     override val pushPlatform: String = PUSH_PLATFORM
 
-    override var pushToken: String = ""
+    override var pushToken: Pair<String, String>? = null
         set(token) {
             //Log.d(TAG, "setPushToken: $token");
             field = token
-            if (mPreferencesService.settings.enablePushNotifications) {
-                mAccountService.setPushNotificationConfig(token, "", PUSH_PLATFORM)
+            if (token != null && mPreferencesService.settings.enablePushNotifications) {
+                mAccountService.setPushNotificationConfig(token.first, token.second, PUSH_PLATFORM)
             } else {
                 mAccountService.setPushNotificationToken("")
             }
@@ -52,7 +52,7 @@ class JamiApplicationFirebase : JamiApplication() {
             FirebaseMessaging.getInstance().token.addOnSuccessListener { token: String? ->
                 Log.w(TAG, "Found push token")
                 try {
-                    pushToken = token ?: ""
+                    pushToken = if (token != null) Pair(token, "") else null
                 } catch (e: Exception) {
                     Log.e(TAG, "Can't set push token", e)
                 }

@@ -85,8 +85,8 @@ class DeviceRuntimeServiceImpl(
     override val cacheDir: File
         get() = mContext.cacheDir
 
-    override val pushToken: String
-        get() = JamiApplication.instance?.pushToken ?: ""
+    override val pushToken: Pair<String, String>?
+        get() = JamiApplication.instance?.pushToken
     override val pushPlatform: String
         get() = JamiApplication.instance?.pushPlatform ?: ""
 
