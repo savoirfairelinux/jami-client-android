@@ -409,6 +409,7 @@ class NotificationServiceImpl(
             if (account.isDhtProxyEnabled) {
                 val server = account.dhtProxyUsed
                 if (server.isEmpty()) return
+                val token = JamiApplication.instance?.pushToken ?: return
                 synchronized(this) {
                     pendingNotificationActions.add(start)
                 }
@@ -426,7 +427,7 @@ class NotificationServiceImpl(
                         AutoCloseable { urlConnection.disconnect() }.use {
                             JsonWriter(OutputStreamWriter(urlConnection.outputStream, "UTF-8")).apply {
                                 beginObject()
-                                name("key").value(JamiApplication.instance!!.pushToken)
+                                name("key").value(token.first)
                                 name("client_id").value(accountId)
                                 name("platform").value("android")
                                 endObject()

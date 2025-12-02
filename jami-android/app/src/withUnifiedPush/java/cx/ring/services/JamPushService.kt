@@ -16,19 +16,34 @@
  */
 package cx.ring.services
 
-import android.content.Context
 import android.util.Log
 import cx.ring.application.JamiApplication
 import cx.ring.application.JamiApplicationUnifiedPush
 import org.json.JSONObject
-import org.unifiedpush.android.connector.MessagingReceiver
-import java.net.URI
+import org.unifiedpush.android.connector.FailedReason
+import org.unifiedpush.android.connector.PushService
+import org.unifiedpush.android.connector.data.PushEndpoint
+import org.unifiedpush.android.connector.data.PushMessage
 
-class JamiPushReceiver : MessagingReceiver() {
-    override fun onMessage(context: Context, message: ByteArray, instance: String) {
-        Log.w("JamiPushReceiver", "onMessage ${String(message)} $instance")
+class JamiPushService : PushService() {
+    override fun onNewEndpoint(
+        endpoint: PushEndpoint,
+        instance: String
+    ) {
+        Log.w("JamiPushReceiver", "onNewEndpoint $endpoint $instance")
+        val app = JamiApplication.instance as JamiApplicationUnifiedPush?
+        val topicKey = endpoint.pubKeySet?.let { "${it.pubKey}|${it.auth}" } ?: ""
+        app?.pushToken = Pair(endpoint.url, topicKey)
+    }
+
+    override fun onMessage(
+        message: PushMessage,
+        instance: String
+    ) {
         try {
-            val obj = JSONObject(String(message))
+            val msgStr = String(message.content)
+            Log.w("JamiPushReceiver", "onMessage $msgStr $instance")
+            val obj = JSONObject(msgStr)
             val msg = HashMap<String, String>()
             obj.keys().forEach { msg[it] = obj.getString(it) }
             val app = JamiApplication.instance as JamiApplicationUnifiedPush?
@@ -38,21 +53,14 @@ class JamiPushReceiver : MessagingReceiver() {
         }
     }
 
-    override fun onNewEndpoint(context: Context, endpoint: String, instance: String) {
-        Log.w("JamiPushReceiver", "onNewEndpoint $endpoint $instance")
-        val app = JamiApplication.instance as JamiApplicationUnifiedPush?
-        //val uri = URI(endpoint) // Drop ?up=1 or query
-        //app?.pushToken = "${uri.scheme}://${uri.authority}${uri.path}"
-        app?.pushToken = endpoint
-    }
-
-    override fun onRegistrationFailed(context: Context, instance: String) {
-        // called when the registration is not possible, eg. no network
+    override fun onRegistrationFailed(
+        reason: FailedReason,
+        instance: String
+    ) {
         Log.w("JamiPushReceiver", "onRegistrationFailed $instance")
     }
 
-    override fun onUnregistered(context: Context, instance: String){
-        // called when this application is unregistered from receiving push messages
+    override fun onUnregistered(instance: String) {
         Log.w("JamiPushReceiver", "onUnregistered $instance")
     }
 
