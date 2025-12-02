@@ -186,7 +186,7 @@ class SettingsFragment :
                 backPressedCallback.isEnabled = true
             }
 
-            if (TextUtils.isEmpty(JamiApplication.instance?.pushToken)) {
+            if (JamiApplication.instance?.pushToken == null) {
                 settingsPushnotificationslogs.visibility = View.GONE
             } else {
                 settingsPushnotificationslogs.setOnClickListener { v: View ->
@@ -199,7 +199,7 @@ class SettingsFragment :
             }
             settingsDarkTheme.isChecked = presenter.darkMode
             settingsExtensionsSwitch.isChecked = JamiService.getPluginsEnabled()
-            if (TextUtils.isEmpty(JamiApplication.instance?.pushToken)) {
+            if (JamiApplication.instance?.pushToken == null) {
                 settingsPushNotificationsLayout.visibility = View.GONE
             }
             if (!JamiService.getPluginsEnabled()) {
