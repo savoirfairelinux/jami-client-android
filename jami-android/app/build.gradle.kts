@@ -171,7 +171,8 @@ dependencies {
         exclude(group= "com.google.firebase", module= "firebase-analytics")
         exclude(group= "com.google.firebase", module= "firebase-measurement-connector")
     }
-    "withUnifiedPushImplementation"("com.github.UnifiedPush:android-connector:2.4.0")
+    "withUnifiedPushImplementation"("org.unifiedpush.android:connector:3.1.2")
+    "withUnifiedPushImplementation"("org.unifiedpush.android:connector-ui:1.1.0")
 }
 
 protobuf {

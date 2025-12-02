@@ -21,14 +21,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         android:name=".application.JamiApplicationUnifiedPush"
         tools:ignore="UnusedAttribute">
 
-        <receiver android:exported="true"  android:enabled="true"  android:name=".services.JamiPushReceiver">
+        <service android:name=".services.JamiPushService"
+            android:exported="false">
             <intent-filter>
-                <action android:name="org.unifiedpush.android.connector.MESSAGE"/>
-                <action android:name="org.unifiedpush.android.connector.UNREGISTERED"/>
-                <action android:name="org.unifiedpush.android.connector.NEW_ENDPOINT"/>
-                <action android:name="org.unifiedpush.android.connector.REGISTRATION_FAILED"/>
+                <action android:name="org.unifiedpush.android.connector.PUSH_EVENT"/>
             </intent-filter>
-        </receiver>
+        </service>
 
     </application>
 
