@@ -20,6 +20,6 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class JamiApplicationNoPush : JamiApplication() {
-    override val pushToken: String = ""
+    override val pushToken: Pair<String, String>? = null
     override val pushPlatform: String = ""
 }

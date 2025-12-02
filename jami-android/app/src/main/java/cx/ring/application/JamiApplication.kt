@@ -97,7 +97,7 @@ abstract class JamiApplication : Application() {
             ringerModeChanged(intent.getIntExtra(AudioManager.EXTRA_RINGER_MODE, AudioManager.RINGER_MODE_NORMAL))
         }
     }
-    abstract val pushToken: String
+    abstract val pushToken: Pair<String, String>?
     abstract val pushPlatform: String
 
     var androidPhoneAccountHandle: PhoneAccountHandle? = null
@@ -159,7 +159,7 @@ abstract class JamiApplication : Application() {
                 // load accounts from Daemon
                 mAccountService.loadAccountsFromDaemon(mPreferencesService.hasNetworkConnected())
                 if (mPreferencesService.settings.enablePushNotifications) {
-                    pushToken.let { token -> if (!token.isEmpty()) JamiService.setPushNotificationToken(token) }
+                    pushToken.let { token -> if (token != null) mAccountService.setPushNotificationConfig(token.first, token.second, pushPlatform) }
                 } else {
                     JamiService.setPushNotificationToken("")
                 }
