@@ -127,7 +127,7 @@ class ConversationAdapter(
     )
 
     private val timestampUpdateTimer: Observable<Long> =
-        Observable.interval(10, TimeUnit.SECONDS, DeviceUtils.uiScheduler).startWithItem(0L)
+        Observable.interval(10, TimeUnit.SECONDS).startWithItem(0L)
     private var lastMsgPos = -1
     private var isComposing = false
     var showLinkPreviews = true
@@ -140,6 +140,16 @@ class ConversationAdapter(
                 }
             })
             .build()
+
+    private fun configureTimestamp(viewHolder: ConversationViewHolder, interaction: Interaction, isDateShown: Boolean) {
+        if (isDateShown) {
+            viewHolder.compositeDisposable.add(timestampUpdateTimer
+                .map { TextUtils.timestampToDate(viewHolder.itemView.context, formatter, interaction.timestamp) }
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe { viewHolder.mMsgDetailTxtPerm?.text = it })
+            viewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
+        } else viewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
+    }
 
     /**
      * Refreshes the data and notifies the changes
@@ -1050,15 +1060,7 @@ class ConversationAdapter(
         })
 
         val isDateShown = hasPermanentDateString(file, position)
-        if (isDateShown) {
-            viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                viewHolder.mMsgDetailTxtPerm?.text =
-                    TextUtils.timestampToDate(context, formatter, file.timestamp)
-            })
-            viewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
-        } else {
-            viewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
-        }
+        configureTimestamp(viewHolder, file, isDateShown)
 
         val contact = interaction.contact ?: return
         if (interaction.isIncoming && presenter.isGroup()) {
@@ -1326,12 +1328,7 @@ class ConversationAdapter(
 
         messageBubble.setBubbleColor(null)
         // Manage the update of the timestamp
-        if (isDateShown) {
-            viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                timePermanent?.text = TextUtils.timestampToDate(context, formatter, interaction.timestamp)
-            })
-            viewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
-        } else viewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
+        configureTimestamp(viewHolder, interaction, isDateShown)
 
         // If in a replying bubble, we need to overlap the message bubble
         // with the answered message bubble.
@@ -1574,7 +1571,6 @@ class ConversationAdapter(
 
         val peerDisplayName = convViewHolder.mPeerDisplayName
         val avatar = convViewHolder.mAvatar
-        val timePermanent = convViewHolder.mMsgDetailTxtPerm
 
         val account = interaction.account ?: return
         val contact = callHistory.contact ?: return
@@ -1625,19 +1621,9 @@ class ConversationAdapter(
         }
 
         // Manage the update of the timestamp
-        if (isDateShown) {
-            convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                timePermanent?.text = TextUtils
-                    .timestampToDate(context, formatter, callHistory.timestamp)
-            })
-            convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
-        } else convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
+        configureTimestamp(convViewHolder, interaction, isDateShown)
 
-        convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-            val timeString =
-                TextUtils.timestampToTime(context, formatter, callHistory.timestamp)
-            convViewHolder.mCallTime?.text = timeString
-        })
+        convViewHolder.mCallTime?.text = TextUtils.timestampToTime(context, formatter, callHistory.timestamp)
         // When a group call is occurring but you are not in it, a message is displayed
         // in conversation to inform the user about the call and invite him to join.
         if (callHistory.isGroupCall) {
