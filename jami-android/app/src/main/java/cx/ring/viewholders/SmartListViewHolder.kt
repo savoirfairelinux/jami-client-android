@@ -96,7 +96,7 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
                     if (state.second) {
                         binding.convLastItem.visibility = View.VISIBLE
                         binding.convLastItem.text = itemView.context.getString(R.string.ongoing_call)
-                    } else if (lastEvent != null) {
+                    } else if (lastEvent.type != Interaction.InteractionType.INVALID) {
                         binding.convLastItem.visibility = View.VISIBLE
                         binding.convLastItem.text = getLastEventSummary(lastEvent, itemView.context)
                     } else {

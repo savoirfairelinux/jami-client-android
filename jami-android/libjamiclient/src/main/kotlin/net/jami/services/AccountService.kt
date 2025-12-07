@@ -1389,7 +1389,6 @@ class AccountService(
                 }
                 subject?.onSuccess(conversation)
                 task?.onSuccess(interactions)
-                account.conversationChanged()
             }}
         } catch (e: Exception) {
             Log.e(TAG, "Exception loading message", e)
@@ -1510,7 +1509,6 @@ class AccountService(
         getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
             synchronized(conversation) {
                 val interaction = addMessage(account, conversation, message, true)
-                account.conversationUpdated(conversation)
                 val isIncoming = !interaction.contact!!.isUser
                 if (isIncoming)
                     incomingSwarmMessageSubject.onNext(interaction)

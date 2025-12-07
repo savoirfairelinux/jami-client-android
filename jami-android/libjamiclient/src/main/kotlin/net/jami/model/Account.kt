@@ -26,7 +26,6 @@ import net.jami.model.interaction.*
 import net.jami.model.interaction.Interaction.TransferStatus
 import net.jami.services.AccountService
 import net.jami.utils.Log
-import java.util.Collections
 import java.util.Date
 import kotlin.collections.ArrayList
 
@@ -54,25 +53,29 @@ class Account(
     private val conversations: MutableMap<String, Conversation> = HashMap()
     private val pending: MutableMap<String, Conversation> = HashMap()
     private val cache: MutableMap<String, Conversation> = HashMap()
-    private val sortedConversations: MutableList<Conversation> = ArrayList()
-    private val sortedPending: MutableList<Conversation> = ArrayList()
     var registeringUsername = false
     val loadedSubject = CompletableSubject.create()
     val loaded: Completable
         get() = loadedSubject
-    private var conversationsChanged = true
-    private var pendingsChanged = true
+
     private var historyLoaded = false
-    private val conversationSubject: Subject<Conversation> = PublishSubject.create()
-    private val pendingSubject: Subject<List<Conversation>> = BehaviorSubject.create()
-    private val conversationsSubject: Subject<List<Conversation>> = BehaviorSubject.create()
+
+    private val conversationMapSubject: Subject<Map<String, Conversation>> = BehaviorSubject.create()
+    private val pendingMapSubject: Subject<Map<String, Conversation>> = BehaviorSubject.create()
+
     private val contactListSubject = BehaviorSubject.create<Collection<Contact>>()
     private val contactLocations: MutableMap<Contact, Observable<ContactLocation>> = HashMap()
     private val mLocationSubject: Subject<Map<Contact, Observable<ContactLocation>>> = BehaviorSubject.createDefault(contactLocations)
     private val mLocationStartedSubject: Subject<ContactLocationEntry> = PublishSubject.create()
     private val registrationStateSubject = BehaviorSubject.createDefault(AccountConfig.RegistrationState.valueOf(mVolatileDetails[ConfigKey.ACCOUNT_REGISTRATION_STATUS]))
-    private val unreadConversationsSubject: Subject<Int> = BehaviorSubject.create()
-    val unreadConversations: Observable<Int> = unreadConversationsSubject.distinctUntilChanged()
+
+    private val conversationsWithLastEventSubject: Observable<Array<Any>> = getLatest(conversationMapSubject)
+    private val conversationsSubject: Observable<List<Conversation>> = conversationsWithLastEventSubject.map(::getSorted).share()
+    val unreadConversations: Observable<Int> = conversationsWithLastEventSubject.map { conversations ->
+        conversations.count { !(it as Pair<Conversation, Interaction>).second.isRead }
+    }
+
+    private val pendingSubject: Observable<List<Conversation>> = getLatest(pendingMapSubject).map (::getSorted)
 
     var historyLoader: Single<Account>? = null
     var loadedProfile: Single<Profile>? = null
@@ -86,11 +89,7 @@ class Account(
     val loadedProfileObservable: Observable<Profile> = mProfileSubject.switchMapSingle { it }
 
     fun cleanup() {
-        conversationSubject.onComplete()
-        conversationsSubject.onComplete()
-        pendingSubject.onComplete()
         contactListSubject.onComplete()
-        //trustRequestsSubject.onComplete();
     }
 
     fun canSearch(): Boolean = getDetail(ConfigKey.MANAGER_URI).isNotEmpty()
@@ -202,11 +201,6 @@ class Account(
         }
 
     /**
-     * Get conversation subject
-     */
-    fun getConversationSubject(): Observable<Conversation> = conversationSubject
-
-    /**
      * Get invitation subject
      */
     fun getPendingSubject(): Observable<List<Conversation>> = pendingSubject
@@ -219,63 +213,18 @@ class Account(
         return pending.values
     }
 
-    private fun pendingRefreshed() {
-        if (historyLoaded) {
-            pendingSubject.onNext(getSortedPending())
-        }
-    }
-
     private fun pendingChanged() {
-        pendingsChanged = true
-        pendingRefreshed()
-    }
-
-    private fun pendingUpdated(conversation: Conversation?) {
         if (!historyLoaded) return
-        if (pendingsChanged) {
-            getSortedPending()
-        } else {
-            conversation?.sortHistory()
-            sortedPending.sortWith(ConversationComparator())
-        }
-        pendingSubject.onNext(getSortedPending())
-    }
-
-    private fun conversationRefreshed(conversation: Conversation, sorted: List<Conversation>) {
-        if (historyLoaded) {
-            conversationSubject.onNext(conversation)
-            updateUnreadConversations(sorted)
+        synchronized(pending) {
+            pendingMapSubject.onNext(pending)
         }
     }
 
     fun conversationChanged() {
-        val sortedList: List<Conversation>?
+        if (!historyLoaded) return
         synchronized(conversations) {
-            conversationsChanged = true
-            sortedList = if (historyLoaded) { ArrayList(getSortedConversations()) } else null
+            conversationMapSubject.onNext(conversations)
         }
-        if (sortedList != null) {
-            conversationsSubject.onNext(sortedList)
-            updateUnreadConversations(sortedList)
-        }
-    }
-
-    fun conversationUpdated(conversation: Conversation) {
-        val sortedList: List<Conversation>
-        synchronized(conversations) {
-            if (!historyLoaded) return
-            if (conversationsChanged) {
-                getSortedConversations()
-            } else {
-                conversation.sortHistory()
-                sortedConversations.sortWith(ConversationComparator())
-            }
-            sortedList = ArrayList(sortedConversations)
-        }
-        // TODO: remove next line when profile is updated through dedicated signal
-        conversationSubject.onNext(conversation)
-        conversationsSubject.onNext(sortedList)
-        updateUnreadConversations(sortedList)
     }
 
     /**
@@ -307,13 +256,13 @@ class Account(
         val key = conversation.uri.uri
         synchronized(conversations) {
             if (conversation == conversations[key]) {
-                conversationUpdated(conversation)
+                conversationChanged()
                 return
             }
         }
         synchronized(pending) {
             if (conversation == pending[key]) {
-                pendingUpdated(conversation)
+                pendingChanged()
                 return
             }
         }
@@ -324,7 +273,7 @@ class Account(
             ) {
                 return
             }
-            if (mContacts.containsKey(key) || !isJami) {
+            if (/*mContacts.containsKey(key)*/conversation.request == null || !isJami) {
                 Log.w(TAG, "updated " + conversation.accountId + " contact " + key)
                 conversations[key] = conversation
                 conversationChanged()
@@ -332,19 +281,6 @@ class Account(
                 pending[key] = conversation
                 pendingChanged()
             }
-        }
-    }
-
-    fun refreshed(conversation: Conversation) {
-        synchronized(conversations) {
-            if (conversations.containsValue(conversation)) {
-                conversationRefreshed(conversation, sortedConversations)
-                return
-            }
-        }
-        synchronized(pending) {
-            if (pending.containsValue(conversation))
-                pendingRefreshed()
         }
     }
 
@@ -483,7 +419,10 @@ class Account(
     val isSip: Boolean
         get() = config[ConfigKey.ACCOUNT_TYPE] == AccountConfig.ACCOUNT_TYPE_SIP
     val isJami: Boolean
-        get() = config[ConfigKey.ACCOUNT_TYPE] == AccountConfig.ACCOUNT_TYPE_JAMI
+        get() {
+            Log.w(TAG, config[ConfigKey.ACCOUNT_TYPE])
+            return config[ConfigKey.ACCOUNT_TYPE] == AccountConfig.ACCOUNT_TYPE_JAMI
+        }
 
     private fun getDetail(key: ConfigKey): String = config[key]
 
@@ -734,41 +673,16 @@ class Account(
     fun setHistoryLoaded(conversations: List<Conversation> = emptyList()) {
         synchronized(this.conversations) {
             if (historyLoaded) return
-            //Log.w(TAG, "setHistoryLoaded $accountId ${conversations.size}")
-            for (c in conversations) {
-                val contact = c.contact
-                if (!c.isSwarm && contact != null && contact.conversationUri.blockingFirst() == c.uri)
-                    updated(c)
-            }
+            if (!isJami)
+                for (c in conversations) {
+                    val contact = c.contact
+                    if (contact != null && contact.conversationUri.blockingFirst() == c.uri)
+                        updated(c)
+                }
             historyLoaded = true
         }
         conversationChanged()
         pendingChanged()
-    }
-
-    private fun getSortedConversations(): List<Conversation> {
-        if (conversationsChanged) {
-            sortedConversations.clear()
-            if (conversations.isNotEmpty()) {
-                sortedConversations.addAll(conversations.values)
-                for (c in sortedConversations) c.sortHistory()
-                //Collections.sort(sortedConversations, ConversationComparator())
-                sortedConversations.sortWith(ConversationComparator())
-            }
-            conversationsChanged = false
-        }
-        return sortedConversations
-    }
-
-    private fun getSortedPending(): List<Conversation> {
-        if (pendingsChanged) {
-            sortedPending.clear()
-            sortedPending.addAll(pending.values)
-            for (c in sortedPending) c.sortHistory()
-            Collections.sort(sortedPending, ConversationComparator())
-            pendingsChanged = false
-        }
-        return sortedPending
     }
 
     private fun contactAdded(contact: Contact) {
@@ -808,12 +722,6 @@ class Account(
             1 -> Contact.PresenceStatus.AVAILABLE
             else -> Contact.PresenceStatus.CONNECTED
         })
-        synchronized(conversations) {
-            Pair(conversations[contactUri], sortedConversations)
-        }.let { it.first?.let {
-            conv -> conversationRefreshed(conv, it.second)
-        }}
-        synchronized(pending) { if (pending.containsKey(contactUri)) pendingRefreshed() }
     }
 
     fun composingStatusChanged(conversationId: String, contactUri: Uri, status: ComposingStatus) {
@@ -922,12 +830,6 @@ class Account(
     fun setActiveCalls(conversationId: String, activeCalls: List<Conversation.ActiveCall>) =
         getSwarm(conversationId)?.setActiveCalls(activeCalls)
 
-    private fun updateUnreadConversations(sortedConversations: List<Conversation>) {
-        unreadConversationsSubject.onNext(sortedConversations.count {
-            it.lastEvent?.isRead == false
-        })
-    }
-
     private class ConversationComparator : Comparator<Conversation> {
         override fun compare(a: Conversation, b: Conversation): Int =
             Interaction.compare(b.lastEvent, a.lastEvent)
@@ -941,5 +843,19 @@ class Account(
         private const val CONTACT_ID = "id"
         private const val CONTACT_CONVERSATION = "conversationId"
         private const val LOCATION_SHARING_EXPIRATION_MS = 1000 * 60 * 2
+
+        private fun getLatest(conversation: Subject<Map<String, Conversation>>) = conversation.switchMap { conversations ->
+            if (conversations.isEmpty()) Observable.just(emptyArray())
+            else Observable.combineLatest(conversations.values.map {
+                conv -> conv.lastEventObservable.map { Pair(conv, it) }
+            }) { it }
+        }
+        private fun getSorted(conversations: Array<Any>): List<Conversation> {
+            if (conversations.isEmpty()) return emptyList()
+            conversations.sortWith { a, b -> Interaction.compare(
+                (b as Pair<Conversation, Interaction>).second,
+                (a as Pair<Conversation, Interaction>).second) }
+            return conversations.map { (it as Pair<Conversation, Interaction>).first }
+        }
     }
 }
