@@ -111,12 +111,17 @@ class DRingService : Service() {
         }
 
         fun disable(context: Context) {
-            val connectivityManager = context.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager?
-            connectivityManager?.unregisterNetworkCallback(this)
+            val connectivityManager =
+                context.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager?
+            try {
+                connectivityManager?.unregisterNetworkCallback(this)
+            } catch (e: Exception) {
+                Log.w(TAG, "Can't unregister network callback", e)
+            }
         }
 
         override fun onAvailable(network: Network) {
-            Log.w(TAG, "onAvailable ${network}")
+            Log.w(TAG, "onAvailable $network")
             updateConnectivityState(true)
         }
 
