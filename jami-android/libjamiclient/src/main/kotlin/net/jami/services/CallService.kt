@@ -602,7 +602,7 @@ abstract class CallService(
         }
     }
 
-    fun incomingCallWithMedia(accountId: String, callId: String, from: String, mediaList: VectMap?) {
+    fun incomingCall(accountId: String, callId: String, from: String, mediaList: VectMap?) {
         Log.d(TAG, "incoming call: $accountId, $callId, $from")
         val nMediaList = mediaList ?: emptyList()
         val medias = nMediaList.mapTo(ArrayList(nMediaList.size)) { mediaMap -> Media(mediaMap) }
