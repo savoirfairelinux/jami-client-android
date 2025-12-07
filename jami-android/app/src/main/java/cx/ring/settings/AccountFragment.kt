@@ -79,7 +79,7 @@ class AccountFragment : Fragment() {
                 binding.systemChangePasswordTitle.setText(if (hasPassword) R.string.account_password_change else R.string.account_password_set)
                 binding.settingsDeleteAccount.setOnClickListener { createDeleteDialog(account.accountId).show() }
                 binding.settingsBlackList.setOnClickListener {
-                    (parentFragment as? JamiAccountSummaryFragment)?.goToBlackList(account.accountId)
+                    (parentFragment as? JamiAccountSummaryFragment)?.goToBlockList(account.accountId)
                 }
                 binding.settingsBiometric.isVisible = hasPassword
                 if (hasPassword) {

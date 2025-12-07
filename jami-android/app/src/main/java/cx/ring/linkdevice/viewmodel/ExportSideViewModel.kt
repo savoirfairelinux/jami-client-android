@@ -51,11 +51,12 @@ class ExportSideViewModel @Inject constructor(
     @param:Named("UiScheduler") private val mUiScheduler: Scheduler
 ) : AuthStateListener, ViewModel() {
 
+    lateinit var accountId: String
+
     // Expose screen UI state
     private val _uiState = MutableStateFlow<AddDeviceExportState>(AddDeviceExportState.Init())
     val uiState: StateFlow<AddDeviceExportState> = _uiState.asStateFlow()
 
-    private val accountId = accountService.currentAccount!!.accountId
     private var operationId: Long? = null
 
     private var compositeDisposable = CompositeDisposable()
