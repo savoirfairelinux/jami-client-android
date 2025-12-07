@@ -239,6 +239,7 @@ class TwoPaneLayout @JvmOverloads constructor(
                 maxLayoutHeight = heightSize - paddingTop - paddingBottom
                 layoutHeight = maxLayoutHeight
             }
+            MeasureSpec.UNSPECIFIED,
             MeasureSpec.AT_MOST -> maxLayoutHeight = heightSize - paddingTop - paddingBottom
         }
         var weightSum = 0f
