@@ -25,6 +25,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.leanback.widget.GuidanceStylist.Guidance
@@ -41,6 +42,7 @@ import net.jami.navigation.HomeNavigationPresenter
 import net.jami.navigation.HomeNavigationView
 import net.jami.navigation.HomeNavigationViewModel
 import net.jami.utils.VCardUtils
+import java.lang.Exception
 
 @AndroidEntryPoint
 class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter, HomeNavigationView>(), HomeNavigationView {
@@ -159,7 +161,11 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter,
     }
 
     override fun goToGallery() {
-        pickProfilePicture.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        try {
+            pickProfilePicture.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        } catch (e: Exception) {
+            Toast.makeText(requireContext(), R.string.conversation_open_file_error, Toast.LENGTH_SHORT).show()
+        }
     }
 
     companion object {
