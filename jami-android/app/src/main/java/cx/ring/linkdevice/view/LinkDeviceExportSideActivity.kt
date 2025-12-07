@@ -16,7 +16,6 @@
  */
 package cx.ring.linkdevice.view
 
-import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.OnBackPressedCallback
@@ -33,6 +32,7 @@ import cx.ring.databinding.ActivityLinkDeviceExportSideBinding
 import cx.ring.linkdevice.viewmodel.AddDeviceExportState
 import dagger.hilt.android.AndroidEntryPoint
 import cx.ring.linkdevice.viewmodel.ExportSideViewModel
+import cx.ring.utils.ConversationPath
 import kotlinx.coroutines.launch
 
 
@@ -49,10 +49,16 @@ class LinkDeviceExportSideActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLinkDeviceExportSideBinding.inflate(layoutInflater)
+        val accountId = intent.getStringExtra(ConversationPath.KEY_ACCOUNT_ID)
+        if (accountId == null) {
+            finish(1)
+            return
+        }
         setContentView(binding.root)
         setupViewPager()
         setupToolbar()
 
+        exportSideViewModel.accountId = accountId
         lifecycleScope.launch {
             exportSideViewModel.uiState.collect {
                 Log.d(TAG, "UI state: $it")
@@ -170,7 +176,7 @@ class LinkDeviceExportSideActivity : AppCompatActivity(),
             Log.w(TAG, "Account exportation failed.")
             exportSideViewModel.onCancel()
         }
-        setResult(if (returnCode == 0) Activity.RESULT_OK else Activity.RESULT_CANCELED)
+        setResult(if (returnCode == 0) RESULT_OK else RESULT_CANCELED)
         finish()
     }
 

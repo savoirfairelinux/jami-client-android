@@ -83,6 +83,8 @@ import net.jami.services.AccountService
 import java.io.File
 import javax.inject.Inject
 import cx.ring.linkdevice.view.LinkDeviceExportSideActivity
+import cx.ring.utils.ConversationPath
+import androidx.core.view.isGone
 
 @AndroidEntryPoint
 class JamiAccountSummaryFragment :
@@ -171,7 +173,7 @@ class JamiAccountSummaryFragment :
             linkedDevices.setRightDrawableOnClickListener { onDeviceRename() }
             registerName.setOnClickListener { showUsernameRegistrationPopup() }
             chipMore.setOnClickListener {
-                if (devicesList.visibility == View.GONE) {
+                if (devicesList.isGone) {
                     expand(devicesList)
                 } else collapse(devicesList)
             }
@@ -207,7 +209,7 @@ class JamiAccountSummaryFragment :
 
     override fun onResume() {
         super.onResume()
-        (activity as HomeActivity?)?.let { activity ->
+        (activity as HomeActivity?)?.let { _ ->
             mBinding!!.accountSwitch.setOnCheckedChangeListener { _, isChecked: Boolean ->
                 presenter.enableAccount(isChecked)
             }
@@ -659,10 +661,8 @@ class JamiAccountSummaryFragment :
         }
     }
 
-    private fun fragmentWithBundle(result: Fragment, accountId: String): Fragment {
-        return result.apply {
-            arguments = Bundle().apply { putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId) }
-        }
+    private fun fragmentWithBundle(result: Fragment, accountId: String): Fragment = result.apply {
+        arguments = Bundle().apply { putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId) }
     }
 
     private fun changeFragment(fragment: Fragment, tag: String?) {
@@ -692,7 +692,7 @@ class JamiAccountSummaryFragment :
         changeFragment(fragmentWithBundle(AdvancedAccountFragment(), accountId), AdvancedAccountFragment.TAG)
     }
 
-    fun goToBlackList(accountId: String?) {
+    fun goToBlockList(accountId: String?) {
         val fragment = BlockListFragment().apply {
             arguments = Bundle().apply { putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId) }
         }
@@ -730,8 +730,10 @@ class JamiAccountSummaryFragment :
     }
 
     private fun showLinkNewDevice() {
+        val accountId = mAccount?.accountId ?: return
         linkDeviceActivityLauncher
-            .launch(Intent(requireContext(), LinkDeviceExportSideActivity::class.java))
+            .launch(Intent(requireContext(), LinkDeviceExportSideActivity::class.java)
+                .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId))
     }
 
     private fun expand(summary: View) {
