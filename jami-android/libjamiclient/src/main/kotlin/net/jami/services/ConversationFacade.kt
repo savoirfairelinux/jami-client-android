@@ -94,7 +94,6 @@ class ConversationFacade(
 
     fun readMessages(account: Account, conversation: Conversation, cancelNotification: Boolean): String? {
         val lastMessage = readMessages(conversation) ?: return null
-        account.refreshed(conversation)
 
         // Mark the message as read (daemon will deal with "read receipt" parameter on his own).
         mAccountService.setMessageDisplayed(account.accountId, conversation.uri, lastMessage)
@@ -133,7 +132,6 @@ class ConversationFacade(
                 if (c.isVisible) message.read()
                 mHistoryService.insertInteraction(c.accountId, c, message).subscribe()
                 c.addTextMessage(message)
-                mAccountService.getAccount(c.accountId)!!.conversationUpdated(c)
                 message
             }.ignoreElement()
     }
@@ -285,12 +283,11 @@ class ConversationFacade(
     }
 
     fun observeConversation(account: Account, conversation: Conversation, hasPresence: Boolean): Observable<ConversationItemViewModel> =
-         Observable.combineLatest(account.getConversationSubject()
-             .filter { c: Conversation -> c === conversation }
-             .startWithItem(conversation)
-             .switchMap { c -> c.profile },
+         Observable.combineLatest(
+             conversation.mode,
+             conversation.profile,
              conversation.contactUpdates.switchMap { c -> mContactService.observeContact(conversation.accountId, c, hasPresence) }
-         ) { profile, contacts -> ConversationItemViewModel(conversation, profile, contacts, hasPresence) }
+         ) { mode, profile, contacts -> ConversationItemViewModel(conversation, profile, contacts, hasPresence) }
 
     fun observeConversations(
         account: Account,

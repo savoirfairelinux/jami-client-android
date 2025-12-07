@@ -32,10 +32,6 @@ open class ConversationHistory {
 
     /* Needed by ORMLite */
     constructor()
-    constructor(conversation: Conversation) {
-        id = conversation.id
-        participant = conversation.participant
-    }
 
     constructor(id: Int, participant: String) {
         this.id = id

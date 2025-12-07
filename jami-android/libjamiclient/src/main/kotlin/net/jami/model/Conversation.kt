@@ -28,14 +28,16 @@ import net.jami.utils.Log
 import net.jami.utils.StringUtils
 import java.util.*
 
-class Conversation : ConversationHistory {
-    val accountId: String
-    val uri: Uri
-    val contacts: MutableList<Contact>
+class Conversation(
+    val accountId: String,
+    val uri: Uri,
+    val contacts: MutableList<Contact>,
+    private val mMode: Subject<Mode>
+) : ConversationHistory() {
     val roles: MutableMap<String, MemberRole> = HashMap()
     private val rawHistory: NavigableMap<Long, Interaction> = TreeMap()
     private val currentCalls = ArrayList<Conference>()
-    val aggregateHistory = ArrayList<Interaction>(32)
+    private val aggregateHistory = ArrayList<Interaction>(32)
 
     val lastDisplayedMessages: MutableMap<String, String> = HashMap()
     private val updatedElementSubject: Subject<Pair<Interaction, ElementStatus>> = PublishSubject.create()
@@ -65,7 +67,6 @@ class Conversation : ConversationHistory {
         private set
     var lastSent: String? = null
         private set
-    private val mMode: Subject<Mode>
 
     private val profileSubject: Subject<Single<Profile>> = BehaviorSubject.createDefault(Profile.EMPTY_PROFILE_SINGLE)
     val profile: Observable<Profile> = profileSubject.switchMapSingle { it }
@@ -127,7 +128,9 @@ class Conversation : ConversationHistory {
             if (e != null)
                 lastEventSubject.onNext(e)
         }
-    private val lastEventSubject: Subject<Interaction> = BehaviorSubject.create()
+
+    private val lastEventSubject: Subject<Interaction> = BehaviorSubject.createDefault(Interaction(accountId))
+    val lastEventObservable: Observable<Interaction> = lastEventSubject
     val currentStateObservable: Observable<Pair<Interaction, Boolean>> =
         Observable.combineLatest(
             lastEventSubject,
@@ -138,21 +141,13 @@ class Conversation : ConversationHistory {
                 false
             }) { event, hasCurrentCall -> Pair(event, hasCurrentCall) }
 
-    constructor(accountId: String, contact: Contact) {
+    constructor(accountId: String, contact: Contact) : this(accountId, contact.uri, mutableListOf(contact), BehaviorSubject.createDefault(Mode.Legacy)) {
         // This should be a legacy conversation (contact view), no role importance.
-        this.accountId = accountId
-        contacts = mutableListOf(contact)
-        uri = contact.uri
         participant = contact.uri.uri
         mContactSubject.onNext(contacts)
-        mMode = BehaviorSubject.createDefault(Mode.Legacy)
     }
 
-    constructor(accountId: String, uri: Uri, mode: Mode) {
-        this.accountId = accountId
-        this.uri = uri
-        contacts = ArrayList(3)
-        mMode = BehaviorSubject.createDefault(mode)
+    constructor(accountId: String, uri: Uri, mode: Mode) : this(accountId, uri, ArrayList(3), BehaviorSubject.createDefault(mode)) {
     }
 
     fun getConference(confId: String?): Conference? {
