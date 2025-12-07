@@ -210,7 +210,7 @@ class DRingService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        // Log.i(TAG, "onStartCommand " + (intent == null ? "null" : intent.getAction()) + " " + flags + " " + startId);
+        // Log.i(TAG, "onStartCommand ${intent?.action} $flags $startId");
         if (intent != null) {
             parseIntent(intent)
         }

@@ -65,7 +65,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     }
 
     override fun setLoading(loading: Boolean) {
-        binding!!.loadingIndicator.visibility = if (loading) View.VISIBLE else View.GONE
+        binding?.loadingIndicator?.visibility = if (loading) View.VISIBLE else View.GONE
     }
 
     override fun removeConversation(accountId: String, conversationUri: Uri) {

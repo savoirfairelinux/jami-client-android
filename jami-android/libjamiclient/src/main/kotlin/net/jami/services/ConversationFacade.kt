@@ -114,7 +114,7 @@ class ConversationFacade(
             } else {
                 val did = message.daemonId
                 if (lastRead == null && did != null && did != 0L)
-                    lastRead = java.lang.Long.toString(did, 16)
+                    lastRead = did.toString(16)
                 mHistoryService.updateInteraction(message, conversation.accountId).subscribe()
             }
         }
