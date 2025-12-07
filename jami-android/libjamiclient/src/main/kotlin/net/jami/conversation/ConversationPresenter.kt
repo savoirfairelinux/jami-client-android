@@ -401,21 +401,19 @@ class ConversationPresenter @Inject constructor(
         mCompositeDisposable.add(mConversationSubject
             .firstElement()
             .subscribe { conversation: Conversation ->
-                val view = view
-                if (view != null) {
-                    val conf = conversation.currentCall
-                    if (conf != null && conf.participants.isNotEmpty()
-                        && conf.participants[0].callStatus !== CallStatus.INACTIVE
-                        && conf.participants[0].callStatus !== CallStatus.FAILURE) {
-                        // Navigate to the call activity with the existing call
-                        view.goToCallActivity(conf.id, conf.hasActiveVideo())
-                    } else {
-                        // Navigate to the call activity with the conversation details
-                        view.goToCallActivityWithResult(
-                            conversation.accountId, conversation.uri,
-                            conversation.contact!!.uri, withCamera
-                        )
-                    }
+                val view = view ?: return@subscribe
+                val conf = conversation.currentCall
+                if (conf != null && conf.participants.isNotEmpty()
+                    && conf.participants[0].callStatus !== CallStatus.INACTIVE
+                    && conf.participants[0].callStatus !== CallStatus.FAILURE) {
+                    // Navigate to the call activity with the existing call
+                    view.goToCallActivity(conf.id, conf.hasActiveVideo())
+                } else {
+                    // Navigate to the call activity with the conversation details
+                    view.goToCallActivityWithResult(
+                        conversation.accountId, conversation.uri,
+                        conversation.contact!!.uri, withCamera
+                    )
                 }
             })
     }

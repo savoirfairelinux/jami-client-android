@@ -33,6 +33,7 @@ import java.io.File
 import java.lang.IllegalArgumentException
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
+import androidx.core.net.toUri
 
 /**
  * This class distributes content uri used to pass along data in the app
@@ -44,7 +45,7 @@ object ContentUri {
     const val SCHEME_TV = "jamitv"
     const val PATH_TV_HOME = "home"
     const val PATH_TV_CONVERSATION = "conversation"
-    private val AUTHORITY_URI = Uri.parse("content://$AUTHORITY")
+    private val AUTHORITY_URI = "content://$AUTHORITY".toUri()
     const val AUTHORITY_URL = "link.jami.net"
 
     val CONVERSATION_CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "conversation")

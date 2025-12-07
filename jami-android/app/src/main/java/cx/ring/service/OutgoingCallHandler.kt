@@ -23,6 +23,7 @@ import android.net.Uri
 import android.preference.PreferenceManager
 import cx.ring.R
 import cx.ring.client.CallActivity
+import androidx.core.net.toUri
 
 class OutgoingCallHandler : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
@@ -39,7 +40,7 @@ class OutgoingCallHandler : BroadcastReceiver() {
             if (!isRingId && systemDialerSip || isRingId && systemDialerRing || uri.isSingleIp) {
                 val i = Intent(Intent.ACTION_CALL)
                     .setClass(context, CallActivity::class.java)
-                    .setData(Uri.parse(phoneNumber))
+                    .setData(phoneNumber.toUri())
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 context.startActivity(i)
                 resultData = null
