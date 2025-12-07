@@ -32,6 +32,7 @@ android {
                     "-DBUILD_CONTRIB=ON",
                     "-DBUILD_EXTRA_TOOLS=OFF",
                     "-DBUILD_TESTING=OFF",
+                    "-DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON",
                     "-DJAMI_JNI=ON",
                     "-DJAMI_JNI_PACKAGEDIR="+rootProject.projectDir.resolve("libjamiclient/src/main/java"),
                     "-DJAMI_DATADIR=/data/data/$namespace/files",
