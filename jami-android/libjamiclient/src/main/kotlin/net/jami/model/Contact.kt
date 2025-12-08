@@ -23,7 +23,7 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
 import java.util.*
 
-class Contact constructor(val uri: Uri, val isUser: Boolean = false) {
+class Contact(val uri: Uri, val isUser: Boolean = false) {
     enum class Status {
         BLOCKED, REQUEST_SENT, CONFIRMED, NO_REQUEST
     }
