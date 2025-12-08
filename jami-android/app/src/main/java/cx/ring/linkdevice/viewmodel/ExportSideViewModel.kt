@@ -65,7 +65,7 @@ class ExportSideViewModel @Inject constructor(
         // Verify the input.
         if (jamiAuthentication.isEmpty()
             || !jamiAuthentication.startsWith("jami-auth://")
-            || (jamiAuthentication.length != 59)
+            || (jamiAuthentication.length != 59 && jamiAuthentication.length != 83)
         ) {
             Log.w(TAG, "Invalid input: $jamiAuthentication")
             // If state is unchanged, error is not emitted again.
