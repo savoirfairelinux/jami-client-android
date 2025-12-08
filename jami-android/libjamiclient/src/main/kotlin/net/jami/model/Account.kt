@@ -55,7 +55,7 @@ class Account(
     private val pending: MutableMap<String, Conversation> = HashMap()
     private val cache: MutableMap<String, Conversation> = HashMap()
     var registeringUsername = false
-    val loadedSubject = CompletableSubject.create()
+    val loadedSubject: CompletableSubject = CompletableSubject.create()
     val loaded: Completable
         get() = loadedSubject
 
@@ -421,7 +421,7 @@ class Account(
         get() = config[ConfigKey.ACCOUNT_TYPE] == AccountConfig.ACCOUNT_TYPE_SIP
     val isJami: Boolean
         get() {
-            Log.w(TAG, config[ConfigKey.ACCOUNT_TYPE])
+            //Log.w(TAG, config[ConfigKey.ACCOUNT_TYPE])
             return config[ConfigKey.ACCOUNT_TYPE] == AccountConfig.ACCOUNT_TYPE_JAMI
         }
 
