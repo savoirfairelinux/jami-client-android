@@ -37,7 +37,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginEnd="8dp"
-        android:layout_toEndOf="@+id/icon"
+        android:layout_toEndOf="@id/icon"
+        android:layout_toStartOf="@id/channels"
         android:orientation="vertical">
 
         <TextView
@@ -64,4 +65,11 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             android:textSize="@dimen/text_size_small"
             tools:text="@tools:sample/us_zipcodes" />
     </LinearLayout>
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/channels"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        tools:text="5" />
 </RelativeLayout>

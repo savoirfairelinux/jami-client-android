@@ -101,6 +101,11 @@ class ConnectionMonitorFragment: Fragment() {
                     else -> ContextCompat.getColorStateList(it.root.context, R.color.icon_color)
                 }
                 it.icon.contentDescription = connection.status.toString()
+                if (connection.status == ConnectionStatus.Connected) {
+                    it.channels.text = connection.channels.toString()
+                    it.channels.isVisible = true
+                } else
+                    it.channels.isVisible = false
             }
             holder.binding?.let {
                 val contact = connections[position].contact!!
