@@ -26,7 +26,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
-                version = "4.1.0"
+                version = "4.1.2"
                 arguments += listOf(
                     "-DANDROID_STL=c++_shared",
                     "-DBUILD_CONTRIB=ON",
@@ -88,7 +88,7 @@ android {
     externalNativeBuild {
         cmake {
             path = file("../../daemon/CMakeLists.txt")
-            version = "4.1.0"
+            version = "4.1.2"
         }
     }
 }
