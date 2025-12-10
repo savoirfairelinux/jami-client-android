@@ -1,8 +1,8 @@
-FROM gradle:jdk17-jammy as build
+FROM gradle:jdk17-noble AS build
 
-ENV LANG en_US.utf8
-ENV LC_ALL en_US.utf8
-ENV DEBIAN_FRONTEND noninteractive
+ENV LANG=en_US.utf8
+ENV LC_ALL=en_US.utf8
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Script dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -50,12 +50,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Swig
 RUN wget -O /tmp/swig.tar.gz https://github.com/swig/swig/archive/v4.2.1.tar.gz && \
-	tar xzf  /tmp/swig.tar.gz -C /opt && \
-	cd /opt/swig-4.2.1/ && ./autogen.sh && ./configure && make && make install && \
-	cd .. && rm -rf /opt/swig-4.2.1 /tmp/swig.tar.gz
+    tar xzf  /tmp/swig.tar.gz -C /opt && \
+    cd /opt/swig-4.2.1/ && ./autogen.sh && ./configure && make && make install && \
+    cd .. && rm -rf /opt/swig-4.2.1 /tmp/swig.tar.gz
 
 # Install Fastlane
 RUN gem install fastlane -NV
+
+ARG API_LEVEL="36"
+ARG BUILD_TOOLS="36.0.0"
 
 # Install Commandlinetools.
 ENV ANDROID_SDK_ROOT=/opt/android
@@ -64,11 +67,9 @@ RUN wget https://dl.google.com/android/repository/${ANDROID_CMD} -P /tmp && \
     unzip -d $ANDROID_SDK_ROOT /tmp/$ANDROID_CMD && \
     mkdir -p $ANDROID_SDK_ROOT/cmdline-tools/tools && cd $ANDROID_SDK_ROOT/cmdline-tools && mv NOTICE.txt source.properties bin lib tools/ && \
     cd $ANDROID_SDK_ROOT/cmdline-tools/tools && ls
-ENV PATH "$PATH:$ANDROID_SDK_ROOT/cmdline-tools/tools:$ANDROID_SDK_ROOT/cmdline-tools/tools/bin:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/build-tools/${BUILD_TOOLS}"
+ENV PATH="$PATH:$ANDROID_SDK_ROOT/cmdline-tools/tools:$ANDROID_SDK_ROOT/cmdline-tools/tools/bin:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/build-tools/${BUILD_TOOLS}"
 
 # Install android SDK libraries, NDK.
-ARG API_LEVEL="36"
-ARG BUILD_TOOLS="36.0.0"
 RUN sdkmanager --update
 RUN yes Y | sdkmanager --licenses
 RUN sdkmanager --channel=1 --no_https "platforms;android-${API_LEVEL}" \
@@ -81,7 +82,7 @@ ENV ANDROID_SDK=${ANDROID_SDK_ROOT}
 ENV ANDROID_NDK=${ANDROID_SDK_ROOT}/ndk/29.0.14206865
 
 
-FROM build as test
+FROM build AS test
 
 # Jami build dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -90,7 +91,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install Spoon (test manager).
 ENV SPOON_RUNNER_PATH=/spoon-runner.jar
 RUN wget -O /spoon-runner.jar \
-  "https://repo1.maven.org/maven2/com/squareup/spoon/spoon-runner/1.7.1/spoon-runner-1.7.1-jar-with-dependencies.jar"
+    "https://repo1.maven.org/maven2/com/squareup/spoon/spoon-runner/1.7.1/spoon-runner-1.7.1-jar-with-dependencies.jar"
 
 # Install android SDK libraries for emulation.
 ARG API_LEVEL="36"
