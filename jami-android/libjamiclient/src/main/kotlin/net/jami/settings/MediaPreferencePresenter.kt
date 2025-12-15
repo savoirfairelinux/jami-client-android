@@ -30,7 +30,7 @@ import javax.inject.Named
 
 class MediaPreferencePresenter @Inject constructor(
     private var mAccountService: AccountService,
-    @Named("UiScheduler")
+    @param:Named("UiScheduler")
     private var mUiScheduler: Scheduler
 ) : RootPresenter<MediaPreferenceView>() {
     private var mAccount: Account? = null

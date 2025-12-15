@@ -24,7 +24,7 @@ import javax.inject.Named
 
 class DaemonService(
     private val mSystemInfoCallbacks: SystemInfoCallbacks,
-    @Named("DaemonExecutor") private val mExecutor: ScheduledExecutorService,
+    @param:Named("DaemonExecutor") private val mExecutor: ScheduledExecutorService,
     private val mCallService: CallService,
     private val mHardwareService: HardwareService,
     private val mAccountService: AccountService

@@ -38,7 +38,7 @@ import javax.inject.Named
 class SIPCreationPresenter @Inject constructor(
     private val mAccountService: AccountService,
     private val mDeviceService: DeviceRuntimeService,
-    @Named("UiScheduler")
+    @param:Named("UiScheduler")
     private var mUiScheduler: Scheduler
 ) : RootPresenter<SIPCreationView>() {
     private var mAccount: Account? = null
