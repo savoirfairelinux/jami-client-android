@@ -26,6 +26,7 @@ import net.jami.model.interaction.*
 import net.jami.model.interaction.Interaction.TransferStatus
 import net.jami.services.AccountService
 import net.jami.utils.Log
+import net.jami.utils.replayingShare
 import java.util.Date
 import kotlin.collections.ArrayList
 
@@ -69,13 +70,12 @@ class Account(
     private val mLocationStartedSubject: Subject<ContactLocationEntry> = PublishSubject.create()
     private val registrationStateSubject = BehaviorSubject.createDefault(AccountConfig.RegistrationState.valueOf(mVolatileDetails[ConfigKey.ACCOUNT_REGISTRATION_STATUS]))
 
-    private val conversationsWithLastEventSubject: Observable<Array<Any>> = getLatest(conversationMapSubject)
-    private val conversationsSubject: Observable<List<Conversation>> = conversationsWithLastEventSubject.map(::getSorted).share()
-    val unreadConversations: Observable<Int> = conversationsWithLastEventSubject.map { conversations ->
+    private val conversationsSubject: Observable<List<Conversation>> = getLatest(conversationMapSubject).map(::getSorted).replayingShare()
+    val unreadConversations: Observable<Int> = conversationsSubject.map { conversations ->
         conversations.count { !(it as Pair<Conversation, Interaction>).second.isRead }
     }
 
-    private val pendingSubject: Observable<List<Conversation>> = getLatest(pendingMapSubject).map (::getSorted)
+    private val pendingSubject: Observable<List<Conversation>> = getLatest(pendingMapSubject).map(::getSorted).replayingShare()
 
     var historyLoader: Single<Account>? = null
     var loadedProfile: Single<Profile>? = null
