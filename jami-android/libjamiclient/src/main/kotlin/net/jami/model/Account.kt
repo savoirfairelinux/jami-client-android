@@ -70,8 +70,9 @@ class Account(
     private val mLocationStartedSubject: Subject<ContactLocationEntry> = PublishSubject.create()
     private val registrationStateSubject = BehaviorSubject.createDefault(AccountConfig.RegistrationState.valueOf(mVolatileDetails[ConfigKey.ACCOUNT_REGISTRATION_STATUS]))
 
-    private val conversationsSubject: Observable<List<Conversation>> = getLatest(conversationMapSubject).map(::getSorted).replayingShare()
-    val unreadConversations: Observable<Int> = conversationsSubject.map { conversations ->
+    private val conversationsWithLastEventSubject: Observable<Array<Any>> = getLatest(conversationMapSubject)
+    private val conversationsSubject: Observable<List<Conversation>> = conversationsWithLastEventSubject.map(::getSorted).replayingShare()
+    val unreadConversations: Observable<Int> = conversationsWithLastEventSubject.map { conversations ->
         conversations.count { !(it as Pair<Conversation, Interaction>).second.isRead }
     }
 
