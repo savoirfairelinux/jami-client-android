@@ -17,12 +17,12 @@
   <string name="call_service_description">Acest serviciu este necesar pentru a menține apelurile în prim plan. Funcționează numai în timpul apelurilor.</string>
   <string name="data_transfer_service_description">Acest serviciu e necesar pentru a afișa notificări persistente în timpul transferurilor de fișiere. Funcționează numai în timpul transferurilor de fișiere.</string>
   <!--About dialog-->
-  <string name="thank_note">Mulțumim colaboratorilor noștri, ale căror eforturi de-a lungul multor ani au făcut din acest software ceea ce este.</string>
+  <string name="thank_note">Mulțumim colaboratorilor noștri, ale căror eforturi de-a lungul multor ani au făcut din acest program ceea ce este acum.</string>
   <string name="developers">Programatori</string>
   <string name="media">Media</string>
   <string name="community_management">Gestionarea comunității</string>
   <string name="special_thanks">Mulțumiri speciale</string>
-  <string name="end_note">Aceasta este o listă de oameni care au făcut o investiție semnificativă de timp, cu rezultate utile, în Jami. Orice astfel de colaboratori care doresc să fie adăugați pe listă trebuie să contacteze echipa Jami la contact@jami.net.</string>
+  <string name="end_note">Aceasta este o listă de oameni care au făcut o investiție semnificativă de timp, cu rezultate utile, în Jami. Astfel de colaboratori care doresc să fie adăugați pe listă trebuie să contacteze echipa Jami la contact@jami.net.</string>
   <!--RingActivity-->
   <string name="error_no_network">Nu există conectare la rețea</string>
   <string name="error_account_offline">Contul este deconectat</string>
