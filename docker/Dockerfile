@@ -86,7 +86,7 @@ FROM build AS test
 
 # Jami build dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libx11-6
+    libx11-6 libx11-xcb1
 
 # Install Spoon (test manager).
 ENV SPOON_RUNNER_PATH=/spoon-runner.jar
