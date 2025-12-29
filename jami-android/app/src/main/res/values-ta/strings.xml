@@ -14,6 +14,7 @@
   <string name="data_transfer_service_description">கோப்பு பரிமாற்றங்களின் போது நிலையான அறிவிப்புகளை காண்பிக்க இந்த சேவை அவசியம். இது கோப்பு பரிமாற்றங்களின் போது மட்டுமே இயங்குகிறது.</string>
   <!--About dialog-->
   <string name="media">ஊடகங்கள்</string>
+  <string name="special_thanks">சிறப்பு நன்றி</string>
   <!--RingActivity-->
   <string name="error_no_network">நெட்வொர்க் இணைப்பு இல்லை</string>
   <string name="error_account_offline">கணக்கு ஆஃப்லைன்</string>
@@ -24,13 +25,16 @@
   <string name="menu_item_accounts">கணக்குகளை நிர்வகித்தல்</string>
   <string name="menu_item_account">கணக்கை நிர்வகிக்கவும்</string>
   <string name="menu_item_settings">அமைப்புகள்</string>
+  <string name="menu_item_app_settings">பயன்பாட்டு அமைப்புகள்</string>
   <string name="menu_item_account_settings">கணக்கு அமைப்புகள்</string>
+  <string name="menu_item_extension_list">நீட்டிப்பு அமைப்புகள்</string>
   <string name="menu_item_share">எனது கணக்கை பகிர்ந்து கொள்ளுங்கள்</string>
   <string name="menu_item_about">ஜாமி பற்றி</string>
   <string name="video_setting_title">வீடியோ அமைப்புகள்</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">அழைப்புகள் பெறப்பட்டன</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d உரையாடல்</item>
     <item quantity="other">%d உரையாடல்கள்</item>
@@ -48,6 +52,7 @@
   <string name="notif_outgoing_call">வெளியேறும் அழைப்பு</string>
   <string name="notif_current_call_title">%1$s உடன் தற்போதைய அழைப்பு</string>
   <string name="notif_current_call">தொடர்ச்சியான அழைப்பு</string>
+  <string name="notif_channel_call_in_progress">அழைப்பு செயலில் உள்ளது</string>
   <string name="notif_channel_calls">அழைப்புகள்</string>
   <string name="notif_channel_missed_calls">தொலைபேசி அழைப்புகளை தவறவிட்டேன்</string>
   <string name="notif_channel_incoming_calls">வருகின்ற அழைப்புகள்</string>
@@ -58,6 +63,8 @@
   <string name="notif_channel_background_service">பின்னணி சேவை</string>
   <string name="notif_channel_background_service_descr">எந்த நேரத்திலும் அழைப்புகள் மற்றும் செய்திகளை பெற அனுமதிக்கிறது.</string>
   <string name="notif_group_calls">அழைப்புகள்</string>
+  <string name="notif_inprogress_group_call">அழைப்பு செயலில் உள்ளது</string>
+  <string name="notif_background_service">Jami தற்போது பின்னணியில் இயங்குகிறது</string>
   <string name="notif_mark_as_read">படித்தபடி குறி</string>
   <string name="notif_dismiss">விலக்கு</string>
   <string name="notif_reply">பதில்</string>
@@ -83,16 +90,27 @@
   <string name="ongoing_call">தொடர்ச்சியான அழைப்பு</string>
   <string name="hist_in_call">%1$s இன் வருகின்ற அழைப்பு</string>
   <string name="hist_out_call">%1$s இன் வெளிவரும் அழைப்பு</string>
+  <string name="start_error_title">Jami-ஐத் தொடங்க முடியவில்லை.</string>
+  <string name="action_call_accept">அழைப்பை ஏற்கவும்</string>
+  <string name="action_call_accept_audio">ஆடியோவுடன் ஏற்றுக்கொள்ளுங்கள்</string>
+  <string name="action_call_accept_video">வீடியோவுடன் ஏற்றுக்கொள்ளுங்கள்</string>
+  <string name="action_call_hold_accept">உள்வரும் அழைப்பை ஆடியோவுடன் மட்டும் ஏற்றுக்கொண்டு, தற்போதைய அழைப்பை நிறுத்தி வைக்கவும்.</string>
+  <string name="action_call_hold_accept_video">வீடியோவுடன் உள்வரும் அழைப்பை ஏற்று, தற்போதைய அழைப்பை வைத்திருங்கள்.</string>
+  <string name="action_call_end_accept">உள்வரும் அழைப்பை ஏற்று தற்போதைய அழைப்பை முடிக்கவும்</string>
   <string name="action_call_decline">குறைவு</string>
   <string name="action_call_mic_mute">மைக்ரோஃபோன் முடக்கப்பட்டது</string>
+  <string name="action_load_extension">சுமை நீட்டிப்பு</string>
+  <string name="ab_action_speakerphone">ஸ்பீக்கரை இயக்கவும்</string>
   <string name="ab_action_contact_add">தொடர்புகளை சேர்க்கவும்</string>
   <string name="ab_action_contact_add_question">தொடர்புகளை சேர்க்க?</string>
   <string name="ab_action_audio_call">ஆடியோ அழைப்பைத் தொடங்கவும்</string>
   <string name="ab_action_video_call">வீடியோ அழைப்பைத் தொடங்கவும்</string>
   <string name="ab_action_change_screen_orientation">திரை நோக்குநிலை மாற்றம்</string>
   <string name="share_via">வழியாக பகிர்ந்து கொள்ளவும்</string>
+  <string name="write_a_message">செய்தி எழுத</string>
   <string name="scan_qr">QR குறியீட்டை ஸ்கேன் செய்யவும்</string>
   <string name="qr_code">QR குறியீடு</string>
+  <string name="new_group">ஒரு புதிய குழுவை உருவாக்கவும்</string>
   <string name="ab_action_flipcamera">ஃபில்ப் கேமரா</string>
   <string name="ab_action_hidepreview">முன்னோட்டத்தை மறைக்கவும்</string>
   <string name="remote_recording">%s பதிவு.</string>
@@ -109,16 +127,20 @@
   <string name="conversation_send_video">வீடியோ கிளிப்பை பதிவு செய்யவும்</string>
   <string name="conversation_share_location">பகிர்வு இடம்</string>
   <string name="ongoing_group_call">தொடர்ச்சியான அழைப்பு</string>
+  <string name="started_call">அழைப்பு தொடங்கியது</string>
   <string name="in_reply_to">பதில்</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">கேமரா அனுமதி</string>
+  <string name="permission_dialog_camera_message">வீடியோ உரையாடல்களுக்கு கேமரா அனுமதி தேவை. கேமரா அனுமதி முடக்கப்பட்டுள்ளது. இந்த அம்சத்தைப் பயன்படுத்த சாதன அமைப்புகளில் அதை இயக்கவும்.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">தவறு</string>
   <string name="ringtone_error_format_not_supported">இந்த வடிவம் ஆதரிக்கப்படவில்லை.</string>
   <string name="ringtone_error_size_too_big">இந்த கோப்பு மிகப்பெரியது. அதிகபட்ச அளவு %1$dkB ஆகும்.</string>
   <string name="ringtone_custom_prompt">தனிப்பயன் ரிங்டோன் அமைக்கவும்</string>
   <string name="ringtone_custom_label">தனிப்பயன்</string>
+  <string name="ringtone_jami_tones">Jami ரிங்டோன்கள்</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jamiக்கு \"தொடர்புகளைப் படிக்க\" அனுமதி தேவை. இந்த அம்சத்தைப் பயன்படுத்த, சாதன அமைப்புகளில் அதை இயக்கவும்.</string>
   <!--Write call log permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">நீங்கள் சேர்க்க விரும்பும் கணக்கின் QR குறியீட்டை ஸ்கேன் செய்யவும்.</string>

@@ -54,9 +54,9 @@
   <string name="pref_push_notifications_logs_summary">Arată  jurnalele obținute de la
         notificări.</string>
   <string name="pref_typing_title">Indicator de scriere</string>
-  <string name="pref_typing_summary">Indică cînd se scrie un mesaj.</string>
-  <string name="pref_block_record_title">Blochează captura de ecran și înregistrarea</string>
-  <string name="pref_block_record_summary">Blochează captura de ecran și înregistrarea video.</string>
+  <string name="pref_typing_summary">Arată că se scrie un mesaj.</string>
+  <string name="pref_block_record_title">Blochează instantanee și înregistrări</string>
+  <string name="pref_block_record_summary">Blochează instantanee de ecran și înregistrări video.</string>
   <string name="pref_link_preview_title">Previzualizări de linkuri web</string>
   <string name="pref_link_preview_summary">Previzualizările necesită descărcarea de conținut de pe servere terțe.</string>
   <!--Notifications Visibility-->
