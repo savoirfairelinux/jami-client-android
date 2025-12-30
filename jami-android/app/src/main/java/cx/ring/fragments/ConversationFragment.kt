@@ -110,6 +110,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private var animating = 0
     private var lastInsets: WindowInsetsCompat? = null
 
+    private fun isImeAnimation(a: WindowInsetsAnimationCompat): Boolean {
+        return (a.typeMask and WindowInsetsCompat.Type.ime()) != 0
+    }
+
     private fun updatePaddings(windowInsets: WindowInsetsCompat) {
         val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime())
         binding?.apply {
@@ -203,7 +207,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 mainContainer,
                 object : WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_STOP) {
                     override fun onPrepare(animation: WindowInsetsAnimationCompat) {
-                        animating++
+                        if (isImeAnimation(animation)) {
+                            animating++
+                        }
                     }
 
                     override fun onProgress(
@@ -218,7 +224,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     }
 
                     override fun onEnd(animation: WindowInsetsAnimationCompat) {
-                        animating--
+                        if (isImeAnimation(animation)) {
+                            animating = (animating - 1).coerceAtLeast(0)
+                        }
                     }
                 })
 
