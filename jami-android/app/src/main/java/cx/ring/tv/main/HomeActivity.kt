@@ -68,6 +68,7 @@ import androidx.core.view.isGone
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.isInvisible
+import cx.ring.tv.account.TVImportArchiveReceiverActivity
 import cx.ring.utils.ConversationPath
 
 @Suppress("DEPRECATION")
@@ -227,12 +228,32 @@ class HomeActivity : FragmentActivity() {
                     if (accounts.isEmpty()) {
                         if (!wizardLaunched && !isFinishing && !isDestroyed) {
                             wizardLaunched = true
-                            startActivity(Intent(this, TVAccountWizard::class.java))
+                            val wizardIntent = Intent(this, TVAccountWizard::class.java)
+                            intent?.let { existingIntent ->
+                                wizardIntent.putExtra(
+                                    TVImportArchiveReceiverActivity.EXTRA_AUTO_OPEN_BACKUP_FLOW,
+                                    existingIntent.getBooleanExtra(
+                                        TVImportArchiveReceiverActivity.EXTRA_AUTO_OPEN_BACKUP_FLOW, false
+                                    )
+                                )
+                                wizardIntent.putExtra(
+                                    TVImportArchiveReceiverActivity.EXTRA_ARCHIVE_PATH,
+                                    existingIntent.getStringExtra(
+                                        TVImportArchiveReceiverActivity.EXTRA_ARCHIVE_PATH
+                                    )
+                                )
+                            }
+                            startActivity(wizardIntent)
                         }
                     } else {
                         wizardLaunched = false
                     }
                 })
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
     }
 
     override fun onPostResume() {

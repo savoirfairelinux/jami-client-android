@@ -36,7 +36,7 @@ import net.jami.account.AccountWizardPresenter
 import net.jami.account.AccountWizardView
 import net.jami.model.Account
 import net.jami.model.AccountConfig
-import net.jami.model.AccountCreationModel
+import java.io.File
 
 @AndroidEntryPoint
 class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardView {
@@ -107,9 +107,25 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
         if (mIsJamiAccountCreation) {
             GuidedStepSupportFragment.add(supportFragmentManager, TVProfileCreationFragment())
         } else {
+            val vm: AccountCreationViewModel by viewModels()
+            val archive = vm.model.archive
+
+            if (archive != null && archive.exists() && isAppCacheFile(archive)) {
+                runCatching { archive.delete() }
+                vm.model.archive = null
+            }
+
             setResult(RESULT_OK, Intent())
             finish()
         }
+    }
+
+    private fun isAppCacheFile(file: File): Boolean {
+        return runCatching {
+            val cache = cacheDir.canonicalFile
+            val target = file.canonicalFile
+            target.startsWith(cache)
+        }.getOrDefault(false)
     }
 
     override fun displayProgress(display: Boolean) {
