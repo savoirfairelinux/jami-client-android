@@ -362,6 +362,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".tv.account.TVImportArchiveReceiverActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:grantUriPermissions="true"
+            android:theme="@style/AppTheme">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:mimeType="application/octet-stream" />
+            </intent-filter>
+
+        </activity>
+
         <receiver
             android:name=".tv.main.ChannelActionHandler"
             android:enabled="true"
