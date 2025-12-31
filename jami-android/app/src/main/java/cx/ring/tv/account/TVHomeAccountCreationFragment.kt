@@ -51,7 +51,7 @@ class TVHomeAccountCreationFragment : JamiGuidedStepFragment<HomeAccountCreation
             }
         }
 
-    private val selectFile = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+    private val selectFile = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
         Log.w(TAG, "Selected file: $uri")
         if (uri == null) {
             return@registerForActivityResult
@@ -149,7 +149,7 @@ class TVHomeAccountCreationFragment : JamiGuidedStepFragment<HomeAccountCreation
         when (action.id) {
             LINK_ACCOUNT -> presenter.clickOnLinkAccount()
             LINK_BACKUP_ACCOUNT -> try {
-                selectFile.launch("*/*")
+                selectFile.launch(arrayOf("*/*"))
             } catch (e: ActivityNotFoundException) {
                 Log.e(TAG, "Error selecting file", e)
                 Snackbar.make(
