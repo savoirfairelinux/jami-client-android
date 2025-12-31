@@ -212,9 +212,16 @@ class HomeActivity : FragmentActivity() {
                 .firstElement()
                 .subscribe { accounts: List<Account?> ->
                     if (accounts.isEmpty()) {
-                        startActivity(Intent(this, TVAccountWizard::class.java))
+                        startActivity(Intent(this, TVAccountWizard::class.java).apply {
+                            intent?.extras?.let { putExtras(it) }
+                        })
                     }
                 })
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
     }
 
     override fun onPostResume() {
