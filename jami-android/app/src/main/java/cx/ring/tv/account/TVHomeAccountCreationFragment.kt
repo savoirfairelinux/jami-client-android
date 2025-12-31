@@ -17,7 +17,6 @@
 package cx.ring.tv.account
 
 import android.app.Activity
-import android.app.Instrumentation
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
@@ -43,6 +42,7 @@ class TVHomeAccountCreationFragment : JamiGuidedStepFragment<HomeAccountCreation
     HomeAccountCreationView {
     private val model: AccountCreationViewModel by activityViewModels()
     private val mCompositeDisposable = CompositeDisposable()
+    private var hasAutoOpenedBackupFlow = false
 
     private val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -77,6 +77,34 @@ class TVHomeAccountCreationFragment : JamiGuidedStepFragment<HomeAccountCreation
 
     private fun finish(){
         activity?.finish()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (hasAutoOpenedBackupFlow) return
+
+        val a = requireActivity()
+        val i = a.intent ?: return
+
+        val shouldOpen = i.getBooleanExtra(
+            TVImportArchiveReceiverActivity.EXTRA_AUTO_OPEN_BACKUP_FLOW,
+            false
+        )
+        if (!shouldOpen) return
+
+        val path = i.getStringExtra(TVImportArchiveReceiverActivity.EXTRA_ARCHIVE_PATH)
+        if (model.model.archive == null && !path.isNullOrBlank()) {
+            model.model.archive = File(path)
+        }
+
+        val archive = model.model.archive
+        if (archive != null && archive.exists()) {
+            i.removeExtra(TVImportArchiveReceiverActivity.EXTRA_AUTO_OPEN_BACKUP_FLOW)
+            i.removeExtra(TVImportArchiveReceiverActivity.EXTRA_ARCHIVE_PATH)
+            hasAutoOpenedBackupFlow = true
+            presenter.clickOnBackupAccountLink()
+        }
     }
 
     override fun goToAccountCreation() {
