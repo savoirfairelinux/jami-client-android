@@ -235,6 +235,11 @@ class HomeActivity : FragmentActivity() {
                 })
     }
 
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+    }
+
     override fun onPostResume() {
         super.onPostResume()
         paused = false
