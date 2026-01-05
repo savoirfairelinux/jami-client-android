@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19c8cc99_2c9afa4c",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Media.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2026-01-05T21:17:56Z",
+      "side": 0,
+      "message": "the variable can be changed but not the string constant, because it\u0027s used as part of the daemon API.",
+      "range": {
+        "startLine": 82,
+        "startChar": 41,
+        "endLine": 82,
+        "endChar": 48
+      },
+      "revId": "42caa8e1a7592723fab0f471ade540c9258b459b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
