@@ -22,6 +22,30 @@
       },
       "revId": "42caa8e1a7592723fab0f471ade540c9258b459b",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c268cea_b75e1094",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Media.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2026-01-06T03:34:43Z",
+      "side": 0,
+      "message": "Thank you for your review.\n\nUpdates to the Daemon API are available in the following patches.\nhttps://review.jami.net/c/jami-daemon/+/32716\nhttps://review.jami.net/c/jami-daemon/+/32303\n\nDid you want `HOLD` reverted to `ON_HOLD` in this patch and another patch to change `ON_HOLD` to `HOLD` in the `Media.kt`?\n\nThank you once again.",
+      "parentUuid": "19c8cc99_2c9afa4c",
+      "range": {
+        "startLine": 82,
+        "startChar": 41,
+        "endLine": 82,
+        "endChar": 48
+      },
+      "revId": "42caa8e1a7592723fab0f471ade540c9258b459b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
