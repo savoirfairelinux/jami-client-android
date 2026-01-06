@@ -123,6 +123,7 @@ class LinkDeviceExportSideActivity : AppCompatActivity(),
     private fun setupViewPager() {
         binding.viewPager.adapter = ViewPagerAdapter(this)
         binding.viewPager.isUserInputEnabled = false // Disable swipe
+        binding.viewPager.offscreenPageLimit = 1
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { _, _ -> }.attach()
         binding.tabLayout.touchables.forEach { it.isEnabled = false }
