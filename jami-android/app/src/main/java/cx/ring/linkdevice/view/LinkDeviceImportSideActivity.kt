@@ -54,6 +54,7 @@ class LinkDeviceImportSideActivity : AppCompatActivity(),
 
         binding.viewPager.adapter = ViewPagerAdapter(this)
         binding.viewPager.isUserInputEnabled = false // Disable viewPager swipe.
+        binding.viewPager.offscreenPageLimit = 1
 
         // TabLayout is used to show the current step. Disable touch events.
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { _, _ -> }.attach()
@@ -66,7 +67,7 @@ class LinkDeviceImportSideActivity : AppCompatActivity(),
 
         lifecycleScope.launch {
             importSideViewModel.uiState.collect {
-                Log.d(TAG, "UI state: $it")
+            Log.d(TAG, "UI state: $it")
                 when (it) {
                     is AddDeviceImportState.Init -> {}
                     is AddDeviceImportState.TokenAvailable -> {
