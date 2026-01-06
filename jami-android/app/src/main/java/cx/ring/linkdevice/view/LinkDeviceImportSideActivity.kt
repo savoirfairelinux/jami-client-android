@@ -54,6 +54,7 @@ class LinkDeviceImportSideActivity : AppCompatActivity(),
 
         binding.viewPager.adapter = ViewPagerAdapter(this)
         binding.viewPager.isUserInputEnabled = false // Disable viewPager swipe.
+        binding.viewPager.offscreenPageLimit = 1
 
         // TabLayout is used to show the current step. Disable touch events.
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { _, _ -> }.attach()
@@ -64,66 +65,68 @@ class LinkDeviceImportSideActivity : AppCompatActivity(),
             launchExitAction()
         }
 
-        lifecycleScope.launch {
-            importSideViewModel.uiState.collect {
+        binding.viewPager.post {
+            lifecycleScope.launch {
+                importSideViewModel.uiState.collect {
                 Log.d(TAG, "UI state: $it")
-                when (it) {
-                    is AddDeviceImportState.Init -> {}
-                    is AddDeviceImportState.TokenAvailable -> {
-                        binding.viewPager.apply {
-                            currentItem = 0
-                            post { // Post is used to let the fragment inflate its views.
-                                (adapter as ViewPagerAdapter).importSideStep1.apply {
-                                    if (it.token.isEmpty()) showLoading()
-                                    else showOutput(it.token)
+                    when (it) {
+                        is AddDeviceImportState.Init -> {}
+                        is AddDeviceImportState.TokenAvailable -> {
+                            binding.viewPager.apply {
+                                currentItem = 0
+                                post { // Post is used to let the fragment inflate its views.
+                                    (adapter as ViewPagerAdapter).importSideStep1.apply {
+                                        if (it.token.isEmpty()) showLoading()
+                                        else showOutput(it.token)
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    is AddDeviceImportState.Connecting -> {
-                        binding.viewPager.apply {
-                            currentItem = 1
-                            post { // Post is used to let the fragment inflate its views.
-                                (adapter as ViewPagerAdapter).importSideStep2.showActionRequired()
+                        is AddDeviceImportState.Connecting -> {
+                            binding.viewPager.apply {
+                                currentItem = 1
+                                post { // Post is used to let the fragment inflate its views.
+                                    (adapter as ViewPagerAdapter).importSideStep2.showActionRequired()
+                                }
                             }
                         }
-                    }
 
-                    is AddDeviceImportState.Authenticating -> {
-                        binding.viewPager.apply {
-                            currentItem = 1
-                            post { // Post is used to let the fragment inflate its views.
-                                (adapter as ViewPagerAdapter).importSideStep2
-                                    .showAuthentication(
-                                        it.needPassword,
-                                        it.id,
-                                        it.registeredName,
-                                        it.error
-                                    )
+                        is AddDeviceImportState.Authenticating -> {
+                            binding.viewPager.apply {
+                                currentItem = 1
+                                post { // Post is used to let the fragment inflate its views.
+                                    (adapter as ViewPagerAdapter).importSideStep2
+                                        .showAuthentication(
+                                            it.needPassword,
+                                            it.id,
+                                            it.registeredName,
+                                            it.error
+                                        )
+                                }
                             }
                         }
-                    }
 
-                    is AddDeviceImportState.InProgress -> {
-                        exitDialog?.dismiss()
-                        binding.viewPager.apply {
-                            currentItem = 2
-                            post { // Post is used to let the fragment inflate its views.
-                                (adapter as ViewPagerAdapter).importSideStep3.showLoading()
+                        is AddDeviceImportState.InProgress -> {
+                            exitDialog?.dismiss()
+                            binding.viewPager.apply {
+                                currentItem = 2
+                                post { // Post is used to let the fragment inflate its views.
+                                    (adapter as ViewPagerAdapter).importSideStep3.showLoading()
+                                }
                             }
                         }
-                    }
 
-                    is AddDeviceImportState.Done -> {
-                        exitDialog?.dismiss()
-                        binding.viewPager.apply {
-                            currentItem = 2
-                            post { // Post is used to let the fragment inflate its views.
-                                if (it.error != null) {
-                                    (adapter as ViewPagerAdapter).importSideStep3.showError(it.error)
-                                } else {
-                                    (adapter as ViewPagerAdapter).importSideStep3.showDone()
+                        is AddDeviceImportState.Done -> {
+                            exitDialog?.dismiss()
+                            binding.viewPager.apply {
+                                currentItem = 2
+                                post { // Post is used to let the fragment inflate its views.
+                                    if (it.error != null) {
+                                        (adapter as ViewPagerAdapter).importSideStep3.showError(it.error)
+                                    } else {
+                                        (adapter as ViewPagerAdapter).importSideStep3.showDone()
+                                    }
                                 }
                             }
                         }
