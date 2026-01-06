@@ -1047,7 +1047,9 @@ class ConversationAdapter(
             return
         }
 
-        viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
+        viewHolder.compositeDisposable.add(timestampUpdateTimer
+            .observeOn(DeviceUtils.uiScheduler)
+            .subscribe {
             viewHolder.mFileSize?.text = when (val status = file.transferStatus) {
                 TransferStatus.TRANSFER_FINISHED -> Formatter.formatFileSize(context, file.totalSize)
                 TransferStatus.TRANSFER_ONGOING -> String.format("%s / %s - %s",
