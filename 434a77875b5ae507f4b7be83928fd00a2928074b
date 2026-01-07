@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14e3e4b4_a3cacd64",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2026-01-07T22:53:12Z",
+      "side": 1,
+      "message": "Thank you for updating the device to one supported by GrapheneOS.\n\nCan a comment please be added to remind future patches to select devices supported by GrapheneOS?\n```\n# https://grapheneos.org/install/web#verified-boot-key-hash\n```",
+      "revId": "434a77875b5ae507f4b7be83928fd00a2928074b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
