@@ -170,7 +170,10 @@ class JamiIdFragment : Fragment() {
         // Set the jamiId
         if (binding.jamiIdEditText.text.toString() != username) {
             binding.jamiIdEditText.setText(username)
-            binding.jamiIdEditText.setSelection(username.length)
+            val textLength = binding.jamiIdEditText.text?.length ?: 0
+            if (textLength > 0) {
+                binding.jamiIdEditText.setSelection(textLength)
+            }
         }
     }
 
