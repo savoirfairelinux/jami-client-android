@@ -34,7 +34,13 @@ class TVShareActivity : FragmentActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tv_activity_share)
-        val f = TVShareFragment.newInstance(Uri.fromString(mAccountService.currentAccount?.uri!!))
+        val accountUri = mAccountService.currentAccount?.uri
+        if (accountUri == null) {
+            finish()
+            return
+        }
+
+        val f = TVShareFragment.newInstance(Uri.fromString(accountUri))
         supportFragmentManager.beginTransaction()
             .replace(R.id.share_frag, f)
             .setReorderingAllowed(true)
