@@ -121,12 +121,16 @@ class ConversationMediaGalleryAdapter(
                     b.playBtn.setImageResource(R.drawable.baseline_play_arrow_24)
                 }
                 b.playBtn.setOnClickListener {
-                    if (player.isPlaying) {
-                        player.pause()
-                        b.playBtn.setImageResource(R.drawable.baseline_play_arrow_24)
-                    } else {
-                        player.start()
-                        b.playBtn.setImageResource(R.drawable.baseline_pause_24)
+                    try {
+                        if (player.isPlaying) {
+                            player.pause()
+                            b.playBtn.setImageResource(R.drawable.baseline_play_arrow_24)
+                        } else {
+                            player.start()
+                            b.playBtn.setImageResource(R.drawable.baseline_pause_24)
+                        }
+                    } catch (e: IllegalStateException) {
+                        // Left blank
                     }
                 }
             } else {
@@ -141,6 +145,9 @@ class ConversationMediaGalleryAdapter(
         val context = viewHolder.itemView.context
         viewHolder.player?.let {
             viewHolder.player = null
+            viewHolder.video?.apply {
+                playBtn.setOnClickListener(null)
+            }
             it.release()
         }
         val video = viewHolder.video ?: return
