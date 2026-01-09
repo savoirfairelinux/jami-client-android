@@ -94,6 +94,7 @@ import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
+import androidx.core.net.toUri
 
 class ConversationAdapter(
     private val conversationFragment: ConversationFragment,
@@ -1405,10 +1406,14 @@ class ConversationAdapter(
                             messageSequenceType = msgSequenceType
                         )
                         linkPreviewLayout.visibility = View.VISIBLE
-                        val url = Uri.parse(data.baseUrl)
+                        val url = data.baseUrl.toUri()
                         viewHolder.mPreviewDomain?.text = url.host
                         linkPreviewLayout.setOnClickListener {
-                            context.startActivity(Intent(Intent.ACTION_VIEW, url))
+                            try {
+                                context.startActivity(Intent(Intent.ACTION_VIEW, url))
+                            } catch (_: Exception) {
+                                Toast.makeText(context, R.string.conversation_open_file_error, Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }) { e -> Log.e(TAG, "Can't load preview", e) })
             } else answerLayout?.visibility = View.GONE
