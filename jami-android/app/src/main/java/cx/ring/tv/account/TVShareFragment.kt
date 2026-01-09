@@ -16,7 +16,6 @@
  */
 package cx.ring.tv.account
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,17 +23,11 @@ import android.view.ViewGroup
 import cx.ring.R
 import cx.ring.databinding.TvFragShareBinding
 import cx.ring.mvp.BaseSupportFragment
-import cx.ring.utils.DeviceUtils
 import cx.ring.views.AvatarDrawable
-import cx.ring.views.AvatarFactory
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Uri
-import net.jami.services.AccountService
-import net.jami.services.ContactService
 import net.jami.share.SharePresenter
 import net.jami.share.ShareView
-import javax.inject.Inject
 import androidx.core.graphics.createBitmap
 
 @AndroidEntryPoint
