@@ -412,9 +412,11 @@ class AccountService(
             .concatWith(observableAccounts.filter { acc -> acc === account })
 
     val currentProfileAccountSubject: Observable<Pair<Account, Profile>>
-        get() = currentAccountSubject.flatMap { a: Account ->
-            mVCardService.loadProfile(a).map { profile -> Pair(a, profile) }
-        }
+        get() = currentAccountSubject
+            .switchMap { a -> observableAccounts.filter { it.accountId == a.accountId } }
+            .switchMap { a: Account ->
+                mVCardService.loadProfile(a).map { profile -> Pair(a, profile) }
+            }
 
     fun subscribeBuddy(accountID: String, uri: String, flag: Boolean) {
         mExecutor.execute { JamiService.subscribeBuddy(accountID, uri, flag) }
