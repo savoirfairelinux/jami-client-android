@@ -10,7 +10,7 @@ plugins {
 
 dependencies {
     // VCard parsing
-    implementation ("com.googlecode.ez-vcard:ez-vcard:0.11.3"){
+    implementation ("com.googlecode.ez-vcard:ez-vcard:0.12.1"){
         exclude(group= "org.jsoup", module= "jsoup")
         exclude(group= "org.freemarker", module= "freemarker")
         exclude(group= "com.fasterxml.jackson.core", module= "jackson-core")

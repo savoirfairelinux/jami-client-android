@@ -117,7 +117,7 @@ object VCardUtils {
         if (!path.exists()) {
             path.mkdirs()
         }
-        val file = File(path, filename)
+        val file = File(path, filename).toPath()
         try {
             VCardWriter(file, VCardVersion.V2_1).use { writer ->
                 writer.vObjectWriter.foldedLineWriter.lineLength = null
@@ -184,7 +184,7 @@ object VCardUtils {
             Log.w(TAG, "vcardPath too big: ${path.length() / 1024} kB")
             return null
         }
-        return Ezvcard.parse(path).first()
+        return Ezvcard.parse(path.toPath()).first()
     }
 
     fun vcardToString(vcard: VCard?): String? {
