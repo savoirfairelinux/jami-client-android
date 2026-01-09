@@ -316,7 +316,11 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
 
     override fun showAccountShare() {
         try {
-            startActivity(Intent(activity, TVShareActivity::class.java))
+            presenter.getCurrentAccountUri()?.let { accountUri ->
+                val intent = Intent(activity, TVShareActivity::class.java)
+                    .putExtra(TVShareActivity.KEY_ACCOUNT_URI, accountUri)
+                startActivity(intent)
+            }
         } catch (e: Exception) {
             Log.e(TAG, "Error starting activity", e)
         }
@@ -349,14 +353,17 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
                         Card.Type.ACCOUNT_ADD_DEVICE -> presenter.onExportClicked()
                         Card.Type.ACCOUNT_EDIT_PROFILE -> presenter.onEditProfileClicked()
                         Card.Type.ACCOUNT_SHARE_ACCOUNT -> {
-                            val view = (itemViewHolder.view as CardView).mainImageView
-                            val intent = Intent(activity, TVShareActivity::class.java)
-                            val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                                requireActivity(),
-                                view,
-                                TVShareActivity.SHARED_ELEMENT_NAME
-                            ).toBundle()
-                            startActivity(intent, bundle)
+                            presenter.getCurrentAccountUri()?.let { accountUri ->
+                                val view = (itemViewHolder.view as CardView).mainImageView
+                                val intent = Intent(activity, TVShareActivity::class.java)
+                                    .putExtra(TVShareActivity.KEY_ACCOUNT_URI, accountUri)
+                                val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                    requireActivity(),
+                                    view,
+                                    TVShareActivity.SHARED_ELEMENT_NAME
+                                ).toBundle()
+                                startActivity(intent, bundle)
+                            }
                         }
                         Card.Type.ADD_CONTACT -> startActivity(Intent(activity, SearchActivity::class.java))
                         else -> {}
