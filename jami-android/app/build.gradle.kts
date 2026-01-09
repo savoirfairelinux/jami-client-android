@@ -171,7 +171,9 @@ dependencies {
         exclude(group= "com.google.firebase", module= "firebase-analytics")
         exclude(group= "com.google.firebase", module= "firebase-measurement-connector")
     }
-    "withUnifiedPushImplementation"("org.unifiedpush.android:connector:3.1.2")
+    "withUnifiedPushImplementation"("org.unifiedpush.android:connector:3.2.0")  {
+        exclude(group= "com.google.protobuf", module= "protobuf-java")
+    }
     "withUnifiedPushImplementation"("org.unifiedpush.android:connector-ui:1.1.0")
 }
 
