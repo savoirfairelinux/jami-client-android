@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2770ddde_dbeb7ced",
+        "filename": "jami-android/app/src/main/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2026-01-09T20:42:58Z",
+      "side": 1,
+      "message": "This registers a TV intent for all Android devices.\nIt would break on mobile/tablets.",
+      "range": {
+        "startLine": 365,
+        "startChar": 8,
+        "endLine": 382,
+        "endChar": 19
+      },
+      "revId": "3c5ddffeda2764ebc60e30c7a12283109ce3a99d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
