@@ -726,7 +726,7 @@ class ConversationFacade(
 
     init {
         mDisposableBag.add(mCallService.callsUpdates
-            .toFlowable(BackpressureStrategy.LATEST)
+            //.toFlowable(BackpressureStrategy.LATEST)
             .flatMapCompletable(this::onCallStateChange)
             .subscribe())
 
