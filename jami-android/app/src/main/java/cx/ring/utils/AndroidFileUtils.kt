@@ -212,17 +212,17 @@ object AndroidFileUtils {
             result = uri.path
             val cut = result!!.lastIndexOf('/')
             if (cut != -1) {
-                result = result!!.substring(cut + 1)
+                result = result.substring(cut + 1)
             }
         }
-        if (result!!.lastIndexOf('.') == -1) {
+        if (result.lastIndexOf('.') == -1) {
             val mimeType = getMimeType(cr, uri)
             val extensionFromMimeType = MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType)
             if (extensionFromMimeType != null) {
                 result += ".$extensionFromMimeType"
             }
         }
-        return result ?: uri.lastPathSegment!!
+        return result
     }
 
     fun getMimeType(cr: ContentResolver, uri: Uri): String? =
