@@ -19,7 +19,7 @@ android {
     buildToolsVersion = "36.0.0"
     ndkVersion = "29.0.14206865"
     defaultConfig {
-        minSdk = 24
+        minSdk = 26
         targetSdk = 36
         versionCode = 479
         versionName = "20251215-02"
