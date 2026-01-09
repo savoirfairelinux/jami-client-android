@@ -32,6 +32,8 @@ class MainPresenter @Inject constructor(
     val contactService: ContactService,
     @param:Named("UiScheduler") private val mUiScheduler: Scheduler
 ) : RootPresenter<MainView>() {
+    fun getCurrentAccountUri(): String? = accountService.currentAccount?.uri
+
     override fun bindView(view: MainView) {
         super.bindView(view)
         loadConversations()

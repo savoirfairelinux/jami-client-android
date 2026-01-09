@@ -16,25 +16,23 @@
  */
 package cx.ring.tv.account
 
-import dagger.hilt.android.AndroidEntryPoint
 import androidx.fragment.app.FragmentActivity
 import android.os.Bundle
 import cx.ring.R
+import dagger.hilt.android.AndroidEntryPoint
 import net.jami.model.Uri
-import net.jami.services.AccountService
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class TVShareActivity : FragmentActivity() {
-
-    @Inject
-    lateinit
-    var mAccountService: AccountService
-
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tv_activity_share)
-        val f = TVShareFragment.newInstance(Uri.fromString(mAccountService.currentAccount?.uri!!))
+        val accountUri = intent.getStringExtra(KEY_ACCOUNT_URI)
+        if (accountUri == null) {
+            finish()
+            return
+        }
+        val f = TVShareFragment.newInstance(Uri.fromString(accountUri))
         supportFragmentManager.beginTransaction()
             .replace(R.id.share_frag, f)
             .setReorderingAllowed(true)
@@ -43,5 +41,6 @@ class TVShareActivity : FragmentActivity() {
 
     companion object {
         const val SHARED_ELEMENT_NAME = "photo"
+        const val KEY_ACCOUNT_URI = "account_uri"
     }
 }
