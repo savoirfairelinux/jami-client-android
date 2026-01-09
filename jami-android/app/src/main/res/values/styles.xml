@@ -1,7 +1,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Main Day/Night base theme -->
-    <style name="AppThemeBase" parent="@style/Theme.Material3Expressive.DayNight.NoActionBar">
+    <style name="AppThemeBase" parent="@style/Theme.Material3.DayNight.NoActionBar">
         <item name="colorSurface">@color/background</item>
         <item name="colorOnSurface">@color/colorOnSurface</item>
 
@@ -77,7 +77,7 @@
     </style>
 
     <!-- Main dark base theme -->
-    <style name="AppThemeBase.Dark" parent="@style/Theme.Material3Expressive.Dark.NoActionBar">
+    <style name="AppThemeBase.Dark" parent="@style/Theme.Material3.Dark.NoActionBar">
         <item name="android:colorBackground">@color/black</item>
         <item name="colorPrimary">@color/white</item>
         <item name="colorSecondary">@color/color_primary_light</item>
@@ -89,7 +89,7 @@
     </style>
 
     <!-- Main light base theme -->
-    <style name="AppThemeBase.Light" parent="@style/Theme.Material3Expressive.Light.NoActionBar">
+    <style name="AppThemeBase.Light" parent="@style/Theme.Material3.Light.NoActionBar">
         <item name="colorPrimary">@color/color_primary_dark</item>
         <item name="colorSecondary">@color/color_primary_light</item>
         <item name="colorError">@color/colorError</item>
@@ -115,7 +115,7 @@
         <item name="android:theme">@style/InvitationCardThemeOverlay</item>
     </style>
 
-    <style name="InvitationCardThemeOverlay" parent="@style/Theme.Material3Expressive.Dark">
+    <style name="InvitationCardThemeOverlay" parent="@style/Theme.Material3.Dark">
 
         <item name="colorPrimary">@color/color_secondary</item>
         <item name="android:colorBackground">@color/invitation_card_background_color</item>
