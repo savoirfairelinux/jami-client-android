@@ -101,7 +101,9 @@ class NotificationServiceImpl(
 
     init {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            registerNotificationChannels(mContext, notificationManager)
+            Schedulers.io().createWorker().schedule {
+                registerNotificationChannels(mContext, notificationManager)
+            }
         }
     }
 
