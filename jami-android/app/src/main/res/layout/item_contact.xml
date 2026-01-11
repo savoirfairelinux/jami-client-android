@@ -28,7 +28,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     android:paddingRight="16dp"
     android:paddingTop="8dp">
 
-    <ImageView
+    <cx.ring.views.AvatarView
         android:id="@+id/photo"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -37,7 +37,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         android:layout_marginEnd="16dp"
         android:contentDescription="@string/contact_picture_description"
         android:scaleType="fitCenter"
-        tools:src="@drawable/ic_contact_picture_fallback" />
+        tools:uri="@tools:sample/full_names"
+        tools:avatar="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/display_name"
@@ -54,7 +55,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         android:textColor="@color/colorOnSurface"
         android:textIsSelectable="false"
         android:textSize="16sp"
-        tools:text="contact_name" />
+        tools:text="@tools:sample/full_names" />
 
     <ImageButton
         android:id="@+id/quick_call"

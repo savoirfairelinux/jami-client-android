@@ -39,7 +39,7 @@ class ContactPickerViewHolder(b: ItemContactBinding) :
         if (conversation.uri != currentUri) {
             currentUri = conversation.uri
             binding.quickCall.isVisible = false
-            binding.photo.setImageDrawable(null)
+            binding.photo.setAvatar(null)
         }
 
         itemView.setOnClickListener { clickListener.onItemClick(conversation) }
@@ -49,8 +49,7 @@ class ContactPickerViewHolder(b: ItemContactBinding) :
         }
 
         binding.displayName.text = conversation.title
-        val fade = binding.photo.drawable !is AvatarDrawable
-        binding.photo.setImageDrawable(AvatarDrawable.Builder()
+        val fade = binding.photo.setAvatar(AvatarDrawable.Builder()
             .withViewModel(conversation)
             .withCircleCrop(true)
             .build(binding.photo.context))
@@ -59,7 +58,7 @@ class ContactPickerViewHolder(b: ItemContactBinding) :
     }
 
     fun unbind() {
-        binding.photo.setImageDrawable(null)
+        binding.photo.setAvatar(null)
     }
 
     interface ContactPickerListeners {

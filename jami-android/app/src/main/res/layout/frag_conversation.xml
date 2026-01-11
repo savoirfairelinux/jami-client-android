@@ -20,35 +20,35 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     android:id="@+id/conversation_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:animateLayoutChanges="true"
     android:background="@color/background"
+    android:orientation="vertical"
     tools:context=".client.ConversationActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:fitsSystemWindows="true"
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="4dp"
-        app:liftOnScroll="false"
+        android:animateLayoutChanges="true"
         android:background="?attr/colorSurfaceContainer"
-        android:animateLayoutChanges="true">
+        android:elevation="4dp"
+        android:fitsSystemWindows="true"
+        app:liftOnScroll="false">
 
         <TextView
             android:id="@+id/error_msg_pane"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorError"
+            android:fitsSystemWindows="true"
             android:gravity="center"
+            android:paddingBottom="8dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="?attr/colorOnError"
             android:textStyle="bold"
             android:visibility="gone"
-            android:paddingBottom="8dp"
             tools:text="No connectivity"
-            tools:visibility="visible"
-            android:fitsSystemWindows="true" />
+            tools:visibility="visible" />
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
@@ -128,20 +128,21 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                 tools:src="@drawable/outline_call_24" />
 
         </LinearLayout>
+
         <TextView
             android:id="@+id/trustRequestMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:orientation="vertical"
-            android:visibility="gone"
             android:gravity="center"
+            android:orientation="vertical"
             android:paddingTop="8dp"
             android:paddingBottom="16dp"
-            android:textColor="@color/colorOnSurface"
             android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/colorOnSurface"
+            android:visibility="gone"
             tools:text="@string/outgoing_contact_invitation_message"
-            tools:visibility="visible"/>
+            tools:visibility="visible" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -155,13 +156,13 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             android:id="@+id/hist_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:alpha="0"
             android:animateLayoutChanges="false"
             android:clipToPadding="false"
             android:divider="@null"
             android:listSelector="@color/transparent"
             android:paddingBottom="60dp"
             android:transcriptMode="normal"
-            android:alpha="0"
             app:layoutManager="LinearLayoutManager"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:stackFromEnd="true"
@@ -169,19 +170,19 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_list"
-            android:elevation="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/background"
             android:animateLayoutChanges="false"
+            android:background="@color/background"
             android:clipToPadding="false"
-            android:paddingBottom="8dp"
             android:divider="@null"
+            android:elevation="10dp"
             android:listSelector="@color/transparent"
+            android:paddingBottom="8dp"
             android:transcriptMode="normal"
+            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:stackFromEnd="true"
-            android:visibility="gone"
             tools:listitem="@layout/item_conv_msg_peer" />
 
         <ProgressBar
@@ -369,8 +370,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                             android:layout_height="40dp"
                             android:adjustViewBounds="true"
                             android:visibility="gone"
-                            tools:visibility="visible"
-                            tools:src="@tools:sample/backgrounds/scenic" />
+                            tools:src="@tools:sample/backgrounds/scenic"
+                            tools:visibility="visible" />
 
                         <TextView
                             android:id="@+id/reply_message"
@@ -381,14 +382,15 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                             android:ellipsize="end"
                             android:gravity="center_vertical"
                             android:maxLines="2"
-                            tools:text="Reply"
-                            app:drawableStartCompat="@drawable/baseline_reply_24" />
+                            app:drawableStartCompat="@drawable/baseline_reply_24"
+                            tools:text="Reply" />
 
                         <ImageView
                             android:id="@+id/reply_close_btn"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:background="?selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/menu_message_cancel_reply"
                             android:src="@drawable/baseline_close_24" />
                     </LinearLayout>
 
@@ -399,7 +401,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:orientation="horizontal"
-                        android:paddingStart="8dp">
+                        android:paddingStart="8dp"
+                        android:paddingEnd="4dp">
 
                         <ImageButton
                             android:id="@+id/btn_menu"
@@ -408,7 +411,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                             android:background="?selectableItemBackgroundBorderless"
                             android:contentDescription="@string/share_label"
                             android:padding="8dp"
-                            app:srcCompat="@drawable/baseline_more_vert_24"/>
+                            app:srcCompat="@drawable/baseline_more_vert_24" />
 
                         <ImageButton
                             android:id="@+id/btn_take_picture"
@@ -417,7 +420,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                             android:background="?selectableItemBackgroundBorderless"
                             android:contentDescription="@string/take_a_photo"
                             android:padding="8dp"
-                            app:srcCompat="@drawable/baseline_photo_camera_24"/>
+                            app:srcCompat="@drawable/baseline_photo_camera_24" />
 
                         <ProgressBar
                             android:id="@+id/pb_data_transfer"
@@ -448,11 +451,11 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
                         <TextView
                             android:id="@+id/emoji_send"
-                            style="?attr/borderlessButtonStyle"
-                            android:layout_width="50dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:background="?selectableItemBackgroundBorderless"
-                            android:padding="0dp"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="8dp"
                             android:textSize="18sp"
                             tools:text="@string/conversation_default_emoji" />
 
@@ -462,9 +465,11 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                             android:layout_height="match_parent"
                             android:background="?selectableItemBackgroundBorderless"
                             android:contentDescription="@string/send_message"
-                            android:padding="8dp"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="8dp"
                             android:visibility="gone"
-                            app:srcCompat="@drawable/baseline_send_24"/>
+                            app:srcCompat="@drawable/baseline_send_24"
+                            tools:visibility="visible" />
 
                     </LinearLayout>
                 </LinearLayout>

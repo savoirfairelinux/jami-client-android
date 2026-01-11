@@ -67,18 +67,19 @@
         android:id="@+id/contact_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipToPadding="false"
         android:minHeight="200dp"
         android:paddingTop="16dp"
         android:paddingBottom="120dp"
-        android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/selected_contacts_tooolbar"
-        tools:listitem="@layout/item_contact"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"/>
+        tools:listitem="@layout/item_contact" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/create_group_btn"
+        style="?attr/extendedFloatingActionButtonSmallStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -87,6 +88,7 @@
         app:icon="@drawable/baseline_group_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:enabled="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

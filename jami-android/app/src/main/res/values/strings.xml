@@ -194,7 +194,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     </plurals>
 
     <!-- ContactList Fragment -->
-    <string name="searchbar_hint">Search name or conversation…</string>
+    <string name="searchbar_hint">Search or add</string>
     <string name="choose_number">Choose a number</string>
 
     <!-- FileExplorerDFragement -->
@@ -518,6 +518,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="menu_message_delete">Delete message</string>
     <string name="menu_message_cancel">Cancel message</string>
     <string name="menu_message_reply">Reply</string>
+    <string name="menu_message_cancel_reply">Cancel reply</string>
     <string name="menu_delete">Delete</string>
     <string name="pref_darkTheme_title">Dark theme</string>
     <string name="pref_darkTheme_summary">Always enable dark theme instead of using system behavior</string>
