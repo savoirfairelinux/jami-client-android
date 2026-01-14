@@ -68,6 +68,7 @@ class JamiApplicationUnifiedPush : JamiApplication() {
     fun onMessage(remoteMessage: Map<String, String>) {
         //Log.d(TAG, "onMessage: from:${remoteMessage.from} priority:${remoteMessage.priority} (was ${remoteMessage.originalPriority})")
         mAccountService.pushNotificationReceived("", remoteMessage)
+        mNotificationService.processPush()
     }
 
     companion object {
