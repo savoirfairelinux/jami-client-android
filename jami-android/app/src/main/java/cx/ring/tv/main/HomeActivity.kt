@@ -106,8 +106,8 @@ class HomeActivity : FragmentActivity() {
                 ContextCompat.getDrawable(this@HomeActivity, R.drawable.background_welcome_jami)
                     ?: getColor(R.color.colorPrimary).toDrawable()
             mCamera = null
-            mPreviewView.removeAllViews()
             mCameraPreview?.stop()
+            mPreviewView.removeAllViews()
         } catch (e: Exception) {
             Log.e(TAG, "ErrorCallback", e)
         }

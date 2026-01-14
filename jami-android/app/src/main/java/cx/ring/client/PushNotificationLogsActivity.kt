@@ -42,7 +42,9 @@ import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import net.jami.services.AccountService
 import net.jami.services.HardwareService
+import net.jami.services.NotificationService
 import java.io.File
 import java.io.FileOutputStream
 import javax.inject.Inject
@@ -67,6 +69,14 @@ class PushNotificationLogsActivity : AppCompatActivity() {
     @Singleton
     lateinit var mHardwareService: HardwareService
 
+    @Inject
+    @Singleton
+    lateinit var mNotificationService: NotificationService
+
+    @Inject
+    @Singleton
+    lateinit var mAccountService: AccountService
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPushNotificationLogsBinding.inflate(layoutInflater)
@@ -90,6 +100,15 @@ class PushNotificationLogsActivity : AppCompatActivity() {
 
         binding.startLoggingButton.setOnClickListener {
             if (disposable == null) startLogging() else stopLogging()
+        }
+
+        binding.testPushButton.setOnClickListener {
+            val account = mAccountService.currentAccount
+            if (account != null) {
+                mNotificationService.testPushNotification(account.accountId)
+            } else {
+                Snackbar.make(binding.root, R.string.error_account_offline, Snackbar.LENGTH_SHORT).show()
+            }
         }
 
         if (mHardwareService.loggingStatus) startLogging()

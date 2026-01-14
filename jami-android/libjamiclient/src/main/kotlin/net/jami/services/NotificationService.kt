@@ -46,6 +46,7 @@ interface NotificationService {
     fun showLocationNotification(first: Account, contact: Contact, conversation: Conversation)
     fun cancelLocationNotification(first: Account, contact: Contact)
     fun processPush()
+    fun testPushNotification(accountId: String)
 
     companion object {
         const val NOTIF_TRUST_REQUEST_ACCOUNT_ID = "NOTIF_TRUST_REQUEST_ACCOUNT_ID"

@@ -86,7 +86,8 @@ class NotificationServiceImpl(
     private val mContactService: ContactService,
     private val mPreferencesService: PreferencesService,
     private val mDeviceRuntimeService: DeviceRuntimeService,
-    private val mCallService: CallService
+    private val mCallService: CallService,
+    private val mHardwareService: HardwareService
     ) : NotificationService {
     private val mNotificationBuilders = SparseArray<NotificationCompat.Builder>()
     private val notificationManager: NotificationManagerCompat = NotificationManagerCompat.from(mContext)
@@ -100,10 +101,8 @@ class NotificationServiceImpl(
     private var pendingScreenshareCallbacks = HashMap<String, () -> Unit>()
 
     init {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Schedulers.io().createWorker().schedule {
-                registerNotificationChannels(mContext, notificationManager)
-            }
+        Schedulers.io().createWorker().schedule {
+            registerNotificationChannels(mContext, notificationManager)
         }
     }
 
@@ -405,6 +404,12 @@ class NotificationServiceImpl(
             }
     }
 
+    override fun testPushNotification(accountId: String) {
+        pingPush(accountId) {
+             mHardwareService.pushLogMessage("Push notification received for account $accountId")
+        }
+    }
+
     private fun pingPush(accountId: String, start: () -> Unit) {
         if (mPreferencesService.isPushAllowed) {
             val account = mAccountService.getAccount(accountId) ?: return
@@ -417,7 +422,13 @@ class NotificationServiceImpl(
                 }
                 Schedulers.io().scheduleDirect {
                     try {
-                        val url = URL("$server/node/pingPush")
+                        // add sceme to server if not present
+                        val serverUrl = if (server.startsWith("http://") || server.startsWith("https://")) {
+                            server
+                        } else {
+                            "http://$server"
+                        }
+                        val url = URL("$serverUrl/node/pingPush")
                         Log.w(TAG, "pingPush $url")
                         val urlConnection: HttpURLConnection = (url.openConnection() as HttpURLConnection).apply {
                             doOutput = true

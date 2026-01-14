@@ -58,15 +58,28 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/startLoggingButton"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_margin="@dimen/fab_margin"
             android:gravity="center"
-            android:text="@string/pref_logs_start"
-            app:icon="@drawable/baseline_article_24" />
+            android:orientation="horizontal"
+            android:padding="@dimen/fab_margin">
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/startLoggingButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/fab_margin"
+                android:text="@string/pref_logs_start"
+                app:icon="@drawable/baseline_article_24" />
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/testPushButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/test_push"
+                app:icon="@drawable/baseline_notifications_active_24" />
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -62,8 +62,9 @@ object ServiceInjectionModule {
                                    contactService: ContactService,
                                    preferencesService: PreferencesService,
                                    deviceRuntimeService: DeviceRuntimeService,
-                                   callService: CallService): NotificationService {
-        return NotificationServiceImpl(appContext, accountService, contactService, preferencesService, deviceRuntimeService, callService)
+                                   callService: CallService,
+                                   hardwareService: HardwareService): NotificationService {
+        return NotificationServiceImpl(appContext, accountService, contactService, preferencesService, deviceRuntimeService, callService, hardwareService)
     }
 
     @Provides

@@ -703,4 +703,5 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="link_device_error_canceled">The operation was canceled by the user.</string>
     <string name="link_device_error_unknown">An error occurred.</string>
     <string name="link_device_error_bad_password">Please check credentials and try again.</string>
+    <string name="test_push">Test Push</string>
 </resources>
