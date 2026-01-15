@@ -176,6 +176,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     if(isVideoMode) acceptClicked() else acceptAudioClicked()
                 }
                 b.callRefuseBtn.setOnClickListener { refuseClicked() }
+                b.callRefuseSingleBtn.setOnClickListener { refuseClicked() }
                 b.callHngUpBtn.setOnClickListener { hangupClicked() }
                 b.callSpeakerBtn.setOnClickListener { speakerClicked() }
                 b.callMicBtn.setOnClickListener { micClicked() }
@@ -1140,6 +1141,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             callBtnRow.isVisible = true
             callAcceptBtn.isVisible = true
             callRefuseBtn.isVisible = true
+            callRefuseSingleBtn.isGone = true
             contactBubbleLayout.isVisible = true
             participantOverlayContainer.isVisible = false
             if(!hasVideo){
@@ -1155,9 +1157,9 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     override fun initOutGoingCallDisplay(hasVideo: Boolean) {
         Log.w(TAG, "initOutGoingCallDisplay")
         binding?.apply {
-            callAcceptBtn.isVisible = false
+            callBtnRow.isGone = true
+            callRefuseSingleBtn.isVisible = true
             callModeToggleBtn.visibility = View.GONE
-            callRefuseBtn.isVisible = true
             contactBubbleLayout.isVisible = true
             if (hasVideo) {
                 fullscreenCameraPreview.visibility = View.VISIBLE
