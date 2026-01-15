@@ -132,7 +132,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
-                app:layout_constraintBottom_toTopOf="@+id/call_btn_row"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -209,74 +208,59 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-            <!-- Bottom group: Call buttons -->
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <com.google.android.material.button.MaterialButtonGroup
                 android:id="@+id/call_btn_row"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/call_mode_toggle_btn"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/call_contact_info_container">
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/call_refuse_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:contentDescription="@string/action_call_decline"
-                    android:visibility="gone"
-                    app:backgroundTint="@color/colorError"
-                    app:elevation="6dp"
-                    app:fabSize="normal"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/call_accept_btn"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:pressedTranslationZ="12dp"
-                    app:rippleColor="@android:color/white"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
-                    app:srcCompat="@drawable/baseline_call_end_24"
-                    app:tint="@android:color/white"
-                    tools:visibility="visible" />
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/call_accept_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:contentDescription="@string/action_call_accept"
-                    android:visibility="gone"
-                    app:backgroundTint="@color/green_500"
-                    app:elevation="6dp"
-                    app:fabSize="normal"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/call_refuse_btn"
-                    app:pressedTranslationZ="12dp"
-                    app:rippleColor="@android:color/white"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
-                    app:srcCompat="@drawable/baseline_call_24"
-                    app:tint="@android:color/white"
-                    tools:visibility="visible" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/call_mode_toggle_btn"
+                style="@style/Widget.Material3.MaterialButtonGroup.Connected"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:contentDescription="@string/switch_to_audio"
-                android:visibility="visible"
-                app:backgroundTint="@color/material_switch_track_checked"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="48dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
-                app:srcCompat="@drawable/videocam_off_24px"
-                app:tint="@android:color/white"
-                tools:visibility="visible" />
+                app:layout_constraintStart_toStartOf="parent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/call_refuse_btn"
+                    style="@style/Widget.Material3Expressive.Button.ElevatedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/action_call_decline"
+                    android:stateListAnimator="@animator/button_press_scale"
+                    android:text="@string/decline"
+                    app:backgroundTint="@color/call_decline"
+                    app:icon="@drawable/baseline_call_end_24"
+                    app:materialSizeOverlay="@style/SizeOverlay.Material3Expressive.Button.Medium"
+                    app:rippleColor="@color/call_button_ripple" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/call_accept_btn"
+                    style="@style/Widget.Material3Expressive.Button.ElevatedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:stateListAnimator="@animator/button_press_scale"
+                    android:text="@string/action_call_accept"
+                    app:backgroundTint="@color/call_accept"
+                    app:icon="@drawable/baseline_call_24"
+                    app:materialSizeOverlay="@style/SizeOverlay.Material3Expressive.Button.Medium"
+                    app:rippleColor="@color/call_button_ripple" />
+
+            </com.google.android.material.button.MaterialButtonGroup>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/call_mode_toggle_btn"
+                style="@style/Widget.Material3Expressive.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:contentDescription="@string/switch_to_audio"
+                android:stateListAnimator="@animator/button_press_scale"
+                android:text="@string/switch_to_audio"
+                app:icon="@drawable/videocam_24px"
+                app:layout_constraintBottom_toTopOf="@id/call_btn_row"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:materialSizeOverlay="@style/SizeOverlay.Material3Expressive.Button.Medium" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
