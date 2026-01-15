@@ -396,13 +396,15 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             binding.callModeToggleBtn.setOnClickListener {
                 with(binding) {
                     if (!isVideoMode) {
-                        callModeToggleBtn.setImageResource(R.drawable.videocam_off_24px)
+                        callModeToggleBtn.setIconResource(R.drawable.videocam_off_24px)
                         callModeToggleBtn.contentDescription = getString(R.string.switch_to_audio)
+                        callModeToggleBtn.text = getString(R.string.switch_to_audio)
                         callAcceptBtn.contentDescription = getString(R.string.action_call_accept_video)
                         fullscreenCameraPreview.visibility = View.VISIBLE
                     } else {
-                        callModeToggleBtn.setImageResource(R.drawable.videocam_24px)
+                        callModeToggleBtn.setIconResource(R.drawable.videocam_24px)
                         callModeToggleBtn.contentDescription = getString(R.string.switch_to_video)
+                        callModeToggleBtn.text = getString(R.string.switch_to_video)
                         callAcceptBtn.contentDescription = getString(R.string.action_call_accept_audio)
                         fullscreenCameraPreview.visibility = View.GONE
                     }
