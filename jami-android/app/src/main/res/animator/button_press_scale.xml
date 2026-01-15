@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true">
+        <set>
+            <objectAnimator
+                android:propertyName="scaleX"
+                android:valueTo="1.08"
+                android:duration="120"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+            <objectAnimator
+                android:propertyName="scaleY"
+                android:valueTo="1.08"
+                android:duration="120"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </set>
+    </item>
+
+    <item android:state_focused="true">
+        <set>
+            <objectAnimator
+                android:propertyName="scaleX"
+                android:valueTo="1.03"
+                android:duration="160"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+            <objectAnimator
+                android:propertyName="scaleY"
+                android:valueTo="1.03"
+                android:duration="160"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </set>
+    </item>
+
+    <item>
+        <set>
+            <objectAnimator
+                android:propertyName="scaleX"
+                android:valueTo="1.0"
+                android:duration="180"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+            <objectAnimator
+                android:propertyName="scaleY"
+                android:valueTo="1.0"
+                android:duration="180"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </set>
+    </item>
+
+</selector>
