@@ -15,6 +15,9 @@
     <color name="colorSecondaryContainer">@color/color_primary_light_container</color>
     <color name="colorOnSecondary">@color/white</color>
     <color name="colorOnSecondaryContainer">@color/grey_700</color>
+    <color name="call_accept">#2E7D6F</color>
+    <color name="call_decline">#8E3B46</color>
+    <color name="call_button_ripple">#E6F5F1</color>
 
     <color name="colorError">@color/red_500</color>
     <color name="colorOnError">#ffffff</color>
