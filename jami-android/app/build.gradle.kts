@@ -1,16 +1,14 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val kotlin_version: String by rootProject.extra
-val hilt_version: String by rootProject.extra
 val buildFirebase = project.hasProperty("buildFirebase") || gradle.startParameter.taskRequests.toString().contains("Firebase")
 
 plugins {
-    id("com.android.application")
-    kotlin("android")
-    id("dagger.hilt.android.plugin")
-    id("com.google.protobuf") version "0.9.6"
-    id("com.google.devtools.ksp")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.protobuf)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -94,98 +92,96 @@ android {
     }
 }
 
-val markwon_version = "4.6.2"
-
 dependencies {
-    implementation (project(":libjamiclient"))
-    implementation ("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
-    implementation ("androidx.core:core-ktx:1.17.0")
-    implementation ("androidx.appcompat:appcompat:1.7.1")
-    implementation ("androidx.constraintlayout:constraintlayout:2.2.1")
-    implementation ("androidx.cardview:cardview:1.0.0")
-    implementation ("androidx.preference:preference-ktx:1.2.1")
-    implementation ("androidx.recyclerview:recyclerview:1.4.0")
-    implementation ("androidx.leanback:leanback:1.2.0")
-    implementation ("androidx.leanback:leanback-preference:1.2.0")
-    implementation ("androidx.car.app:app:1.7.0")
-    implementation ("androidx.tvprovider:tvprovider:1.1.0")
-    implementation ("androidx.media:media:1.7.1")
-    implementation ("androidx.sharetarget:sharetarget:1.2.0")
-    implementation ("androidx.emoji2:emoji2:1.6.0")
-    implementation ("androidx.viewpager2:viewpager2:1.1.0")
-    implementation ("androidx.emoji2:emoji2-emojipicker:1.6.0")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0")
-    implementation ("androidx.window:window:1.5.1")
-    val camerax_version = "1.5.2"
-    implementation ("androidx.camera:camera-core:${camerax_version}")
-    implementation ("androidx.camera:camera-camera2:${camerax_version}")
-    implementation ("androidx.camera:camera-lifecycle:${camerax_version}")
-    implementation ("androidx.camera:camera-view:${camerax_version}")
+    implementation(project(":libjamiclient"))
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.cardview)
+    implementation(libs.androidx.preference.ktx)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.leanback)
+    implementation(libs.androidx.leanback.preference)
+    implementation(libs.androidx.car.app)
+    implementation(libs.androidx.tvprovider)
+    implementation(libs.androidx.media)
+    implementation(libs.androidx.sharetarget)
+    implementation(libs.androidx.emoji2)
+    implementation(libs.androidx.viewpager2)
+    implementation(libs.androidx.emoji2.emojipicker)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.window)
 
-    implementation ("com.google.android.material:material:1.14.0-alpha08")
-    implementation ("androidx.biometric:biometric:1.1.0")
-    implementation ("com.google.android.flexbox:flexbox:3.0.0")
-    implementation ("com.google.protobuf:protobuf-javalite:4.33.3")
-    implementation("androidx.annotation:annotation-jvm:1.9.1")
+    implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
+
+    implementation(libs.material)
+    implementation(libs.androidx.biometric)
+    implementation(libs.flexbox)
+    implementation(libs.protobuf.javalite)
+    implementation(libs.androidx.annotation.jvm)
 
     // ORM
-    implementation ("com.j256.ormlite:ormlite-android:5.7")
+    implementation(libs.ormlite.android)
 
     // Barcode scanning
-    implementation("com.journeyapps:zxing-android-embedded:4.3.0") { isTransitive = false }
-    implementation ("com.google.zxing:core:3.5.4")
+    implementation(libs.zxing.android.embedded) { isTransitive = false }
+    implementation(libs.zxing.core)
 
     // Dagger dependency injection
-    implementation("com.google.dagger:hilt-android:$hilt_version")
-    ksp("com.google.dagger:hilt-android-compiler:$hilt_version")
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
 
     // Espresso Unit Tests
-    androidTestImplementation("androidx.test.ext:junit-ktx:1.3.0")
-    androidTestImplementation("androidx.test.ext:junit:1.3.0")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
-    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.7.0")
-    androidTestImplementation("androidx.test:rules:1.7.0")
-    androidTestImplementation("com.squareup.okhttp3:okhttp:5.3.2")
-    androidTestImplementation("androidx.test.espresso:espresso-intents:3.7.0")
-    androidTestImplementation("androidx.test:core:1.7.0")
+    androidTestImplementation(libs.androidx.test.ext.junit.ktx)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.espresso.core)
+    androidTestImplementation(libs.androidx.test.espresso.contrib)
+    androidTestImplementation(libs.androidx.test.rules)
+    androidTestImplementation(libs.okhttp)
+    androidTestImplementation(libs.androidx.test.espresso.intents)
+    androidTestImplementation(libs.androidx.test.core)
 
     // Glide
-    implementation ("com.github.bumptech.glide:glide:5.0.5")
-    ksp("com.github.bumptech.glide:ksp:5.0.5")
+    implementation(libs.glide)
+    ksp(libs.glide.ksp)
     // Android SVG
-    implementation ("com.caverock:androidsvg-aar:1.4")
+    implementation(libs.androidsvg)
 
     // RxAndroid
-    implementation ("io.reactivex.rxjava3:rxandroid:3.0.2")
-    implementation ("io.reactivex.rxjava3:rxjava:3.1.12")
+    implementation(libs.rxandroid)
+    implementation(libs.rxjava)
 
     // OpenStreetMap
-    implementation ("org.osmdroid:osmdroid-android:6.1.20")
+    implementation(libs.osmdroid)
 
     // Markwon (Markdown support)
-    implementation ("io.noties.markwon:core:$markwon_version")
-    implementation ("io.noties.markwon:linkify:$markwon_version")
+    implementation(libs.markwon.core)
+    implementation(libs.markwon.linkify)
 
-    implementation ("com.jsibbold:zoomage:1.3.1")
-    implementation ("com.googlecode.ez-vcard:ez-vcard:0.12.1") {
+    implementation(libs.zoomage)
+    implementation(libs.ez.vcard) {
         exclude(group= "org.freemarker", module= "freemarker")
         exclude(group= "com.fasterxml.jackson.core", module= "jackson-core")
     }
 
-    "withFirebaseImplementation"("com.google.firebase:firebase-messaging:25.0.1") {
+    "withFirebaseImplementation"(libs.firebase.messaging) {
         exclude(group= "com.google.firebase", module= "firebase-core")
         exclude(group= "com.google.firebase", module= "firebase-analytics")
         exclude(group= "com.google.firebase", module= "firebase-measurement-connector")
     }
-    "withUnifiedPushImplementation"("org.unifiedpush.android:connector:3.2.0")  {
+    "withUnifiedPushImplementation"(libs.unifiedpush.connector)  {
         exclude(group= "com.google.protobuf", module= "protobuf-java")
     }
-    "withUnifiedPushImplementation"("org.unifiedpush.android:connector-ui:1.1.0")
+    "withUnifiedPushImplementation"(libs.unifiedpush.connector.ui)
 }
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:4.33.2"
+        artifact = "com.google.protobuf:protoc:${libs.versions.protoc.get()}"
     }
     generateProtoTasks {
         all().configureEach {
@@ -200,7 +196,7 @@ protobuf {
 
 if (buildFirebase) {
     println ("apply plugin $buildFirebase")
-    apply(plugin = "com.google.gms.google-services")
+    apply(plugin = libs.plugins.google.services.get().pluginId)
 }
 
 // Make sure the native build runs before the Kotlin/Java build
