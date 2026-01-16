@@ -1,24 +1,12 @@
 plugins {
-    id("com.google.devtools.ksp") version "2.3.4" apply false
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.hilt) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.protobuf) apply false
+    alias(libs.plugins.google.services) apply false
 }
 
-buildscript {
-    repositories {
-        google()
-        maven { url = uri( "https://maven.google.com") }
-        mavenCentral()
-    }
-
-    val kotlin_version by extra { "2.2.21" }
-    val hilt_version by extra { "2.57.2" }
-
-    dependencies {
-        classpath ("com.android.tools.build:gradle:9.0.0")
-        classpath ("com.google.gms:google-services:4.4.4")
-        classpath ("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
-        classpath ("com.google.dagger:hilt-android-gradle-plugin:$hilt_version")
-    }
-}
 allprojects {
     repositories {
         google()

@@ -1,0 +1,121 @@
+[versions]
+agp = "9.0.0"
+kotlin = "2.2.21"
+hilt = "2.57.2"
+ksp = "2.3.4"
+protobufPlugin = "0.9.6"
+googleServices = "4.4.4"
+
+coreKtx = "1.17.0"
+appcompat = "1.7.1"
+constraintlayout = "2.2.1"
+cardview = "1.0.0"
+preference = "1.2.1"
+recyclerview = "1.4.0"
+leanback = "1.2.0"
+carApp = "1.7.0"
+tvprovider = "1.1.0"
+media = "1.7.1"
+sharetarget = "1.2.0"
+emoji2 = "1.6.0"
+viewpager2 = "1.1.0"
+lifecycle = "2.10.0"
+window = "1.5.1"
+camerax = "1.5.2"
+material = "1.14.0-alpha08"
+biometric = "1.1.0"
+flexbox = "3.0.0"
+protobuf = "4.33.3"
+annotation = "1.9.1"
+ormlite = "5.7"
+zxingEmbedded = "4.3.0"
+zxingCore = "3.5.4"
+junit = "1.3.0"
+espresso = "3.7.0"
+testRules = "1.7.0"
+okhttp = "5.3.2"
+testCore = "1.7.0"
+glide = "5.0.5"
+androidsvg = "1.4"
+rxandroid = "3.0.2"
+rxjava = "3.1.12"
+osmdroid = "6.1.20"
+markwon = "4.6.2"
+zoomage = "1.3.1"
+ezVcard = "0.12.1"
+firebaseMessaging = "25.0.1"
+unifiedPushConnector = "3.2.0"
+unifiedPushUi = "1.1.0"
+protoc = "4.33.2"
+javaxInject = "1"
+junit4 = "4.13.2"
+gson = "2.13.2"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+androidx-cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
+androidx-preference-ktx = { group = "androidx.preference", name = "preference-ktx", version.ref = "preference" }
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
+androidx-leanback = { group = "androidx.leanback", name = "leanback", version.ref = "leanback" }
+androidx-leanback-preference = { group = "androidx.leanback", name = "leanback-preference", version.ref = "leanback" }
+androidx-car-app = { group = "androidx.car.app", name = "app", version.ref = "carApp" }
+androidx-tvprovider = { group = "androidx.tvprovider", name = "tvprovider", version.ref = "tvprovider" }
+androidx-media = { group = "androidx.media", name = "media", version.ref = "media" }
+androidx-sharetarget = { group = "androidx.sharetarget", name = "sharetarget", version.ref = "sharetarget" }
+androidx-emoji2 = { group = "androidx.emoji2", name = "emoji2", version.ref = "emoji2" }
+androidx-viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version.ref = "viewpager2" }
+androidx-emoji2-emojipicker = { group = "androidx.emoji2", name = "emoji2-emojipicker", version.ref = "emoji2" }
+androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+androidx-window = { group = "androidx.window", name = "window", version.ref = "window" }
+androidx-camera-core = { group = "androidx.camera", name = "camera-core", version.ref = "camerax" }
+androidx-camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "camerax" }
+androidx-camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "camerax" }
+androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "camerax" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-biometric = { group = "androidx.biometric", name = "biometric", version.ref = "biometric" }
+flexbox = { group = "com.google.android.flexbox", name = "flexbox", version.ref = "flexbox" }
+protobuf-javalite = { group = "com.google.protobuf", name = "protobuf-javalite", version.ref = "protobuf" }
+androidx-annotation-jvm = { group = "androidx.annotation", name = "annotation-jvm", version.ref = "annotation" }
+ormlite-android = { group = "com.j256.ormlite", name = "ormlite-android", version.ref = "ormlite" }
+ormlite-core = { group = "com.j256.ormlite", name = "ormlite-core", version.ref = "ormlite" }
+zxing-android-embedded = { group = "com.journeyapps", name = "zxing-android-embedded", version.ref = "zxingEmbedded" }
+zxing-core = { group = "com.google.zxing", name = "core", version.ref = "zxingCore" }
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+dagger = { group = "com.google.dagger", name = "dagger", version.ref = "hilt" }
+dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "hilt" }
+androidx-test-ext-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junit" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }
+androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
+androidx-test-espresso-contrib = { group = "androidx.test.espresso", name = "espresso-contrib", version.ref = "espresso" }
+androidx-test-espresso-intents = { group = "androidx.test.espresso", name = "espresso-intents", version.ref = "espresso" }
+androidx-test-rules = { group = "androidx.test", name = "rules", version.ref = "testRules" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+androidx-test-core = { group = "androidx.test", name = "core", version.ref = "testCore" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+glide-ksp = { group = "com.github.bumptech.glide", name = "ksp", version.ref = "glide" }
+androidsvg = { group = "com.caverock", name = "androidsvg-aar", version.ref = "androidsvg" }
+rxandroid = { group = "io.reactivex.rxjava3", name = "rxandroid", version.ref = "rxandroid" }
+rxjava = { group = "io.reactivex.rxjava3", name = "rxjava", version.ref = "rxjava" }
+osmdroid = { group = "org.osmdroid", name = "osmdroid-android", version.ref = "osmdroid" }
+markwon-core = { group = "io.noties.markwon", name = "core", version.ref = "markwon" }
+markwon-linkify = { group = "io.noties.markwon", name = "linkify", version.ref = "markwon" }
+zoomage = { group = "com.jsibbold", name = "zoomage", version.ref = "zoomage" }
+ez-vcard = { group = "com.googlecode.ez-vcard", name = "ez-vcard", version.ref = "ezVcard" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
+unifiedpush-connector = { group = "org.unifiedpush.android", name = "connector", version.ref = "unifiedPushConnector" }
+unifiedpush-connector-ui = { group = "org.unifiedpush.android", name = "connector-ui", version.ref = "unifiedPushUi" }
+javax-inject = { group = "javax.inject", name = "javax.inject", version.ref = "javaxInject" }
+junit = { group = "junit", name = "junit", version.ref = "junit4" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
