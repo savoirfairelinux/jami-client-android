@@ -217,9 +217,16 @@ class AccountWizardPresenter @Inject constructor(
     }
 
     fun profileCreated(model: AccountCreationModel, saveProfile: Boolean) {
-        view!!.blockOrientation()
-        view!!.displayProgress(true)
-        var newAccount = model.accountObservable!!.filter { a: Account -> a.registrationState != AccountConfig.RegistrationState.INITIALIZING
+        val v = view ?: return
+        val accountObservable = model.accountObservable
+        if (accountObservable == null) {
+            Log.e(TAG, "profileCreated: accountObservable is null - likely process death; restarting")
+            v.goToHomeCreation()
+            return
+        }
+        v.blockOrientation()
+        v.displayProgress(true)
+        var newAccount = accountObservable.filter { a: Account -> a.registrationState != AccountConfig.RegistrationState.INITIALIZING
         }
             .firstOrError()
         if (saveProfile) {
