@@ -77,12 +77,9 @@ class JamiApplicationFirebase : JamiApplication() {
             RemoteMessage.PRIORITY_NORMAL -> hardwareService.normalPriorityPushCount++
             RemoteMessage.PRIORITY_UNKNOWN -> hardwareService.unknownPriorityPushCount++
         }
-        if (remoteMessage.priority != remoteMessage.originalPriority) {
-            val messageData = remoteMessage.data.toString()
-            val currentTimestamp = getCurrentTimestamp(withMilliseconds = true)
-            hardwareService.pushLogMessage("[$currentTimestamp] Received message from: "
-                + "${remoteMessage.from}, data: $messageData")
-        }
+        val messageData = remoteMessage.data.toString()
+        val currentTimestamp = getCurrentTimestamp(withMilliseconds = true)
+        hardwareService.pushLogMessage("[$currentTimestamp] Received message from: ${remoteMessage.from}, data: $messageData")
     }
 
     companion object {

@@ -22,11 +22,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.isGone
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
@@ -39,6 +39,7 @@ import cx.ring.utils.ContentUri
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -89,12 +90,11 @@ class PushNotificationLogsActivity : AppCompatActivity() {
         binding.logRecyclerView.itemAnimator = FadeInItemAnimator(highlightColor, bgColor)
         binding.logRecyclerView.adapter = logAdapter
         binding.logRecyclerView.layoutManager = LinearLayoutManager(this)
-        val pushSummaryTextView = findViewById<TextView>(R.id.pushSummaryTextView)
-        pushSummaryTextView.text = "Push notifications received since " +
-                "${mHardwareService.startTime}\n" +
-                "high priority - ${mHardwareService.highPriorityPushCount}\n" +
-                "normal priority - ${mHardwareService.normalPriorityPushCount}\n" +
-                "unknown priority - ${mHardwareService.unknownPriorityPushCount}"
+
+        updateSummary()
+        compositeDisposable.add(Observable.interval(3, java.util.concurrent.TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { updateSummary() })
 
         logFile = mHardwareService.pushLogFile
 
@@ -112,6 +112,13 @@ class PushNotificationLogsActivity : AppCompatActivity() {
         }
 
         if (mHardwareService.loggingStatus) startLogging()
+        else setButtonState(false)
+    }
+
+    private fun updateSummary() {
+        binding.pushNormalCount.text = "Normal: ${mHardwareService.normalPriorityPushCount}"
+        binding.pushHighCount.text = "High: ${mHardwareService.highPriorityPushCount}"
+        binding.pushUnknownCount.text = "Unknown: ${mHardwareService.unknownPriorityPushCount}"
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -153,7 +160,6 @@ class PushNotificationLogsActivity : AppCompatActivity() {
             { e -> Log.w(TAG, "Error in logger", e) }
             .apply { disposable = this })
         setButtonState(true)
-
     }
 
     private fun stopLogging() {
@@ -234,6 +240,7 @@ class PushNotificationLogsActivity : AppCompatActivity() {
             .string.pref_logs_start)
         binding.startLoggingButton.setBackgroundColor(ContextCompat
             .getColor(this, if (logging) R.color.red_400 else R.color.colorSecondary))
+        binding.testPushButton.isGone = !logging
     }
 
     override fun onDestroy() {

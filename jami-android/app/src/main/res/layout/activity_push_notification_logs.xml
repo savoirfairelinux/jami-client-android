@@ -33,7 +33,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/background"
-            tools:menu="@menu/push_notifications_logs_menu"
+            tools:menu="@menu/push_notification_logs_menu"
             tools:title="Logs" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -45,12 +45,45 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <TextView
-            android:id="@+id/pushSummaryTextView"
+            style="@style/TextAppearance.Material3.LabelLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:text="Total received:" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="Loading summary..."
-            android:textAppearance="?attr/textAppearanceBody1" />
+            android:layout_marginHorizontal="8dp">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/pushHighCount"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:enabled="false"
+                tools:text="High: " />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/pushNormalCount"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:enabled="false"
+                tools:text="Normal: " />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/pushUnknownCount"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:enabled="false"
+                tools:text="Unknown: " />
+        </com.google.android.material.chip.ChipGroup>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/logRecyclerView"
@@ -58,28 +91,30 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <LinearLayout
+        <com.google.android.material.button.MaterialButtonGroup
+            android:id="@+id/buttonGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="@dimen/fab_margin">
+            android:gravity="center_horizontal"
+            android:paddingVertical="@dimen/fab_margin">
 
-            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            <Button
                 android:id="@+id/startLoggingButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/fab_margin"
                 android:text="@string/pref_logs_start"
-                app:icon="@drawable/baseline_article_24" />
+                app:icon="@drawable/baseline_article_24"
+                android:backgroundTint="?colorSecondary"
+                app:materialSizeOverlay="@style/SizeOverlay.Material3Expressive.Button.Medium" />
 
-            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            <Button
                 android:id="@+id/testPushButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/test_push"
-                app:icon="@drawable/baseline_notifications_active_24" />
-        </LinearLayout>
+                app:icon="@drawable/baseline_notifications_active_24"
+                app:materialSizeOverlay="@style/SizeOverlay.Material3Expressive.Button.Small" />
+        </com.google.android.material.button.MaterialButtonGroup>
 
     </LinearLayout>
 
