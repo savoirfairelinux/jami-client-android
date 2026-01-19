@@ -326,13 +326,52 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             </androidx.cardview.widget.CardView>
         </LinearLayout>
 
+        <com.google.android.material.floatingtoolbar.FloatingToolbarLayout
+            android:id="@+id/endedConversationPrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="8dp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            style="?attr/floatingToolbarStyle">
+
+            <LinearLayout
+                android:id="@+id/floating_toolbar_child_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/btnDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    app:icon="@drawable/baseline_delete_24"
+                    app:iconTint="@color/colorError"
+                    android:text="@string/menu_delete" />
+
+                <Button
+                    android:id="@+id/btnSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    app:icon="@drawable/baseline_open_in_new_24"
+                    app:iconTint="@color/colorPrimary"
+                    android:text="@string/switch_conversation"
+                    android:visibility="gone"/>
+            </LinearLayout>
+        </com.google.android.material.floatingtoolbar.FloatingToolbarLayout>
+
         <LinearLayout
             android:id="@+id/cvMessageInputGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@drawable/textmsg_bg_input"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:visibility="gone">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvMessageInput"
