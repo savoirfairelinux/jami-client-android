@@ -181,40 +181,33 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     }
 
     override fun onItemLongClick(item: Conversation) {
-
         if (item.isSwarm) {
             // Don't display same menu item if swarm group or if swarm one to one.
             if (item.isSwarmGroup()) {
-                MaterialAlertDialogBuilder(requireContext())
-                    .setItems(R.array.swarm_group_actions) { _, which ->
-                        when (which) {
-                            0 -> presenter.removeConversation(item)
-                        }
+                ActionListBottomSheet(R.array.swarm_group_actions, R.array.swarm_group_action_icons) { which ->
+                    when (which) {
+                        0 -> presenter.removeConversation(item)
                     }
-                    .show()
+                }.show(childFragmentManager, "SmartListFragment")
             } else {
-                MaterialAlertDialogBuilder(requireContext())
-                    .setItems(R.array.swarm_one_to_one_actions) { _, which ->
-                        when (which) {
-                            0 -> presenter.copyNumber(item)
-                            1 -> presenter.clearConversation(item)
-                            2 -> presenter.removeConversation(item)
-                            3 -> presenter.blockContact(item)
-                        }
+                ActionListBottomSheet(R.array.swarm_one_to_one_actions, R.array.swarm_one_to_one_action_icons) { which ->
+                    when (which) {
+                        0 -> presenter.copyNumber(item)
+                        1 -> presenter.clearConversation(item)
+                        2 -> presenter.removeConversation(item)
+                        3 -> presenter.blockContact(item)
                     }
-                    .show()
+                }.show(childFragmentManager, "SmartListFragment")
             }
         } else {
-            MaterialAlertDialogBuilder(requireContext())
-                .setItems(R.array.conversation_actions) { _, which ->
-                    when (which) {
-                        ActionHelper.ACTION_COPY -> presenter.copyNumber(item)
-                        ActionHelper.ACTION_CLEAR -> presenter.clearConversation(item)
-                        ActionHelper.ACTION_DELETE -> presenter.removeConversation(item)
-                        ActionHelper.ACTION_BLOCK -> presenter.blockContact(item)
-                    }
+            ActionListBottomSheet(R.array.conversation_actions, R.array.conversation_action_icons) { which ->
+                when (which) {
+                    ActionHelper.ACTION_COPY -> presenter.copyNumber(item)
+                    ActionHelper.ACTION_CLEAR -> presenter.clearConversation(item)
+                    ActionHelper.ACTION_DELETE -> presenter.removeConversation(item)
+                    ActionHelper.ACTION_BLOCK -> presenter.blockContact(item)
                 }
-                .show()
+            }.show(childFragmentManager, "SmartListFragment")
         }
     }
 
