@@ -1416,7 +1416,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             CallStatus.BUSY -> R.string.call_human_state_busy
             CallStatus.FAILURE -> R.string.call_human_state_failure
             CallStatus.HOLD -> R.string.call_human_state_hold
-            CallStatus.UNHOLD -> R.string.call_human_state_unhold
             CallStatus.OVER -> R.string.call_human_state_over
             CallStatus.NONE -> R.string.call_human_state_none
             else -> R.string.call_human_state_none

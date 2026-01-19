@@ -226,7 +226,7 @@ class HardwareServiceImpl(
                             mShouldSpeakerphone = isOngoingVideo || isSpeakerphoneOn()
                             setAudioRouting(mShouldSpeakerphone)
                         }
-                        CallStatus.HOLD, CallStatus.UNHOLD, CallStatus.INACTIVE -> {}
+                        CallStatus.HOLD, CallStatus.INACTIVE -> {}
                         else -> if (callEnded) closeAudioState()
                     }
                 } catch (e: Exception) {
