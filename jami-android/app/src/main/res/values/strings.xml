@@ -31,6 +31,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="section_license">License</string>
     <string name="switch_conversation">Switch conversation</string>
     <string name="delete_conversation_confirmation">Are you sure you want to delete this conversation?</string>
+    <string name="acc_profile_photo_capture">Capture photo</string>
+    <string name="view_switch_camera">Switch camera</string>
     <string name="sponsor_section">Jami is free software developed and supported by</string>
     <string name="copyright_section">Copyright</string>
     <string name="contribute_section">Contribute</string>

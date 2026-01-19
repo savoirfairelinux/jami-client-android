@@ -68,11 +68,7 @@ class ProfileCreationPresenter @Inject constructor(
     }
 
     fun cameraClick() {
-        if (mDeviceRuntimeService.hasVideoPermission()) {
-            view?.goToPhotoCapture()
-        } else {
-            view?.askPhotoPermission()
-        }
+        view?.goToPhotoCapture()
     }
 
     fun cameraPermissionChanged(isGranted: Boolean) {
