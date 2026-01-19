@@ -24,6 +24,9 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <dimen name="list_medium_icon_size">40dp</dimen>
     <dimen name="list_small_icon_size">32dp</dimen>
 
+    <dimen name="contact_bubble_top_padding">16dp</dimen>
+    <dimen name="contact_bubble_bottom_margin">48dp</dimen>
+
     <dimen name="conversation_message_input_radius">24dp</dimen>
     <dimen name="conversation_message_input_margin">16dp</dimen>
     <dimen name="conversation_avatar_size">32dp</dimen>
