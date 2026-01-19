@@ -123,8 +123,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/contact_bubble_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true">
+            android:layout_height="match_parent">
 
             <!-- Top group: Avatar + name + status -->
             <androidx.constraintlayout.widget.ConstraintLayout
