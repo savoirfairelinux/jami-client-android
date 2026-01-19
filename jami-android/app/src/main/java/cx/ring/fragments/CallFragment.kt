@@ -252,6 +252,28 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
 
         binding?.let { binding ->
+            ViewCompat.setOnApplyWindowInsetsListener(
+                binding.contactBubbleLayout
+            ) { _, windowInsets ->
+                val insets = windowInsets.getInsets(
+                    WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+                )
+                val density = resources.displayMetrics.density
+                val topPadding = (insets.top + (16 * density)).toInt()
+                val bottomMarginValue = (insets.bottom + (48 * density)).toInt()
+
+                with(binding) {
+                    callContactInfoContainer.updatePadding(top = topPadding)
+                    listOf(callBtnRow, callRefuseSingleBtn).forEach { button ->
+                        button.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                            bottomMargin = bottomMarginValue
+                        }
+                    }
+                }
+
+                windowInsets
+            }
+
             binding.participantOverlayContainer.layoutTransition?.apply {
                 disableTransitionType(LayoutTransition.CHANGE_DISAPPEARING)
                 disableTransitionType(LayoutTransition.CHANGE_APPEARING)
