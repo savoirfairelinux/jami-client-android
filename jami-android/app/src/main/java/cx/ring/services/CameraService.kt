@@ -648,6 +648,7 @@ class CameraService internal constructor(c: Context) {
             Log.d(TAG, "Selected preview size: " + previewSize + ", fps range: " + fpsRange + " rate: " + videoParams.rate)
             view.setAspectRatio(previewSize.height, previewSize.width)
             val texture = view.surfaceTexture ?: throw IllegalStateException()
+            texture.setDefaultBufferSize(previewSize.width, previewSize.height)
             val previewSurface = Surface(texture)
             val codec = if (hw_accel)
                 openEncoder(videoParams, videoParams.getAndroidCodec(), handler, resolution, bitrate)
