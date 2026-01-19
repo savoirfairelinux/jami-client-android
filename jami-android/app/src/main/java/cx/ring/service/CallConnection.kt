@@ -67,7 +67,7 @@ class CallConnection(
                     .subscribe { call ->
                         val status = call.callStatus
                         // Set the HOLD capability if the call is current
-                        connectionCapabilities = if (status == CallStatus.CURRENT) {
+                        connectionCapabilities = if (status == CallStatus.CURRENT || status == CallStatus.HOLD) {
                             connectionCapabilities or CAPABILITY_HOLD
                         } else {
                             connectionCapabilities and CAPABILITY_HOLD.inv()
@@ -81,6 +81,7 @@ class CallConnection(
                             CallStatus.HOLD -> setOnHold()
                             CallStatus.INACTIVE -> setDisconnected(DisconnectCause(DisconnectCause.LOCAL))
                             CallStatus.FAILURE -> setDisconnected(DisconnectCause(DisconnectCause.ERROR))
+                            CallStatus.BUSY,
                             CallStatus.HUNGUP -> setDisconnected(DisconnectCause(DisconnectCause.REMOTE))
                             CallStatus.OVER -> dispose()
                             else -> {}
