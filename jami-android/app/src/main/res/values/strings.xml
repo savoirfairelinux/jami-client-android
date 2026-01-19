@@ -29,6 +29,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="submit_issue_action_description"><u>Create new issue</u></string>
     <string name="submit_issue_link" translatable="false">https://git.jami.net/savoirfairelinux/jami-client-android/issues</string>
     <string name="section_license">License</string>
+    <string name="switch_conversation">Switch conversation</string>
+    <string name="delete_conversation_confirmation">Are you sure you want to delete this conversation?</string>
     <string name="sponsor_section">Jami is free software developed and supported by</string>
     <string name="copyright_section">Copyright</string>
     <string name="contribute_section">Contribute</string>

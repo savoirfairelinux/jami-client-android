@@ -68,6 +68,7 @@ import androidx.core.view.isGone
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.isInvisible
+import cx.ring.utils.ConversationPath
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
@@ -129,6 +130,18 @@ class HomeActivity : FragmentActivity() {
                 mPreviewView.setRenderEffect(null)
             }
         }
+    }
+
+    fun startConversation(path: ConversationPath) {
+        val fragment = TVContactFragment().apply {
+            arguments = path.toBundle()
+        }
+
+        supportFragmentManager.beginTransaction()
+            .setReorderingAllowed(true)
+            .replace(R.id.fragment_container, fragment, TVContactFragment.TAG)
+            .addToBackStack(TVContactFragment.TAG)
+            .commit()
     }
 
     private val mPreviewCallback = Camera.PreviewCallback { data, camera ->

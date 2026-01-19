@@ -43,8 +43,9 @@ interface ConversationView {
     fun switchToConversationView()
     fun switchToBlockedView()
     fun switchToSyncingView()
-    fun switchToEndedView()
+    fun switchToEndedView(canSwitch: Boolean)
     fun openFilePicker()
+
     fun acceptFile(accountId: String, conversationUri: Uri, transfer: DataTransfer)
     fun goToGroupCall(conversation: Conversation, contactUri: Uri, hasVideo: Boolean)
     fun shareFile(path: File, displayName: String)
@@ -68,4 +69,5 @@ interface ConversationView {
     fun addSearchResults(results: List<Interaction>)
     fun shareText(body: String)
     fun goToSearchMessage(messageId: String)
+    fun openConversation(accountId: String, conversationUri: Uri)
 }

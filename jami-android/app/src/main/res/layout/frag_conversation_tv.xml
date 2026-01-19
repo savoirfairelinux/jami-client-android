@@ -75,6 +75,43 @@
                     android:gravity="center" />
 
                 <LinearLayout
+                    android:id="@+id/ended_conversation_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/conversation_ended"
+                        android:layout_marginEnd="16dp"
+                        android:textColor="@color/text_color_primary_dark"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/btn_switch"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/tv_button_shape"
+                        android:src="@drawable/baseline_open_in_new_24"
+                        app:tint="@color/text_color_primary_dark"
+                        android:padding="8dp"/>
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/btn_delete"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/tv_button_shape"
+                        android:src="@drawable/baseline_delete_24"
+                        app:tint="@color/text_color_primary_dark"
+                        android:padding="8dp"/>
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/conversation_action_group"
                     tools:visibility="gone"
                     android:layout_width="match_parent"

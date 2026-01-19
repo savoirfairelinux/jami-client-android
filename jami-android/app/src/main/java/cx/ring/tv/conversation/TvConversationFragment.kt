@@ -62,6 +62,7 @@ import cx.ring.service.DRingService
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationColor
 import cx.ring.tv.call.TVCallActivity
 import cx.ring.tv.camera.CustomCameraActivity
+import cx.ring.tv.main.HomeActivity
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.utils.ContentUri
 import cx.ring.utils.ConversationPath
@@ -610,7 +611,9 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun displayNumberSpinner(conversation: Conversation, number: net.jami.model.Uri) {}
     override fun hideNumberSpinner() {}
     override fun clearMsgEdit() {}
-    override fun goToHome() {}
+    override fun goToHome() {
+        activity?.onBackPressedDispatcher?.onBackPressed()
+    }
     override fun goToCallActivity(conferenceId: String, hasVideo: Boolean) {}
     override fun goToCallActivityWithResult(
         accountId: String,
@@ -624,6 +627,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun switchToUnknownView() {
         binding?.apply {
             conversationActionGroup.isVisible = false
+            endedConversationGroup.isVisible = false
             conversationActionMessage.text = getString(R.string.outgoing_contact_invitation_message)
             conversationActionMessage.isVisible = true
         }
@@ -632,6 +636,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun switchToIncomingTrustRequestView(name: String, requestMode: Conversation.Mode) {
         binding?.apply {
             conversationActionGroup.isVisible = false
+            endedConversationGroup.isVisible = false
             conversationActionMessage.text = name
             conversationActionMessage.isVisible = true
         }
@@ -640,6 +645,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun switchToConversationView() {
         binding?.apply {
             conversationActionGroup.isVisible = true
+            endedConversationGroup.isVisible = false
             conversationActionMessage.isVisible = false
         }
     }
@@ -647,6 +653,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun switchToBlockedView() {
         binding?.apply {
             conversationActionGroup.isVisible = false
+            endedConversationGroup.isVisible = false
             conversationActionMessage.text = getString(R.string.conversation_contact_blocked, "")
             conversationActionMessage.isVisible = true
         }
@@ -655,18 +662,40 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun switchToSyncingView() {
         binding?.apply {
             conversationActionGroup.isVisible = false
+            endedConversationGroup.isVisible = false
             conversationActionMessage.text = getString(R.string.conversation_syncing)
             conversationActionMessage.isVisible = true
         }
     }
 
-    override fun switchToEndedView() {
+    override fun switchToEndedView(canSwitch: Boolean) {
         binding?.apply {
             conversationActionGroup.isVisible = false
-            conversationActionMessage.text = getText(R.string.conversation_ended)
-            conversationActionMessage.isVisible = true
+            conversationActionMessage.isVisible = false
+            endedConversationGroup.isVisible = true
+            btnSwitch.isVisible = canSwitch
+            btnSwitch.setOnClickListener { presenter.switchConversation() }
+            btnDelete.setOnClickListener {
+                context?.run {
+                    MaterialAlertDialogBuilder(requireContext(), Theme_MaterialComponents_Dialog)
+                        .setTitle(R.string.menu_delete)
+                        .setMessage(getString(R.string.delete_conversation_confirmation))
+                        .setPositiveButton(R.string.menu_delete) { _, _ -> presenter.deleteConversation() }
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .show()
+                }
+            }
         }
     }
+
+    override fun openConversation(accountId: String, conversationUri: net.jami.model.Uri) {
+        val host = activity
+        if (host is HomeActivity) {
+            val path = ConversationPath(accountId, conversationUri)
+            host.startConversation(path)
+        }
+    }
+
 
     override fun openFilePicker() {}
     override fun acceptFile(accountId: String, conversationUri: net.jami.model.Uri, transfer: DataTransfer) {
