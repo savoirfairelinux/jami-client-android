@@ -31,6 +31,24 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string-array name="swarm_group_actions">
         <item>@string/swarm_group_action_leave</item>
     </string-array>
+    <array name="swarm_group_action_icons">
+        <item>@drawable/baseline_delete_24</item>
+    </array>
+
+    <array name="conversation_action_icons">
+        <item>@drawable/outline_copy_24</item>
+        <item>@drawable/baseline_clear_all_24</item>
+        <item>@drawable/baseline_androidtv_deletecontact</item>
+        <item>@drawable/baseline_block_24</item>
+    </array>
+
+    <array name="swarm_one_to_one_action_icons">
+        <item>@drawable/outline_copy_24</item>
+        <item>@drawable/baseline_delete_24</item>
+        <item>@drawable/baseline_androidtv_deletecontact</item>
+        <item>@drawable/baseline_block_24</item>
+    </array>
+
     <string-array name="swarm_request_one_to_one_actions">
         <item>@string/accept_invitation</item>
         <item>@string/decline_invitation</item>
