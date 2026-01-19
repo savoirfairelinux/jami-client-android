@@ -156,12 +156,12 @@ class Call(
     }
 
     enum class CallStatus {
-        NONE, SEARCHING, CONNECTING, RINGING, CURRENT, HUNGUP, BUSY, FAILURE, HOLD, UNHOLD, INACTIVE, OVER;
+        NONE, SEARCHING, CONNECTING, RINGING, CURRENT, HUNGUP, BUSY, FAILURE, HOLD, INACTIVE, OVER;
 
         val isRinging: Boolean
             get() = this == CONNECTING || this == RINGING || this == NONE || this == SEARCHING
         val isOnGoing: Boolean
-            get() = this == CURRENT || this == HOLD || this == UNHOLD
+            get() = this == CURRENT || this == HOLD
         val isOver: Boolean
             get() = this == HUNGUP || this == BUSY || this == FAILURE || this == OVER
 
@@ -176,7 +176,6 @@ class Call(
                     "BUSY" -> BUSY
                     "FAILURE" -> FAILURE
                     "HOLD" -> HOLD
-                    "UNHOLD" -> UNHOLD
                     "INACTIVE" -> INACTIVE
                     "OVER" -> OVER
                     "NONE" -> NONE
