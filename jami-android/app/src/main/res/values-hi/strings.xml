@@ -37,7 +37,6 @@
     <item quantity="other">%d बातचीत</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">नाम या वार्तालाप खोजें…</string>
   <string name="choose_number">एक नंबर चुनें</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

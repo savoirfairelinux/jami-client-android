@@ -39,7 +39,6 @@
     <item quantity="other">%d Cuộc trò chuyện</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Tìm tên hoặc tin nhắn</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->

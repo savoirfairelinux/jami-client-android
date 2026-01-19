@@ -48,7 +48,6 @@
     <item quantity="other">%d个对话</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">搜索姓名或对话…</string>
   <string name="choose_number">选择一个数字</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

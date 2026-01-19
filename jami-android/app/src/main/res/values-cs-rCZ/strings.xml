@@ -50,7 +50,6 @@
     <item quantity="other">%d konverzací</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Hledat jméno nebo konverzaci...</string>
   <string name="choose_number">Zvolte číslo</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

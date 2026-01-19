@@ -35,7 +35,6 @@
     <item quantity="other">%d대화</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">이름이나 대화를 검색</string>
   <string name="choose_number">숫자를 선택</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

@@ -49,7 +49,6 @@
     <item quantity="other">%dbeszélgetés</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Név vagy beszélgetés keresése…</string>
   <string name="choose_number">Szám kiválasztása</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

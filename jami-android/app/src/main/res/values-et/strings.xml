@@ -49,7 +49,6 @@
     <item quantity="other">%d vestlust</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Otsi nime või vestlust…</string>
   <string name="choose_number">Vali number</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

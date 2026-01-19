@@ -52,7 +52,6 @@ contact@jami.net.</string>
     <item quantity="other">%dگفتگو ها</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">جست و جوی نام یا گفت و گو ...</string>
   <string name="choose_number">یک شماره انتخاب کنید</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

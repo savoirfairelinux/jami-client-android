@@ -50,7 +50,6 @@
     <item quantity="other">%d разговора</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Претражи име или конверзацију…</string>
   <string name="choose_number">Изабери број</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

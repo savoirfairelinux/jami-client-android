@@ -37,7 +37,6 @@
     <item quantity="other">%d gesprekken</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Zoek op naam of gesprek</string>
   <string name="choose_number">Kies een nummer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

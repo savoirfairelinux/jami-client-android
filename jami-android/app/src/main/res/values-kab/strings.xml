@@ -49,7 +49,6 @@
     <item quantity="other">%d Idiwenniyen</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Nadi isem neɣ adiwenni...</string>
   <string name="choose_number">Fren uṭṭun</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

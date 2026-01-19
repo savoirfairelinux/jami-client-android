@@ -31,7 +31,6 @@
   <!--Home Fragment-->
   <string name="invitation_card_title">邀请已发送</string>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">搜索姓名或对话…</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->

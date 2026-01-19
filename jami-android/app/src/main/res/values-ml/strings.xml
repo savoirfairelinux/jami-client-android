@@ -49,7 +49,6 @@
     <item quantity="other">%d സംഭാഷണങ്ങൾ</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">സംഭാഷണമോ പേരോ തിരയുക...</string>
   <string name="choose_number">ഒരു നമ്പര് തിരഞ്ഞെടുക്കുക</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

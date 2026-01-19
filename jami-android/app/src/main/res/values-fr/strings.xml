@@ -50,7 +50,6 @@
     <item quantity="other">%d Conversations</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Rechercher un nom ou une conversation</string>
   <string name="choose_number">Choisissez un numéro</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

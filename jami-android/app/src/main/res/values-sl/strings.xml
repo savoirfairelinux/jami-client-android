@@ -51,7 +51,6 @@
     <item quantity="other">%d pogovorov</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Poišči osebo ali pogovor ...</string>
   <string name="choose_number">Izberite številko</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -161,6 +160,7 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Preberite QR-kodo stika, ki ga želite dodati.</string>
   <string name="title_activity_qrcode">Deli moj račun</string>
+  <string name="error_scan_no_camera_permissions">Skener kod QR potrebuje dovoljenje dostopa do kamere. Dostop do kamere je onemogočen. Omogočite ga v nastavitvah naprave, da boste lahko uporabljali to funkcijo.</string>
   <string name="tab_code">Moja koda</string>
   <string name="tab_scan">Optično preberi kodo</string>
   <!--Settings-->
@@ -471,6 +471,7 @@
   <string name="link_device_dialog_stop_title">Ali želite ustaviti povezovanje z napravo?</string>
   <string name="link_device_dialog_stop_export_body">Z ustavljanjem boste preklicali operacijo izvoza računa.</string>
   <string name="link_device_dialog_stop_import_body">Z ustavljanjem boste preklicali operacijo uvoza računa.</string>
+  <string name="export_side_step1_advice_qr">Na novi napravi začnite z izvozom.\nIzberite<b>Račun &gt; Dodaj račun &gt; Poveži iz druge naprave</b>\nKo ste pripravljeni, skenirajte kodo QR.</string>
   <string name="export_side_step1_switch_to_code">Ali kliknite semkaj za vnos overitvene kode</string>
   <string name="export_side_step1_switch_to_qr">Ali kliknite semkaj za skeniranje QR-kode</string>
   <string name="export_side_step1_error_malformed">Ne prepoznani identifikator nove naprave. Sledite spodnjim navodilom.</string>
@@ -485,6 +486,8 @@
   <string name="export_side_step3_body_loading">Izvoz računa na novo napravo je v teku. Počakajte trenutek ...</string>
   <string name="export_side_step3_body_done">Račun je bil uspešno uvožen na novo napravo.</string>
   <string name="export_side_step3_exit">Dokončaj</string>
+  <string name="import_side_step1_advice_qr">Začnite z izvozom na izvorni napravi.\n<b>Izberi račun &gt; Nastavitve računa &gt; Poveži novo napravo</b>\nKo ste pripravljeni, skenirajte spodnjo kodo QR.</string>
+  <string name="import_side_step1_advice_code">Začnite z izvozom na izvorni napravi.\n<b>Izberi račun &gt; Nastavitve računa &gt; Poveži novo napravo</b>\nKo ste pripravljeni, vnesite spodnjo kodo.</string>
   <string name="import_side_step1_share">Deli</string>
   <string name="import_side_step1_switch_to_code">Ali kliknite semkaj za prikaz overitvene kode</string>
   <string name="import_side_step1_switch_to_qr">Ali kliknite semkaj za prikaz QR-kode</string>
@@ -493,6 +496,7 @@
   <string name="import_side_step2_password_prompt">Račun je zaščiten z geslom..\nZa nadaljevanje ga odklenite.</string>
   <string name="import_side_step2_password_import">Uvoz</string>
   <string name="import_side_step2_password_unlocking">Odklepanje računa ...</string>
+  <string name="import_side_step2_action_required">Potreben je odziv. Potrdite račun na izvorni napravi.</string>
   <string name="import_side_step3_body_loading">Račun se uvaža na novo napravo. Počakajte trenutek ...</string>
   <string name="import_side_step3_body_done">Račun je bil uspešno uvožen.</string>
   <string name="import_side_step3_go_to_account">Pojdi na novi račun</string>

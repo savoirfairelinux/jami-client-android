@@ -51,7 +51,6 @@
     <item quantity="other">%d Групові чати</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Пошук імені в груповому чаті...</string>
   <string name="choose_number">Оберіть номер</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

@@ -45,7 +45,6 @@
   <!--Home Fragment-->
   <string name="invitation_card_title">Erhaltene Einladungen</string>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Nach Namen oder Unterhaltung suchen…</string>
   <string name="choose_number">Nummer auswählen</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

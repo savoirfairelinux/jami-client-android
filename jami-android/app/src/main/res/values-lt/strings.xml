@@ -43,7 +43,6 @@
     <item quantity="other">%d pokalbių</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Ieškoti vardo ar pokalbio…</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
