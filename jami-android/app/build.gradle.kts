@@ -116,6 +116,12 @@ dependencies {
     implementation ("androidx.emoji2:emoji2-emojipicker:1.6.0")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0")
     implementation ("androidx.window:window:1.5.1")
+    val camerax_version = "1.5.2"
+    implementation ("androidx.camera:camera-core:${camerax_version}")
+    implementation ("androidx.camera:camera-camera2:${camerax_version}")
+    implementation ("androidx.camera:camera-lifecycle:${camerax_version}")
+    implementation ("androidx.camera:camera-view:${camerax_version}")
+
     implementation ("com.google.android.material:material:1.14.0-alpha08")
     implementation ("androidx.biometric:biometric:1.1.0")
     implementation ("com.google.android.flexbox:flexbox:3.0.0")

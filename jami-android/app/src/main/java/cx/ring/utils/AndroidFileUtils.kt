@@ -452,7 +452,8 @@ object AndroidFileUtils {
         val rotatedWidth: Int
         val rotatedHeight: Int
         val orientation = getOrientation(context, uriImage)
-        if (orientation == ORIENTATION_LEFT || orientation == ORIENTATION_RIGHT) {
+        if (orientation == ExifInterface.ORIENTATION_ROTATE_90 || orientation == ExifInterface.ORIENTATION_ROTATE_270 ||
+                orientation == ExifInterface.ORIENTATION_TRANSPOSE || orientation == ExifInterface.ORIENTATION_TRANSVERSE) {
             rotatedWidth = dbo.outHeight
             rotatedHeight = dbo.outWidth
         } else {
@@ -474,9 +475,23 @@ object AndroidFileUtils {
                 srcBitmap = BitmapFactory.decodeStream(stream)
             }
         }
-        if (orientation > 0) {
-            val matrix = Matrix()
-            matrix.postRotate(orientation.toFloat())
+        val matrix = Matrix()
+        when (orientation) {
+            ExifInterface.ORIENTATION_FLIP_HORIZONTAL -> matrix.setScale(-1f, 1f)
+            ExifInterface.ORIENTATION_ROTATE_180 -> matrix.setRotate(180f)
+            ExifInterface.ORIENTATION_FLIP_VERTICAL -> matrix.setScale(1f, -1f)
+            ExifInterface.ORIENTATION_TRANSPOSE -> {
+                matrix.setRotate(90f)
+                matrix.postScale(-1f, 1f)
+            }
+            ExifInterface.ORIENTATION_ROTATE_90 -> matrix.setRotate(90f)
+            ExifInterface.ORIENTATION_TRANSVERSE -> {
+                matrix.setRotate(-90f)
+                matrix.postScale(-1f, 1f)
+            }
+            ExifInterface.ORIENTATION_ROTATE_270 -> matrix.setRotate(270f)
+        }
+        if (orientation != ExifInterface.ORIENTATION_NORMAL && orientation != 0) {
             srcBitmap = Bitmap.createBitmap(srcBitmap!!, 0, 0, srcBitmap!!.width,
                     srcBitmap!!.height, matrix, true)
         }
@@ -487,17 +502,19 @@ object AndroidFileUtils {
         val resolver = context.contentResolver ?: return 0
         try {
             resolver.query(photoUri, arrayOf(MediaStore.Images.ImageColumns.ORIENTATION), null, null, null)!!.use { cursor ->
-                cursor.moveToFirst()
-                return cursor.getInt(0)
+                if (cursor.moveToFirst()) {
+                    return when (cursor.getInt(0)) {
+                        90 -> ExifInterface.ORIENTATION_ROTATE_90
+                        180 -> ExifInterface.ORIENTATION_ROTATE_180
+                        270 -> ExifInterface.ORIENTATION_ROTATE_270
+                        else -> ExifInterface.ORIENTATION_NORMAL
+                    }
+                }
             }
         } catch (e: Exception) {
-            return when (getExifOrientation(resolver, photoUri)) {
-                ExifInterface.ORIENTATION_ROTATE_90 -> 90
-                ExifInterface.ORIENTATION_ROTATE_180 -> 180
-                ExifInterface.ORIENTATION_ROTATE_270 -> 270
-                else -> 0
-            }
+            // ignore
         }
+        return getExifOrientation(resolver, photoUri)
     }
 
     private fun getExifOrientation(resolver: ContentResolver, photoUri: Uri): Int =
