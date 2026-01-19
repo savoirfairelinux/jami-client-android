@@ -19,7 +19,6 @@ package net.jami.conversation
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
-import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
@@ -28,6 +27,7 @@ import io.reactivex.rxjava3.subjects.Subject
 import net.jami.daemon.Blob
 import net.jami.services.ConversationFacade
 import net.jami.model.*
+import net.jami.model.Error
 import net.jami.model.Account.ComposingStatus
 import net.jami.model.Conversation.ElementStatus
 import net.jami.model.Call.CallStatus
@@ -137,7 +137,10 @@ class ConversationPresenter @Inject constructor(
         if (account.isJami) {
             Log.w(TAG, "initContact ${c.uri} mode: ${c.mode}")
             if (c.isEnded) {
-                view.switchToEndedView()
+                val contactC = c.getContact()?.contact
+                val canSwitch = !c.isGroup() && contactC?.conversationUri?.blockingFirst() != c.uri
+                Log.w(TAG, "initContact switchToEndedView canSwitch=$canSwitch for ${c.uri}: isGroup=${c.isGroup()} conversationUri=${contactC?.conversationUri?.blockingFirst()}")
+                view.switchToEndedView(canSwitch)
             } else if (c.mode === Conversation.Mode.Syncing) {
                 view.switchToSyncingView()
             } else if (c.mode == Conversation.Mode.Request) {
@@ -533,6 +536,25 @@ class ConversationPresenter @Inject constructor(
         val message = mConversation?.getMessage(messageId)
         if (message?.body != newMessage)
             accountService.editConversationMessage(accountId, conversationUri, newMessage, messageId)
+    }
+
+    fun deleteConversation() {
+        val conversation = mConversation ?: return
+        mCompositeDisposable.add(conversationFacade.removeConversation(conversation.accountId, conversation.uri, true)
+            .observeOn(uiScheduler)
+            .subscribe({
+                view?.goToHome()
+            }, { error ->
+                Log.e(TAG, "Error removing conversation", error)
+                view?.displayErrorToast(Error.INVALID_FILE)
+            }))
+    }
+
+    fun switchConversation() {
+        val conversation = mConversation ?: return
+        val contact = conversation.contact ?: return
+        val uri = contact.conversationUri.blockingFirst()
+        view?.openConversation(conversation.accountId, uri)
     }
 
     companion object {

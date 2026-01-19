@@ -85,6 +85,8 @@ import net.jami.smartlist.ConversationItemViewModel
 import java.io.File
 import java.util.*
 import androidx.core.content.edit
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import cx.ring.client.HomeActivity
 
 @AndroidEntryPoint
 class ConversationFragment : BaseSupportFragment<ConversationPresenter, ConversationView>(),
@@ -842,7 +844,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             mPreferences = getConversationPreferences(
                     requireContext(), path.accountId, path.conversationUri
             ).also { sharedPreferences ->
-                sharedPreferences.edit().remove(KEY_PREFERENCE_CONVERSATION_LAST_READ).apply()
+                sharedPreferences.edit { remove(KEY_PREFERENCE_CONVERSATION_LAST_READ) }
             }
         } catch (e: Exception) {
             Log.e(TAG, "Unable to load conversation preferences")
@@ -1117,16 +1119,39 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     }
 
-    override fun switchToEndedView() {
+    override fun switchToEndedView(canSwitch: Boolean) {
         binding?.apply {
+            toolbar.menu.findItem(R.id.conv_search).isVisible = false
+            toolbar.menu.findItem(R.id.conv_action_videocall).isVisible = false
+            toolbar.menu.findItem(R.id.conv_action_audiocall).isVisible = false
             cvMessageInput.visibility = View.GONE
             unknownContactPrompt.visibility = View.GONE
             trustRequestPrompt.visibility = View.GONE
             trustRequestMessage.visibility = View.VISIBLE
             trustRequestMessage.text = getText(R.string.conversation_ended)
+            btnDelete.setOnClickListener {
+                context?.run {
+                    MaterialAlertDialogBuilder(this)
+                        .setTitle(R.string.menu_delete)
+                        .setMessage(getString(R.string.delete_conversation_confirmation))
+                        .setPositiveButton(R.string.menu_delete) { _, _ -> presenter.deleteConversation() }
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .show()
+                }
+            }
+            btnSwitch.visibility = if (canSwitch) View.VISIBLE else View.GONE
+            btnSwitch.setOnClickListener { presenter.switchConversation() }
+            endedConversationPrompt.visibility = View.VISIBLE
         }
-        currentBottomView = null
+        val endedView = binding?.endedConversationPrompt ?: return
+        currentBottomView = endedView
+        endedView.doOnNextLayout {
+            endedView.height.takeIf { it > 0 }?.let {
+                binding?.histList?.updatePadding(bottom = it + marginPxTotal)
+            }
+        }
     }
+
 
     private fun setLoading(isLoading: Boolean) {
         val binding = binding ?: return
@@ -1136,6 +1161,15 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         } else {
             binding.btnTakePicture.visibility = View.VISIBLE
             binding.pbDataTransfer.visibility = View.GONE
+        }
+    }
+
+    override fun openConversation(accountId: String, conversationUri: net.jami.model.Uri) {
+        activity?.apply {
+            if (this is HomeActivity)
+                this.startConversation(accountId, conversationUri)
+            else
+                startActivity(Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, conversationUri), this, HomeActivity::class.java))
         }
     }
 
