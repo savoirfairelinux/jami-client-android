@@ -364,6 +364,24 @@ class CameraService internal constructor(c: Context) {
 
     fun closeCamera(camId: String) {
         mParams[camId]?.let { params ->
+            params.cameraSession?.let { session ->
+                try {
+                    session.stopRepeating()
+                } catch (_: Exception) {
+                }
+
+                try {
+                    session.abortCaptures()
+                } catch (_: Exception) {
+                }
+
+                try {
+                    session.close()
+                } catch (_: Exception) {
+                }
+
+                params.cameraSession = null
+            }
             params.camera?.let { camera ->
                 camera.close()
                 params.camera = null
