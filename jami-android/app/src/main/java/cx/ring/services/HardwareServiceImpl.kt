@@ -61,6 +61,7 @@ import net.jami.services.HardwareService
 import net.jami.services.PreferencesService
 import java.io.File
 import java.lang.ref.WeakReference
+import java.util.Collections
 import java.util.concurrent.ScheduledExecutorService
 import androidx.core.content.edit
 
@@ -85,6 +86,7 @@ class HardwareServiceImpl(
     private var mPreviewCamId: String? = null
     private val sharedPreferences: SharedPreferences = context
         .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    private val pendingStartCodec = Collections.synchronizedSet(HashSet<String>())
     override val pushLogFile: File = File(context.filesDir, "firebaselog.txt")
 
     init {
@@ -514,6 +516,9 @@ class HardwareServiceImpl(
                 false,
                 onOpened = {
                     handleExtensionMediaHandler(conf?.id)
+                    if (pendingStartCodec.remove(videoParams.id)) {
+                        cameraService.startCodec(videoParams)
+                    }
                 }
             )
         }
@@ -537,6 +542,7 @@ class HardwareServiceImpl(
                     }
 
                     override fun onError() {
+                        pendingStartCodec.remove(videoParams.id)
                         stopCapture(videoParams.id)
                     }
                 },
@@ -618,7 +624,12 @@ class HardwareServiceImpl(
                 }
             )
         } else {
-            cameraService.startCodec(videoParams)
+            val sessionReady = videoParams.camera != null && videoParams.cameraSession != null
+            if (sessionReady) {
+                cameraService.startCodec(videoParams)
+            } else {
+                pendingStartCodec.add(cam)
+            }
         }
     }
 
