@@ -130,7 +130,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private val mCompositeDisposable = CompositeDisposable()
     private var bottomSheetParams: BottomSheetBehavior<View>? = null
     private var extensionsAdapter: ExtensionsAdapter? = null
-    private var isVideoMode: Boolean = true
+    private var isVideoMode: Boolean = false
 
     private val cameraPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
         if (isGranted) {
@@ -441,6 +441,11 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
             binding.fullscreenCameraPreview.surfaceTextureListener = object : SurfaceTextureListener {
                 override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
+                    val shouldStartCamera =
+                        (isVideoMode || presenter.wantVideo) &&
+                                binding.fullscreenCameraPreview.isVisible
+
+                    if (!shouldStartCamera) return
                     presenter.fullScreenVideoSurfaceCreated(binding.fullscreenCameraPreview)
                     configureTransform(binding.fullscreenCameraPreview, width, height)
                 }
@@ -1173,9 +1178,11 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             if(!hasVideo){
                 callModeToggleBtn.visibility = View.GONE
                 binding?.fullscreenCameraPreview?.visibility = View.GONE
+                isVideoMode = false
             } else {
                 callModeToggleBtn.visibility = View.VISIBLE
                 binding?.fullscreenCameraPreview?.visibility = View.VISIBLE
+                isVideoMode = true
             }
         }
     }
@@ -1189,8 +1196,10 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             contactBubbleLayout.isVisible = true
             if (hasVideo) {
                 fullscreenCameraPreview.visibility = View.VISIBLE
+                isVideoMode = true
             } else {
                 fullscreenCameraPreview.visibility = View.GONE
+                isVideoMode = false
             }
         }
     }
