@@ -394,6 +394,10 @@ class CallPresenter @Inject constructor(
         view?.displayHangupButton(mOnGoingCall && displayed)
     }
 
+    fun onCallViewDestroyed() {
+        mHardwareService.cameraCleanup()
+    }
+
     private fun finish(hangupReason: HangupReason = HangupReason.LOCAL) {
         timeUpdateTask?.let { task ->
             if (!task.isDisposed)

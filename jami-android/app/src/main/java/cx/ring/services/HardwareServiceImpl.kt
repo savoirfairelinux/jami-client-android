@@ -522,6 +522,15 @@ class HardwareServiceImpl(
         }
     }
 
+    override fun cameraCleanup() {
+        val camId = mPreviewCamId ?: return
+        val params = cameraService.getParams(camId) ?: return
+        if (params.camera == null && params.cameraSession == null) return
+
+        pendingStartCodec.remove(camId)
+        cameraService.closeCamera(camId)
+    }
+
     private fun openCameraPreview(
         videoParams: VideoParams,
         previewSurface: TextureView?,

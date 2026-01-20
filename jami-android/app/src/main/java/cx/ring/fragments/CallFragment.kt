@@ -451,7 +451,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 }
 
                 override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean {
-                    presenter.previewVideoSurfaceDestroyed()
+                    presenter.fullScreenVideoSurfaceDestroyed()
                     return true
                 }
 
@@ -487,6 +487,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     override fun onDestroyView() {
         super.onDestroyView()
+        presenter.onCallViewDestroyed()
         mOrientationListener?.disable()
         mOrientationListener = null
         mCompositeDisposable.clear()

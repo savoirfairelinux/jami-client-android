@@ -87,6 +87,7 @@ abstract class HardwareService(
     abstract fun getCameraInfo(camId: String, formats: IntVect, sizes: UintVect, rates: UintVect)
     abstract fun setParameters(camId: String, format: Int, width: Int, height: Int, rate: Int)
     abstract fun startCameraPreview(videoPreview: Boolean)
+    abstract fun cameraCleanup()
     abstract fun startCapture(camId: String?)
     abstract fun stopCapture(camId: String)
     abstract fun hasMicrophone(): Boolean
