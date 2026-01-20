@@ -437,6 +437,10 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
             binding.fullscreenCameraPreview.surfaceTextureListener = object : SurfaceTextureListener {
                 override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
+                    val shouldStartCamera = presenter.wantVideo && isVideoMode &&
+                                binding.fullscreenCameraPreview.isVisible
+
+                    if (!shouldStartCamera) return
                     presenter.fullScreenVideoSurfaceCreated(binding.fullscreenCameraPreview)
                     configureTransform(binding.fullscreenCameraPreview, width, height)
                 }
