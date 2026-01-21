@@ -54,32 +54,53 @@ class TVContactMoreFragment : LeanbackSettingsFragmentCompat() {
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
             presenter.setContact(fromIntent(requireActivity().intent)!!)
+            val isGroup = presenter.getConversation()?.isSwarmGroup() == true
+
+            findPreference<Preference>("Contact.remove")?.isVisible = !isGroup
+            findPreference<Preference>("Contact.delete")?.setTitle(
+                if (isGroup) {
+                    R.string.swarm_group_action_leave
+                } else {
+                    R.string.delete_contact
+                }
+            )
         }
 
         override fun onPreferenceTreeClick(preference: Preference): Boolean {
-            if (preference.key == "Contact.clear") {
-                createDialog(
-                    getString(R.string.conversation_action_history_clear_title),
-                    getString(R.string.clear_history)
-                ) { dialog: DialogInterface?, whichButton: Int -> presenter.clearHistory() }
-            } else if (preference.key == "Contact.delete") {
-                createDialog(
-                    getString(R.string.conversation_action_remove_this_title),
-                    getString(R.string.menu_delete)
-                ) { dialog: DialogInterface?, whichButton: Int -> presenter.removeContact() }
+            val isGroup =
+                presenter.getConversation()?.isSwarmGroup() == true
+
+            if (preference.key == "Contact.delete") {
+                val message = if (isGroup) {
+                    R.string.swarm_group_action_leave_message
+                } else {
+                    R.string.conversation_action_remove_this_message
+                }
+
+                createDialog(getString(message)) { _, _ ->
+                    presenter.removeContact()
+                }
+            } else if (preference.key == "Contact.remove") {
+                if (!isGroup) {
+                    createDialog(
+                        getString(R.string.conversation_action_remove_message)
+                    ) { _, _ ->
+                        presenter.removeConversation()
+                    }
+                }
             }
+
             return super.onPreferenceTreeClick(preference)
         }
 
         private fun createDialog(
             title: String,
-            buttonText: String,
             onClickListener: DialogInterface.OnClickListener
         ) {
             val alertDialog = MaterialAlertDialogBuilder(requireContext(), com.google.android.material.R.style.Theme_MaterialComponents_Dialog)
                 .setTitle(title)
                 .setMessage("")
-                .setPositiveButton(buttonText, onClickListener)
+                .setPositiveButton(android.R.string.ok, onClickListener)
                 .setNegativeButton(android.R.string.cancel, null)
                 .create()
             alertDialog.setOwnerActivity(requireActivity())
@@ -92,10 +113,10 @@ class TVContactMoreFragment : LeanbackSettingsFragmentCompat() {
             alertDialog.show()
         }
 
-        override fun finishView(finishParent: Boolean) {
+        override fun finishView() {
             val activity: Activity? = activity
             if (activity != null) {
-                activity.setResult(if (finishParent) DELETE else CLEAR)
+                activity.setResult(DELETE)
                 activity.finish()
             }
         }
@@ -108,7 +129,7 @@ class TVContactMoreFragment : LeanbackSettingsFragmentCompat() {
     }
 
     companion object {
-        const val CLEAR = 101
+        const val REMOVE = 101
         const val DELETE = 102
     }
 }
