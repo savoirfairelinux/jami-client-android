@@ -17,5 +17,5 @@
 package cx.ring.tv.contact.more
 
 interface TVContactMoreView {
-    fun finishView(finishParent: Boolean)
+    fun finishView()
 }

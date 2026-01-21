@@ -18,6 +18,7 @@ package cx.ring.tv.contact.more
 
 import cx.ring.utils.ConversationPath
 import net.jami.model.Uri
+import net.jami.model.Conversation
 import net.jami.mvp.RootPresenter
 import net.jami.services.ConversationFacade
 import javax.inject.Inject
@@ -31,13 +32,18 @@ class TVContactMorePresenter @Inject internal constructor(private val conversati
         mUri = path.conversationUri
     }
 
-    fun clearHistory() {
-        conversationService.clearHistory(mAccountId!!, mUri!!).subscribe()
-        view?.finishView(false)
+    fun removeConversation() {
+        conversationService.removeConversation(mAccountId!!, mUri!!, true).subscribe()
+        view?.finishView()
     }
 
     fun removeContact() {
         conversationService.removeConversation(mAccountId!!, mUri!!).subscribe()
-        view?.finishView(true)
+        view?.finishView()
+    }
+
+    fun getConversation(): Conversation? {
+        if (mAccountId == null || mUri == null) return null
+        return conversationService.getConversation(mAccountId!!, mUri!!)
     }
 }

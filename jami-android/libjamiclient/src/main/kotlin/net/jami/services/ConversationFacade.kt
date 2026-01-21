@@ -72,6 +72,11 @@ class ConversationFacade(
         }
     }
 
+    fun getConversation(accountId: String, conversationUri: Uri): Conversation? {
+        val account = mAccountService.getAccount(accountId)
+        return account?.getByUri(conversationUri)
+    }
+
     fun startConversation(accountId: String, contactId: Uri): Single<Conversation> =
         getAccountSubject(accountId).map { account: Account -> account.getByUri(contactId)!! }
 
