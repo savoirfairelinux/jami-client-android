@@ -111,12 +111,12 @@ pipeline {
             }
             steps {
                 script {
-                    sh 'su jenkins -c "cd /jami-client-android && ./compile.sh --test"'
+                    sh 'cd /jami-client-android && ./compile.sh --test'
                     sh 'cd /jami-client-android/ci && ./start_emu_headless.sh'
 
                     boolean errorOccurred = false
                     try{
-                        sh 'su jenkins -c "cd /jami-client-android/ci && ./jami_test.sh"'
+                        sh 'cd /jami-client-android/ci && ./jami_test.sh'
                     } catch (Exception e) {
                         errorOccurred = true
                     }
