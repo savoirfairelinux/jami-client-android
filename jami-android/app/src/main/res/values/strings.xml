@@ -246,6 +246,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <!-- Call Fragment -->
     <string name="you_txt_prefix">You:</string>
     <string name="action_call_hangup">End call</string>
+    <string name="action_call_unhold">Resume</string>
     <string name="action_call_maximize">Maximize</string>
     <string name="action_call_minimize">Reduce</string>
     <string name="action_call_mute">Mute</string>
@@ -254,6 +255,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="hist_in_call">Incoming call of %1$s</string>
     <string name="hist_out_call">Outgoing call of %1$s</string>
     <string name="call_duration">Lasted %s</string>
+    <string name="call_on_hold">Call is on hold</string>
     <string name="start_error_title">Unable to start Jami</string>
     <string name="action_call_accept">Accept call</string>
     <string name="action_call_accept_audio">Accept with audio</string>

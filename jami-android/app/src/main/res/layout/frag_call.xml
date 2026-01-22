@@ -760,4 +760,44 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </FrameLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+    <com.google.android.material.button.MaterialButtonGroup
+        android:id="@+id/hold_action_row"
+        style="@style/Widget.Material3.MaterialButtonGroup.Connected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="48dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/call_hold_end_btn"
+            style="@style/Widget.Material3Expressive.Button.ElevatedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/action_call_hangup"
+            android:stateListAnimator="@animator/button_press_scale"
+            android:text="@string/action_call_hangup"
+            app:backgroundTint="@color/call_decline"
+            app:icon="@drawable/baseline_call_end_24"
+            app:materialSizeOverlay="@style/SizeOverlay.Material3Expressive.Button.Medium"
+            app:rippleColor="@color/call_button_ripple" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/call_resume_btn"
+            style="@style/Widget.Material3Expressive.Button.ElevatedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/action_call_unhold"
+            android:stateListAnimator="@animator/button_press_scale"
+            android:text="@string/action_call_unhold"
+            app:backgroundTint="@color/call_accept"
+            app:icon="@drawable/baseline_resume_arrow_24"
+            app:materialSizeOverlay="@style/SizeOverlay.Material3Expressive.Button.Medium"
+            app:rippleColor="@color/call_button_ripple" />
+
+    </com.google.android.material.button.MaterialButtonGroup>
+
 </FrameLayout>
