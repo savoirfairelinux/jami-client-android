@@ -105,6 +105,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private var mPreviewSurfaceWidth = 0
     private var mPreviewSurfaceHeight = 0
     private var isInPIP = false
+    private var isOnHold = false
     private lateinit var mProjectionManager: MediaProjectionManager
     private var mBackstackLost = false
     private var confAdapter: ConfParticipantAdapter? = null
@@ -187,6 +188,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 b.callRaiseHandBtn.setOnClickListener { raiseHandClicked() }
                 b.callExtensionsBtn.setOnClickListener { extensionsButtonClicked() }
                 b.callCameraFlipBtn.setOnClickListener { cameraFlip() }
+                b.callResumeBtn.setOnClickListener { presenter.resumeCallFromHold() }
+                b.callHoldEndBtn.setOnClickListener { refuseClicked() }
                 bottomSheetParams = binding?.callOptionsBottomSheet?.let { BottomSheetBehavior.from(it) }
             }.root
     }
@@ -562,12 +565,15 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             binding.callRelativeLayoutSurfaces.isVisible = false
             binding.callRelativeLayoutButtons.isVisible = false
             binding.callCoordinatorOptionContainer.isVisible = false
+            binding.holdActionRow.isVisible = false
         } else {
             mBackstackLost = true
             // Show normal UI elements.
             binding.callRelativeLayoutSurfaces.isVisible = true
             binding.callRelativeLayoutButtons.isVisible = true
             binding.callCoordinatorOptionContainer.isVisible = true
+            if (isOnHold) binding.holdActionRow.isVisible = true
+
         }
     }
 
@@ -1052,6 +1058,13 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
+    override fun displayHoldOverlay(show: Boolean) {
+        binding?.apply {
+            holdActionRow.isVisible = show && !isInPIP
+            if (show) callOptionsBottomSheet.isVisible = false
+        }
+    }
+
     /**
      * Set bottom sheet, define height for each state (Expanded/Half-expanded/Collapsed) based on current Display metrics (density & size)
      */
@@ -1097,7 +1110,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     private fun displayBottomSheet(display: Boolean) {
         val binding = binding ?: return
-        binding.callOptionsBottomSheet.isVisible = display && presenter.mOnGoingCall == true
+        binding.callOptionsBottomSheet.isVisible =
+            display && presenter.mOnGoingCall == true && !binding.holdActionRow.isVisible
     }
 
     override fun resetBottomSheetState() {
