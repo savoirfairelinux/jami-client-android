@@ -176,7 +176,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     if(isVideoMode) acceptClicked() else acceptAudioClicked()
                 }
                 b.callRefuseBtn.setOnClickListener { refuseClicked() }
-                b.callRefuseSingleBtn.setOnClickListener { refuseClicked() }
+                b.callEndBtn.setOnClickListener { refuseClicked() }
                 b.callHngUpBtn.setOnClickListener { hangupClicked() }
                 b.callSpeakerBtn.setOnClickListener { speakerClicked() }
                 b.callMicBtn.setOnClickListener { micClicked() }
@@ -269,7 +269,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
                 with(binding) {
                     callContactInfoContainer.updatePadding(top = topPadding)
-                    listOf(callBtnRow, callRefuseSingleBtn).forEach { button ->
+                    listOf(callBtnRow, callEndBtn).forEach { button ->
                         button.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                             bottomMargin = bottomMarginValue
                         }
@@ -1173,7 +1173,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             callBtnRow.isVisible = true
             callAcceptBtn.isVisible = true
             callRefuseBtn.isVisible = true
-            callRefuseSingleBtn.isGone = true
+            callEndBtn.isGone = true
             contactBubbleLayout.isVisible = true
             participantOverlayContainer.isVisible = false
             if(!hasVideo){
@@ -1192,7 +1192,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         Log.w(TAG, "initOutGoingCallDisplay")
         binding?.apply {
             callBtnRow.isGone = true
-            callRefuseSingleBtn.isVisible = true
+            callEndBtn.isVisible = true
             callModeToggleBtn.visibility = View.GONE
             contactBubbleLayout.isVisible = true
             if (hasVideo) {
