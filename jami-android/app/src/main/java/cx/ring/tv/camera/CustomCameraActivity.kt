@@ -16,251 +16,249 @@
  */
 package cx.ring.tv.camera
 
+import android.Manifest
 import android.animation.Animator
-import android.app.Activity
-import android.media.MediaRecorder
-import android.hardware.Camera.PictureCallback
-import cx.ring.utils.ContentUri
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import android.content.Intent
-import android.hardware.Camera
-import android.provider.MediaStore
-import android.widget.Toast
-import cx.ring.R
+import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.ViewAnimationUtils
-import android.hardware.Camera.CameraInfo
-import android.media.CamcorderProfile
-import android.net.Uri
-import android.os.Build
+import android.provider.MediaStore
 import android.util.Log
-import android.view.Surface
 import android.view.View
+import android.view.ViewAnimationUtils
+import android.widget.FrameLayout
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.video.FileOutputOptions
+import androidx.camera.video.Recording
+import androidx.camera.video.VideoRecordEvent
+import androidx.camera.view.LifecycleCameraController
+import androidx.camera.view.PreviewView
+import androidx.camera.view.video.AudioConfig
+import androidx.core.content.ContextCompat
+import cx.ring.R
 import cx.ring.databinding.CamerapickerBinding
 import cx.ring.utils.AndroidFileUtils
-import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import cx.ring.utils.ContentUri
 import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.lang.Exception
 import kotlin.math.max
+import androidx.core.view.isVisible
 
-class CustomCameraActivity : Activity() {
+class CustomCameraActivity : AppCompatActivity() {
     private var binding: CamerapickerBinding? = null
-    private val mDisposableBag = CompositeDisposable()
-    private var cameraFront = -1
-    private var cameraBack = -1
-    private var currentCamera = 0
-    private var recorder: MediaRecorder? = null
-    private var mRecording = false
+    private lateinit var cameraController: LifecycleCameraController
+    private var activeRecording: Recording? = null
+
     private var mActionVideo = false
     private var mVideoFile: File? = null
-    private var mCamera: Camera? = null
-    private var mCameraPreview: CameraPreview? = null
 
-    private val mPicture = PictureCallback { input: ByteArray, camera ->
-        mDisposableBag.add(
-            Single.fromCallable {
-                if (mCameraPreview != null) mCameraPreview!!.stop()
-                val file = AndroidFileUtils.createImageFile(this)
-                FileOutputStream(file).use { out ->
-                    out.write(input)
-                    out.flush()
-                }
-                ContentUri.getUriForFile(this, file)
-            }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ uri: Uri ->
-                    setResult(RESULT_OK, Intent()
-                            .putExtra(MediaStore.EXTRA_OUTPUT, uri)
-                            .setType(TYPE_IMAGE))
-                    finish()
-                }) { e: Throwable ->
-                    Log.e(TAG, "Error saving picture", e)
-                    setResult(RESULT_CANCELED)
-                    finish()
-                })
-    }
-
-    private fun takePicture() {
-        if (mRecording) releaseMediaRecorder()
-        if (mCamera != null) {
-            binding!!.buttonPicture.isEnabled = false
-            binding!!.buttonVideo.visibility = View.GONE
-            try {
-                mCamera!!.takePicture(null, null, mPicture)
-            } catch (e: Exception) {
-                Toast.makeText(this, getString(R.string.taking_picture_error), Toast.LENGTH_LONG).show()
+    private val requestPermissionsLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            val cameraGranted = permissions[Manifest.permission.CAMERA] ?: false
+            if (!cameraGranted) {
+                Toast.makeText(this, getString(R.string.open_camera_error), Toast.LENGTH_LONG).show()
                 finish()
             }
         }
-    }
 
-    private fun takeVideo() {
-        if (mRecording) {
-            releaseMediaRecorder()
-            mCameraPreview!!.stop()
-            val intent = Intent()
-                .putExtra(MediaStore.EXTRA_OUTPUT, ContentUri.getUriForFile(this, mVideoFile!!))
-                .setType(TYPE_VIDEO)
-            setResult(RESULT_OK, intent)
-            binding!!.buttonVideo.setImageResource(R.drawable.baseline_videocam_24)
-            finish()
-        } else {
-            if (mCamera != null) {
-                initRecorder()
-                binding!!.buttonVideo.setImageResource(androidx.leanback.R.drawable.lb_ic_stop)
-                binding!!.buttonPicture.visibility = View.GONE
-            }
-        }
-        mRecording = !mRecording
-    }
-
-    /**
-     * Called when the activity is first created.
-     */
-    public override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = CamerapickerBinding.inflate(layoutInflater)
+        setContentView(binding!!.root)
+
         if (intent.action != null) {
             mActionVideo = intent.action == MediaStore.ACTION_VIDEO_CAPTURE
         }
-        binding!!.buttonVideo.isEnabled = false
-        binding!!.buttonPicture.isEnabled = false
+
+        setupCamera()
+        setupUI()
+    }
+
+    private fun setupCamera() {
+        cameraController = LifecycleCameraController(this)
+        cameraController.setEnabledUseCases(LifecycleCameraController.IMAGE_CAPTURE or LifecycleCameraController.VIDEO_CAPTURE)
+
+        val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
+        cameraProviderFuture.addListener({
+            try {
+                val cameraProvider = cameraProviderFuture.get()
+                if (cameraProvider.hasCamera(CameraSelector.DEFAULT_FRONT_CAMERA)) {
+                    cameraController.cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
+                } else if (cameraProvider.hasCamera(CameraSelector.DEFAULT_BACK_CAMERA)) {
+                    cameraController.cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+                } else {
+                    Toast.makeText(this, getString(R.string.open_camera_error), Toast.LENGTH_LONG).show()
+                    finish()
+                }
+                cameraController.bindToLifecycle(this)
+            } catch (e: Exception) {
+                Log.e(TAG, "Use camera error", e)
+            }
+        }, ContextCompat.getMainExecutor(this))
+
+        val previewView = PreviewView(this)
+        previewView.layoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.MATCH_PARENT
+        )
+        previewView.controller = cameraController
+        binding!!.cameraPreview.addView(previewView, 0)
+    }
+
+    private fun setupUI() {
+        val binding = binding ?: return
+        binding.buttonVideo.isEnabled = true
+        binding.buttonPicture.isEnabled = true
+
         if (mActionVideo) {
-            binding!!.buttonVideo.visibility = View.VISIBLE
+            binding.buttonVideo.visibility = View.VISIBLE
+            binding.buttonVideo.setOnClickListener { toggleVideoRecording() }
+            binding.buttonPicture.visibility = View.GONE
+        } else {
+            binding.buttonPicture.setOnClickListener { takePicture() }
         }
-        setContentView(binding!!.root)
+
+        binding.root.post {
+            val endRadius = max(binding.root.width, binding.root.height)
+            val x = binding.root.width / 2
+            val y = binding.root.height / 2
+            if (binding.loadClip.isVisible) {
+                val anim = ViewAnimationUtils.createCircularReveal(
+                    binding.loadClip, x, y, endRadius.toFloat(), 0f
+                )
+                anim.addListener(object : Animator.AnimatorListener {
+                    override fun onAnimationStart(animator: Animator) {}
+                    override fun onAnimationEnd(animator: Animator) {
+                        try {
+                            binding.loadClip.visibility = View.GONE
+                        } catch (e: Exception) {
+                            Log.e(TAG, "Error hiding load clip", e)
+                        }
+                    }
+
+                    override fun onAnimationCancel(animator: Animator) {}
+                    override fun onAnimationRepeat(animator: Animator) {}
+                })
+                anim.duration = 600
+                anim.startDelay = 50
+                anim.start()
+            }
+        }
     }
 
     override fun onStart() {
         super.onStart()
-        mDisposableBag.add(Single.fromCallable { cameraInstance }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ camera ->
-                if (binding == null) {
-                    camera.release()
-                } else {
-                    mCamera = camera
-                    mCameraPreview = CameraPreview(this, camera)
-                    binding!!.cameraPreview.addView(mCameraPreview, 0)
-                    binding!!.buttonVideo.isEnabled = true
-                    binding!!.buttonPicture.isEnabled = true
-                    binding!!.buttonPicture.setOnClickListener { takePicture() }
-                    binding!!.buttonVideo.setOnClickListener { takeVideo() }
-                    val endRadius = max(binding!!.root.width, binding!!.root.height)
-                    val x = binding!!.root.width / 2
-                    val y = binding!!.root.height / 2
-                    if (binding!!.loadClip.visibility == View.VISIBLE) {
-                        val anim = ViewAnimationUtils.createCircularReveal(
-                            binding!!.loadClip, x, y, endRadius.toFloat(), 0f
-                        )
-                        anim.addListener(object : Animator.AnimatorListener {
-                            override fun onAnimationStart(animator: Animator) {}
-                            override fun onAnimationEnd(animator: Animator) {
-                                binding!!.loadClip.visibility = View.GONE
-                            }
+        val permissions = mutableListOf(Manifest.permission.CAMERA)
+        if (mActionVideo) {
+            permissions.add(Manifest.permission.RECORD_AUDIO)
+        }
 
-                            override fun onAnimationCancel(animator: Animator) {}
-                            override fun onAnimationRepeat(animator: Animator) {}
-                        })
-                        anim.duration = 600
-                        anim.startDelay = 50
-                        anim.start()
-                    }
-                }
-            }) { e: Throwable ->
-                Toast.makeText(this, getString(R.string.open_camera_error), Toast.LENGTH_LONG).show()
-                finish()
-            })
-    }
+        val missing = permissions.filter {
+            ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED
+        }
 
-    override fun onStop() {
-        super.onStop()
-        if (mCameraPreview != null) {
-            mCameraPreview!!.stop()
-            mCameraPreview = null
+        if (missing.isNotEmpty()) {
+            requestPermissionsLauncher.launch(missing.toTypedArray())
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mDisposableBag.dispose()
         binding = null
-        mCamera?.apply {
-            release()
-            mCamera = null
-        }
     }
 
-    private fun initVideo() {
-        val numberCameras = Camera.getNumberOfCameras()
-        if (numberCameras == 0) return
-        val camInfo = CameraInfo()
-        for (i in 0 until numberCameras) {
-            Camera.getCameraInfo(i, camInfo)
-            if (camInfo.facing == CameraInfo.CAMERA_FACING_FRONT) {
-                cameraFront = i
-            } else {
-                cameraBack = i
-            }
-        }
-        currentCamera = if (cameraFront == -1) cameraBack else cameraFront
-    }
+    private fun takePicture() {
+        binding!!.buttonPicture.isEnabled = false
 
-    /**
-     * Helper method to access the camera returns null if it cannot get the
-     * camera or does not exist
-     */
-    private val cameraInstance: Camera
-        get() {
-            initVideo()
-            return Camera.open(currentCamera)
-        }
-
-    private fun initRecorder() {
-        val videoWidth = mCamera!!.parameters.previewSize.width
-        val videoHeight = mCamera!!.parameters.previewSize.height
-        mCamera?.unlock()
-        recorder = MediaRecorder().apply {
-            setCamera(mCamera)
-            setAudioSource(MediaRecorder.AudioSource.MIC)
-            setVideoSource(MediaRecorder.VideoSource.DEFAULT)
-            setProfile(CamcorderProfile.get(currentCamera, CamcorderProfile.QUALITY_HIGH))
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                try {
-                    mVideoFile = AndroidFileUtils.createVideoFile(this@CustomCameraActivity)
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-                setOutputFile(mVideoFile)
-            }
-            setVideoSize(videoWidth, videoHeight)
-        }
-        prepareRecorder()
-    }
-
-    private fun prepareRecorder() {
-        recorder!!.setPreviewDisplay(Surface(mCameraPreview!!.surfaceTexture))
-        try {
-            recorder!!.prepare()
-            recorder!!.start()
+        val file = try {
+            AndroidFileUtils.createImageFile(this)
         } catch (e: Exception) {
-            Toast.makeText(this, getString(R.string.starting_recorder_error), Toast.LENGTH_LONG).show()
-            Log.e(TAG, "Error starting recorder", e)
+            Toast.makeText(this, getString(R.string.taking_picture_error), Toast.LENGTH_LONG).show()
             finish()
+            return
+        }
+
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(file).build()
+
+        cameraController.takePicture(
+            outputOptions,
+            ContextCompat.getMainExecutor(this),
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                    val uri = ContentUri.getUriForFile(this@CustomCameraActivity, file)
+                    setResult(RESULT_OK, Intent()
+                        .putExtra(MediaStore.EXTRA_OUTPUT, uri)
+                        .setType(TYPE_IMAGE))
+                    finish()
+                }
+
+                override fun onError(exc: ImageCaptureException) {
+                    Log.e(TAG, "Error saving picture", exc)
+                    Toast.makeText(this@CustomCameraActivity, getString(R.string.taking_picture_error), Toast.LENGTH_LONG).show()
+                    setResult(RESULT_CANCELED)
+                    finish()
+                }
+            }
+        )
+    }
+
+    private fun toggleVideoRecording() {
+        if (activeRecording != null) {
+            stopVideoRecording()
+        } else {
+            startVideoRecording()
         }
     }
 
-    private fun releaseMediaRecorder() {
-        recorder?.apply {
-            reset()
-            release()
-            recorder = null
+    private fun startVideoRecording() {
+        mVideoFile = try {
+            AndroidFileUtils.createVideoFile(this)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error creating video file", e)
+            return
+        }
+
+        val outputOptions = FileOutputOptions.Builder(mVideoFile!!).build()
+
+        val audioPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
+
+        val pending = cameraController.startRecording(
+            outputOptions,
+            AudioConfig.create(audioPermission),
+            ContextCompat.getMainExecutor(this)
+        ) { event ->
+            if (event is VideoRecordEvent.Finalize) {
+                handleVideoFinalize(event)
+            }
+        }
+
+        activeRecording = pending
+
+        binding!!.buttonVideo.setImageResource(androidx.leanback.R.drawable.lb_ic_stop)
+    }
+
+    private fun stopVideoRecording() {
+        activeRecording?.stop()
+        activeRecording = null
+        binding!!.buttonVideo.setImageResource(R.drawable.baseline_videocam_24)
+    }
+
+    private fun handleVideoFinalize(event: VideoRecordEvent.Finalize) {
+        if (!event.hasError()) {
+            val uri = ContentUri.getUriForFile(this, mVideoFile!!)
+            setResult(RESULT_OK, Intent()
+                .putExtra(MediaStore.EXTRA_OUTPUT, uri)
+                .setType(TYPE_VIDEO))
+            finish()
+        } else {
+            Log.e(TAG, "Video capture failed: ${event.error}")
+            Toast.makeText(this, getString(R.string.starting_recorder_error), Toast.LENGTH_LONG).show()
+            mVideoFile?.delete()
+            finish()
         }
     }
 
