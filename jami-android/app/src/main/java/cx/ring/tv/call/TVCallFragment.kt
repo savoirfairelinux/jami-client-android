@@ -297,6 +297,8 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
 
     override fun resetBottomSheetState() {}
 
+    override fun displayHoldOverlay(show: Boolean) {}
+
     override fun initNormalStateDisplay() {
         mSession!!.isActive = true
         binding?.apply {

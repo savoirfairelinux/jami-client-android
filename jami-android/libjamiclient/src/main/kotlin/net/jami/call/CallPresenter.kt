@@ -415,13 +415,15 @@ class CallPresenter @Inject constructor(
      * */
     private fun confUpdate(call: Conference) {
         mConference = call
+        val isHold = call.state == CallStatus.HOLD
         val status = call.state
+        view?.displayHoldOverlay(isHold)
+
         if (status === CallStatus.HOLD) {
-            if (call.isSimpleCall)
-                mCallService.unhold(call.accountId, call.id)
-            else
+            if (!call.isSimpleCall)
                 JamiService.addMainParticipant(call.accountId, call.id)
         }
+
         val hasVideo = call.hasVideo()
         val hasActiveCameraVideo = call.hasActiveNonScreenShareVideo()
         val view = view ?: return
@@ -472,6 +474,17 @@ class CallPresenter @Inject constructor(
             finish()
         }
     }
+
+    fun resumeCallFromHold() {
+        val conf = mConference ?: return
+
+        try {
+            mCallService.unhold(conf.accountId, conf.id)
+        } catch (t: Throwable) {
+            Log.e(TAG, "resumeCallFromHold() failed", t)
+        }
+    }
+
 
     fun maximizeParticipant(info: ParticipantInfo?) {
         val conference = mConference ?: return
