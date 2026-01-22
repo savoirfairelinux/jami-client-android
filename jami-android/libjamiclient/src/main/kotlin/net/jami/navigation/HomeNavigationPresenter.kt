@@ -21,7 +21,6 @@ import net.jami.mvp.RootPresenter
 import net.jami.services.AccountService
 import net.jami.services.DeviceRuntimeService
 import net.jami.services.HardwareService
-import net.jami.services.VCardService
 import net.jami.utils.Log
 import java.io.File
 import javax.inject.Inject
@@ -31,7 +30,6 @@ class HomeNavigationPresenter @Inject constructor(
     private val mAccountService: AccountService,
     private val mHardwareService: HardwareService,
     private val mDeviceRuntimeService: DeviceRuntimeService,
-    private val mVCardService: VCardService,
     @param:Named("UiScheduler")
     private val mUiScheduler: Scheduler
 ) : RootPresenter<HomeNavigationView>() {
@@ -56,12 +54,9 @@ class HomeNavigationPresenter @Inject constructor(
         view?.goToGallery()
     }
 
-    fun updateProfile(displayName: String, avatar: String? = null, fileType: String = "") {
+    fun updateProfile(displayName: String) {
         val account = mAccountService.currentAccount ?: return
-        if (avatar == null)
-            mAccountService.updateProfile(account.accountId, displayName, "", "")
-        else
-            mAccountService.updateProfile(account.accountId, displayName, avatar, fileType)
+        mAccountService.updateProfile(account.accountId, displayName)
     }
     fun updateProfile(displayName: String, avatar: File, fileType: String) {
         val account = mAccountService.currentAccount ?: return

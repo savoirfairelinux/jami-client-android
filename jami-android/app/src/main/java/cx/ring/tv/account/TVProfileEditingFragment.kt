@@ -19,7 +19,6 @@ package cx.ring.tv.account
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -34,7 +33,6 @@ import cx.ring.R
 import cx.ring.account.ProfileCreationFragment
 import cx.ring.tv.camera.CustomCameraActivity
 import cx.ring.utils.AndroidFileUtils
-import cx.ring.utils.BitmapUtils
 import cx.ring.utils.ContentUri.getUri
 import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
