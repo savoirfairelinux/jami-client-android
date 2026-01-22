@@ -187,6 +187,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 b.callRaiseHandBtn.setOnClickListener { raiseHandClicked() }
                 b.callExtensionsBtn.setOnClickListener { extensionsButtonClicked() }
                 b.callCameraFlipBtn.setOnClickListener { cameraFlip() }
+                b.callUnholdBtn.setOnClickListener { presenter.resumeCallFromHold() }
                 bottomSheetParams = binding?.callOptionsBottomSheet?.let { BottomSheetBehavior.from(it) }
             }.root
     }
@@ -1051,6 +1052,13 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             callMicBtn.isChecked = isMicrophoneMuted
         }
     }
+
+    override fun displayHoldOverlay(show: Boolean) {
+        binding?.apply {
+            holdOverlay.isVisible = show
+        }
+    }
+
 
     /**
      * Set bottom sheet, define height for each state (Expanded/Half-expanded/Collapsed) based on current Display metrics (density & size)
