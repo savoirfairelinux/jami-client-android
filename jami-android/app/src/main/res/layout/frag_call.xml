@@ -37,6 +37,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:animateLayoutChanges="false"
         android:visibility="gone" />
 
+    <LinearLayout
+        android:id="@+id/call_on_hold_banner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="132dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:background="@drawable/background_call_banner"
+        android:visibility="gone" >
+
+        <View
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/baseline_call_onhold_24"
+            android:backgroundTint="@color/grey_500"/>
+
+        <TextView
+            android:id="@+id/call_on_hold_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/call_on_hold"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
     <!-- video surfaces layout -->
     <RelativeLayout
         android:id="@+id/call_relative_layout_surfaces"
@@ -759,5 +789,45 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </androidx.constraintlayout.widget.ConstraintLayout>
         </FrameLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <com.google.android.material.button.MaterialButtonGroup
+        android:id="@+id/hold_action_row"
+        style="@style/Widget.Material3.MaterialButtonGroup.Connected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="48dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/call_hold_end_btn"
+            style="@style/Widget.Material3Expressive.Button.ElevatedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/action_call_hangup"
+            android:stateListAnimator="@animator/button_press_scale"
+            android:text="@string/action_call_hangup"
+            app:backgroundTint="@color/call_decline"
+            app:icon="@drawable/baseline_call_end_24"
+            app:materialSizeOverlay="@style/SizeOverlay.Material3Expressive.Button.Medium"
+            app:rippleColor="@color/call_button_ripple" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/call_resume_btn"
+            style="@style/Widget.Material3Expressive.Button.ElevatedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/action_call_resume"
+            android:stateListAnimator="@animator/button_press_scale"
+            android:text="@string/action_call_resume"
+            app:backgroundTint="@color/call_accept"
+            app:icon="@drawable/baseline_resume_arrow_24"
+            app:materialSizeOverlay="@style/SizeOverlay.Material3Expressive.Button.Medium"
+            app:rippleColor="@color/call_button_ripple" />
+
+    </com.google.android.material.button.MaterialButtonGroup>
 
 </FrameLayout>
