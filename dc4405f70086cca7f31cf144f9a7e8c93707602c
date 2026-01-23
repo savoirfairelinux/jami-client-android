@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "249ed4a2_553913ba",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/JamiAccountCreationFragment.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2026-01-23T20:42:27Z",
+      "side": 1,
+      "message": "* Split string between step counter and description\n* make everything translatable",
+      "range": {
+        "startLine": 50,
+        "startChar": 12,
+        "endLine": 54,
+        "endChar": 13
+      },
+      "revId": "dc4405f70086cca7f31cf144f9a7e8c93707602c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
