@@ -141,6 +141,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "64ee1332_e200f602",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2026-01-23T09:16:12Z",
+      "side": 1,
+      "message": "The https://review.jami.net/c/jami-client-android/+/32930 patch has been merged. Please rebase this patch. Thank you",
+      "parentUuid": "2646006e_009882cd",
+      "range": {
+        "startLine": 248,
+        "startChar": 38,
+        "endLine": 248,
+        "endChar": 45
+      },
+      "revId": "898e407fb25548ffa55f45b08442ff045718a1eb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e7ba41df_31926906",
         "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
         "patchSetId": 1
