@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "98e6a47a_9ef482c2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-01-23T17:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8e338a2_2889a516",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "898e407fb25548ffa55f45b08442ff045718a1eb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7bf30753_aa48f85f",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-01-23T00:56:10Z",
       "side": 1,
       "message": "Can `Unhold` be `Resume`?",
+      "range": {
+        "startLine": 190,
+        "startChar": 22,
+        "endLine": 190,
+        "endChar": 28
+      },
+      "revId": "898e407fb25548ffa55f45b08442ff045718a1eb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fcd502f2_5e15108e",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-01-23T17:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bf30753_aa48f85f",
       "range": {
         "startLine": 190,
         "startChar": 22,
@@ -70,6 +118,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "baa2d0e4_0cedf672",
+        "filename": "jami-android/app/src/main/res/layout/frag_call.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-01-23T17:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b3f1757_5b9d0b5e",
+      "range": {
+        "startLine": 87,
+        "startChar": 38,
+        "endLine": 87,
+        "endChar": 44
+      },
+      "revId": "898e407fb25548ffa55f45b08442ff045718a1eb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d79604ab_597c21e0",
@@ -93,6 +165,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f63a610_d10c5ffd",
+        "filename": "jami-android/app/src/main/res/layout/frag_call.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-01-23T17:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d79604ab_597c21e0",
+      "range": {
+        "startLine": 92,
+        "startChar": 64,
+        "endLine": 92,
+        "endChar": 70
+      },
+      "revId": "898e407fb25548ffa55f45b08442ff045718a1eb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "25422395_3cd213d1",
@@ -106,6 +202,30 @@
       "writtenOn": "2026-01-23T00:56:10Z",
       "side": 1,
       "message": "Can `unhold` be `resume`?",
+      "range": {
+        "startLine": 94,
+        "startChar": 50,
+        "endLine": 94,
+        "endChar": 56
+      },
+      "revId": "898e407fb25548ffa55f45b08442ff045718a1eb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63f3138c_728d5a02",
+        "filename": "jami-android/app/src/main/res/layout/frag_call.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-01-23T17:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25422395_3cd213d1",
       "range": {
         "startLine": 94,
         "startChar": 50,
@@ -153,6 +273,30 @@
       "side": 1,
       "message": "The https://review.jami.net/c/jami-client-android/+/32930 patch has been merged. Please rebase this patch. Thank you",
       "parentUuid": "2646006e_009882cd",
+      "range": {
+        "startLine": 248,
+        "startChar": 38,
+        "endLine": 248,
+        "endChar": 45
+      },
+      "revId": "898e407fb25548ffa55f45b08442ff045718a1eb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e6857b5_32285eeb",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-01-23T17:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64ee1332_e200f602",
       "range": {
         "startLine": 248,
         "startChar": 38,
