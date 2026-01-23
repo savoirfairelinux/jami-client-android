@@ -245,7 +245,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
     <!-- Call Fragment -->
     <string name="you_txt_prefix">You:</string>
-    <string name="action_call_hangup">Hang up</string>
+    <string name="action_call_hangup">End call</string>
     <string name="action_call_maximize">Maximize</string>
     <string name="action_call_minimize">Reduce</string>
     <string name="action_call_mute">Mute</string>
