@@ -47,6 +47,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "438f41ba_a0ceb631",
+        "filename": "jami-android/app/src/main/res/layout/frag_call.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-01-23T17:15:52Z",
+      "side": 1,
+      "message": "Changed this to end as per the latest string",
+      "parentUuid": "74a88d99_e78867c3",
+      "range": {
+        "startLine": 269,
+        "startChar": 38,
+        "endLine": 269,
+        "endChar": 44
+      },
+      "revId": "ddf34519195c7d70d46b28610ddb515e49afc466",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0088248b_a2e5edca",
@@ -70,6 +94,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a27efdcf_b1cfa11f",
+        "filename": "jami-android/app/src/main/res/layout/frag_call.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-01-23T17:15:52Z",
+      "side": 1,
+      "message": "The actual string was changed to \"end call\". I didn’t update this to avoid breaking translations.",
+      "parentUuid": "0088248b_a2e5edca",
+      "range": {
+        "startLine": 274,
+        "startChar": 64,
+        "endLine": 274,
+        "endChar": 70
+      },
+      "revId": "ddf34519195c7d70d46b28610ddb515e49afc466",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e6976e73_8688cbd9",
@@ -83,6 +131,30 @@
       "writtenOn": "2026-01-23T00:58:08Z",
       "side": 1,
       "message": "Should `hangup` be `end`?",
+      "range": {
+        "startLine": 276,
+        "startChar": 50,
+        "endLine": 276,
+        "endChar": 56
+      },
+      "revId": "ddf34519195c7d70d46b28610ddb515e49afc466",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3001a749_87c62c41",
+        "filename": "jami-android/app/src/main/res/layout/frag_call.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-01-23T17:15:52Z",
+      "side": 1,
+      "message": "The actual string was changed to \"end call\". I didn’t update this to avoid breaking translations.",
+      "parentUuid": "e6976e73_8688cbd9",
       "range": {
         "startLine": 276,
         "startChar": 50,
