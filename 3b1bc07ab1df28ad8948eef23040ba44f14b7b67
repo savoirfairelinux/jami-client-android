@@ -22,6 +22,30 @@
       },
       "revId": "3b1bc07ab1df28ad8948eef23040ba44f14b7b67",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "889d6de3_d8439d17",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/call/CallView.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-01-23T19:14:57Z",
+      "side": 1,
+      "message": "since updateCallStatus is for displaying outgoing call status, proceeding with this change.",
+      "parentUuid": "fd6b0c56_d51db545",
+      "range": {
+        "startLine": 54,
+        "startChar": 1,
+        "endLine": 55,
+        "endChar": 41
+      },
+      "revId": "3b1bc07ab1df28ad8948eef23040ba44f14b7b67",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
