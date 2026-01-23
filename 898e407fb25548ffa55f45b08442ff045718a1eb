@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bf30753_aa48f85f",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2026-01-23T00:56:10Z",
+      "side": 1,
+      "message": "Can `Unhold` be `Resume`?",
+      "range": {
+        "startLine": 190,
+        "startChar": 22,
+        "endLine": 190,
+        "endChar": 28
+      },
+      "revId": "898e407fb25548ffa55f45b08442ff045718a1eb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b3f1757_5b9d0b5e",
+        "filename": "jami-android/app/src/main/res/layout/frag_call.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2026-01-23T00:56:10Z",
+      "side": 1,
+      "message": "Can `unhold` be `resume`?",
+      "range": {
+        "startLine": 87,
+        "startChar": 38,
+        "endLine": 87,
+        "endChar": 44
+      },
+      "revId": "898e407fb25548ffa55f45b08442ff045718a1eb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d79604ab_597c21e0",
+        "filename": "jami-android/app/src/main/res/layout/frag_call.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2026-01-23T00:56:10Z",
+      "side": 1,
+      "message": "Can `unhold` be `resume`?",
+      "range": {
+        "startLine": 92,
+        "startChar": 64,
+        "endLine": 92,
+        "endChar": 70
+      },
+      "revId": "898e407fb25548ffa55f45b08442ff045718a1eb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25422395_3cd213d1",
+        "filename": "jami-android/app/src/main/res/layout/frag_call.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2026-01-23T00:56:10Z",
+      "side": 1,
+      "message": "Can `unhold` be `resume`?",
+      "range": {
+        "startLine": 94,
+        "startChar": 50,
+        "endLine": 94,
+        "endChar": 56
+      },
+      "revId": "898e407fb25548ffa55f45b08442ff045718a1eb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7ba41df_31926906",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2026-01-23T00:56:10Z",
+      "side": 1,
+      "message": "Can `unhold` be `resume`?",
+      "range": {
+        "startLine": 482,
+        "startChar": 25,
+        "endLine": 482,
+        "endChar": 31
+      },
+      "revId": "898e407fb25548ffa55f45b08442ff045718a1eb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
