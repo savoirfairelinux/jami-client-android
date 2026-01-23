@@ -118,6 +118,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2646006e_009882cd",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2026-01-23T01:02:36Z",
+      "side": 1,
+      "message": "Can `Hang up` be `End call`?\n\nAlternatively, the https://review.jami.net/c/jami-client-android/+/32930 patch changes this if better in a new patch.\n\nThank you",
+      "range": {
+        "startLine": 248,
+        "startChar": 38,
+        "endLine": 248,
+        "endChar": 45
+      },
+      "revId": "898e407fb25548ffa55f45b08442ff045718a1eb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e7ba41df_31926906",
         "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
         "patchSetId": 1
