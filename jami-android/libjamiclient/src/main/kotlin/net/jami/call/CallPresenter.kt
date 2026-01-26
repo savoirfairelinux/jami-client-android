@@ -174,7 +174,11 @@ class CallPresenter @Inject constructor(
         ) { hasVideo: Boolean, audioState: AudioState ->
             hasVideo to audioState
         }.observeOn(mUiScheduler)
-            .subscribe { (hasVideo, audioState) -> view?.updateAudioState(audioState, hasVideo) }
+            .subscribe({ (hasVideo, audioState) ->
+                view?.updateAudioState(audioState, hasVideo)
+            }, { error ->
+                Log.e(TAG, "Error updating audio state", error)
+            })
             .apply { mCompositeDisposable.add(this) }
         mCompositeDisposable.add(conference
             .switchMap { obj: Conference ->
