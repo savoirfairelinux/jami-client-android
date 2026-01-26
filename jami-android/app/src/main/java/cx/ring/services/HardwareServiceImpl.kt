@@ -163,7 +163,7 @@ class HardwareServiceImpl(
 
     @SuppressLint("NewApi")
     override fun getAudioState(conf: Conference): Observable<AudioState> =
-        (conf.call ?: conf.hostCall)!!.systemConnection
+        (conf.call ?: conf.hostCall ? conf.firstCall)!!.systemConnection
             .flatMapObservable { a -> (a as CallServiceImpl.AndroidCall).connection!!.audioState }
             .map { a -> AudioState(routeToType(a.route), maskToList(a.supportedRouteMask)) }
             .onErrorResumeWith { audioState }
