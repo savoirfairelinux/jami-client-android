@@ -75,7 +75,7 @@
   <string name="location_share_about_title">Habari za ramani</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Wewe:</string>
-  <string name="action_call_hangup">Funga</string>
+  <string name="action_call_hangup">Maliza simu hii</string>
   <string name="action_call_maximize">Kufanya yote uwezayo</string>
   <string name="action_call_minimize">Kupunguza</string>
   <string name="action_call_mute">Kiziwi</string>
@@ -83,6 +83,7 @@
   <string name="ongoing_call">Mawasiliano ya sasa</string>
   <string name="hist_in_call">Kuingia wito wa %1$s</string>
   <string name="hist_out_call">Kuondoka wito wa %1$s</string>
+  <string name="switch_to_video">Weka Video</string>
   <string name="action_call_decline">Kupungua</string>
   <string name="action_call_mic_mute">Kipaza sauti</string>
   <string name="ab_action_contact_add">Ongeza kwa mawasiliano</string>

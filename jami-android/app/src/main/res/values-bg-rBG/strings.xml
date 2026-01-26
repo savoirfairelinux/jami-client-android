@@ -75,7 +75,6 @@
   <string name="location_share_about_title">Информация за картата</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Вие:</string>
-  <string name="action_call_hangup">Затваряне</string>
   <string name="action_call_maximize">Максимизирайте</string>
   <string name="action_call_minimize">Намаляване</string>
   <string name="action_call_mute">Мълчави</string>

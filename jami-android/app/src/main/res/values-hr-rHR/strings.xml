@@ -30,9 +30,11 @@
   <string name="notif_location_action_stop">Prestani dijeliti lokaciju</string>
   <string name="location_share_about_title">Informacije o karti</string>
   <!--Call Fragment-->
+  <string name="action_call_hangup">Završi poziv</string>
   <string name="action_call_minimize">Smanjenje</string>
   <string name="action_call_mute">Neispravni</string>
   <string name="action_call_unmute">Nezgledni</string>
+  <string name="switch_to_video">Omogući video</string>
   <string name="ab_action_audio_call">Pokrenite audio poziv</string>
   <string name="ab_action_video_call">Pokrenite video pozive</string>
   <string name="qr_code">QR kod</string>

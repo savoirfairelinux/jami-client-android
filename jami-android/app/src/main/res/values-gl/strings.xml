@@ -78,7 +78,7 @@
   <string name="location_share_about_title">Información do mapa</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ti:</string>
-  <string name="action_call_hangup">Colgar</string>
+  <string name="action_call_hangup">Finalizar chamada</string>
   <string name="action_call_maximize">Maximizar</string>
   <string name="action_call_minimize">Reducir</string>
   <string name="action_call_mute">Acalar</string>
@@ -88,6 +88,7 @@
   <string name="hist_out_call">Chamada a %1$s</string>
   <string name="call_duration">Durou %s</string>
   <string name="action_call_accept">Aceptar chamada</string>
+  <string name="switch_to_video">Activar vídeo</string>
   <string name="action_call_decline">Rexeitar</string>
   <string name="action_call_mic_mute">Apagar micrófono</string>
   <string name="ab_action_contact_add">Engadir a contactos</string>

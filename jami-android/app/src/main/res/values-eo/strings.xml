@@ -75,7 +75,6 @@
   <string name="location_share_about_title">Mapo informoj</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vi:</string>
-  <string name="action_call_hangup">Fini vokon</string>
   <string name="action_call_maximize">Maksimumi</string>
   <string name="action_call_minimize">Redukti</string>
   <string name="action_call_mute">Mutaj</string>

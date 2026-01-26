@@ -31,7 +31,7 @@
   <!--Home Fragment-->
   <string name="invitation_card_title">邀请已发送</string>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">搜索姓名或对话…</string>
+  <string name="searchbar_hint">搜索或添加</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
@@ -54,6 +54,8 @@
   <string name="notif_incoming_file_transfer_title">从%1$s收到文件</string>
   <string name="notif_sync_title">正在同步数据……</string>
   <!--Call Fragment-->
+  <string name="action_call_hangup">結束電話</string>
+  <string name="action_call_resume">继续</string>
   <string name="action_call_minimize">缩小</string>
   <string name="ongoing_call">正在通话</string>
   <string name="hist_in_call">%1$s 的来电</string>
@@ -64,6 +66,7 @@
   <string name="action_call_accept_audio">接受音频</string>
   <string name="action_call_accept_video">接受视频</string>
   <string name="action_call_hold_accept">接受仅带音频的来电并保持当前通话</string>
+  <string name="switch_to_video">启用视频</string>
   <string name="action_call_hold_accept_video">接受视频来电并保持当前通话</string>
   <string name="action_call_end_accept">接听来电并结束当前通话</string>
   <string name="action_call_mic_mute">禁用麦克风</string>
@@ -227,6 +230,7 @@
   <string name="menu_message_copy">复制</string>
   <string name="menu_message_history">消息历史记录</string>
   <string name="menu_message_delete">删除消息</string>
+  <string name="menu_message_cancel_reply">取消回复</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">会话</string>
   <string name="navigation_item_contact_request">邀请</string>
@@ -346,4 +350,5 @@
   <string name="link_device_error_canceled">操作已被用户取消。</string>
   <string name="link_device_error_unknown">发生错误。</string>
   <string name="link_device_error_bad_password">请检查凭据并重试。</string>
+  <string name="test_push">测试推送</string>
 </resources>

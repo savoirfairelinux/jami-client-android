@@ -44,7 +44,6 @@
     <item quantity="other">%d Converses</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Cerca nom o conversa...</string>
   <string name="choose_number">Trieu un número</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -87,7 +86,6 @@
   <string name="location_share_about_title">Informació al mapa</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Usuari:</string>
-  <string name="action_call_hangup">Penja</string>
   <string name="action_call_maximize">Maximitza</string>
   <string name="action_call_minimize">Redueix</string>
   <string name="action_call_mute">Silencia</string>

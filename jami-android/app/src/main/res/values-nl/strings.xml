@@ -37,7 +37,6 @@
     <item quantity="other">%d gesprekken</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Zoek op naam of gesprek</string>
   <string name="choose_number">Kies een nummer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -79,7 +78,7 @@
   <string name="location_share_about_title">Informatie over de kaart</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">U:</string>
-  <string name="action_call_hangup">Ophangen</string>
+  <string name="action_call_hangup">Oproep beëindigen</string>
   <string name="action_call_maximize">Maximaliseren</string>
   <string name="action_call_minimize">Verkleinen</string>
   <string name="action_call_mute">Dempen</string>
@@ -89,6 +88,7 @@
   <string name="hist_out_call">Uitgaande oproep van %1$s</string>
   <string name="call_duration">Duurde %s</string>
   <string name="action_call_accept">Oproep accepteren</string>
+  <string name="switch_to_video">Video inschakelen</string>
   <string name="action_call_decline">Weigeren</string>
   <string name="action_call_mic_mute">Microfoon dempen</string>
   <string name="ab_action_contact_add">Aan contacten toevoegen</string>

@@ -44,7 +44,6 @@
     <item quantity="other">%d Samtalar</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Søk etter namn eller samtale ...</string>
   <string name="choose_number">Vel eit nummer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -86,7 +85,7 @@
   <string name="location_share_about_title">Kartinformasjon</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Du:</string>
-  <string name="action_call_hangup">Henga opp</string>
+  <string name="action_call_hangup">Avslutt samtale</string>
   <string name="action_call_maximize">Maksimalgjøre</string>
   <string name="action_call_minimize">Reduksjon av</string>
   <string name="action_call_mute">Stum</string>
@@ -97,6 +96,7 @@
   <string name="action_call_accept_audio">Godta med ljod</string>
   <string name="action_call_accept_video">Godta med video</string>
   <string name="action_call_hold_accept">Godta den innkomande samtala med berre ljod og bli verande i samtala</string>
+  <string name="switch_to_video">Legg videoen til</string>
   <string name="action_call_hold_accept_video">Godta den innkomande samtala med video og bli verande i samtala</string>
   <string name="action_call_end_accept">Godta den innkomande samtala og enda den noverande samtala</string>
   <string name="action_call_decline">Ikkje godta</string>

@@ -74,7 +74,7 @@
   <string name="location_share_about_title">ਨਕਸ਼ੇ ਦੀ ਜਾਣਕਾਰੀ</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">ਤੁਸੀਂ:</string>
-  <string name="action_call_hangup">ਕਾਲ ਕੱਟੋ</string>
+  <string name="action_call_hangup">ਕਾਲ ਸਮਾਪਤ ਕਰੋ</string>
   <string name="action_call_maximize">ਵੱਡਾ ਕਰੋ</string>
   <string name="action_call_minimize">ਛੋਟਾ ਕਰੋ</string>
   <string name="action_call_mute">ਚੁੱਪ ਹੋਵੋ</string>
@@ -82,6 +82,7 @@
   <string name="ongoing_call">ਜਾਂਦੀ ਕਾਲ</string>
   <string name="hist_in_call">%1$s ਤੋਂ ਆਉਂਦੀ ਕਾਲ</string>
   <string name="hist_out_call">%1$s ਨੂੰ ਜਾਂਦੀ ਕਾਲ</string>
+  <string name="switch_to_video">ਵੀਡੀਓ ਚਾਲੂ ਕਰੋ</string>
   <string name="action_call_decline">ਕਾਲ ਕੱਟੋ</string>
   <string name="action_call_mic_mute">ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਬੰਦ ਕਰੋ</string>
   <string name="ab_action_contact_add">ਸੰਪਰਕਾਂ ਵਿੱਚ ਜੋੜੋ</string>

@@ -75,7 +75,7 @@
   <string name="location_share_about_title">Картын мэдээлэл</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Та:</string>
-  <string name="action_call_hangup">-Хэлээч.</string>
+  <string name="action_call_hangup">Дуудлагыг дуусгах</string>
   <string name="action_call_maximize">Хамгийн их хэмжээний</string>
   <string name="action_call_minimize">Хөгжиж байна</string>
   <string name="action_call_mute">Үмээнгүй</string>
@@ -83,6 +83,7 @@
   <string name="ongoing_call">Цаашид явагдаж буй</string>
   <string name="hist_in_call">%1$s-ийн орж ирж буй дуудлага</string>
   <string name="hist_out_call">%1$s-ийн гадаад дуудлага</string>
+  <string name="switch_to_video">Видеог ашиглах</string>
   <string name="action_call_decline">Хөгжиж байна</string>
   <string name="action_call_mic_mute">Улаан чимээгүй микрофон</string>
   <string name="ab_action_contact_add">Байрлуудад нэмнэ</string>

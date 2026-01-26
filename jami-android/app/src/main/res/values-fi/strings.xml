@@ -49,7 +49,6 @@
     <item quantity="other">%d keskustelua</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Hae nimeä tai keskustelua…</string>
   <string name="choose_number">Valitse numero</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -92,7 +91,8 @@
   <string name="location_share_about_title">Karttatiedot</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Sinä:</string>
-  <string name="action_call_hangup">Katkaise puhelu</string>
+  <string name="action_call_hangup">Lopeta puhelu</string>
+  <string name="action_call_resume">Jatka</string>
   <string name="action_call_maximize">Suurenna</string>
   <string name="action_call_minimize">Supista</string>
   <string name="action_call_mute">Mykistä</string>
@@ -106,6 +106,7 @@
   <string name="action_call_accept_audio">Hyväksy äänellä</string>
   <string name="action_call_accept_video">Hyväksy videolla</string>
   <string name="action_call_hold_accept">Hyväksy saapuva puhelu äänellä ja pidä nykyinen puhelu</string>
+  <string name="switch_to_video">Video käyttöön</string>
   <string name="action_call_hold_accept_video">Hyväksy saapuva puhelu videolla ja pidä nykyinen puhelu</string>
   <string name="action_call_end_accept">Hyväksy saapuva puhelu ja lopeta nykyinen puhelu</string>
   <string name="action_call_decline">Hylkää</string>

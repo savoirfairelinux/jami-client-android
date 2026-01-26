@@ -75,7 +75,6 @@
   <string name="location_share_about_title">نقشه یازی</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">سن:</string>
-  <string name="action_call_hangup">باغلا</string>
   <string name="action_call_maximize">حددن آرتيق</string>
   <string name="action_call_minimize">آزالت</string>
   <string name="action_call_mute">ساکئت</string>

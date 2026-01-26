@@ -75,7 +75,6 @@
   <string name="location_share_about_title">Στοιχεία χάρτη</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Εσύ</string>
-  <string name="action_call_hangup">Κλείσιμο</string>
   <string name="action_call_maximize">Μεγιστοποίηση</string>
   <string name="action_call_minimize">Ελαχιστοποίηση</string>
   <string name="action_call_mute">Σίγαση</string>

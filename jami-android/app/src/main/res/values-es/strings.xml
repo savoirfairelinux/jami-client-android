@@ -50,7 +50,7 @@
     <item quantity="other">Conversaciones: %d</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Buscar nombre o conversación...</string>
+  <string name="searchbar_hint">Buscar o agregar</string>
   <string name="choose_number">Escoge un número</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -93,7 +93,7 @@
   <string name="location_share_about_title">Información del mapa</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tú:</string>
-  <string name="action_call_hangup">Colgar</string>
+  <string name="action_call_resume">Reanudar</string>
   <string name="action_call_maximize">Maximizar</string>
   <string name="action_call_minimize">Reducir</string>
   <string name="action_call_mute">Silenciar</string>
@@ -345,6 +345,7 @@
   <string name="menu_message_delete">Eliminar mensaje</string>
   <string name="menu_message_cancel">Cancelar mensaje</string>
   <string name="menu_message_reply">Responder</string>
+  <string name="menu_message_cancel_reply">Cancelar respuesta</string>
   <string name="menu_delete">Borrar</string>
   <string name="pref_darkTheme_title">Tema oscuro</string>
   <string name="pref_darkTheme_summary">Siempre activar el tema oscuro en vez de utilizar el de por defecto del sistema</string>
@@ -507,4 +508,5 @@
   <string name="link_device_error_canceled">Operación cancelada por el usuario.</string>
   <string name="link_device_error_unknown">Sucedió un error.</string>
   <string name="link_device_error_bad_password">Comprobar las credenciales e intentarlo de nuevo.</string>
+  <string name="test_push">Pulsar Prueba</string>
 </resources>

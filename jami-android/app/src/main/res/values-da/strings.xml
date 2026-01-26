@@ -75,7 +75,6 @@
   <string name="location_share_about_title">Kort information</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Dig:</string>
-  <string name="action_call_hangup">Læg på</string>
   <string name="action_call_maximize">Maksimer</string>
   <string name="action_call_minimize">Reducer</string>
   <string name="action_call_mute">Stem</string>

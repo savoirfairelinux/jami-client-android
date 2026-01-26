@@ -49,7 +49,7 @@
     <item quantity="other">%d Biseda</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Kërkoni për emër, ose bisedë…</string>
+  <string name="searchbar_hint">Kërkoni, ose shtoni</string>
   <string name="choose_number">Zgjidhni një numër</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -92,7 +92,8 @@
   <string name="location_share_about_title">Të dhëna harte</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ju:</string>
-  <string name="action_call_hangup">Mbylle thirrjen</string>
+  <string name="action_call_hangup">Përfundoje thirrjen</string>
+  <string name="action_call_resume">Rimerre</string>
   <string name="action_call_maximize">Maksimizoje</string>
   <string name="action_call_minimize">Reduktoje</string>
   <string name="action_call_mute">Heshtoje</string>
@@ -106,6 +107,7 @@
   <string name="action_call_accept_audio">Pranoje me audio</string>
   <string name="action_call_accept_video">Pranoje me video</string>
   <string name="action_call_hold_accept">Prano thirrje ardhëse vetëm me audio dhe mbaj në pritje thirrjen e tanishme</string>
+  <string name="switch_to_video">Aktivizo Video</string>
   <string name="action_call_hold_accept_video">Prano thirrje ardhëse me audio dhe mbaj në pritje thirrjen e tanishme</string>
   <string name="action_call_end_accept">Prano thirrje ardhëse dhe përfundo thirrjen e tanishme</string>
   <string name="action_call_decline">Hidhe tej</string>
@@ -344,6 +346,7 @@
   <string name="menu_message_delete">Fshije mesazhin</string>
   <string name="menu_message_cancel">Anuloje mesazhin</string>
   <string name="menu_message_reply">Përgjigjuni</string>
+  <string name="menu_message_cancel_reply">Anulojeni përgjigjen</string>
   <string name="menu_delete">Fshije</string>
   <string name="pref_darkTheme_title">Temë e errët</string>
   <string name="pref_darkTheme_summary">Aktivizo përherë temën e errët, në vend të përdorimit të sjelljes së sistemit</string>

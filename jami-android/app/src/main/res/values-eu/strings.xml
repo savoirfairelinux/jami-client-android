@@ -75,7 +75,7 @@
   <string name="location_share_about_title">Mapa informazioa</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Zuk:</string>
-  <string name="action_call_hangup">Eseki</string>
+  <string name="action_call_hangup">Amaitu deia</string>
   <string name="action_call_maximize">Maximizatu</string>
   <string name="action_call_minimize">Murriztu</string>
   <string name="action_call_mute">Isiltzea</string>
@@ -84,6 +84,7 @@
   <string name="hist_in_call">%1$s iraupeneko deia</string>
   <string name="hist_out_call">%1$s iraupeneko deia</string>
   <string name="action_call_accept">Deia onartu</string>
+  <string name="switch_to_video">Gaitu bideoa</string>
   <string name="action_call_decline">Ukatu</string>
   <string name="action_call_mic_mute">Mututu mikrofonoa</string>
   <string name="ab_action_contact_add">Gehitu kontaktuetara</string>

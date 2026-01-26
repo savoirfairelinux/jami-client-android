@@ -75,7 +75,7 @@
   <string name="location_share_about_title">ನಕ್ಷೆ ಮಾಹಿತಿ</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">ನೀವು:</string>
-  <string name="action_call_hangup">ಮುಚ್ಚಿ</string>
+  <string name="action_call_hangup">ಕರೆ ಅಂತ್ಯಗೊಳಿಸು</string>
   <string name="action_call_maximize">ಗರಿಷ್ಠ ಮಟ್ಟದಲ್ಲಿ</string>
   <string name="action_call_minimize">ಕಡಿಮೆ ಮಾಡಿ</string>
   <string name="action_call_mute">ಮೂಕ</string>
@@ -83,6 +83,7 @@
   <string name="ongoing_call">ನಡೆಯುತ್ತಿರುವ ಕರೆ</string>
   <string name="hist_in_call">%1$s ನ ಒಳಬರುವ ಕರೆ</string>
   <string name="hist_out_call">%1$s ನ ಹೊರಹೋಗುವ ಕರೆ</string>
+  <string name="switch_to_video">ವೀಡಿಯೊವನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
   <string name="action_call_decline">ಕುಸಿತ</string>
   <string name="action_call_mic_mute">ಮೂಕ ಮೈಕ್ರೊಫೋನ್</string>
   <string name="ab_action_contact_add">ಸಂಪರ್ಕಗಳನ್ನು ಸೇರಿಸಿ</string>

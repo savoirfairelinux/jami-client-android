@@ -79,7 +79,7 @@
   <string name="location_share_about_title">Informácie o mape</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vy:</string>
-  <string name="action_call_hangup">Zložiť</string>
+  <string name="action_call_hangup">Ukončiť hovor</string>
   <string name="action_call_maximize">Maximálne</string>
   <string name="action_call_minimize">Zníženie</string>
   <string name="action_call_mute">Nezvláštne</string>
@@ -88,6 +88,7 @@
   <string name="hist_in_call">Prichádzajúci hovor dĺžky %1$s</string>
   <string name="hist_out_call">Odchádzajúci hovor dĺžky %1$s</string>
   <string name="action_call_accept">Prijať hovor</string>
+  <string name="switch_to_video">Povoliť video</string>
   <string name="action_call_decline">Odmietnuť</string>
   <string name="action_call_mic_mute">Stlmiť mikrofón</string>
   <string name="ab_action_contact_add">Pridať kontakt</string>

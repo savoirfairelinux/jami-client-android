@@ -49,7 +49,6 @@
     <item quantity="other">%d Unterhaltungen</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Nach Namen oder Unterhaltung suchen…</string>
   <string name="choose_number">Nummer auswählen</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -92,7 +91,7 @@
   <string name="location_share_about_title">Informationen zur Karte</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Sie:</string>
-  <string name="action_call_hangup">Auflegen</string>
+  <string name="action_call_resume">Weiter</string>
   <string name="action_call_maximize">Maximieren</string>
   <string name="action_call_minimize">Reduzieren</string>
   <string name="action_call_mute">Stummschalten</string>

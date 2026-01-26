@@ -76,7 +76,7 @@
   <string name="location_share_about_title">Informacije o karti</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ti:</string>
-  <string name="action_call_hangup">Poklopi</string>
+  <string name="action_call_hangup">Završi poziv</string>
   <string name="action_call_maximize">Maksimiziraj</string>
   <string name="action_call_minimize">Smanjenje</string>
   <string name="action_call_mute">Neispravni</string>
@@ -84,6 +84,7 @@
   <string name="ongoing_call">Poziv koji je u tijeku</string>
   <string name="hist_in_call">Dolazni poziv od %1$s</string>
   <string name="hist_out_call">Odlazni poziv prema %1$s</string>
+  <string name="switch_to_video">Omogući video</string>
   <string name="action_call_decline">Odbij</string>
   <string name="action_call_mic_mute">Utišaj mikrofon</string>
   <string name="ab_action_contact_add">Dodaj u kontakte</string>

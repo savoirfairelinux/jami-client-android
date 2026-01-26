@@ -50,7 +50,6 @@
     <item quantity="other">%d Conversazioni</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Cerca nome o conversazione…</string>
   <string name="choose_number">Scegli un numero</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -93,7 +92,8 @@
   <string name="location_share_about_title">Informazioni mappa</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tu:</string>
-  <string name="action_call_hangup">Chiudi</string>
+  <string name="action_call_hangup">Termina chiamata</string>
+  <string name="action_call_resume">Riprendi</string>
   <string name="action_call_maximize">Massimizza</string>
   <string name="action_call_minimize">Riduci</string>
   <string name="action_call_mute">Disattiva</string>
@@ -107,6 +107,7 @@
   <string name="action_call_accept_audio">Rispondi con audio</string>
   <string name="action_call_accept_video">Rispondi con video</string>
   <string name="action_call_hold_accept">Metti in attesa e rispondi solo con l\'audio</string>
+  <string name="switch_to_video">Attiva Video</string>
   <string name="action_call_hold_accept_video">Metti in attesa e rispondi solo con video</string>
   <string name="action_call_end_accept">Rispondi e termina la chiamata in corso</string>
   <string name="action_call_decline">Rifiuta</string>

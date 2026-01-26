@@ -1,25 +1,23 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="version_section">අනුවාදය</string>
   <!--About dialog-->
   <!--RingActivity-->
   <!--AB menus-->
   <!--Sections-->
-  <string name="menu_item_settings">සැකසුම්</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
   <!--Home Fragment-->
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Buscar o agregar</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
   <!--Call Fragment-->
-  <string name="action_call_hangup">ඇමතුම අවසන් කරන්න</string>
-  <string name="new_group">නව සමූහය තනන්න</string>
+  <string name="action_call_hangup">Terminar llamada</string>
+  <string name="action_call_resume">Reanudar</string>
+  <string name="switch_to_video">Permitir video</string>
   <!--Text messages-->
-  <string name="time_just_now">මේ දැන්</string>
-  <string name="send_file">ගොනුව යවන්න</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
   <!--Read contacts permission-->
@@ -27,6 +25,9 @@
   <!--QRCode Scan-->
   <!--Settings-->
   <!--Conversation-->
+  <string name="remove_conversation">Eliminar conversación</string>
+  <string name="conversation_action_remove_title">¿Eliminar conversación?</string>
+  <string name="conversation_action_remove_message">Esto eliminará esta conversación sin eliminar el contacto.</string>
   <!--Contacts-->
   <!--Account summary-->
   <!--Share fragment-->
@@ -34,19 +35,16 @@
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
-  <string name="file_transfer_status_canceled">අවලංගු කළා</string>
+  <string name="menu_message_cancel_reply">Cancelar respuesta</string>
   <!--Bottom Navigation-->
   <!--TV-->
   <!--Wizard-->
   <!--Bottom sheet-->
-  <string name="bottomSheet_hangup_btn">ඇමතුම අවසන් කරන්න</string>
   <!--Swarm Details-->
-  <string name="tab_settings">සැකසුම්</string>
   <!--JamiId-->
   <!--WelcomeJami-->
   <!--Conversation details-->
   <!--Donation-->
-  <string name="donation_card_not_now">දැන් නොවේ</string>
   <!--Extension-->
-  <string name="export_side_step2_cancel">අවලංගු කරන්න</string>
+  <string name="test_push">Pulsar Prueba</string>
 </resources>

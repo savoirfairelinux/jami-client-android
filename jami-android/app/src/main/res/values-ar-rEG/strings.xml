@@ -71,7 +71,6 @@
   <string name="location_share_about_title">خريطة المعلومات</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">أنت:</string>
-  <string name="action_call_hangup">إنهاء</string>
   <string name="action_call_maximize">تكبير</string>
   <string name="action_call_minimize">تقليص</string>
   <string name="action_call_mute">كتم الصوت</string>

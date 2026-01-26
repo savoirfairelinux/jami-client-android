@@ -50,7 +50,6 @@
     <item quantity="other">%d konverzací</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Hledat jméno nebo konverzaci...</string>
   <string name="choose_number">Zvolte číslo</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -93,7 +92,7 @@
   <string name="location_share_about_title">Informace o mapě</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vy:</string>
-  <string name="action_call_hangup">Zavěsit</string>
+  <string name="action_call_resume">Pokračovat</string>
   <string name="action_call_maximize">Maximalizovat</string>
   <string name="action_call_minimize">Minimalizovat</string>
   <string name="action_call_mute">Ztlumit</string>

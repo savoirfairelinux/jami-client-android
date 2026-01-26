@@ -41,7 +41,7 @@
     <item quantity="other">%dConversaciones</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Buscar nombre o conversación...</string>
+  <string name="searchbar_hint">Buscar o agregar</string>
   <string name="choose_number">Elige un número</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -54,6 +54,7 @@
   <string name="location_share_contact">%1$s está compartiendo su ubicación contigo</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tú:</string>
+  <string name="action_call_resume">Reanudar</string>
   <string name="hist_out_call">Llamada saliente de %1$s</string>
   <string name="call_duration">Último %s</string>
   <string name="start_error_title">No se puede iniciar Jami</string>
@@ -194,6 +195,7 @@
   <string name="no_space_left_on_device">No hay espacio disponible en el dispositivo.</string>
   <string name="menu_message_edit">Editar mensaje</string>
   <string name="menu_message_history">Historial de mensajes</string>
+  <string name="menu_message_cancel_reply">Cancelar respuesta</string>
   <string name="menu_delete">Eliminar</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_contact_request">Invitaciones</string>
@@ -328,4 +330,5 @@
   <string name="link_device_error_canceled">Operación cancelada por el usuario.</string>
   <string name="link_device_error_unknown">Sucedió un error.</string>
   <string name="link_device_error_bad_password">Comprobar las credenciales e intentarlo de nuevo.</string>
+  <string name="test_push">Pulsar Prueba</string>
 </resources>

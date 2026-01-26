@@ -49,7 +49,7 @@
     <item quantity="other">%d vestlust</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Otsi nime või vestlust…</string>
+  <string name="searchbar_hint">Otsi või lisa</string>
   <string name="choose_number">Vali number</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -106,6 +106,7 @@
   <string name="action_call_accept_audio">Vasta häälkõnena</string>
   <string name="action_call_accept_video">Vasta videokõnena</string>
   <string name="action_call_hold_accept">Vasta uuele sissetulevale kõnele häälkõnena ja pane pooleliolev kõne ootele</string>
+  <string name="switch_to_video">Lülita video sisse</string>
   <string name="action_call_hold_accept_video">Vasta uuele sissetulevale kõnele videokõnena ja pane pooleliolev kõne ootele</string>
   <string name="action_call_end_accept">Vasta uuele sissetulevale kõnele ja lõpeta pooleliolev kõne</string>
   <string name="action_call_decline">Keeldu</string>
@@ -344,6 +345,7 @@
   <string name="menu_message_delete">Kustuta sõnum</string>
   <string name="menu_message_cancel">Tühista sõnum</string>
   <string name="menu_message_reply">Vasta</string>
+  <string name="menu_message_cancel_reply">Katkesta vastamine</string>
   <string name="menu_delete">Kustuta</string>
   <string name="pref_darkTheme_title">Tume kujundus</string>
   <string name="pref_darkTheme_summary">Süsteemi kujunduse asemel kasuta alati tumedat kujundust</string>
@@ -508,4 +510,5 @@ Kui klõpsid „Kinnita“, siis jätkame kasutajakonto eksportimisega.</string>
   <string name="link_device_error_canceled">Kasutaja katkestas tegevuse.</string>
   <string name="link_device_error_unknown">Tekkis viga.</string>
   <string name="link_device_error_bad_password">Palun kontrolli et konto nimi ja salasõna on õiged ja proovi uuesti.</string>
+  <string name="test_push">Testi tõuketeenust</string>
 </resources>

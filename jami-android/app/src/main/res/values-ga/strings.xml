@@ -48,10 +48,12 @@
   <string name="location_share_action_stop">Stop ag roinnt</string>
   <string name="location_share_about_title">Teachtaireachtaí cart</string>
   <!--Call Fragment-->
+  <string name="action_call_hangup">Críochnaigh an glao</string>
   <string name="action_call_maximize">A mhéadú</string>
   <string name="action_call_minimize">Cinntíonn</string>
   <string name="action_call_mute">Múnla</string>
   <string name="action_call_unmute">Unmute</string>
+  <string name="switch_to_video">Céadú físeán</string>
   <string name="action_call_decline">Tarraing</string>
   <string name="action_call_mic_mute">Micrófón muinte</string>
   <string name="ab_action_contact_add">Cuir le teagmhálacha</string>

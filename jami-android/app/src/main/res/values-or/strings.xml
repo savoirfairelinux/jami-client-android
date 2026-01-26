@@ -14,6 +14,7 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <!--Call Fragment-->
+  <string name="action_call_hangup">କଲ୍ ଶେଷ</string>
   <string name="action_call_mute">ମୌନ</string>
   <string name="action_call_unmute">ଅନ୍‌ମ୍ୟୁଟ୍‌</string>
   <string name="ab_action_video_call">ଭିଡିଓ କଲ୍ ଆରମ୍ଭ କରନ୍ତୁ</string>

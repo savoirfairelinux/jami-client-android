@@ -51,7 +51,7 @@
   <string name="location_share_about_title">מידע על מפה</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">אני:</string>
-  <string name="action_call_hangup">   ניתוק</string>
+  <string name="action_call_hangup">סיום השיחה</string>
   <string name="action_call_maximize">שימו את האפס</string>
   <string name="action_call_minimize">להפחית</string>
   <string name="action_call_mute">שקט</string>
@@ -59,6 +59,7 @@
   <string name="ongoing_call">שיחה יוצאת</string>
   <string name="hist_in_call">שיחה נכנסת מ%1$s</string>
   <string name="hist_out_call">שיחה יוצאת אל %1$s</string>
+  <string name="switch_to_video">אפשר וידאו</string>
   <string name="action_call_decline">ירידה</string>
   <string name="action_call_mic_mute">מיקרופון שקט</string>
   <string name="ab_action_contact_add">הוסף לקשרים</string>

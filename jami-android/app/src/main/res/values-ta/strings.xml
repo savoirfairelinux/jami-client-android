@@ -82,7 +82,7 @@
   <string name="location_share_about_title">வரைபட தகவல்</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">நீ:</string>
-  <string name="action_call_hangup">மூடிடு</string>
+  <string name="action_call_hangup">அழைப்பை முடித்திடுக</string>
   <string name="action_call_maximize">அதிகபட்சமாக</string>
   <string name="action_call_minimize">குறைத்தல்</string>
   <string name="action_call_mute">முடக்க</string>
@@ -95,6 +95,7 @@
   <string name="action_call_accept_audio">ஆடியோவுடன் ஏற்றுக்கொள்ளுங்கள்</string>
   <string name="action_call_accept_video">வீடியோவுடன் ஏற்றுக்கொள்ளுங்கள்</string>
   <string name="action_call_hold_accept">உள்வரும் அழைப்பை ஆடியோவுடன் மட்டும் ஏற்றுக்கொண்டு, தற்போதைய அழைப்பை நிறுத்தி வைக்கவும்.</string>
+  <string name="switch_to_video">வீடியோவை இயக்கு</string>
   <string name="action_call_hold_accept_video">வீடியோவுடன் உள்வரும் அழைப்பை ஏற்று, தற்போதைய அழைப்பை வைத்திருங்கள்.</string>
   <string name="action_call_end_accept">உள்வரும் அழைப்பை ஏற்று தற்போதைய அழைப்பை முடிக்கவும்</string>
   <string name="action_call_decline">குறைவு</string>

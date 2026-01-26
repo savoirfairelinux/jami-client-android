@@ -50,7 +50,6 @@
     <item quantity="other">%d разговора</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Претражи име или конверзацију…</string>
   <string name="choose_number">Изабери број</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -93,7 +92,7 @@
   <string name="location_share_about_title">Информације о мапи</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ти: </string>
-  <string name="action_call_hangup">Прекини позив</string>
+  <string name="action_call_hangup">Заврши позив</string>
   <string name="action_call_maximize">Увећај</string>
   <string name="action_call_minimize">Смањи</string>
   <string name="action_call_mute">Искључи звук</string>
@@ -105,6 +104,7 @@
   <string name="start_error_title">Није могуће покренути Јами</string>
   <string name="action_call_accept">Прихвати позив</string>
   <string name="action_call_accept_audio">Прихватите са звуком</string>
+  <string name="switch_to_video">Омогући видео</string>
   <string name="action_call_decline">Одбиј</string>
   <string name="action_call_mic_mute">Искључи микрофон</string>
   <string name="ab_action_contact_add">Додај у контакте</string>
