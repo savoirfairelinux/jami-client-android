@@ -124,7 +124,15 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
     }
 
     override fun goToGallery() {
-        pickProfilePicture.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        try {
+            pickProfilePicture.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        } catch (e: Exception) {
+            AlertDialog.Builder(requireActivity())
+                .setPositiveButton(android.R.string.ok, null)
+                .setTitle(R.string.gallery_error_title)
+                .setMessage(R.string.gallery_error_message)
+                .show()
+        }
     }
 
     override fun goToPhotoCapture() {
