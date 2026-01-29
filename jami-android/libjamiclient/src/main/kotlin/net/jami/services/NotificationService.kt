@@ -17,11 +17,14 @@
 package net.jami.services
 
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import net.jami.model.*
 import net.jami.model.interaction.DataTransfer
 
 interface NotificationService {
-    fun showCallNotification(notifId: Int): Any?
+
+    fun callNotificationStream(): Observable<Any>
+
     fun cancelCallNotification()
     fun removeCallNotification()
     fun handleCallNotification(conference: Conference, remove: Boolean, startScreenshare: Boolean = false): Completable
