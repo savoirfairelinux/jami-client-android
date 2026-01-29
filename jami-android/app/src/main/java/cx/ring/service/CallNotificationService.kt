@@ -28,6 +28,7 @@ import android.os.IBinder
 import android.util.Log
 import cx.ring.services.NotificationServiceImpl
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.services.NotificationService
 import javax.inject.Inject
 
@@ -45,67 +46,81 @@ class CallNotificationService : Service() {
     @Inject
     lateinit var mNotificationService: NotificationService
 
+    private val mDisposable = CompositeDisposable()
+
     @SuppressLint("ForegroundServiceType")
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
-        if (ACTION_START == intent.action) {
-            val confId = intent.getStringExtra(NotificationService.KEY_CALL_ID)
-            val notification = mNotificationService.showCallNotification(intent.getIntExtra(NotificationService.KEY_NOTIFICATION_ID, -1)) as Notification?
+        val action = intent?.action
+        if (ACTION_START == action) {
             val startScreenshare = intent.getBooleanExtra(NotificationService.KEY_SCREENSHARE, false)
-            if (notification != null) {
-                try {
-                    // Since API 34, foreground services
-                    // should not be specified before user grants permission.
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                        val pm = packageManager
-                        val cameraServiceType = if (pm.hasPermissions(Manifest.permission.FOREGROUND_SERVICE_CAMERA, Manifest.permission.CAMERA))
-                            ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA else 0
-                        val microphoneServiceType = if (pm.hasPermissions(Manifest.permission.FOREGROUND_SERVICE_MICROPHONE, Manifest.permission.RECORD_AUDIO))
-                            ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE else 0
-                        val callServiceType = if (pm.hasPermission(Manifest.permission.FOREGROUND_SERVICE_PHONE_CALL))
-                            ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL else 0
-                        val screenShareType = if (startScreenshare && pm.hasPermission(Manifest.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION))
-                            ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION else 0
-                        startForeground(
-                            NotificationServiceImpl.NOTIF_CALL_ID,
-                            notification,
-                            callServiceType
-                                    or microphoneServiceType
-                                    or cameraServiceType
-                                    or screenShareType
-                        )
-                        // Since API 30, microphone and camera should be specified for app to use them.
-                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
-                        startForeground(
-                            NotificationServiceImpl.NOTIF_CALL_ID,
-                            notification,
-                            ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL
-                                    or ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE
-                                    or ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA
-                                    or (if (startScreenshare) ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION else 0)
-                        )
-                    // Since API 29, should specify foreground service type.
-                    else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-                        startForeground(
-                            NotificationServiceImpl.NOTIF_CALL_ID,
-                            notification,
-                            ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL
-                                    or ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION
-                        )
-                    else // Before API 29, just start foreground service.
-                        startForeground(NotificationServiceImpl.NOTIF_CALL_ID, notification)
-                    if (startScreenshare && confId != null)
-                        mNotificationService.startPendingScreenshare(confId)
-                } catch (e: Exception) {
-                    Log.e(TAG, "Failed to start foreground service", e)
-                }
-            }
-        } else if (ACTION_STOP == intent.action) {
+            mDisposable.clear()
+            mDisposable.add(mNotificationService.callNotificationStream()
+                .subscribe({ notificationObj ->
+                    val notification = notificationObj as? Notification
+                    if (notification != null) {
+                        try {
+                            updateForeground(notification, startScreenshare)
+                        } catch (e: Exception) {
+                            Log.e(TAG, "Failed to start foreground service", e)
+                        }
+                    }
+                }, { e ->
+                    Log.e(TAG, "Error in notification stream", e)
+                    stopForeground(STOP_FOREGROUND_REMOVE)
+                    stopSelf()
+                }, {
+                    stopForeground(STOP_FOREGROUND_REMOVE)
+                    stopSelf()
+                }))
+
+            if (startScreenshare)
+                mNotificationService.startPendingScreenshare("")
+        } else if (ACTION_STOP == action) {
             stopForeground(STOP_FOREGROUND_REMOVE)
             stopSelf()
             mNotificationService.cancelCallNotification()
         }
         return START_NOT_STICKY
+    }
+
+    private fun updateForeground(notification: Notification, startScreenshare: Boolean) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            val pm = packageManager
+            val cameraServiceType = if (pm.hasPermissions(Manifest.permission.FOREGROUND_SERVICE_CAMERA, Manifest.permission.CAMERA))
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA else 0
+            val microphoneServiceType = if (pm.hasPermissions(Manifest.permission.FOREGROUND_SERVICE_MICROPHONE, Manifest.permission.RECORD_AUDIO))
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE else 0
+            val callServiceType = if (pm.hasPermission(Manifest.permission.FOREGROUND_SERVICE_PHONE_CALL))
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL else 0
+            val screenShareType = if (startScreenshare && pm.hasPermission(Manifest.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION))
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION else 0
+            startForeground(
+                NotificationServiceImpl.NOTIF_CALL_ID,
+                notification,
+                callServiceType
+                        or microphoneServiceType
+                        or cameraServiceType
+                        or screenShareType
+            )
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
+            startForeground(
+                NotificationServiceImpl.NOTIF_CALL_ID,
+                notification,
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL
+                        or ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE
+                        or ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA
+                        or (if (startScreenshare) ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION else 0)
+            )
+        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+            startForeground(
+                NotificationServiceImpl.NOTIF_CALL_ID,
+                notification,
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL
+                        or ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION
+            )
+        else
+            startForeground(NotificationServiceImpl.NOTIF_CALL_ID, notification)
     }
 
     override fun onBind(intent: Intent): IBinder? = null

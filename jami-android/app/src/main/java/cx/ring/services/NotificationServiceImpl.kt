@@ -62,8 +62,10 @@ import cx.ring.views.AvatarFactory.toAdaptiveIcon
 import cx.ring.views.AvatarFactory.toBitmap
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.ReplaySubject
 import net.jami.call.CallPresenter
 import net.jami.model.*
 import net.jami.model.interaction.Interaction.TransferStatus
@@ -93,8 +95,7 @@ class NotificationServiceImpl(
     private val random = Random()
     private val avatarSize = (mContext.resources.displayMetrics.density * AvatarFactory.SIZE_NOTIF).toInt()
     private val currentCalls = LinkedHashMap<String, Conference>()
-
-    private val callNotifications = ConcurrentHashMap<Int, Notification>()
+    private var notificationSubject: ReplaySubject<Any>? = null
     private val dataTransferNotifications = ConcurrentHashMap<Int, Notification>()
     private var pendingNotificationActions = ArrayList<() -> Unit>()
     private var pendingScreenshareCallbacks = HashMap<String, () -> Unit>()
@@ -216,7 +217,14 @@ class NotificationServiceImpl(
         }
     }
 
-    override fun showCallNotification(notifId: Int): Any? = callNotifications.remove(notifId)
+    @Synchronized
+    override fun callNotificationStream(): Observable<Any> {
+        if (notificationSubject == null) {
+            notificationSubject = ReplaySubject.createWithSize(1)
+        }
+        return notificationSubject!!
+    }
+
 
     override fun showLocationNotification(first: Account, contact: Contact, conversation: Conversation) {
         // Ignore new notification if conversation is muted.
@@ -335,36 +343,41 @@ class NotificationServiceImpl(
                 }
             })
             .flatMapCompletable { notification ->
-                Log.w(TAG, "showCallNotification $notification")
-                val nid = random.nextInt()
-                callNotifications[nid] = notification
-                val start = {
-                    ContextCompat.startForegroundService(mContext,
-                        Intent(CallNotificationService.ACTION_START, null, mContext, CallNotificationService::class.java)
-                            .putExtra(NotificationService.KEY_NOTIFICATION_ID, nid)
-                            .putExtra(NotificationService.KEY_SCREENSHARE, startScreenshare)
-                            .putExtra(NotificationService.KEY_CALL_ID, id)
-                    )
-                }
-                try {
-                    start()
-                } catch (e: Exception) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                        if (e is ForegroundServiceStartNotAllowedException) {
-                            pingPush(conference.accountId, start)
-                        } else {
-                            Log.w(TAG, "Can't show call notification", e)
+                Completable.fromAction {
+                    synchronized(this) {
+                        if (notificationSubject == null || notificationSubject!!.hasComplete()) {
+                            notificationSubject = ReplaySubject.createWithSize(1)
                         }
-                    } else {
-                        Log.w(TAG, "Can't show call notification", e)
+                        notificationSubject!!.onNext(notification)
+
+                        val start: () -> Unit  = {
+                            val intent = Intent(CallNotificationService.ACTION_START, null, mContext, CallNotificationService::class.java)
+                            if (startScreenshare)
+                                intent.putExtra(NotificationService.KEY_SCREENSHARE, true)
+                            mContext.startForegroundService(intent)
+                        }
+                        try {
+                            start()
+                        } catch (e: Exception) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                                if (e is ForegroundServiceStartNotAllowedException) {
+                                    pingPush(conference.accountId, start)
+                                } else {
+                                    Log.w(TAG, "Can't show call notification", e)
+                                }
+                            } else {
+                                Log.w(TAG, "Can't show call notification", e)
+                            }
+                        }
                     }
                 }
-                Completable.complete()
             }
             .onErrorComplete()
             .doOnComplete {
-                if (currentCalls.isEmpty()) {
-                    removeCallNotification()
+                synchronized(this) {
+                    if (currentCalls.isEmpty()) {
+                        notificationSubject?.onComplete()
+                    }
                 }
             }
     }
@@ -384,6 +397,16 @@ class NotificationServiceImpl(
      * @param confId The call to start the screenshare on
      */
     override fun startPendingScreenshare(confId: String) {
+        if (confId.isEmpty()) {
+            val iter = pendingScreenshareCallbacks.keys.iterator()
+            while (iter.hasNext()) {
+                val key = iter.next()
+                val callback = pendingScreenshareCallbacks[key]
+                callback?.invoke()
+                iter.remove()
+            }
+            return
+        }
         val callback = pendingScreenshareCallbacks[confId] ?: return
         callback()
         pendingScreenshareCallbacks.remove(confId)
@@ -405,7 +428,7 @@ class NotificationServiceImpl(
 
     override fun testPushNotification(accountId: String) {
         pingPush(accountId) {
-             mHardwareService.pushLogMessage("Push notification received for account $accountId")
+            mHardwareService.pushLogMessage("Push notification received for account $accountId")
         }
     }
 
@@ -421,7 +444,7 @@ class NotificationServiceImpl(
                 }
                 Schedulers.io().scheduleDirect {
                     try {
-                        // add sceme to server if not present
+                        // add scheme to server if not present
                         val serverUrl = if (server.startsWith("http://") || server.startsWith("https://")) {
                             server
                         } else {
@@ -457,10 +480,8 @@ class NotificationServiceImpl(
     }
 
     override fun removeCallNotification() {
-        try {
-            mContext.startService(Intent(CallNotificationService.ACTION_STOP, null, mContext, CallNotificationService::class.java))
-        } catch (e: Exception) {
-            Log.w(TAG, "Error stopping service", e)
+        synchronized(this) {
+            notificationSubject?.onComplete()
         }
     }
 
@@ -921,9 +942,8 @@ class NotificationServiceImpl(
         }
         dataTransferNotifications[notificationId] = messageNotificationBuilder.build()
 
-        val start = {
-            ContextCompat.startForegroundService(
-                mContext,
+        val start: () -> Unit = {
+            mContext.startForegroundService(
                 Intent(
                     DataTransferService.ACTION_START, path, mContext,
                     DataTransferService::class.java
@@ -1014,9 +1034,9 @@ class NotificationServiceImpl(
     }
 
     override fun cancelCallNotification() {
+        notificationSubject?.onComplete()
         notificationManager.cancel(NOTIF_CALL_ID)
         mNotificationBuilders.remove(NOTIF_CALL_ID)
-        callNotifications.clear()
     }
 
     /**\
