@@ -75,7 +75,8 @@
   <string name="location_share_about_title">Kartinformation</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Du:</string>
-  <string name="action_call_hangup">Lägg på</string>
+  <string name="action_call_hangup">Avsluta samtal</string>
+  <string name="action_call_resume">Återuppta</string>
   <string name="action_call_maximize">Maximera</string>
   <string name="action_call_minimize">Minska</string>
   <string name="action_call_mute">Tysta</string>
@@ -84,6 +85,7 @@
   <string name="hist_in_call">Inkommande samtal av %1$s</string>
   <string name="hist_out_call">Utgående samtal av %1$s</string>
   <string name="action_call_accept">Acceptera samtal</string>
+  <string name="switch_to_video">Aktivera video</string>
   <string name="action_call_decline">Avslå</string>
   <string name="action_call_mic_mute">Stäng av mikrofon</string>
   <string name="ab_action_contact_add">Lägg till i kontakter</string>
@@ -325,4 +327,6 @@
   <string name="export_side_step2_confirm">Bekräfta</string>
   <string name="import_side_step1_share">Dela</string>
   <string name="import_side_step2_password_import">Importera</string>
+  <!--Accessibility-->
+  <string name="step_title_set_password">Ange lösenord</string>
 </resources>

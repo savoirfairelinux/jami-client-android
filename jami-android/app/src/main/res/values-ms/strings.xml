@@ -74,7 +74,7 @@
   <string name="location_share_about_title">മാപ്പ് വിവരങ്ങൾ</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Anda</string>
-  <string name="action_call_hangup">Putuskan</string>
+  <string name="action_call_hangup">Tamatkan panggilan</string>
   <string name="action_call_maximize">പരമാവധി</string>
   <string name="action_call_minimize">കുറയ്ക്കുക</string>
   <string name="action_call_mute">നിശബ്ദത</string>
@@ -82,6 +82,7 @@
   <string name="ongoing_call">Panggilan sedang berlangsung</string>
   <string name="hist_in_call">Panggilan masuk sebanyak %1$s</string>
   <string name="hist_out_call">Panggilan keluar sebanyak %1$s</string>
+  <string name="switch_to_video">Aktifkan panggilan video</string>
   <string name="action_call_decline">Bantah panggilan</string>
   <string name="action_call_mic_mute">മിണ്ടാത്ത മൈക്രോഫോൺ</string>
   <string name="ab_action_contact_add">Tambahkan sebagai kenalan</string>
@@ -319,4 +320,5 @@
   <string name="export_side_step2_confirm">സ്ഥിരീകരണം</string>
   <string name="import_side_step1_share">പങ്കിടുക</string>
   <string name="import_side_step2_password_import">ഇറക്കുമതി</string>
+  <!--Accessibility-->
 </resources>

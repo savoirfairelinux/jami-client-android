@@ -77,7 +77,7 @@
   <string name="location_share_about_title">地図情報</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">あなた:</string>
-  <string name="action_call_hangup">通話終了</string>
+  <string name="action_call_hangup">通話を終了</string>
   <string name="action_call_maximize">最大化</string>
   <string name="action_call_minimize">最小化</string>
   <string name="action_call_mute">消音</string>
@@ -86,6 +86,7 @@
   <string name="hist_in_call">%1$s の着信</string>
   <string name="hist_out_call">%1$s の発信</string>
   <string name="action_call_accept">着信を受ける</string>
+  <string name="switch_to_video">動画を有効化</string>
   <string name="action_call_decline">辞退</string>
   <string name="action_call_mic_mute">マイクをミュート</string>
   <string name="ab_action_contact_add">連絡先に追加</string>
@@ -326,4 +327,6 @@
   <string name="export_side_step2_confirm">確認</string>
   <string name="import_side_step1_share">共有</string>
   <string name="import_side_step2_password_import">輸入</string>
+  <!--Accessibility-->
+  <string name="step_title_set_password">パスワードを設定</string>
 </resources>

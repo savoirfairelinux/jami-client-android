@@ -48,6 +48,8 @@
   <string name="pref_logs_summary">Odpri nastavitve diagnostičnih zapisnikov</string>
   <string name="pref_logs_start">Začni beležiti</string>
   <string name="pref_logs_stop">Prenehaj beležiti</string>
+  <string name="pref_connection_monitor">Pregled povezave</string>
+  <string name="pref_connection_monitor_summary">Spremljaj povezavo med vrstniki</string>
   <string name="pref_push_notifications_logs_title">Zapisniki potisnih sporočil</string>
   <string name="pref_push_notifications_logs_summary">Oglejte si zapisnike, zajete iz potisnih
          sporočil.</string>

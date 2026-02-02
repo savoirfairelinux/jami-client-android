@@ -84,7 +84,7 @@
   <string name="location_share_about_title">Harita bilgisi</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Siz:</string>
-  <string name="action_call_hangup">Kapat</string>
+  <string name="action_call_hangup">Çağrıyı sonlandır</string>
   <string name="action_call_maximize">En büyük</string>
   <string name="action_call_minimize">Azalt</string>
   <string name="action_call_mute">Sessiz</string>
@@ -94,6 +94,7 @@
   <string name="hist_out_call">Giden çağrı %1$s</string>
   <string name="call_duration">%s sürdü</string>
   <string name="action_call_accept">Aramayı kabul et </string>
+  <string name="switch_to_video">Görüntüyü Etkinleştir</string>
   <string name="action_call_decline">Reddet</string>
   <string name="action_call_mic_mute">Mikrofon sessiz</string>
   <string name="ab_action_contact_add">Kişilere ekle</string>
@@ -347,4 +348,6 @@
   <string name="export_side_step2_confirm">Onayla</string>
   <string name="import_side_step1_share">Paylaş</string>
   <string name="import_side_step2_password_import">İçe aktar</string>
+  <!--Accessibility-->
+  <string name="step_title_set_password">Parola ayarla</string>
 </resources>

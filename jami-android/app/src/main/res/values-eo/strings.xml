@@ -75,7 +75,7 @@
   <string name="location_share_about_title">Mapo informoj</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vi:</string>
-  <string name="action_call_hangup">Fini vokon</string>
+  <string name="action_call_hangup">Finigi vokon</string>
   <string name="action_call_maximize">Maksimumi</string>
   <string name="action_call_minimize">Redukti</string>
   <string name="action_call_mute">Mutaj</string>
@@ -83,6 +83,7 @@
   <string name="ongoing_call">Aktiva voko</string>
   <string name="hist_in_call">Eniranta voko de %1$s</string>
   <string name="hist_out_call">Eliranta voko de %1$s</string>
+  <string name="switch_to_video">Ŝalti Videon</string>
   <string name="action_call_decline">Rifuzi</string>
   <string name="action_call_mic_mute">Muta mikrofono</string>
   <string name="ab_action_contact_add">Aldoni al kontaktoj</string>
@@ -319,4 +320,5 @@
   <string name="export_side_step2_confirm">Konfirmu</string>
   <string name="import_side_step1_share">Kunhavi</string>
   <string name="import_side_step2_password_import">Enporti</string>
+  <!--Accessibility-->
 </resources>

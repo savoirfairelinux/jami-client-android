@@ -48,10 +48,12 @@
   <string name="location_share_action_stop">Бүлешүне туктатыгыз</string>
   <string name="location_share_about_title">Карта мәгълүматлары</string>
   <!--Call Fragment-->
+  <string name="action_call_hangup">Шалтыратуны тәмамлау</string>
   <string name="action_call_maximize">Максимумлырак</string>
   <string name="action_call_minimize">Киметегез</string>
   <string name="action_call_mute">Тыңлаучан</string>
   <string name="action_call_unmute">Тынычлык</string>
+  <string name="switch_to_video">Видеоны кую</string>
   <string name="action_call_decline">Кирешү</string>
   <string name="action_call_mic_mute">Тыныч микрофон</string>
   <string name="ab_action_contact_add">Контактларга өстәү</string>
@@ -173,4 +175,5 @@
   <string name="export_side_step2_confirm">Ышанычлылык</string>
   <string name="import_side_step1_share">Бүләкләү</string>
   <string name="import_side_step2_password_import">Импорт</string>
+  <!--Accessibility-->
 </resources>

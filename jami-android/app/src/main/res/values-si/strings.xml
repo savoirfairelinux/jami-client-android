@@ -15,6 +15,7 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <!--Call Fragment-->
+  <string name="action_call_hangup">ඇමතුම අවසන් කරන්න</string>
   <string name="new_group">නව සමූහය තනන්න</string>
   <!--Text messages-->
   <string name="time_just_now">මේ දැන්</string>
@@ -48,4 +49,5 @@
   <string name="donation_card_not_now">දැන් නොවේ</string>
   <!--Extension-->
   <string name="export_side_step2_cancel">අවලංගු කරන්න</string>
+  <!--Accessibility-->
 </resources>

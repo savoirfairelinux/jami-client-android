@@ -43,7 +43,6 @@
     <item quantity="other">%d pokalbių</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Ieškoti vardo ar pokalbio…</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
@@ -73,7 +72,7 @@
   <string name="location_share_about_title">Informacija apie žemėlapį</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Jūs:</string>
-  <string name="action_call_hangup">Padėti ragelį</string>
+  <string name="action_call_hangup">Baigti skambutį</string>
   <string name="hist_in_call">%1$s gaunamasis skambutis</string>
   <string name="hist_out_call">%1$s išsiunčiamasis skambutis</string>
   <string name="call_duration">Trukmė: %s</string>
@@ -81,6 +80,7 @@
   <string name="action_call_accept">Atsiliepti</string>
   <string name="action_call_accept_audio">Atsiliepti su garsu</string>
   <string name="action_call_accept_video">Atsiliepti su vaizdu</string>
+  <string name="switch_to_video">Įjungti vaizdą</string>
   <string name="action_call_decline">Atmesti</string>
   <string name="action_call_mic_mute">Išjungti mikrofoną</string>
   <string name="action_load_extension">Įkelti plėtinį</string>
@@ -341,4 +341,6 @@
   <string name="import_side_step1_share">Bendrinti</string>
   <string name="import_side_step2_password_import">Importuoti</string>
   <string name="link_device_error_unknown">Įvyko klaida.</string>
+  <!--Accessibility-->
+  <string name="step_title_set_password">Nustatyti slaptažodį</string>
 </resources>

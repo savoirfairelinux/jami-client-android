@@ -50,7 +50,7 @@
     <item quantity="other">%d de conversații</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Caută nume sau conversație…</string>
+  <string name="searchbar_hint">Caută sau adaugă</string>
   <string name="choose_number">Alege un număr</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -93,7 +93,8 @@
   <string name="location_share_about_title">Detalii pe hartă</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tu:</string>
-  <string name="action_call_hangup">Închide</string>
+  <string name="action_call_hangup">Închide apelul</string>
+  <string name="action_call_resume">Reia apelul</string>
   <string name="action_call_maximize">Maximizează</string>
   <string name="action_call_minimize">Micșorează</string>
   <string name="action_call_mute">Oprește</string>
@@ -107,6 +108,7 @@
   <string name="action_call_accept_audio">Răspunde vocal</string>
   <string name="action_call_accept_video">Răspunde video</string>
   <string name="action_call_hold_accept">Răspunde doar vocal și pune în pauză apelul actual</string>
+  <string name="switch_to_video">Activează Video</string>
   <string name="action_call_hold_accept_video">Răspunde cu video și pune în pauză apelul actual</string>
   <string name="action_call_end_accept">Răspunde și termină apelul actual</string>
   <string name="action_call_decline">Refuză</string>
@@ -345,6 +347,7 @@
   <string name="menu_message_delete">Șterge mesajul</string>
   <string name="menu_message_cancel">Anulează mesajul</string>
   <string name="menu_message_reply">Răspunde</string>
+  <string name="menu_message_cancel_reply">Anulează răspunsul</string>
   <string name="menu_delete">Șterge</string>
   <string name="pref_darkTheme_title">Fond negru</string>
   <string name="pref_darkTheme_summary">Activează mereu fondul negru în loc să folosești fondul sistemului</string>
@@ -507,4 +510,7 @@
   <string name="link_device_error_canceled">Operațiunea a fost anulată de utilizator.</string>
   <string name="link_device_error_unknown">A apărut o eroare.</string>
   <string name="link_device_error_bad_password">Verifică datele de acces și încearcă din nou.</string>
+  <string name="test_push">Test Notificări</string>
+  <!--Accessibility-->
+  <string name="step_title_set_password">Alege parola</string>
 </resources>

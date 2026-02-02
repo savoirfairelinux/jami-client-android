@@ -48,10 +48,12 @@
   <string name="location_share_action_stop">Kwụsị ịkekọrịta</string>
   <string name="location_share_about_title">Ozi map</string>
   <!--Call Fragment-->
+  <string name="action_call_hangup">Kwụsị oku</string>
   <string name="action_call_maximize">Mee Ka Ihe Dịkwuo Mma</string>
   <string name="action_call_minimize">Belata</string>
   <string name="action_call_mute">Ndị na-adịghị ekwu okwu</string>
   <string name="action_call_unmute">Ndị na-adịghị ekwu okwu</string>
+  <string name="switch_to_video">Gbaa vidiyo ahụ</string>
   <string name="action_call_decline">Ọdịda</string>
   <string name="action_call_mic_mute">Igwe okwu na-adịghị arụ ọrụ</string>
   <string name="ab_action_contact_add">Tinye na kọntaktị</string>
@@ -174,4 +176,5 @@
   <string name="export_side_step2_confirm">Kwado</string>
   <string name="import_side_step1_share">Ịkekọrịta</string>
   <string name="import_side_step2_password_import">Ịba n\'ime</string>
+  <!--Accessibility-->
 </resources>

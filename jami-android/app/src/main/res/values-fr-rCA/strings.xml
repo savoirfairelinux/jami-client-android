@@ -50,7 +50,6 @@
     <item quantity="other">%d conversation</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Rechercher un nom ou une conversation</string>
   <string name="choose_number">Choisissez un numéro</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -93,7 +92,8 @@
   <string name="location_share_about_title">Informations sur la carte</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vous :</string>
-  <string name="action_call_hangup">Raccrocher</string>
+  <string name="action_call_hangup">Fin d’appel</string>
+  <string name="action_call_resume">Reprendre l\'appel</string>
   <string name="action_call_maximize">Agrandir</string>
   <string name="action_call_minimize">Réduire</string>
   <string name="action_call_mute">Couper le micro</string>
@@ -107,6 +107,7 @@
   <string name="action_call_accept_audio">Accepter en audio</string>
   <string name="action_call_accept_video">Accepter en vidéo</string>
   <string name="action_call_hold_accept">Accepter l\'appel en audio et mettre l\'appel en cours sur pause.</string>
+  <string name="switch_to_video">Activer la vidéo</string>
   <string name="action_call_hold_accept_video">Accepter l\'appel vidéo et mettre l\'appel en cours sur pause.</string>
   <string name="action_call_end_accept">Accepter l\'appel entrant et raccrocher l\'appel courant</string>
   <string name="action_call_decline">Refuser</string>
@@ -519,4 +520,6 @@ Veuillez patienter.</string>
   <string name="link_device_error_canceled">L\'opération a été annulée.</string>
   <string name="link_device_error_unknown">Une erreur s\'est produite</string>
   <string name="link_device_error_bad_password">Veuillez vérifier vos informations d\'identification et réessayer.</string>
+  <!--Accessibility-->
+  <string name="step_title_set_password">Définir mot de passe</string>
 </resources>

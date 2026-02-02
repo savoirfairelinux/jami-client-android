@@ -4,6 +4,8 @@
   <string name="submit_issue_title">Enviar problema</string>
   <string name="submit_issue_action_description"><u>Crear nueva edición</u></string>
   <string name="section_license">Licencia</string>
+  <string name="switch_conversation">Cambiar conversación</string>
+  <string name="delete_conversation_confirmation">¿Estás seguro de que deseas eliminar esta conversación?</string>
   <string name="sponsor_section">Jami es software libre desarrollado y respaldado por</string>
   <string name="copyright_section">Derechos Reservados</string>
   <string name="contribute_section">Contribuir</string>
@@ -50,7 +52,7 @@
     <item quantity="other">%dConversaciones</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Buscar nombre o conversación...</string>
+  <string name="searchbar_hint">Buscar o agregar</string>
   <string name="choose_number">Seleccionar un numero</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -93,7 +95,8 @@
   <string name="location_share_about_title">Información del mapa</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vos:</string>
-  <string name="action_call_hangup">Colgar</string>
+  <string name="action_call_hangup">Terminar llamada</string>
+  <string name="action_call_resume">Reanudar</string>
   <string name="action_call_maximize">Maximizar</string>
   <string name="action_call_minimize">Reducir</string>
   <string name="action_call_mute">Silenciar</string>
@@ -102,11 +105,14 @@
   <string name="hist_in_call">Llamada entrante de %1$s</string>
   <string name="hist_out_call">Llamada saliente de %1$s</string>
   <string name="call_duration">Último %s</string>
+  <string name="call_on_hold">La llamada está en espera</string>
   <string name="start_error_title">No se puede iniciar Jami</string>
   <string name="action_call_accept">Aceptar llamada</string>
   <string name="action_call_accept_audio">Aceptar con audio</string>
   <string name="action_call_accept_video">Aceptar con vídeo</string>
   <string name="action_call_hold_accept">Aceptar llamadas entrantes solo con audio y mantener presionada la llamada actual</string>
+  <string name="switch_to_audio">Deshabilitar video</string>
+  <string name="switch_to_video">Permitir video</string>
   <string name="action_call_hold_accept_video">Aceptar llamadas entrantes con vídeo y mantener presionada la llamada actual</string>
   <string name="action_call_end_accept">Aceptar llamada entrante y finalizar la llamada actual</string>
   <string name="action_call_decline">Rechazar</string>
@@ -345,6 +351,7 @@
   <string name="menu_message_delete">Eliminar mensaje</string>
   <string name="menu_message_cancel">Cancelar mensaje</string>
   <string name="menu_message_reply">Responder</string>
+  <string name="menu_message_cancel_reply">Cancelar respuesta</string>
   <string name="menu_delete">Borrar</string>
   <string name="pref_darkTheme_title">Tema oscuro</string>
   <string name="pref_darkTheme_summary">Siempre habilitar el tema oscuro en lugar de usar el comportamiento del sistema</string>
@@ -507,4 +514,7 @@
   <string name="link_device_error_canceled">Operación cancelada por el usuario.</string>
   <string name="link_device_error_unknown">Sucedió un error.</string>
   <string name="link_device_error_bad_password">Comprobar las credenciales e intentarlo de nuevo.</string>
+  <string name="test_push">Pulsar Prueba</string>
+  <!--Accessibility-->
+  <string name="step_title_set_password">Establecer contraseña</string>
 </resources>
