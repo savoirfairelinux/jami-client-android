@@ -16,6 +16,8 @@
  */
 package cx.ring.services
 
+import android.app.ActivityManager
+import android.content.Intent
 import android.os.PowerManager
 import android.util.Log
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -37,7 +39,38 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
             Log.w("JamiFirebaseMessaging", "Can't acquire wake lock", e)
         }
         val app = JamiApplication.instance as JamiApplicationFirebase?
+        val isForeground = isAppInForeground()
+
+        if (shouldPostReconnectNotification(remoteMessage, isForeground)) {
+            val intent = Intent(this, cx.ring.service.PushForegroundService::class.java)
+            startForegroundService(intent)
+        }
+
         app?.onMessageReceived(remoteMessage)
+    }
+
+    private fun isAppInForeground(): Boolean {
+        val am = getSystemService(ACTIVITY_SERVICE) as ActivityManager
+        val procs = am.runningAppProcesses ?: return false
+        val pkg = packageName
+
+        return procs.any { p ->
+            p.processName == pkg &&
+                    p.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND
+        }
+    }
+
+    private fun shouldPostReconnectNotification(
+        remoteMessage: RemoteMessage,
+        isForeground: Boolean
+    ): Boolean {
+        if (isForeground) return false
+
+        val isHighPriority =
+            remoteMessage.priority == RemoteMessage.PRIORITY_HIGH &&
+                    remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH
+
+        return isHighPriority
     }
 
     override fun onNewToken(refreshedToken: String) {
