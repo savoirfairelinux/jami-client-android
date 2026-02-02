@@ -233,6 +233,9 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="notif_incoming_picture">Picture from %1$s</string>
     <string name="notif_sync_title">Syncing data…</string>
     <string name="notif_location_title">Sharing location with %1$s</string>
+    <string name="notif_channel_reconnect">Push reconnect</string>
+    <string name="notif_reconnect_title">Reconnecting…</string>
+    <string name="notif_reconnect_message">Syncing messages and calls…</string>
     <string name="location_share_contact">%1$s is sharing location with you</string>
     <string name="notif_location_multi_title">Sharing location with %1$d contacts</string>
     <string name="notif_location_remaining">%1$d minutes remaining</string>
