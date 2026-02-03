@@ -24,9 +24,9 @@ import androidx.test.espresso.action.ViewActions.clearText
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.action.ViewActions.longClick
+import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.action.ViewActions.swipeUp
-import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
@@ -135,7 +135,7 @@ class Messaging {
 
         // Type text message.
         onView(withId(R.id.msg_input_txt))
-            .perform(waitUntil(isDisplayed()), typeText(TEST_MESSAGE_1), closeSoftKeyboard())
+            .perform(waitUntil(isDisplayed()), replaceText(TEST_MESSAGE_1), closeSoftKeyboard())
 
         // Click send button.
         onView(withId(R.id.msg_send)).check(matches(isDisplayed())).perform(click())
@@ -186,7 +186,7 @@ class Messaging {
 
         // Type text message.
         onView(withId(R.id.msg_input_txt))
-            .perform(waitUntil(isDisplayed()), typeText(TEST_MESSAGE_2), closeSoftKeyboard())
+            .perform(waitUntil(isDisplayed()), replaceText(TEST_MESSAGE_2), closeSoftKeyboard())
 
         // Click send button.
         onView(withId(R.id.msg_send)).check(matches(isDisplayed())).perform(click())
@@ -246,7 +246,7 @@ class Messaging {
             .perform(
                 waitUntil(isDisplayed()),
                 clearText(),
-                typeText(TEST_MESSAGE_3),
+                replaceText(TEST_MESSAGE_3),
                 closeSoftKeyboard()
             )
 
