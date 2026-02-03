@@ -861,7 +861,9 @@ class Conversation(
     val isEnded: Boolean
         get() {
             val user = contacts.firstOrNull { it.isUser }
-            val nonUserRoles = roles.filterKeys { it != user?.uri?.uri }.values
+            val nonUserRoles = synchronized(roles) {
+                roles.filterKeys { it != user?.uri?.uri }.values.toList()
+            }
             if (nonUserRoles.isEmpty()) {
                 return this.isSwarmGroup() && !this.isUserGroupAdmin()
             }
