@@ -20,8 +20,9 @@ import org.hamcrest.Matchers.allOf
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
+import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.action.ViewActions.scrollTo
-import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
@@ -134,11 +135,11 @@ class AddContact {
         AccountNavigationUtils.moveToAccount(accountA!!.registeredName)
 
         // Click on the search bar
-        onView(withId(R.id.search_bar)).perform(click())
+        onView(withId(R.id.search_bar)).perform(closeSoftKeyboard(), click())
 
         // Type the username of account B
         onView(allOf(supportsInputMethods(), isDescendantOfA(withId(R.id.search_view))))
-            .perform(typeText(accountB!!.registeredName))
+            .perform(replaceText(accountB!!.registeredName))
 
         // Check account B is in the search results
         onView(isRoot()).perform(
@@ -157,11 +158,11 @@ class AddContact {
     @Test
     fun b2_searchForContact_usingJamiId() {
         // Click on the search bar
-        onView(withId(R.id.search_bar)).perform(click())
+        onView(withId(R.id.search_bar)).perform(closeSoftKeyboard(), click())
 
         // Type the username of account B
         onView(allOf(supportsInputMethods(), isDescendantOfA(withId(R.id.search_view))))
-            .perform(typeText(accountB!!.username))
+            .perform(replaceText(accountB!!.username!!))
 
         // Check account B is in the search results
         onView(isRoot()).perform(
@@ -180,11 +181,11 @@ class AddContact {
     @Test
     fun b3_sendContactInvite() {
         // Click on the search bar
-        onView(withId(R.id.search_bar)).perform(click())
+        onView(withId(R.id.search_bar)).perform(closeSoftKeyboard(), click())
 
         // Type the username of account B
         onView(allOf(supportsInputMethods(), isDescendantOfA(withId(R.id.search_view))))
-            .perform(typeText(accountB!!.registeredName))
+            .perform(replaceText(accountB!!.registeredName))
 
         // Wait(for view to be displayed) then click on the search result for account B
         onView(isRoot()).perform(
