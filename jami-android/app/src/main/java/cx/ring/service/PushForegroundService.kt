@@ -1,9 +1,6 @@
 package cx.ring.service
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.Service
-import android.content.Context
 import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.os.Build
@@ -12,6 +9,7 @@ import android.os.IBinder
 import android.os.Looper
 import androidx.core.app.NotificationCompat
 import cx.ring.R
+import cx.ring.services.NotificationServiceImpl.Companion.NOTIF_CHANNEL_PUSH_SYNC
 
 class PushForegroundService : Service() {
     private val timeoutMs = 5000L
@@ -25,9 +23,7 @@ class PushForegroundService : Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        createNotificationChannel()
-
-        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+        val notification = NotificationCompat.Builder(this, NOTIF_CHANNEL_PUSH_SYNC)
             .setContentTitle(getString(R.string.notif_reconnect_title))
             .setSmallIcon(R.drawable.ic_ring_logo_white)
             .setOngoing(true)
@@ -58,18 +54,7 @@ class PushForegroundService : Service() {
         super.onDestroy()
     }
 
-    private fun createNotificationChannel() {
-        val channel = NotificationChannel(
-            CHANNEL_ID,
-            getString(R.string.notif_channel_reconnect),
-            NotificationManager.IMPORTANCE_DEFAULT
-        )
-        val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        manager.createNotificationChannel(channel)
-    }
-
     companion object {
-        private const val CHANNEL_ID = "push_reconnect_channel"
         private const val NOTIFICATION_ID = 2001
     }
 }

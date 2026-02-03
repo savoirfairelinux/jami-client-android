@@ -1114,13 +1114,13 @@ class NotificationServiceImpl(
         private const val NOTIF_MSG = "MESSAGE"
         private const val NOTIF_TRUST_REQUEST = "TRUST REQUEST"
         private const val NOTIF_FILE_TRANSFER = "FILE_TRANSFER"
-        private const val NOTIF_MISSED_CALL = "MISSED_CALL"
         private const val NOTIF_CHANNEL_CALL_IN_PROGRESS = "current_call"
         private const val NOTIF_CHANNEL_MISSED_CALL = "missed_calls"
         private const val NOTIF_CHANNEL_INCOMING_CALL = "incoming_call2"
         private const val NOTIF_CHANNEL_MESSAGE = "messages"
         private const val NOTIF_CHANNEL_REQUEST = "requests"
         private const val NOTIF_CHANNEL_FILE_TRANSFER = "file_transfer"
+        const val NOTIF_CHANNEL_PUSH_SYNC = "sync_channel"
         const val NOTIF_CHANNEL_SYNC = "sync"
         private const val NOTIF_CHANNEL_SERVICE = "service"
         private const val NOTIF_CALL_GROUP = "calls"
@@ -1211,6 +1211,18 @@ class NotificationServiceImpl(
             backgroundChannel.enableVibration(false)
             backgroundChannel.setShowBadge(false)
             notificationManager.createNotificationChannel(backgroundChannel)
+
+            notificationManager.createNotificationChannel(NotificationChannel(
+                NOTIF_CHANNEL_PUSH_SYNC,
+                context.getString(R.string.notif_channel_reconnect),
+                NotificationManager.IMPORTANCE_LOW
+            ).apply {
+                lockscreenVisibility = Notification.VISIBILITY_SECRET
+                enableLights(false)
+                enableVibration(false)
+                setShowBadge(false)
+                setSound(null, null)
+            })
         }
     }
 }
