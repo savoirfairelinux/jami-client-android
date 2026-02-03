@@ -27,7 +27,6 @@ import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.action.ViewActions.pressImeActionButton
 import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.action.ViewActions.scrollTo
-import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intending
@@ -160,10 +159,14 @@ class AccountSettings {
         onView(withId(R.id.usernameField)).perform(click())
 
         // Change name. Press confirm on keyboard.
-        onView(withId(R.id.username)).perform(typeText(accountAProfileName), pressImeActionButton())
-
+        onView(withId(R.id.username)).perform(
+            replaceText(accountAProfileName),
+            pressImeActionButton()
+        )
         // Check if name is changed.
-        onView(withId(R.id.username)).check(matches(withText(accountAProfileName)))
+        onView(withId(R.id.username)).perform(
+            waitUntil(withText(accountAProfileName))
+        )
     }
 
     @Test
@@ -305,7 +308,7 @@ class AccountSettings {
         onView(withId(R.id.register_name)).perform(click())
 
         // Type invalid username.
-        onView(withId(R.id.input_username)).perform(typeText("ab"), closeSoftKeyboard())
+        onView(withId(R.id.input_username)).perform(replaceText("ab"), closeSoftKeyboard())
 
         // Verify that the error is displayed.
         onView(withId(R.id.input_username_txt_box))
@@ -322,7 +325,7 @@ class AccountSettings {
         onView(withId(R.id.register_name)).perform(click())
 
         // Type already taken username.
-        onView(withId(R.id.input_username)).perform(typeText("abc"), closeSoftKeyboard())
+        onView(withId(R.id.input_username)).perform(replaceText("abc"), closeSoftKeyboard())
 
         // Verify that the error is displayed.
         onView(withId(R.id.input_username_txt_box))
@@ -359,7 +362,7 @@ class AccountSettings {
         // Type valid username.
         val randomUsername = "jamitest_" + System.currentTimeMillis()
         onView(allOf(withId(R.id.input_username), isDisplayed()))
-            .perform(typeText(randomUsername), closeSoftKeyboard())
+            .perform(replaceText(randomUsername), closeSoftKeyboard())
 
         // Verify no error is displayed.
         onView(withId(R.id.input_username_txt_box))
@@ -401,8 +404,8 @@ class AccountSettings {
         onView(withId(R.id.system_change_password_title)).perform(click())
 
         // Type and recopy invalid password.
-        onView(withId(R.id.new_password_txt)).perform(typeText("12345"), closeSoftKeyboard())
-        onView(withId(R.id.new_password_repeat_txt)).perform(typeText("12345"), closeSoftKeyboard())
+        onView(withId(R.id.new_password_txt)).perform(replaceText("12345"), closeSoftKeyboard())
+        onView(withId(R.id.new_password_repeat_txt)).perform(replaceText("12345"), closeSoftKeyboard())
 
         // Click on `Set Password`.
         onView(withId(android.R.id.button1)).perform(click())
@@ -427,8 +430,8 @@ class AccountSettings {
         onView(withId(R.id.system_change_password_title)).perform(click())
 
         // Type and badly recopy password.
-        onView(withId(R.id.new_password_txt)).perform(typeText("123456"), closeSoftKeyboard())
-        onView(withId(R.id.new_password_repeat_txt)).perform(typeText("12345"), closeSoftKeyboard())
+        onView(withId(R.id.new_password_txt)).perform(replaceText("123456"), closeSoftKeyboard())
+        onView(withId(R.id.new_password_repeat_txt)).perform(replaceText("12345"), closeSoftKeyboard())
 
         // Click on `Set Password`.
         onView(withId(android.R.id.button1)).perform(click())
@@ -453,9 +456,9 @@ class AccountSettings {
         onView(withId(R.id.system_change_password_title)).perform(click())
 
         // Type and recopy password.
-        onView(withId(R.id.new_password_txt)).perform(typeText("123456"), closeSoftKeyboard())
+        onView(withId(R.id.new_password_txt)).perform(replaceText("123456"), closeSoftKeyboard())
         onView(withId(R.id.new_password_repeat_txt)).perform(
-            typeText("123456"),
+            replaceText("123456"),
             closeSoftKeyboard()
         )
 
@@ -496,7 +499,7 @@ class AccountSettings {
         onView(withId(R.id.system_export_title)).perform(click())
 
         // Give password.
-        onView(withId(R.id.password_txt)).perform(typeText("123456"), closeSoftKeyboard())
+        onView(withId(R.id.password_txt)).perform(replaceText("123456"), closeSoftKeyboard())
 
         // Valid password.
         onView(withId(android.R.id.button1)).perform(click())
@@ -545,7 +548,7 @@ class AccountSettings {
 
         // Will open a dialog.
         // Type old password.
-        onView(withId(R.id.old_password_txt)).perform(typeText("123456"), closeSoftKeyboard())
+        onView(withId(R.id.old_password_txt)).perform(replaceText("123456"), closeSoftKeyboard())
 
         // Click on `Change Password`. Null new password will delete it.
         onView(withId(android.R.id.button1)).perform(click())
@@ -657,7 +660,7 @@ class AccountSettings {
         Intents.release()
 
         // Type and confirm password.
-        onView(withId(R.id.existing_password)).perform(typeText("123456"), closeSoftKeyboard())
+        onView(withId(R.id.existing_password)).perform(replaceText("123456"), closeSoftKeyboard())
         onView(withId(R.id.link_button)).perform(click())
 
         AccountCreation.skipBiometrics()
