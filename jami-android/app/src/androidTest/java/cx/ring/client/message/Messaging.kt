@@ -52,6 +52,7 @@ import net.jami.model.Account
 import net.jami.model.Conversation
 import net.jami.model.Uri
 import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.equalToIgnoringCase
 import org.hamcrest.Matchers.not
 import org.junit.Before
 import org.junit.FixMethodOrder
@@ -140,7 +141,7 @@ class Messaging {
 
         // Check if the message is displayed.
         onView(withId(R.id.bubble_message_text))
-            .perform(waitUntil(allOf(withText(TEST_MESSAGE_1), isDisplayed())))
+            .perform(waitUntil(allOf(withText(equalToIgnoringCase(TEST_MESSAGE_1)), isDisplayed())))
     }
 
     @Test
@@ -158,7 +159,7 @@ class Messaging {
 
         // Check if message was received.
         onView(withId(R.id.bubble_message_text))
-            .perform(waitUntil(allOf(withText(TEST_MESSAGE_1), isDisplayed())))
+            .perform(waitUntil(allOf(withText(equalToIgnoringCase(TEST_MESSAGE_1)), isDisplayed())))
     }
 
     @Test
@@ -175,7 +176,7 @@ class Messaging {
         )
 
         // Long press on the message.
-        onView(allOf(withId(R.id.bubble_message_text), withText(TEST_MESSAGE_1)))
+        onView(allOf(withId(R.id.bubble_message_text), withText(equalToIgnoringCase(TEST_MESSAGE_1))))
             .perform(longClick())
 
         // Click on reply button.
@@ -190,10 +191,10 @@ class Messaging {
         onView(withId(R.id.msg_send)).check(matches(isDisplayed())).perform(click())
 
         // Check if the message is displayed (with reply).
-        onView(allOf(withText(TEST_MESSAGE_2), withId(R.id.bubble_message_text)))
+        onView(allOf(withText(equalToIgnoringCase(TEST_MESSAGE_2)), withId(R.id.bubble_message_text)))
             .perform(waitUntil(isDisplayed()))
         onView(allOf(withId(R.id.reply_text), isDisplayed()))
-            .check(matches(withText(TEST_MESSAGE_1)))
+            .check(matches(withText(equalToIgnoringCase(TEST_MESSAGE_1))))
     }
 
     @Test
@@ -212,10 +213,10 @@ class Messaging {
 
         // Check if the replied message is displayed.
         // Check if the message is displayed (with reply).
-        onView(allOf(withText(TEST_MESSAGE_2), withId(R.id.bubble_message_text)))
+        onView(allOf(withText(equalToIgnoringCase(TEST_MESSAGE_2)), withId(R.id.bubble_message_text)))
             .perform(waitUntil(isDisplayed()))
         onView(allOf(withId(R.id.reply_text), isDisplayed()))
-            .check(matches(withText(TEST_MESSAGE_1)))
+            .check(matches(withText(equalToIgnoringCase(TEST_MESSAGE_1))))
     }
 
     @Test
@@ -232,7 +233,7 @@ class Messaging {
         )
 
         // Long press on the message.
-        onView(allOf(withText(TEST_MESSAGE_1), withId(R.id.bubble_message_text)))
+        onView(allOf(withText(equalToIgnoringCase(TEST_MESSAGE_1)), withId(R.id.bubble_message_text)))
             .perform(longClick())
 
         // Click on the edit button.
@@ -252,9 +253,9 @@ class Messaging {
         onView(withId(R.id.msg_send)).check(matches(isDisplayed())).perform(click())
 
         // Check if the message is displayed.
-        onView(allOf(withText(TEST_MESSAGE_3), withId(R.id.bubble_message_text)))
+        onView(allOf(withText(equalToIgnoringCase(TEST_MESSAGE_3)), withId(R.id.bubble_message_text)))
             .perform(waitUntil(isDisplayed()))
-        onView(allOf(withText(TEST_MESSAGE_1), withId(R.id.bubble_message_text)))
+        onView(allOf(withText(equalToIgnoringCase(TEST_MESSAGE_1)), withId(R.id.bubble_message_text)))
             .check(doesNotExist())
     }
 
@@ -272,9 +273,9 @@ class Messaging {
         )
 
         // Check if the modified message is displayed.
-        onView(allOf(withText(TEST_MESSAGE_3), withId(R.id.bubble_message_text)))
+        onView(allOf(withText(equalToIgnoringCase(TEST_MESSAGE_3)), withId(R.id.bubble_message_text)))
             .perform(waitUntil(isDisplayed()))
-        onView(allOf(withText(TEST_MESSAGE_1), withId(R.id.bubble_message_text)))
+        onView(allOf(withText(equalToIgnoringCase(TEST_MESSAGE_1)), withId(R.id.bubble_message_text)))
             .check(doesNotExist())
     }
 
@@ -289,7 +290,7 @@ class Messaging {
         )
 
         // Long press on the message.
-        onView(allOf(withText(TEST_MESSAGE_3), withId(R.id.bubble_message_text)))
+        onView(allOf(withText(equalToIgnoringCase(TEST_MESSAGE_3)), withId(R.id.bubble_message_text)))
             .perform(longClick())
 
         // Verify that the edit button is not displayed
@@ -311,7 +312,7 @@ class Messaging {
         )
 
         // Long press on the message
-        onView(allOf(withText(TEST_MESSAGE_3), withId(R.id.bubble_message_text)))
+        onView(allOf(withText(equalToIgnoringCase(TEST_MESSAGE_3)), withId(R.id.bubble_message_text)))
             .perform(longClick())
 
         // Click on delete button.
@@ -325,7 +326,7 @@ class Messaging {
         }
         onView(allOf(withText(deletedString), withId(R.id.bubble_message_text)))
             .perform(waitUntil(isDisplayed()))
-        onView(allOf(withText(TEST_MESSAGE_3), withId(R.id.bubble_message_text)))
+        onView(allOf(withText(equalToIgnoringCase(TEST_MESSAGE_3)), withId(R.id.bubble_message_text)))
             .check(doesNotExist())
     }
 
@@ -347,7 +348,7 @@ class Messaging {
             .getString(R.string.conversation_message_deleted).format(accountB.registeredName)
         onView(allOf(withText(deletedString), withId(R.id.bubble_message_text)))
             .perform(waitUntil(isDisplayed()))
-        onView(allOf(withText(TEST_MESSAGE_3), withId(R.id.bubble_message_text)))
+        onView(allOf(withText(equalToIgnoringCase(TEST_MESSAGE_3)), withId(R.id.bubble_message_text)))
             .check(doesNotExist())
     }
 
@@ -362,7 +363,7 @@ class Messaging {
         )
 
         // Click on the message.
-        onView(allOf(withText(TEST_MESSAGE_2), withId(R.id.bubble_message_text)))
+        onView(allOf(withText(equalToIgnoringCase(TEST_MESSAGE_2)), withId(R.id.bubble_message_text)))
             .perform(longClick())
 
         // Verify that the delete button is not displayed.
@@ -409,7 +410,7 @@ class Messaging {
         pressBack()
 
         // Check if the conversation color is changed.
-        onView(allOf(withId(R.id.message_content), hasDescendant(withText(TEST_MESSAGE_4))))
+        onView(allOf(withId(R.id.message_content), hasDescendant(withText(equalToIgnoringCase(TEST_MESSAGE_4)))))
             .check(matches(hasBackgroundColor(R.color.conversation_palette_red)))
     }
 
