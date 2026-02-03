@@ -114,7 +114,7 @@ class AccountCreation {
     fun accountCreation_SpecifyPasswordOnly() {
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+        onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
 
         onView(allOf(withId(R.id.ring_password_switch), isDisplayed())).perform(click())
 
@@ -162,7 +162,7 @@ class AccountCreation {
     fun accountCreation_SpecifyProfileName() {
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+        onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
 
         onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
 
@@ -192,7 +192,7 @@ class AccountCreation {
     fun accountCreation_SpecifyProfilePictureViaCamera() {
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+        onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
 
         onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
 
@@ -252,7 +252,7 @@ class AccountCreation {
     fun accountCreation_SpecifyProfilePictureViaGallery() {
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+        onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
 
         onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
 
@@ -300,7 +300,7 @@ class AccountCreation {
     fun accountCreation_SpecifyProfilePicture_CanCancel(){
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+        onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
 
         onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
 
@@ -394,7 +394,7 @@ class AccountCreation {
     fun passwordSelection_EnableSection() {
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+        onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
 
         onView(allOf(withId(R.id.ring_password_switch), isDisplayed())).perform(click())
 
@@ -412,7 +412,7 @@ class AccountCreation {
     fun passwordSelection_LessThan6Characters_InvalidPassword() {
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+        onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
 
         onView(allOf(withId(R.id.ring_password_switch), isDisplayed())).perform(click())
 
@@ -435,7 +435,7 @@ class AccountCreation {
     fun passwordSelection_WrongRecopy() {
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+        onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
 
         onView(allOf(withId(R.id.ring_password_switch), isDisplayed())).perform(click())
 
@@ -460,7 +460,7 @@ class AccountCreation {
     fun passwordSelection_ValidPassword() {
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+        onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
 
         onView(allOf(withId(R.id.ring_password_switch), isDisplayed())).perform(click())
 
@@ -477,7 +477,7 @@ class AccountCreation {
     private fun createDefaultAccount() {
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+        onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
 
         onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
 
