@@ -21,6 +21,7 @@ import android.app.Instrumentation
 import android.content.Intent
 import android.net.Uri
 import android.provider.MediaStore
+import androidx.core.os.bundleOf
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.*
@@ -33,11 +34,13 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
-import androidx.test.runner.intent.IntentCallback
-import androidx.test.runner.intent.IntentMonitorRegistry
+import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
+import androidx.test.runner.lifecycle.Stage
 import cx.ring.AccountUtils
 import cx.ring.ImageProvider
 import cx.ring.R
+import cx.ring.account.AccountWizardActivity
+import cx.ring.account.ProfilePhotoFragment
 import cx.ring.application.JamiApplication
 import cx.ring.client.HomeActivity
 import cx.ring.waitUntil
@@ -45,7 +48,6 @@ import cx.ring.hasTextInputLayoutError
 import net.jami.utils.Log
 import cx.ring.isDialogWithTitle
 import cx.ring.waitForView
-import cx.ring.utils.ContentUri.getUri
 import cx.ring.withImageUri
 import org.hamcrest.Matchers.allOf
 import org.junit.After
@@ -196,37 +198,15 @@ class AccountCreation {
 
         onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
 
-        // Prepare the callback when we will intercept the camera intent.
-        val intentCallback = IntentCallback { intentCallback ->
-            if (intentCallback.action == MediaStore.ACTION_IMAGE_CAPTURE) {
-                intentCallback.extras!!.getUri(MediaStore.EXTRA_OUTPUT)!!.run {
-                    InstrumentationRegistry.getInstrumentation().targetContext.contentResolver.let {
-                        // Copy the downloaded image to the intent uri.
-                        val inStream = it.openInputStream(downloadedImagesUri[0])
-                        val outStream = it.openOutputStream(this)
-                        inStream?.use { input -> outStream?.use { output -> input.copyTo(output) } }
-                    }
-                }
-            }
-        }
-
-        // Start recording intents and subscribe to the callback.
-        Intents.init()
-        IntentMonitorRegistry.getInstance().addIntentCallback(intentCallback)
-
-        // Block the camera intent to propagate (prevent the camera from opening).
-        intending(hasAction(MediaStore.ACTION_IMAGE_CAPTURE))
-            .respondWith(Instrumentation.ActivityResult(Activity.RESULT_OK, null))
-
         // Click on camera (should launch a camera intent).
         onView(withId(R.id.camera)).perform(click())
 
-        // Stop recording intents and remove the callback.
-        IntentMonitorRegistry.getInstance().removeIntentCallback(intentCallback)
-        Intents.release()
+        returnPhotoFromProfilePhotoFragment(downloadedImagesUri[0])
+
+        waitForView(withId(R.id.profile_photo)).perform(waitUntil(isDisplayed()))
 
         // Check if the image is displayed.
-         onView(withId(R.id.profile_photo)).check(matches(withImageUri(downloadedImagesUri[0])))
+        onView(withId(R.id.profile_photo)).check(matches(withImageUri(downloadedImagesUri[0])))
 
         onView(allOf(withId(R.id.next_create_account), isDisplayed())).perform(click())
 
@@ -518,6 +498,30 @@ class AccountCreation {
         onView(allOf(withId(R.id.skip_create_account), isDisplayed())).perform(click())
 
         Log.d(TAG, "Account created: $username")
+    }
+
+    private fun returnPhotoFromProfilePhotoFragment(uri: Uri) {
+        val wizard = getCurrentActivity() as AccountWizardActivity
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+
+        instrumentation.runOnMainSync {
+            wizard.supportFragmentManager.setFragmentResult(
+                ProfilePhotoFragment.REQUEST_KEY_PHOTO,
+                bundleOf(ProfilePhotoFragment.RESULT_URI to uri.toString())
+            )
+            wizard.supportFragmentManager.popBackStackImmediate()
+        }
+    }
+
+    private fun getCurrentActivity(): Activity {
+        val instrumentation: Instrumentation = InstrumentationRegistry.getInstrumentation()
+        val activities = arrayOfNulls<Activity>(1)
+        instrumentation.runOnMainSync {
+            val resumed = ActivityLifecycleMonitorRegistry.getInstance()
+                .getActivitiesInStage(Stage.RESUMED)
+            activities[0] = resumed.firstOrNull()
+        }
+        return activities[0] ?: throw IllegalStateException("No RESUMED activity")
     }
 
     companion object {
