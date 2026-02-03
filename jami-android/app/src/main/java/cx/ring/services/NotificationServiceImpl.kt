@@ -1126,7 +1126,6 @@ class NotificationServiceImpl(
         private const val NOTIF_CALL_GROUP = "calls"
         const val NOTIF_CALL_ID = 1001
 
-        @RequiresApi(api = Build.VERSION_CODES.O)
         fun registerNotificationChannels(context: Context, notificationManager: NotificationManagerCompat) {
             // Setting up groups
             notificationManager.createNotificationChannelGroup(NotificationChannelGroupCompat.Builder(NOTIF_CALL_GROUP)
