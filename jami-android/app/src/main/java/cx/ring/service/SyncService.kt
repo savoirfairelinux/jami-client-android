@@ -24,6 +24,7 @@ import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import cx.ring.R
@@ -83,7 +84,7 @@ class SyncService : Service() {
             serviceUsers++
             val timeout = intent.getLongExtra(EXTRA_TIMEOUT, -1)
             if (timeout > 0) {
-                Handler().postDelayed({
+                Handler(Looper.getMainLooper()).postDelayed({
                     stop()
                 }, timeout)
             }
