@@ -26,15 +26,15 @@ import cx.ring.utils.BitmapUtils
 import net.jami.model.Uri
 import kotlin.math.min
 
-class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int = 0, defStyleRes: Int = 0) :
+class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0, defStyleRes: Int = 0) :
     View(context, attrs, defStyleAttr, defStyleRes) {
 
     private var avatarDrawable: AvatarDrawable? = null
 
     init {
-        context.obtainStyledAttributes(attrs, R.styleable.AvatarView).use { typedArray ->
-            val uri = typedArray.getString(R.styleable.AvatarView_uri) ?: return@use
-            if (isInEditMode) {
+        if (isInEditMode) {
+            context.obtainStyledAttributes(attrs, R.styleable.AvatarView).use { typedArray ->
+                val uri = typedArray.getString(R.styleable.AvatarView_uri) ?: return@use
                 val username = typedArray.getString(R.styleable.AvatarView_username)
                 val displayName = typedArray.getString(R.styleable.AvatarView_displayName)
                 val avatar = typedArray.getDrawable(R.styleable.AvatarView_avatar)
