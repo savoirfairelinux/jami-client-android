@@ -51,6 +51,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -1388,6 +1389,7 @@ class ConversationAdapter(
                         if (data.imageUrl.isNotEmpty()) {
                             Glide.with(context)
                                 .load(data.imageUrl)
+                                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                                 .centerCrop()
                                 .into(image)
                             image.visibility = View.VISIBLE
