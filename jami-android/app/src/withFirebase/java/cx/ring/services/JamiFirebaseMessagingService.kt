@@ -24,6 +24,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import cx.ring.application.JamiApplication
 import cx.ring.application.JamiApplicationFirebase
+import cx.ring.service.PushForegroundService
 
 class JamiFirebaseMessagingService : FirebaseMessagingService() {
 
@@ -36,46 +37,39 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
             wl.setReferenceCounted(false)
             wl.acquire((10 * 1000).toLong())
         } catch (e: Exception) {
-            Log.w("JamiFirebaseMessaging", "Can't acquire wake lock", e)
+            Log.w(TAG, "Can't acquire wake lock", e)
+        }
+        try {
+            val isForeground = isAppInForeground()
+            val shouldStartService = !isForeground && remoteMessage.priority == RemoteMessage.PRIORITY_HIGH
+            if (shouldStartService) {
+                startForegroundService(Intent(this, PushForegroundService::class.java))
+            }
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to start foreground service for push notification", e)
         }
         val app = JamiApplication.instance as JamiApplicationFirebase?
-        val isForeground = isAppInForeground()
-
-        if (shouldPostReconnectNotification(remoteMessage, isForeground)) {
-            val intent = Intent(this, cx.ring.service.PushForegroundService::class.java)
-            startForegroundService(intent)
-        }
-
         app?.onMessageReceived(remoteMessage)
     }
 
     private fun isAppInForeground(): Boolean {
         val am = getSystemService(ACTIVITY_SERVICE) as ActivityManager
         val procs = am.runningAppProcesses ?: return false
-        val pkg = packageName
-
+        val pid = android.os.Process.myPid()
         return procs.any { p ->
-            p.processName == pkg &&
-                    p.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND
+            p.pid == pid
+                    && (p.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND
+                    || p.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIBLE)
         }
     }
 
-    private fun shouldPostReconnectNotification(
-        remoteMessage: RemoteMessage,
-        isForeground: Boolean
-    ): Boolean {
-        if (isForeground) return false
-
-        val isHighPriority =
-            remoteMessage.priority == RemoteMessage.PRIORITY_HIGH &&
-                    remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH
-
-        return isHighPriority
-    }
-
     override fun onNewToken(refreshedToken: String) {
-        Log.w("JamiFirebaseMessaging", "onNewToken $refreshedToken")
+        Log.w(TAG, "onNewToken $refreshedToken")
         val app = JamiApplication.instance as JamiApplicationFirebase?
         app?.pushToken = Pair(refreshedToken, "")
+    }
+
+    companion object {
+        private const val TAG = "JamiFirebaseMessaging"
     }
 }

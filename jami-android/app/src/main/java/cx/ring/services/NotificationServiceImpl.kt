@@ -32,7 +32,6 @@ import android.text.format.Formatter
 import android.util.JsonWriter
 import android.util.Log
 import android.util.SparseArray
-import androidx.annotation.RequiresApi
 import androidx.car.app.notification.CarAppExtender
 import androidx.car.app.notification.CarNotificationManager
 import androidx.core.app.*
@@ -1144,6 +1143,8 @@ class NotificationServiceImpl(
         const val NOTIF_CHANNEL_SYNC = "sync"
         private const val NOTIF_CHANNEL_SERVICE = "service"
         private const val NOTIF_CALL_GROUP = "calls"
+        private const val NOTIF_GROUP_SYNC = "sync"
+
         const val NOTIF_CALL_ID = 1001
 
         fun registerNotificationChannels(context: Context, notificationManager: NotificationManagerCompat) {
@@ -1153,90 +1154,115 @@ class NotificationServiceImpl(
                 .build())
 
             // Missed calls channel
-            val missedCallsChannel = NotificationChannelCompat.Builder(NOTIF_CHANNEL_MISSED_CALL, NotificationManager.IMPORTANCE_DEFAULT)
+            notificationManager.createNotificationChannel(NotificationChannelCompat.Builder(NOTIF_CHANNEL_MISSED_CALL, NotificationManager.IMPORTANCE_DEFAULT)
                 .setName(context.getString(R.string.notif_channel_missed_calls))
                 .setSound(null, null)
                 .setGroup(NOTIF_CALL_GROUP)
                 .setVibrationEnabled(false)
-                .build()
-            // lockscreenVisibility = Notification.VISIBILITY_SECRET
-            notificationManager.createNotificationChannel(missedCallsChannel)
+                .build())
 
             // Incoming call channel
-            val incomingCallChannel = NotificationChannel(
+            notificationManager.createNotificationChannel(NotificationChannel(
                 NOTIF_CHANNEL_INCOMING_CALL,
                 context.getString(R.string.notif_channel_incoming_calls),
                 NotificationManager.IMPORTANCE_HIGH
             ).apply {
-                lockscreenVisibility = Notification.VISIBILITY_PUBLIC
                 group = NOTIF_CALL_GROUP
+                lockscreenVisibility = Notification.VISIBILITY_PUBLIC
                 setSound(null, null)
                 enableVibration(true)
                 vibrationPattern = longArrayOf(0, 1000, 1000)
-            }
-            notificationManager.createNotificationChannel(incomingCallChannel)
+            })
 
             // Call in progress channel
-            val callInProgressChannel = NotificationChannel(
+            notificationManager.createNotificationChannel(NotificationChannel(
                 NOTIF_CHANNEL_CALL_IN_PROGRESS,
                 context.getString(R.string.notif_channel_call_in_progress),
                 NotificationManager.IMPORTANCE_DEFAULT
             ).apply {
+                group = NOTIF_CALL_GROUP
                 lockscreenVisibility = Notification.VISIBILITY_PUBLIC
                 setSound(null, null)
                 enableVibration(false)
-                group = NOTIF_CALL_GROUP
-            }
-            notificationManager.createNotificationChannel(callInProgressChannel)
+            })
 
             // Text messages channel
             val soundAttributes = AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .setUsage(AudioAttributes.USAGE_NOTIFICATION_COMMUNICATION_INSTANT)
+                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
                 .build()
-            val messageChannel = NotificationChannel(NOTIF_CHANNEL_MESSAGE, context.getString(R.string.notif_channel_messages), NotificationManager.IMPORTANCE_HIGH)
-            messageChannel.enableVibration(true)
-            messageChannel.lockscreenVisibility = Notification.VISIBILITY_SECRET
-            messageChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), soundAttributes)
-            notificationManager.createNotificationChannel(messageChannel)
+
+            notificationManager.createNotificationChannel(NotificationChannel(
+                NOTIF_CHANNEL_MESSAGE,
+                context.getString(R.string.notif_channel_messages),
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                lockscreenVisibility = Notification.VISIBILITY_SECRET
+                enableVibration(true)
+                setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), soundAttributes)
+            })
 
             // Contact requests
-            val requestsChannel = NotificationChannel(NOTIF_CHANNEL_REQUEST,context.getString(R.string.notif_channel_requests), NotificationManager.IMPORTANCE_DEFAULT)
-            requestsChannel.enableVibration(true)
-            requestsChannel.lockscreenVisibility = Notification.VISIBILITY_SECRET
-            requestsChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), soundAttributes)
-            notificationManager.createNotificationChannel(requestsChannel)
+            notificationManager.createNotificationChannel(NotificationChannel(
+                NOTIF_CHANNEL_REQUEST,
+                context.getString(R.string.notif_channel_requests),
+                NotificationManager.IMPORTANCE_DEFAULT
+            ).apply {
+                lockscreenVisibility = Notification.VISIBILITY_SECRET
+                enableVibration(true)
+                setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), soundAttributes)
+            })
 
             // File transfer requests
-            val fileTransferChannel = NotificationChannel(NOTIF_CHANNEL_FILE_TRANSFER, context.getString(R.string.notif_channel_file_transfer), NotificationManager.IMPORTANCE_DEFAULT)
-            fileTransferChannel.enableVibration(true)
-            fileTransferChannel.lockscreenVisibility = Notification.VISIBILITY_SECRET
-            fileTransferChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), soundAttributes)
-            notificationManager.createNotificationChannel(fileTransferChannel)
+            notificationManager.createNotificationChannel(NotificationChannel(
+                NOTIF_CHANNEL_FILE_TRANSFER,
+                context.getString(R.string.notif_channel_file_transfer),
+                NotificationManager.IMPORTANCE_DEFAULT
+            ).apply {
+                lockscreenVisibility = Notification.VISIBILITY_SECRET
+                enableVibration(true)
+                setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), soundAttributes)
+            })
 
-            // File transfer requests
-            val syncChannel = NotificationChannel(NOTIF_CHANNEL_SYNC, context.getString(R.string.notif_channel_sync), NotificationManager.IMPORTANCE_DEFAULT)
-            syncChannel.lockscreenVisibility = Notification.VISIBILITY_SECRET
-            syncChannel.enableLights(false)
-            syncChannel.enableVibration(false)
-            syncChannel.setShowBadge(false)
-            syncChannel.setSound(null, null)
-            notificationManager.createNotificationChannel(syncChannel)
+            notificationManager.createNotificationChannelGroup(NotificationChannelGroupCompat.Builder(NOTIF_GROUP_SYNC)
+                .setName(context.getString(R.string.notif_channel_background_service))
+                .build())
+
+            // Background sync
+            notificationManager.createNotificationChannel(NotificationChannel(
+                NOTIF_CHANNEL_SYNC,
+                context.getString(R.string.notif_channel_sync),
+                NotificationManager.IMPORTANCE_DEFAULT
+            ).apply {
+                group = NOTIF_GROUP_SYNC
+                lockscreenVisibility = Notification.VISIBILITY_SECRET
+                enableLights(false)
+                enableVibration(false)
+                setShowBadge(false)
+                setSound(null, null)
+            })
 
             // Background service channel
-            val backgroundChannel = NotificationChannel(NOTIF_CHANNEL_SERVICE, context.getString(R.string.notif_channel_background_service), NotificationManager.IMPORTANCE_LOW)
-            backgroundChannel.description = context.getString(R.string.notif_channel_background_service_descr)
-            backgroundChannel.lockscreenVisibility = Notification.VISIBILITY_SECRET
-            backgroundChannel.enableLights(false)
-            backgroundChannel.enableVibration(false)
-            backgroundChannel.setShowBadge(false)
-            notificationManager.createNotificationChannel(backgroundChannel)
+            notificationManager.createNotificationChannel(NotificationChannel(
+                NOTIF_CHANNEL_SERVICE,
+                context.getString(R.string.notif_channel_background_service),
+                NotificationManager.IMPORTANCE_LOW
+            ).apply {
+                group = NOTIF_GROUP_SYNC
+                description = context.getString(R.string.notif_channel_background_service_descr)
+                lockscreenVisibility = Notification.VISIBILITY_SECRET
+                enableLights(false)
+                enableVibration(false)
+                setShowBadge(false)
+                setSound(null, null)
+            })
 
             notificationManager.createNotificationChannel(NotificationChannel(
                 NOTIF_CHANNEL_PUSH_SYNC,
                 context.getString(R.string.notif_channel_reconnect),
                 NotificationManager.IMPORTANCE_LOW
             ).apply {
+                group = NOTIF_GROUP_SYNC
                 lockscreenVisibility = Notification.VISIBILITY_SECRET
                 enableLights(false)
                 enableVibration(false)
