@@ -39,6 +39,12 @@ class PushForegroundService : Service() {
                 notification,
                 ServiceInfo.FOREGROUND_SERVICE_TYPE_REMOTE_MESSAGING
             )
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            startForeground(
+                NOTIFICATION_ID,
+                notification,
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+            )
         } else {
             startForeground(NOTIFICATION_ID, notification)
         }
