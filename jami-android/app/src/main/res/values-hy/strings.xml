@@ -75,7 +75,7 @@
   <string name="location_share_about_title">Քարտեզի տեղեկատվություն</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Դուք.</string>
-  <string name="action_call_hangup">Բացեք։</string>
+  <string name="action_call_hangup">Վերջնական զանգը</string>
   <string name="action_call_maximize">Մաքսիմալացնել</string>
   <string name="action_call_minimize">Կրկնել</string>
   <string name="action_call_mute">Լռություն</string>
@@ -83,6 +83,7 @@
   <string name="ongoing_call">Շարունակվող զանգ</string>
   <string name="hist_in_call">%1$s-ի մուտքագրվող զանգը</string>
   <string name="hist_out_call">%1$s հեռախոսազանգ</string>
+  <string name="switch_to_video">Հեռուստատեսություն</string>
   <string name="action_call_decline">Հասնում է</string>
   <string name="action_call_mic_mute">Միկրոֆոն անջատ</string>
   <string name="ab_action_contact_add">Բարձրացնել շփումները</string>
@@ -320,4 +321,5 @@
   <string name="export_side_step2_confirm">Համոզվեք</string>
   <string name="import_side_step1_share">Մասնակից</string>
   <string name="import_side_step2_password_import">Արտահանման համար</string>
+  <!--Accessibility-->
 </resources>

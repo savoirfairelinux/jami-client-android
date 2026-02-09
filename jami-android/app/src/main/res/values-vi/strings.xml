@@ -39,7 +39,6 @@
     <item quantity="other">%d Cuộc trò chuyện</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Tìm tên hoặc tin nhắn</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
@@ -68,6 +67,7 @@
   <string name="location_share_about_title">Thông tin bản đồ</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Bạn:</string>
+  <string name="action_call_hangup">Kết thúc cuộc gọi</string>
   <string name="action_call_maximize">Tối đa</string>
   <string name="action_call_minimize">Giảm</string>
   <string name="action_call_mute">Tắt tiếng</string>
@@ -75,6 +75,7 @@
   <string name="ongoing_call">Cuộc gọi đang diễn ra</string>
   <string name="call_duration">Đã gọi %s</string>
   <string name="start_error_title">Không thể khởi động Jami</string>
+  <string name="switch_to_video">Bật video</string>
   <string name="action_call_decline">Từ chối</string>
   <string name="action_call_mic_mute">Tắt tiếng micrô</string>
   <string name="ab_action_contact_add">Thêm vào danh bạ</string>
@@ -276,4 +277,5 @@
   <string name="link_device_error_network">Có lỗi mạng trong quá trình kết nối thiết bị. Vui lòng kiểm tra kết nối và thử lại.</string>
   <string name="link_device_error_authentication">Có lỗi xác thực trong quá trình kết nối thiết bị. Vui lòng kiểm tra danh tính và thử lại.</string>
   <string name="link_device_error_unknown">Đã xảy ra lỗi.</string>
+  <!--Accessibility-->
 </resources>

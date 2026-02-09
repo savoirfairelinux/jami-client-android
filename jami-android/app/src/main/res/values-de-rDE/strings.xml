@@ -4,6 +4,7 @@
   <string name="submit_issue_title">Problem übermitteln</string>
   <string name="submit_issue_action_description"><u>Neues Problem erstellen</u></string>
   <string name="section_license">Lizenz</string>
+  <string name="view_switch_camera">Kamera wechseln</string>
   <string name="sponsor_section">Jami ist eine kostenlose Software, die entwickelt und unterstützt wird von</string>
   <string name="copyright_section">Urheberrecht</string>
   <string name="contribute_section">Beitragen</string>
@@ -45,7 +46,6 @@
   <!--Home Fragment-->
   <string name="invitation_card_title">Erhaltene Einladungen</string>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Nach Namen oder Unterhaltung suchen…</string>
   <string name="choose_number">Nummer auswählen</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -78,7 +78,8 @@
   <string name="location_share_about_title">Karteninformation</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Du:</string>
-  <string name="action_call_hangup">Auflegen</string>
+  <string name="action_call_hangup">Anruf beenden</string>
+  <string name="action_call_resume">Weiter</string>
   <string name="action_call_maximize">Maximieren</string>
   <string name="action_call_minimize">Reduzieren</string>
   <string name="action_call_mute">Stummschalten</string>
@@ -90,6 +91,7 @@
   <string name="action_call_accept_audio">Mit Audio antworten</string>
   <string name="action_call_accept_video">Mit Video antworten</string>
   <string name="action_call_hold_accept">Eingehende Anrufe nur mit Audio annehmen und aktuellen Anruf halten</string>
+  <string name="switch_to_video">Video aktivieren</string>
   <string name="action_call_hold_accept_video">Eingehenden Anrufen mit Video annehmen und aktuellen Anruf halten</string>
   <string name="action_call_end_accept">Eingehenden Anruf annehmen und aktuellen Anruf beenden</string>
   <string name="action_call_decline">Ablehnen</string>
@@ -308,4 +310,6 @@
   <string name="link_device_error_canceled">Der Vorgang wurde vom Benutzer abgebrochen.</string>
   <string name="link_device_error_unknown">Es ist ein Fehler aufgetreten.</string>
   <string name="link_device_error_bad_password">Bitte überprüfen Sie die Anmeldeinformationen und versuchen Sie es erneut.</string>
+  <!--Accessibility-->
+  <string name="step_title_set_password">Passwort festlegen</string>
 </resources>

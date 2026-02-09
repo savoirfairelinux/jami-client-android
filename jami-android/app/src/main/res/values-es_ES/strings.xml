@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="switch_conversation">Cambiar conversación</string>
+  <string name="delete_conversation_confirmation">¿Estás seguro de que deseas eliminar esta conversación?</string>
+  <string name="view_switch_camera">Cambiar cámara</string>
+  <!--About dialog-->
+  <!--RingActivity-->
+  <!--AB menus-->
+  <!--Sections-->
+  <!--Dialing Fragment-->
+  <!--History Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <string name="searchbar_hint">Buscar o agregar</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <!--Call Fragment-->
+  <string name="action_call_hangup">Terminar llamada</string>
+  <string name="action_call_resume">Reanudar</string>
+  <string name="call_on_hold">La llamada está en espera</string>
+  <string name="switch_to_audio">Deshabilitar video</string>
+  <string name="switch_to_video">Permitir video</string>
+  <!--Text messages-->
+  <!--MediaPreferenceFragment-->
+  <!--Ringtone activity-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <!--Conversation-->
+  <string name="remove_conversation">Eliminar conversación</string>
+  <string name="conversation_action_remove_title">¿Eliminar conversación?</string>
+  <string name="conversation_action_remove_message">Esto eliminará esta conversación sin eliminar el contacto.</string>
+  <!--Contacts-->
+  <!--Account summary-->
+  <!--Share fragment-->
+  <!--Pending invitations-->
+  <!--Blacklist-->
+  <!--Smartlist-->
+  <!--File Transfer-->
+  <string name="menu_message_cancel_reply">Cancelar respuesta</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
+  <!--Wizard-->
+  <!--Bottom sheet-->
+  <!--Swarm Details-->
+  <!--JamiId-->
+  <!--WelcomeJami-->
+  <!--Conversation details-->
+  <!--Donation-->
+  <!--Extension-->
+  <string name="test_push">Pulsar Prueba</string>
+  <!--Accessibility-->
+  <string name="step_title_create_username">Crear nombre de usuario</string>
+  <string name="step_title_set_password">Establecer contraseña</string>
+  <string name="step_title_create_profile">Crear perfil</string>
+  <string name="step_format">Paso %1$d de %2$d: %3$s</string>
+</resources>

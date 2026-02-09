@@ -75,7 +75,7 @@
   <string name="location_share_about_title">মানচিত্রের তথ্য</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">তুমিঃ</string>
-  <string name="action_call_hangup">বন্ধ করো</string>
+  <string name="action_call_hangup">কল শেষ</string>
   <string name="action_call_maximize">সর্বাধিক</string>
   <string name="action_call_minimize">হ্রাস করুন</string>
   <string name="action_call_mute">নীরব</string>
@@ -83,6 +83,7 @@
   <string name="ongoing_call">চলমান কল</string>
   <string name="hist_in_call">%1$s এর ইনকামিং কল</string>
   <string name="hist_out_call">%1$s এর বহিরাগত কল</string>
+  <string name="switch_to_video">ভিডিও সক্ষম করুন</string>
   <string name="action_call_decline">হ্রাস</string>
   <string name="action_call_mic_mute">নিঃশব্দ মাইক্রোফোন</string>
   <string name="ab_action_contact_add">পরিচিতি যোগ করুন</string>
@@ -321,4 +322,5 @@
   <string name="export_side_step2_confirm">নিশ্চিত করুন</string>
   <string name="import_side_step1_share">ভাগ করে নেওয়ার</string>
   <string name="import_side_step2_password_import">আমদানি</string>
+  <!--Accessibility-->
 </resources>

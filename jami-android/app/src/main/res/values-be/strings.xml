@@ -48,10 +48,12 @@
   <string name="location_share_action_stop">Спыніце дзяліцца</string>
   <string name="location_share_about_title">Інфармацыя пра карту</string>
   <!--Call Fragment-->
+  <string name="action_call_hangup">Скончыць выклік</string>
   <string name="action_call_maximize">Максімальнае</string>
   <string name="action_call_minimize">Зніжэнне</string>
   <string name="action_call_mute">Непаўторны</string>
   <string name="action_call_unmute">Неўмоўнае</string>
+  <string name="switch_to_video">Уключыць відэа</string>
   <string name="action_call_decline">Падзенне</string>
   <string name="action_call_mic_mute">Непаўны мікрафон</string>
   <string name="ab_action_contact_add">Дадаць да кантактаў</string>
@@ -175,4 +177,5 @@
   <string name="export_side_step2_confirm">Пацвердзіць</string>
   <string name="import_side_step1_share">Падзяліцца</string>
   <string name="import_side_step2_password_import">Імпарт</string>
+  <!--Accessibility-->
 </resources>

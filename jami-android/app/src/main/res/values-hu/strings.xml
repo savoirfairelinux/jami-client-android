@@ -4,6 +4,9 @@
   <string name="submit_issue_title">Probléma küldése</string>
   <string name="submit_issue_action_description"><u>Új probléma küldésének létrehozása</u></string>
   <string name="section_license">Licenc</string>
+  <string name="switch_conversation">Beszélgetés váltása</string>
+  <string name="delete_conversation_confirmation">Biztosan szeretné törölni ezt a beszélgetést?</string>
+  <string name="view_switch_camera">Fényképezőgépváltás</string>
   <string name="sponsor_section">A Jami ingyenes szoftver, amely fejlesztett és támogatott:</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Közreműködés</string>
@@ -49,7 +52,7 @@
     <item quantity="other">%dbeszélgetés</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Név vagy beszélgetés keresése…</string>
+  <string name="searchbar_hint">Keresés vagy hozzáadás</string>
   <string name="choose_number">Szám kiválasztása</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -93,6 +96,7 @@
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ön:</string>
   <string name="action_call_hangup">Hívás befejezése</string>
+  <string name="action_call_resume">Folytatás</string>
   <string name="action_call_maximize">Teljes méret</string>
   <string name="action_call_minimize">Csökkentés</string>
   <string name="action_call_mute">Elnémítás</string>
@@ -101,11 +105,14 @@
   <string name="hist_in_call">Bejövő hívás (%1$s)</string>
   <string name="hist_out_call">Kimenő hívás (%1$s)</string>
   <string name="call_duration">%s tartott</string>
+  <string name="call_on_hold">A hívás várakoztatva van</string>
   <string name="start_error_title">Nem sikerült elindítani a Jamit</string>
   <string name="action_call_accept">Hívás fogadása</string>
   <string name="action_call_accept_audio">Elfogadás hanggal</string>
   <string name="action_call_accept_video">Elfogadás videóval</string>
   <string name="action_call_hold_accept">Bejövő hívás fogadása csak hanggal és a jelenlegi hívás tartása</string>
+  <string name="switch_to_audio">Videó letiltása</string>
+  <string name="switch_to_video">Videó engedélyezése</string>
   <string name="action_call_hold_accept_video">Bejövő hívás fogadása videóval és a jelenlegi hívás tartása</string>
   <string name="action_call_end_accept">Bejövő hívás fogadása és a jelenlegi hívás befejezése</string>
   <string name="action_call_decline">Elutasítás</string>
@@ -344,6 +351,7 @@
   <string name="menu_message_delete">Üzenet törlése</string>
   <string name="menu_message_cancel">Üzenet törlése</string>
   <string name="menu_message_reply">Válasz</string>
+  <string name="menu_message_cancel_reply">Válasz visszavonása</string>
   <string name="menu_delete">Törlés</string>
   <string name="pref_darkTheme_title">Sötét téma</string>
   <string name="pref_darkTheme_summary">A rendszer viselkedése helyett mindig engedélyezze a sötét témát</string>
@@ -508,4 +516,10 @@ A fiókexportálási művelet folytatásához kattintson a Megerősítés gombra
   <string name="link_device_error_canceled">A felhasználó megszakította a műveletet.</string>
   <string name="link_device_error_unknown">Hiba történt.</string>
   <string name="link_device_error_bad_password">Kérjük, ellenőrizze a hitelesítő adatokat, és próbálkozzon újra.</string>
+  <string name="test_push">Push-értesítés vizsgálata</string>
+  <!--Accessibility-->
+  <string name="step_title_create_username">Felhasználónév létrehozása</string>
+  <string name="step_title_set_password">Jelszó beállítása</string>
+  <string name="step_title_create_profile">Profil létrehozása</string>
+  <string name="step_format">%1$d. lépés, összesen: %2$d: %3$s</string>
 </resources>

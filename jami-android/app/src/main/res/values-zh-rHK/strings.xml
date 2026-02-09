@@ -4,6 +4,9 @@
   <string name="submit_issue_title">提交问题</string>
   <string name="submit_issue_action_description"><u>创建新问题</u></string>
   <string name="section_license">许可</string>
+  <string name="switch_conversation">切换对话</string>
+  <string name="delete_conversation_confirmation">你确定要删除这个对话吗？</string>
+  <string name="view_switch_camera">翻轉相機</string>
   <string name="sponsor_section">Jami 是自由软件，它的开发和支持者是：</string>
   <string name="copyright_section">版权所有</string>
   <string name="contribute_section">贡献</string>
@@ -45,7 +48,7 @@
   <!--Home Fragment-->
   <string name="invitation_card_title">邀请已发送</string>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">搜索姓名或对话…</string>
+  <string name="searchbar_hint">搜索或添加</string>
   <string name="choose_number">选择一个数字</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -88,7 +91,8 @@
   <string name="location_share_about_title">地图信息</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">您：</string>
-  <string name="action_call_hangup">挂断</string>
+  <string name="action_call_hangup">結束電話</string>
+  <string name="action_call_resume">继续</string>
   <string name="action_call_maximize">最大化</string>
   <string name="action_call_minimize">减少</string>
   <string name="action_call_mute">静音</string>
@@ -97,11 +101,14 @@
   <string name="hist_in_call">%1$s 的來電</string>
   <string name="hist_out_call">%1$s 的去電</string>
   <string name="call_duration">最后的%s</string>
+  <string name="call_on_hold">通话已挂起</string>
   <string name="start_error_title">无法启动Jami</string>
   <string name="action_call_accept">接听通话</string>
   <string name="action_call_accept_audio">接受音频</string>
   <string name="action_call_accept_video">接受视频</string>
   <string name="action_call_hold_accept">接受仅带音频的来电并保持当前通话</string>
+  <string name="switch_to_audio">关闭视频</string>
+  <string name="switch_to_video">启用视频</string>
   <string name="action_call_hold_accept_video">接受视频来电并保持当前通话</string>
   <string name="action_call_end_accept">接听来电并结束当前通话</string>
   <string name="action_call_decline">拒接</string>
@@ -340,6 +347,7 @@
   <string name="menu_message_delete">删除消息</string>
   <string name="menu_message_cancel">取消消息</string>
   <string name="menu_message_reply">回复</string>
+  <string name="menu_message_cancel_reply">取消回复</string>
   <string name="menu_delete">刪除</string>
   <string name="pref_darkTheme_title">黑色主题</string>
   <string name="pref_darkTheme_summary">总是使用黑色主题，而不是跟随系统</string>
@@ -502,4 +510,10 @@
   <string name="link_device_error_canceled">操作已被用户取消。</string>
   <string name="link_device_error_unknown">发生错误。</string>
   <string name="link_device_error_bad_password">请检查凭据并重试。</string>
+  <string name="test_push">测试推送</string>
+  <!--Accessibility-->
+  <string name="step_title_create_username">创建用户名</string>
+  <string name="step_title_set_password">设置密码</string>
+  <string name="step_title_create_profile">创建个人资料</string>
+  <string name="step_format">第%1$d步（共%2$d步）：%3$s</string>
 </resources>
