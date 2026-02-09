@@ -39,6 +39,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class SyncService : Service() {
+    private val handler = Handler(Looper.getMainLooper())
     private var serviceUsers = 0
     private val mRandom = Random()
     private var notification: Notification? = null
@@ -84,9 +85,7 @@ class SyncService : Service() {
             serviceUsers++
             val timeout = intent.getLongExtra(EXTRA_TIMEOUT, -1)
             if (timeout > 0) {
-                Handler(Looper.getMainLooper()).postDelayed({
-                    stop()
-                }, timeout)
+                handler.postDelayed({ stop() }, timeout)
             }
         } else if (ACTION_STOP == action) {
             stop()
