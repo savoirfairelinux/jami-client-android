@@ -38,6 +38,7 @@ import cx.ring.service.ConnectionService
 import cx.ring.R
 import cx.ring.service.DRingService
 import cx.ring.service.JamiJobService
+import cx.ring.linkpreview.LinkPreview
 import cx.ring.services.CallServiceImpl.Companion.CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.views.AvatarFactory
@@ -128,6 +129,7 @@ abstract class JamiApplication : Application() {
         super.onLowMemory()
         AvatarFactory.clearCache()
         Glide.get(this).clearMemory()
+        LinkPreview.clearCache()
     }
 
     fun bootstrapDaemon() {
@@ -203,6 +205,7 @@ abstract class JamiApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        LinkPreview.init(this)
 
         // Launch logging if previously set up by user (info is stored in shared preferences).
         // Subscribe on it (first element) to initialize pipe construction.
