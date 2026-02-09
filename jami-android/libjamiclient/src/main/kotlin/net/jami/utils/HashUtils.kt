@@ -25,6 +25,7 @@ object HashUtils {
     private val TAG = HashUtils::class.simpleName!!
     fun md5(s: String) = hash(s, "MD5")!!
     fun sha1(s: String) = hash(s, "SHA-1")!!
+    fun sha256(s: String) = hash(s, "SHA-256")!!
 
     private fun hashRaw(bytes: ByteArray, algo: String) = try {
         MessageDigest.getInstance(algo)
