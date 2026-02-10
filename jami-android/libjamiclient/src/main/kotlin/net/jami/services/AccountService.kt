@@ -421,7 +421,7 @@ class AccountService(
 
     val currentProfileAccountSubject: Observable<Pair<Account, Profile>>
         get() = currentAccountSubject
-            .switchMap { a -> observableAccounts.filter { it.accountId == a.accountId } }
+            .switchMap { a -> getObservableAccount(a) }
             .switchMap { a: Account ->
                 mVCardService.loadProfile(a).map { profile -> Pair(a, profile) }
             }
