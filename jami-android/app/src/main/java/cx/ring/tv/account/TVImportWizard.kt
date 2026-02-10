@@ -18,6 +18,8 @@ package cx.ring.tv.account
 
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.leanback.app.GuidedStepSupportFragment
 import androidx.lifecycle.ViewModelProvider
@@ -28,6 +30,7 @@ import cx.ring.linkdevice.view.ImportSideStep3Fragment
 import cx.ring.linkdevice.view.ImportSideStep3Fragment.OnResultCallback
 import cx.ring.linkdevice.viewmodel.AddDeviceImportState
 import cx.ring.linkdevice.viewmodel.ImportSideViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import net.jami.services.AccountService
@@ -35,6 +38,11 @@ import net.jami.services.AccountService
 @AndroidEntryPoint
 class TVImportWizard : AppCompatActivity(), OnResultCallback {
     private val importSideViewModel by lazy { ViewModelProvider(this)[ImportSideViewModel::class.java] }
+    private var exitDialog: AlertDialog? = null
+    private fun dismissExitDialog() {
+        exitDialog?.dismiss()
+        exitDialog = null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +52,12 @@ class TVImportWizard : AppCompatActivity(), OnResultCallback {
                 .add(android.R.id.content, TVAccountImportStep1Fragment())
                 .commitNow()
         }
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                launchExitAction()
+            }
+        })
 
         lifecycleScope.launch {
             importSideViewModel.uiState.collect {
@@ -95,7 +109,7 @@ class TVImportWizard : AppCompatActivity(), OnResultCallback {
     }
 
     fun onCancel() {
-        //presenter.onCancel()
+        finishImport(1)
     }
 
     private fun showAuthenticating(
@@ -147,12 +161,46 @@ class TVImportWizard : AppCompatActivity(), OnResultCallback {
     }
 
     override fun onExit(returnCode: Int) {
-        Log.w(TAG, "showExit $returnCode")
-        setResult(when(returnCode) {
-            0 -> RESULT_OK
-            else -> RESULT_CANCELED
-        })
-        finish()
+        finishImport(returnCode)
+    }
+
+    private fun finishImport(returnCode: Int = 0) {
+        dismissExitDialog()
+        if (returnCode == 0) {
+            setResult(RESULT_OK)
+        } else {
+            importSideViewModel.onCancel()
+            setResult(RESULT_CANCELED)
+        }
+        super.finish()
+    }
+
+    private fun launchExitAction() {
+        val state = importSideViewModel.uiState.value
+
+        if (state is AddDeviceImportState.Init || state is AddDeviceImportState.TokenAvailable) {
+            finishImport(1)
+            return
+        } else if (state is AddDeviceImportState.Done) {
+            finishImport(if (state.error == null) 0 else 1)
+            return
+        }
+
+        val message = when (state) {
+            is AddDeviceImportState.Connecting,
+            is AddDeviceImportState.Authenticating,
+            is AddDeviceImportState.InProgress -> getString(R.string.link_device_dialog_stop_import_body)
+            else -> getString(R.string.link_device_dialog_stop_import_body)
+        }
+
+        dismissExitDialog()
+        exitDialog = MaterialAlertDialogBuilder(this)
+            .setTitle(getString(R.string.link_device_dialog_stop_title))
+            .setMessage(message)
+                .setPositiveButton(android.R.string.ok) { _, _ -> finishImport(1) }
+            .setNegativeButton(android.R.string.cancel, null)
+            .setOnDismissListener { exitDialog = null }
+            .show()
     }
 
     companion object {
