@@ -98,6 +98,7 @@ class HomeActivity : FragmentActivity() {
     private var cameraPermissionIsRefusedFlag = false // to not ask for permission again if refused
     private var paused = false
     private var renderEffect: RenderEffect? = null
+    private var wizardLaunched = false
 
     private val mErrorCallback = ErrorCallback { error, camera ->
         Log.w(TAG, "Camera error: $error")
@@ -222,10 +223,14 @@ class HomeActivity : FragmentActivity() {
         mDisposableBag.add(
             mAccountService.observableAccountList
                 .observeOn(AndroidSchedulers.mainThread())
-                .firstElement()
                 .subscribe { accounts: List<Account?> ->
                     if (accounts.isEmpty()) {
-                        startActivity(Intent(this, TVAccountWizard::class.java))
+                        if (!wizardLaunched && !isFinishing && !isDestroyed) {
+                            wizardLaunched = true
+                            startActivity(Intent(this, TVAccountWizard::class.java))
+                        }
+                    } else {
+                        wizardLaunched = false
                     }
                 })
     }
