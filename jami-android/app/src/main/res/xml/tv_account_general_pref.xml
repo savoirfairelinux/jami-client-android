@@ -26,6 +26,12 @@
             android:title="@string/account_rendezvous_label"
             android:summary="@string/account_rendezvous_summary"
             android:icon="@drawable/baseline_group_24"/>
+
+        <Preference
+            android:key="Account.delete"
+            android:title="@string/pref_delete_account_title"
+            android:summary="@string/pref_delete_account_summary"
+            android:icon="@drawable/baseline_delete_24" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_category_video">

@@ -18,9 +18,13 @@ package cx.ring.tv.settings
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.leanback.preference.LeanbackSettingsFragmentCompat
 import androidx.preference.*
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.R.style.Theme_MaterialComponents_Dialog
 import cx.ring.R
 import cx.ring.services.SharedPreferencesServiceImpl
 import cx.ring.tv.account.JamiPreferenceFragment
@@ -114,13 +118,43 @@ class TVSettingsFragment : LeanbackSettingsFragmentCompat() {
         }
 
         override fun onPreferenceTreeClick(preference: Preference): Boolean {
+            if (preference.key == PREF_DELETE_ACCOUNT) {
+                showDeleteAccountDialog()
+                return true
+            }
             val key = ConfigKey.fromString(preference.key)
             if (key != null && key.isBool)
                 presenter.twoStatePreferenceChanged(key, (preference as SwitchPreference).isChecked)
             return super.onPreferenceTreeClick(preference)
         }
 
+        private fun showDeleteAccountDialog() {
+            val dialog = MaterialAlertDialogBuilder(requireContext(), Theme_MaterialComponents_Dialog)
+                .setTitle(R.string.account_delete_dialog_title)
+                .setMessage(R.string.account_delete_dialog_message)
+                .setPositiveButton(R.string.menu_delete) { _, _ -> deleteAccount() }
+                .setNegativeButton(android.R.string.cancel, null)
+                .create()
+            dialog.setOnShowListener {
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.apply {
+                    isFocusable = true
+                    isFocusableInTouchMode = true
+                    requestFocus()
+                }
+            }
+            dialog.show()
+        }
+
+        private fun deleteAccount() {
+            presenter.removeAccount()
+            val activity = requireActivity()
+            Log.d("pavan", "settings calling dispatycher")
+            activity.onBackPressedDispatcher.onBackPressed()
+            activity.finish()
+        }
+
         companion object {
+            private const val PREF_DELETE_ACCOUNT = "Account.delete"
             fun newInstance(): PrefsFragment = PrefsFragment()
         }
     }
