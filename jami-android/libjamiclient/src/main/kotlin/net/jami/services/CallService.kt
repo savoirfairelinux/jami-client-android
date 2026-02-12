@@ -43,8 +43,8 @@ abstract class CallService(
 ) {
     private val calls: MutableMap<String, Call> = HashMap()
     private val conferences: MutableMap<String, Conference> = HashMap()
-    private val callSubject = PublishSubject.create<Call>()
-    private val conferenceSubject = PublishSubject.create<Conference>()
+    private val callSubject = PublishSubject.create<Call>().toSerialized()
+    private val conferenceSubject = PublishSubject.create<Conference>().toSerialized()
 
     val confsUpdates: Observable<Conference>
         get() = conferenceSubject
