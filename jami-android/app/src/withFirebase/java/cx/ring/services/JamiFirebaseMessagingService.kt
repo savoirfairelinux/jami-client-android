@@ -25,8 +25,10 @@ import com.google.firebase.messaging.RemoteMessage
 import cx.ring.application.JamiApplication
 import cx.ring.application.JamiApplicationFirebase
 import cx.ring.service.PushForegroundService
+import kotlinx.coroutines.*
 
 class JamiFirebaseMessagingService : FirebaseMessagingService() {
+    private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         try {
@@ -48,8 +50,14 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
         } catch (e: Exception) {
             Log.w(TAG, "Failed to start foreground service for push notification", e)
         }
-        val app = JamiApplication.instance as JamiApplicationFirebase?
-        app?.onMessageReceived(remoteMessage)
+        serviceScope.launch {
+            try {
+                val app = JamiApplication.instance as JamiApplicationFirebase?
+                app?.onMessageReceived(remoteMessage)
+            } catch (e: Exception) {
+                Log.e(TAG, "Error in processing message", e)
+            }
+        }
     }
 
     private fun isAppInForeground(): Boolean {
