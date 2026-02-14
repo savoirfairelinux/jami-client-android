@@ -46,6 +46,30 @@
       },
       "revId": "42caa8e1a7592723fab0f471ade540c9258b459b",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b94965ec_a580b2a5",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Media.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2026-02-14T02:13:43Z",
+      "side": 0,
+      "message": "Reverted the string constant. If not, please advise. Thank you",
+      "parentUuid": "7c268cea_b75e1094",
+      "range": {
+        "startLine": 82,
+        "startChar": 41,
+        "endLine": 82,
+        "endChar": 48
+      },
+      "revId": "42caa8e1a7592723fab0f471ade540c9258b459b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
