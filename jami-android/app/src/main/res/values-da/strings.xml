@@ -75,7 +75,7 @@
   <string name="location_share_about_title">Kort information</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Dig:</string>
-  <string name="action_call_hangup">Læg på</string>
+  <string name="action_call_hangup">Afslut opkald</string>
   <string name="action_call_maximize">Maksimer</string>
   <string name="action_call_minimize">Reducer</string>
   <string name="action_call_mute">Stem</string>
@@ -83,6 +83,7 @@
   <string name="ongoing_call">Igangværende opkald</string>
   <string name="hist_in_call">Indgående opkald af %1$s</string>
   <string name="hist_out_call">Udgående opkald af %1$s</string>
+  <string name="switch_to_video">Aktiver video</string>
   <string name="action_call_decline">Afvis</string>
   <string name="action_call_mic_mute">Sluk mikrofon</string>
   <string name="ab_action_contact_add">Tilføj til kontakter</string>
@@ -322,4 +323,5 @@
   <string name="export_side_step2_confirm">- Det bekræfter jeg.</string>
   <string name="import_side_step1_share">Del</string>
   <string name="import_side_step2_password_import">Importér</string>
+  <!--Accessibility-->
 </resources>

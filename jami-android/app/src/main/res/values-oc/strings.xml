@@ -75,7 +75,7 @@
   <string name="location_share_about_title">Informacion de mapa</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tu:</string>
-  <string name="action_call_hangup">Òc, tanca.</string>
+  <string name="action_call_hangup">Terminar</string>
   <string name="action_call_maximize">Maximizar</string>
   <string name="action_call_minimize">Reduccion</string>
   <string name="action_call_mute">Muç</string>
@@ -84,6 +84,7 @@
   <string name="hist_in_call">Apèl entrant de %1$s</string>
   <string name="hist_out_call">Apèl sortent de %1$s</string>
   <string name="action_call_accept">Acceptar la sonada</string>
+  <string name="switch_to_video">Activar la vidèo</string>
   <string name="action_call_decline">Regetar</string>
   <string name="action_call_mic_mute">Micròfon silenciós</string>
   <string name="ab_action_contact_add">Ajustar als contactes</string>
@@ -321,4 +322,5 @@
   <string name="export_side_step2_confirm">Confirmacion</string>
   <string name="import_side_step1_share">Compartilhar</string>
   <string name="import_side_step2_password_import">Importacion</string>
+  <!--Accessibility-->
 </resources>

@@ -86,6 +86,8 @@ Możesz to zmienić później.</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Zaawansowane</string>
   <string name="account_chat_settings_title">Ustawienia czatu</string>
+  <string name="account_read_receipts_label">Odczytaj potwierdzenia</string>
+  <string name="account_read_receipts_summary">Wyślij i żądaj potwierdzenia dostarczenia wiadomości i do wysłania, gdy wiadomości są dostarczane lub czytane.</string>
   <string name="account_call_settings_title">Ustawienia rozmowy</string>
   <string name="account_dht_public_in_calls_label">Umożliwiaj rozmowy od nieznajomych</string>
   <string name="account_registration_exp_label">Rejestracja Wygasła</string>
@@ -197,10 +199,12 @@ Możesz to zmienić później.</string>
   <string name="account_link_export_button">Połącz nowe urządzenie</string>
   <string name="account_link_show_button">Wyświetlać %d więcej urządzeń połączonych</string>
   <string name="account_link_hide_button">Ukryj urządzenie połączone</string>
+  <string name="account_start_export_button">Wygeneruj kod uwierzytelniania.</string>
   <string name="account_end_export_button">zamknij</string>
   <string name="account_export_title">Konty łączenia z innymi urządzeniami</string>
   <string name="account_connect_server_button">Połączenie z serwerem zarządzania</string>
   <string name="account_connect_button">Połącz</string>
+  <string name="prompt_server">Zarządzaj URL serwera</string>
   <string name="help_credentials_enter">Wprowadź swoje poświadczenia organizacji</string>
   <string name="help_connect_password_enter">Wprowadź swoje hasło organizacji</string>
   <string name="account_connect_prompt_username">Nazwa użytkownika</string>
@@ -247,12 +251,21 @@ Możesz to zmienić później.</string>
   <string name="account_device_name_empty">Nazwa urządzenia nie może być pusta.</string>
   <string name="account_device_this_indicator">To urządzenie</string>
   <string name="account_disabled_indicator">Niepełnosprawni</string>
+  <string name="account_device_id">ID urządzenia</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Ten format nie jest obsługiwany.</string>
+  <string name="account_link_info">W aplikacji Jami na nowym urządzeniu, skanuj kod QR lub wprowadź kod uwierzytelniający ręcznie.</string>
   <string name="account_link_device_title">Połącz nowe urządzenie</string>
+  <string name="account_link_password">To konto jest zaszyfrowane hasłem, wprowadź hasło do generowania kodu uwierzytelniania.</string>
   <string name="account_link_generate_button">Generowanie</string>
+  <string name="account_link_time_valid">Kod uwierzytelniania będzie ważny: %1$s.</string>
+  <string name="account_link_device_info">Wybierz \"Połącz nowe urządzenie\" z innej aplikacji Jami, aby pokazać kod QR lub kod uwierzytelniania.</string>
   <string name="account_generate_export_device">Na drugim urządzeniu</string>
+  <string name="account_generate_export_info">Zainstaluj i uruchom Jami. Wybierz \"Importuj z innego urządzenia\" i skanuj kod QR. Alternatywnie należy ręcznie wprowadzić kod PIN.</string>
   <string name="content_description_qr_generated">Kod QR konta</string>
+  <string name="account_generate_export_invalid">Kod uwierzytelniania nie jest już poprawny.\nWprowadź hasło i wygeneruj inny kod, aby połączyć nowe urządzenie.</string>
+  <string name="account_generate_export_invalid_two">Kod uwierzytelniania nie jest już poprawny.\nGeneruj inny, aby połączyć nowe urządzenie.</string>
+  <string name="help_pin_info">Wymagane, jeśli konto jest zaszyfrowane hasłem.</string>
   <string name="account_link_device_button">Połącz</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Odblokuj konto Jami</string>
@@ -265,5 +278,6 @@ Możesz to zmienić później.</string>
   <string name="account_biometry_enroll_auth_message">Dodaj bezpieczne uwierzytelnianie biometryczne lub uwierzytelnianie urządzenia jako alternatywę dla hasła</string>
   <string name="account_auth_error">Błąd uwierzytelnienia: %1$s</string>
   <string name="account_auth_success">Uwierzytelnienie powiodło się</string>
+  <string name="account_auth_key_error">Wystąpił błąd podczas odszyfrowania klucza konta.</string>
   <string name="account_auth_password">Użyj hasła do konta</string>
 </resources>

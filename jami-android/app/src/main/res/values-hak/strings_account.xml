@@ -93,6 +93,7 @@
   <string name="account_sip_success_message">您已成功注册了您的 SIP 账户。</string>
   <!--TV-->
   <string name="account_tv_advance_settings_header">高级设置</string>
+  <string name="tv_about_credits">致謝</string>
   <string name="account_link_button">从网络连接</string>
   <string name="account_link_archive_button">从备份文件连接</string>
   <string name="account_new_button">建立 Jami 帳號</string>

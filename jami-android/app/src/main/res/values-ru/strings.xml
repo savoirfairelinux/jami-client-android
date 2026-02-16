@@ -4,6 +4,7 @@
   <string name="submit_issue_title">Сообщить о проблеме</string>
   <string name="submit_issue_action_description"><u>Отправить на рассмотрение</u></string>
   <string name="section_license">Лицензия</string>
+  <string name="view_switch_camera">Переключить камеру</string>
   <string name="sponsor_section">Jami – свободное программное обеспечение, разрабатываемое и поддерживаемое</string>
   <string name="copyright_section">Авторское право</string>
   <string name="contribute_section">Помочь проекту</string>
@@ -51,7 +52,6 @@
     <item quantity="other">%d диалогов</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Поиск по имени или беседе...</string>
   <string name="choose_number">Выберите номер</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -94,7 +94,8 @@
   <string name="location_share_about_title">Информация о карте</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Вы:</string>
-  <string name="action_call_hangup">Повесить трубку</string>
+  <string name="action_call_hangup">Завершить вызов</string>
+  <string name="action_call_resume">Возобновить</string>
   <string name="action_call_maximize">Максимизировать</string>
   <string name="action_call_minimize">Уменьшить</string>
   <string name="action_call_mute">Беззвучно </string>
@@ -108,6 +109,7 @@
   <string name="action_call_accept_audio">Принять с аудио</string>
   <string name="action_call_accept_video">Принять с видео</string>
   <string name="action_call_hold_accept">Принять входящий звонок, только аудио и поставить текущий вызов на удержание</string>
+  <string name="switch_to_video">Включить видео</string>
   <string name="action_call_hold_accept_video">Принять входящий звонок с видео и поставить текущий вызов на удержание</string>
   <string name="action_call_end_accept">Принять входящий звонок и завершить текущий вызов</string>
   <string name="action_call_decline">Отклонить</string>
@@ -489,4 +491,6 @@
   <string name="link_device_error_timeout">Время операции истекло.</string>
   <string name="link_device_error_unknown">Произошла ошибка.</string>
   <string name="link_device_error_bad_password">Проверьте учетные данные и повторите попытку.</string>
+  <!--Accessibility-->
+  <string name="step_title_set_password">Установить пароль</string>
 </resources>

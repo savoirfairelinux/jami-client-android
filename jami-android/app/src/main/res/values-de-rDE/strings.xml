@@ -4,6 +4,10 @@
   <string name="submit_issue_title">Problem übermitteln</string>
   <string name="submit_issue_action_description"><u>Neues Problem erstellen</u></string>
   <string name="section_license">Lizenz</string>
+  <string name="switch_conversation">Unterhaltung wechseln</string>
+  <string name="delete_conversation_confirmation">Möchten Sie diese Unterhaltung wirklich löschen?</string>
+  <string name="acc_profile_photo_capture">Foto aufnehmen</string>
+  <string name="view_switch_camera">Kamera wechseln</string>
   <string name="sponsor_section">Jami ist eine kostenlose Software, die entwickelt und unterstützt wird von</string>
   <string name="copyright_section">Urheberrecht</string>
   <string name="contribute_section">Beitragen</string>
@@ -45,7 +49,7 @@
   <!--Home Fragment-->
   <string name="invitation_card_title">Erhaltene Einladungen</string>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Nach Namen oder Unterhaltung suchen…</string>
+  <string name="searchbar_hint">Suchen oder hinzufügen</string>
   <string name="choose_number">Nummer auswählen</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -72,24 +76,30 @@
   <string name="notif_dismiss">Abweisen</string>
   <string name="notif_reply">Antworten</string>
   <string name="notif_sync_title">Gleiche Daten ab ...</string>
+  <string name="notif_channel_reconnect">Hintergrundsynchronisierung</string>
+  <string name="notif_reconnect_title">Jami synchronisiert…</string>
   <string name="notif_location_action_stop">Standort teilen beenden</string>
   <string name="location_share_action_start">Teilen starten</string>
   <string name="location_share_action_stop">Teilen beenden</string>
   <string name="location_share_about_title">Karteninformation</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Du:</string>
-  <string name="action_call_hangup">Auflegen</string>
+  <string name="action_call_hangup">Anruf beenden</string>
+  <string name="action_call_resume">Weiter</string>
   <string name="action_call_maximize">Maximieren</string>
   <string name="action_call_minimize">Reduzieren</string>
   <string name="action_call_mute">Stummschalten</string>
   <string name="action_call_unmute">Stummschaltung aufheben</string>
   <string name="ongoing_call">Laufender Anruf</string>
   <string name="call_duration">Dauerte %s</string>
+  <string name="call_on_hold">Anruf wird gehalten</string>
   <string name="start_error_title">Jami kann nicht gestartet werden</string>
   <string name="action_call_accept">Anruf annehmen</string>
   <string name="action_call_accept_audio">Mit Audio antworten</string>
   <string name="action_call_accept_video">Mit Video antworten</string>
   <string name="action_call_hold_accept">Eingehende Anrufe nur mit Audio annehmen und aktuellen Anruf halten</string>
+  <string name="switch_to_audio">Video deaktivieren</string>
+  <string name="switch_to_video">Video aktivieren</string>
   <string name="action_call_hold_accept_video">Eingehenden Anrufen mit Video annehmen und aktuellen Anruf halten</string>
   <string name="action_call_end_accept">Eingehenden Anruf annehmen und aktuellen Anruf beenden</string>
   <string name="action_call_decline">Ablehnen</string>
@@ -216,6 +226,7 @@
   <string name="file_download">Herunterladen</string>
   <string name="no_space_left_on_device">Auf dem Gerät ist kein Speicherplatz verfügbar.</string>
   <string name="menu_message_reply">Antworten</string>
+  <string name="menu_message_cancel_reply">Antwort abbrechen</string>
   <!--Bottom Navigation-->
   <!--TV-->
   <string name="tv_audio_play">Wiedergeben</string>
@@ -308,4 +319,10 @@
   <string name="link_device_error_canceled">Der Vorgang wurde vom Benutzer abgebrochen.</string>
   <string name="link_device_error_unknown">Es ist ein Fehler aufgetreten.</string>
   <string name="link_device_error_bad_password">Bitte überprüfen Sie die Anmeldeinformationen und versuchen Sie es erneut.</string>
+  <string name="test_push">Test-Push</string>
+  <!--Accessibility-->
+  <string name="step_title_create_username">Benutzernamen erstellen</string>
+  <string name="step_title_set_password">Passwort festlegen</string>
+  <string name="step_title_create_profile">Profil erstellen</string>
+  <string name="step_format">Schritt %1$d von %2$d: %3$s </string>
 </resources>

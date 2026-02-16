@@ -78,6 +78,7 @@
   <string name="account_share_body">用 \"%1$s\" 在 Jami 分布式通信平台上与我联系：%2$s</string>
   <string name="account_share_body_with_username">使用 \"%1$s\"或我的公开用户名 \"%2$s\" 在 Jami 分布式通讯平台上联系我：%3$s</string>
   <string name="account_contact_me">在 Jami 上联系我！</string>
+  <string name="sip_account">SIP 賬戶</string>
   <string name="account_migration_message_dialog">您的账户需要被更新。您想前往账户管理界面进行该操作吗？</string>
   <string name="account_cannot_be_found_title">无法找到账户</string>
   <string name="account_cannot_be_found_message">在 Jami 网络上找不到账户。请确保它是从现有设备上的 Jami 导出的，并且提供的凭据是正确的。</string>
@@ -91,6 +92,7 @@
   <string name="account_sip_success_message">您已成功注册了您的 SIP 账户。</string>
   <!--TV-->
   <string name="account_tv_advance_settings_header">高级设置</string>
+  <string name="tv_about_credits">致謝</string>
   <string name="account_link_button">从网络连接</string>
   <string name="account_link_archive_button">从备份文件连接</string>
   <string name="account_new_button">建立 Jami 帳號</string>

@@ -71,7 +71,7 @@
   <string name="location_share_about_title">خريطة المعلومات</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">أنت:</string>
-  <string name="action_call_hangup">إنهاء</string>
+  <string name="action_call_hangup">إنهاء المكالمة</string>
   <string name="action_call_maximize">تكبير</string>
   <string name="action_call_minimize">تقليص</string>
   <string name="action_call_mute">كتم الصوت</string>
@@ -79,6 +79,7 @@
   <string name="ongoing_call">مكالمة جارية</string>
   <string name="hist_in_call">مكالمة واردة من %1$s</string>
   <string name="hist_out_call">مكالمة صادرة من %1$s</string>
+  <string name="switch_to_video">فعل الفيديو</string>
   <string name="action_call_decline">رفض</string>
   <string name="action_call_mic_mute">كتم ميكروفون</string>
   <string name="ab_action_contact_add">إضافة إلى جهات الاتصال</string>
@@ -318,4 +319,6 @@
   <string name="export_side_step2_confirm">تأكيد</string>
   <string name="import_side_step1_share">مشاركة</string>
   <string name="import_side_step2_password_import">استيراد</string>
+  <!--Accessibility-->
+  <string name="step_title_set_password">تعيين كلمة المرور</string>
 </resources>
