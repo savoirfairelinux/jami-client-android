@@ -515,9 +515,10 @@ class CameraService internal constructor(c: Context) {
     }
 
     fun requestKeyFrame(camId: String) {
-        Log.w(TAG, "requestKeyFrame() $camId")
+        val cam = camId.substringAfter("camera://", missingDelimiterValue = camId)
+        Log.w(TAG, "requestKeyFrame() $cam")
         try {
-            mParams[camId]?.mediaCodec?.setParameters(Bundle().apply {
+            mParams[cam]?.mediaCodec?.setParameters(Bundle().apply {
                 putInt(MediaCodec.PARAMETER_KEY_REQUEST_SYNC_FRAME, 0)
             })
         } catch (e: IllegalStateException) {
