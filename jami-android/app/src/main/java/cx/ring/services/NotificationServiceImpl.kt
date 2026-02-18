@@ -24,6 +24,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Icon
 import android.media.AudioAttributes
+import android.media.AudioManager
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
@@ -183,6 +184,17 @@ class NotificationServiceImpl(
                                         .putExtra(CallPresenter.KEY_ACCEPT_OPTION, CallPresenter.ACCEPT_HOLD)
                                         .putExtra(CallFragment.KEY_HAS_VIDEO, hasVideo), ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)))
                                     .setIsVideo(hasVideo))
+                        try {
+                            val audioManager =
+                                mContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+                            val ringerMode = audioManager.ringerMode
+                            val shouldMute = (ringerMode == AudioManager.RINGER_MODE_VIBRATE
+                                || ringerMode == AudioManager.RINGER_MODE_SILENT)
+
+                            mCallService.muteRingTone(shouldMute)
+                        } catch (e: Exception) {
+                            Log.w(TAG, "Error muting ringtone", e)
+                        }
                     } else {
                         messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS)
                             .setContentTitle(mContext.getString(R.string.notif_outgoing_call_title, contact.displayName))
