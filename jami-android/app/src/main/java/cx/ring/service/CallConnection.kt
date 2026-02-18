@@ -28,6 +28,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
+import net.jami.daemon.JamiService
 import net.jami.model.Call.CallStatus
 import net.jami.model.Call
 
@@ -134,6 +135,7 @@ class CallConnection(
 
     override fun onSilence() {
         Log.w(TAG, "onSilence")
+        service.callService.muteRingTone(true)
     }
 
     override fun onDisconnect() {
