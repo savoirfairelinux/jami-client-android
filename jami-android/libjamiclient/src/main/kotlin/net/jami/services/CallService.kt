@@ -603,6 +603,7 @@ abstract class CallService(
         val call = addCall(accountId, callId, Uri.fromStringWithName(from).first, Direction.INCOMING, medias)
         callSubject.onNext(call)
         updateConnectionCount()
+        muteRingTone(false)
     }
 
     fun mediaChangeRequested(accountId: String, callId: String, mediaList: VectMap) {
