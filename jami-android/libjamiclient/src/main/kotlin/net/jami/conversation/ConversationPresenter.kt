@@ -358,11 +358,6 @@ class ConversationPresenter @Inject constructor(
         view?.startReplyTo(interaction)
     }
 
-    fun cancelMessage(message: Interaction) {
-        val conversation = mConversation ?: return
-        conversationFacade.cancelMessage(conversation, message)
-    }
-
     private fun sendTrustRequest() {
         val conversation = mConversation ?: return
         val contact = conversation.contact ?: return

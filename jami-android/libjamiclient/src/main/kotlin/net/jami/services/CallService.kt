@@ -489,12 +489,6 @@ abstract class CallService(
             }, flags)
         }.subscribeOn(Schedulers.from(mExecutor))
 
-    fun cancelMessage(accountId: String, messageID: Long): Completable =
-        Completable.fromAction {
-            Log.i(TAG, "CancelMessage() running…   Account ID:  $accountId Message ID  $messageID")
-            JamiService.cancelMessage(accountId, messageID)
-        }.subscribeOn(Schedulers.from(mExecutor))
-
     private fun addCall(accountId: String, callId: String, from: Uri, direction: Direction, media: List<Media>, conversationUri: Uri? = null): Call =
         synchronized(calls) {
             calls.getOrPut(callId) {

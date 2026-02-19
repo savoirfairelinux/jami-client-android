@@ -325,7 +325,6 @@ class TvConversationAdapter(
             R.id.conv_action_download -> presenter.saveFile(interaction)
             R.id.conv_action_open -> presenter.openFile(interaction)
             R.id.conv_action_delete -> presenter.deleteConversationItem(interaction)
-            R.id.conv_action_cancel_message -> presenter.cancelMessage(interaction)
         }
         return true
     }

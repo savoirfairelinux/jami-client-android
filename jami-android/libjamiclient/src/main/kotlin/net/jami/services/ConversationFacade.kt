@@ -221,15 +221,6 @@ class ConversationFacade(
         }
     }
 
-    fun cancelMessage(conversation: Conversation, message: Interaction) {
-        val accountId = message.account ?: return
-        if (conversation.isSwarm) return
-        mDisposableBag.add(
-            mCallService.cancelMessage(accountId, message.id.toLong()).subscribeOn(Schedulers.io())
-                .subscribe({ conversation.removeInteraction(message) }
-                ) { e: Throwable -> Log.e(TAG, "Can't cancel message sending", e) })
-    }
-
     /**
      * Loads the smartlist from cache or database
      *
