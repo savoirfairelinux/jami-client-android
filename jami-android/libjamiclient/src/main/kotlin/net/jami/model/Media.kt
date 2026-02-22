@@ -1,19 +1,20 @@
 /*
- *  Copyright (C) 2004-2025 Savoir-faire Linux Inc.
+ * Copyright (C) 2004-2026 Savoir-faire Linux Inc.
  *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program. If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
+
 package net.jami.model
 
 import net.jami.daemon.StringMap
@@ -22,7 +23,7 @@ data class Media(val source: String?,
                  val mediaType: MediaType?,
                  val label: String?,
                  val isEnabled: Boolean,
-                 val isOnHold: Boolean,
+                 val isHold: Boolean,
                  val isMuted: Boolean
 ) {
     constructor(mediaMap: Map<String, String>) : this(
@@ -30,7 +31,7 @@ data class Media(val source: String?,
             mediaType = MediaType.parseMediaType(mediaMap[MEDIA_TYPE_KEY]!!),
             label = mediaMap[LABEL_KEY],
             isEnabled = java.lang.Boolean.parseBoolean(mediaMap[ENABLED_KEY]),
-            isOnHold = java.lang.Boolean.parseBoolean(mediaMap[ON_HOLD_KEY]),
+            isHold = java.lang.Boolean.parseBoolean(mediaMap[ON_HOLD_KEY]),
             isMuted = java.lang.Boolean.parseBoolean(mediaMap[MUTED_KEY])
     )
 
@@ -39,7 +40,7 @@ data class Media(val source: String?,
             mediaType = type,
             label = label,
             isEnabled = true,
-            isOnHold = false,
+            isHold = false,
             isMuted = false
     )
 
@@ -69,7 +70,7 @@ data class Media(val source: String?,
         map[MEDIA_TYPE_KEY] = MediaType.getMediaTypeString(mediaType)
         if (label != null) map[LABEL_KEY] = label
         map[ENABLED_KEY] = java.lang.Boolean.toString(isEnabled)
-        map[ON_HOLD_KEY] = java.lang.Boolean.toString(isOnHold)
+        map[ON_HOLD_KEY] = java.lang.Boolean.toString(isHold)
         map[MUTED_KEY] = java.lang.Boolean.toString(isMuted)
         return map
     }
@@ -79,7 +80,7 @@ data class Media(val source: String?,
         const val MEDIA_TYPE_KEY = "MEDIA_TYPE"
         private const val LABEL_KEY = "LABEL"
         private const val ENABLED_KEY = "ENABLED"
-        private const val ON_HOLD_KEY = "ON_HOLD"
+        private const val ON_HOLD_KEY = "HOLD"
         const val MUTED_KEY = "MUTED"
         val DEFAULT_AUDIO = Media(MediaType.MEDIA_TYPE_AUDIO, "audio_0")
         val DEFAULT_VIDEO = Media(MediaType.MEDIA_TYPE_VIDEO, "video_0")
