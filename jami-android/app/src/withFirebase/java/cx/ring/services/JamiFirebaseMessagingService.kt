@@ -18,6 +18,8 @@ package cx.ring.services
 
 import android.app.ActivityManager
 import android.content.Intent
+import android.os.Handler
+import android.os.Looper
 import android.os.PowerManager
 import android.util.Log
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -45,7 +47,14 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
             val isForeground = isAppInForeground()
             val shouldStartService = !isForeground && remoteMessage.priority == RemoteMessage.PRIORITY_HIGH
             if (shouldStartService) {
-                startForegroundService(Intent(this, PushForegroundService::class.java))
+                Handler(Looper.getMainLooper()).post {
+                    try {
+                        val intent = Intent(this, PushForegroundService::class.java)
+                        startForegroundService(intent)
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Failed to start service on main thread", e)
+                    }
+                }
             }
         } catch (e: Exception) {
             Log.w(TAG, "Failed to start foreground service for push notification", e)
