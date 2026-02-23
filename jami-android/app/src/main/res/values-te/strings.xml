@@ -75,7 +75,7 @@
   <string name="location_share_about_title">మ్యాప్ సమాచారం</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">మీరు:</string>
-  <string name="action_call_hangup">మూసివేయండి</string>
+  <string name="action_call_hangup">కాల్‌ను ముగించు</string>
   <string name="action_call_maximize">గరిష్టంగా</string>
   <string name="action_call_minimize">తగ్గించు</string>
   <string name="action_call_mute">మ్యూట్</string>
@@ -83,6 +83,7 @@
   <string name="ongoing_call">కొనసాగుతున్న కాల్</string>
   <string name="hist_in_call">%1$s లో ఇన్కమింగ్ కాల్</string>
   <string name="hist_out_call">%1$s యొక్క అవుట్గోయింగ్ కాల్</string>
+  <string name="switch_to_video">వీడియోను ప్రారంభించండి</string>
   <string name="action_call_decline">తగ్గుదల</string>
   <string name="action_call_mic_mute">మ్యూట్ మైక్రోఫోన్</string>
   <string name="ab_action_contact_add">పరిచయాలకు జోడించండి</string>
@@ -319,4 +320,5 @@
   <string name="export_side_step2_confirm">ధృవీకరించు</string>
   <string name="import_side_step1_share">భాగస్వామ్యం</string>
   <string name="import_side_step2_password_import">దిగుమతి</string>
+  <!--Accessibility-->
 </resources>

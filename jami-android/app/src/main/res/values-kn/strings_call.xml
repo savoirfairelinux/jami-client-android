@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-Copyright (C) 2004-2025 Savoir-faire Linux Inc.
+Copyright (C) 2004-2026 Savoir-faire Linux Inc.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -14,6 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 -->
+
 <resources>
     <string name="call_error_no_microphone">ಕರೆ ರದ್ದುಗೊಳಿಸಲಾಗಿದೆ. ಮೈಕ್ರೊಫೋನ್ ಪತ್ತೆಯಾಗಿಲ್ಲ.</string>
     <string name="call_error_no_camera_no_microphone">ಕರೆ ರದ್ದುಗೊಳಿಸಲಾಗಿದೆ. ಯಾವುದೇ ಕ್ಯಾಮರಾ ಅಥವಾ ಮೈಕ್ರೊಫೋನ್ ಪತ್ತೆಯಾಗಿಲ್ಲ.</string>
@@ -27,7 +28,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="call_human_state_busy">ಕಾರ್ಯನಿರತ</string>
     <string name="call_human_state_failure">ವಿಫಲ</string>
     <string name="call_human_state_hold">ಕಾಯಿರಿ</string>
-    <string name="call_human_state_unhold">ನಿಂತುಕೊಳ್ಳಿ</string>
     <string name="call_human_state_over">ಮುಗಿದಿದೆ</string>
     <!-- Conferences -->
     <string name="call_moderator">ಸಂರಚಕ</string>

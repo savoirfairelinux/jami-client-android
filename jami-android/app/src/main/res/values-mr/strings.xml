@@ -75,7 +75,7 @@
   <string name="location_share_about_title">नकाशा माहिती</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">तू:</string>
-  <string name="action_call_hangup">बंद करा</string>
+  <string name="action_call_hangup">कॉल समाप्त करा</string>
   <string name="action_call_maximize">जास्तीत जास्त</string>
   <string name="action_call_minimize">कमी करा</string>
   <string name="action_call_mute">गप्प</string>
@@ -83,6 +83,7 @@
   <string name="ongoing_call">चालू कॉल</string>
   <string name="hist_in_call">%1$s चे इनकमिंग कॉल</string>
   <string name="hist_out_call">%1$s च्या आउटगोइंग कॉल</string>
+  <string name="switch_to_video">व्हिडिओ सक्षम करा</string>
   <string name="action_call_decline">घट</string>
   <string name="action_call_mic_mute">गप्प मायक्रोफोन</string>
   <string name="ab_action_contact_add">संपर्क जोडणे</string>
@@ -319,4 +320,5 @@
   <string name="export_side_step2_confirm">पुष्टी करा</string>
   <string name="import_side_step1_share">शेअर करा</string>
   <string name="import_side_step2_password_import">आयात</string>
+  <!--Accessibility-->
 </resources>

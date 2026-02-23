@@ -22,6 +22,8 @@
   <string name="account_delete_dialog_message">此操作不可撤销。</string>
   <!--AccountManagementFragment-->
   <string name="normal_devices_titles">关联设备</string>
+  <string name="account_device_revoke">注销设备</string>
+  <string name="account_device_revocation_success">设备已注销！</string>
   <string name="account_device_revocation_error_title">无法注销设备</string>
   <string name="account_device_revocation_wrong_password">密码错误</string>
   <string name="account_password_change_wait_message">更改账户密码</string>
@@ -33,6 +35,7 @@
   <string name="account_bootstrap_label">初始化</string>
   <string name="account_name_server_label">名称服务器</string>
   <string name="account_password_label">密码</string>
+  <string name="account_autoanswer_label">自动回复</string>
   <string name="account_proxy_field">代理服务器</string>
   <!--Extension Details-->
   <string name="account_preferences_extension_tab">扩展</string>
@@ -46,9 +49,12 @@
   <string name="account_call_settings_title">通话设置</string>
   <string name="account_stun_enable_label">使用 STUN</string>
   <string name="account_stun_server_label">Stun服务器</string>
+  <string name="account_accept_files_max_size">允许自动接收的文件的最大大小</string>
+  <string name="size_mb">%1$d MB</string>
   <string name="account_turn_username_label">TURN 用户名</string>
   <string name="account_turn_password_label">TURN 密码</string>
   <string name="account_connectivity_label">点到点连接</string>
+  <string name="disabled">停用</string>
   <string name="default_value">默认</string>
   <string name="account_proxy_list_enable_label">使用DHT代理列表</string>
   <string name="account_proxy_server_used">使用：%1$s</string>
@@ -74,10 +80,12 @@
   <string name="error_passwords_not_equals">密码不匹配。</string>
   <string name="export_account_wait_message">导出账户信息</string>
   <string name="account_export_file">备份账户</string>
+  <string name="account_export_file_summary">将您的账户备份到设备上以便稍后恢复</string>
   <string name="account_export_end_decryption_message">使用该密码无法解锁您的账户。</string>
   <string name="account_share_body">用 \"%1$s\" 在 Jami 分布式通信平台上与我联系：%2$s</string>
   <string name="account_share_body_with_username">使用 \"%1$s\"或我的公开用户名 \"%2$s\" 在 Jami 分布式通讯平台上联系我：%3$s</string>
   <string name="account_contact_me">在 Jami 上联系我！</string>
+  <string name="sip_account">SIP 賬戶</string>
   <string name="account_migration_message_dialog">您的账户需要被更新。您想前往账户管理界面进行该操作吗？</string>
   <string name="account_cannot_be_found_title">无法找到账户</string>
   <string name="account_cannot_be_found_message">在 Jami 网络上找不到账户。请确保它是从现有设备上的 Jami 导出的，并且提供的凭据是正确的。</string>
@@ -91,6 +99,7 @@
   <string name="account_sip_success_message">您已成功注册了您的 SIP 账户。</string>
   <!--TV-->
   <string name="account_tv_advance_settings_header">高级设置</string>
+  <string name="tv_about_credits">致謝</string>
   <string name="account_link_button">从网络连接</string>
   <string name="account_link_archive_button">从备份文件连接</string>
   <string name="account_new_button">建立 Jami 帳號</string>
@@ -115,7 +124,9 @@
   <!--Edit profile-->
   <string name="account_edit_profile">修改您的账户资料</string>
   <!--Devices-->
+  <string name="revoke_device_title">注销设备</string>
   <string name="revoke_device_message">您确定要注销设备%1$s吗？</string>
+  <string name="revoke_device_wait_message">正在注销设备</string>
   <string name="rename_device_message">输入设备名称以在Jami帐户中标识此设备</string>
   <string name="account_device_name_empty">设备名不可为空</string>
   <string name="account_disabled_indicator">已停用</string>

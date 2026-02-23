@@ -55,6 +55,7 @@
   <string name="account_upnp_label">Aktivér UPnP</string>
   <string name="account_proxy_field">Stedfortræder</string>
   <!--Extension Details-->
+  <string name="account_preferences_extension_tab">Udvidelser</string>
   <!--Audio Details-->
   <string name="account_audio_label">Lyd</string>
   <string name="account_preferences_media_tab">Medier</string>
@@ -161,6 +162,7 @@
   <string name="account_enter_username">Indtast brugernavn</string>
   <!--Name registration-->
   <string name="error_username_empty">Indtast et brugernavn</string>
+  <string name="username_available">Brugernavnet er tilgængeligt.</string>
   <string name="register_name">Registrer navn</string>
   <string name="registered_username">Registreret brugernavn</string>
   <string name="register_username">Registrer offentligt brugernavn</string>

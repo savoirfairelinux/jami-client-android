@@ -1,12 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="version_section">අනුවාදය</string>
   <!--About dialog-->
   <!--RingActivity-->
   <!--AB menus-->
   <!--Sections-->
-  <string name="menu_item_settings">සැකසුම්</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
   <!--Home Fragment-->
@@ -15,11 +13,10 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <!--Call Fragment-->
-  <string name="action_call_hangup">ඇමතුම අවසන් කරන්න</string>
-  <string name="new_group">නව සමූහය තනන්න</string>
+  <string name="action_call_hangup">Avslutt samtale</string>
+  <string name="action_call_resume">Gjenopta</string>
+  <string name="switch_to_video">Aktiver video</string>
   <!--Text messages-->
-  <string name="time_just_now">මේ දැන්</string>
-  <string name="send_file">ගොනුව යවන්න</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
   <!--Read contacts permission-->
@@ -27,6 +24,7 @@
   <!--QRCode Scan-->
   <!--Settings-->
   <!--Conversation-->
+  <string name="remove_conversation">Slett samtale</string>
   <!--Contacts-->
   <!--Account summary-->
   <!--Share fragment-->
@@ -34,20 +32,16 @@
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
-  <string name="file_transfer_status_canceled">අවලංගු කළා</string>
   <!--Bottom Navigation-->
   <!--TV-->
   <!--Wizard-->
   <!--Bottom sheet-->
-  <string name="bottomSheet_hangup_btn">ඇමතුම අවසන් කරන්න</string>
   <!--Swarm Details-->
-  <string name="tab_settings">සැකසුම්</string>
   <!--JamiId-->
   <!--WelcomeJami-->
   <!--Conversation details-->
   <!--Donation-->
-  <string name="donation_card_not_now">දැන් නොවේ</string>
   <!--Extension-->
-  <string name="export_side_step2_cancel">අවලංගු කරන්න</string>
   <!--Accessibility-->
+  <string name="step_title_set_password">Lagre passord</string>
 </resources>

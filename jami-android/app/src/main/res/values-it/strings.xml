@@ -4,6 +4,9 @@
   <string name="submit_issue_title">Segnala un problema</string>
   <string name="submit_issue_action_description"><u>Crea un nuovo problema</u></string>
   <string name="section_license">Licenza</string>
+  <string name="switch_conversation">Cambia conversazione</string>
+  <string name="delete_conversation_confirmation">Sei sicuro di voler cancellare questa conversazione?</string>
+  <string name="view_switch_camera">Cambia fotocamera</string>
   <string name="sponsor_section">Jami è un software libero sviluppato e sostenuto da</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribuisci</string>
@@ -50,7 +53,7 @@
     <item quantity="other">%d Conversazioni</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Cerca nome o conversazione…</string>
+  <string name="searchbar_hint">Cerca o aggiungi</string>
   <string name="choose_number">Scegli un numero</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -93,7 +96,8 @@
   <string name="location_share_about_title">Informazioni mappa</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tu:</string>
-  <string name="action_call_hangup">Chiudi</string>
+  <string name="action_call_hangup">Termina chiamata</string>
+  <string name="action_call_resume">Riprendi</string>
   <string name="action_call_maximize">Massimizza</string>
   <string name="action_call_minimize">Riduci</string>
   <string name="action_call_mute">Disattiva</string>
@@ -102,11 +106,14 @@
   <string name="hist_in_call">Chiamata in arrivo di %1$s</string>
   <string name="hist_out_call">Chiamata in uscita %1$s</string>
   <string name="call_duration">Durata %s</string>
+  <string name="call_on_hold">La chiamata è in attesa</string>
   <string name="start_error_title">Impossibile avviare Jami</string>
   <string name="action_call_accept">Accetta la chiamata</string>
   <string name="action_call_accept_audio">Rispondi con audio</string>
   <string name="action_call_accept_video">Rispondi con video</string>
   <string name="action_call_hold_accept">Metti in attesa e rispondi solo con l\'audio</string>
+  <string name="switch_to_audio">Disattiva video</string>
+  <string name="switch_to_video">Attiva Video</string>
   <string name="action_call_hold_accept_video">Metti in attesa e rispondi solo con video</string>
   <string name="action_call_end_accept">Rispondi e termina la chiamata in corso</string>
   <string name="action_call_decline">Rifiuta</string>
@@ -345,6 +352,7 @@
   <string name="menu_message_delete">Elimina messaggio</string>
   <string name="menu_message_cancel">Annulla messaggio</string>
   <string name="menu_message_reply">Rispondi</string>
+  <string name="menu_message_cancel_reply">Annulla risposta</string>
   <string name="menu_delete">Elimina</string>
   <string name="pref_darkTheme_title">Sfondo scuro</string>
   <string name="pref_darkTheme_summary">Attiva sempre lo sfondo scuro invece di quello del sistema</string>
@@ -507,4 +515,10 @@
   <string name="link_device_error_canceled">L\'operazione è stata annullata dal utente.</string>
   <string name="link_device_error_unknown">C\'è stato un errore.</string>
   <string name="link_device_error_bad_password">Controllare le credenziali e riprovare.</string>
+  <string name="test_push">Notifiche di prova</string>
+  <!--Accessibility-->
+  <string name="step_title_create_username">Crea nome utente</string>
+  <string name="step_title_set_password">Imposta password</string>
+  <string name="step_title_create_profile">Crea profilo</string>
+  <string name="step_format">Passo %1$d di %2$d: %3$s</string>
 </resources>

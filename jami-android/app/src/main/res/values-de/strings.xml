@@ -4,6 +4,10 @@
   <string name="submit_issue_title">Problem übermitteln</string>
   <string name="submit_issue_action_description"><u>Neues Problem erstellen</u></string>
   <string name="section_license">Lizenz</string>
+  <string name="switch_conversation">Unterhaltung wechseln</string>
+  <string name="delete_conversation_confirmation">Möchten Sie diese Unterhaltung wirklich löschen?</string>
+  <string name="acc_profile_photo_capture">Foto aufnehmen</string>
+  <string name="view_switch_camera">Kamera wechseln</string>
   <string name="sponsor_section">Jami ist eine kostenlose Software, die entwickelt und unterstützt wird von</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Beitragen</string>
@@ -49,7 +53,7 @@
     <item quantity="other">%d Unterhaltungen</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Nach Namen oder Unterhaltung suchen…</string>
+  <string name="searchbar_hint">Suchen oder hinzufügen</string>
   <string name="choose_number">Nummer auswählen</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -83,6 +87,8 @@
   <string name="notif_incoming_picture">Bild von %1$s</string>
   <string name="notif_sync_title">Daten synchronisieren...</string>
   <string name="notif_location_title">Standort mit %1$s teilen</string>
+  <string name="notif_channel_reconnect">Hintergrundsynchronisierung</string>
+  <string name="notif_reconnect_title">Jami synchronisiert…</string>
   <string name="location_share_contact">%1$s teilt den Standort mit dir</string>
   <string name="notif_location_multi_title">Geteilter Standort mit %1$d Kontakten</string>
   <string name="notif_location_remaining">%1$d verbleibende Minuten</string>
@@ -92,7 +98,8 @@
   <string name="location_share_about_title">Informationen zur Karte</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Sie:</string>
-  <string name="action_call_hangup">Auflegen</string>
+  <string name="action_call_hangup">Anruf beenden</string>
+  <string name="action_call_resume">Weiter</string>
   <string name="action_call_maximize">Maximieren</string>
   <string name="action_call_minimize">Reduzieren</string>
   <string name="action_call_mute">Stummschalten</string>
@@ -101,11 +108,14 @@
   <string name="hist_in_call">Eingehender Anruf von %1$s</string>
   <string name="hist_out_call">Ausgehender Anruf von %1$s</string>
   <string name="call_duration">Dauerte %s</string>
+  <string name="call_on_hold">Anruf wird gehalten</string>
   <string name="start_error_title">Jami kann nicht gestartet werden</string>
   <string name="action_call_accept">Anruf annehmen</string>
   <string name="action_call_accept_audio">Mit Audio annehmen</string>
   <string name="action_call_accept_video">Mit Video annehmen</string>
   <string name="action_call_hold_accept">Eingehenden Anruf nur mit Audio annehmen und aktuellen Anruf halten</string>
+  <string name="switch_to_audio">Video deaktivieren</string>
+  <string name="switch_to_video">Video aktivieren</string>
   <string name="action_call_hold_accept_video">Eingehenden Anruf mit Video annehmen und aktuellen Anruf halten</string>
   <string name="action_call_end_accept">Eingehenden Anruf annehmen und aktuellen Anruf beenden</string>
   <string name="action_call_decline">Ablehnen</string>
@@ -344,6 +354,7 @@
   <string name="menu_message_delete">Nachricht löschen</string>
   <string name="menu_message_cancel">Nachricht abbrechen</string>
   <string name="menu_message_reply">Antworten</string>
+  <string name="menu_message_cancel_reply">Antwort abbrechen</string>
   <string name="menu_delete">Löschen</string>
   <string name="pref_darkTheme_title">Dunkles Design</string>
   <string name="pref_darkTheme_summary">Immer das dunkle Design aktivieren, anstatt das Systemverhalten zu verwenden</string>
@@ -506,4 +517,10 @@
   <string name="link_device_error_canceled">Der Vorgang wurde vom Benutzer abgebrochen.</string>
   <string name="link_device_error_unknown">Es ist ein Fehler aufgetreten.</string>
   <string name="link_device_error_bad_password">Bitte überprüfen Sie die Anmeldeinformationen und versuchen Sie es erneut.</string>
+  <string name="test_push">Test-Push</string>
+  <!--Accessibility-->
+  <string name="step_title_create_username">Benutzernamen erstellen</string>
+  <string name="step_title_set_password">Passwort festlegen</string>
+  <string name="step_title_create_profile">Profil erstellen</string>
+  <string name="step_format">Schritt %1$d von %2$d: %3$s </string>
 </resources>

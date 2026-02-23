@@ -75,7 +75,7 @@
   <string name="location_share_about_title">Información del mapa</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">El so padre foi un fíu de la familia de los sos padres.</string>
-  <string name="action_call_hangup">Enfermedaes.</string>
+  <string name="action_call_hangup">La llamada final</string>
   <string name="action_call_maximize">La mayor parte de los casos</string>
   <string name="action_call_minimize">Reducir</string>
   <string name="action_call_mute">El so nome ye \"Mud\".</string>
@@ -83,6 +83,7 @@
   <string name="ongoing_call">L\'español en cursu</string>
   <string name="hist_in_call">L\' llamada entrante del %1$s</string>
   <string name="hist_out_call">L\' llamada saliente del %1$s</string>
+  <string name="switch_to_video">Activu video</string>
   <string name="action_call_decline">El declive</string>
   <string name="action_call_mic_mute">Micrófonos silenciosos</string>
   <string name="ab_action_contact_add">Aponer a los contactos</string>
@@ -318,4 +319,5 @@
   <string name="export_side_step2_confirm">Confirmar</string>
   <string name="import_side_step1_share">Compartir</string>
   <string name="import_side_step2_password_import">Importación</string>
+  <!--Accessibility-->
 </resources>

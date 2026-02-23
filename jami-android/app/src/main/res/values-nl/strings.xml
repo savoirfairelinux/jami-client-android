@@ -1,10 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">probleem indienen</string>
+  <string name="submit_issue_action_description"><u>nieuw probleem aanmaken</u></string>
   <string name="section_license">Licentie</string>
+  <string name="switch_conversation">Gesprek wisselen</string>
+  <string name="delete_conversation_confirmation">Weet u zeker dat u dit gesprek wilt verwijderen?</string>
+  <string name="sponsor_section">Jami is vrije software ontwikkeld en ondersteund door</string>
   <string name="copyright_section">Auteursrecht</string>
   <string name="contribute_section">Bijdragen</string>
   <string name="version_section">Versie</string>
+  <string name="no_browser_app_installed">Geen webbrowserapp gevonden, installeer er een om deze pagina te bekijken</string>
   <string name="website_chooser_title">Website bekijken met…</string>
   <string name="license">Deze software wordt ‘als zodanig’ aangeboden zonder enige garantie. Bekijk voor meer informatie de <u>GNU General Public License versie 3 of later</u></string>
   <string name="description">Jami is vrije software voor universele communicatie, die de vrijheden en privacy van haar gebruikers eerbiedigt.</string>
@@ -13,7 +19,12 @@
   <string name="call_service_description">Deze dienst is vereist om uw oproepen op de voorgrond te blijven uitvoeren. Ze draait enkel tijdens oproepen.</string>
   <string name="data_transfer_service_description">Deze dienst is vereist om blijvende meldingen te kunnen tonen tijdens bestandsoverdrachten. Ze draait enkel tijdens bestandsoverdrachten.</string>
   <!--About dialog-->
+  <string name="thank_note">We willen onze medewerkers bedanken, wier inspanningen gedurende vele jaren deze software hebben gemaakt tot wat hij nu is.</string>
+  <string name="developers">Ontwikkelaars</string>
   <string name="media">Media</string>
+  <string name="community_management">Gemeenschapsbeheer</string>
+  <string name="special_thanks">Met uitzonderlijke dank aan</string>
+  <string name="end_note">Dit is een lijst van mensen die veel tijd hebben geïnvesteerd in Jami en daarbij nuttige resultaten hebben geboekt. Bijdragers die aan deze lijst willen worden toegevoegd, kunnen contact opnemen met het Jami-team via contact@jami.net.</string>
   <!--RingActivity-->
   <string name="error_no_network">Geen netwerkverbinding</string>
   <string name="error_account_offline">Het account is offline</string>
@@ -24,11 +35,14 @@
   <string name="menu_item_accounts">Accounts beheren</string>
   <string name="menu_item_account">Account beheren</string>
   <string name="menu_item_settings">Instellingen</string>
+  <string name="menu_item_app_settings">app-instellingen</string>
   <string name="menu_item_account_settings">Accountinstellingen</string>
+  <string name="menu_item_extension_list">extensie-instellingen</string>
   <string name="menu_item_share">Mijn account delen</string>
   <string name="menu_item_about">Over Jami</string>
   <string name="video_setting_title">Video-instellingen</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">Nummer bellen</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Uitnodigingen ontvangen</string>
@@ -37,7 +51,7 @@
     <item quantity="other">%d gesprekken</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Zoek op naam of gesprek</string>
+  <string name="searchbar_hint">Zoek of voeg toe</string>
   <string name="choose_number">Kies een nummer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -62,6 +76,7 @@
   <string name="notif_channel_background_service_descr">Maakt het mogelijk om op elk moment oproepen en berichten te ontvangen.</string>
   <string name="notif_group_calls">Oproepen</string>
   <string name="notif_inprogress_group_call">Oproep bezig</string>
+  <string name="notif_background_service">Jami draait momenteel in de achtergrond</string>
   <string name="notif_mark_as_read">Markeren als gelezen</string>
   <string name="notif_dismiss">Negeren</string>
   <string name="notif_reply">Beantwoorden</string>
@@ -79,7 +94,8 @@
   <string name="location_share_about_title">Informatie over de kaart</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">U:</string>
-  <string name="action_call_hangup">Ophangen</string>
+  <string name="action_call_hangup">Oproep beëindigen</string>
+  <string name="action_call_resume">Hervatten</string>
   <string name="action_call_maximize">Maximaliseren</string>
   <string name="action_call_minimize">Verkleinen</string>
   <string name="action_call_mute">Dempen</string>
@@ -88,17 +104,30 @@
   <string name="hist_in_call">Inkomende oproep van %1$s</string>
   <string name="hist_out_call">Uitgaande oproep van %1$s</string>
   <string name="call_duration">Duurde %s</string>
+  <string name="call_on_hold">Telefoongesprek in wacht</string>
+  <string name="start_error_title">Jami kan niet opgestart worden!</string>
   <string name="action_call_accept">Oproep accepteren</string>
+  <string name="action_call_accept_audio">Accepteren met audio</string>
+  <string name="action_call_accept_video">Accepteer met video</string>
+  <string name="action_call_hold_accept">Inkomende oproep alleen met audio aannemen en huidige oproep in de wacht zetten</string>
+  <string name="switch_to_audio">Video uitschakelen</string>
+  <string name="switch_to_video">Video inschakelen</string>
+  <string name="action_call_hold_accept_video">Inkomende oproep met video aannemen en huidige oproep in de wacht zetten</string>
+  <string name="action_call_end_accept">Inkomende oproep aannemen en huidige oproep beëindigen</string>
   <string name="action_call_decline">Weigeren</string>
   <string name="action_call_mic_mute">Microfoon dempen</string>
+  <string name="action_load_extension">Uitbreiding laden</string>
+  <string name="ab_action_speakerphone">Luidspreker inschakelen</string>
   <string name="ab_action_contact_add">Aan contacten toevoegen</string>
   <string name="ab_action_contact_add_question">Toevoegen aan contacten?</string>
   <string name="ab_action_audio_call">Audio-oproep starten</string>
   <string name="ab_action_video_call">Video-oproep starten</string>
   <string name="ab_action_change_screen_orientation">Schermoriëntatie aanpassen</string>
   <string name="share_via">Delen via</string>
+  <string name="write_a_message">Schrijf een bericht</string>
   <string name="scan_qr">QR-code scannen</string>
   <string name="qr_code">QR-code</string>
+  <string name="qr_code_not_contact">Geen Jami contact QR code</string>
   <string name="new_group">Nieuwe groep aanmaken</string>
   <string name="ab_action_flipcamera">Camera draaien</string>
   <string name="ab_action_hidepreview">Verberg voorbeeld</string>
@@ -116,15 +145,19 @@
   <string name="conversation_send_video">Videobericht opnemen</string>
   <string name="conversation_share_location">Uw locatie delen</string>
   <string name="ongoing_group_call">Lopende oproep</string>
+  <string name="started_call">Oproep begonnen</string>
   <string name="in_reply_to">In antwoord op</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Cameramachtiging</string>
+  <string name="permission_dialog_camera_message">Voor videogesprekken is toestemming voor de camera vereist. De toestemming voor de camera is uitgeschakeld. Schakel deze in de apparaatinstellingen in om deze functie te kunnen gebruiken.</string>
+  <string name="camera_error">Er is een fout opgetreden bij het opstarten van de camera.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Fout</string>
   <string name="ringtone_error_format_not_supported">Dit formaat wordt niet ondersteund.</string>
   <string name="ringtone_error_size_too_big">Dit bestand is te groot. De maximale grootte is %1$dkB.</string>
   <string name="ringtone_custom_prompt">Stel een aangepaste beltoon in</string>
   <string name="ringtone_custom_label">Aangepast</string>
+  <string name="ringtone_jami_tones">Jami beltonen</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
@@ -150,13 +183,17 @@
   <string name="conversation_action_remove_this_title">Dit contact verwijderen?</string>
   <string name="conversation_action_remove_this_message">Dit zal het contact verwijderen en de gespreksgeschiedenis voorgoed wissen.</string>
   <string name="remove_conversation">Gesprek verwijderen</string>
+  <string name="swarm_group_action_leave">Groep verlaten</string>
+  <string name="swarm_group_action_leave_title">Deze groep verlaten?</string>
   <string name="conversation_action_select_peer_number">Kies een nummer</string>
   <string name="conversation_action_block_this">Contact blokkeren</string>
   <string name="conversation_action_unblock_this">Contact deblokkeren</string>
+  <string name="conversation_action_go_to_call">Terug naar lopende oproep</string>
   <string name="conversation_action_incoming_call">Inkomende oproep</string>
   <string name="conversation_action_latest">Naar het einde van het gesprek schuiven</string>
   <string name="conversation_open_file_error">Er is geen toepassing geïnstalleerd om dit bestandstype te openen.</string>
   <string name="clip_contact_uri">Contactadres</string>
+  <string name="clip_message">Bericht inhoud</string>
   <string name="block_contact_dialog_title">%1$s blokkeren?</string>
   <string name="block_contact_dialog_message">%1$s zal u niet meer kunnen contacteren totdat u hem/haar deblokkeert.</string>
   <string name="block_contact_completed">%1$s is geblokkeerd.</string>
@@ -171,12 +208,14 @@
   <string name="conversation_ended">Het gesprek is voorbij.</string>
   <string name="conversation_message_deleted">%s verwijderde een bericht</string>
   <string name="conversation_reply_you">Jij?</string>
+  <string name="video_not_found">Video bestand niet gevonden</string>
   <string name="conversation_preference_color">Kleur van het gesprek</string>
   <string name="conversation_preference_emoji">Conversatie emoji</string>
   <string name="conversation_type_contact">Jami contact</string>
   <string name="conversation_type_private">Privé</string>
   <string name="conversation_type_group">Groep</string>
   <string name="conversation_search_hint">Zoek gesprek</string>
+  <string name="starting_camera_error">Er is een fout opgetreden bij het opstarten van de camera.</string>
   <string name="today">Vandaag</string>
   <string name="yesterday">Gisteren</string>
   <!--Contacts-->
@@ -346,4 +385,6 @@
   <string name="export_side_step2_confirm">Bevestigen</string>
   <string name="import_side_step1_share">Delen</string>
   <string name="import_side_step2_password_import">Importeren</string>
+  <!--Accessibility-->
+  <string name="step_title_set_password">Wachtwoord instellen</string>
 </resources>

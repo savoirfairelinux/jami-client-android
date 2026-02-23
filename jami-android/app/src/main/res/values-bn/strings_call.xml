@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-Copyright (C) 2004-2025 Savoir-faire Linux Inc.
+Copyright (C) 2004-2026 Savoir-faire Linux Inc.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -14,6 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 -->
+
 <resources>
     <string name="call_error_no_microphone">কল বাতিল করা হয়েছে। কোন মাইক্রোফোন সনাক্ত করা যায়নি.</string>
     <string name="call_error_no_camera_no_microphone">কল বাতিল করা হয়েছে। কোন ক্যামেরা বা মাইক্রোফোন সনাক্ত করা যায়নি.</string>
@@ -27,7 +28,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="call_human_state_busy">ব্যস্ত</string>
     <string name="call_human_state_failure">ব্যর্থ</string>
     <string name="call_human_state_hold">থেকো</string>
-    <string name="call_human_state_unhold">থামো</string>
     <string name="call_human_state_over">শেষ</string>
     <!-- Conferences -->
     <string name="call_moderator">মডারেটর</string>

@@ -8,6 +8,7 @@
   <string name="pref_category_diagnostic">Diagnostik</string>
   <string name="pref_category_appearance">Udseende</string>
   <string name="pref_category_connectivity">Forbindelse</string>
+  <string name="pref_category_extensions">Udvidelser</string>
   <string name="pref_category_video_settings">Avancerede videoindstillinger</string>
   <string name="pref_mobileData_title">Mobildata</string>
   <string name="pref_mobileData_summary">Tillad Jami at bruge mobilnetværket i tillæg til Wi-Fi</string>
@@ -41,9 +42,10 @@
   <string name="pref_logs_summary">Åbne indstillinger for diagnostisk log</string>
   <string name="pref_logs_start">Start logging</string>
   <string name="pref_logs_stop">Stop med at logge</string>
-  <string name="pref_typing_title">Indikator til indtydning</string>
-  <string name="pref_block_record_title">Block skærmbilleder og optagelse</string>
-  <string name="pref_block_record_summary">Blokker at tage skærmbilleder eller optage videoer.</string>
+  <string name="pref_typing_title">Indtastningsindikator</string>
+  <string name="pref_typing_summary">Viser når der bliver indtastet beskeder.</string>
+  <string name="pref_block_record_title">Bloker skærmbilleder og optagelse</string>
+  <string name="pref_block_record_summary">Bloker skærmbilleder og optagelse af videoer.</string>
   <string name="pref_link_preview_title">Eksempelvisning af weblinks</string>
   <string name="pref_link_preview_summary">Forhåndsvisning kræver download af indhold fra tredjepartsservere.</string>
   <!--Notifications Visibility-->

@@ -52,7 +52,6 @@ contact@jami.net.</string>
     <item quantity="other">%dگفتگو ها</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">جست و جوی نام یا گفت و گو ...</string>
   <string name="choose_number">یک شماره انتخاب کنید</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -95,7 +94,7 @@ contact@jami.net.</string>
   <string name="location_share_about_title">اطلاعات نقشه</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">شما:</string>
-  <string name="action_call_hangup">قطع‌کردن</string>
+  <string name="action_call_hangup">پایان دادن به تماس</string>
   <string name="action_call_maximize">به حداکثر رساندن</string>
   <string name="action_call_minimize">کاهش دادن</string>
   <string name="action_call_mute">بی‌صدا کردن</string>
@@ -108,6 +107,7 @@ contact@jami.net.</string>
   <string name="action_call_accept_audio">پاسخ به صورت صوتی</string>
   <string name="action_call_accept_video">پاسخ به صورت ویدیویی</string>
   <string name="action_call_hold_accept">در حالت انتظار نگه داشتن تماس فعلی و ‍ پذیرفتن تماس بعدی</string>
+  <string name="switch_to_video">فعال کردن ویدیو</string>
   <string name="action_call_hold_accept_video">در حالت انتظار نگه داشتن تماس فعلی و پذیرفتن تماس ویدیویی</string>
   <string name="action_call_decline">ردکردن</string>
   <string name="action_call_mic_mute">قطع میکروفون</string>
@@ -360,4 +360,6 @@ contact@jami.net.</string>
   <string name="export_side_step2_confirm">تایید</string>
   <string name="import_side_step1_share">اشتراک گذاری</string>
   <string name="import_side_step2_password_import">واردات</string>
+  <!--Accessibility-->
+  <string name="step_title_set_password">تعیین گذرواژه</string>
 </resources>

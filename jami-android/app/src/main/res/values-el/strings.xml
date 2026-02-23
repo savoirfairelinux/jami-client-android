@@ -75,7 +75,7 @@
   <string name="location_share_about_title">Στοιχεία χάρτη</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Εσύ</string>
-  <string name="action_call_hangup">Κλείσιμο</string>
+  <string name="action_call_hangup">Τερματισμός κλήσης</string>
   <string name="action_call_maximize">Μεγιστοποίηση</string>
   <string name="action_call_minimize">Ελαχιστοποίηση</string>
   <string name="action_call_mute">Σίγαση</string>
@@ -84,6 +84,7 @@
   <string name="hist_in_call">Εισερχόμενη κλήση από %1$s</string>
   <string name="hist_out_call">Εξερχόμενη κλήση από %1$s</string>
   <string name="action_call_accept">Αποδοχή κλήσης</string>
+  <string name="switch_to_video">Ενεργοποίηση βίντεο</string>
   <string name="action_call_decline">Απόρριψη κλήσης</string>
   <string name="action_call_mic_mute">Σίγαση μικροφώνου</string>
   <string name="ab_action_contact_add">Προσθήκη στις επαφές</string>
@@ -324,4 +325,5 @@
   <string name="export_side_step2_confirm">Επιβεβαίωση</string>
   <string name="import_side_step1_share">Κοινοποίηση</string>
   <string name="import_side_step2_password_import">Εισαγωγή</string>
+  <!--Accessibility-->
 </resources>
