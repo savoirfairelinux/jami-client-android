@@ -128,8 +128,8 @@ class CallConnection(
         service.callService.hold(call)
     }
 
-    override fun onUnhold() {
-        Log.w(TAG, "onUnhold")
+    override fun onResume() {
+        Log.w(TAG, "onResume")
         val call = call ?: return
         service.callService.resume(call)
     }
