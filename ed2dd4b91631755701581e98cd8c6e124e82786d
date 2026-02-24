@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8af0e20b_81889bd9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2026-02-24T15:47:09Z",
+      "side": 1,
+      "message": "This is an implementation of the Android Telecom API, which uses the unhold terminology:\nhttps://developer.android.com/reference/android/telecom/Connection",
+      "revId": "ed2dd4b91631755701581e98cd8c6e124e82786d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
