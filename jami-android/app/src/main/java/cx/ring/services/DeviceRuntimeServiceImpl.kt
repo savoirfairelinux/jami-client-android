@@ -143,7 +143,7 @@ class DeviceRuntimeServiceImpl(
             sampleRate = am.getProperty(AudioManager.PROPERTY_OUTPUT_SAMPLE_RATE).toInt()
             bufferSize = am.getProperty(AudioManager.PROPERTY_OUTPUT_FRAMES_PER_BUFFER).toInt()
         } catch (e: Exception) {
-            Log.w(javaClass.name, "Failed to read native OpenSL config", e)
+            Log.w(javaClass.name, "Failed to read native audio config", e)
         }
         ret.add(sampleRate)
         ret.add(bufferSize)
