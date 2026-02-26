@@ -1677,7 +1677,8 @@ class AccountService(
         val status: ConnectionStatus,
         val peer: String,
         val remoteAddress: String?,
-        val channels: Int
+        val channels: List<String>,
+        val connectionTime: Long
     )
 
     fun monitorConnections(): Observable<Pair<String, List<Pair<String, List<DeviceConnection>>>>> =
@@ -1685,7 +1686,7 @@ class AccountService(
             .switchMap { monitorConnections(it.accountId) }
 
     private fun monitorConnections(accountId: String): Observable<Pair<String, List<Pair<String, List<DeviceConnection>>>>> =
-        Observable.interval(0, 1, TimeUnit.SECONDS, scheduler)
+        Observable.interval(0, 2, TimeUnit.SECONDS, scheduler)
             .map { _ ->
                 Pair(accountId, JamiService.getConnectionList(accountId, "")
                     .mapNotNull { it: Map<String, String> ->
@@ -1700,7 +1701,10 @@ class AccountService(
                                 status=status,
                                 peer=it["peer"]!!,
                                 remoteAddress=it["remoteAddress"],
-                                channels=JamiService.getChannelList(accountId, it["id"]!!).size
+                                channels=JamiService.getChannelList(accountId, it["id"]!!).map { c -> c["name"]!! },
+                                connectionTime=it["created"]?.toLongOrNull()?.apply {
+                                    System.currentTimeMillis() - this
+                                } ?: 0L
                             )
                         }
                     }

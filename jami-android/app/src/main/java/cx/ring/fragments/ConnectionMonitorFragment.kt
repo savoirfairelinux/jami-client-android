@@ -17,10 +17,12 @@
 package cx.ring.fragments
 
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
@@ -102,10 +104,30 @@ class ConnectionMonitorFragment: Fragment() {
                 }
                 it.icon.contentDescription = connection.status.toString()
                 if (connection.status == ConnectionStatus.Connected) {
-                    it.channels.text = connection.channels.toString()
+                    it.channels.text = connection.channels.size.toString()
                     it.channels.isVisible = true
-                } else
+                    it.channels.setOnClickListener { view ->
+                        MaterialAlertDialogBuilder(view.context)
+                            .setTitle(R.string.connection_monitor_channels)
+                            .setItems(connection.channels.toTypedArray(), null)
+                            .setPositiveButton(android.R.string.ok, null)
+                            .show()
+                    }
+                    if (connection.connectionTime > 0L) {
+                        it.connectionTime.text = DateUtils.getRelativeTimeSpanString(
+                            connection.connectionTime,
+                            System.currentTimeMillis(),
+                            DateUtils.SECOND_IN_MILLIS
+                        )
+                        it.connectionTime.isVisible = true
+                    } else {
+                        it.connectionTime.isVisible = false
+                    }
+                } else {
                     it.channels.isVisible = false
+                    it.channels.setOnClickListener(null)
+                    it.connectionTime.isVisible = false
+                }
             }
             holder.binding?.let {
                 val contact = connections[position].contact!!
@@ -139,8 +161,11 @@ class ConnectionMonitorFragment: Fragment() {
                         oldItem.contact.contact.uri == newItem.contact.contact.uri
                                 && oldItem.contact.displayName == newItem.contact.displayName
                     } else {
-                        oldItem.connection?.id == newItem.connection?.id
+                        /*oldItem.connection?.id == newItem.connection?.id
                                 && oldItem.connection?.status == newItem.connection?.status
+                                && oldItem.connection?.connectionTime == newItem.connection?.connectionTime*/
+                        // force update of connection time
+                        false
                     }
                 }
 
@@ -166,14 +191,14 @@ class ConnectionMonitorFragment: Fragment() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 val adapter = list?.adapter as? ConnectionAdapter
-                adapter?.setData(it.map { (contact, connections) ->
+                adapter?.setData(it.flatMap { (contact, connections) ->
                     val list = ArrayList<DeviceConnectionViewModel>(1 + connections.size)
                     list.add(DeviceConnectionViewModel(contact, null))
                     connections.forEach { connection ->
                         list.add(DeviceConnectionViewModel(null, connection))
                     }
                     list
-                }.flatten())
+                })
             }))
     }
 
