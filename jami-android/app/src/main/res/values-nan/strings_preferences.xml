@@ -16,6 +16,7 @@
   <string name="pref_persistNotification_summary">允许在后台运行以接收呼叫和消息。</string>
   <string name="pref_connection_monitor">连接监视器</string>
   <string name="pref_connection_monitor_summary">监控对等连接</string>
+  <string name="connection_monitor_channels">通道</string>
   <string name="pref_push_notifications_logs_title">推送通知日志</string>
   <string name="pref_push_notifications_logs_summary">查看从推送通知中捕获的日志。</string>
   <string name="pref_typing_title">类型指标</string>

@@ -50,6 +50,7 @@
   <string name="pref_logs_stop">Ferma la diagnostica</string>
   <string name="pref_connection_monitor">Monitoraggio connessione</string>
   <string name="pref_connection_monitor_summary">Monitoraggio delle connessioni peer to peer</string>
+  <string name="connection_monitor_channels">Canali</string>
   <string name="pref_push_notifications_logs_title">Registri dalle notifiche</string>
   <string name="pref_push_notifications_logs_summary">Mostra i registri acquisiti dalle
         notifiche.</string>

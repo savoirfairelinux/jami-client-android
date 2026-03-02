@@ -50,6 +50,7 @@
   <string name="pref_logs_stop">Arrêter la journalisation</string>
   <string name="pref_connection_monitor">Supervision des connexions</string>
   <string name="pref_connection_monitor_summary">Supervision des connexions pair à pair</string>
+  <string name="connection_monitor_channels">Canaux</string>
   <string name="pref_push_notifications_logs_title">Journal des notifications poussées</string>
   <string name="pref_push_notifications_logs_summary">Voir le journal des notifications poussées</string>
   <string name="pref_typing_title">Indicateur de frappe</string>

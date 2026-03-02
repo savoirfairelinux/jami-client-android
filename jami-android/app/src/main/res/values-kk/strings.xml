@@ -75,7 +75,7 @@
   <string name="location_share_about_title">Карталық ақпарат</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Сіз:</string>
-  <string name="action_call_hangup">Ашыңыз</string>
+  <string name="action_call_hangup">Қоңырауды аяқтау</string>
   <string name="action_call_maximize">Максималды</string>
   <string name="action_call_minimize">Қисық</string>
   <string name="action_call_mute">Өркітсіз</string>
@@ -83,6 +83,7 @@
   <string name="ongoing_call">Ағымдағы шақыру</string>
   <string name="hist_in_call">%1$s кіріс шақыру</string>
   <string name="hist_out_call">%1$s шығыс шақыру</string>
+  <string name="switch_to_video">Видеоны қосу</string>
   <string name="action_call_decline">Ауыру</string>
   <string name="action_call_mic_mute">Ақысыз микрофон</string>
   <string name="ab_action_contact_add">Байланыстарға қосу</string>
@@ -319,4 +320,5 @@
   <string name="export_side_step2_confirm">Куәлікті растау</string>
   <string name="import_side_step1_share">Ортақ</string>
   <string name="import_side_step2_password_import">Импорт</string>
+  <!--Accessibility-->
 </resources>

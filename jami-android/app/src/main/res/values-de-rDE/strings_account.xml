@@ -21,6 +21,8 @@ Sie können Ihr Konto später bearbeiten</string>
   <!--Basic Details-->
   <string name="account_alias_label">Anzeigename</string>
   <string name="account_name_server_label">Name-Server</string>
+  <string name="account_rendezvous_label">Treffpunkt-Modus</string>
+  <string name="account_rendezvous_summary">Im Treffpunkt-Modus werden eingehende Anrufe zu einem Konferenzraum hinzugefügt.</string>
   <!--Extension Details-->
   <string name="account_preferences_extension_tab">Erweiterungen</string>
   <!--Audio Details-->
@@ -34,6 +36,7 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="account_accept_files_max_size">Maximale Dateigröße für das automatischen Annehmen</string>
   <string name="account_accept_files_never">Niemals automatisch annehmen</string>
   <string name="account_accept_files_always">Immer automatisch annehmen</string>
+  <string name="account_turn_enable_label">TURN verwenden</string>
   <string name="account_connectivity_label">Peer-to-Peer-Konnektivität</string>
   <string name="default_value">Standard</string>
   <string name="account_proxy_list_enable_label">DHT-Proxyliste verwenden</string>

@@ -163,6 +163,7 @@
   <string name="account_enter_username">Kullanıcı adını girin</string>
   <!--Name registration-->
   <string name="error_username_empty">Kullanıcı adı gir</string>
+  <string name="username_available">Kullanıcı adı uygun.</string>
   <string name="register_name">Ad Kaydet</string>
   <string name="registered_username">Kayıtlı kullanıcı adı</string>
   <string name="register_username">Halka açık kullanıcı adı kaydet</string>
@@ -170,6 +171,7 @@
   <string name="username_already_taken">Kullanıcı adı önceden alınmış</string>
   <string name="invalid_username">Geçersiz kullanıcı adı</string>
   <string name="unknown_error">Bilinmeyen hata. Lütfen ağ bağlantınızı denetleyin!</string>
+  <string name="looking_for_username_availability">Kullanıcı adının kullanılabilirliği kontrol ediliyor…</string>
   <string name="account_status_connecting">Bağlanılıyor</string>
   <string name="account_status_connection_error">Bağlantı hatası</string>
   <string name="account_status_online">Çevrim İçi</string>

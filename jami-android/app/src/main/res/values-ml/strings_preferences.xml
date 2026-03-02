@@ -42,6 +42,7 @@
   <string name="pref_logs_summary">ഡയഗ്നോസ്റ്റിക് ലോഗ് ക്രമീകരണങ്ങൾ തുറക്കുക</string>
   <string name="pref_logs_start">ലോഗ് ആരംഭിക്കുക</string>
   <string name="pref_logs_stop">മരം മുറിക്കുന്നത് നിർത്തുക</string>
+  <string name="connection_monitor_channels">ചാനലുകൾ</string>
   <string name="pref_typing_title">ടൈപ്പിംഗ് സൂചകങ്ങൾ</string>
   <string name="pref_block_record_title">സ്ക്രീൻഷോട്ടും റെക്കോർഡിംഗും തടയുക</string>
   <string name="pref_block_record_summary">സ്ക്രീൻഷോട്ട് എടുക്കുകയോ വീഡിയോ റെക്കോർഡ് ചെയ്യുകയോ ചെയ്യുന്നത് തടയുക.</string>

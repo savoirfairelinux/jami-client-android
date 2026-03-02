@@ -49,7 +49,6 @@
     <item quantity="other">%d സംഭാഷണങ്ങൾ</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">സംഭാഷണമോ പേരോ തിരയുക...</string>
   <string name="choose_number">ഒരു നമ്പര് തിരഞ്ഞെടുക്കുക</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -92,7 +91,7 @@
   <string name="location_share_about_title">മാപ്പ് വിവരങ്ങൾ</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">നീ:</string>
-  <string name="action_call_hangup">അടയ്ക്കുക</string>
+  <string name="action_call_hangup">കോൾ അവസാനിപ്പിക്കുക</string>
   <string name="action_call_maximize">പരമാവധി</string>
   <string name="action_call_minimize">കുറയ്ക്കുക</string>
   <string name="action_call_mute">നിശബ്ദത</string>
@@ -106,6 +105,7 @@
   <string name="action_call_accept_audio">ഓഡിയൊ വഴി സ്വീകരിക്കുക</string>
   <string name="action_call_accept_video">വീഡിയൊ വഴി സ്വീകരിക്കുക</string>
   <string name="action_call_hold_accept">നിലവിലുള്ള കോൾ ഹോൾഡ് ചെയ്ത് വരുന്ന കോൾ ഓഡിയോയിലൂടെ മാത്രം സ്വീകരിക്കുക</string>
+  <string name="switch_to_video">വീഡിയോ പ്രവർത്തനക്ഷമമാക്കുക</string>
   <string name="action_call_hold_accept_video">നിലവിലുള്ള കോൾ ഹോൾഡ് ചെയ്ത് വരുന്ന കോൾ വീഡിയോയിലൂടെ സ്വീകരിക്കുക</string>
   <string name="action_call_end_accept">നിലവിലുള്ള കോൾ നിർത്തി വരുന്ന കോൾ സ്വീകരിക്കുക</string>
   <string name="action_call_decline">കുറവ്</string>
@@ -447,4 +447,5 @@
   <string name="link_device_error_authentication">ഈ ഡിവൈസുമായി ബന്ധിപ്പിക്കുമ്പോൾ ആധികാരികത സംബന്ധിച്ചുള്ള പ്രശ്നം വന്നിരിക്കുന്നു. ക്രഡെൻഷലുകൾ പരിശോധിച്ച് ദയവായി വീണ്ടും ശ്രമിക്കുക.</string>
   <string name="link_device_error_timeout">ഓപ്പറേഷനുള്ള സമയം കഴിഞ്ഞു.</string>
   <string name="link_device_error_canceled">യൂസർ ഓപ്പറേഷൻ റദ്ദാക്കി.</string>
+  <!--Accessibility-->
 </resources>

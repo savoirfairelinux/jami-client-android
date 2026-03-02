@@ -65,8 +65,8 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="account_optionnal_category">Weitere Einstellungen</string>
   <string name="account_useragent_label">User Agent</string>
   <string name="account_autoanswer_label">Automatisch antworten</string>
-  <string name="account_rendezvous_label">Rendezvous-Modus</string>
-  <string name="account_rendezvous_summary">Im Rendezvous-Modus werden eingehende Anrufe einem Konferenzraum hinzugefügt.</string>
+  <string name="account_rendezvous_label">Treffpunkt-Modus</string>
+  <string name="account_rendezvous_summary">Im Treffpunkt-Modus werden eingehende Anrufe zu einem Konferenzraum hinzugefügt.</string>
   <string name="account_upnp_label"> UPnP aktivieren</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Extension Details-->
