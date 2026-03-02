@@ -74,7 +74,7 @@
   <string name="location_share_about_title">Informasi peta</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Anda:</string>
-  <string name="action_call_hangup">Angkat</string>
+  <string name="action_call_hangup">Akhiri panggilan</string>
   <string name="action_call_maximize">Maksimalkan</string>
   <string name="action_call_minimize">Kurangi</string>
   <string name="action_call_mute">Senyapkan</string>
@@ -83,6 +83,7 @@
   <string name="hist_in_call">Panggilan masuk dari %1$s</string>
   <string name="hist_out_call">Panggilan keluar dari %1$s</string>
   <string name="action_call_accept">Terima panggilan</string>
+  <string name="switch_to_video">Aktifkan Video</string>
   <string name="action_call_decline">Tolak</string>
   <string name="action_call_mic_mute">Senyapkan mikrofon</string>
   <string name="ab_action_contact_add">Tambah sebagai kontak</string>
@@ -321,4 +322,6 @@
   <string name="export_side_step2_confirm">Konfirmasi</string>
   <string name="import_side_step1_share">Bagikan</string>
   <string name="import_side_step2_password_import">Impor</string>
+  <!--Accessibility-->
+  <string name="step_title_set_password">Atur kata sandi</string>
 </resources>

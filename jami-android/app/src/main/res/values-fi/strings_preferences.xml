@@ -50,6 +50,7 @@
   <string name="pref_logs_stop">Lopeta kirjaaminen</string>
   <string name="pref_connection_monitor">Yhteysmonitori</string>
   <string name="pref_connection_monitor_summary">Tarkkaile vertaisyhteyksiä</string>
+  <string name="connection_monitor_channels">Kanavat</string>
   <string name="pref_push_notifications_logs_title">Push ilmoituslokit</string>
   <string name="pref_push_notifications_logs_summary">Tarkastele push-toiminnolla kerättyjä lokeja
         ilmoitukset.</string>

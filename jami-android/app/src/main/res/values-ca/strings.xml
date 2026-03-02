@@ -44,7 +44,6 @@
     <item quantity="other">%d Converses</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Cerca nom o conversa...</string>
   <string name="choose_number">Trieu un número</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -87,7 +86,7 @@
   <string name="location_share_about_title">Informació al mapa</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Usuari:</string>
-  <string name="action_call_hangup">Penja</string>
+  <string name="action_call_hangup">Finalitza la trucada</string>
   <string name="action_call_maximize">Maximitza</string>
   <string name="action_call_minimize">Redueix</string>
   <string name="action_call_mute">Silencia</string>
@@ -100,6 +99,7 @@
   <string name="action_call_accept_audio">Acceptar amb audio</string>
   <string name="action_call_accept_video">Acceptar amb vídeo</string>
   <string name="action_call_hold_accept">Acceptar trucada entrant amb àudio i manté en espera la trucada actual</string>
+  <string name="switch_to_video">Habilita el vídeo</string>
   <string name="action_call_hold_accept_video">Accepta la trucada entrant amb vídeo i manté en espera la trucada actual</string>
   <string name="action_call_decline">Rebutja</string>
   <string name="action_call_mic_mute">Silencia el micròfon</string>
@@ -354,4 +354,6 @@
   <string name="export_side_step2_confirm">Confirma</string>
   <string name="import_side_step1_share">Comparteix</string>
   <string name="import_side_step2_password_import">Importa</string>
+  <!--Accessibility-->
+  <string name="step_title_set_password">Estableix contrasenya</string>
 </resources>

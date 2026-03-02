@@ -50,6 +50,7 @@
   <string name="pref_logs_stop">Parar de logar</string>
   <string name="pref_connection_monitor">Monitor de conexão</string>
   <string name="pref_connection_monitor_summary">Monitorizar conexões ponto a ponto</string>
+  <string name="connection_monitor_channels">Canais</string>
   <string name="pref_push_notifications_logs_title">Registos de notificações push</string>
   <string name="pref_push_notifications_logs_summary">Ver os registos capturados por
         notificações push.</string>

@@ -50,6 +50,7 @@
   <string name="pref_logs_stop">Ndale regjistrimin</string>
   <string name="pref_connection_monitor">Mbikëqyrës lidhjesh</string>
   <string name="pref_connection_monitor_summary">Mbikëqyr lidhje tek për tek</string>
+  <string name="connection_monitor_channels">Kanale</string>
   <string name="pref_push_notifications_logs_title">Regjistra njoftimesh push</string>
   <string name="pref_push_notifications_logs_summary">Shihni regjistra të marrë prej
         njoftimeve push.</string>

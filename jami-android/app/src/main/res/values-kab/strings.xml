@@ -49,7 +49,6 @@
     <item quantity="other">%d Idiwenniyen</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Nadi isem neɣ adiwenni...</string>
   <string name="choose_number">Fren uṭṭun</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -92,7 +91,7 @@
   <string name="location_share_about_title">Talɣut ɣef tkarḍa</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Kečč-Kemm:</string>
-  <string name="action_call_hangup">Senser</string>
+  <string name="action_call_hangup">Fak tiɣri</string>
   <string name="action_call_maximize">Semɣer</string>
   <string name="action_call_minimize">Senqes</string>
   <string name="action_call_mute"> Sgugem</string>
@@ -106,6 +105,7 @@
   <string name="action_call_accept_audio">Qbel s umeslaw</string>
   <string name="action_call_accept_video">Qbel s tvidyut</string>
   <string name="action_call_hold_accept">Qbel tiɣri i d-ikeččmen s ṣṣut kan u sbedd deg laɛḍil tiɣri tamirant</string>
+  <string name="switch_to_video">Rmed tavidyut</string>
   <string name="action_call_hold_accept_video">Qbel tiɣri i d-ikeččmen s tviduyt kan u sbedd deg laɛḍil tiɣri tamirant</string>
   <string name="action_call_end_accept">Qbel tiɣri i d-ikeččmen u fakk tiɣri n tamirant</string>
   <string name="action_call_decline">Agi</string>
@@ -506,4 +506,5 @@
   <string name="link_device_error_canceled">Tamhelt-nni isemmet-itt useqdac-nni. </string>
   <string name="link_device_error_unknown">Teḍra-d tuccḍa. </string>
   <string name="link_device_error_bad_password">Ma ulac aɣilif, senqed isefka n usnekwu sakin ɛreḍ tikelt nniḍen.</string>
+  <!--Accessibility-->
 </resources>

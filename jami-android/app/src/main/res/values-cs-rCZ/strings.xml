@@ -50,7 +50,6 @@
     <item quantity="other">%d konverzací</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Hledat jméno nebo konverzaci...</string>
   <string name="choose_number">Zvolte číslo</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -93,7 +92,8 @@
   <string name="location_share_about_title">Informace o mapě</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vy:</string>
-  <string name="action_call_hangup">Zavěsit</string>
+  <string name="action_call_hangup">Ukončit hovor</string>
+  <string name="action_call_resume">Pokračovat</string>
   <string name="action_call_maximize">Maximalizovat</string>
   <string name="action_call_minimize">Minimalizovat</string>
   <string name="action_call_mute">Ztlumit</string>
@@ -106,6 +106,7 @@
   <string name="action_call_accept_audio">Přijmout se zvukem</string>
   <string name="action_call_accept_video">Přijmout s obrazem</string>
   <string name="action_call_hold_accept">Přijmout příchozí hovor pouze se zvukem a přidržet aktuální hovor</string>
+  <string name="switch_to_video">Povolit video</string>
   <string name="action_call_hold_accept_video">Přijmout příchozí hovor pomocí videa a přidržet aktuální hovor</string>
   <string name="action_call_end_accept">Přijmout příchozí hovor a ukončit aktuální hovor</string>
   <string name="action_call_decline">Odmítnout</string>
@@ -390,4 +391,6 @@
   <string name="export_side_step2_confirm">Potvrdit</string>
   <string name="import_side_step1_share">Sdílet</string>
   <string name="import_side_step2_password_import">Importovat</string>
+  <!--Accessibility-->
+  <string name="step_title_set_password">Nastavit heslo</string>
 </resources>

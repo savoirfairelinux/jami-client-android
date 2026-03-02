@@ -75,7 +75,7 @@
   <string name="location_share_about_title">نقشه یازی</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">سن:</string>
-  <string name="action_call_hangup">باغلا</string>
+  <string name="action_call_hangup">Zəngi bitir</string>
   <string name="action_call_maximize">حددن آرتيق</string>
   <string name="action_call_minimize">آزالت</string>
   <string name="action_call_mute">ساکئت</string>
@@ -83,6 +83,7 @@
   <string name="ongoing_call">داوام ائد ن چاغیرما</string>
   <string name="hist_in_call">%1$s-ین گلیش زنگینی</string>
   <string name="hist_out_call">%1$s-ین چیخان چاغیرماسی</string>
+  <string name="switch_to_video">ویدیو فعال ائتمک</string>
   <string name="action_call_decline">آشاغی صفحه</string>
   <string name="action_call_mic_mute">Mikrofonu səssiz et</string>
   <string name="ab_action_contact_add">تماسلارا قوش</string>
@@ -318,4 +319,5 @@
   <string name="export_side_step2_confirm">تأکید ائدیر</string>
   <string name="import_side_step1_share">بؤلوم</string>
   <string name="import_side_step2_password_import">واردات</string>
+  <!--Accessibility-->
 </resources>

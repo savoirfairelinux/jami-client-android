@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="submit_issue_title">Sorunu bildir</string>
+  <string name="submit_issue_title">Sorun bildir</string>
   <string name="submit_issue_action_description"><u>Sorun bildirimi oluştur</u></string>
   <string name="section_license">Lisans</string>
-  <string name="sponsor_section">Jami, özgür yazılımdır ve şunlarca geliştirilir ve desteklenir:</string>
+  <string name="delete_conversation_confirmation">Bu görüşmeyi silmek istediğine emin misin?</string>
+  <string name="acc_profile_photo_capture">Fotoğraf çek</string>
+  <string name="view_switch_camera">Kamerayı çevir</string>
+  <string name="sponsor_section">Jami, özgür yazılımdır. Şunlarca geliştirilir ve desteklenir:</string>
   <string name="copyright_section">Telif Hakkı</string>
   <string name="contribute_section">Katkı Yap</string>
   <string name="version_section">Sürüm</string>
-  <string name="no_browser_app_installed">Web tarayıcı uygulaması bulunmadı, bu sayfayı görmek için bir tane yükleyin.</string>
+  <string name="no_browser_app_installed">Web tarayıcı uygulaması bulunmadı, bu sayfayı görmek için bir tane yüklenmeli.</string>
   <string name="website_chooser_title">Şunu kullanarak web sitesini gör…</string>
   <string name="license">Bu yazılım, herhangi bir garanti olmaksızın \"olduğu gibi\" sağlanmaktadır. Ayrıntılar için <u>GNU Genel Kamu Lisansı sürüm 3 veya sonrasına bakın.</u></string>
-  <string name="description">Jami, kullanıcılarının özgürlüğüne ve mahremiyetine saygı duyan ücretsiz bir evrensel iletişim yazılımıdır.</string>
+  <string name="description">Jami, kullanıcılarının özgürlüğüne ve mahremiyetine saygı duyan özgür bir evrensel iletişim yazılımıdır.</string>
   <string name="credits">Emeği geçenler</string>
   <string name="pip_title">Jami Toplantı Görüşmesi</string>
   <string name="call_service_description">Bu hizmet, çağrıların ön planda devam etmesini sağlamak için gereklidir. Yalnızca çağrı esnasında çalışır.</string>
@@ -20,6 +23,9 @@
   <string name="thank_note">Bu yazılımın bu hale gelmesinde şimdiye kadar yardımı dokunan herkese teşekkür ediyoruz.</string>
   <string name="developers">Geliştiriciler</string>
   <string name="media">Ortam</string>
+  <string name="community_management">Topluluk Yönetimi</string>
+  <string name="special_thanks">Özel teşekkürler</string>
+  <string name="end_note">Bu, Jami\'ye önemli ölçüde zaman ayırmış ve faydalı sonuçlar elde etmiş kişilerin listesidir. Listeye eklenmek isteyen katkıda bulunanlar, contact@jami.net adresinden Jami ekibiyle iletişime geçmeli.</string>
   <!--RingActivity-->
   <string name="error_no_network">Ağ bağlantısı yok</string>
   <string name="error_account_offline">Hesap çevrim dışı</string>
@@ -30,11 +36,14 @@
   <string name="menu_item_accounts">Hesapları yönet</string>
   <string name="menu_item_account">Hesabı yönet</string>
   <string name="menu_item_settings">Ayarlar</string>
+  <string name="menu_item_app_settings">Uygulama Ayarları</string>
   <string name="menu_item_account_settings">Hesap Ayarları</string>
+  <string name="menu_item_extension_list">Uzantı Ayarları</string>
   <string name="menu_item_share">Jami Hesabı </string>
   <string name="menu_item_about">Jami Hakkında</string>
   <string name="video_setting_title">Görüntü Ayarları</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">Numarayı çevir</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Alınan davetler</string>
@@ -43,6 +52,7 @@
     <item quantity="other">%d görüşme</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Ara veya ekle</string>
   <string name="choose_number">Numara seç</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -62,20 +72,23 @@
   <string name="notif_channel_messages">İletiler</string>
   <string name="notif_channel_requests">İstekler</string>
   <string name="notif_channel_file_transfer">Dosya aktarımı</string>
-  <string name="notif_channel_sync">Veri eşzamanlama</string>
+  <string name="notif_channel_sync">Veri senkronizasyonu</string>
   <string name="notif_channel_background_service">Artalan hizmeti</string>
-  <string name="notif_channel_background_service_descr">Her zaman çağrı ve ileti almana izin verir.</string>
+  <string name="notif_channel_background_service_descr">İstediğin zaman çağrı ve mesaj almana olanak sağlar.</string>
   <string name="notif_group_calls">Çağrılar</string>
   <string name="notif_inprogress_group_call">Devam eden çağrı</string>
+  <string name="notif_background_service">Jami şu anda arka planda çalışıyor.</string>
   <string name="notif_mark_as_read">Okundu olarak işaretle</string>
   <string name="notif_dismiss">Reddet</string>
   <string name="notif_reply">Yanıtla</string>
   <string name="notif_incoming_file_transfer_title">%1$s\'dan gelen dosya</string>
   <string name="notif_outgoing_file_transfer_title">%1$s\'e dosya gönderme</string>
   <string name="notif_incoming_picture">%1$s görsel</string>
-  <string name="notif_sync_title">Veri eşzamanlanıyor…</string>
+  <string name="notif_sync_title">Veriler senkronize ediliyor…</string>
   <string name="notif_location_title">Konumunuz %1$s ile paylaşılıyor </string>
-  <string name="location_share_contact">%1$s sizinle konumunu paylaşıyor</string>
+  <string name="notif_channel_reconnect">Arka plan senkronizasyonu</string>
+  <string name="notif_reconnect_title">Jami senkronize oluyor…</string>
+  <string name="location_share_contact">%1$s seninle konumunu paylaşıyor</string>
   <string name="notif_location_multi_title">Konumun %1$d kişileriyle ile paylaşılıyor</string>
   <string name="notif_location_remaining">%1$d dakika kaldı</string>
   <string name="notif_location_action_stop">Konum paylaşmayı durdur</string>
@@ -83,27 +96,41 @@
   <string name="location_share_action_stop">Paylaşımı durdur</string>
   <string name="location_share_about_title">Harita bilgisi</string>
   <!--Call Fragment-->
-  <string name="you_txt_prefix">Siz:</string>
-  <string name="action_call_hangup">Kapat</string>
+  <string name="you_txt_prefix">Sen:</string>
+  <string name="action_call_hangup">Çağrıyı sonlandır</string>
+  <string name="action_call_resume">Sürdür</string>
   <string name="action_call_maximize">En büyük</string>
   <string name="action_call_minimize">Azalt</string>
   <string name="action_call_mute">Sessiz</string>
-  <string name="action_call_unmute">Sesi Aç</string>
+  <string name="action_call_unmute">Sesi aç</string>
   <string name="ongoing_call">Giden çağrı</string>
   <string name="hist_in_call">Gelen çağrı %1$s</string>
   <string name="hist_out_call">Giden çağrı %1$s</string>
   <string name="call_duration">%s sürdü</string>
-  <string name="action_call_accept">Aramayı kabul et </string>
+  <string name="call_on_hold">Çağrı beklemede.</string>
+  <string name="start_error_title">Jami başlatılamadı.</string>
+  <string name="action_call_accept">Çağrıyı kabul et </string>
+  <string name="action_call_accept_audio">Sesli kabul et</string>
+  <string name="action_call_accept_video">Görüntülü kabul et</string>
+  <string name="action_call_hold_accept">Gelen çağrıyı yalnızca sesli olarak kabul et ve mevcut çağrıyı beklemeye al.</string>
+  <string name="switch_to_audio">Videoyu devre dışı bırak</string>
+  <string name="switch_to_video">Görüntüyü Etkinleştir</string>
+  <string name="action_call_hold_accept_video">Gelen çağrıyı yalnızca görüntülü olarak kabul et ve mevcut çağrıyı beklemeye al.</string>
+  <string name="action_call_end_accept">Gelen çağrıyı kabul et ve mevcut çağrıyı sonlandır.</string>
   <string name="action_call_decline">Reddet</string>
-  <string name="action_call_mic_mute">Mikrofon sessiz</string>
+  <string name="action_call_mic_mute">Mikrofonun sesini kapat</string>
+  <string name="action_load_extension">Uzantı yükle</string>
+  <string name="ab_action_speakerphone">Hoparlörü aç</string>
   <string name="ab_action_contact_add">Kişilere ekle</string>
   <string name="ab_action_contact_add_question">Kişilere eklensin mi?</string>
-  <string name="ab_action_audio_call">Sesli arama başlat</string>
-  <string name="ab_action_video_call">Görüntülü arama başlat</string>
-  <string name="ab_action_change_screen_orientation">Ekran Yönünü değiştir</string>
+  <string name="ab_action_audio_call">Sesli çağrı başlat</string>
+  <string name="ab_action_video_call">Görüntülü çağrı başlat</string>
+  <string name="ab_action_change_screen_orientation">Ekran yönünü değiştir</string>
   <string name="share_via">Şununla paylaş</string>
-  <string name="scan_qr">Kare Kod Tara</string>
+  <string name="write_a_message">Mesaj yaz</string>
+  <string name="scan_qr">QR Kod Tara</string>
   <string name="qr_code">QR Kod</string>
+  <string name="qr_code_not_contact">QR bir Jami kişisi kodu değil</string>
   <string name="new_group">Yeni grup oluştur</string>
   <string name="ab_action_flipcamera">Kamerayı döndür</string>
   <string name="ab_action_hidepreview">Ön izlemeyi gizle</string>
@@ -117,24 +144,31 @@
   <string name="select_media">Galeriyi aç</string>
   <string name="hist_file_sent">Dosya gönderildi</string>
   <string name="hist_file_received">Dosya alındı</string>
-  <string name="conversation_send_audio">Ses klibi kaydet </string>
-  <string name="conversation_send_video">Görüntü klibi kaydet</string>
+  <string name="conversation_send_audio">Ses kaydet</string>
+  <string name="conversation_send_video">Video kaydet</string>
   <string name="conversation_share_location">Konum paylaş</string>
   <string name="ongoing_group_call">Giden çağrı</string>
-  <string name="in_reply_to">Cevap olarak</string>
+  <string name="started_call">Çağrı başladı</string>
+  <string name="in_reply_to">Yanıt olarak</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera izni</string>
+  <string name="permission_dialog_camera_message">Video görüşmeleri için kamera izni gerekli. Kamera izni devre dışı bırakılmış. Bu özelliği kullanabilmek için cihaz ayarlarınızdan kamera iznini etkinleştir.</string>
+  <string name="camera_error">Kamera başlatılırken bir hata oluştu.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Hata</string>
   <string name="ringtone_error_format_not_supported">Bu biçim desteklenmiyor.</string>
   <string name="ringtone_error_size_too_big">Bu dosya çok büyük. En büyük boyut %1$dkB.</string>
   <string name="ringtone_custom_prompt">Özel zil sesi ayarla </string>
   <string name="ringtone_custom_label">Özel</string>
+  <string name="ringtone_jami_tones">Jami zil sesleri</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jami\'nin \"Kişileri oku\" iznine ihtiyacı var. Bu özelliği kullanabilmek için cihaz ayarlarından bu iznin etkinleştirilmesi gerekir.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jami\'nin \"Çağrı kaydına yazma\" iznine ihtiyacı var. Bu özelliği kullanabilmek için cihaz ayarlarından bu iznin etkinleştirilmesi gerekir.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Eklemek istediğin hesabın QR kodunu tara.</string>
   <string name="title_activity_qrcode">Hesabımı paylaş</string>
+  <string name="error_scan_no_camera_permissions">QR tarayıcı kamera izni gerektirir. Kamera izni devre dışı bırakıldı. Bu özelliği kullanabilmek için cihaz ayarlarından etkinleştirilmeli.</string>
   <string name="tab_code">Kodum</string>
   <string name="tab_scan">Kodu Tara</string>
   <!--Settings-->
@@ -146,6 +180,7 @@
   <string name="conversation_details">Görüşme detayları</string>
   <string name="contact_details">Kişi ayrıntıları</string>
   <string name="conversation_action_delete_this">Bu görüşmeyi sil</string>
+  <string name="conversation_action_delete_this_title">Bu görüşme silinsin mi?</string>
   <string name="leave_conversation">Görüşmeden ayrıl</string>
   <string name="conversation_action_delete_this_message">Bu eylem geri alınamaz.</string>
   <string name="conversation_action_history_clear">Geçmişi temizle</string>
@@ -154,14 +189,24 @@
   <string name="delete_contact">Kişiyi sil</string>
   <string name="conversation_action_remove_this_title">Bu kişi silinsin mi?</string>
   <string name="conversation_action_remove_this_message">Bu, kişiyi silecek ve görüşme geçmişini tümüyle temizleyecek.</string>
-  <string name="remove_conversation">Konuşma sil</string>
+  <string name="conversation_action_add_this_message">Bu bir bağlantı isteği gönderecek.</string>
+  <string name="remove_conversation">Görüşmeyi kaldır</string>
+  <string name="conversation_action_remove_title">Görüşme kaldırılsın mı?</string>
+  <string name="conversation_action_remove_message">Bu işlem, kişiyi silmeden bu görüşmeyi silecek.</string>
+  <string name="swarm_group_action_leave">Gruptan ayrıl</string>
+  <string name="swarm_group_action_leave_title">Bu gruptan ayrılsın mı?</string>
+  <string name="swarm_group_action_leave_message">Bu işlem, görüşmeyi görüşme listesinden kaldıracak.</string>
+  <string name="conversation_action_copy_peer_number">İletişim tanımlayıcısını kopyala</string>
+  <string name="copied_to_clipboard">%1$s panoya kopyalandı.</string>
   <string name="conversation_action_select_peer_number">Numara seç</string>
   <string name="conversation_action_block_this">Kişiyi engelle</string>
   <string name="conversation_action_unblock_this">Kişinin engelini kaldır</string>
+  <string name="conversation_action_go_to_call">Çağrıya dön</string>
   <string name="conversation_action_incoming_call">Gelen çağrı</string>
   <string name="conversation_action_latest">Görüşmenin sonuna kaydır</string>
   <string name="conversation_open_file_error">Bu dosya türünü açabilecek yüklü bir uygulama yok.</string>
   <string name="clip_contact_uri">İletişim adresi</string>
+  <string name="clip_message">Mesaj içeriği</string>
   <string name="block_contact_dialog_title">%1$s Engellensin mi?</string>
   <string name="block_contact_dialog_message">Engellemeyi kaldırana kadar %1$s seninle iletişim kuramayacak.</string>
   <string name="block_contact_completed">%1$s engellendi.</string>
@@ -171,42 +216,68 @@
   <string name="conversation_contact_is_typing">Kişi yazıyor…</string>
   <string name="conversation_info_contact_you">Siz</string>
   <string name="conversation_members">Üyeler</string>
-  <string name="conversation_syncing">Konuşma karşı taraftan indiriliyor</string>
+  <string name="conversation_syncing">Görüşme karşı taraftan indiriliyor</string>
   <string name="conversation_blocked">Bu kişi engellendi.</string>
   <string name="conversation_ended">Görüşme sona erdi.</string>
+  <string name="conversation_message_deleted">%s mesajı sildi</string>
   <string name="conversation_reply_you">Siz</string>
+  <string name="video_not_found">Video dosyası bulunamadı</string>
   <string name="conversation_preference_color">Görüşme rengi</string>
   <string name="conversation_preference_emoji">Görüşme emojisi</string>
   <string name="conversation_type_contact">Jami kişisi</string>
   <string name="conversation_type_private">Özel</string>
   <string name="conversation_type_group">Küme</string>
+  <string name="conversation_contact_invited">%1$s görüşmeye davet edildi.</string>
+  <string name="conversation_contact_added">%1$s görüşmeye katıldı.</string>
+  <string name="conversation_contact_left">%1$s görüşmeden ayrıldı.</string>
+  <string name="conversation_contact_blocked">%1$s görüşmeye katılması engellendi.</string>
+  <string name="conversation_contact_unblocked">%1$s görüşmeye erişim engeli kaldırıldı.</string>
   <string name="conversation_search_hint">Görüşmede ara</string>
+  <string name="audio_recorder_error">Ses kayıt uygulaması bulunamadı.</string>
+  <string name="video_recorder_error">Video kayıt uygulaması bulunamadı.</string>
+  <string name="taking_picture_error">Fotoğraf çekilirken bir hata oluştu.</string>
+  <string name="find_picture_error">Fotoğraf bulunurken bir hata oluştu.</string>
+  <string name="open_camera_error">Kamera açılırken bir hata oluştu.</string>
+  <string name="starting_recorder_error">Kaydedici başlatılırken bir hata oluştu.</string>
+  <string name="starting_camera_error">Kamera başlatılırken bir hata oluştu.</string>
+  <string name="browser_error">Bu cihazda dosya tarayıcısı yok.</string>
+  <string name="import_archive_error">Arşiv içe aktarılırken bir hata oluştu.</string>
+  <string name="export_archive_error">Arşiv dışa aktarılırken bir hata oluştu.</string>
+  <string name="load_ringtone_error">Zil sesi yüklenirken bir hata oluştu.</string>
+  <string name="sharing_log_error">Günlükler paylaşılırken bir hata oluştu.</string>
+  <string name="no_native_crash">Yakın zamanda yerel kilitlenme olmadı</string>
   <string name="today">Bugün</string>
   <string name="yesterday">Dün</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s eklensin mi?</string>
   <string name="prompt_new_password">Yeni parola</string>
   <string name="prompt_new_password_optional">Yeni parola (isteğe bağlı)</string>
-  <string name="prompt_new_password_repeat">Yeni parolayı doğrulayın</string>
+  <string name="prompt_new_password_repeat">Yeni parolayı doğrula</string>
   <string name="account_create_title">Jami hesabı oluştur</string>
   <string name="prompt_new_username">Yeni kullanıcı adı gir</string>
   <string name="prompt_hint_username">Kullanıcı adı</string>
   <string name="help_password_choose">Jami hesabını korumak için anımsayacağın güçlü parola seç.</string>
   <string name="help_password_enter">Ana Jami hesabının parolasını gir.</string>
-  <string name="help_server_enter">Yönetim sunucusunun URL\'sini gir.</string>
+  <string name="help_server_enter">Yönetim sunucusunun bağlantısını gir.</string>
+  <string name="pin_copied">Kimlik doğrulama kodu panoya kopyalandı.</string>
+  <string name="copied_clipboard">Panoya kopyalandı.</string>
   <string name="wizard_next">İleri</string>
   <string name="wizard_back">Geri</string>
   <string name="wizard_skip">Atla</string>
   <string name="hist_contact_invited">Kişi davet edildi</string>
   <string name="hist_contact_added">Kişi eklendi</string>
   <string name="hist_contact_left">Kişi ayrıldı</string>
+  <string name="hist_contact_blocked">Kişi engellendi</string>
+  <string name="hist_contact_unblocked">Kişinin engeli kaldırıldı</string>
   <string name="hist_invitation_received">Davetiye alındı</string>
   <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Profil adı</string>
   <string name="profile_message_warning">Profil, yalnızca kişilerle paylaşılır</string>
+  <string name="custom_profile_message_warning">Özel profil yalnızca bu cihazdaki hesap tarafından görülebilir</string>
   <string name="open_the_gallery">Galeriyi aç</string>
   <string name="take_a_photo">Fotoğraf çek</string>
+  <string name="remove_photo">Fotoğrafı kaldır</string>
   <string name="profile_name_hint">İsim gir</string>
   <string name="registered_name">Kayıtlı Ad</string>
   <string name="no_registered_name">Kayıtlı ad yok</string>
@@ -221,14 +292,23 @@
   <string name="share_message">Bu kodu Jami ile tarayın</string>
   <string name="share_message_no_account">Lütfen paylaşmak için bir hesap seçin.</string>
   <string name="share_your_account_information">İletişim bilgimi paylaş</string>
+  <string name="share_contact_information">İletişim bilgilerini paylaş</string>
   <string name="share_label">Paylaş</string>
   <string name="generic_error_migration">Hata</string>
+  <string name="generic_error_migration_message">Hesap taşınırken bir hata oluştu.</string>
   <string name="title_share_with">Paylaş</string>
   <!--Pending invitations-->
   <string name="accept">Kabul et</string>
   <string name="decline">Reddet</string>
   <string name="block">Engelleme</string>
+  <string name="decline_invitation">Daveti reddet</string>
+  <string name="accept_invitation">Daveti kabul et</string>
+  <string name="accept_invitation_body">Şuradan %s davet alındı.</string>
+  <string name="new_invitation_request_title">Yeni davetiye</string>
   <string name="invitation_message">%1$d iletişim isteği var</string>
+  <string name="no_invitations">Görüntülenecek davetiye yok.</string>
+  <string name="invitation_received_message">Şuradan %s davet alındı.\nDavet kabul mü, reddedil mi edilsin?</string>
+  <string name="outgoing_contact_invitation_message">Bu kişi, kişi listenizde yok.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Engellenmiş kişi yok</string>
   <!--Smartlist-->
@@ -236,25 +316,44 @@
   <string name="conversation_placeholder">Henüz görüşme yok</string>
   <string name="contact_request_sent">İletişim isteği gönderildi</string>
   <string name="start_conversation">Görüşme başlat </string>
+  <string name="search_results">Arama sonuçları</string>
   <string name="tv_contact_row_header">Kişiler</string>
   <string name="gallery_error_title">Galeri uygulaması bulunamadı</string>
   <string name="gallery_error_message">Galeriyi açmak için aygıtta herhangi bir uygulama bulunamadı</string>
+  <string name="generic_error">Bilinmeyen bir hata oluştu.</string>
   <!--File Transfer-->
+  <string name="invalid_file">Geçersiz dosya</string>
+  <string name="not_able_to_write_file">Dosya yazılamadı.</string>
   <string name="file_transfer_status_created">Başlatılıyor</string>
+  <string name="file_transfer_status_unsupported">Desteklenmiyor</string>
+  <string name="file_transfer_status_wait_peer_acceptance">Karşı tarafın onayı bekleniyor…</string>
+  <string name="file_transfer_status_wait_host_acceptance">Toplantı sahibinin kabul etmesi bekleniyor…</string>
+  <string name="file_transfer_status_ongoing">Devam ediyor</string>
+  <string name="file_transfer_status_finished">Tamamlandı</string>
+  <string name="file_transfer_status_closed_by_host">Toplantı sahibi tarafından kapatıldı</string>
+  <string name="file_transfer_status_closed_by_peer">Eş tarafından kapatıldı</string>
   <string name="file_transfer_status_invalid_file">Geçersiz dosya</string>
+  <string name="file_transfer_status_unjoinable_peer">Eşe ulaşılamıyor</string>
   <string name="file_transfer_status_canceled">İptal edildi</string>
+  <string name="file_transfer_status_error">Dosya aktarılırken bir hata oluştu.</string>
+  <string name="file_transfer_status_timed_out">İşlem zaman aşımına uğradı.</string>
+  <string name="file_saved_in">Dosya %s dizinine kaydedildi.</string>
+  <string name="file_saved_successfully">Dosya başarıyla kaydedildi.</string>
   <string name="file_download">İndir</string>
+  <string name="no_space_left_on_device">Cihazda yeterli depolama alanı yok.</string>
   <string name="title_media_viewer">Ortam Galerisi</string>
   <string name="menu_file_open">Dosyayı Aç</string>
   <string name="menu_file_download">Dosyayı indir</string>
-  <string name="menu_file_save">Dosyayı Kaydet</string>
+  <string name="menu_file_save">Dosyayı kaydet</string>
   <string name="menu_file_delete">Dosyayı sil</string>
   <string name="menu_file_share">Dosya paylaş</string>
   <string name="menu_message_copy">Kopyala</string>
   <string name="menu_message_edit">İletiyi düzenle</string>
+  <string name="menu_message_history">Mesaj geçmişi</string>
   <string name="menu_message_delete">İletiyi sil</string>
   <string name="menu_message_cancel">İletiyi iptal et</string>
   <string name="menu_message_reply">Yanıtla</string>
+  <string name="menu_message_cancel_reply">Yanıtlamayı iptal et</string>
   <string name="menu_delete">Sil</string>
   <string name="pref_darkTheme_title">Koyu tema</string>
   <string name="pref_darkTheme_summary">Sistem davranışını kullanmak yerine her zaman koyu temayı etkinleştir</string>
@@ -277,6 +376,16 @@
   <string name="tv_send_video">Ortam Gönder</string>
   <string name="tv_action_more">Daha fazla</string>
   <string name="conversation_input_speech_hint">Bir şey söyle…</string>
+  <string name="audio_permission_denied">Mikrofon izni devre dışı bırakıldı. Bu özelliği kullanabilmek için cihaz ayarlarından etkinleştirilmeli.</string>
+  <string name="camera_permission_denied">Kamera izni devre dışı bırakıldı. Bu özelliği kullanabilmek için cihaz ayarlarından etkinleştirilmeli.</string>
+  <string name="speech_recogniton_unavailable">Konuşma tanıma kullanılamıyor.</string>
+  <string name="audio_permission_rationale_title">Ses izni gerekli</string>
+  <string name="camera_permission_rationale_title">Kamera izni gerekli</string>
+  <string name="audio_permission_rationale_message">Jami, konuşmadan metne dönüştürme ve ses kaydı özelliklerini kullanabilmek için mikrofon iznine ihtiyaç duyar. Bu izin bir sonraki adımda istenecek.</string>
+  <string name="camera_permission_rationale_message">Jami, video kaydı yapabilmek ve görüntülü çağrı yapabilmek için kamera iznine ihtiyaç duyar. Bu izin bir sonraki adımda istenecek.</string>
+  <string name="unable_to_start_recorder">Ses kaydı başlatılamadı.</string>
+  <string name="error_sharing_file">Dosya paylaşılırken bir hata oluştu.</string>
+  <string name="error_opening_file">Dosya açılırken bir hata oluştu.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Önerilen</string>
   <string name="wizard_status_optional">İsteğe bağlı</string>
@@ -286,14 +395,15 @@
   <string name="wizard_username_skip">Kullanıcı adı seçmeyi atla</string>
   <string name="wizard_password_info">Hesap parolası</string>
   <string name="wizard_password_placeholder">Bu aygıttaki hesap anahtarını şifrelemek için parola seç</string>
-  <string name="wizard_password_button">Parola seçin</string>
+  <string name="wizard_password_button">Parola seç</string>
   <string name="wizard_password_skip">Hesap oluştur</string>
   <string name="wizard_password_switch">Hesabı parola ile şifrele</string>
-  <string name="wizard_password_warning">Unutmayın ki parola kurtarılamaz</string>
+  <string name="wizard_password_warning">Unutma parola kurtarılamaz</string>
   <string name="wizard_profile_info">Profil, yalnızca kişilerle paylaşılır</string>
   <string name="wizard_profile_button">Profili kaydet</string>
   <string name="wizard_profile_skip">Atla ve daha sonra yap</string>
   <string name="fab_path_choose">Başka bir dosya seç</string>
+  <string name="chat_extensions">Sohbet uzantıları</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Paylaş</string>
   <string name="bottomSheet_dialpad_btn">Tuş takımı</string>
@@ -305,34 +415,56 @@
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Sesler</string>
   <string name="bottomSheet_raiseHand_btn">El kaldır</string>
+  <string name="open_account_extension_settings">Hesap Uzantısı Ayarlarını Aç</string>
+  <string name="open_general_extension_settings">Genel Uzantı Ayarlarını Aç</string>
   <string name="uninstall">Kaldır</string>
   <string name="reset">Sıfırlama</string>
   <!--Swarm Details-->
   <string name="rename_btn">Onayla</string>
+  <string name="rename_error">boş olamaz.</string>
+  <string name="swarm_description">Açıklama ekle</string>
   <string name="tab_members">Üyeler</string>
   <string name="tab_files">Dosyalar</string>
   <string name="tab_settings">Ayarlar</string>
+  <string name="not_admin_toast">Bu grubun bilgilerini yalnızca yöneticiler düzenleyebilir</string>
+  <string name="dialog_title_contact">Görünen adı düzenle</string>
+  <string name="dialogtitle_title">Grup başlığını düzenle</string>
+  <string name="dialogtitle_description">Grup açıklamasını düzenle</string>
   <string name="dialog_hint_title">Başlık</string>
   <string name="dialog_hint_description">Açıklama</string>
   <string name="picker_title">Kişi seç</string>
   <string name="picker_btn">Kişi seç</string>
+  <string name="no_contact_to_add">Eklenebilir hiçbir kişi yok</string>
   <string name="bottomsheet_contact">Jami ile iletişime geç\n%1$s</string>
   <string name="bottomsheet_remove">Üyeyi kaldır</string>
   <string name="error_open_no_app_found">Bu dosyayı işleyecek uygulama bulunamadı: %1$s</string>
+  <string name="swarm_detail_no_document">Eklenebilir hiçbir belge yok.</string>
+  <string name="group_admin">Yönetici</string>
+  <string name="share_contact_intent_title">Bu kişiyi Jami\'ye ekle!</string>
+  <string name="share_contact_intent_body">Bu kişiyi “%1$s” Jami dağıtılmış iletişim platformuna ekleyebilirsin: %2$s</string>
   <!--JamiId-->
   <string name="jami_id_copy">JamiId kopyala</string>
   <string name="jami_id_share">JamiId paylaş</string>
   <string name="jami_id_validate">Kullanıcı adını kaydet</string>
+  <string name="jami_id_available">Kullanıcı adı uygun.</string>
+  <string name="jami_id_not_available">Kullanıcı adı uygun değil.</string>
   <string name="jami_id_info">• Maksimum 32 karakter\n• İzin verilen özel karakterler: tire (-), alt çizgi (_)</string>
+  <string name="jami_id_looking_for_availability">Kullanıcı adının kullanılabilirliği kontrol ediliyor…</string>
   <string name="jami_id_choose_username">Kullanıcı Adı Seç</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Jami ye Hoş geldin</string>
   <string name="welcome_jami_description">Daha kolay iletişime geçilebilmek için Jami tanımlayıcını paylaş!</string>
   <!--Conversation details-->
   <string name="details">Ayrıntılar</string>
+  <string name="secure_p2p_connection">Güvenli eşler arası bağlantı</string>
+  <string name="swarm_type">Görüşme tipi</string>
   <string name="Private">Özel</string>
+  <string name="swarm_id">Swarm kimliği</string>
+  <string name="show_qr_code">QR kodu göster</string>
+  <string name="show_certificate">Sertifikayı göster</string>
   <string name="mute_conversation">Görüşmeyi sessize al</string>
   <!--Donation-->
+  <string name="donation_card_description">Jami\'yi kullanmaktan hoşlanıyor ve misyonumuza güveniyorsan bağış yapmak ister misin?</string>
   <string name="donation_card_not_now">Şimdi değil</string>
   <string name="donation_donate">Bağış</string>
   <string name="donation_setting_title">Bağış anımsatıcı</string>
@@ -341,10 +473,53 @@
   <string name="unable_to_load">%1$s yüklenemedi.</string>
   <string name="load_success">%1$s: etkinleştirildi</string>
   <string name="unload_success">%1$s: devre dışı</string>
+  <string name="install_success">Uzantı %1$s başarıyla kuruldu.</string>
+  <string name="install_error">Uzantı içe aktarılırken bir hata oluştu.</string>
   <string name="export_side_main_title">Hesabı dışa aktar</string>
+  <string name="import_side_main_title">Hesabı içe aktar</string>
+  <string name="link_device_dialog_stop_title">Cihaz bağlantısı durdurulsun mu?</string>
+  <string name="link_device_dialog_stop_export_body">Durdurma işlemi, hesabın dışarı aktarılması işlemini iptal edecek.</string>
+  <string name="link_device_dialog_stop_import_body">Durdurma işlemi, hesabın içeri aktarılması işlemini iptal edecek.</string>
+  <string name="export_side_step1_advice_qr">Yeni cihazda, yeni bir hesap başlat.\n<b>Hesap &gt; Hesap Ekle &gt; Başka bir cihazdan bağlan</b>\nHazır olduğunda QR kodunu tara.</string>
+  <string name="export_side_step1_switch_to_code">Veya doğrulama kodunu girmek için buraya tıkla</string>
+  <string name="export_side_step1_switch_to_qr">Veya QR kodunu taramak için buraya tıkla.</string>
+  <string name="export_side_step1_error_malformed">Tanınmayan yeni cihaz tanımlayıcısı. Lütfen yukarıdaki talimatları izle.</string>
   <string name="export_side_step1_code_connect">Bağlan</string>
+  <string name="export_side_step2_advice">Yeni cihaz burada bulunuyor. Bu sen misin?\nHesap dışa aktarma işlemine devam etmek için Onayla\'ya tıkla.</string>
+  <string name="export_side_step2_advice_ip_only">Aşağıdaki adrese yeni bir cihaz bağlandı. Bu sen misin?\nHesabı dışa aktarmaya devam etmek için Onayla\'ya tıkla.</string>
+  <string name="export_side_step2_ip_only">Yeni cihazın IP adresi: %1$s</string>
   <string name="export_side_step2_cancel">İptal</string>
   <string name="export_side_step2_confirm">Onayla</string>
+  <string name="export_side_step2_password">Hesap parola ile korunmakta.\nDevam edebilmek için yeni cihazda kimliğin doğrulaması gerekiyor.</string>
+  <string name="export_side_step3_body_loading">Hesabı yeni cihaza aktarma işlemi devam ediyor. Lütfen bekle…</string>
+  <string name="export_side_step3_body_done">Hesap yeni cihaza başarıyla aktarıldı.</string>
+  <string name="export_side_step3_exit">Bitir</string>
+  <string name="import_side_step1_advice_qr">Kaynak cihazda dışa aktarma işlemini başlat. \n<b>Hesap &gt; Hesap Ayarları &gt; Yeni cihaz bağla seçeneğini seç.</b>\nHazır olduğunda, aşağıdaki QR kodunu tara.</string>
+  <string name="import_side_step1_advice_code">Kaynak cihazda dışa aktarma işlemini başlat&lt;b&gt;.\nHesap &amp;gt; Hesap Ayarları &amp;gt; Yeni cihaz bağla seçeneğini seç.\nHazır olduğunda, aşağıdaki kodu gir.</string>
   <string name="import_side_step1_share">Paylaş</string>
+  <string name="import_side_step1_switch_to_code">Veya doğrulama kodunu görüntülemek için buraya tıkla.</string>
+  <string name="import_side_step1_switch_to_qr">Veya QR kodunu görüntülemek için buraya tıkla</string>
+  <string name="import_side_step1_connecting">Kaynak cihaza bağlanılıyor…</string>
+  <string name="import_side_step1_preparing_device">Cihaz hazırlanıyor…</string>
+  <string name="import_side_step2_password_prompt">Hesap parola ile korunmakta.\nDevam etmek için parolayı kaldır.</string>
   <string name="import_side_step2_password_import">İçe aktar</string>
+  <string name="import_side_step2_password_unlocking">Hesabın kilidi açılıyor…</string>
+  <string name="import_side_step2_action_required">Eylem gerekli. Lütfen kaynak cihazdaki hesabı onayla.</string>
+  <string name="import_side_step3_body_loading">Hesap yeni cihaza aktarılıyor. Lütfen bekle…</string>
+  <string name="import_side_step3_body_done">Hesap başarıyla içe aktarıldı.</string>
+  <string name="import_side_step3_go_to_account">Yeni hesaba git</string>
+  <string name="import_side_step3_exit">Bitir</string>
+  <string name="link_device_share_title">Kimlik doğrulama kodunu paylaş</string>
+  <string name="link_device_error_network">Cihaz bağlanırken bir ağ hatası oluştu. Lütfen bağlantını kontrol et ve tekrar dene.</string>
+  <string name="link_device_error_authentication">Cihaz bağlanırken bir kimlik doğrulama hatası oluştu. Lütfen kimlik bilgilerini kontrol et ve tekrar dene.</string>
+  <string name="link_device_error_timeout">İşlem zaman aşımına uğradı.</string>
+  <string name="link_device_error_canceled">İşlem kullanıcı tarafından iptal edildi.</string>
+  <string name="link_device_error_unknown">Bir hata oluştu.</string>
+  <string name="link_device_error_bad_password">Lütfen kimlik bilgilerini kontrol edip tekrar dene.</string>
+  <string name="test_push">Deneme Bildirimi</string>
+  <!--Accessibility-->
+  <string name="step_title_create_username">Kullanıcı adı oluştur</string>
+  <string name="step_title_set_password">Parola ayarla</string>
+  <string name="step_title_create_profile">Profil oluştur</string>
+  <string name="step_format">Adım %1$d/%2$d: %3$s</string>
 </resources>

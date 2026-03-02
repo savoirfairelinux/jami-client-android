@@ -50,6 +50,7 @@
   <string name="pref_logs_stop">Остановить логирование</string>
   <string name="pref_connection_monitor">Монитор подключений</string>
   <string name="pref_connection_monitor_summary">Отслеживание одноранговых подключений</string>
+  <string name="connection_monitor_channels">Каналы</string>
   <string name="pref_push_notifications_logs_title">Журналы push-уведомлений</string>
   <string name="pref_push_notifications_logs_summary">Просмотр журналов, полученных
          из push-уведомлений.</string>
