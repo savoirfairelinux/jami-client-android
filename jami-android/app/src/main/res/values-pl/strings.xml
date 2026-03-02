@@ -4,6 +4,9 @@
   <string name="submit_issue_title">Zgłoś błąd</string>
   <string name="submit_issue_action_description"><u>Stwórz nowe zgłoszenie błędu</u></string>
   <string name="section_license">Licencja</string>
+  <string name="switch_conversation">Przełącz konwersację</string>
+  <string name="delete_conversation_confirmation">Jesteś pewien/a, że chcesz usunąć tą rozmowę bezpowrotnie?</string>
+  <string name="view_switch_camera">Przełącz aparat</string>
   <string name="sponsor_section">Jami to wolne oprogramowanie, stworzone i wspierane przez</string>
   <string name="copyright_section">Prawa autorskie</string>
   <string name="contribute_section">Współpracuj</string>
@@ -51,7 +54,7 @@
     <item quantity="other">%d Rozmowy</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Wyszukaj nazwę lub rozmowę...</string>
+  <string name="searchbar_hint">Wyszukaj albo dodaj</string>
   <string name="choose_number">Wybierz numer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -94,7 +97,8 @@
   <string name="location_share_about_title">Informacje o mapie</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ty:</string>
-  <string name="action_call_hangup">Rozłącz się</string>
+  <string name="action_call_hangup">Skończ rozmowę</string>
+  <string name="action_call_resume">Kontynuuj</string>
   <string name="action_call_maximize">Maksymalizuj</string>
   <string name="action_call_minimize">Zredukuj</string>
   <string name="action_call_mute">Wycisz</string>
@@ -103,11 +107,14 @@
   <string name="hist_in_call">Czas przychodzączego połączenia: %1$s</string>
   <string name="hist_out_call">Czas wychodzączego połączenia: %1$s</string>
   <string name="call_duration">Połączenie trwało %s</string>
+  <string name="call_on_hold">Rozmowa jest zawieszona</string>
   <string name="start_error_title">Nie można uruchomić Jami</string>
   <string name="action_call_accept">Zaakceptuj rozmowę</string>
   <string name="action_call_accept_audio">Odbierz z dźwiękiem</string>
   <string name="action_call_accept_video">Odbierz z obrazem</string>
   <string name="action_call_hold_accept">Odbierz z dźwiękiem przychodzącą rozmowę i wstrzymaj obecną rozmowę</string>
+  <string name="switch_to_audio">Wyłącz wideo</string>
+  <string name="switch_to_video">Włącz video</string>
   <string name="action_call_hold_accept_video">Odbierz z obrazem przychodzącą rozmowę i wstrzymaj obecną rozmowę</string>
   <string name="action_call_end_accept"> Odbierz przychodzącą rozmowę i zakończ obecną rozmowę</string>
   <string name="action_call_decline">Odrzuć</string>
@@ -184,6 +191,8 @@
   <string name="conversation_action_remove_this_message">To usunie kontakt i całkowicie wyczyści historię rozmowy.</string>
   <string name="conversation_action_add_this_message">Wyślij żądanie połączenia.</string>
   <string name="remove_conversation">Usuń rozmowę</string>
+  <string name="conversation_action_remove_title">Usunąć konwersację?</string>
+  <string name="conversation_action_remove_message">To usunie tę rozmowę bez usuwania kontaktu.</string>
   <string name="swarm_group_action_leave">Opuść grupę</string>
   <string name="swarm_group_action_leave_title">Wyjść z tej grupy?</string>
   <string name="swarm_group_action_leave_message">Usunąć tą rozmowę z listy rozmów?</string>
@@ -212,6 +221,7 @@
   <string name="conversation_ended">Rozmowa się skończyła.</string>
   <string name="conversation_message_deleted">%s usunął wiadomość</string>
   <string name="conversation_reply_you">Ty</string>
+  <string name="video_not_found">Plik wideo nie został odnaleziony</string>
   <string name="conversation_preference_color">Kolor rozmowy</string>
   <string name="conversation_preference_emoji">Emoji rozmowy</string>
   <string name="conversation_type_contact">Kontakty Jami</string>
@@ -249,6 +259,7 @@
   <string name="help_password_choose">Wybierz silne hasło, które zapamiętasz, by chronić swoje konto Jami.</string>
   <string name="help_password_enter">Wprowadź hasło do swojego głównego konta Jami</string>
   <string name="help_server_enter">Wprowadź URL serwera zarządzania.</string>
+  <string name="pin_copied">Kod uwierzytelniania został skopiowany do schowka.</string>
   <string name="copied_clipboard">Skopiowane do schowka.</string>
   <string name="wizard_next">Następne</string>
   <string name="wizard_back">Wstecz</string>
@@ -327,6 +338,7 @@
   <string name="file_transfer_status_error">Błąd podczas przesyłania pliku.</string>
   <string name="file_transfer_status_timed_out">Operacja zakończona niepowodzeniem z powodu przekroczenia limitu czasu.</string>
   <string name="file_saved_in">Plik zapisany w %s.</string>
+  <string name="file_saved_successfully">Plik został zapisany pomyślnie .</string>
   <string name="file_download">Pobierz</string>
   <string name="no_space_left_on_device">Brak miejsca na dysku urządzenia.</string>
   <string name="title_media_viewer">Przeglądarka mediów</string>
@@ -341,6 +353,7 @@
   <string name="menu_message_delete">Usuń wiadomość</string>
   <string name="menu_message_cancel">Anuluj wiadomość</string>
   <string name="menu_message_reply">Odpowiedz</string>
+  <string name="menu_message_cancel_reply">Anuluj odpowiedź</string>
   <string name="menu_delete">Usuń</string>
   <string name="pref_darkTheme_title">Ciemny motyw</string>
   <string name="pref_darkTheme_summary">Zawsze używaj ciemnego motywu bez względu na ustawienia systemu</string>
@@ -460,12 +473,17 @@
   <string name="unable_to_load">Nie można załadować %1$s</string>
   <string name="load_success">%1$s jest włączone</string>
   <string name="unload_success">%1$s: wyłączone </string>
+  <string name="install_success">Rozszerzenie %1$s zostało zainstalowane pomyślnie.</string>
   <string name="install_error">Wystąpił błąd podczas importowania rozszerzenia.</string>
   <string name="export_side_main_title">Wyeksportuj konto</string>
   <string name="import_side_main_title">Importuj konto</string>
+  <string name="link_device_dialog_stop_title">Czy chcesz przestać łączyć to urządzenie?</string>
+  <string name="link_device_dialog_stop_export_body">Zatrzymanie anuluje operację eksportu.</string>
+  <string name="link_device_dialog_stop_import_body">Zatrzymanie anuluje operację importu konta.</string>
   <string name="export_side_step1_advice_qr">W nowym urządzeniu, zacznij nowe konto.\nWybierz Konto &amp;gt; Dodaj konto &amp;gt, Połącz z innego urządzenia\n Kiedy się wyświetli, zeskanuj kod QR</string>
   <string name="export_side_step1_switch_to_code">Albo kliknij tu, żeby wprowadzić kod autentykacyjny</string>
   <string name="export_side_step1_switch_to_qr"> Albo kliknij tu, żeby zeskanować kod QR</string>
+  <string name="export_side_step1_error_malformed">Nierozpoznany nowy identyfikator urządzenia. Należy postępować zgodnie z powyższymi instrukcjami.</string>
   <string name="export_side_step1_code_connect">Połącz</string>
   <string name="export_side_step2_advice">Nowe urządzenie jest zlokalizowane tutaj. Czy to Ty?\nPotwierdź aby kontynuować eksport konta.</string>
   <string name="export_side_step2_advice_ip_only">Nowe urządzenie jest zlokalizowane pod poniższym adresem. Czy to Ty?\nPotwierdź aby kontynuować eksport konta.</string>
@@ -473,6 +491,8 @@
   <string name="export_side_step2_cancel">Anuluj</string>
   <string name="export_side_step2_confirm">Potwierdź</string>
   <string name="export_side_step2_password">Konto jest zabezpieczone hasłem.\nWpisz hasło w nowym urządzeniu, aby kontynuować.</string>
+  <string name="export_side_step3_body_loading">Operacja eksportu konta do nowego urządzenia jest w toku. Proszę zaczekać..</string>
+  <string name="export_side_step3_body_done">Konto zostało z powodzeniem zaimportowane na nowe urządzenie.</string>
   <string name="export_side_step3_exit">Zakończ</string>
   <string name="import_side_step1_advice_qr">Rozpocznij eksport konta w urządzeniu źródłowym\n<b>Wybierz Konto &gt; Ustawienia konta &gt; Połącz nowe urządzenie</b>\nZeskanuj poniższy kod QR.</string>
   <string name="import_side_step1_advice_code">Rozpocznij eksport konta na urządzeniu źródłowym.\n<b>Wybierz Konto &gt; Ustawienia konta &gt; Połącz nowe urządzenie</b>\nWpisz ponniższy kod.</string>
@@ -484,8 +504,22 @@
   <string name="import_side_step2_password_prompt">Konto jest zabezpieczone hasłem.\nWpisz hasło by kontynuować.</string>
   <string name="import_side_step2_password_import">Importuj</string>
   <string name="import_side_step2_password_unlocking">Odblokowanie konta…</string>
+  <string name="import_side_step2_action_required">Wymagane działanie. Proszę potwierdzić konto na urządzeniu źródłowym.</string>
+  <string name="import_side_step3_body_loading">Konto jest importowane na nowe urządzenie. Proszę zaczekać..</string>
+  <string name="import_side_step3_body_done">Konto zostało zaimportowane pomyślnie.</string>
+  <string name="import_side_step3_go_to_account">Idź do nowego konta</string>
   <string name="import_side_step3_exit">Zakończ</string>
+  <string name="link_device_share_title">Podziel się kodem uwierzytelniania</string>
+  <string name="link_device_error_network">Podczas łączenia urządzenia wystąpił błąd sieciowy. Proszę sprawdzić połączenie i spróbować ponownie.</string>
+  <string name="link_device_error_authentication">Podczas łączenia urządzenia wystąpił błąd uwierzytelniania. Proszę sprawdzić dane logowania i spróbować ponownie.</string>
   <string name="link_device_error_timeout">Operacja zakończona niepowodzeniem z powodu przekroczenia limitu czasu.</string>
+  <string name="link_device_error_canceled">Operacja została przerwana przez użytkownika.</string>
   <string name="link_device_error_unknown">Wystąpił błąd.</string>
   <string name="link_device_error_bad_password">Sprawdź poprawność hasła i spróbuj ponownie.</string>
+  <string name="test_push">Test powiadomienia Push</string>
+  <!--Accessibility-->
+  <string name="step_title_create_username">Utwórz nazwę użytkownika</string>
+  <string name="step_title_set_password">Ustaw hasło</string>
+  <string name="step_title_create_profile">Utwórz profil</string>
+  <string name="step_format">Krok %1$d z %2$d: %3$s</string>
 </resources>

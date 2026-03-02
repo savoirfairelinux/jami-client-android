@@ -4,6 +4,10 @@
   <string name="submit_issue_title">Soumettre un bug</string>
   <string name="submit_issue_action_description"><u>Créer un nouveau ticket</u></string>
   <string name="section_license">Licence</string>
+  <string name="switch_conversation">Changer de conversation</string>
+  <string name="delete_conversation_confirmation">Êtes-vous certain de vouloir supprimer cette conversation ? </string>
+  <string name="acc_profile_photo_capture">Prendre une photo</string>
+  <string name="view_switch_camera">Changer de caméra</string>
   <string name="sponsor_section">Jami est un logiciel libre développé et supporté par</string>
   <string name="copyright_section">Droits d\'auteurs</string>
   <string name="contribute_section">Contribuer</string>
@@ -50,7 +54,7 @@
     <item quantity="other">%d conversation</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Rechercher un nom ou une conversation</string>
+  <string name="searchbar_hint">Rechercher ou ajouter</string>
   <string name="choose_number">Choisissez un numéro</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -84,6 +88,8 @@
   <string name="notif_incoming_picture">Photo de %1$s</string>
   <string name="notif_sync_title">Synchronisation des données en cours...</string>
   <string name="notif_location_title">Partage de la localisation avec %1$s</string>
+  <string name="notif_channel_reconnect">Synchronisation en arrière plan</string>
+  <string name="notif_reconnect_title">Jami se synchronise ...</string>
   <string name="location_share_contact">%1$s partage sa localisation avec vous</string>
   <string name="notif_location_multi_title">Partage de la localisation avec %1$d contacts</string>
   <string name="notif_location_remaining">%1$d minutes restantes</string>
@@ -93,7 +99,8 @@
   <string name="location_share_about_title">Informations sur la carte</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vous :</string>
-  <string name="action_call_hangup">Raccrocher</string>
+  <string name="action_call_hangup">Fin d’appel</string>
+  <string name="action_call_resume">Reprendre l\'appel</string>
   <string name="action_call_maximize">Agrandir</string>
   <string name="action_call_minimize">Réduire</string>
   <string name="action_call_mute">Couper le micro</string>
@@ -102,11 +109,14 @@
   <string name="hist_in_call">Appel entrant de %1$s</string>
   <string name="hist_out_call">Appel sortant de %1$s</string>
   <string name="call_duration">Dernier %s</string>
+  <string name="call_on_hold">L\'appel est en attente</string>
   <string name="start_error_title">Impossible de démarrer Jami !</string>
   <string name="action_call_accept">Prendre l\'appel</string>
   <string name="action_call_accept_audio">Accepter en audio</string>
   <string name="action_call_accept_video">Accepter en vidéo</string>
   <string name="action_call_hold_accept">Accepter l\'appel en audio et mettre l\'appel en cours sur pause.</string>
+  <string name="switch_to_audio">Désactiver la vidéo</string>
+  <string name="switch_to_video">Activer la vidéo</string>
   <string name="action_call_hold_accept_video">Accepter l\'appel vidéo et mettre l\'appel en cours sur pause.</string>
   <string name="action_call_end_accept">Accepter l\'appel entrant et raccrocher l\'appel courant</string>
   <string name="action_call_decline">Refuser</string>
@@ -345,6 +355,7 @@
   <string name="menu_message_delete">Supprimer le message</string>
   <string name="menu_message_cancel">Annuler le message</string>
   <string name="menu_message_reply">Répondre</string>
+  <string name="menu_message_cancel_reply">Annuler la réponse</string>
   <string name="menu_delete">Supprimer</string>
   <string name="pref_darkTheme_title">Thème sombre</string>
   <string name="pref_darkTheme_summary">Toujours activer le thème sombre plutôt que d\'utiliser les paramètres du système</string>
@@ -519,4 +530,10 @@ Veuillez patienter.</string>
   <string name="link_device_error_canceled">L\'opération a été annulée.</string>
   <string name="link_device_error_unknown">Une erreur s\'est produite</string>
   <string name="link_device_error_bad_password">Veuillez vérifier vos informations d\'identification et réessayer.</string>
+  <string name="test_push">Tester les notifications poussées.</string>
+  <!--Accessibility-->
+  <string name="step_title_create_username">Créer un nom d\'utilisateur</string>
+  <string name="step_title_set_password">Définir mot de passe</string>
+  <string name="step_title_create_profile">Créer un profile</string>
+  <string name="step_format">Étape %1$d de %2$d: %3$s</string>
 </resources>

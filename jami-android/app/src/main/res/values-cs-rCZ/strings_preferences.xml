@@ -50,6 +50,7 @@
   <string name="pref_logs_stop">Zazstavení záznamu</string>
   <string name="pref_connection_monitor">Monitor připojení</string>
   <string name="pref_connection_monitor_summary">Monitor peer-to-peer připojení</string>
+  <string name="connection_monitor_channels">Kanály</string>
   <string name="pref_push_notifications_logs_title"> Protokoly push notifikací</string>
   <string name="pref_push_notifications_logs_summary">Zobrazit protokoly zachycené z push
         oznámení.</string>

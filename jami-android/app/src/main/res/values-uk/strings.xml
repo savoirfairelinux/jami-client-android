@@ -51,7 +51,6 @@
     <item quantity="other">%d Групові чати</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Пошук імені в груповому чаті...</string>
   <string name="choose_number">Оберіть номер</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -94,7 +93,7 @@
   <string name="location_share_about_title">Інформація з карти</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ви:</string>
-  <string name="action_call_hangup">Зупинити</string>
+  <string name="action_call_hangup">Закінчити дзвінок</string>
   <string name="action_call_maximize">Збільшити</string>
   <string name="action_call_minimize">Зменшити</string>
   <string name="action_call_mute">Без звуку</string>
@@ -108,6 +107,7 @@
   <string name="action_call_accept_audio">Прийняти зі звуком</string>
   <string name="action_call_accept_video">Прийняти з відео</string>
   <string name="action_call_hold_accept">Прийняти вхідний дзвінок тільки зі звуком та утримати поточний дзвінок</string>
+  <string name="switch_to_video">Увімкнути відео</string>
   <string name="action_call_hold_accept_video">Прийняти вхідний дзвінок з відео та утримати поточний дзвінок</string>
   <string name="action_call_end_accept">Прийняти вхідний дзвінок та завершити поточний дзвінок</string>
   <string name="action_call_decline">Відхилити</string>
@@ -488,4 +488,6 @@
   <string name="link_device_error_timeout">Час очікування операції вичерпано.</string>
   <string name="link_device_error_unknown">Сталася помилка.</string>
   <string name="link_device_error_bad_password">Будь ласка, перевірте облікові дані та спробуйте знову.</string>
+  <!--Accessibility-->
+  <string name="step_title_set_password">Задати пароль</string>
 </resources>
