@@ -74,7 +74,7 @@
   <string name="notif_channel_background_service_descr">Омогућава примање позива и порука у било ком тренутку.</string>
   <string name="notif_group_calls">Позиви</string>
   <string name="notif_inprogress_group_call">Позив у току</string>
-  <string name="notif_background_service">Jami trenutno radi u pozadini</string>
+  <string name="notif_background_service">Glowmate trenutno radi u pozadini</string>
   <string name="notif_mark_as_read">Означи као прочитано</string>
   <string name="notif_dismiss">Одбаци</string>
   <string name="notif_reply">Одговори</string>
@@ -116,7 +116,7 @@
   <string name="write_a_message">Napiši poruku</string>
   <string name="scan_qr">Скенирај QR код</string>
   <string name="qr_code">QR код</string>
-  <string name="qr_code_not_contact">Nije QR kod za kontakt sa Jami</string>
+  <string name="qr_code_not_contact">Nije QR kod za kontakt sa Glowmate</string>
   <string name="new_group">Kreiraj novu grupu</string>
   <string name="ab_action_flipcamera">Обрни камеру</string>
   <string name="ab_action_hidepreview">Сакриј преглед</string>
@@ -145,7 +145,7 @@
   <string name="ringtone_custom_prompt">Подесите прилагођену мелодију звона</string>
   <string name="ringtone_custom_label">Прилагођено</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jamiju je potrebna dozvola „Čitanje kontakata“. Omogućite ga u podešavanjima uređaja da biste koristili ovu funkciju.</string>
+  <string name="permission_dialog_read_contacts_message">Glowmateju je potrebna dozvola „Čitanje kontakata“. Omogućite ga u podešavanjima uređaja da biste koristili ovu funkciju.</string>
   <!--Write call log permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Скенирајте QR код налога који желите да додате.</string>
@@ -303,8 +303,8 @@
   <string name="conversation_input_speech_hint">Реци нешто…</string>
   <string name="audio_permission_denied">Dozvola za mikrofon je onemogućena. Omogućite ga u podešavanjima uređaja da biste koristili ovu funkciju.</string>
   <string name="audio_permission_rationale_title">Potrebna je audio dozvola</string>
-  <string name="audio_permission_rationale_message">Jami-ju je potrebna dozvola mikrofona za korišćenje govora u tekst i snimanje audio funkcija. To će biti postavljeno u sledećem koraku.</string>
-  <string name="camera_permission_rationale_message">Jamiju je potrebna dozvola kamere da bi snimio video i uputio video poziv. To će biti postavljeno u sledećem koraku.</string>
+  <string name="audio_permission_rationale_message">Glowmate-ju je potrebna dozvola mikrofona za korišćenje govora u tekst i snimanje audio funkcija. To će biti postavljeno u sledećem koraku.</string>
+  <string name="camera_permission_rationale_message">Glowmateju je potrebna dozvola kamere da bi snimio video i uputio video poziv. To će biti postavljeno u sledećem koraku.</string>
   <string name="unable_to_start_recorder">Nije moguće započeti snimanje zvuka.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Препоручено</string>
@@ -357,17 +357,17 @@
   <string name="error_open_no_app_found">Није пронађена ниједна апликација за обраду ове датотеке: %1$s</string>
   <string name="swarm_detail_no_document">Još nemate dokumenta.</string>
   <string name="group_admin">Admin</string>
-  <string name="share_contact_intent_title">Dodajte ovaj kontakt na Jami!</string>
+  <string name="share_contact_intent_title">Dodajte ovaj kontakt na Glowmate!</string>
   <string name="share_contact_intent_body">Можете додати овај контакт „%1$s“ на Јама дистрибуираној комуникацијској платформи: %2$s</string>
-  <!--JamiId-->
-  <string name="jami_id_copy">Копирај JamiId</string>
-  <string name="jami_id_share">Подели JamiId</string>
+  <!--GlowmateId-->
+  <string name="jami_id_copy">Копирај GlowmateId</string>
+  <string name="jami_id_share">Подели GlowmateId</string>
   <string name="jami_id_validate">Региструј корисничко име</string>
   <string name="jami_id_available">Корисничко име је доступно.</string>
   <string name="jami_id_info">• Максимално 32 знака\n• Дозвољени специјални знакови: цртица (-), доња црта (_)</string>
   <string name="jami_id_looking_for_availability">Проверава се доступност корисничког имена…</string>
   <string name="jami_id_choose_username">Изабери корисничко име</string>
-  <!--WelcomeJami-->
+  <!--WelcomeGlowmate-->
   <string name="welcome_jami_title">Добродошли у Јами</string>
   <string name="welcome_jami_description">Поделите свој Јами идентификатор како бисте лакше контактирали!</string>
   <!--Conversation details-->

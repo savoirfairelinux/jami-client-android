@@ -10,7 +10,7 @@
   <string name="pref_category_connectivity">Anslutningsbarhet</string>
   <string name="pref_category_video_settings">Avancerade video inställningar</string>
   <string name="pref_mobileData_title">Mobildata</string>
-  <string name="pref_mobileData_summary">Tillåt Jami på 3G/LTE-nätverk, som tillägg till WiFi</string>
+  <string name="pref_mobileData_summary">Tillåt Glowmate på 3G/LTE-nätverk, som tillägg till WiFi</string>
   <string name="pref_pushNotifications_title">Använd aviseringar</string>
   <string name="pref_pushNotifications_summary">Använd Google-servrar för att ta emot samtal/meddelanden i bakgrunden</string>
   <string name="pref_unifiedPush_summary">Använd en UnifiedPush-tjänst för att tillåta att ta emot samtal/meddelanden i bakgrunden</string>
@@ -25,10 +25,10 @@
   <string name="pref_videoResolution_summary">Ange grundinställd utgående videoupplösning </string>
   <string name="pref_systemContacts_title">Använd systemkontakter</string>
   <string name="pref_systemContacts_summary">Använd systemkontakter för att visa uppringaren info</string>
-  <string name="pref_systemDialer_title">Använd Jami till systemsamtal</string>
-  <string name="pref_systemDialer_summary">Använd om möjligt Jami för systemsamtal.</string>
-  <string name="pref_startOnBoot_title">Starta Jami vid systemstart</string>
-  <string name="pref_startOnBoot_summary">Kör Jami i bakgrunden när systemet startas</string>
+  <string name="pref_systemDialer_title">Använd Glowmate till systemsamtal</string>
+  <string name="pref_systemDialer_summary">Använd om möjligt Glowmate för systemsamtal.</string>
+  <string name="pref_startOnBoot_title">Starta Glowmate vid systemstart</string>
+  <string name="pref_startOnBoot_summary">Kör Glowmate i bakgrunden när systemet startas</string>
   <string name="pref_clearHistory_title">Rensa historik</string>
   <string name="pref_notification_title">Synlighet för notiser. </string>
   <string name="pref_notification_summary">Ange synlighet för appens notiser på låst skärm. </string>
@@ -36,7 +36,7 @@
   <string name="pref_blackList_summary">Kontrollera din blockeringslista. </string>
   <string name="pref_delete_account_title">Ta bort konto</string>
   <string name="pref_newGroup_title">Aktivera gruppchat</string>
-  <string name="pref_newGroup_summary">Skapar grupper i Jami.</string>
+  <string name="pref_newGroup_summary">Skapar grupper i Glowmate.</string>
   <string name="pref_logs_title">Diagnostiklogg</string>
   <string name="pref_logs_summary">Öppna inställningar för diagnostiklogg</string>
   <string name="pref_logs_start">Starta loggning</string>

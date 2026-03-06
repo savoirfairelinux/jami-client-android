@@ -8,16 +8,16 @@
   <string name="delete_conversation_confirmation">Ali ste prepričani, da želite izbrisati ta pogovor?</string>
   <string name="acc_profile_photo_capture">Zajemi fotografijo</string>
   <string name="view_switch_camera">Preklopi kamero</string>
-  <string name="sponsor_section">Jami je prosto programje, ki ga razvija in podpira</string>
+  <string name="sponsor_section">Glowmate je prosto programje, ki ga razvija in podpira</string>
   <string name="copyright_section">Avtorske pravice</string>
   <string name="contribute_section">Prispevaj</string>
   <string name="version_section">Različica</string>
   <string name="no_browser_app_installed">Spletni brskalnik ni bil najden. Namestite ga, če želite videti to stran</string>
   <string name="website_chooser_title">Pokaži spletišče z ...</string>
   <string name="license">Ta programska oprema je na voljo »kakršna je«, brez kakršnihkoli zagotovil in garancije. Za podrobnosti glejte <u>Splošno javno dovoljenje GNU različice 3 ali novejše</u></string>
-  <string name="description">Jami je brezplačen program za univerzalno komunikacijo, ki spoštuje svobodo in zasebnost svojih uporabnikov.</string>
+  <string name="description">Glowmate je brezplačen program za univerzalno komunikacijo, ki spoštuje svobodo in zasebnost svojih uporabnikov.</string>
   <string name="credits">Zasluge</string>
-  <string name="pip_title">Konferenca Jami</string>
+  <string name="pip_title">Konferenca Glowmate</string>
   <string name="call_service_description">Ta storitev je nujna za delovanje vaših klicev v ospredju. Deluje le med klici.</string>
   <string name="data_transfer_service_description">Ta storitev je nujna za prikaz obstojnih sporočil med prenosom datotek. Deluje le med prenašanjem datotek.</string>
   <!--About dialog-->
@@ -26,7 +26,7 @@
   <string name="media">Medij</string>
   <string name="community_management">Upravljanje skupnosti</string>
   <string name="special_thanks">Posebne zahvale</string>
-  <string name="end_note">To je seznam vseh, ki so pomembno prispevali svoj čas in napore ter doprinesli k projektu Jami. Vsi, ki zaradi svojega prispevka pogrešate svoje ime na seznamu, stopite v stik z nami na naslovu contact@jami.net.</string>
+  <string name="end_note">To je seznam vseh, ki so pomembno prispevali svoj čas in napore ter doprinesli k projektu Glowmate. Vsi, ki zaradi svojega prispevka pogrešate svoje ime na seznamu, stopite v stik z nami na naslovu contact@jami.net.</string>
   <!--RingActivity-->
   <string name="error_no_network">Ni omrežne povezave</string>
   <string name="error_account_offline">Račun ni povezan</string>
@@ -41,7 +41,7 @@
   <string name="menu_item_account_settings">Nastavitve računa</string>
   <string name="menu_item_extension_list">Nastavitve razširitev</string>
   <string name="menu_item_share">Deli moj račun</string>
-  <string name="menu_item_about">O programu Jami</string>
+  <string name="menu_item_about">O programu Glowmate</string>
   <string name="video_setting_title">Nastavitve videa</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Kliči številko</string>
@@ -80,7 +80,7 @@
   <string name="notif_channel_background_service_descr">Dovoli sprejemanje klicev in sporočil kadarkoli.</string>
   <string name="notif_group_calls">Klici</string>
   <string name="notif_inprogress_group_call">Klic poteka</string>
-  <string name="notif_background_service">Jami se trenutno izvaja v ozadju</string>
+  <string name="notif_background_service">Glowmate se trenutno izvaja v ozadju</string>
   <string name="notif_mark_as_read">Označi kot prebrano</string>
   <string name="notif_dismiss">Opusti</string>
   <string name="notif_reply">Odgovori</string>
@@ -90,7 +90,7 @@
   <string name="notif_sync_title">Sinhronizacija podatkov ...</string>
   <string name="notif_location_title">Deljenje lokacije z %1$s</string>
   <string name="notif_channel_reconnect">Usklajevanje v ozadju</string>
-  <string name="notif_reconnect_title">Jami se usklajuje ...</string>
+  <string name="notif_reconnect_title">Glowmate se usklajuje ...</string>
   <string name="location_share_contact">%1$s deli lokacijo z vami</string>
   <string name="notif_location_multi_title">Deljenje lokacije s %1$d stiki</string>
   <string name="notif_location_remaining">Preostalo je še %1$d minut</string>
@@ -111,7 +111,7 @@
   <string name="hist_out_call">Odhodni klic do %1$s</string>
   <string name="call_duration">Trajanje: %s</string>
   <string name="call_on_hold">Klic je na čakanju</string>
-  <string name="start_error_title">Jami ni možno zagnati</string>
+  <string name="start_error_title">Glowmate ni možno zagnati</string>
   <string name="action_call_accept">Sprejmi klic</string>
   <string name="action_call_accept_audio">Sprejmi z zvokom</string>
   <string name="action_call_accept_video">Sprejmi z videosliko</string>
@@ -133,7 +133,7 @@
   <string name="write_a_message">Napiši sporočilo</string>
   <string name="scan_qr">Preberi QR-kodo</string>
   <string name="qr_code">QR-koda</string>
-  <string name="qr_code_not_contact">Ni koda QR stika Jami</string>
+  <string name="qr_code_not_contact">Ni koda QR stika Glowmate</string>
   <string name="new_group">Ustvari novo skupino</string>
   <string name="ab_action_flipcamera">Zrcali kamero</string>
   <string name="ab_action_hidepreview">Skrij predogled</string>
@@ -163,11 +163,11 @@
   <string name="ringtone_error_size_too_big">Ta datoteka je prevelika. Največja velikost je %1$d kB.</string>
   <string name="ringtone_custom_prompt">Določi zvonjenje po meri</string>
   <string name="ringtone_custom_label">Po meri</string>
-  <string name="ringtone_jami_tones">Zvonjenja Jami</string>
+  <string name="ringtone_jami_tones">Zvonjenja Glowmate</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami potrebuje dovoljenje za »branje stikov«, da bi uporabili to funkcijo. Potrdite ga v nastavitvah naprave..</string>
+  <string name="permission_dialog_read_contacts_message">Glowmate potrebuje dovoljenje za »branje stikov«, da bi uporabili to funkcijo. Potrdite ga v nastavitvah naprave..</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami potrebuje dovoljenje za »pisanje zapisnika klicev«, da bi uporabili to funkcijo. Potrdite ga v nastavitvah naprave..</string>
+  <string name="permission_dialog_write_call_log_message">Glowmate potrebuje dovoljenje za »pisanje zapisnika klicev«, da bi uporabili to funkcijo. Potrdite ga v nastavitvah naprave..</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Preberite QR-kodo stika, ki ga želite dodati.</string>
   <string name="title_activity_qrcode">Deli moj račun</string>
@@ -227,7 +227,7 @@
   <string name="video_not_found">Videodatoteke ni možno najti</string>
   <string name="conversation_preference_color">Barva pogovora</string>
   <string name="conversation_preference_emoji">Emoji pogovora</string>
-  <string name="conversation_type_contact">Stik Jami</string>
+  <string name="conversation_type_contact">Stik Glowmate</string>
   <string name="conversation_type_private">Zasebno</string>
   <string name="conversation_type_group">Skupina</string>
   <string name="conversation_contact_invited">%1$s je povabljen/a, da se pridruži pogovoru.</string>
@@ -256,11 +256,11 @@
   <string name="prompt_new_password">Novo geslo</string>
   <string name="prompt_new_password_optional">Novo geslo (neobvezno)</string>
   <string name="prompt_new_password_repeat">Potrdite novo geslo</string>
-  <string name="account_create_title">Ustvarite račun Jami</string>
+  <string name="account_create_title">Ustvarite račun Glowmate</string>
   <string name="prompt_new_username">Vpiši novo uporabniško ime</string>
   <string name="prompt_hint_username">Uporabniško ime</string>
-  <string name="help_password_choose">Izberite močno geslo, ki si ga boste zapomnili in z njim zaščitili svoj račun Jami.</string>
-  <string name="help_password_enter">Vnesite glavno geslo svojega Jami računa.</string>
+  <string name="help_password_choose">Izberite močno geslo, ki si ga boste zapomnili in z njim zaščitili svoj račun Glowmate.</string>
+  <string name="help_password_enter">Vnesite glavno geslo svojega Glowmate računa.</string>
   <string name="help_server_enter">Vnesite URL upravljalnega strežnika.</string>
   <string name="pin_copied">Overitvena koda je kopirana na odložišče.</string>
   <string name="copied_clipboard">Kopirano na odložišče.</string>
@@ -292,7 +292,7 @@
   <string name="devices">Povezane naprave</string>
   <string name="total_devices">Skupaj naprav:</string>
   <!--Share fragment-->
-  <string name="share_message">Preberi kodo z Jamijem.</string>
+  <string name="share_message">Preberi kodo z Glowmatejem.</string>
   <string name="share_message_no_account">Izberite račun, ki ga želite deliti.</string>
   <string name="share_your_account_information">Deli podatke o mojem stiku</string>
   <string name="share_contact_information">Deli podatke o stiku</string>
@@ -384,8 +384,8 @@
   <string name="speech_recogniton_unavailable">Razpoznavanje govora ni na voljo.</string>
   <string name="audio_permission_rationale_title">Zahtevano je dovoljenje za zvok</string>
   <string name="camera_permission_rationale_title">Zahtevano je dovoljenje za kamero</string>
-  <string name="audio_permission_rationale_message">Jami zahteva dovoljenje mikrofona za uporabo funkcije govor-v-besedilo in za funkcije snemanja zvoka. O tem boste povprašani v naslednjem koraku.</string>
-  <string name="camera_permission_rationale_message">Jami zahteva dovoljenje kamere za snemanje videa in za vzpostavljanje videoklica. O tem boste povprašani v naslednjem koraku.</string>
+  <string name="audio_permission_rationale_message">Glowmate zahteva dovoljenje mikrofona za uporabo funkcije govor-v-besedilo in za funkcije snemanja zvoka. O tem boste povprašani v naslednjem koraku.</string>
+  <string name="camera_permission_rationale_message">Glowmate zahteva dovoljenje kamere za snemanje videa in za vzpostavljanje videoklica. O tem boste povprašani v naslednjem koraku.</string>
   <string name="unable_to_start_recorder">Snemanja zvoka ni možno sprožiti.</string>
   <string name="error_sharing_file">Pri skupni rabi datoteke je prišlo do napake.</string>
   <string name="error_opening_file">Pri odpiranju datoteke je prišlo do napake.</string>
@@ -438,25 +438,25 @@
   <string name="picker_title">Izberite stike</string>
   <string name="picker_btn">Izberite stike</string>
   <string name="no_contact_to_add">Nimate stikov, ki bi jih lahko dodali</string>
-  <string name="bottomsheet_contact">Stop v stik z Jamijem\n%1$s</string>
+  <string name="bottomsheet_contact">Stop v stik z Glowmatejem\n%1$s</string>
   <string name="bottomsheet_remove">Odstrani člana</string>
   <string name="error_open_no_app_found">Ni programa, ki bi znal ravnati z datoteko: %1$s</string>
   <string name="swarm_detail_no_document">Trenutno še nimate dokumentov.</string>
   <string name="group_admin">Skrbnik</string>
-  <string name="share_contact_intent_title">Dodaj stik v Jami!</string>
-  <string name="share_contact_intent_body">Ta stik %1$s lahko dodate na razpršeno komunikacijsko platformo Jami: %2$s</string>
-  <!--JamiId-->
-  <string name="jami_id_copy">Kopiraj JamiId</string>
-  <string name="jami_id_share">Deli JamiId</string>
+  <string name="share_contact_intent_title">Dodaj stik v Glowmate!</string>
+  <string name="share_contact_intent_body">Ta stik %1$s lahko dodate na razpršeno komunikacijsko platformo Glowmate: %2$s</string>
+  <!--GlowmateId-->
+  <string name="jami_id_copy">Kopiraj GlowmateId</string>
+  <string name="jami_id_share">Deli GlowmateId</string>
   <string name="jami_id_validate">Registriraj uporabniško ime</string>
   <string name="jami_id_available">Uporabniško ime je na voljo.</string>
   <string name="jami_id_not_available">Uporabniško ime ni na voljo.</string>
   <string name="jami_id_info">• Največ 32 znakov\n• Dovoljena posebna znaka: vezaj (-), podčrtaj (_)</string>
   <string name="jami_id_looking_for_availability">Poteka preverjanje, ali je uporabniško ime na voljo ...</string>
   <string name="jami_id_choose_username">Izberite uporabniško ime</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">Dobrodošli v Jami</string>
-  <string name="welcome_jami_description">Delite svoj identifikator Jami, da vas lažje najdejo!</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">Dobrodošli v Glowmate</string>
+  <string name="welcome_jami_description">Delite svoj identifikator Glowmate, da vas lažje najdejo!</string>
   <!--Conversation details-->
   <string name="details">Detajli</string>
   <string name="secure_p2p_connection">Varna povezava med vrstniki</string>
@@ -467,7 +467,7 @@
   <string name="show_certificate">Pokaži potrdilo</string>
   <string name="mute_conversation">Utišaj pogovor</string>
   <!--Donation-->
-  <string name="donation_card_description">Če vam je Jami všeč in verjamete v naše poslanstvo - bi prispevali projektu?</string>
+  <string name="donation_card_description">Če vam je Glowmate všeč in verjamete v naše poslanstvo - bi prispevali projektu?</string>
   <string name="donation_card_not_now">Ne zdaj</string>
   <string name="donation_donate">Donirajte</string>
   <string name="donation_setting_title">Opomnik za donacije</string>

@@ -8,7 +8,7 @@
   <string name="account_selection">Вибрати обліковий запис</string>
   <string name="add_ring_account_title">Додати обліковий запис</string>
   <string name="add_sip_account_title">Додати обліковий запис SIP</string>
-  <string name="ring_account_default_name">Обліковий запис Jami %1$s</string>
+  <string name="ring_account_default_name">Обліковий запис Glowmate %1$s</string>
   <string name="account_creation_error">Сталася помилка під час створення облікового запису.</string>
   <string name="prompt_alias">Додаткове ім’я</string>
   <string name="prompt_hostname">Імʼя хоста</string>
@@ -28,7 +28,7 @@
    Ви зможете здійснювати та отримувати лише прямі IP-дзвінки.
    Ви можете редагувати свій обліковий запис пізніше</string>
   <string name="account_type_ip2ip">Обліковий запис IP</string>
-  <string name="help_ring">Обліковий запис Jami дозволяє вам безпечно зв\'язуватися з людьми напряму через повністю розподілену мережу.</string>
+  <string name="help_ring">Обліковий запис Glowmate дозволяє вам безпечно зв\'язуватися з людьми напряму через повністю розподілену мережу.</string>
   <string name="help_sip_title">Додати обліковий запис SIP</string>
   <string name="help_sip">Налаштувати існуючий SIP-обліковий запис</string>
   <string name="create_sip_account">Налаштувати SIP-обліковий запис</string>
@@ -155,27 +155,27 @@
   <string name="account_export_file_summary">Завантажуйте свій обліковий запис на свій пристрій, щоб відновити його пізніше.</string>
   <string name="account_export_end_decryption_message">Неправильний пароль. Будь ласка, спробуйте знову з правильним паролем.</string>
   <string name="account_enter_password">Ввести пароль</string>
-  <string name="account_share_body">Зв\'яжіться зі мною, використовуючи \"%1$s\" на розподіленій комунікаційній платформі Jami: %2$s</string>
-  <string name="account_share_body_with_username">Зв\'яжіться зі мною, використовуючи \"%1$s\" або моє публічне ім\'я користувача \"%2$s\" на розподіленій комунікаційній платформі Jami: %3$s</string>
+  <string name="account_share_body">Зв\'яжіться зі мною, використовуючи \"%1$s\" на розподіленій комунікаційній платформі Glowmate: %2$s</string>
+  <string name="account_share_body_with_username">Зв\'яжіться зі мною, використовуючи \"%1$s\" або моє публічне ім\'я користувача \"%2$s\" на розподіленій комунікаційній платформі Glowmate: %3$s</string>
   <string name="account_contact_me">Звініться зі мною на Джамі!</string>
   <string name="update_account">Оновити обліковий запис</string>
   <string name="account_migration">Ваш обліковий запис Джамі можна оновити.\nБудь ласка, введіть пароль.</string>
-  <string name="ring_account">Обліковий запис Jami</string>
+  <string name="ring_account">Обліковий запис Glowmate</string>
   <string name="sip_account">Спільний рахунок</string>
   <string name="ring_account_identity">Особа</string>
   <string name="account_migration_title_dialog">Переведення облікового запису</string>
   <string name="account_migration_message_dialog">Ваші облікові записи потребують оновлення. Чи хочете ви перейти до екрану управління обліковими записами для виконання цієї операції?</string>
   <string name="account_update_needed">Необхідне оновлення</string>
   <string name="account_cannot_be_found_title">Помилка облікового запису</string>
-  <string name="account_cannot_be_found_message">Не вдається знайти обліковий запис у мережі Jami. Переконайтеся, що він був експортований з Jami з існуючого пристрою, і що надані облікові дані правильні.</string>
+  <string name="account_cannot_be_found_message">Не вдається знайти обліковий запис у мережі Glowmate. Переконайтеся, що він був експортований з Glowmate з існуючого пристрою, і що надані облікові дані правильні.</string>
   <string name="jams_account_cannot_be_found_message">Сталася помилка під час підключення облікового запису. Будь ласка, перевірте облікові дані та спробуйте знову.</string>
   <string name="account_sip_cannot_be_registered_message">Ви можете продовжити створювати обліковий запис або змінити відомості тут. Зміни можна зробити пізніше в налаштуваннях облікового запису.</string>
   <string name="account_no_network_title">Збій мережі</string>
-  <string name="account_no_network_message">Сталася помилка з\'єднання під час додавання облікового запису Jami до розподіленої мережі. Перевірте підключення вашого пристрою.</string>
+  <string name="account_no_network_message">Сталася помилка з\'єднання під час додавання облікового запису Glowmate до розподіленої мережі. Перевірте підключення вашого пристрою.</string>
   <string name="account_device_added_title">Пристрій облікового запису додано</string>
-  <string name="account_device_added_message">Обліковий запис Jami успішно налаштовано на цьому пристрої.</string>
+  <string name="account_device_added_message">Обліковий запис Glowmate успішно налаштовано на цьому пристрої.</string>
   <string name="account_device_updated_title">Пристрій облікового запису оновлено</string>
-  <string name="account_device_updated_message">Обліковий запис Jami успішно оновлено.</string>
+  <string name="account_device_updated_message">Обліковий запис Glowmate успішно оновлено.</string>
   <string name="account_cannot_be_updated_message">Сталася помилка під час оновлення облікового запису. Будь ласка, перевірте пароль облікового запису.</string>
   <string name="account_sip_success_title">Зареєстровано обліковий запис SIP</string>
   <string name="account_sip_success_message">SIP-обліковий запис успішно зареєстровано.</string>
@@ -185,7 +185,7 @@
   <string name="account_tv_advance_settings_header">Розширені налаштування</string>
   <string name="account_tv_add_contact">Додавати контакт</string>
   <string name="account_tv_advanced_settings">Змінить загальні налаштування</string>
-  <string name="account_tv_about">Про Jami</string>
+  <string name="account_tv_about">Про Glowmate</string>
   <string name="tv_about_version">Версія</string>
   <string name="tv_about_license">Ліцензія</string>
   <string name="tv_about_author">Авторські права</string>
@@ -193,7 +193,7 @@
   <string name="account_link_device">Підключити з іншого пристрою</string>
   <string name="account_link_button">Підключення з мережі</string>
   <string name="account_link_archive_button">З\'єднатися з резервної системи</string>
-  <string name="account_new_button">Створення акаунту Jami</string>
+  <string name="account_new_button">Створення акаунту Glowmate</string>
   <string name="account_link_export_button">Привʼязати новий пристрій</string>
   <string name="account_link_show_button">Покажіть %d більше пов\'язаних пристроїв</string>
   <string name="account_link_hide_button">Сховати з\'єднане пристрої</string>
@@ -227,9 +227,9 @@
   <string name="account_status_offline">Поза мережею</string>
   <string name="account_status_error">Помилка</string>
   <!--Create account-->
-  <string name="account_creation_home">Вітаємо в Jami</string>
+  <string name="account_creation_home">Вітаємо в Glowmate</string>
   <string name="account_creation_profile">Створіть ваш профіль</string>
-  <string name="account_creation_ring">Створіть свій обліковий запис Jami</string>
+  <string name="account_creation_ring">Створіть свій обліковий запис Glowmate</string>
   <string name="account_sip_cannot_be_registered">Сталася помилка під час реєстрації SIP-облікового запису.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Редагувати профіль</string>
@@ -241,7 +241,7 @@
   <string name="revoke_device_wait_title">Будь ласка зачекайте</string>
   <string name="revoke_device_wait_message">Відкликаю пристрій</string>
   <string name="rename_device_title">Перейменувати цей пристрій</string>
-  <string name="rename_device_message">Введіть назву пристрою для ідентифікації цього пристрою у вашому обліковому записі Jami</string>
+  <string name="rename_device_message">Введіть назву пристрою для ідентифікації цього пристрою у вашому обліковому записі Glowmate</string>
   <string name="rename_device_button">Перейменувати пристрій</string>
   <string name="account_rename_device_hint">Вибрати нову назву для пристрою</string>
   <string name="account_device_name_empty">Назва пристрою не може бути порожньою.</string>
@@ -255,14 +255,14 @@
   <string name="content_description_qr_generated">QR-код облікового запису</string>
   <string name="account_link_device_button">З\'єднати</string>
   <!--Biometry-->
-  <string name="account_biometry_auth_title">Розблокувати обліковий запис Jami</string>
+  <string name="account_biometry_auth_title">Розблокувати обліковий запис Glowmate</string>
   <string name="account_biometry_auth_message">Використовувати біометрію для розблокування вашого облікового запису</string>
   <string name="account_biometry_enroll_title">Використовувати біометричну автентифікацію?</string>
   <string name="account_biometry_enroll_message">Ваш пристрій підтримує безпечну біометричну автентифікацію.
-Біометрична або автентифікація пристрою додає зручний спосіб локально розблокувати доступ до вашого облікового запису Jami. Ви все ще зможете використовувати свій пароль.</string>
+Біометрична або автентифікація пристрою додає зручний спосіб локально розблокувати доступ до вашого облікового запису Glowmate. Ви все ще зможете використовувати свій пароль.</string>
   <string name="account_biometry_enroll_accept">Використовувати біометрію</string>
   <string name="no_thanks">Ні, дякую</string>
-  <string name="account_biometry_enroll_auth_title">Додати автентифікацію для вашого облікового запису Jami</string>
+  <string name="account_biometry_enroll_auth_title">Додати автентифікацію для вашого облікового запису Glowmate</string>
   <string name="account_biometry_enroll_auth_message">Додати захищену біометричну або автентифікацію пристрою як альтернативу вашому паролю</string>
   <string name="account_auth_error">Помилка автентифікації: %1$s</string>
   <string name="account_auth_success">Автентифікацію успішно виконано</string>

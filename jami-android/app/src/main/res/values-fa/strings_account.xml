@@ -146,7 +146,7 @@
   <string name="account_link_device">اتصال از دستگاه دیگر</string>
   <string name="account_link_button">اتصال از طریق شبکه</string>
   <string name="account_link_archive_button">اتصال از طریق پشتیبان</string>
-  <string name="account_new_button">حساب Jami را ایجاد کنید</string>
+  <string name="account_new_button">حساب Glowmate را ایجاد کنید</string>
   <string name="account_link_export_button">پیوند دستگاه جدید</string>
   <string name="account_link_show_button">نمایش %d دستگاه‌های پیوندیافته بیشتر</string>
   <string name="account_link_hide_button">مخفی‌کردن دستگاه پیوند‌داده‌شده</string>

@@ -19,9 +19,9 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/share_frag"
-    android:name="cx.ring.tv.account.TVShareFragment"
+    android:name="com.glowmate.tv.account.TVShareFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cx.ring.tv.account.TVShareActivity"
+    tools:context="com.glowmate.tv.account.TVShareActivity"
     tools:deviceIds="tv"
     tools:ignore="MergeRootFrame" />

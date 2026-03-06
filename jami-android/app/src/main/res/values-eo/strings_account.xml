@@ -7,7 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Aldoni konton</string>
   <string name="add_sip_account_title">Aldonu SIP-konto</string>
-  <string name="ring_account_default_name">Jami konto %1$s</string>
+  <string name="ring_account_default_name">Glowmate konto %1$s</string>
   <string name="prompt_alias">Kromnomo</string>
   <string name="prompt_hostname">Nomo de gastiga komputilo</string>
   <string name="prompt_username">Uzantnomo</string>
@@ -22,7 +22,7 @@
   <string name="dialog_wait_update">Aktualigo de konto</string>
   <string name="dialog_wait_update_details">Bonvolu atendi ĝis via nova konto estos ĝisdatigita...</string>
   <string name="account_type_ip2ip">IP-konto</string>
-  <string name="help_ring">Konto Jami permesas al vi atingi homojn sekure en peer-to-peer tra plene distribuita reto.</string>
+  <string name="help_ring">Konto Glowmate permesas al vi atingi homojn sekure en peer-to-peer tra plene distribuita reto.</string>
   <string name="help_sip_title">Aldonu SIP-konto</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">Tiu ago ne povas esti inversigita.</string>
@@ -120,10 +120,10 @@
   <string name="account_export_file">Konto de rezervo</string>
   <string name="account_export_file_summary">Rezervu vian konton en via aparato por reestigi ĝin poste.</string>
   <string name="account_enter_password">Enigu pasvorton</string>
-  <string name="account_contact_me">Kontaktu min pri Jami!</string>
+  <string name="account_contact_me">Kontaktu min pri Glowmate!</string>
   <string name="update_account">Aktualigo de konto</string>
-  <string name="account_migration">Via konto de Jami povas esti ĝisdatigita. Bonvolu enmeti vian pasvorton.</string>
-  <string name="ring_account">La konto de Jami</string>
+  <string name="account_migration">Via konto de Glowmate povas esti ĝisdatigita. Bonvolu enmeti vian pasvorton.</string>
+  <string name="ring_account">La konto de Glowmate</string>
   <string name="sip_account">SIP-konto</string>
   <string name="ring_account_identity">Identigo</string>
   <string name="account_migration_title_dialog">Migrado de konto</string>
@@ -138,7 +138,7 @@
   <string name="account_tv_advance_settings_header">Antaŭaj agordoj</string>
   <string name="account_tv_add_contact">Aldonu kontakton</string>
   <string name="account_tv_advanced_settings">Ŝanĝu la ĝeneralajn agordojn</string>
-  <string name="account_tv_about">Pri Jami</string>
+  <string name="account_tv_about">Pri Glowmate</string>
   <string name="tv_about_version">Eldono</string>
   <string name="tv_about_license">Licenco</string>
   <string name="tv_about_author">Aŭtorajtoj</string>
@@ -146,7 +146,7 @@
   <string name="account_link_device">Konektiĝi de alia aparato</string>
   <string name="account_link_button">Konektiĝu de reto</string>
   <string name="account_link_archive_button">Konektiĝi de rezervo</string>
-  <string name="account_new_button">Kreu konto Jami</string>
+  <string name="account_new_button">Kreu konto Glowmate</string>
   <string name="account_link_export_button">Ligi novan aparaton</string>
   <string name="account_link_show_button">Montru %d pli ligitan aparaton</string>
   <string name="account_link_hide_button">Kaŝu ligitan aparaton</string>
@@ -174,9 +174,9 @@
   <string name="account_status_offline">Malkonektita</string>
   <string name="account_status_error">Eraro</string>
   <!--Create account-->
-  <string name="account_creation_home">Bonvenon al Jami.</string>
+  <string name="account_creation_home">Bonvenon al Glowmate.</string>
   <string name="account_creation_profile">Kreu vian profilon</string>
-  <string name="account_creation_ring">Krei vian konto Jami</string>
+  <string name="account_creation_ring">Krei vian konto Glowmate</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Enigu pasvorton por konfirmi</string>

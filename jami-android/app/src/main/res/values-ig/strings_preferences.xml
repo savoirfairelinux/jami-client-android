@@ -10,7 +10,7 @@
   <string name="pref_category_connectivity">Njikọ</string>
   <string name="pref_category_video_settings">Ntọala vidiyo dị elu</string>
   <string name="pref_mobileData_title">Data mkpanaka</string>
-  <string name="pref_mobileData_summary">Hapụ Jami na netwọk 3G / LTE na mgbakwunye na Wi-Fi</string>
+  <string name="pref_mobileData_summary">Hapụ Glowmate na netwọk 3G / LTE na mgbakwunye na Wi-Fi</string>
   <string name="pref_pushNotifications_title">Nkwupụta ịkwanye</string>
   <string name="pref_pushNotifications_summary">Jiri ihe nkesa Google iji kwe ka ị nata oku / ozi na ndabere</string>
   <string name="pref_unifiedPush_summary">Jiri ọrụ UnifiedPush iji nye ohere ịnweta oku / ozi na ndabere</string>
@@ -25,10 +25,10 @@
   <string name="pref_videoResolution_summary">Họrọ ndabara na-apụ apụ video mkpebi</string>
   <string name="pref_systemContacts_title">Jiri kọntaktị sistemụ</string>
   <string name="pref_systemContacts_summary">Jiri kọntaktị sistemụ iji gosi nkọwa nke onye kpọrọ oku.</string>
-  <string name="pref_systemDialer_title">Mee oku na sistemụ site na iji Jami</string>
-  <string name="pref_systemDialer_summary">Jiri Jami mee ka ndị ọrụ na-akpọ gị mgbe ọ bụla o kwere omume.</string>
-  <string name="pref_startOnBoot_title">Malite Jami na mmalite</string>
-  <string name="pref_startOnBoot_summary">Mee ka Jami nọrọ n\'azụ mgbe usoro ahụ malitere.</string>
+  <string name="pref_systemDialer_title">Mee oku na sistemụ site na iji Glowmate</string>
+  <string name="pref_systemDialer_summary">Jiri Glowmate mee ka ndị ọrụ na-akpọ gị mgbe ọ bụla o kwere omume.</string>
+  <string name="pref_startOnBoot_title">Malite Glowmate na mmalite</string>
+  <string name="pref_startOnBoot_summary">Mee ka Glowmate nọrọ n\'azụ mgbe usoro ahụ malitere.</string>
   <string name="pref_clearHistory_title">Akụkọ ihe mere eme doro anya</string>
   <string name="pref_notification_title">Nkwupụta nke ọkwa</string>
   <string name="pref_notification_summary">Tinye ngwa ngosi ngosi na mkpọchi ihuenyo.</string>
@@ -36,7 +36,7 @@
   <string name="pref_blackList_summary">Lelee ndepụta ndị ị na-eme.</string>
   <string name="pref_delete_account_title">Ihichapụ akaụntụ</string>
   <string name="pref_newGroup_title">Gbaa nkata otu</string>
-  <string name="pref_newGroup_summary">Mee ka ndị otu na Jami nwee ike ịmepụta.</string>
+  <string name="pref_newGroup_summary">Mee ka ndị otu na Glowmate nwee ike ịmepụta.</string>
   <string name="pref_logs_title">Ihe ndekọ nchọpụta</string>
   <string name="pref_logs_summary">Mbido ndekọ ndekọ nchọpụta na-emeghe</string>
   <string name="pref_logs_start">Malite Ịkụ Ụgbọ</string>

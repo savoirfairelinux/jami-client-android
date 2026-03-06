@@ -7,7 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">حساب قوش</string>
   <string name="add_sip_account_title">SIP حسابي قوش</string>
-  <string name="ring_account_default_name">Jami حساب %1$s</string>
+  <string name="ring_account_default_name">Glowmate حساب %1$s</string>
   <string name="prompt_alias">آلفا</string>
   <string name="prompt_hostname">آدی</string>
   <string name="prompt_username">ایستیفاده چی آد</string>
@@ -146,7 +146,7 @@
   <string name="account_link_device">باشقا آلاتدان باغلانیب</string>
   <string name="account_link_button">شبکه دن باغلانیب</string>
   <string name="account_link_archive_button">پشتیبانلیکدن باغلانیب</string>
-  <string name="account_new_button">Jami حسابي يارادين</string>
+  <string name="account_new_button">Glowmate حسابي يارادين</string>
   <string name="account_link_export_button">یئنی آلینانی باغلا</string>
   <string name="account_link_show_button">%d داها باغلي اولان آلتی گؤرسهدیر</string>
   <string name="account_link_hide_button">باغلي اولان آلتی اؤرت</string>
@@ -176,7 +176,7 @@
   <!--Create account-->
   <string name="account_creation_home">\" جامي \" نين خوش آمديد</string>
   <string name="account_creation_profile">پروفایل یارانماق</string>
-  <string name="account_creation_ring">Jami حسابینی یارات</string>
+  <string name="account_creation_ring">Glowmate حسابینی یارات</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">تصدیق اوچون رمز یاز</string>

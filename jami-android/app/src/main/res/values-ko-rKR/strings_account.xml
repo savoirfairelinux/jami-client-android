@@ -146,7 +146,7 @@
   <string name="account_link_device">다른 장치에서 연결</string>
   <string name="account_link_button">네트워크에서 연결</string>
   <string name="account_link_archive_button">백업에서 연결</string>
-  <string name="account_new_button">Jami 계정을 생성</string>
+  <string name="account_new_button">Glowmate 계정을 생성</string>
   <string name="account_link_export_button">새로운 장치를 연결</string>
   <string name="account_link_show_button">%d 더 많은 연결된 장치를 표시</string>
   <string name="account_link_hide_button">연결된 장치를 숨기</string>

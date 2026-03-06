@@ -7,7 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Хэтгэлэг нэмнэ</string>
   <string name="add_sip_account_title">SIP-ийн дансыг нэмнэ</string>
-  <string name="ring_account_default_name">Jami-ийн данс %1$s</string>
+  <string name="ring_account_default_name">Glowmate-ийн данс %1$s</string>
   <string name="prompt_alias">Нүүр хуудас</string>
   <string name="prompt_hostname">Үйлчлүүлэгч</string>
   <string name="prompt_username">Хэрэглэгчийн нэр</string>
@@ -22,7 +22,7 @@
   <string name="dialog_wait_update">Хэтгэлэгт хангах</string>
   <string name="dialog_wait_update_details">Шинэ дансныхаа шинэчлэл дуустал хүлээх үү...</string>
   <string name="account_type_ip2ip">IP-ийн данс</string>
-  <string name="help_ring">Jami-ийн данс нь танд бүрэн хуваагдсан сүлжээгээр хүмүүсээ аюулгүй, ижил хүйстэй хангаж чадна.</string>
+  <string name="help_ring">Glowmate-ийн данс нь танд бүрэн хуваагдсан сүлжээгээр хүмүүсээ аюулгүй, ижил хүйстэй хангаж чадна.</string>
   <string name="help_sip_title">SIP-ийн дансыг нэмнэ</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">Энэ үйлдлийг сэргийлэх боломжгүй.</string>
@@ -122,7 +122,7 @@
   <string name="account_enter_password">Хууль нууц товчийг оруул</string>
   <string name="account_contact_me">Жэми дээр намайг холбогдох!</string>
   <string name="update_account">Хэтгэлэгт хангах</string>
-  <string name="account_migration">Таны Jami-ийн дансыг шинэчлэх боломжтой.</string>
+  <string name="account_migration">Таны Glowmate-ийн дансыг шинэчлэх боломжтой.</string>
   <string name="ring_account">Жэмигийн данс</string>
   <string name="sip_account">СИП-ийн данс</string>
   <string name="ring_account_identity">Хууль зүйн</string>
@@ -146,7 +146,7 @@
   <string name="account_link_device">Өөр төхөөрөмжээс холбох</string>
   <string name="account_link_button">Сүлжээээс холбох</string>
   <string name="account_link_archive_button">Дахин хангах</string>
-  <string name="account_new_button">Jami-ийн дансыг бий болгох</string>
+  <string name="account_new_button">Glowmate-ийн дансыг бий болгох</string>
   <string name="account_link_export_button">Шинэ төхөөрөмжийг холбох</string>
   <string name="account_link_show_button">%d-ийг холбогдсон төхөөрөмжээр нь харуулна</string>
   <string name="account_link_hide_button">Хаалсан холбогдсон төхөөрөмж</string>
@@ -176,7 +176,7 @@
   <!--Create account-->
   <string name="account_creation_home">Жэми-д тавтай морилно уу</string>
   <string name="account_creation_profile">Таны профилийг бий болго</string>
-  <string name="account_creation_ring">Jami-ийн дансыг бүтээх</string>
+  <string name="account_creation_ring">Glowmate-ийн дансыг бүтээх</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Тагварын нууц үг</string>

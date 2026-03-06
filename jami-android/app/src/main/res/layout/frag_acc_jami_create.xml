@@ -22,9 +22,9 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/color_primary_dark"
-    tools:context="cx.ring.account.AccountWizardActivity">
+    tools:context="com.glowmate.account.AccountWizardActivity">
 
-    <cx.ring.views.BoundedRelativeLayout
+    <com.glowmate.views.BoundedRelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center"
@@ -53,7 +53,7 @@
             android:textStyle="bold"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
 
-        <cx.ring.views.WizardViewPager
+        <com.glowmate.views.WizardViewPager
             android:id="@+id/pager"
             android:layout_width="@dimen/wizard_card_width"
             android:layout_height="@dimen/wizard_card_height"
@@ -73,6 +73,6 @@
             app:tabGravity="center"
             app:tabIndicatorHeight="0dp"/>
 
-    </cx.ring.views.BoundedRelativeLayout>
+    </com.glowmate.views.BoundedRelativeLayout>
 
 </FrameLayout>

@@ -7,7 +7,7 @@
   <string name="version_section">Версія</string>
   <string name="website_chooser_title">Праглядзіце сайт з дапамогай...</string>
   <string name="license">Гэты праграмны праграмны прадукт прадастаўляецца "як ёсць", без гарантыі якога-небудзь роду. Для падрабязнасці, глядзіце GNU General Public License версія 3 або пазней&lt;/u&gt;</string>
-  <string name="description">Jami з\'яўляецца свабодным праграмным забеспячэннем для універсальнай камунікацыі, якое паважае свабоды і прыватнасць сваіх карыстальнікаў.</string>
+  <string name="description">Glowmate з\'яўляецца свабодным праграмным забеспячэннем для універсальнай камунікацыі, якое паважае свабоды і прыватнасць сваіх карыстальнікаў.</string>
   <string name="credits">Крэдыты</string>
   <string name="pip_title">Канферэнцыя Джані</string>
   <string name="call_service_description">Гэты сэрвіс неабходны для таго, каб выклікі працавалі ў першую чаргу. Ён працуе толькі падчас званкоў.</string>
@@ -89,7 +89,7 @@
   <string name="yesterday">Учора</string>
   <!--Contacts-->
   <string name="prompt_new_password_repeat">Пацвердзіце новы пароль</string>
-  <string name="account_create_title">Стварэнне ўліковага запісу Jami</string>
+  <string name="account_create_title">Стварэнне ўліковага запісу Glowmate</string>
   <string name="prompt_hint_username">Назва карыстальніка</string>
   <string name="wizard_next">Далей</string>
   <string name="wizard_back">Звярніцеся назад</string>
@@ -160,10 +160,10 @@
   <string name="dialog_hint_title">Назва</string>
   <string name="dialog_hint_description">Апісанне</string>
   <string name="bottomsheet_remove">Выключыць члена</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">Запіс імя карыстальніка</string>
   <string name="jami_id_choose_username">Выберыце імя карыстальніка</string>
-  <!--WelcomeJami-->
+  <!--WelcomeGlowmate-->
   <string name="welcome_jami_title">Сардэчна запрашаем у Джамі</string>
   <!--Conversation details-->
   <string name="details">Падрабязнасці</string>

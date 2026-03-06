@@ -26,7 +26,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <!-- Smartlist to display swarms -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
-        android:name="cx.ring.fragments.SmartListFragment"
+        android:name="com.glowmate.fragments.SmartListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/searchbar_scrolling_view_behavior"

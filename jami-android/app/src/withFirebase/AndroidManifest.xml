@@ -31,7 +31,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         </service>
 
         <service
-            android:name="cx.ring.service.PushForegroundService"
+            android:name="com.glowmate.service.PushForegroundService"
             android:exported="false"
             android:foregroundServiceType="dataSync|remoteMessaging">
         </service>

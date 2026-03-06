@@ -23,14 +23,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     tools:background="#424242"
     tools:context=".client.CallActivity">
 
-    <cx.ring.views.AutoFitTextureView
+    <com.glowmate.views.AutoFitTextureView
         android:id="@+id/fullscreen_camera_preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible"
         app:isFullscreen="true"/>
 
-    <cx.ring.views.ParticipantsContainerView
+    <com.glowmate.views.ParticipantsContainerView
         android:id="@+id/participant_overlay_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -88,7 +88,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             app:cardPreventCornerOverlap="false"
             tools:visibility="visible">
 
-            <cx.ring.views.AutoFitSurfaceView
+            <com.glowmate.views.AutoFitSurfaceView
                 android:id="@+id/extension_preview_surface"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -122,7 +122,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             app:cardPreventCornerOverlap="false"
             tools:visibility="visible">
 
-            <cx.ring.views.AutoFitTextureView
+            <com.glowmate.views.AutoFitTextureView
                 android:id="@+id/preview_surface"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -175,7 +175,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <cx.ring.views.AvatarView
+                    <com.glowmate.views.AvatarView
                         android:id="@+id/contact_bubble"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
@@ -390,7 +390,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <!-- Icons grid -->
-                <cx.ring.views.CustomGridLayout
+                <com.glowmate.views.CustomGridLayout
                     android:id="@+id/call_parameters_grid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -411,7 +411,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:orientation="vertical"
                         android:padding="5dp">
 
-                        <cx.ring.views.CheckableImageButton
+                        <com.glowmate.views.CheckableImageButton
                             android:id="@+id/call_speaker_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -447,7 +447,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:orientation="vertical"
                         android:padding="5dp">
 
-                        <cx.ring.views.CheckableImageButton
+                        <com.glowmate.views.CheckableImageButton
                             android:id="@+id/call_mic_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -483,7 +483,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:orientation="vertical"
                         android:padding="5dp">
 
-                        <cx.ring.views.CheckableImageButton
+                        <com.glowmate.views.CheckableImageButton
                             android:id="@+id/call_hng_up_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -518,7 +518,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:orientation="vertical"
                         android:padding="5dp">
 
-                        <cx.ring.views.CheckableImageButton
+                        <com.glowmate.views.CheckableImageButton
                             android:id="@+id/call_videocam_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -553,7 +553,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:orientation="vertical"
                         android:padding="5dp">
 
-                        <cx.ring.views.CheckableImageButton
+                        <com.glowmate.views.CheckableImageButton
                             android:id="@+id/call_camera_flip_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -587,7 +587,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:orientation="vertical"
                         android:padding="5dp">
 
-                        <cx.ring.views.CheckableImageButton
+                        <com.glowmate.views.CheckableImageButton
                             android:id="@+id/add_participant_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -622,7 +622,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:orientation="vertical"
                         android:padding="5dp">
 
-                        <cx.ring.views.CheckableImageButton
+                        <com.glowmate.views.CheckableImageButton
                             android:id="@+id/call_sharescreen_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -659,7 +659,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:visibility="gone"
                         tools:visibility="visible">
 
-                        <cx.ring.views.CheckableImageButton
+                        <com.glowmate.views.CheckableImageButton
                             android:id="@+id/call_dialpad_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -694,7 +694,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:orientation="vertical"
                         android:padding="5dp">
 
-                        <cx.ring.views.CheckableImageButton
+                        <com.glowmate.views.CheckableImageButton
                             android:id="@+id/call_raiseHand_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -728,7 +728,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:orientation="vertical"
                         android:padding="5dp">
 
-                        <cx.ring.views.CheckableImageButton
+                        <com.glowmate.views.CheckableImageButton
                             android:id="@+id/call_extensions_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -753,7 +753,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:textSize="11sp" />
                     </LinearLayout>
 
-                </cx.ring.views.CustomGridLayout>
+                </com.glowmate.views.CustomGridLayout>
 
                 <!-- Recycler view for participants in call -->
                 <androidx.recyclerview.widget.RecyclerView

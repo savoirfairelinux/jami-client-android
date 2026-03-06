@@ -11,7 +11,7 @@
   <string name="pref_category_extensions">Uzantılar</string>
   <string name="pref_category_video_settings">Gelişmiş görüntü ayarları</string>
   <string name="pref_mobileData_title">Hücresel veri</string>
-  <string name="pref_mobileData_summary">Jami uygulamasına Wi-Fi bağlantınına ek olarak 3G/LTE ağlarında izin ver</string>
+  <string name="pref_mobileData_summary">Glowmate uygulamasına Wi-Fi bağlantınına ek olarak 3G/LTE ağlarında izin ver</string>
   <string name="pref_pushNotifications_title">Anlık bildirimler</string>
   <string name="pref_pushNotifications_summary">Arka planda çağrı/ileti alınmasına izin vermek için Google sunucularını kullan</string>
   <string name="pref_unifiedPush_summary">Arka planda çağrı/ileti alınmasına izin vermek için UnifiedPush hizmetini kullanın</string>
@@ -26,10 +26,10 @@
   <string name="pref_videoResolution_summary">Öntanımlı giden görüntü çözünürlüğünü seç</string>
   <string name="pref_systemContacts_title">Sistem kişilerini kullan</string>
   <string name="pref_systemContacts_summary">Arayan ayrıntılarını göstermek için sistem kişilerini kullan.</string>
-  <string name="pref_systemDialer_title">Jami\'yi kullanarak sistem çağrıları yap</string>
-  <string name="pref_systemDialer_summary">Sistem çağrıları yerine olabildiğince Jami kullan</string>
-  <string name="pref_startOnBoot_title">Jami uygulamasını başlangıçta başlat</string>
-  <string name="pref_startOnBoot_summary">Sistem başladığında Jami uygulamasını arka planda çalıştır.</string>
+  <string name="pref_systemDialer_title">Glowmate\'yi kullanarak sistem çağrıları yap</string>
+  <string name="pref_systemDialer_summary">Sistem çağrıları yerine olabildiğince Glowmate kullan</string>
+  <string name="pref_startOnBoot_title">Glowmate uygulamasını başlangıçta başlat</string>
+  <string name="pref_startOnBoot_summary">Sistem başladığında Glowmate uygulamasını arka planda çalıştır.</string>
   <string name="pref_clearHistory_title">Geçmişi temizle</string>
   <string name="pref_notification_title">Bildirim görünürlüğü</string>
   <string name="pref_notification_summary">Kilit ekranında uygulama bildirimlerinin görünürlüğünü ayarla.</string>
@@ -37,7 +37,7 @@
   <string name="pref_blackList_summary">Engelleme listeni gözden geçir.</string>
   <string name="pref_delete_account_title">Hesabı sil</string>
   <string name="pref_newGroup_title">Grup sohbetini etkinleştir</string>
-  <string name="pref_newGroup_summary">Jami uygulamasında grup oluşturmayı etkinleştir.</string>
+  <string name="pref_newGroup_summary">Glowmate uygulamasında grup oluşturmayı etkinleştir.</string>
   <string name="pref_logs_title">Tanılama günlüğü</string>
   <string name="pref_logs_summary">Tanılama günlüğü ayarlarını aç</string>
   <string name="pref_logs_start">Günlükle</string>

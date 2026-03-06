@@ -7,7 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">アカウントを追加</string>
   <string name="add_sip_account_title">SIPアカウントを追加</string>
-  <string name="ring_account_default_name">Jamiアカウント %1$s</string>
+  <string name="ring_account_default_name">Glowmateアカウント %1$s</string>
   <string name="prompt_alias">別名</string>
   <string name="prompt_hostname">ホスト名</string>
   <string name="prompt_username">ユーザー名</string>
@@ -22,7 +22,7 @@
   <string name="dialog_wait_update">アカウントの更新</string>
   <string name="dialog_wait_update_details">アカウントを更新しています。しばらくお待ちください...</string>
   <string name="account_type_ip2ip">IPアカウント</string>
-  <string name="help_ring">Jamiアカウントを使って、完全に分散したネットワークを通じ、ピアツーピアで安全に連絡を取ることができます。</string>
+  <string name="help_ring">Glowmateアカウントを使って、完全に分散したネットワークを通じ、ピアツーピアで安全に連絡を取ることができます。</string>
   <string name="help_sip_title">SIPアカウントを追加</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">この操作は元に戻せません。</string>
@@ -122,8 +122,8 @@
   <string name="account_enter_password">パスワードを入力してください</string>
   <string name="account_contact_me">ジャミに連絡する!</string>
   <string name="update_account">アカウントを更新</string>
-  <string name="account_migration">Jamiアカウントが更新可能です。\nあなたのパスワードを入力してください。</string>
-  <string name="ring_account">Jamiアカウント</string>
+  <string name="account_migration">Glowmateアカウントが更新可能です。\nあなたのパスワードを入力してください。</string>
+  <string name="ring_account">Glowmateアカウント</string>
   <string name="sip_account">SIPアカウント</string>
   <string name="ring_account_identity">ID</string>
   <string name="account_migration_title_dialog">アカウントの移行</string>
@@ -138,7 +138,7 @@
   <string name="account_tv_advance_settings_header">詳細設定</string>
   <string name="account_tv_add_contact">連絡先を追加</string>
   <string name="account_tv_advanced_settings">一般の設定を変更する</string>
-  <string name="account_tv_about">Jamiについて</string>
+  <string name="account_tv_about">Glowmateについて</string>
   <string name="tv_about_version">バージョン</string>
   <string name="tv_about_license">ライセンス</string>
   <string name="tv_about_author">作者に許可される。</string>
@@ -146,7 +146,7 @@
   <string name="account_link_device">他のデバイスから接続する</string>
   <string name="account_link_button">ネットワークから接続</string>
   <string name="account_link_archive_button">バックアップから接続</string>
-  <string name="account_new_button">Jamiアカウントを作成する</string>
+  <string name="account_new_button">Glowmateアカウントを作成する</string>
   <string name="account_link_export_button">新しいデバイスを連結する</string>
   <string name="account_link_show_button">さらに%d個のデバイスを表示</string>
   <string name="account_link_hide_button">リンクされたデバイスを隠す</string>
@@ -175,9 +175,9 @@
   <string name="account_status_offline">オフライン</string>
   <string name="account_status_error">エラー</string>
   <!--Create account-->
-  <string name="account_creation_home">Jamiへようこそ</string>
+  <string name="account_creation_home">Glowmateへようこそ</string>
   <string name="account_creation_profile">プロフィールを作成する</string>
-  <string name="account_creation_ring">Jamiアカウントを作成</string>
+  <string name="account_creation_ring">Glowmateアカウントを作成</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">確認の暗証語を入力</string>

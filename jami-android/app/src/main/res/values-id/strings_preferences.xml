@@ -10,7 +10,7 @@
   <string name="pref_category_connectivity">Konektivitas</string>
   <string name="pref_category_video_settings">Pengaturan video lanjutan</string>
   <string name="pref_mobileData_title">Data ponsel</string>
-  <string name="pref_mobileData_summary">Izinkan Jami pada jaringan 3G/LTE tambahan ke Wi-Fi</string>
+  <string name="pref_mobileData_summary">Izinkan Glowmate pada jaringan 3G/LTE tambahan ke Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notifikasi push</string>
   <string name="pref_pushNotifications_summary">Gunakan server Google untuk menerima panggilan/pesan di latar belakang</string>
   <string name="pref_unifiedPush_summary">Gunakan layanan UnifiedPush untuk memungkinkan menerima panggilan/pesan di latar belakang</string>
@@ -25,10 +25,10 @@
   <string name="pref_videoResolution_summary">Pilih resolusi keluaran video default</string>
   <string name="pref_systemContacts_title">Gunakan kontak sistem</string>
   <string name="pref_systemContacts_summary">Gunakan kontak sistem untuk menampilkan detail penelepon.</string>
-  <string name="pref_systemDialer_title">Lakukan panggilan sistem menggunakan Jami</string>
-  <string name="pref_systemDialer_summary">Gunakan Jami untuk melakukan panggilan sistem jika memungkinkan.</string>
-  <string name="pref_startOnBoot_title">Mulai Jami saat Startup</string>
-  <string name="pref_startOnBoot_summary">Mulai Jami di latar belakang ketika sistem berjalan.</string>
+  <string name="pref_systemDialer_title">Lakukan panggilan sistem menggunakan Glowmate</string>
+  <string name="pref_systemDialer_summary">Gunakan Glowmate untuk melakukan panggilan sistem jika memungkinkan.</string>
+  <string name="pref_startOnBoot_title">Mulai Glowmate saat Startup</string>
+  <string name="pref_startOnBoot_summary">Mulai Glowmate di latar belakang ketika sistem berjalan.</string>
   <string name="pref_clearHistory_title">Bersihkan riwayat</string>
   <string name="pref_notification_title">Visibilitas notifikasi</string>
   <string name="pref_notification_summary">Atur visibilitas notifikasi aplikasi di layar kunci.</string>
@@ -36,7 +36,7 @@
   <string name="pref_blackList_summary">Periksa daftar blokir anda</string>
   <string name="pref_delete_account_title">Hapus akun</string>
   <string name="pref_newGroup_title">Aktifkan obrolan grup</string>
-  <string name="pref_newGroup_summary">Aktifkan pembuatan grup di Jami.</string>
+  <string name="pref_newGroup_summary">Aktifkan pembuatan grup di Glowmate.</string>
   <string name="pref_logs_title">Log diagnostik</string>
   <string name="pref_logs_summary">Buka pengaturan log diagnostik</string>
   <string name="pref_logs_start">Mulai logging</string>

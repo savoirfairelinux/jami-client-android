@@ -8,7 +8,7 @@
   <string name="account_selection">Izberite račun</string>
   <string name="add_ring_account_title">Dodajanje računa</string>
   <string name="add_sip_account_title">Dodaj račun SIP</string>
-  <string name="ring_account_default_name">Račun Jami %1$s</string>
+  <string name="ring_account_default_name">Račun Glowmate %1$s</string>
   <string name="account_creation_error">Pri ustvarjanju računa je prišlo do napake.</string>
   <string name="prompt_alias">Vzdevek</string>
   <string name="prompt_hostname">Ime strežnika gostitelja</string>
@@ -28,7 +28,7 @@
         Lahko boste prejemali in opravili le neposredne klice IP.
         Svoj račun lahko uredite kasneje</string>
   <string name="account_type_ip2ip">IP-račun</string>
-  <string name="help_ring">Račun Jami omogoča varno sporazumevanje z ljudmi preko polno distribuiranega omrežja P2P.</string>
+  <string name="help_ring">Račun Glowmate omogoča varno sporazumevanje z ljudmi preko polno distribuiranega omrežja P2P.</string>
   <string name="help_sip_title">Dodaj račun SIP</string>
   <string name="help_sip">Nastavi obstoječi račun SIP</string>
   <string name="create_sip_account">Prilagodi račun SIP</string>
@@ -157,27 +157,27 @@
   <string name="account_export_file_summary">Varnostno kopiranje računa za kasnejšo obnovitev.</string>
   <string name="account_export_end_decryption_message">Nepravilno geslo. Poskusite znova s pravim geslom.</string>
   <string name="account_enter_password">Vnesite geslo</string>
-  <string name="account_share_body">Kontaktiraj me z uporabo \'%1$s\' na Jami razpršeni komunikacijski platformi: %2$s</string>
-  <string name="account_share_body_with_username">Kontaktiraj me z uporabo \'%1$s\' ali mojim javnim uporabniškim imenom \'%2$s\' na razpršeni komunikacijski platformi Jami: %3$s </string>
-  <string name="account_contact_me">Poišči me na Jami-ju!</string>
+  <string name="account_share_body">Kontaktiraj me z uporabo \'%1$s\' na Glowmate razpršeni komunikacijski platformi: %2$s</string>
+  <string name="account_share_body_with_username">Kontaktiraj me z uporabo \'%1$s\' ali mojim javnim uporabniškim imenom \'%2$s\' na razpršeni komunikacijski platformi Glowmate: %3$s </string>
+  <string name="account_contact_me">Poišči me na Glowmate-ju!</string>
   <string name="update_account">Posodobi račun</string>
-  <string name="account_migration">Vaš Jami račun je mogoče posodobiti.\nVnesite geslo.</string>
-  <string name="ring_account">Jami račun</string>
+  <string name="account_migration">Vaš Glowmate račun je mogoče posodobiti.\nVnesite geslo.</string>
+  <string name="ring_account">Glowmate račun</string>
   <string name="sip_account">Račun SIP</string>
   <string name="ring_account_identity">Identiteta</string>
   <string name="account_migration_title_dialog">Selitev računa</string>
   <string name="account_migration_message_dialog">Vaši računi morajo biti posodobljeni. Ali želite na zaslon za urejanje računa, da to izvedete?</string>
   <string name="account_update_needed">Potrebna je posodobitev</string>
   <string name="account_cannot_be_found_title">Napaka računa</string>
-  <string name="account_cannot_be_found_message">Računa v omrežju Jami ni bilo mogoče najti. Preverite, da je bilo izvoženo na Jami iz obstoječe naprave in da so bili posredovani pravi podatki.</string>
+  <string name="account_cannot_be_found_message">Računa v omrežju Glowmate ni bilo mogoče najti. Preverite, da je bilo izvoženo na Glowmate iz obstoječe naprave in da so bili posredovani pravi podatki.</string>
   <string name="jams_account_cannot_be_found_message">Pri povezovanju računa je prišlo do napake. Prevrite svoje poverilnice in poskusite znova.</string>
   <string name="account_sip_cannot_be_registered_message">Lahko nadaljujete z ustvarjanjem računa ali tukaj uredite svoje podatke. Urejanje je še možno tudi kasneje v nastavitvah računa.</string>
   <string name="account_no_network_title">Napaka na omrežju</string>
-  <string name="account_no_network_message">Prišlo je do napake povezovanja med dodajanjem računa Jami v razpršeno omrežje. Preverite povezljivost svoje naprave.</string>
+  <string name="account_no_network_message">Prišlo je do napake povezovanja med dodajanjem računa Glowmate v razpršeno omrežje. Preverite povezljivost svoje naprave.</string>
   <string name="account_device_added_title">Naprava računa je dodana</string>
-  <string name="account_device_added_message">Račun Jami je bil uspešno vzpostavljen na tej napravi.</string>
+  <string name="account_device_added_message">Račun Glowmate je bil uspešno vzpostavljen na tej napravi.</string>
   <string name="account_device_updated_title">Naprava računa je posodobljena</string>
-  <string name="account_device_updated_message">Račun Jami je bil uspešno posodobljen.</string>
+  <string name="account_device_updated_message">Račun Glowmate je bil uspešno posodobljen.</string>
   <string name="account_cannot_be_updated_message">Pri posodabljanju računa je prišlo do napake. Prevrite geslo računa.</string>
   <string name="account_sip_success_title">Račun SIP je registriran</string>
   <string name="account_sip_success_message">Račun SIP je bil uspešno registriran.</string>
@@ -187,7 +187,7 @@
   <string name="account_tv_advance_settings_header">Napredne nastavitve</string>
   <string name="account_tv_add_contact">Dodaj stik</string>
   <string name="account_tv_advanced_settings">Spremeni splošne nastavitve</string>
-  <string name="account_tv_about">O programu Jami</string>
+  <string name="account_tv_about">O programu Glowmate</string>
   <string name="tv_about_version">Različica</string>
   <string name="tv_about_license">Licenca</string>
   <string name="tv_about_author">Avtorske pravice</string>
@@ -195,7 +195,7 @@
   <string name="account_link_device">Poveži se z druge naprave</string>
   <string name="account_link_button">Poveži se iz omrežja</string>
   <string name="account_link_archive_button">Poveži se se iz varnostne kopije</string>
-  <string name="account_new_button">Ustvarite račun Jami</string>
+  <string name="account_new_button">Ustvarite račun Glowmate</string>
   <string name="account_link_export_button">Poveži novo napravo</string>
   <string name="account_link_show_button">Prikaži %d več povezanih naprav</string>
   <string name="account_link_hide_button">Skrij povezano napravo</string>
@@ -231,9 +231,9 @@
   <string name="account_status_offline">Brez povezave</string>
   <string name="account_status_error">Napaka</string>
   <!--Create account-->
-  <string name="account_creation_home">Dobrodošli v Jami</string>
+  <string name="account_creation_home">Dobrodošli v Glowmate</string>
   <string name="account_creation_profile">Ustvari profil</string>
-  <string name="account_creation_ring">Ustvari račun Jami</string>
+  <string name="account_creation_ring">Ustvari račun Glowmate</string>
   <string name="account_sip_cannot_be_registered">Pri registraciji računa SIP je prišlo do napake.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Uredi profil</string>
@@ -245,7 +245,7 @@
   <string name="revoke_device_wait_title">Počakajte ...</string>
   <string name="revoke_device_wait_message">Odstranitev naprave</string>
   <string name="rename_device_title">Preimenuj to napravo</string>
-  <string name="rename_device_message">Vnesite ime naprave za identifikacijo te naprave v vašem računu Jami</string>
+  <string name="rename_device_message">Vnesite ime naprave za identifikacijo te naprave v vašem računu Glowmate</string>
   <string name="rename_device_button">Preimenuj napravo</string>
   <string name="account_rename_device_hint">Izberite novo ime naprave</string>
   <string name="account_device_name_empty">Ime naprave ne more biti prazno.</string>
@@ -254,28 +254,28 @@
   <string name="account_device_id">ID naprave</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Format ni podprt.</string>
-  <string name="account_link_info">V aplikaciji Jami na novi napravi skenirajte kodo QR ali ročno vnesite overitveno kodo.</string>
+  <string name="account_link_info">V aplikaciji Glowmate na novi napravi skenirajte kodo QR ali ročno vnesite overitveno kodo.</string>
   <string name="account_link_device_title">Poveži novo napravo</string>
   <string name="account_link_password">Ta račun je šifriran z geslom, vnesite geslo, da tvorite kodo overjanja.</string>
   <string name="account_link_generate_button">Tvori</string>
   <string name="account_link_time_valid">Koda overjanja bo neveljavna: %1$s.</string>
-  <string name="account_link_device_info">Izberite \"Poveži novo napravo\" v drugem programu Jami, da prikažete QR-kodo ali overitveno kodo.</string>
+  <string name="account_link_device_info">Izberite \"Poveži novo napravo\" v drugem programu Glowmate, da prikažete QR-kodo ali overitveno kodo.</string>
   <string name="account_generate_export_device">Na drugi napravi</string>
-  <string name="account_generate_export_info">Namestite in zaženite Jami, izberite uvoz iz druge naprave in optično preberite kodo QR. Lahko tudi ročno vnesete kodo PIN.</string>
+  <string name="account_generate_export_info">Namestite in zaženite Glowmate, izberite uvoz iz druge naprave in optično preberite kodo QR. Lahko tudi ročno vnesete kodo PIN.</string>
   <string name="content_description_qr_generated">QR-koda računa</string>
   <string name="account_generate_export_invalid">Overitvena koda ni več veljavna.\n Vnesite geslo in tvorite novo kodo, da povežete novo napravo.</string>
   <string name="account_generate_export_invalid_two">Overitvena koda ni več veljavna.\n Tvorite novo, da povežete novo napravo.</string>
   <string name="help_pin_info">Obvezno, če je račun zaščiten z geslom.</string>
   <string name="account_link_device_button">Poveži</string>
   <!--Biometry-->
-  <string name="account_biometry_auth_title">Odkleni račun Jami</string>
+  <string name="account_biometry_auth_title">Odkleni račun Glowmate</string>
   <string name="account_biometry_auth_message">Uporabi biometrične podatke za odklep računa</string>
   <string name="account_biometry_enroll_title">Ali želite uporabiti biometrično overjanje?</string>
   <string name="account_biometry_enroll_message">Vaša naprava podpira varno biometrično overjanje.
-Biometrično overjanje ali overjanje lastno napravi dodaja priročen način za krajevno odklenjen dostop do svojega računa Jami. Še vedno boste lahko uporabljali svoje geslo.</string>
+Biometrično overjanje ali overjanje lastno napravi dodaja priročen način za krajevno odklenjen dostop do svojega računa Glowmate. Še vedno boste lahko uporabljali svoje geslo.</string>
   <string name="account_biometry_enroll_accept">Uporabi biometriko</string>
   <string name="no_thanks">Ne, hvala</string>
-  <string name="account_biometry_enroll_auth_title">Dodaj overjanje za račun Jami</string>
+  <string name="account_biometry_enroll_auth_title">Dodaj overjanje za račun Glowmate</string>
   <string name="account_biometry_enroll_auth_message">Dodajte varno biometrično overjanje ali napravi lastno overjanje kot alternativo za svoje geslo</string>
   <string name="account_auth_error">Napaka overjanja: %1$s</string>
   <string name="account_auth_success">Overjanje je uspelo</string>

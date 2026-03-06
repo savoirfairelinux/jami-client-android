@@ -42,8 +42,8 @@
   <string name="bottomSheet_hangup_btn">ඇමතුම අවසන් කරන්න</string>
   <!--Swarm Details-->
   <string name="tab_settings">සැකසුම්</string>
-  <!--JamiId-->
-  <!--WelcomeJami-->
+  <!--GlowmateId-->
+  <!--WelcomeGlowmate-->
   <!--Conversation details-->
   <!--Donation-->
   <string name="donation_card_not_now">දැන් නොවේ</string>

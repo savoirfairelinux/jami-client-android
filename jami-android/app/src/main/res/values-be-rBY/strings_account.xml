@@ -22,7 +22,7 @@
   <string name="dialog_wait_update">Абноўленне рахунку</string>
   <string name="dialog_wait_update_details">Калі ласка, пачакайце, пакуль ваш новы рахунак будзе абнаўляны...</string>
   <string name="account_type_ip2ip">IP-уліковы запіс</string>
-  <string name="help_ring">Уліковы запіс Jami дазваляе вам бяспечна далучацца да людзей з аднаму па аднаму праз цалкам размеркаваную сетку.</string>
+  <string name="help_ring">Уліковы запіс Glowmate дазваляе вам бяспечна далучацца да людзей з аднаму па аднаму праз цалкам размеркаваную сетку.</string>
   <string name="help_sip_title">Дадаць SIP-улік</string>
   <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
@@ -119,9 +119,9 @@
   <string name="account_export_file">Запіс запісу</string>
   <string name="account_export_file_summary">Запісваць свой рахунак на прыладзе, каб аднавіць яго пазней.</string>
   <string name="account_enter_password">Увядзіце пароль</string>
-  <string name="account_contact_me">Звяжыцеся са мной на Jami!</string>
+  <string name="account_contact_me">Звяжыцеся са мной на Glowmate!</string>
   <string name="update_account">Абноўленне рахунку</string>
-  <string name="account_migration">Ваш рахунак Jami можа быць абнаўлена.\nДайце пароль.</string>
+  <string name="account_migration">Ваш рахунак Glowmate можа быць абнаўлена.\nДайце пароль.</string>
   <string name="ring_account">Рахунак Джэмі</string>
   <string name="sip_account">Спі-акаўнт</string>
   <string name="ring_account_identity">Пазначэнне</string>
@@ -145,7 +145,7 @@
   <string name="account_link_device">Падключыць з іншага прылады</string>
   <string name="account_link_button">Палучайцеся з сеткі</string>
   <string name="account_link_archive_button">Падключыце з рэзервовай сістэмы</string>
-  <string name="account_new_button">Стварэнне ўліковага запісу Jami</string>
+  <string name="account_new_button">Стварэнне ўліковага запісу Glowmate</string>
   <string name="account_link_export_button">Звязаць новае прылада</string>
   <string name="account_link_show_button">Паказаць %d больш звязаных прылад</string>
   <string name="account_link_hide_button">Схаваць злучанае прылада</string>
@@ -175,7 +175,7 @@
   <!--Create account-->
   <string name="account_creation_home">Сардэчна запрашаем у Джамі</string>
   <string name="account_creation_profile">Стварэнне вашага профілю</string>
-  <string name="account_creation_ring">Стварыце свой рахунак Jami</string>
+  <string name="account_creation_ring">Стварыце свой рахунак Glowmate</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Увядзіце пароль для пацверджання</string>

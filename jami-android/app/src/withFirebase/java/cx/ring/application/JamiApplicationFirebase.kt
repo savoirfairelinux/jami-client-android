@@ -14,7 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package cx.ring.application
+package com.glowmate.application
 
 import android.util.Log
 import com.google.firebase.FirebaseApp

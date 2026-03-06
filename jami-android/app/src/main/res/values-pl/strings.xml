@@ -7,16 +7,16 @@
   <string name="switch_conversation">Przełącz konwersację</string>
   <string name="delete_conversation_confirmation">Jesteś pewien/a, że chcesz usunąć tą rozmowę bezpowrotnie?</string>
   <string name="view_switch_camera">Przełącz aparat</string>
-  <string name="sponsor_section">Jami to wolne oprogramowanie, stworzone i wspierane przez</string>
+  <string name="sponsor_section">Glowmate to wolne oprogramowanie, stworzone i wspierane przez</string>
   <string name="copyright_section">Prawa autorskie</string>
   <string name="contribute_section">Współpracuj</string>
   <string name="version_section">Wersja</string>
   <string name="no_browser_app_installed">Nie wykryto przeglądarki internetowej, zainstaluj, żeby zobaczyć tą stronę.</string>
   <string name="website_chooser_title">Zobacz stronę używając...</string>
   <string name="license">To oprogramowanie jest dostarczane \"tak jak jest\", bez jakiejkolwiek gwarancji. Aby uzyskać szczegółowe informacje, zobacz <u>GNU General Public License wersja 3 lub późniejsza</u></string>
-  <string name="description">Jami jest wolnym oprogramowaniem do uniwersalnej komunikacji, respektującym wolności i prywatność swoich użytkowników.</string>
+  <string name="description">Glowmate jest wolnym oprogramowaniem do uniwersalnej komunikacji, respektującym wolności i prywatność swoich użytkowników.</string>
   <string name="credits">Podziękowania</string>
-  <string name="pip_title">Konferencja Jami</string>
+  <string name="pip_title">Konferencja Glowmate</string>
   <string name="call_service_description">Ta usługa jest niezbędna, aby Twoje połączenia telefoniczne działały na pierwszym planie. Działa ona tylko podczas połączeń.</string>
   <string name="data_transfer_service_description">Ta usługa jest niezbędna, aby wyświetlać utrzymujące się powiadomienia podczas transferu plików. Działa ona tylko podczas transferu plików.</string>
   <!--About dialog-->
@@ -25,7 +25,7 @@
   <string name="media">Multimedia</string>
   <string name="community_management">Zarządzanie społecznością</string>
   <string name="special_thanks">Specjalne podziękowania dla</string>
-  <string name="end_note">To jest lista ludzi, którzy mocno się przyczynili, inwestując duże ilości czasu i wysiłku w tworzenie i ulepszanie Jami. W celu umieszczenia na liście, prosimy o kontakt z contact@jami.net.</string>
+  <string name="end_note">To jest lista ludzi, którzy mocno się przyczynili, inwestując duże ilości czasu i wysiłku w tworzenie i ulepszanie Glowmate. W celu umieszczenia na liście, prosimy o kontakt z contact@jami.net.</string>
   <!--RingActivity-->
   <string name="error_no_network">Brak połączenia z siecią</string>
   <string name="error_account_offline">To konto jest offline</string>
@@ -40,7 +40,7 @@
   <string name="menu_item_account_settings">Ustawienia Konta</string>
   <string name="menu_item_extension_list">Ustawienia rozszerzeń</string>
   <string name="menu_item_share">Udostępnij moje konto</string>
-  <string name="menu_item_about">O Jami</string>
+  <string name="menu_item_about">O Glowmate</string>
   <string name="video_setting_title">Ustawienia wideo</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Wybierz numer</string>
@@ -79,7 +79,7 @@
   <string name="notif_channel_background_service_descr">Pozwala na odbieranie połączeń i wiadomości w dowolnym czasie.</string>
   <string name="notif_group_calls">Rozmowy</string>
   <string name="notif_inprogress_group_call">Rozmowa w toku</string>
-  <string name="notif_background_service">Jami jest aktywny w tle</string>
+  <string name="notif_background_service">Glowmate jest aktywny w tle</string>
   <string name="notif_mark_as_read">Zaznacz jako przeczytane</string>
   <string name="notif_dismiss">Odrzuć</string>
   <string name="notif_reply">Odpowiedz</string>
@@ -108,7 +108,7 @@
   <string name="hist_out_call">Czas wychodzączego połączenia: %1$s</string>
   <string name="call_duration">Połączenie trwało %s</string>
   <string name="call_on_hold">Rozmowa jest zawieszona</string>
-  <string name="start_error_title">Nie można uruchomić Jami</string>
+  <string name="start_error_title">Nie można uruchomić Glowmate</string>
   <string name="action_call_accept">Zaakceptuj rozmowę</string>
   <string name="action_call_accept_audio">Odbierz z dźwiękiem</string>
   <string name="action_call_accept_video">Odbierz z obrazem</string>
@@ -130,7 +130,7 @@
   <string name="write_a_message">Napisz wiadomość</string>
   <string name="scan_qr">Zeskanuj kod QR</string>
   <string name="qr_code">Kod QR</string>
-  <string name="qr_code_not_contact">Nie jest to kod QR kontaktu Jami</string>
+  <string name="qr_code_not_contact">Nie jest to kod QR kontaktu Glowmate</string>
   <string name="new_group">Utwórz nową grupę</string>
   <string name="ab_action_flipcamera">Zamień kamerę</string>
   <string name="ab_action_hidepreview">Ukryj podgląd</string>
@@ -160,11 +160,11 @@
   <string name="ringtone_error_size_too_big">Ten plik jest zbyt duży! Maksymalny rozmiar to %1$d kB.</string>
   <string name="ringtone_custom_prompt">Ustaw niestandardowy dzwonek</string>
   <string name="ringtone_custom_label">Wartość własna</string>
-  <string name="ringtone_jami_tones">Dzwonki Jami</string>
+  <string name="ringtone_jami_tones">Dzwonki Glowmate</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami wymaga dostęp do kontaktów. Włącz dostęp do kontaktów w ustawieniach urządzenia, aby użyć tej funkcji.</string>
+  <string name="permission_dialog_read_contacts_message">Glowmate wymaga dostęp do kontaktów. Włącz dostęp do kontaktów w ustawieniach urządzenia, aby użyć tej funkcji.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami wymaga dostęp do rejestrów połączeń. Włącz dostęp do rejestrów połączeń w ustawieniach urządzenia, aby użyć tej funkcji.</string>
+  <string name="permission_dialog_write_call_log_message">Glowmate wymaga dostęp do rejestrów połączeń. Włącz dostęp do rejestrów połączeń w ustawieniach urządzenia, aby użyć tej funkcji.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Zeskanuj kod QR konta, które chcesz dodać.</string>
   <string name="title_activity_qrcode">Udostępnij moje konto</string>
@@ -224,7 +224,7 @@
   <string name="video_not_found">Plik wideo nie został odnaleziony</string>
   <string name="conversation_preference_color">Kolor rozmowy</string>
   <string name="conversation_preference_emoji">Emoji rozmowy</string>
-  <string name="conversation_type_contact">Kontakty Jami</string>
+  <string name="conversation_type_contact">Kontakty Glowmate</string>
   <string name="conversation_type_private">Prywatne</string>
   <string name="conversation_type_group">Grupa</string>
   <string name="conversation_contact_invited">%1$s został zaproszony do dołączenia to rozmowy</string>
@@ -253,11 +253,11 @@
   <string name="prompt_new_password">Nowe hasło</string>
   <string name="prompt_new_password_optional">Nowe hasło (opcjonalnie)</string>
   <string name="prompt_new_password_repeat">Potwierdź nowe hasło</string>
-  <string name="account_create_title">Utworz konto Jami</string>
+  <string name="account_create_title">Utworz konto Glowmate</string>
   <string name="prompt_new_username">Wprowadź nową nazwę użytkownika</string>
   <string name="prompt_hint_username">Nazwa użytkownika</string>
-  <string name="help_password_choose">Wybierz silne hasło, które zapamiętasz, by chronić swoje konto Jami.</string>
-  <string name="help_password_enter">Wprowadź hasło do swojego głównego konta Jami</string>
+  <string name="help_password_choose">Wybierz silne hasło, które zapamiętasz, by chronić swoje konto Glowmate.</string>
+  <string name="help_password_enter">Wprowadź hasło do swojego głównego konta Glowmate</string>
   <string name="help_server_enter">Wprowadź URL serwera zarządzania.</string>
   <string name="pin_copied">Kod uwierzytelniania został skopiowany do schowka.</string>
   <string name="copied_clipboard">Skopiowane do schowka.</string>
@@ -289,7 +289,7 @@
   <string name="devices">Połączone urządzenia</string>
   <string name="total_devices">Wszystkich urządzeń:</string>
   <!--Share fragment-->
-  <string name="share_message">Zeskanuj ten kod używając Jami</string>
+  <string name="share_message">Zeskanuj ten kod używając Glowmate</string>
   <string name="share_message_no_account">Wybierz, proszę, konto które chcesz udostępnić.</string>
   <string name="share_your_account_information">Udostępnij informacje o moim kontakcie</string>
   <string name="share_contact_information">Udostępnij informacje kontaktowe</string>
@@ -381,8 +381,8 @@
   <string name="speech_recogniton_unavailable">Brak funkcji rozpoznawania głosu.</string>
   <string name="audio_permission_rationale_title">Wymagane pozwolenie na odtwarzanie dźwięku</string>
   <string name="camera_permission_rationale_title">Wymagany dostęp do aparatu</string>
-  <string name="audio_permission_rationale_message">Jami wymaga uprawnień mikrofonu do korzystania z funkcji zamiany mowy na tekst i nagrywania dźwięku. Zostaniesz o to poproszony/a w następnym kroku.</string>
-  <string name="camera_permission_rationale_message">Jami wymaga uprawnień kamery na nagrywanie wideo i wykonywanie połączeń wideo. Zostaniesz o to poproszony/a w następnym kroku.</string>
+  <string name="audio_permission_rationale_message">Glowmate wymaga uprawnień mikrofonu do korzystania z funkcji zamiany mowy na tekst i nagrywania dźwięku. Zostaniesz o to poproszony/a w następnym kroku.</string>
+  <string name="camera_permission_rationale_message">Glowmate wymaga uprawnień kamery na nagrywanie wideo i wykonywanie połączeń wideo. Zostaniesz o to poproszony/a w następnym kroku.</string>
   <string name="unable_to_start_recorder">Nie można rozpocząć nagrywania dźwięku.</string>
   <string name="error_sharing_file">Błąd podczas udostępniania pliku.</string>
   <string name="error_opening_file">Błąd podczas otwierania pliku.</string>
@@ -435,25 +435,25 @@
   <string name="picker_title">Wybierz kontakty</string>
   <string name="picker_btn">Wybierz kontakty</string>
   <string name="no_contact_to_add">Nie masz kontaktu do dodania</string>
-  <string name="bottomsheet_contact">Skontaktuj się z Jami\n%1$s</string>
+  <string name="bottomsheet_contact">Skontaktuj się z Glowmate\n%1$s</string>
   <string name="bottomsheet_remove">Usunięcie członka</string>
   <string name="error_open_no_app_found">Nie znaleziono aplikacji zdolnej do obsługi tego typu pliku %1$s</string>
   <string name="swarm_detail_no_document">Nie masz jeszcze żadnych dokumentów.</string>
   <string name="group_admin">Administrator</string>
-  <string name="share_contact_intent_title">Dodaj ten kontakt do Jami!</string>
-  <string name="share_contact_intent_body">Możesz dodać ten kontakt  “%1$s” w Jami distributed communication platform: %2$s</string>
-  <!--JamiId-->
-  <string name="jami_id_copy">Skopiuj Jamild</string>
-  <string name="jami_id_share">Udostępnij Jamild</string>
+  <string name="share_contact_intent_title">Dodaj ten kontakt do Glowmate!</string>
+  <string name="share_contact_intent_body">Możesz dodać ten kontakt  “%1$s” w Glowmate distributed communication platform: %2$s</string>
+  <!--GlowmateId-->
+  <string name="jami_id_copy">Skopiuj Glowmateld</string>
+  <string name="jami_id_share">Udostępnij Glowmateld</string>
   <string name="jami_id_validate">Zarejestruj nazwę użytkownika</string>
   <string name="jami_id_available">Nazwa użytkownika jest dostępna.</string>
   <string name="jami_id_not_available">Nazwa użytkownika jest niedostępna.</string>
   <string name="jami_id_info">• maksymalnie 32 znaki\n• Następujące specjalne znaki są dozwolone: myślnik (-), podkreślnik (_)</string>
   <string name="jami_id_looking_for_availability">Sprawdzanie dostępności nazwy użytkownika...</string>
   <string name="jami_id_choose_username">Wybierz nazwę użytkownika</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">Witaj w Jami</string>
-  <string name="welcome_jami_description">Udostępnij swój identyfikator Jami aby ułatwić skontaktowanie się z Tobą!</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">Witaj w Glowmate</string>
+  <string name="welcome_jami_description">Udostępnij swój identyfikator Glowmate aby ułatwić skontaktowanie się z Tobą!</string>
   <!--Conversation details-->
   <string name="details">Dane</string>
   <string name="secure_p2p_connection">Bezpieczne połączenie peer-to-peer</string>
@@ -464,7 +464,7 @@
   <string name="show_certificate">Pokaż certyfikat</string>
   <string name="mute_conversation">Wycisz rozmowę</string>
   <!--Donation-->
-  <string name="donation_card_description">Jeśli lubisz użytkować Jami i wierzysz w naszą misję, czy rozważysz wykonanie dotacji?</string>
+  <string name="donation_card_description">Jeśli lubisz użytkować Glowmate i wierzysz w naszą misję, czy rozważysz wykonanie dotacji?</string>
   <string name="donation_card_not_now">Nie w tej chwili</string>
   <string name="donation_donate">Przekaż darowiznę</string>
   <string name="donation_setting_title">Przypomnienie o darowiźnie </string>

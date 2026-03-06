@@ -7,9 +7,9 @@
   <string name="version_section">ਵਰਜਨ</string>
   <string name="website_chooser_title">ਇਹ ਵਰਤ ਕੇ ਵੈੱਬਸਾਈਟ ਵੇਖੋ…</string>
   <string name="license">ਇਹ ਸਾਫ਼ਟਵੇਅਰ \"ਜਿਵੇਂ ਵੀ ਐ\", ਕਿਸੇ ਵੀ ਵਰੰਟੀ ਦੇ ਬਿਨਾਂ ਦਿੱਤਾ ਜਾਂਦਾ ਹੈ। ਵੇਰਵਿਆਂ ਲਈ, <u>GNU General Public License version 3 ਜਾਂ ਬਾਅਦ ਵਾਲੇ ਲਾਇਸੰਸ</u> ਵੇਖੋ</string>
-  <string name="description">Jami ਦੁਨੀਆ ਭਰ ਵਿੱਚ ਸੰਚਾਰ ਕਰਨ ਲਈ ਮੁਫ਼ਤ ਸਾਫ਼ਟਵੇਅਰ ਹੈ ਜੋ ਆਪਣੇ ਵਰਤੋਂਕਾਰਾਂ ਦੀ ਅਜ਼ਾਦੀ ਅਤੇ ਪਰਦੇਦਾਰੀ ਦਾ ਖਿਆਲ ਰੱਖਦਾ ਹੈ।</string>
+  <string name="description">Glowmate ਦੁਨੀਆ ਭਰ ਵਿੱਚ ਸੰਚਾਰ ਕਰਨ ਲਈ ਮੁਫ਼ਤ ਸਾਫ਼ਟਵੇਅਰ ਹੈ ਜੋ ਆਪਣੇ ਵਰਤੋਂਕਾਰਾਂ ਦੀ ਅਜ਼ਾਦੀ ਅਤੇ ਪਰਦੇਦਾਰੀ ਦਾ ਖਿਆਲ ਰੱਖਦਾ ਹੈ।</string>
   <string name="credits">ਸ਼ਲਾਘਾਯੋਗ ਵਿਅਕਤੀ</string>
-  <string name="pip_title">Jami ਸੰਮੇਲਨ</string>
+  <string name="pip_title">Glowmate ਸੰਮੇਲਨ</string>
   <string name="call_service_description">ਇਹ ਸੇਵਾ ਤੁਹਾਡੀਆਂ ਕਾਲਾਂ ਮੂਹਰੇ ਜਾਰੀ ਰੱਖਣ ਲਈ ਜ਼ਰੂਰੀ ਹੈ। ਇਹ ਸਿਰਫ਼ ਕਾਲਾਂ ਵੇਲੇ ਚੱਲਦੀ ਹੈ।</string>
   <string name="data_transfer_service_description">ਇਹ ਸੇਵਾ ਫ਼ਾਈਲਾਂ ਦੇ ਤਬਾਦਲੇ ਵੇਲੇ ਸਥਾਈ ਸੂਚਨਾਵਾਂ ਵਿਖਾਉਣ ਲਈ ਜ਼ਰੂਰੀ ਹੈ। ਇਹ ਸਿਰਫ਼ ਫ਼ਾਈਲਾਂ ਦੇ ਤਬਾਦਲੇ ਵੇਲੇ ਚੱਲਦੀ ਹੈ।</string>
   <!--About dialog-->
@@ -26,7 +26,7 @@
   <string name="menu_item_settings">ਸੈਟਿੰਗਾਂ</string>
   <string name="menu_item_account_settings">ਖਾਤਾ ਸੈਟਿੰਗਾਂ</string>
   <string name="menu_item_share">ਮੇਰਾ ਖਾਤਾ ਸਾਂਝਾ ਕਰੋ</string>
-  <string name="menu_item_about">Jami ਬਾਰੇ</string>
+  <string name="menu_item_about">Glowmate ਬਾਰੇ</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
   <!--Home Fragment-->
@@ -156,8 +156,8 @@
   <string name="prompt_new_password_optional">ਨਵਾਂ ਪਾਸਵਰਡ (ਮਰਜ਼ੀ ਮੁਤਾਬਕ)</string>
   <string name="prompt_new_username">ਨਵਾਂ ਵਰਤੋਂਕਾਰ ਨਾਂ ਦਾਖਲ ਕਰੋ</string>
   <string name="prompt_hint_username">ਵਰਤੋਂਕਾਰ ਨਾਂ</string>
-  <string name="help_password_choose">ਆਪਣੇ Jami ਖਾਤੇ ਨੂੰ ਸੁਰੱਖਿਅਤ ਰੱਖਣ ਲਈ ਅਜਿਹਾ ਮਜ਼ਬੂਤ ਪਾਸਵਰਡ ਚੁਣੋ ਜੋ ਤੁਹਾਨੂੰ ਯਾਦ ਰਹੇ।</string>
-  <string name="help_password_enter">ਆਪਣਾ ਮੁੱਖ Jami ਖਾਤਾ ਪਾਸਵਰਡ ਦਾਖਲ ਕਰੋ।</string>
+  <string name="help_password_choose">ਆਪਣੇ Glowmate ਖਾਤੇ ਨੂੰ ਸੁਰੱਖਿਅਤ ਰੱਖਣ ਲਈ ਅਜਿਹਾ ਮਜ਼ਬੂਤ ਪਾਸਵਰਡ ਚੁਣੋ ਜੋ ਤੁਹਾਨੂੰ ਯਾਦ ਰਹੇ।</string>
+  <string name="help_password_enter">ਆਪਣਾ ਮੁੱਖ Glowmate ਖਾਤਾ ਪਾਸਵਰਡ ਦਾਖਲ ਕਰੋ।</string>
   <string name="help_server_enter">ਪ੍ਰਬੰਧ ਸਰਵਰ ਦਾ URLਦਾਖਲ ਕਰੋ।</string>
   <string name="wizard_next">ਅੱਗੇ</string>
   <string name="wizard_back">ਪਿੱਛੇ</string>
@@ -176,7 +176,7 @@
   <string name="link_new_device">ਨਵਾਂ ਡੀਵਾਈਸ ਜੋੜੋ</string>
   <string name="devices_header">ਡੀਵਾਈਸ</string>
   <!--Share fragment-->
-  <string name="share_message">Jami ਨਾਲ ਇਹ ਕੋਡ ਸਕੈਨ ਕਰੋ</string>
+  <string name="share_message">Glowmate ਨਾਲ ਇਹ ਕੋਡ ਸਕੈਨ ਕਰੋ</string>
   <string name="share_message_no_account">ਕਿਰਪਾ ਕਰਕੇ ਸਾਂਝਾ ਕਰਨ ਲਈ ਕੋਈ ਖਾਤਾ ਚੁਣੋ।</string>
   <string name="share_your_account_information">ਮੇਰੀ ਸੰਪਰਕ ਜਾਣਕਾਰੀ ਸਾਂਝੀ ਕਰੋ</string>
   <string name="share_label">ਸਾਂਝਾ ਕਰੋ</string>
@@ -257,9 +257,9 @@
   <string name="tab_members">ਸਾਥੀ</string>
   <string name="tab_settings">ਸੈਟਿੰਗਾਂ</string>
   <string name="dialog_hint_title">ਸਿਰਲੇਖ</string>
-  <!--JamiId-->
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">Jami ਵਿੱਚ ਜੀ ਆਇਆਂ ਨੂੰ</string>
+  <!--GlowmateId-->
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">Glowmate ਵਿੱਚ ਜੀ ਆਇਆਂ ਨੂੰ</string>
   <!--Conversation details-->
   <!--Donation-->
   <string name="donation_card_not_now">ਹਾਲੇ ਨਹੀਂ</string>

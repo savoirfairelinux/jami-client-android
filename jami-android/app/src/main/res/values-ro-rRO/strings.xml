@@ -8,16 +8,16 @@
   <string name="delete_conversation_confirmation">Chiar vrei să ștergi această conversație?</string>
   <string name="acc_profile_photo_capture">Fă o poză</string>
   <string name="view_switch_camera">Schimbă camera</string>
-  <string name="sponsor_section">Jami este un program liber, creat și susținut de</string>
+  <string name="sponsor_section">Glowmate este un program liber, creat și susținut de</string>
   <string name="copyright_section">Drepturi de autor</string>
   <string name="contribute_section">Contribuie</string>
   <string name="version_section">Versiunea</string>
   <string name="no_browser_app_installed">Nu a fost găsită o aplicație de navigare în internet. Instalează una pentru a vedea această pagină.</string>
   <string name="website_chooser_title">Vezi adresa de internet folosind...</string>
   <string name="license">Acest program este furnizat „așa cum este”, fără nicio garanție. Pentru detalii, vezi <u>GNU General Public License versiunea 3 sau ulterioară</u></string>
-  <string name="description">Jami este un program liber pentru comunicare universală care respectă libertățile și intimitatea utilizatorilor săi.</string>
+  <string name="description">Glowmate este un program liber pentru comunicare universală care respectă libertățile și intimitatea utilizatorilor săi.</string>
   <string name="credits">Merite</string>
-  <string name="pip_title">Conferința Jami</string>
+  <string name="pip_title">Conferința Glowmate</string>
   <string name="call_service_description">Acest serviciu este necesar pentru a menține apelurile în prim-plan. Funcționează numai în timpul apelurilor.</string>
   <string name="data_transfer_service_description">Acest serviciu e necesar pentru a afișa notificări persistente în timpul transferurilor de fișiere. Funcționează numai în timpul transferurilor de fișiere.</string>
   <!--About dialog-->
@@ -26,7 +26,7 @@
   <string name="media">Multimedia</string>
   <string name="community_management">Gestionarea comunității</string>
   <string name="special_thanks">Mulțumiri speciale</string>
-  <string name="end_note">Aceasta este o listă de oameni care au făcut o investiție semnificativă de timp, cu rezultate utile, în Jami. Astfel de colaboratori care doresc să fie adăugați pe listă trebuie să contacteze echipa Jami la contact@jami.net.</string>
+  <string name="end_note">Aceasta este o listă de oameni care au făcut o investiție semnificativă de timp, cu rezultate utile, în Glowmate. Astfel de colaboratori care doresc să fie adăugați pe listă trebuie să contacteze echipa Glowmate la contact@jami.net.</string>
   <!--RingActivity-->
   <string name="error_no_network">Nu există conectare la rețea</string>
   <string name="error_account_offline">Contul este deconectat</string>
@@ -41,7 +41,7 @@
   <string name="menu_item_account_settings">Reglările contului</string>
   <string name="menu_item_extension_list">Reglări Extensii</string>
   <string name="menu_item_share">Distribuie contul meu</string>
-  <string name="menu_item_about">Despre Jami</string>
+  <string name="menu_item_about">Despre Glowmate</string>
   <string name="video_setting_title">Reglări video</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Formează numărul</string>
@@ -79,7 +79,7 @@
   <string name="notif_channel_background_service_descr">Permite mereu primirea de apeluri și mesaje.</string>
   <string name="notif_group_calls">Apeluri</string>
   <string name="notif_inprogress_group_call">Apelare în curs</string>
-  <string name="notif_background_service">Acum Jami funcționează ascuns</string>
+  <string name="notif_background_service">Acum Glowmate funcționează ascuns</string>
   <string name="notif_mark_as_read">Bifează ca citit</string>
   <string name="notif_dismiss">Ignoră</string>
   <string name="notif_reply">Răspunde</string>
@@ -89,7 +89,7 @@
   <string name="notif_sync_title">Se sincronizează datele...</string>
   <string name="notif_location_title">Se distribuie poziția către %1$s</string>
   <string name="notif_channel_reconnect">Se sincronizează</string>
-  <string name="notif_reconnect_title">Jami se sincronizează…</string>
+  <string name="notif_reconnect_title">Glowmate se sincronizează…</string>
   <string name="location_share_contact">%1$s îți trimite poziția</string>
   <string name="notif_location_multi_title">Se distribuie poziția către %1$d contacte</string>
   <string name="notif_location_remaining">%1$d minute rămase</string>
@@ -110,7 +110,7 @@
   <string name="hist_out_call">Apel efectuat %1$s</string>
   <string name="call_duration">Durata %s</string>
   <string name="call_on_hold">Apelul e în așteptare</string>
-  <string name="start_error_title">Jami nu pornește</string>
+  <string name="start_error_title">Glowmate nu pornește</string>
   <string name="action_call_accept">Acceptă apelul</string>
   <string name="action_call_accept_audio">Răspunde vocal</string>
   <string name="action_call_accept_video">Răspunde video</string>
@@ -132,7 +132,7 @@
   <string name="write_a_message">Scrie un mesaj</string>
   <string name="scan_qr">Scanează codul QR</string>
   <string name="qr_code">Cod QR</string>
-  <string name="qr_code_not_contact">Nu este un cod QR de contact Jami</string>
+  <string name="qr_code_not_contact">Nu este un cod QR de contact Glowmate</string>
   <string name="new_group">Creează un grup nou</string>
   <string name="ab_action_flipcamera">Schimbă camera</string>
   <string name="ab_action_hidepreview">Ascunde previzualizarea</string>
@@ -162,11 +162,11 @@
   <string name="ringtone_error_size_too_big">Fișierul este prea mare. Dimensiunea maximă este de %1$dkO.</string>
   <string name="ringtone_custom_prompt">Alege o sonerie personalizată</string>
   <string name="ringtone_custom_label">Personalizată</string>
-  <string name="ringtone_jami_tones">Sonerii Jami</string>
+  <string name="ringtone_jami_tones">Sonerii Glowmate</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami are nevoie de permisiunea de a citi contactele. Permisiunea trebuie dată din reglările sistemului.</string>
+  <string name="permission_dialog_read_contacts_message">Glowmate are nevoie de permisiunea de a citi contactele. Permisiunea trebuie dată din reglările sistemului.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami are nevoie de permisiunea de a scrie în jurnalul de apeluri. Permisiunea trebuie dată din reglările sistemului.</string>
+  <string name="permission_dialog_write_call_log_message">Glowmate are nevoie de permisiunea de a scrie în jurnalul de apeluri. Permisiunea trebuie dată din reglările sistemului.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scanează Codul QR al contului pe care vrei să-l adaugi.</string>
   <string name="title_activity_qrcode">Distribuie contul meu</string>
@@ -226,7 +226,7 @@
   <string name="video_not_found">Fișierul video nu a fost găsit</string>
   <string name="conversation_preference_color">Culoarea conversației</string>
   <string name="conversation_preference_emoji">Emoji de conversație</string>
-  <string name="conversation_type_contact">Contact Jami</string>
+  <string name="conversation_type_contact">Contact Glowmate</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_type_group">Grup</string>
   <string name="conversation_contact_invited">%1$s a fost invitat să participe la conversație.</string>
@@ -255,11 +255,11 @@
   <string name="prompt_new_password">Parola nouă</string>
   <string name="prompt_new_password_optional">Parola nouă (facultativ)</string>
   <string name="prompt_new_password_repeat">Confirmă parola nouă</string>
-  <string name="account_create_title">Creează un cont Jami</string>
+  <string name="account_create_title">Creează un cont Glowmate</string>
   <string name="prompt_new_username">Introdu un nou nume de utilizator</string>
   <string name="prompt_hint_username">Nume de utilizator</string>
-  <string name="help_password_choose">Alege o parolă complexă pe care să ți-o amintești, pentru a proteja contul tău Jami.</string>
-  <string name="help_password_enter">Introdu parola contului tău principal Jami.</string>
+  <string name="help_password_choose">Alege o parolă complexă pe care să ți-o amintești, pentru a proteja contul tău Glowmate.</string>
+  <string name="help_password_enter">Introdu parola contului tău principal Glowmate.</string>
   <string name="help_server_enter">Introdu URL-ul serverului de administrare</string>
   <string name="pin_copied">Codul de autentificare a fost copiat.</string>
   <string name="copied_clipboard">Copiat în memorie.</string>
@@ -291,7 +291,7 @@
   <string name="devices">Aparate asociate</string>
   <string name="total_devices">Toate aparatele: </string>
   <!--Share fragment-->
-  <string name="share_message">Scanează acest cod cu Jami</string>
+  <string name="share_message">Scanează acest cod cu Glowmate</string>
   <string name="share_message_no_account">Alege un cont de distribuit.</string>
   <string name="share_your_account_information">Trimite datele mele de contact</string>
   <string name="share_contact_information">Trimite datele de contact</string>
@@ -383,8 +383,8 @@
   <string name="speech_recogniton_unavailable">Recunoașterea vorbirii nu este disponibilă.</string>
   <string name="audio_permission_rationale_title">Permisiunea audio este necesară</string>
   <string name="camera_permission_rationale_title">Este necesar accesul la cameră</string>
-  <string name="audio_permission_rationale_message">Jami are nevoie de acces la microfon pentru a transforma vorbirea în text și pentru a înregistra audio. Acesta va fi solicitat la pasul următor.</string>
-  <string name="camera_permission_rationale_message">Jami are nevoie de acces la cameră pentru a înregistra video și a efectua apeluri video. Acesta va fi solicitat la pasul următor.</string>
+  <string name="audio_permission_rationale_message">Glowmate are nevoie de acces la microfon pentru a transforma vorbirea în text și pentru a înregistra audio. Acesta va fi solicitat la pasul următor.</string>
+  <string name="camera_permission_rationale_message">Glowmate are nevoie de acces la cameră pentru a înregistra video și a efectua apeluri video. Acesta va fi solicitat la pasul următor.</string>
   <string name="unable_to_start_recorder">Nu se poate începe înregistrarea audio.</string>
   <string name="error_sharing_file">A apărut o eroare în timpul trimiterii fișierului.</string>
   <string name="error_opening_file">A apărut o eroare la deschiderea fișierului.</string>
@@ -437,25 +437,25 @@
   <string name="picker_title">Alege contacte</string>
   <string name="picker_btn">Alege contacte</string>
   <string name="no_contact_to_add">Nu ai niciun contact de adăugat</string>
-  <string name="bottomsheet_contact">Contactează Jami\n%1$s</string>
+  <string name="bottomsheet_contact">Contactează Glowmate\n%1$s</string>
   <string name="bottomsheet_remove">Elimină membrul</string>
   <string name="error_open_no_app_found">Nu s-a găsit nicio aplicație care să gestioneze acest fișier: %1$s</string>
   <string name="swarm_detail_no_document">Încă nu ai documente.</string>
   <string name="group_admin">Administrator</string>
-  <string name="share_contact_intent_title">Adaugă acest contact în Jami!</string>
-  <string name="share_contact_intent_body">Poți adăuga acest contact „%1$s” pe platforma de comunicare distribuită Jami: %2$s</string>
-  <!--JamiId-->
-  <string name="jami_id_copy">Copiază JamiID</string>
-  <string name="jami_id_share">Distribuie JamiID</string>
+  <string name="share_contact_intent_title">Adaugă acest contact în Glowmate!</string>
+  <string name="share_contact_intent_body">Poți adăuga acest contact „%1$s” pe platforma de comunicare distribuită Glowmate: %2$s</string>
+  <!--GlowmateId-->
+  <string name="jami_id_copy">Copiază GlowmateID</string>
+  <string name="jami_id_share">Distribuie GlowmateID</string>
   <string name="jami_id_validate">Înscrie numele de utilizator</string>
   <string name="jami_id_available">Numele este disponibil.</string>
   <string name="jami_id_not_available">Numele nu este disponibil.</string>
   <string name="jami_id_info">• maximum 32 de caractere\n• Caractere speciale permise: cratimă (-), liniuță joasă (_)</string>
   <string name="jami_id_looking_for_availability">Caut disponibilitatea numelui de utilizator…</string>
   <string name="jami_id_choose_username">Alege un nume de utilizator</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">Bine ai venit pe Jami</string>
-  <string name="welcome_jami_description">Împărtășește identificatorul tău Jami pentru a fi contactat mai ușor!</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">Bine ai venit pe Glowmate</string>
+  <string name="welcome_jami_description">Împărtășește identificatorul tău Glowmate pentru a fi contactat mai ușor!</string>
   <!--Conversation details-->
   <string name="details">Detalii</string>
   <string name="secure_p2p_connection">Conexiune sigură P2P</string>
@@ -466,7 +466,7 @@
   <string name="show_certificate">Arată certificatul</string>
   <string name="mute_conversation">Dezactivează notificările</string>
   <!--Donation-->
-  <string name="donation_card_description">Dacă îți place să folosești Jami și crezi că misiunea noastră este importantă, vrei să faci o donație?</string>
+  <string name="donation_card_description">Dacă îți place să folosești Glowmate și crezi că misiunea noastră este importantă, vrei să faci o donație?</string>
   <string name="donation_card_not_now">Nu acum</string>
   <string name="donation_donate">Donează</string>
   <string name="donation_setting_title">Reamintire donații</string>

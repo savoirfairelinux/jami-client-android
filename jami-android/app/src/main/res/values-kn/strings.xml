@@ -303,10 +303,10 @@
   <string name="picker_btn">ಸಂಪರ್ಕಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
   <string name="bottomsheet_contact">ಜಾಮಿ %1$s ಗಳನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
   <string name="bottomsheet_remove">ಸದಸ್ಯರನ್ನು ತೆಗೆದುಹಾಕಿ</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">ಬಳಕೆದಾರ ಹೆಸರನ್ನು ನೋಂದಾಯಿಸಿ</string>
   <string name="jami_id_choose_username">ಬಳಕೆದಾರ ಹೆಸರನ್ನು ಆರಿಸಿ</string>
-  <!--WelcomeJami-->
+  <!--WelcomeGlowmate-->
   <string name="welcome_jami_title">ಜಾಮಿಗೆ ಸ್ವಾಗತ</string>
   <!--Conversation details-->
   <string name="details">ವಿವರಗಳು</string>

@@ -11,7 +11,7 @@
   <string name="pref_category_extensions">Tiện ích mở rộng</string>
   <string name="pref_category_video_settings">Cài đặt video nâng cao</string>
   <string name="pref_mobileData_title">Dữ liệu di động</string>
-  <string name="pref_mobileData_summary">Cho phép Jami trên mạng 3G / LTE ngoài Wi-Fi</string>
+  <string name="pref_mobileData_summary">Cho phép Glowmate trên mạng 3G / LTE ngoài Wi-Fi</string>
   <string name="pref_pushNotifications_title">Thông báo đẩy</string>
   <string name="pref_pushNotifications_summary">Dùng máy chủ Google để nhận cuộc gọi/tin nhắn</string>
   <string name="pref_unifiedPush_summary">Dùng dịch vụ UnifiedPush để nhận cuộc gọi/tin nhắn</string>
@@ -26,10 +26,10 @@
   <string name="pref_videoResolution_summary">Chọn độ phân giải video phát ra mặc định</string>
   <string name="pref_systemContacts_title">Sử dụng các liên hệ hệ thống</string>
   <string name="pref_systemContacts_summary">Sử dụng các liên hệ hệ thống để hiển thị chi tiết người gọi.</string>
-  <string name="pref_systemDialer_title">Đặt cuộc gọi hệ thống bằng Jami</string>
-  <string name="pref_systemDialer_summary">Sử dụng Jami để đặt các cuộc gọi hệ thống khi có thể.</string>
-  <string name="pref_startOnBoot_title">Bắt đầu Jami khi khởi động</string>
-  <string name="pref_startOnBoot_summary">Cho Jami chạy nền khi hệ thống khởi động.</string>
+  <string name="pref_systemDialer_title">Đặt cuộc gọi hệ thống bằng Glowmate</string>
+  <string name="pref_systemDialer_summary">Sử dụng Glowmate để đặt các cuộc gọi hệ thống khi có thể.</string>
+  <string name="pref_startOnBoot_title">Bắt đầu Glowmate khi khởi động</string>
+  <string name="pref_startOnBoot_summary">Cho Glowmate chạy nền khi hệ thống khởi động.</string>
   <string name="pref_clearHistory_title">Xóa lịch sử</string>
   <string name="pref_notification_title">Hiển thị thông báo</string>
   <string name="pref_notification_summary">Đặt hiển thị thông báo ứng dụng trên màn hình khóa.</string>
@@ -40,7 +40,7 @@
   <string name="pref_delete_account_summary">Xóa tài khoản khỏi thiết bị này</string>
   <string name="pref_persistNotification_title">Chạy trong nền</string>
   <string name="pref_newGroup_title">Cho phép trò chuyện nhóm</string>
-  <string name="pref_newGroup_summary">Cho phép tạo nhóm trong Jami.</string>
+  <string name="pref_newGroup_summary">Cho phép tạo nhóm trong Glowmate.</string>
   <string name="pref_logs_title">Log chẩn đoán</string>
   <string name="pref_logs_summary">Mở cài đặt log chẩn đoán</string>
   <string name="pref_logs_start">Bắt đầu ghi log</string>

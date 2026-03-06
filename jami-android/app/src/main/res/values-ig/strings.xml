@@ -7,9 +7,9 @@
   <string name="version_section">Version</string>
   <string name="website_chooser_title">Lee ebe nrụọrụ weebụ site na iji...</string>
   <string name="license">A na-enye ngwanrọ a \"dị ka ọ dị\", na-enweghị akwụkwọ ikike ọ bụla. Maka nkọwa, lee <u>GNU General Public License version 3 ma ọ bụ mgbe e mesịrị</u></string>
-  <string name="description">Jami bụ ngwanrọ na-enweghị ihe ọ bụla maka nkwukọrịta zuru ụwa ọnụ nke na-akwanyere nnwere onwe na nzuzo nke ndị ọrụ ya ùgwù.</string>
+  <string name="description">Glowmate bụ ngwanrọ na-enweghị ihe ọ bụla maka nkwukọrịta zuru ụwa ọnụ nke na-akwanyere nnwere onwe na nzuzo nke ndị ọrụ ya ùgwù.</string>
   <string name="credits">Ihe ndị e ji akwụ ụgwọ</string>
-  <string name="pip_title">Nzukọ Jami</string>
+  <string name="pip_title">Nzukọ Glowmate</string>
   <string name="call_service_description">Ọrụ a dị mkpa iji mee ka oku gị na-agba ọsọ na mbara ala. Ọ na-agba ọsọ naanị n\'oge oku.</string>
   <string name="data_transfer_service_description">Ọrụ a dị mkpa iji gosipụta ọkwa na-adịgide adịgide n\'oge nnyefe faịlụ. Ọ na-agba naanị n\'oge nnyefe faịlụ.</string>
   <!--About dialog-->
@@ -26,7 +26,7 @@
   <string name="menu_item_settings">Ntọala</string>
   <string name="menu_item_account_settings">Ntọala akaụntụ</string>
   <string name="menu_item_share">Kesaa akaụntụ m</string>
-  <string name="menu_item_about">Banyere Jami</string>
+  <string name="menu_item_about">Banyere Glowmate</string>
   <string name="video_setting_title">Ntọala nke Ihe Nlereanya</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
@@ -88,7 +88,7 @@
   <string name="yesterday">N\'ụbọchị gara aga</string>
   <!--Contacts-->
   <string name="prompt_new_password_repeat">Nyochaa paswọọdụ ọhụrụ</string>
-  <string name="account_create_title">Mepụta akaụntụ Jami</string>
+  <string name="account_create_title">Mepụta akaụntụ Glowmate</string>
   <string name="prompt_hint_username">Aha njirimara</string>
   <string name="wizard_next">Nke na-abịa</string>
   <string name="wizard_back">Ịlaghachi azụ</string>
@@ -159,11 +159,11 @@
   <string name="dialog_hint_title">Isiokwu</string>
   <string name="dialog_hint_description">Nkọwa</string>
   <string name="bottomsheet_remove">Wepụ onye so</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">Debanye aha njirimara</string>
   <string name="jami_id_choose_username">Họrọ aha njirimara</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">Mmadụ Bịa na Jami</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">Mmadụ Bịa na Glowmate</string>
   <!--Conversation details-->
   <string name="details">Ihe ndị ọzọ</string>
   <string name="Private">Ndị mmadụ n\'onwe ha</string>

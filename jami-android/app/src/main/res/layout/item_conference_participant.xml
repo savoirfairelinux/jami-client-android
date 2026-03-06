@@ -54,7 +54,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         android:textSize="16sp"
         tools:text="jami:21d85b6990d2f23663d6990d2f23663da147db28797ad26c478e4" />
 
-    <cx.ring.views.CheckableImageButton
+    <com.glowmate.views.CheckableImageButton
         android:id="@+id/mute_participant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -65,7 +65,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         android:padding="12dp"
         app:srcCompat="@drawable/baseline_mic_on_24"/>
 
-    <cx.ring.views.CheckableImageButton
+    <com.glowmate.views.CheckableImageButton
         android:id="@+id/extend_participant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -75,7 +75,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         android:padding="12dp"
         app:srcCompat="@drawable/baseline_open_in_full_24"/>
 
-    <cx.ring.views.CheckableImageButton
+    <com.glowmate.views.CheckableImageButton
         android:id="@+id/kick_participant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

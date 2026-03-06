@@ -7,7 +7,7 @@
   <string name="version_section">Хөгжлийн хувилбар</string>
   <string name="website_chooser_title">Сайтыг ашиглаж үзнэ үү...</string>
   <string name="license">Энэхүү програм хангамжийг ямар ч баталгаагүйгээр "хүнтэй" хүргэж байна. Тодруулбал GNU General Public License 3 болон дараагийн хувилбарыг үзнэ үү&lt;/u&gt;</string>
-  <string name="description">Jami нь бүх нийтийн харилцааны чөлөөт програм бөгөөд хэрэглэгчийн эрх чөлөө, хувийн хэвшлийг хүндэтгэдэг.</string>
+  <string name="description">Glowmate нь бүх нийтийн харилцааны чөлөөт програм бөгөөд хэрэглэгчийн эрх чөлөө, хувийн хэвшлийг хүндэтгэдэг.</string>
   <string name="credits">Ашигт малтмалын</string>
   <string name="pip_title">Жэми-ийн чуулган</string>
   <string name="call_service_description">Энэ үйлчилгээ нь танай дуудлагаг эхэнд үлдээхэд шаардлагатай. Энэ нь зөвхөн дуудлага хийх үед ажилладаг.</string>
@@ -177,11 +177,11 @@
   <string name="prompt_new_password">Шинэ нууц үг</string>
   <string name="prompt_new_password_optional">Шинэ нууц үг (болдлоо)</string>
   <string name="prompt_new_password_repeat">Шинэ нууц үг батлах</string>
-  <string name="account_create_title">Jami-ийн дансыг бий болгох</string>
+  <string name="account_create_title">Glowmate-ийн дансыг бий болгох</string>
   <string name="prompt_new_username">Шинэ хэрэглэгчдийн нэрийг оруул</string>
   <string name="prompt_hint_username">Хэрэглэгчийн нэр</string>
-  <string name="help_password_choose">Jami-ийн дансыг хамгаалахын тулд санаж болох хүчтэй нууц үг сонгох.</string>
-  <string name="help_password_enter">Таны \"Jami\" дансны нууц үгсийг оруул.</string>
+  <string name="help_password_choose">Glowmate-ийн дансыг хамгаалахын тулд санаж болох хүчтэй нууц үг сонгох.</string>
+  <string name="help_password_enter">Таны \"Glowmate\" дансны нууц үгсийг оруул.</string>
   <string name="help_server_enter">Захиргааны серверний URL-ийг оруул.</string>
   <string name="wizard_next">Дараа нь</string>
   <string name="wizard_back">Хурд</string>
@@ -302,12 +302,12 @@
   <string name="dialog_hint_description">Тодруулбал</string>
   <string name="picker_title">Байрлагуудыг сонго</string>
   <string name="picker_btn">Байрлагуудыг сонго</string>
-  <string name="bottomsheet_contact">Jami\n%1$s-тай холбоо барих</string>
+  <string name="bottomsheet_contact">Glowmate\n%1$s-тай холбоо барих</string>
   <string name="bottomsheet_remove">Хөгжлийн гишүүн</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">Хэрэглэгчийн нэрийг бүртгүүлэх</string>
   <string name="jami_id_choose_username">Хэрэглэгчийн нэрийг сонго</string>
-  <!--WelcomeJami-->
+  <!--WelcomeGlowmate-->
   <string name="welcome_jami_title">Жэми-д тавтай морилно уу</string>
   <!--Conversation details-->
   <string name="details">Тодруулбал</string>

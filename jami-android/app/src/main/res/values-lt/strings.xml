@@ -3,16 +3,16 @@
   <!--About-->
   <string name="section_license">Licencija</string>
   <string name="view_switch_camera">Perjungti kamerą</string>
-  <string name="sponsor_section">Jami - tai atvirojo kodo prgrama, kurią sukūrė ir palaiko</string>
+  <string name="sponsor_section">Glowmate - tai atvirojo kodo prgrama, kurią sukūrė ir palaiko</string>
   <string name="copyright_section">Autorių teisės</string>
   <string name="contribute_section">Talkinti</string>
   <string name="version_section">Versija</string>
   <string name="no_browser_app_installed">Nerasta jokia interneto naršyklė. Įdiekite interneto naršyklę, kad peržiūrėti šį puslapį.</string>
   <string name="website_chooser_title">Rodyti svetainę naudojant...</string>
   <string name="license">Ši programinė įranga yra pateikiama \"tokia, kokia yra\", be jokios garantijos. Išsamesnei informacijai, žiūrėkite <u>GNU Bendrąją Viešąją Licenciją, versiją 3 arba vėlesnę</u></string>
-  <string name="description">Jami yra visuotiniam bendravimui skirta laisva programinė įranga, kuri gerbia savo naudotojų laisves ir privatumą.</string>
+  <string name="description">Glowmate yra visuotiniam bendravimui skirta laisva programinė įranga, kuri gerbia savo naudotojų laisves ir privatumą.</string>
   <string name="credits">Padėkos</string>
-  <string name="pip_title">Jami konferencija</string>
+  <string name="pip_title">Glowmate konferencija</string>
   <string name="call_service_description">Ši tarnyba būtina, kad jūsų skambučiai veiktų, kai programėlė yra aktyvi. Tarnyba veikia tik skambučių metu.</string>
   <string name="data_transfer_service_description">Ši tarnyba būtina nuolatiniams pranešimams rodyti failų perkėlimo metu. Ji veikia tik failų perkėlimo metu.</string>
   <!--About dialog-->
@@ -31,7 +31,7 @@
   <string name="menu_item_account_settings">Paskyros nustatymai</string>
   <string name="menu_item_extension_list">Plėtinių nustatymai</string>
   <string name="menu_item_share">Bendrinti mano paskyrą</string>
-  <string name="menu_item_about">Apie Jami</string>
+  <string name="menu_item_about">Apie Glowmate</string>
   <string name="video_setting_title">Vaizdo nustatymai</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Rinkti numerį</string>
@@ -62,7 +62,7 @@
   <string name="notif_channel_background_service">Foninė tarnyba</string>
   <string name="notif_channel_background_service_descr">Leidžia bet kuriuo metu priimti skambučius ir gauti žinutes.</string>
   <string name="notif_group_calls">Skambučiai</string>
-  <string name="notif_background_service">Jami šiuo metu veikia fone</string>
+  <string name="notif_background_service">Glowmate šiuo metu veikia fone</string>
   <string name="notif_mark_as_read">Žymėti kaip skaitytą</string>
   <string name="notif_dismiss">Atmesti</string>
   <string name="notif_reply">Atsakyti</string>
@@ -77,7 +77,7 @@
   <string name="hist_in_call">%1$s gaunamasis skambutis</string>
   <string name="hist_out_call">%1$s išsiunčiamasis skambutis</string>
   <string name="call_duration">Trukmė: %s</string>
-  <string name="start_error_title">Nepavyko paleisti Jami</string>
+  <string name="start_error_title">Nepavyko paleisti Glowmate</string>
   <string name="action_call_accept">Atsiliepti</string>
   <string name="action_call_accept_audio">Atsiliepti su garsu</string>
   <string name="action_call_accept_video">Atsiliepti su vaizdu</string>
@@ -95,7 +95,7 @@
   <string name="write_a_message">Rašyti žinutę</string>
   <string name="scan_qr">Skenuoti QR kodą</string>
   <string name="qr_code">QR kodas</string>
-  <string name="qr_code_not_contact">Ne Jami adresato QR kodas</string>
+  <string name="qr_code_not_contact">Ne Glowmate adresato QR kodas</string>
   <string name="new_group">Sukurti naują grupę</string>
   <string name="ab_action_flipcamera">Apversti kamerą</string>
   <string name="ab_action_hidepreview">Slėpti peržiūrą</string>
@@ -115,7 +115,7 @@
   <string name="ringtone_error_title">Klaida</string>
   <string name="ringtone_error_format_not_supported">Šis formatas yra nepalaikomas.</string>
   <string name="ringtone_error_size_too_big">Šis failas yra per didelis. Didžiausias dydis yra %1$dkB.</string>
-  <string name="ringtone_jami_tones">Jami skambučio melodijos</string>
+  <string name="ringtone_jami_tones">Glowmate skambučio melodijos</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
@@ -168,7 +168,7 @@
   <string name="conversation_reply_you">Jūs</string>
   <string name="video_not_found">Vaizdo įrašo failas nerastas</string>
   <string name="conversation_preference_color">Pokalbio spalva</string>
-  <string name="conversation_type_contact">Jami adresatas</string>
+  <string name="conversation_type_contact">Glowmate adresatas</string>
   <string name="conversation_type_private">Privatus</string>
   <string name="conversation_type_group">Grupė</string>
   <string name="starting_camera_error">Paleidžiant kamerą įvyko klaida.</string>
@@ -180,10 +180,10 @@
   <string name="prompt_new_password">Naujas slaptažodis</string>
   <string name="prompt_new_password_optional">Naujas slaptažodis (nebūtina)</string>
   <string name="prompt_new_password_repeat">Pakartokite naują slaptažodį</string>
-  <string name="account_create_title">Susikurkite Jami paskyrą</string>
+  <string name="account_create_title">Susikurkite Glowmate paskyrą</string>
   <string name="prompt_new_username">Įveskite naują naudotojo vardą</string>
   <string name="prompt_hint_username">Naudotojo vardas</string>
-  <string name="help_password_choose">Pasirinkite stiprų slaptažodį, kurį prisiminsite, kad apsaugotumėte savo Jami paskyrą.</string>
+  <string name="help_password_choose">Pasirinkite stiprų slaptažodį, kurį prisiminsite, kad apsaugotumėte savo Glowmate paskyrą.</string>
   <string name="copied_clipboard">Nukopijuota į iškarpinę.</string>
   <string name="wizard_next">Kitas</string>
   <string name="wizard_back">Atgal</string>
@@ -212,7 +212,7 @@
   <string name="devices">Susieti įrenginiai</string>
   <string name="total_devices">Iš viso įrenginių: </string>
   <!--Share fragment-->
-  <string name="share_message">Nuskenuokite šį kodą naudodami Jami</string>
+  <string name="share_message">Nuskenuokite šį kodą naudodami Glowmate</string>
   <string name="share_message_no_account">Pasirinkite paskyrą, kurią norite bendrinti.</string>
   <string name="share_your_account_information">Bendrinti mano kontaktinę informaciją</string>
   <string name="share_contact_information">Bendrinti kontaktinę informaciją</string>
@@ -311,18 +311,18 @@
   <string name="dialogtitle_description">Taisyti grupės aprašą</string>
   <string name="dialog_hint_title">Pavadinimas</string>
   <string name="dialog_hint_description">Aprašas</string>
-  <string name="bottomsheet_contact">Susisiekite su Jami\n%1$s</string>
+  <string name="bottomsheet_contact">Susisiekite su Glowmate\n%1$s</string>
   <string name="bottomsheet_remove">Ištrinti narį</string>
   <string name="swarm_detail_no_document">Kol kas neturite jokių dokumentų.</string>
-  <!--JamiId-->
-  <string name="jami_id_copy">Kopijuoti JamiId</string>
+  <!--GlowmateId-->
+  <string name="jami_id_copy">Kopijuoti GlowmateId</string>
   <string name="jami_id_validate">Registruoti naudotojo vardą</string>
   <string name="jami_id_available">Naudotojo vardas yra prieinamas.</string>
   <string name="jami_id_not_available">Naudotojo vardas yra neprieinamas.</string>
   <string name="jami_id_looking_for_availability">Tikrinamas naudotojo vardo prieinamumas…</string>
   <string name="jami_id_choose_username">Pasirinkite naudotojo vardą</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">Sveiki atvykę į Jami</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">Sveiki atvykę į Glowmate</string>
   <!--Conversation details-->
   <string name="details">Išsamiau</string>
   <string name="swarm_type">Pokalbio tipas</string>

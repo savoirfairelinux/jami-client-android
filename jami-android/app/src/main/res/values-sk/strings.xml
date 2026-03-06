@@ -3,16 +3,16 @@
   <!--About-->
   <string name="submit_issue_title">Odoslať problém</string>
   <string name="section_license">Licencia</string>
-  <string name="sponsor_section">Jami je bezplatný softvér vyvíjaný a podporovaný</string>
+  <string name="sponsor_section">Glowmate je bezplatný softvér vyvíjaný a podporovaný</string>
   <string name="copyright_section">Autorské právo</string>
   <string name="contribute_section">Prispejte</string>
   <string name="version_section">Verzia</string>
   <string name="no_browser_app_installed">Nebol nájdený žiadny webový prehliadač, na zobrazenie tejto stránky si nejaký nainštalujte.</string>
   <string name="website_chooser_title">Zobraziť stránku pomocou...</string>
   <string name="license">Tento softvér je distribuovaný \"tak, ako je\", bez záruky akéhokoľvek druhu. Pre viac informácií pozrite <u>GNU General Public Licence verzie 3 alebo neskoršej</u></string>
-  <string name="description">Jami je slobodný softvér na univerzálnu komunikáciu, ktorý rešpektuje slobodu a súkromie používateľov.</string>
+  <string name="description">Glowmate je slobodný softvér na univerzálnu komunikáciu, ktorý rešpektuje slobodu a súkromie používateľov.</string>
   <string name="credits">Autori</string>
-  <string name="pip_title">Konferencia Jami</string>
+  <string name="pip_title">Konferencia Glowmate</string>
   <string name="call_service_description">Táto služba je potrebná na to, aby boli vaše hovory v popredí. Beží iba počas hovorov.</string>
   <string name="data_transfer_service_description">Táto služba je potrebná na zobrazenie upozornení počas prenosu súborov. Beží iba počas prenosu súborov. </string>
   <!--About dialog-->
@@ -33,7 +33,7 @@
   <string name="menu_item_app_settings">Nastavenia aplikácie</string>
   <string name="menu_item_account_settings">Nastavenia účtu</string>
   <string name="menu_item_share">Zdieľať môj účet</string>
-  <string name="menu_item_about">O programe Jami</string>
+  <string name="menu_item_about">O programe Glowmate</string>
   <string name="video_setting_title">Nastavenia videa</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
@@ -171,7 +171,7 @@
   <string name="conversation_reply_you">Ty...</string>
   <string name="conversation_preference_color">Farba konverzácie</string>
   <string name="conversation_preference_emoji">Emoji konverzácie</string>
-  <string name="conversation_type_contact">Kontakt s Jami</string>
+  <string name="conversation_type_contact">Kontakt s Glowmate</string>
   <string name="conversation_type_private">Privátny</string>
   <string name="conversation_type_group">Skupina</string>
   <string name="conversation_search_hint">Vyhľadávacie rozhovor</string>
@@ -182,11 +182,11 @@
   <string name="prompt_new_password">Nové heslo</string>
   <string name="prompt_new_password_optional">Nové heslo (voliteľné)</string>
   <string name="prompt_new_password_repeat">Potvrďte nový heslo</string>
-  <string name="account_create_title">Vytvorte účet Jami</string>
+  <string name="account_create_title">Vytvorte účet Glowmate</string>
   <string name="prompt_new_username">Zadajte nové používateľské meno</string>
   <string name="prompt_hint_username">Používateľské meno</string>
   <string name="help_password_choose">Zvoľte si silné heslo, ktoré si zapamätáte, na ochranu vášho účtu.</string>
-  <string name="help_password_enter">Vložte si heslo na účet Jami.</string>
+  <string name="help_password_enter">Vložte si heslo na účet Glowmate.</string>
   <string name="help_server_enter">Vložte URL správneho servera.</string>
   <string name="wizard_next">Ďalej</string>
   <string name="wizard_back">Späť</string>
@@ -212,7 +212,7 @@
   <string name="devices">Prepojené zariadenia</string>
   <string name="total_devices">Celkové zariadenia: </string>
   <!--Share fragment-->
-  <string name="share_message">Nasnímajte tento kód aplikáciou Jami</string>
+  <string name="share_message">Nasnímajte tento kód aplikáciou Glowmate</string>
   <string name="share_message_no_account">Vyberte účet, ktorý chcete zdieľať.</string>
   <string name="share_your_account_information">Zdieľať moje kontaktné informácie </string>
   <string name="share_label">Zdieľať</string>
@@ -310,13 +310,13 @@
   <string name="dialog_hint_description">Opis</string>
   <string name="picker_title">Vyberte kontakty</string>
   <string name="picker_btn">Vyberte kontakty</string>
-  <string name="bottomsheet_contact">Kontaktujte Jami\n%1$s</string>
+  <string name="bottomsheet_contact">Kontaktujte Glowmate\n%1$s</string>
   <string name="bottomsheet_remove">Odstránenie člena</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">Registrovať používateľské meno</string>
   <string name="jami_id_choose_username">Vyberte používateľské meno</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">Vitajte v Jami</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">Vitajte v Glowmate</string>
   <!--Conversation details-->
   <string name="details">Detaily</string>
   <string name="swarm_type">Typ konverzácie</string>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cx.ring.client.MediaViewerFragment"
+    tools:context="com.glowmate.client.MediaViewerFragment"
     tools:showIn="@layout/activity_media_viewer"
     tools:theme="@style/AppTheme.MediaViewer">
 

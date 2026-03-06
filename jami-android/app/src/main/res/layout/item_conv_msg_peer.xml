@@ -108,7 +108,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
     </LinearLayout>
 
-    <cx.ring.views.MessageBubble
+    <com.glowmate.views.MessageBubble
         android:id="@+id/message_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -136,9 +136,9 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             android:visibility="gone"
             tools:visibility="visible" />
 
-    </cx.ring.views.MessageBubble>
+    </com.glowmate.views.MessageBubble>
 
-    <cx.ring.views.MessageStatusView
+    <com.glowmate.views.MessageStatusView
         android:id="@+id/status_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -166,7 +166,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         app:layout_constraintTop_toBottomOf="@id/message_content"
         tools:text="🤕🤒3" />
 
-    <cx.ring.views.AvatarView
+    <com.glowmate.views.AvatarView
         android:id="@+id/photo"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/conversation_avatar_size"

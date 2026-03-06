@@ -92,7 +92,7 @@
     <color name="invitation_drawable_p1_color">@color/white</color>
     <color name="invitation_drawable_p2_color">#03b9e9</color>
 
-    <!--  JamiId  -->
+    <!--  GlowmateId  -->
     <color name="jami_id_background_color">#4CFFFFFF</color>
     <color name="jami_id_surface_color">#005699</color>
     <color name="jami_id_validate_background_disabled_color">#4C005699</color>

@@ -10,7 +10,7 @@
   <string name="pref_category_connectivity">ڤڠاجين</string>
   <string name="pref_category_video_settings">ڤڠاجرن ڤيديو ڤرنه</string>
   <string name="pref_mobileData_title">داتا موبايل</string>
-  <string name="pref_mobileData_summary">ممبريكن Jami دڠن 3G/LTE نيتر برساتو Wi-Fi</string>
+  <string name="pref_mobileData_summary">ممبريكن Glowmate دڠن 3G/LTE نيتر برساتو Wi-Fi</string>
   <string name="pref_pushNotifications_title">ڤمبلاجر ڤڠاجرن</string>
   <string name="pref_pushNotifications_summary">مڠڬوناكن سرڤير Google اونتوق ممبريكن ڤرليندوڠن/ميسيج دالم ڤڠڬوناكن</string>
   <string name="pref_unifiedPush_summary">مڠڬوناكن ڤڠڬونا UnifiedPush اونتوق ممبريكن ڤرلو مڠهادڤي ڤرساتوان/ميسيج دالم ڤڠڬونا</string>
@@ -25,9 +25,9 @@
   <string name="pref_videoResolution_summary">ڤيليه ڤرودوک ڤمبلاجرن ڤد ڤمبلاجرن</string>
   <string name="pref_systemContacts_title">مڠڬوناكن ڤڠڬونا سيستم</string>
   <string name="pref_systemContacts_summary">مڠڬوناكن ڤڠاجرن سيستم اونتوق ممبنتو ديتيل ڤڠاجرن.</string>
-  <string name="pref_systemDialer_title">ممڤوپا?? ي ڤڠاجين سيستم دڠن مڠڬوناكن Jami</string>
+  <string name="pref_systemDialer_title">ممڤوپا?? ي ڤڠاجين سيستم دڠن مڠڬوناكن Glowmate</string>
   <string name="pref_systemDialer_summary">مڠڬوناكن جامي اونتوق ممڤوپا?? ي ڤڠاجرن سيسيتيم كتيک ممڤوپا?? ي.</string>
-  <string name="pref_startOnBoot_title">ڤمبيلن Jami دالم ڤمبيلن</string>
+  <string name="pref_startOnBoot_title">ڤمبيلن Glowmate دالم ڤمبيلن</string>
   <string name="pref_startOnBoot_summary">جادي جادي جادي دالم سبواه ڤرتنديڠن كتيک سيسيڠ.</string>
   <string name="pref_clearHistory_title">تاريخ يڠ برڤنتيڠ</string>
   <string name="pref_notification_title">ڤرلو دڤرلوكن</string>
@@ -36,7 +36,7 @@
   <string name="pref_blackList_summary">چيكل ڤمبلاجرن.</string>
   <string name="pref_delete_account_title">مڠمبيل ڤڠاجرن</string>
   <string name="pref_newGroup_title">ممبنتو چيت ڤڠڬونا</string>
-  <string name="pref_newGroup_summary">ممبنتو ڤڠڬوناكن ڬروڤ د Jami.</string>
+  <string name="pref_newGroup_summary">ممبنتو ڤڠڬوناكن ڬروڤ د Glowmate.</string>
   <string name="pref_logs_title">ڤڠاجرن ڤڠاجرن</string>
   <string name="pref_logs_summary">ڤڠاجرن لوڬ دأڠڬڤ</string>
   <string name="pref_logs_start">ڤرلو مڠهادڤي ڤڠاجين</string>

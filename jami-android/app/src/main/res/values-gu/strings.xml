@@ -176,7 +176,7 @@
   <string name="prompt_new_password">નવો પાસવર્ડ</string>
   <string name="prompt_new_password_optional">નવો પાસવર્ડ (વૈકલ્પિક)</string>
   <string name="prompt_new_password_repeat">નવા પાસવર્ડની પુષ્ટિ કરો</string>
-  <string name="account_create_title">Jami એકાઉન્ટ બનાવો</string>
+  <string name="account_create_title">Glowmate એકાઉન્ટ બનાવો</string>
   <string name="prompt_new_username">નવું વપરાશકર્તાનામ દાખલ કરો</string>
   <string name="prompt_hint_username">વપરાશકર્તા નામ</string>
   <string name="help_password_choose">તમારા જેમી એકાઉન્ટને સુરક્ષિત કરવા માટે તમે યાદ રાખશો તે મજબૂત પાસવર્ડ પસંદ કરો.</string>
@@ -303,10 +303,10 @@
   <string name="picker_btn">સંપર્કો પસંદ કરો</string>
   <string name="bottomsheet_contact">જમી\n%1$s સાથે સંપર્ક કરો</string>
   <string name="bottomsheet_remove">સભ્ય દૂર કરો</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">વપરાશકર્તા નામ નોંધણી</string>
   <string name="jami_id_choose_username">વપરાશકર્તા નામ પસંદ કરો</string>
-  <!--WelcomeJami-->
+  <!--WelcomeGlowmate-->
   <string name="welcome_jami_title">જમીમાં આપનું સ્વાગત છે</string>
   <!--Conversation details-->
   <string name="details">વિગતો</string>

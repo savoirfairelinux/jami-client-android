@@ -7,9 +7,9 @@
   <string name="version_section">Toleo</string>
   <string name="website_chooser_title">Tazama tovuti kwa kutumia...</string>
   <string name="license">Programu hii hutolewa "kama ilivyo", bila dhamana ya aina yoyote. Kwa maelezo, tazama GNU General Public License toleo 3 au baadaye&lt;/u&gt;</string>
-  <string name="description">Jami ni programu huru ya mawasiliano ya kimataifa ambayo inaheshimu uhuru na faragha ya watumiaji wake.</string>
+  <string name="description">Glowmate ni programu huru ya mawasiliano ya kimataifa ambayo inaheshimu uhuru na faragha ya watumiaji wake.</string>
   <string name="credits">Mikopo</string>
-  <string name="pip_title">Mkutano wa Jami</string>
+  <string name="pip_title">Mkutano wa Glowmate</string>
   <string name="call_service_description">Huduma hii ni muhimu ili kuweka simu yako mbio katika eneo la mbele. Ni mbio tu wakati wa simu.</string>
   <string name="data_transfer_service_description">Huduma hii ni muhimu kwa kuonyesha taarifa kudumu wakati wa uhamisho wa faili.</string>
   <!--About dialog-->
@@ -26,7 +26,7 @@
   <string name="menu_item_settings">Mipangilio</string>
   <string name="menu_item_account_settings">Mipangilio ya Akaunti</string>
   <string name="menu_item_share">Shiriki akaunti yangu</string>
-  <string name="menu_item_about">Kuhusu Jami</string>
+  <string name="menu_item_about">Kuhusu Glowmate</string>
   <string name="video_setting_title">Mipangilio ya Video</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
@@ -166,7 +166,7 @@
   <string name="conversation_reply_you">Wewe</string>
   <string name="conversation_preference_color">Rangi ya mazungumzo</string>
   <string name="conversation_preference_emoji">Emoji ya mazungumzo</string>
-  <string name="conversation_type_contact">Wasiliana na Jami</string>
+  <string name="conversation_type_contact">Wasiliana na Glowmate</string>
   <string name="conversation_type_private">Private</string>
   <string name="conversation_search_hint">Tafuta mazungumzo</string>
   <string name="today">Leo</string>
@@ -176,11 +176,11 @@
   <string name="prompt_new_password">Nambari mpya</string>
   <string name="prompt_new_password_optional">Nywele mpya (zaidi)</string>
   <string name="prompt_new_password_repeat">Thibitisha password mpya</string>
-  <string name="account_create_title">Unda akaunti ya Jami</string>
+  <string name="account_create_title">Unda akaunti ya Glowmate</string>
   <string name="prompt_new_username">Ingiza jina jipya la mtumiaji</string>
   <string name="prompt_hint_username">Jina la mtumiaji</string>
-  <string name="help_password_choose">Chagua nenosiri lenye nguvu ambalo utakumbuka kulinda akaunti yako ya Jami.</string>
-  <string name="help_password_enter">Ingiza nenosiri lako kuu la akaunti ya Jami.</string>
+  <string name="help_password_choose">Chagua nenosiri lenye nguvu ambalo utakumbuka kulinda akaunti yako ya Glowmate.</string>
+  <string name="help_password_enter">Ingiza nenosiri lako kuu la akaunti ya Glowmate.</string>
   <string name="help_server_enter">Ingiza URL ya usimamizi wa seva.</string>
   <string name="wizard_next">Yafuatayo</string>
   <string name="wizard_back">Kurudi</string>
@@ -205,7 +205,7 @@
   <string name="devices">Vifaa vilivyounganishwa</string>
   <string name="total_devices">Jumla ya vifaa: </string>
   <!--Share fragment-->
-  <string name="share_message">Scan hii code na Jami</string>
+  <string name="share_message">Scan hii code na Glowmate</string>
   <string name="share_message_no_account">Tafadhali chagua akaunti ya kushiriki.</string>
   <string name="share_your_account_information">Shiriki maelezo yangu ya mawasiliano</string>
   <string name="share_label">Kushiriki</string>
@@ -301,13 +301,13 @@
   <string name="dialog_hint_description">Maelezo</string>
   <string name="picker_title">Chagua mawasiliano</string>
   <string name="picker_btn">Chagua mawasiliano</string>
-  <string name="bottomsheet_contact">Wasiliana Jami\n%1$s</string>
+  <string name="bottomsheet_contact">Wasiliana Glowmate\n%1$s</string>
   <string name="bottomsheet_remove">Ondoa mshiriki</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">Kujiandikisha jina la mtumiaji</string>
   <string name="jami_id_choose_username">Chagua jina la mtumiaji</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">Karibu Jami</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">Karibu Glowmate</string>
   <!--Conversation details-->
   <string name="details">Maelezo</string>
   <string name="Private">Private</string>

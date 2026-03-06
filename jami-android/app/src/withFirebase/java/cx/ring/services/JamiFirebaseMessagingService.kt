@@ -14,7 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package cx.ring.services
+package com.glowmate.services
 
 import android.app.ActivityManager
 import android.content.Intent
@@ -24,9 +24,9 @@ import android.os.PowerManager
 import android.util.Log
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import cx.ring.application.JamiApplication
-import cx.ring.application.JamiApplicationFirebase
-import cx.ring.service.PushForegroundService
+import com.glowmate.application.JamiApplication
+import com.glowmate.application.JamiApplicationFirebase
+import com.glowmate.service.PushForegroundService
 import kotlinx.coroutines.*
 
 class JamiFirebaseMessagingService : FirebaseMessagingService() {

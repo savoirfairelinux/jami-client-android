@@ -7,7 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Ongeza akaunti</string>
   <string name="add_sip_account_title">Ongeza akaunti ya SIP</string>
-  <string name="ring_account_default_name">Akaunti ya Jami %1$s</string>
+  <string name="ring_account_default_name">Akaunti ya Glowmate %1$s</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Jina la mwenyeji</string>
   <string name="prompt_username">Jina la mtumiaji</string>
@@ -22,7 +22,7 @@
   <string name="dialog_wait_update">Uhariri wa akaunti</string>
   <string name="dialog_wait_update_details">Tafadhali subiri wakati akaunti yako mpya ni updated...</string>
   <string name="account_type_ip2ip">Akaunti ya IP</string>
-  <string name="help_ring">Akaunti ya Jami hukuruhusu kuwasiliana na watu kwa usalama kwa peer-to-peer kupitia mtandao ulioshirikiwa kabisa.</string>
+  <string name="help_ring">Akaunti ya Glowmate hukuruhusu kuwasiliana na watu kwa usalama kwa peer-to-peer kupitia mtandao ulioshirikiwa kabisa.</string>
   <string name="help_sip_title">Ongeza akaunti ya SIP</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">Hatua hii haiwezi kuondolewa.</string>
@@ -120,10 +120,10 @@
   <string name="account_export_file">Akaunti ya chelezo</string>
   <string name="account_export_file_summary">Fungua akaunti yako kwenye kifaa chako ili kuiweka upya baadaye.</string>
   <string name="account_enter_password">Ingiza nywila</string>
-  <string name="account_contact_me">Wasiliana nami juu ya Jami!</string>
+  <string name="account_contact_me">Wasiliana nami juu ya Glowmate!</string>
   <string name="update_account">Rekodi ya sasisho</string>
-  <string name="account_migration">Akaunti yako ya Jami inaweza kusasishwa. Tafadhali ingiza nenosiri lako.</string>
-  <string name="ring_account">Akaunti ya Jami</string>
+  <string name="account_migration">Akaunti yako ya Glowmate inaweza kusasishwa. Tafadhali ingiza nenosiri lako.</string>
+  <string name="ring_account">Akaunti ya Glowmate</string>
   <string name="sip_account">Akaunti ya SIP</string>
   <string name="ring_account_identity">Utambulisho</string>
   <string name="account_migration_title_dialog">Uhamiaji wa akaunti</string>
@@ -138,7 +138,7 @@
   <string name="account_tv_advance_settings_header">Mipangilio ya juu</string>
   <string name="account_tv_add_contact">Ongeza mawasiliano</string>
   <string name="account_tv_advanced_settings">Badilisha mipangilio ya jumla</string>
-  <string name="account_tv_about">Kuhusu Jami</string>
+  <string name="account_tv_about">Kuhusu Glowmate</string>
   <string name="tv_about_version">Toleo</string>
   <string name="tv_about_license">Leseni</string>
   <string name="tv_about_author">Haki za waandishi</string>
@@ -146,7 +146,7 @@
   <string name="account_link_device">Unganisha kutoka kifaa kingine</string>
   <string name="account_link_button">Kuunganisha kutoka mtandao</string>
   <string name="account_link_archive_button">Kuunganisha kutoka salama</string>
-  <string name="account_new_button">Unda akaunti ya Jami</string>
+  <string name="account_new_button">Unda akaunti ya Glowmate</string>
   <string name="account_link_export_button">Unganisha kifaa kipya</string>
   <string name="account_link_show_button">Onyesha %d zaidi kifaa kilichounganishwa</string>
   <string name="account_link_hide_button">Funga kifaa kilichounganishwa</string>
@@ -174,9 +174,9 @@
   <string name="account_status_offline">Nje ya mtandao</string>
   <string name="account_status_error">Kosa</string>
   <!--Create account-->
-  <string name="account_creation_home">Karibu Jami</string>
+  <string name="account_creation_home">Karibu Glowmate</string>
   <string name="account_creation_profile">Unda wasifu wako</string>
-  <string name="account_creation_ring">Unda akaunti yako ya Jami</string>
+  <string name="account_creation_ring">Unda akaunti yako ya Glowmate</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Ingiza password ili kuthibitisha</string>

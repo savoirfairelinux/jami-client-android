@@ -21,6 +21,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     tools:layout="@layout/frag_share"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cx.ring.tv.account.TVShareActivity"
+    tools:context="com.glowmate.tv.account.TVShareActivity"
     tools:deviceIds="tv"
     tools:ignore="MergeRootFrame" />

@@ -24,10 +24,10 @@
 
     <fragment
         android:id="@+id/main_browse_fragment"
-        android:name="cx.ring.tv.main.MainFragment"
+        android:name="com.glowmate.tv.main.MainFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="cx.ring.tv.main.HomeActivity"
+        tools:context="com.glowmate.tv.main.HomeActivity"
         tools:deviceIds="tv"
         tools:ignore="MergeRootFrame" />
 

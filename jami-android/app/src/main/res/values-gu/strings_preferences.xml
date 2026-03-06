@@ -25,7 +25,7 @@
   <string name="pref_videoResolution_summary">ડિફૉલ્ટ બહાર નીકળો વિડિઓ રીઝોલ્યુશન પસંદ કરો</string>
   <string name="pref_systemContacts_title">સિસ્ટમ સંપર્કોનો ઉપયોગ કરો</string>
   <string name="pref_systemContacts_summary">કોલરની વિગતો બતાવવા માટે સિસ્ટમ સંપર્કોનો ઉપયોગ કરો.</string>
-  <string name="pref_systemDialer_title">Jami નો ઉપયોગ કરીને સિસ્ટમ કૉલ્સ કરો</string>
+  <string name="pref_systemDialer_title">Glowmate નો ઉપયોગ કરીને સિસ્ટમ કૉલ્સ કરો</string>
   <string name="pref_systemDialer_summary">શક્ય હોય ત્યારે સિસ્ટમ કોલ્સ કરવા માટે જેમીનો ઉપયોગ કરો.</string>
   <string name="pref_startOnBoot_title">સ્ટાર્ટઅપ પર જમી શરૂ કરો</string>
   <string name="pref_startOnBoot_summary">સિસ્ટમ શરૂ થાય ત્યારે પૃષ્ઠભૂમિમાં જમ્મી ચલાવો.</string>

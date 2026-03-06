@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<cx.ring.tv.views.CustomTitleView
+<com.glowmate.tv.views.CustomTitleView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/browse_title_group"
     android:padding="16dp"

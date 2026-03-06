@@ -52,7 +52,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             tools:visibility="visible" />
         <!--    maxEms="8" to have around 16 characters displayed   -->
 
-        <cx.ring.views.AvatarView
+        <com.glowmate.views.AvatarView
             android:id="@+id/photo"
             android:layout_width="@dimen/conversation_avatar_size"
             android:layout_height="@dimen/conversation_avatar_size"

@@ -10,7 +10,7 @@
   <string name="pref_category_connectivity">La conectividá</string>
   <string name="pref_category_video_settings">La configuración avanzada de video</string>
   <string name="pref_mobileData_title">Datu de movilidá</string>
-  <string name="pref_mobileData_summary">Permitir Jami en redes 3G/LTE amás de Wi-Fi</string>
+  <string name="pref_mobileData_summary">Permitir Glowmate en redes 3G/LTE amás de Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notificaciones de empuxa</string>
   <string name="pref_pushNotifications_summary">Utiliza servidores de Google pa permitir la recepción de llamadas/mensaxes en fondu</string>
   <string name="pref_unifiedPush_summary">Utiliza un serviciu UnifiedPush pa permitir la recepción d\'escuestes/mensaxes en fondu</string>
@@ -25,9 +25,9 @@
   <string name="pref_videoResolution_summary">Seleccione la resolución de video saliente predeterminada</string>
   <string name="pref_systemContacts_title">Utiliza contactos del sistema</string>
   <string name="pref_systemContacts_summary">Utiliza los contactos del sistema pa mostrar detalles de l\'anunciante.</string>
-  <string name="pref_systemDialer_title">Lugar de les llamadas del sistema usando Jami</string>
+  <string name="pref_systemDialer_title">Lugar de les llamadas del sistema usando Glowmate</string>
   <string name="pref_systemDialer_summary">La so madre ye una de les muyeres más importantes del mundu.</string>
-  <string name="pref_startOnBoot_title">Iniciar Jami na puesta en marcha</string>
+  <string name="pref_startOnBoot_title">Iniciar Glowmate na puesta en marcha</string>
   <string name="pref_startOnBoot_summary">La so carrera foi de la so carrera.</string>
   <string name="pref_clearHistory_title">La hestoria clara</string>
   <string name="pref_notification_title">La visibilidá de la notificación</string>
@@ -36,7 +36,7 @@
   <string name="pref_blackList_summary">Verificar la so llista de bloques.</string>
   <string name="pref_delete_account_title">La cuenta ye borrada</string>
   <string name="pref_newGroup_title">Activu del grupu de charla</string>
-  <string name="pref_newGroup_summary">Permite crear grupos en Jami.</string>
+  <string name="pref_newGroup_summary">Permite crear grupos en Glowmate.</string>
   <string name="pref_logs_title">Los rexistros de diagnósticu</string>
   <string name="pref_logs_summary">Configuraciones abiertes del rexistru de diagnósticu</string>
   <string name="pref_logs_start">Comienza la arquivada</string>

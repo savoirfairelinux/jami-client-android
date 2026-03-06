@@ -25,7 +25,7 @@
   <string name="pref_videoResolution_summary">डीफॉल्ट आउटगोइंग व्हिडिओ रेझोल्यूशन निवडा</string>
   <string name="pref_systemContacts_title">प्रणाली संपर्क वापरा</string>
   <string name="pref_systemContacts_summary">कॉल करणाऱ्यांची माहिती दाखवण्यासाठी सिस्टम संपर्क वापरा.</string>
-  <string name="pref_systemDialer_title">Jami वापरून सिस्टम कॉल करा</string>
+  <string name="pref_systemDialer_title">Glowmate वापरून सिस्टम कॉल करा</string>
   <string name="pref_systemDialer_summary">शक्य असेल तर जामीला फोनवर कॉल करायला सांगा.</string>
   <string name="pref_startOnBoot_title">प्रारंभ करताना जमी सुरू करा</string>
   <string name="pref_startOnBoot_summary">जेव्हा सिस्टम सुरू होते तेव्हा जामीला पार्श्वभूमीवर चालवा.</string>
@@ -36,7 +36,7 @@
   <string name="pref_blackList_summary">तुमच्या ब्लॉक लिस्टची तपासणी करा.</string>
   <string name="pref_delete_account_title">खाते हटवा</string>
   <string name="pref_newGroup_title">गट चॅट सक्षम करा</string>
-  <string name="pref_newGroup_summary">Jami मध्ये गट तयार करण्यास सक्षम करा.</string>
+  <string name="pref_newGroup_summary">Glowmate मध्ये गट तयार करण्यास सक्षम करा.</string>
   <string name="pref_logs_title">निदान नोंदी</string>
   <string name="pref_logs_summary">उघड डायग्नोस्टिक लॉग सेटिंग्ज</string>
   <string name="pref_logs_start">लॉगिंग सुरू करा</string>

@@ -7,7 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Tambah akun</string>
   <string name="add_sip_account_title">Tambahkan akun SIP</string>
-  <string name="ring_account_default_name">Akun Jami %1$s</string>
+  <string name="ring_account_default_name">Akun Glowmate %1$s</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Nama host</string>
   <string name="prompt_username">Nama pengguna</string>
@@ -22,7 +22,7 @@
   <string name="dialog_wait_update">Memperbarui akun</string>
   <string name="dialog_wait_update_details">Mohon tunggu...</string>
   <string name="account_type_ip2ip">Akun IP</string>
-  <string name="help_ring">Akun Jami memungkinkan Anda untuk menjangkau orang-orang dengan aman secara peer to peer melalui jaringan yang sepenuhnya terdistribusi.</string>
+  <string name="help_ring">Akun Glowmate memungkinkan Anda untuk menjangkau orang-orang dengan aman secara peer to peer melalui jaringan yang sepenuhnya terdistribusi.</string>
   <string name="help_sip_title">Tambahkan akun SIP</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">Aksi ini tak bisa dibatalkan</string>
@@ -120,10 +120,10 @@
   <string name="account_export_file">Cadangkan akun</string>
   <string name="account_export_file_summary">Cadangkan akun di perangkat anda untuk memulihkannya nanti.</string>
   <string name="account_enter_password">Masukan kata sandi</string>
-  <string name="account_contact_me">Hubungi saya di Jami!</string>
+  <string name="account_contact_me">Hubungi saya di Glowmate!</string>
   <string name="update_account">Perbarui akun</string>
-  <string name="account_migration">Akun Jami anda dapat diperbarui. \nSilakan masukkan kata sandi anda.</string>
-  <string name="ring_account">Akun Jami</string>
+  <string name="account_migration">Akun Glowmate anda dapat diperbarui. \nSilakan masukkan kata sandi anda.</string>
+  <string name="ring_account">Akun Glowmate</string>
   <string name="sip_account">Akun SIP</string>
   <string name="ring_account_identity">Identitas</string>
   <string name="account_migration_title_dialog">Migrasi akun</string>
@@ -138,7 +138,7 @@
   <string name="account_tv_advance_settings_header">Pengaturan lanjutan</string>
   <string name="account_tv_add_contact">Tambah kontak</string>
   <string name="account_tv_advanced_settings">Ubah pengaturan umum</string>
-  <string name="account_tv_about">Tentang Jami</string>
+  <string name="account_tv_about">Tentang Glowmate</string>
   <string name="tv_about_version">Versi</string>
   <string name="tv_about_license">Lisensi</string>
   <string name="tv_about_author">Hak pemilik</string>
@@ -146,7 +146,7 @@
   <string name="account_link_device">Hubungkan melalui perangkat lain</string>
   <string name="account_link_button">Hubungkan melalui jaringan</string>
   <string name="account_link_archive_button">Hubungkan melalui cadangan</string>
-  <string name="account_new_button">Buat akun Jami</string>
+  <string name="account_new_button">Buat akun Glowmate</string>
   <string name="account_link_export_button">Tautkan perangkat baru</string>
   <string name="account_link_show_button">Tampilkan %d lebih banyak perangkat yang ditautkan</string>
   <string name="account_link_hide_button">Sembunyikan perangkat yang tertaut</string>
@@ -175,9 +175,9 @@
   <string name="account_status_offline">Luring</string>
   <string name="account_status_error">Galat</string>
   <!--Create account-->
-  <string name="account_creation_home">Selamat datang di Jami</string>
+  <string name="account_creation_home">Selamat datang di Glowmate</string>
   <string name="account_creation_profile">Buat profil Anda</string>
-  <string name="account_creation_ring">Buat akun Jami Anda</string>
+  <string name="account_creation_ring">Buat akun Glowmate Anda</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Masukkan kata sandi untuk konfirmasi</string>

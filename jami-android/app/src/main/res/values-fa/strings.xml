@@ -4,7 +4,7 @@
   <string name="submit_issue_title">گزارش اشکال</string>
   <string name="submit_issue_action_description"><u>گزارش مشکل جدید</u></string>
   <string name="section_license">مجوز</string>
-  <string name="sponsor_section">Jami is free software developed and supported by</string>
+  <string name="sponsor_section">Glowmate is free software developed and supported by</string>
   <string name="copyright_section">کپی رایت</string>
   <string name="contribute_section">مشارکت و همکاری</string>
   <string name="version_section">نسخه</string>
@@ -147,7 +147,7 @@ contact@jami.net.</string>
   <string name="ringtone_error_size_too_big">این فایل خیلی بزرگ است. حداکثر اندازه %1$d کیلو‌بایت است.</string>
   <string name="ringtone_custom_prompt">تعیین صدای زنگ سفارشی</string>
   <string name="ringtone_custom_label">سفارشی</string>
-  <string name="ringtone_jami_tones">Jami ringtones</string>
+  <string name="ringtone_jami_tones">Glowmate ringtones</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
@@ -209,7 +209,7 @@ contact@jami.net.</string>
   <string name="prompt_new_password">گذرواژه جدید</string>
   <string name="prompt_new_password_optional">گذرواژه جدید (اختیاری)</string>
   <string name="prompt_new_password_repeat">تایید گذرواژه جدید</string>
-  <string name="account_create_title">حساب Jami را ایجاد کنید</string>
+  <string name="account_create_title">حساب Glowmate را ایجاد کنید</string>
   <string name="prompt_new_username">نام کاربری جدید را وارد کنید</string>
   <string name="prompt_hint_username">نام کاربری</string>
   <string name="help_password_choose">برای حفاظت از حساب جمی خود، گذرواژه‌ای قوی را که به خاطر خواهید سپرد، برگزینید.</string>
@@ -337,12 +337,12 @@ contact@jami.net.</string>
   <string name="dialog_hint_description">توضیحات</string>
   <string name="picker_title">انتخاب مخاطبین</string>
   <string name="picker_btn">انتخاب مخاطبین</string>
-  <string name="bottomsheet_contact">با Jami\n%1$s تماس بگیرید</string>
+  <string name="bottomsheet_contact">با Glowmate\n%1$s تماس بگیرید</string>
   <string name="bottomsheet_remove">عضو را حذف کنید</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">ثبت نام کاربری</string>
   <string name="jami_id_choose_username">یک نام کاربری را انتخاب کنید</string>
-  <!--WelcomeJami-->
+  <!--WelcomeGlowmate-->
   <string name="welcome_jami_title">به جمی خوش آمدید</string>
   <!--Conversation details-->
   <string name="details">جزییات</string>

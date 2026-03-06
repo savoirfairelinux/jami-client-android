@@ -7,9 +7,9 @@
   <string name="version_section">Έκδοση</string>
   <string name="website_chooser_title">Προβολή σελίδας με...</string>
   <string name="license">Το παρόν λογισμικό παρέχεται \"ως έχει\", άνευ οποιασδήποτε εγγύησης. Για περισσότερα βλ.<u> Γενική Άδεια Δημόσιας Χρήσης GNU έκδοση 3 ή νεώτερη</u></string>
-  <string name="description">To Jami είναι ένα ελεύθερο λογισμικό για επικοινωνία με όλο τον κόσμο. Σέβεται την ελευθερία και την ιδιωτικότητα των χρηστών/στριών του.</string>
+  <string name="description">To Glowmate είναι ένα ελεύθερο λογισμικό για επικοινωνία με όλο τον κόσμο. Σέβεται την ελευθερία και την ιδιωτικότητα των χρηστών/στριών του.</string>
   <string name="credits">Συντελεστές</string>
-  <string name="pip_title">Συνδιάσκεψη Jami</string>
+  <string name="pip_title">Συνδιάσκεψη Glowmate</string>
   <string name="call_service_description">Αυτή η υπηρεσία είναι απαραίτητη για να μπορείτε να δέχεστε κλήσεις. Εκτελείται μόνο κατά τη διάρκεια των κλήσεων.</string>
   <string name="data_transfer_service_description">Αυτή η υπηρεσία είναι απαραίτητη για την προβολή διαρκών ειδοποιήσεων κατά τη μεταφορά αρχείων.</string>
   <!--About dialog-->
@@ -26,7 +26,7 @@
   <string name="menu_item_settings">Ρυθμίσεις</string>
   <string name="menu_item_account_settings">Ρυθμίσεις λογαριασμού</string>
   <string name="menu_item_share">Κοινοποίηση λογαριασμού</string>
-  <string name="menu_item_about">Σχετικά με το Jami</string>
+  <string name="menu_item_about">Σχετικά με το Glowmate</string>
   <string name="video_setting_title">Εποθέματα Βίντεο</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
@@ -168,7 +168,7 @@
   <string name="conversation_reply_you">Εσύ</string>
   <string name="conversation_preference_color">Χρώμα συνομιλίας</string>
   <string name="conversation_preference_emoji">Emoji συνομιλίας</string>
-  <string name="conversation_type_contact">Επαφή Jami</string>
+  <string name="conversation_type_contact">Επαφή Glowmate</string>
   <string name="conversation_type_private">Ιδιωτικό</string>
   <string name="conversation_type_group">Ομάδα</string>
   <string name="conversation_search_hint">Ψάξτε για συζήτηση</string>
@@ -179,11 +179,11 @@
   <string name="prompt_new_password">Νέο συνθηματικό</string>
   <string name="prompt_new_password_optional">Νέος κωδικός  (προαιρετικό)</string>
   <string name="prompt_new_password_repeat">Επιβεβαίωση νέου κωδικού</string>
-  <string name="account_create_title">Δημιουργήστε λογαριασμό Jami</string>
+  <string name="account_create_title">Δημιουργήστε λογαριασμό Glowmate</string>
   <string name="prompt_new_username">Εισάγετε νέο ψευδώνυμο</string>
   <string name="prompt_hint_username">Όνομα χρήστη</string>
-  <string name="help_password_choose">Επιλέξτε έναν κωδικό που θα θυμάστε για την προστασία του λογαριασμού σας στο Jami.</string>
-  <string name="help_password_enter">Καταχώρησε το κωδικό του κύριου λογαριασμού σου Jami.</string>
+  <string name="help_password_choose">Επιλέξτε έναν κωδικό που θα θυμάστε για την προστασία του λογαριασμού σας στο Glowmate.</string>
+  <string name="help_password_enter">Καταχώρησε το κωδικό του κύριου λογαριασμού σου Glowmate.</string>
   <string name="help_server_enter">Εισάγετε το URL του διακομιστή διαχείρισης.</string>
   <string name="wizard_next">Επόμενο</string>
   <string name="wizard_back">Πίσω</string>
@@ -208,7 +208,7 @@
   <string name="devices">Συνδεδεμένες συσκευές</string>
   <string name="total_devices">Σύνολο συσκευών:</string>
   <!--Share fragment-->
-  <string name="share_message">Σάρωσε αυτό τον κώδικα με το Jami</string>
+  <string name="share_message">Σάρωσε αυτό τον κώδικα με το Glowmate</string>
   <string name="share_message_no_account">Επιλέξτε έναν λογαριασμό για διαμοιρασμό.</string>
   <string name="share_your_account_information">Μοίρασε τις πληροφορίες των επαφών μου</string>
   <string name="share_label">Κοινοποίηση</string>
@@ -304,13 +304,13 @@
   <string name="dialog_hint_description">Περιγραφή</string>
   <string name="picker_title">Επιλέξτε επαφές</string>
   <string name="picker_btn">Επιλέξτε επαφές</string>
-  <string name="bottomsheet_contact">Επικοινωνήστε με Jami\n%1$s</string>
+  <string name="bottomsheet_contact">Επικοινωνήστε με Glowmate\n%1$s</string>
   <string name="bottomsheet_remove">Αφαίρεση μέλος</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">Καταχωρίστε το όνομα χρήστη</string>
   <string name="jami_id_choose_username">Επιλέξτε όνομα χρήστη</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">Καλώς ήλθατε στο  Jami</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">Καλώς ήλθατε στο  Glowmate</string>
   <!--Conversation details-->
   <string name="details">Λεπτομέρειες</string>
   <string name="Private">Ιδιωτικό</string>

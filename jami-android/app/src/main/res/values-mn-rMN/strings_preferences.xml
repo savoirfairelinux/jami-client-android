@@ -10,7 +10,7 @@
   <string name="pref_category_connectivity">Холбоотой байдал</string>
   <string name="pref_category_video_settings">Видеоны дэвшилтэт тохируулалт</string>
   <string name="pref_mobileData_title">Гар утасны мэдээлэл</string>
-  <string name="pref_mobileData_summary">Jami-г Wi-Fi-ээс гадна 3G/LTE сүлжээний хэрэгслийн ашиглалтанд оруулаарай</string>
+  <string name="pref_mobileData_summary">Glowmate-г Wi-Fi-ээс гадна 3G/LTE сүлжээний хэрэгслийн ашиглалтанд оруулаарай</string>
   <string name="pref_pushNotifications_title">Дашрамдсан мэдэгдэл</string>
   <string name="pref_pushNotifications_summary">Google сервер ашиглаж, хойноо дуудлага / мэдээ хүлээн авах боломжийг олгох</string>
   <string name="pref_unifiedPush_summary">UnifiedPush үйлчилгээг ашиглан дуудлага / мэдээллийг хяналд хүлээн авах боломжийг олгоно</string>
@@ -25,9 +25,9 @@
   <string name="pref_videoResolution_summary">Хажуу видеоны тохируулалт сонго</string>
   <string name="pref_systemContacts_title">Системийн холбоосыг ашиглах</string>
   <string name="pref_systemContacts_summary">Зурагчдын мэдээллийг системээр дамжуулан үзнэ үү.</string>
-  <string name="pref_systemDialer_title">Jami-ийг ашиглан системт дуудлага хийх</string>
+  <string name="pref_systemDialer_title">Glowmate-ийг ашиглан системт дуудлага хийх</string>
   <string name="pref_systemDialer_summary">Магадгүй Джамиг системээр дуудлага хийхэд ашигла.</string>
-  <string name="pref_startOnBoot_title">Jami-ийг эхлүүлэхэд эхлүүлэх</string>
+  <string name="pref_startOnBoot_title">Glowmate-ийг эхлүүлэхэд эхлүүлэх</string>
   <string name="pref_startOnBoot_summary">Системийн эхлэх үед Джамиг дэргэд нь явуул.</string>
   <string name="pref_clearHistory_title">Тарих нь тодорхой</string>
   <string name="pref_notification_title">Хэвлэл мэдээллийн илрүүлэл</string>
@@ -36,7 +36,7 @@
   <string name="pref_blackList_summary">Таны жагсаалтыг шалгаарай.</string>
   <string name="pref_delete_account_title">Хэтгэлээ устгах</string>
   <string name="pref_newGroup_title">Товчдын ярилцлагаг идэвхжүүлнэ</string>
-  <string name="pref_newGroup_summary">Jami-д бүлэг байгуулах боломжийг олгох.</string>
+  <string name="pref_newGroup_summary">Glowmate-д бүлэг байгуулах боломжийг олгох.</string>
   <string name="pref_logs_title">Хэвлэлийн тэмдэглэл</string>
   <string name="pref_logs_summary">Диагностикийн тэмдэглэлийн нээлттэй тохируулалт</string>
   <string name="pref_logs_start">Хүрэлтийн ажлыг эхлүүлнэ</string>

@@ -33,7 +33,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     android:foreground="?android:attr/selectableItemBackground"
     >
 
-    <cx.ring.views.CheckableImageButton
+    <com.glowmate.views.CheckableImageButton
         android:id="@+id/call_sharescreen_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

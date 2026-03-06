@@ -7,7 +7,7 @@
   <string name="version_section">нұсқасы</string>
   <string name="website_chooser_title">Веб-сайтты пайдалану арқылы қарау...</string>
   <string name="license">Бұл бағдарламалық жасақтама "барлығындай", ешқандай кепілдіксіз ұсынылады. Толығырақ білу үшін GNU жалпы қоғамдық лицензиясының 3 немесе одан кейінгі нұсқасын қараңыз&lt;/u&gt;</string>
-  <string name="description">Jami - бұл пайдаланушылардың еркіндігі мен жеке өміріне құрмет көрсететін әмбебап байланыс үшін тегін бағдарламалық қамтамасыз ету.</string>
+  <string name="description">Glowmate - бұл пайдаланушылардың еркіндігі мен жеке өміріне құрмет көрсететін әмбебап байланыс үшін тегін бағдарламалық қамтамасыз ету.</string>
   <string name="credits">Кредиттер</string>
   <string name="pip_title">Жами конференциясы</string>
   <string name="call_service_description">Бұл қызмет сіздің шақыруларыңызды бірінші планда ұстау үшін қажет. Ол тек шақырулар кезінде ғана жүреді.</string>
@@ -166,7 +166,7 @@
   <string name="conversation_reply_you">Сендер</string>
   <string name="conversation_preference_color">Әңгімелеудің түсі</string>
   <string name="conversation_preference_emoji">Әңгімелеу эмоджисі</string>
-  <string name="conversation_type_contact">Jami байланысы</string>
+  <string name="conversation_type_contact">Glowmate байланысы</string>
   <string name="conversation_type_private">Жеке</string>
   <string name="conversation_search_hint">Іздеу әңгімесі</string>
   <string name="today">Бүгінде</string>
@@ -176,11 +176,11 @@
   <string name="prompt_new_password">Жаңа пароль</string>
   <string name="prompt_new_password_optional">Жаңа пароль (босөзбен)</string>
   <string name="prompt_new_password_repeat">Жаңа парольді растаңыз</string>
-  <string name="account_create_title">Jami тіркелгісін құру</string>
+  <string name="account_create_title">Glowmate тіркелгісін құру</string>
   <string name="prompt_new_username">Жаңа пайдаланушы атауын келтіріңіз</string>
   <string name="prompt_hint_username">Пайдаланушы аты</string>
-  <string name="help_password_choose">Jami тіркелгіңізді қорғау үшін естен шығармайтын күшті парольді таңдаңыз.</string>
-  <string name="help_password_enter">Негізгі Jami тіркелгіңіздің паролін келтіріңіз.</string>
+  <string name="help_password_choose">Glowmate тіркелгіңізді қорғау үшін естен шығармайтын күшті парольді таңдаңыз.</string>
+  <string name="help_password_enter">Негізгі Glowmate тіркелгіңіздің паролін келтіріңіз.</string>
   <string name="help_server_enter">Басқару серверінің URL-ін келтіріңіз.</string>
   <string name="wizard_next">Келесі</string>
   <string name="wizard_back">Қайта оралу</string>
@@ -205,7 +205,7 @@
   <string name="devices">Қосылған құрылғылар</string>
   <string name="total_devices">Жалпы құрылғылар: </string>
   <!--Share fragment-->
-  <string name="share_message">Осы кодты Jamiмен сканерлеу</string>
+  <string name="share_message">Осы кодты Glowmateмен сканерлеу</string>
   <string name="share_message_no_account">Бөліну үшін тіркелгі таңдаңыз.</string>
   <string name="share_your_account_information">Байланыс мәліметіммен бөліс</string>
   <string name="share_label">Ортақ</string>
@@ -301,12 +301,12 @@
   <string name="dialog_hint_description">Тасуирлау</string>
   <string name="picker_title">Байланыстарды таңдау</string>
   <string name="picker_btn">Байланыстарды таңдау</string>
-  <string name="bottomsheet_contact">Jami\n%1$s-мен байланыс</string>
+  <string name="bottomsheet_contact">Glowmate\n%1$s-мен байланыс</string>
   <string name="bottomsheet_remove">Қатысушыны алып тастау</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">Пайдаланушы атауын тіркеу</string>
   <string name="jami_id_choose_username">Пайдаланушы атауын таңдау</string>
-  <!--WelcomeJami-->
+  <!--WelcomeGlowmate-->
   <string name="welcome_jami_title">Жамиге қош келдіңіздер</string>
   <!--Conversation details-->
   <string name="details">Толығырақ</string>

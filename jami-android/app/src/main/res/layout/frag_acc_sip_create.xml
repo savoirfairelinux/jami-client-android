@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:background="@color/color_primary_dark"
-    tools:context="cx.ring.account.AccountWizardActivity">
+    tools:context="com.glowmate.account.AccountWizardActivity">
 
     <ScrollView
         android:layout_width="match_parent"

@@ -39,7 +39,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             android:persistent="false"
             android:summary=""
             android:title="@string/account_username_label" />
-        <cx.ring.views.PasswordPreference
+        <com.glowmate.views.PasswordPreference
             android:key="Account.password"
             android:persistent="false"
             android:summary=""

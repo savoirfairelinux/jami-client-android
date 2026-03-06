@@ -26,9 +26,9 @@
   <string name="pref_systemContacts_title">సిస్టమ్ పరిచయాలను ఉపయోగించు</string>
   <string name="pref_systemContacts_summary">కాల్ వివరాలను చూపించడానికి సిస్టమ్ పరిచయాలను ఉపయోగించండి.</string>
   <string name="pref_systemDialer_title">జమిని ఉపయోగించి సిస్టమ్ కాల్స్ చేయండి</string>
-  <string name="pref_systemDialer_summary">సాధ్యమైనప్పుడు వ్యవస్థ కాల్స్ ఉంచడానికి Jami ఉపయోగించండి.</string>
+  <string name="pref_systemDialer_summary">సాధ్యమైనప్పుడు వ్యవస్థ కాల్స్ ఉంచడానికి Glowmate ఉపయోగించండి.</string>
   <string name="pref_startOnBoot_title">ప్రారంభంలో జామి ప్రారంభించండి</string>
-  <string name="pref_startOnBoot_summary">వ్యవస్థ ప్రారంభించినప్పుడు నేపథ్యంలో Jami అమలు.</string>
+  <string name="pref_startOnBoot_summary">వ్యవస్థ ప్రారంభించినప్పుడు నేపథ్యంలో Glowmate అమలు.</string>
   <string name="pref_clearHistory_title">స్పష్టమైన చరిత్ర</string>
   <string name="pref_notification_title">నోటిఫికేషన్ల దృశ్యమానత</string>
   <string name="pref_notification_summary">లాక్ స్క్రీన్ లో అప్లికేషన్ నోటిఫికేషన్ల దృశ్యమానతను సెట్ చేయండి.</string>

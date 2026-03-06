@@ -6,16 +6,16 @@
   <string name="section_license">Licentie</string>
   <string name="switch_conversation">Gesprek wisselen</string>
   <string name="delete_conversation_confirmation">Weet u zeker dat u dit gesprek wilt verwijderen?</string>
-  <string name="sponsor_section">Jami is vrije software ontwikkeld en ondersteund door</string>
+  <string name="sponsor_section">Glowmate is vrije software ontwikkeld en ondersteund door</string>
   <string name="copyright_section">Auteursrecht</string>
   <string name="contribute_section">Bijdragen</string>
   <string name="version_section">Versie</string>
   <string name="no_browser_app_installed">Geen webbrowserapp gevonden, installeer er een om deze pagina te bekijken</string>
   <string name="website_chooser_title">Website bekijken met…</string>
   <string name="license">Deze software wordt ‘als zodanig’ aangeboden zonder enige garantie. Bekijk voor meer informatie de <u>GNU General Public License versie 3 of later</u></string>
-  <string name="description">Jami is vrije software voor universele communicatie, die de vrijheden en privacy van haar gebruikers eerbiedigt.</string>
+  <string name="description">Glowmate is vrije software voor universele communicatie, die de vrijheden en privacy van haar gebruikers eerbiedigt.</string>
   <string name="credits">Met dank aan</string>
-  <string name="pip_title">Conferentie van Jami</string>
+  <string name="pip_title">Conferentie van Glowmate</string>
   <string name="call_service_description">Deze dienst is vereist om uw oproepen op de voorgrond te blijven uitvoeren. Ze draait enkel tijdens oproepen.</string>
   <string name="data_transfer_service_description">Deze dienst is vereist om blijvende meldingen te kunnen tonen tijdens bestandsoverdrachten. Ze draait enkel tijdens bestandsoverdrachten.</string>
   <!--About dialog-->
@@ -24,7 +24,7 @@
   <string name="media">Media</string>
   <string name="community_management">Gemeenschapsbeheer</string>
   <string name="special_thanks">Met uitzonderlijke dank aan</string>
-  <string name="end_note">Dit is een lijst van mensen die veel tijd hebben geïnvesteerd in Jami en daarbij nuttige resultaten hebben geboekt. Bijdragers die aan deze lijst willen worden toegevoegd, kunnen contact opnemen met het Jami-team via contact@jami.net.</string>
+  <string name="end_note">Dit is een lijst van mensen die veel tijd hebben geïnvesteerd in Glowmate en daarbij nuttige resultaten hebben geboekt. Bijdragers die aan deze lijst willen worden toegevoegd, kunnen contact opnemen met het Glowmate-team via contact@jami.net.</string>
   <!--RingActivity-->
   <string name="error_no_network">Geen netwerkverbinding</string>
   <string name="error_account_offline">Het account is offline</string>
@@ -39,7 +39,7 @@
   <string name="menu_item_account_settings">Accountinstellingen</string>
   <string name="menu_item_extension_list">extensie-instellingen</string>
   <string name="menu_item_share">Mijn account delen</string>
-  <string name="menu_item_about">Over Jami</string>
+  <string name="menu_item_about">Over Glowmate</string>
   <string name="video_setting_title">Video-instellingen</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Nummer bellen</string>
@@ -76,7 +76,7 @@
   <string name="notif_channel_background_service_descr">Maakt het mogelijk om op elk moment oproepen en berichten te ontvangen.</string>
   <string name="notif_group_calls">Oproepen</string>
   <string name="notif_inprogress_group_call">Oproep bezig</string>
-  <string name="notif_background_service">Jami draait momenteel in de achtergrond</string>
+  <string name="notif_background_service">Glowmate draait momenteel in de achtergrond</string>
   <string name="notif_mark_as_read">Markeren als gelezen</string>
   <string name="notif_dismiss">Negeren</string>
   <string name="notif_reply">Beantwoorden</string>
@@ -105,7 +105,7 @@
   <string name="hist_out_call">Uitgaande oproep van %1$s</string>
   <string name="call_duration">Duurde %s</string>
   <string name="call_on_hold">Telefoongesprek in wacht</string>
-  <string name="start_error_title">Jami kan niet opgestart worden!</string>
+  <string name="start_error_title">Glowmate kan niet opgestart worden!</string>
   <string name="action_call_accept">Oproep accepteren</string>
   <string name="action_call_accept_audio">Accepteren met audio</string>
   <string name="action_call_accept_video">Accepteer met video</string>
@@ -127,7 +127,7 @@
   <string name="write_a_message">Schrijf een bericht</string>
   <string name="scan_qr">QR-code scannen</string>
   <string name="qr_code">QR-code</string>
-  <string name="qr_code_not_contact">Geen Jami contact QR code</string>
+  <string name="qr_code_not_contact">Geen Glowmate contact QR code</string>
   <string name="new_group">Nieuwe groep aanmaken</string>
   <string name="ab_action_flipcamera">Camera draaien</string>
   <string name="ab_action_hidepreview">Verberg voorbeeld</string>
@@ -157,7 +157,7 @@
   <string name="ringtone_error_size_too_big">Dit bestand is te groot. De maximale grootte is %1$dkB.</string>
   <string name="ringtone_custom_prompt">Stel een aangepaste beltoon in</string>
   <string name="ringtone_custom_label">Aangepast</string>
-  <string name="ringtone_jami_tones">Jami beltonen</string>
+  <string name="ringtone_jami_tones">Glowmate beltonen</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
@@ -211,7 +211,7 @@
   <string name="video_not_found">Video bestand niet gevonden</string>
   <string name="conversation_preference_color">Kleur van het gesprek</string>
   <string name="conversation_preference_emoji">Conversatie emoji</string>
-  <string name="conversation_type_contact">Jami contact</string>
+  <string name="conversation_type_contact">Glowmate contact</string>
   <string name="conversation_type_private">Privé</string>
   <string name="conversation_type_group">Groep</string>
   <string name="conversation_search_hint">Zoek gesprek</string>
@@ -223,11 +223,11 @@
   <string name="prompt_new_password">Nieuw wachtwoord</string>
   <string name="prompt_new_password_optional">Nieuw wachtwoord (optioneel)</string>
   <string name="prompt_new_password_repeat">Bevestig het nieuwe wachtwoord</string>
-  <string name="account_create_title">Maak een account op Jami</string>
+  <string name="account_create_title">Maak een account op Glowmate</string>
   <string name="prompt_new_username">Voer nieuwe gebruikersnaam in</string>
   <string name="prompt_hint_username">Gebruikersnaam</string>
-  <string name="help_password_choose">Kies een sterk wachtwoord om uw Jami-account te beschermen.</string>
-  <string name="help_password_enter">Voer het wachtwoord van uw Jami-account in.</string>
+  <string name="help_password_choose">Kies een sterk wachtwoord om uw Glowmate-account te beschermen.</string>
+  <string name="help_password_enter">Voer het wachtwoord van uw Glowmate-account in.</string>
   <string name="help_server_enter">Voer URL van beheerserver in.</string>
   <string name="wizard_next">Volgende</string>
   <string name="wizard_back">Terug</string>
@@ -253,7 +253,7 @@
   <string name="devices">Gekoppelde apparaten</string>
   <string name="total_devices">Totaal aantal apparaten:</string>
   <!--Share fragment-->
-  <string name="share_message">Scan deze code met Jami</string>
+  <string name="share_message">Scan deze code met Glowmate</string>
   <string name="share_message_no_account">Selecteer een account om te delen.</string>
   <string name="share_your_account_information">Deel mijn contactinformatie</string>
   <string name="share_label">Delen</string>
@@ -313,8 +313,8 @@
   <string name="tv_action_more">Meer</string>
   <string name="conversation_input_speech_hint">Zeg iets...</string>
   <string name="audio_permission_rationale_title">Audio-toestemming vereist</string>
-  <string name="audio_permission_rationale_message">Jami heeft microfoon-toegang nodig voor spraak-naar-text en audio-opname functies. Het zal in de volgende step gevraagd worden</string>
-  <string name="camera_permission_rationale_message">Jami heeft camera-toegang nodig voor het opnemen van video en video-bellen. Het zal in de volgende step gevraagd worden</string>
+  <string name="audio_permission_rationale_message">Glowmate heeft microfoon-toegang nodig voor spraak-naar-text en audio-opname functies. Het zal in de volgende step gevraagd worden</string>
+  <string name="camera_permission_rationale_message">Glowmate heeft camera-toegang nodig voor het opnemen van video en video-bellen. Het zal in de volgende step gevraagd worden</string>
   <string name="unable_to_start_recorder">Niet in staat om de audio opname te starten</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Aanbevolen</string>
@@ -324,7 +324,7 @@
   <string name="wizard_username_button">Registreer gebruikersnaam</string>
   <string name="wizard_username_skip">Gebruikersnaam registratie overslaan</string>
   <string name="wizard_password_info">Account wachtwoord</string>
-  <string name="wizard_password_placeholder">Kies een sterk wachtwoord om uw Jami-account te beschermen</string>
+  <string name="wizard_password_placeholder">Kies een sterk wachtwoord om uw Glowmate-account te beschermen</string>
   <string name="wizard_password_button">Kies wachtwoord</string>
   <string name="wizard_password_skip">Account aanmaken</string>
   <string name="wizard_password_switch">Account versleutelen met wachtwoord</string>
@@ -354,18 +354,18 @@
   <string name="dialog_hint_description">Beschrijving</string>
   <string name="picker_title">Selecteer contacten</string>
   <string name="picker_btn">Selecteer contacten</string>
-  <string name="bottomsheet_contact">Neem contact op met Jami\n%1$s</string>
+  <string name="bottomsheet_contact">Neem contact op met Glowmate\n%1$s</string>
   <string name="bottomsheet_remove">Afschaffen van lid</string>
   <string name="error_open_no_app_found">Geen applicatie gevonden om dit bestand te verwerken: %1$s</string>
-  <!--JamiId-->
-  <string name="jami_id_copy">Jami-ID Kopiëren</string>
-  <string name="jami_id_share">Jami-ID Delen</string>
+  <!--GlowmateId-->
+  <string name="jami_id_copy">Glowmate-ID Kopiëren</string>
+  <string name="jami_id_share">Glowmate-ID Delen</string>
   <string name="jami_id_validate">Gebruikersnaam registreren</string>
   <string name="jami_id_info">• Maximaal 32 karakters\n• Speciale karakters toegestaan: streep(-), laag streepje(_)</string>
   <string name="jami_id_choose_username">Kies een gebruikersnaam</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">Welkom bij Jami</string>
-  <string name="welcome_jami_description">Deel uw Jami Identifier zodat u makkelijker bereikbaar bent!</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">Welkom bij Glowmate</string>
+  <string name="welcome_jami_description">Deel uw Glowmate Identifier zodat u makkelijker bereikbaar bent!</string>
   <!--Conversation details-->
   <string name="details">Details</string>
   <string name="Private">Privé</string>

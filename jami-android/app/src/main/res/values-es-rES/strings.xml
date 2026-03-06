@@ -18,7 +18,7 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <string name="notif_channel_reconnect">Sincronización en segundo plano</string>
-  <string name="notif_reconnect_title">Jami está sincronizando…</string>
+  <string name="notif_reconnect_title">Glowmate está sincronizando…</string>
   <!--Call Fragment-->
   <string name="action_call_hangup">Terminar llamada</string>
   <string name="action_call_resume">Reanudar</string>
@@ -49,8 +49,8 @@
   <!--Wizard-->
   <!--Bottom sheet-->
   <!--Swarm Details-->
-  <!--JamiId-->
-  <!--WelcomeJami-->
+  <!--GlowmateId-->
+  <!--WelcomeGlowmate-->
   <!--Conversation details-->
   <!--Donation-->
   <!--Extension-->

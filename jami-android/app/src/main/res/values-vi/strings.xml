@@ -3,15 +3,15 @@
   <!--About-->
   <string name="submit_issue_title">Báo lỗi</string>
   <string name="section_license">Giấy phép</string>
-  <string name="sponsor_section">Jami là phần mềm miễn phí được phát triển và hỗ trợ bởi</string>
+  <string name="sponsor_section">Glowmate là phần mềm miễn phí được phát triển và hỗ trợ bởi</string>
   <string name="copyright_section">Bản quyền</string>
   <string name="contribute_section">Đóng góp</string>
   <string name="version_section">Phiên bản</string>
   <string name="website_chooser_title">Xem trang web bằng...</string>
   <string name="license">Phần mềm này được cung cấp \"nguyên bản\", không có bảo hành. Để biết chi tiết, xem <u>GNU General Public License 3 hoặc trở về sau</u></string>
-  <string name="description">Jami là phần mềm liên lạc miễn phí, tôn trọng quyền tự do và quyền riêng tư của người dùng.</string>
+  <string name="description">Glowmate là phần mềm liên lạc miễn phí, tôn trọng quyền tự do và quyền riêng tư của người dùng.</string>
   <string name="credits">Ghi công</string>
-  <string name="pip_title">Hội nghị Jami</string>
+  <string name="pip_title">Hội nghị Glowmate</string>
   <string name="call_service_description">Dịch vụ này là cần thiết để giữ cho cuộc gọi của bạn chạy trong nền. Nó chỉ chạy khi thực hiện các cuộc gọi.</string>
   <string name="data_transfer_service_description">Dịch vụ này là cần thiết để hiển thị liên tục các thông báo trong quá trình chuyển tệp. Nó chỉ chạy khi thực hiện chuyển tệp.</string>
   <!--About dialog-->
@@ -29,7 +29,7 @@
   <string name="menu_item_app_settings">Cài đặt app</string>
   <string name="menu_item_account_settings">Cài đặt tài khoản</string>
   <string name="menu_item_share">Chia sẻ tài khoản của tôi</string>
-  <string name="menu_item_about">Về Jami</string>
+  <string name="menu_item_about">Về Glowmate</string>
   <string name="video_setting_title">Cài đặt video</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
@@ -74,7 +74,7 @@
   <string name="action_call_unmute">Bỏ tắt tiếng</string>
   <string name="ongoing_call">Cuộc gọi đang diễn ra</string>
   <string name="call_duration">Đã gọi %s</string>
-  <string name="start_error_title">Không thể khởi động Jami</string>
+  <string name="start_error_title">Không thể khởi động Glowmate</string>
   <string name="switch_to_video">Bật video</string>
   <string name="action_call_decline">Từ chối</string>
   <string name="action_call_mic_mute">Tắt tiếng micrô</string>
@@ -83,7 +83,7 @@
   <string name="ab_action_video_call">Bắt đầu cuộc gọi video</string>
   <string name="scan_qr">Quét mã QR</string>
   <string name="qr_code">Mã QR</string>
-  <string name="qr_code_not_contact">Không phải mã QR liên hệ Jami</string>
+  <string name="qr_code_not_contact">Không phải mã QR liên hệ Glowmate</string>
   <string name="new_group">Tạo nhóm mới</string>
   <!--Text messages-->
   <string name="message_failed">Không thành công</string>
@@ -145,9 +145,9 @@
   <string name="yesterday">Hôm qua</string>
   <!--Contacts-->
   <string name="prompt_new_password_repeat">Xác nhận mật khẩu mới</string>
-  <string name="account_create_title">Tạo tài khoản Jami</string>
+  <string name="account_create_title">Tạo tài khoản Glowmate</string>
   <string name="prompt_hint_username">Tên người dùng</string>
-  <string name="help_password_choose">Hãy chọn một mật khẩu mạnh, dễ nhớ để bảo vệ tài khoản Jami của bạn.</string>
+  <string name="help_password_choose">Hãy chọn một mật khẩu mạnh, dễ nhớ để bảo vệ tài khoản Glowmate của bạn.</string>
   <string name="pin_copied">Đã sao chép mã xác thực vào clipboard.</string>
   <string name="copied_clipboard">Đã sao chép vào clipboard.</string>
   <string name="wizard_next">Tiếp theo</string>
@@ -171,7 +171,7 @@
   <string name="devices_header">Thiết bị</string>
   <string name="devices">Thiết bị đã liên kết</string>
   <!--Share fragment-->
-  <string name="share_message">Quét mã này bằng Jami</string>
+  <string name="share_message">Quét mã này bằng Glowmate</string>
   <string name="share_label">Chia sẻ</string>
   <string name="generic_error_migration">Lỗi</string>
   <string name="generic_error_migration_message">Xảy ra lỗi khi chuyển tài khoản.</string>
@@ -250,14 +250,14 @@
   <string name="no_contact_to_add">Chưa có liên hệ nào</string>
   <string name="bottomsheet_remove">Xóa thành viên</string>
   <string name="swarm_detail_no_document">Chưa có tài liệu nào</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">Đăng ký tên người dùng</string>
   <string name="jami_id_available">Tên người dùng này khả dụng.</string>
   <string name="jami_id_not_available">Tên người dùng không khả dụng.</string>
   <string name="jami_id_looking_for_availability">Đang kiểm tra tính khả dụng của tên người dùng…</string>
   <string name="jami_id_choose_username">Chọn tên người dùng</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">Chào mừng đến với Jami</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">Chào mừng đến với Glowmate</string>
   <!--Conversation details-->
   <string name="details">Chi tiết</string>
   <string name="swarm_type">Loại hội thoại</string>

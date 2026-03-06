@@ -343,7 +343,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity
             android:name=".tv.main.HomeActivity"
             android:exported="true"
-            android:theme="@style/Theme.Jami.Leanback.Main">
+            android:theme="@style/Theme.Glowmate.Leanback.Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -356,7 +356,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="cx.ring"
+                    android:host="com.glowmate"
                     android:path="/home"
                     android:scheme="jamitv" />
             </intent-filter>
@@ -408,7 +408,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:supportsPictureInPicture="true"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="cx.ring.action.CALL" />
+                <action android:name="com.glowmate.action.CALL" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -418,7 +418,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:exported="false"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="cx.ring.action.CALL" />
+                <action android:name="com.glowmate.action.CALL" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -434,7 +434,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="cx.ring"
+                    android:host="com.glowmate"
                     android:pathPrefix="/conversation/"
                     android:scheme="jamitv" />
             </intent-filter>
@@ -450,7 +450,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="cx.ring.file_provider"
+            android:authorities="com.glowmate.file_provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -465,7 +465,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:theme="@style/AppTheme.MediaViewer" />
 
         <service
-            android:name=".service.JamiJobService"
+            android:name=".service.GlowmateJobService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 

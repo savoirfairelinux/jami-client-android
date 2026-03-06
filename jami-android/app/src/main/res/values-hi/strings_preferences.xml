@@ -25,9 +25,9 @@
   <string name="pref_videoResolution_summary">डिफ़ॉल्ट आउटगोइंग वीडियो रिज़ॉल्यूशन का चयन करें</string>
   <string name="pref_systemContacts_title">सिस्टम संपर्क का उपयोग करें</string>
   <string name="pref_systemContacts_summary">फोन करने वाले के विवरण दिखाने के लिए सिस्टम संपर्क का उपयोग करें।</string>
-  <string name="pref_systemDialer_title">Jami का उपयोग करके सिस्टम कॉल करें</string>
+  <string name="pref_systemDialer_title">Glowmate का उपयोग करके सिस्टम कॉल करें</string>
   <string name="pref_systemDialer_summary">जब संभव हो तो सिस्टम कॉल करने के लिए जेमी का उपयोग करें।</string>
-  <string name="pref_startOnBoot_title">स्टार्टअप पर Jami शुरू करें</string>
+  <string name="pref_startOnBoot_title">स्टार्टअप पर Glowmate शुरू करें</string>
   <string name="pref_startOnBoot_summary">जब सिस्टम शुरू होता है तो जेमी को पृष्ठभूमि में चलाएं।</string>
   <string name="pref_clearHistory_title">स्पष्ट इतिहास</string>
   <string name="pref_notification_title">सूचनाओं की दृश्यता</string>
@@ -36,7 +36,7 @@
   <string name="pref_blackList_summary">अपनी ब्लॉक सूची की जाँच करें।</string>
   <string name="pref_delete_account_title">खाता मिटाये</string>
   <string name="pref_newGroup_title">समूह चैट सक्षम करें</string>
-  <string name="pref_newGroup_summary">Jami में समूह बनाने में सक्षम करें।</string>
+  <string name="pref_newGroup_summary">Glowmate में समूह बनाने में सक्षम करें।</string>
   <string name="pref_logs_title">निदान लॉग</string>
   <string name="pref_logs_summary">खुले डायग्नोस्टिक लॉग सेटिंग्स</string>
   <string name="pref_logs_start">लॉगिंग शुरू करें</string>

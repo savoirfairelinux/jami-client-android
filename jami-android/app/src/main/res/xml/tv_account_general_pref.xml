@@ -7,7 +7,7 @@
             android:key="Account.about"
             android:title="@string/account_tv_about"
             android:selectable="true"
-            android:fragment="cx.ring.tv.settings.TVAboutFragment"
+            android:fragment="com.glowmate.tv.settings.TVAboutFragment"
             android:icon="@drawable/ic_jami"/>
     </PreferenceCategory>
 

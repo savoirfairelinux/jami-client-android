@@ -10,7 +10,7 @@
   <string name="pref_category_connectivity">Connectiviteit</string>
   <string name="pref_category_video_settings">Geavanceerde video-instellingen</string>
   <string name="pref_mobileData_title">Mobiele data</string>
-  <string name="pref_mobileData_summary">Sta Jami toe om 3G/LTE-netwerken te gebruiken naast wifi</string>
+  <string name="pref_mobileData_summary">Sta Glowmate toe om 3G/LTE-netwerken te gebruiken naast wifi</string>
   <string name="pref_pushNotifications_title">Pushmeldingen</string>
   <string name="pref_pushNotifications_summary">Gebruik de servers van Google om oproepen/berichten in de achtergrond te kunnen ontvangen</string>
   <string name="pref_unifiedPush_summary">Gebruik een UnifiedPush-service om oproepen/berichten in de achtergrond te ontvangen</string>
@@ -25,10 +25,10 @@
   <string name="pref_videoResolution_summary">Selecteer de standaard resolutie van uitgaande video</string>
   <string name="pref_systemContacts_title">Systeemcontacten gebruiken</string>
   <string name="pref_systemContacts_summary">Gebruik systeemcontacten om gegevens over de beller te tonen</string>
-  <string name="pref_systemDialer_title">Systeemoproepen plaatsen met Jami</string>
-  <string name="pref_systemDialer_summary">Gebruik Jami wanneer mogelijk voor systeemoproepen.</string>
-  <string name="pref_startOnBoot_title">Jami automatisch starten</string>
-  <string name="pref_startOnBoot_summary">Voer Jami in de achtergrond uit wanneer het systeem gestart wordt.</string>
+  <string name="pref_systemDialer_title">Systeemoproepen plaatsen met Glowmate</string>
+  <string name="pref_systemDialer_summary">Gebruik Glowmate wanneer mogelijk voor systeemoproepen.</string>
+  <string name="pref_startOnBoot_title">Glowmate automatisch starten</string>
+  <string name="pref_startOnBoot_summary">Voer Glowmate in de achtergrond uit wanneer het systeem gestart wordt.</string>
   <string name="pref_clearHistory_title">Geschiedenis wissen</string>
   <string name="pref_notification_title">Notificatie zichtbaarheid</string>
   <string name="pref_notification_summary">Zichtbaarheid van applicatie-notificaties op het lock scherm</string>
@@ -36,7 +36,7 @@
   <string name="pref_blackList_summary">Controleer je bloklijst.</string>
   <string name="pref_delete_account_title">Account verwijderen</string>
   <string name="pref_newGroup_title">Groepschat inzetten</string>
-  <string name="pref_newGroup_summary">Maak groepen in Jami mogelijk.</string>
+  <string name="pref_newGroup_summary">Maak groepen in Glowmate mogelijk.</string>
   <string name="pref_logs_title">Diagnostische logs</string>
   <string name="pref_logs_summary">Open diagnostische loginstellingen</string>
   <string name="pref_logs_start">Begin met loggen</string>

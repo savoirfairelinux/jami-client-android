@@ -7,9 +7,9 @@
   <string name="version_section">Versi</string>
   <string name="website_chooser_title">Lihat halaman menggunakan...</string>
   <string name="license">Perangkat lunak ini disediakan \"apa adanya\", tanpa jaminan apapun. Untuk detalinya, <u>GNU General Public License versi 3 atau yang lebih baru</u></string>
-  <string name="description">Jami adalah perangkat lunak gratis untuk komunikasi universal yang menghormati kebebasan dan privasi penggunanya</string>
+  <string name="description">Glowmate adalah perangkat lunak gratis untuk komunikasi universal yang menghormati kebebasan dan privasi penggunanya</string>
   <string name="credits">Partisipan</string>
-  <string name="pip_title">Konferensi Jami</string>
+  <string name="pip_title">Konferensi Glowmate</string>
   <string name="call_service_description">Layanan ini diperlukan untuk membuat panggilan anda tetap berjalan di latar depan. Ini hanya berjalan selama panggilan</string>
   <string name="data_transfer_service_description">Layanan ini diperlukan untuk menampilkan pemberitahuan terus menerus selama mengirim file. Ini hanya berjalan ketika mengirim file</string>
   <!--About dialog-->
@@ -26,7 +26,7 @@
   <string name="menu_item_settings">Setelan</string>
   <string name="menu_item_account_settings">Pengaturan Akun</string>
   <string name="menu_item_share">Bagikan akun saya</string>
-  <string name="menu_item_about">Tentang Jami</string>
+  <string name="menu_item_about">Tentang Glowmate</string>
   <string name="video_setting_title">Pengaturan Video</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
@@ -177,11 +177,11 @@
   <string name="prompt_new_password">Kata sandi baru</string>
   <string name="prompt_new_password_optional">Kata sandi baru (opsional)</string>
   <string name="prompt_new_password_repeat">Konfirmasi kata sandi baru</string>
-  <string name="account_create_title">Buat akun Jami</string>
+  <string name="account_create_title">Buat akun Glowmate</string>
   <string name="prompt_new_username">Masukkan username baru</string>
   <string name="prompt_hint_username">Nama pengguna</string>
-  <string name="help_password_choose">Gunakan kata sandi kuat dan mudah diingat untuk menjaga akun Jami anda.</string>
-  <string name="help_password_enter">Masukkan kata sandi utama akun Jami anda</string>
+  <string name="help_password_choose">Gunakan kata sandi kuat dan mudah diingat untuk menjaga akun Glowmate anda.</string>
+  <string name="help_password_enter">Masukkan kata sandi utama akun Glowmate anda</string>
   <string name="help_server_enter">Masukkan URL manajemen peladen.</string>
   <string name="wizard_next">Selanjutnya</string>
   <string name="wizard_back">Kembali</string>
@@ -206,7 +206,7 @@
   <string name="devices">Perangkat yang terhubung</string>
   <string name="total_devices">Jumlah perangkat:</string>
   <!--Share fragment-->
-  <string name="share_message">Pindai kode dengan Jami</string>
+  <string name="share_message">Pindai kode dengan Glowmate</string>
   <string name="share_message_no_account">Silakan pilih akun untuk dibagikan.</string>
   <string name="share_your_account_information">Bagikan informasi kontak saya</string>
   <string name="share_label">Bagikan</string>
@@ -302,13 +302,13 @@
   <string name="dialog_hint_description">Deskripsi</string>
   <string name="picker_title">Pilih kontak</string>
   <string name="picker_btn">Pilih kontak</string>
-  <string name="bottomsheet_contact">Hubungi Jami\n%1$s</string>
+  <string name="bottomsheet_contact">Hubungi Glowmate\n%1$s</string>
   <string name="bottomsheet_remove">Hapus anggota</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">Daftarkan nama pengguna</string>
   <string name="jami_id_choose_username">Tentukan nama pengguna</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">Selamat datang di Jami</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">Selamat datang di Glowmate</string>
   <!--Conversation details-->
   <string name="details">Detail</string>
   <string name="Private">Privat</string>

@@ -69,7 +69,7 @@
                 android:textColor="@color/colorOnSurface"
                 android:textSize="18sp" />
 
-            <!-- Jami ID -->
+            <!-- Glowmate ID -->
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/jamiIdFragmentContainerView"
                 android:layout_width="wrap_content"

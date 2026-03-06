@@ -7,7 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Բաժնորդագրություն ավելացնել</string>
   <string name="add_sip_account_title">Ավելացնել SIP հաշիվ</string>
-  <string name="ring_account_default_name">Jami հաշիվ %1$s</string>
+  <string name="ring_account_default_name">Glowmate հաշիվ %1$s</string>
   <string name="prompt_alias">Անանուններ</string>
   <string name="prompt_hostname">Հյուրընկալող անուն</string>
   <string name="prompt_username">Օգտագործողի անունը</string>
@@ -22,7 +22,7 @@
   <string name="dialog_wait_update">Հաշվետու թարմացում</string>
   <string name="dialog_wait_update_details">Խնդրում եմ սպասել, մինչեւ ձեր նոր հաշիվը թարմացվի...</string>
   <string name="account_type_ip2ip">IP հաշիվ</string>
-  <string name="help_ring">Jami հաշիվը թույլ է տալիս ապահովորեն հասնել մարդկանց, զուգընկերների միջոցով ամբողջությամբ տարածված ցանցի միջոցով:</string>
+  <string name="help_ring">Glowmate հաշիվը թույլ է տալիս ապահովորեն հասնել մարդկանց, զուգընկերների միջոցով ամբողջությամբ տարածված ցանցի միջոցով:</string>
   <string name="help_sip_title">Ավելացնել SIP հաշիվ</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">Այս գործողությունը չի կարող չեղարկվել:</string>
@@ -146,7 +146,7 @@
   <string name="account_link_device">Կապակցել այլ սարք</string>
   <string name="account_link_button">Հեռախոսային ցանցից միանալ</string>
   <string name="account_link_archive_button">Կապակցեք պահուստային համակարգից</string>
-  <string name="account_new_button">Ստեղծեք Jami հաշիվ</string>
+  <string name="account_new_button">Ստեղծեք Glowmate հաշիվ</string>
   <string name="account_link_export_button">Կապակցեք նոր սարքը</string>
   <string name="account_link_show_button">Ցուցադրել %d ավելի շատ կապված սարք</string>
   <string name="account_link_hide_button">Հավաքել միացված սարքը</string>
@@ -176,7 +176,7 @@
   <!--Create account-->
   <string name="account_creation_home">Բարի գալուստ Ջամի:</string>
   <string name="account_creation_profile">Ստեղծեք ձեր պրոֆիլը</string>
-  <string name="account_creation_ring">Ստեղծեք ձեր Jami հաշիվը</string>
+  <string name="account_creation_ring">Ստեղծեք ձեր Glowmate հաշիվը</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Փոխանցեք գաղտնաբառը հաստատելու համար</string>

@@ -7,9 +7,9 @@
   <string name="version_section">Verzija</string>
   <string name="website_chooser_title">Pogledaj web stranicu koristeći...</string>
   <string name="license">Ovaj softver je dostavljen \"kao što je\", bez ikakve jamstva.</string>
-  <string name="description">Jami je slobodni software za univerzalnu komunikaciju koji poštuje slobode i privatnost svojih korisnika.</string>
+  <string name="description">Glowmate je slobodni software za univerzalnu komunikaciju koji poštuje slobode i privatnost svojih korisnika.</string>
   <string name="credits">Zasluge</string>
-  <string name="pip_title">Konferencija Jamija</string>
+  <string name="pip_title">Konferencija Glowmateja</string>
   <string name="call_service_description">Ova usluga je potrebna da bi se pozivi bili u prvom planu.</string>
   <string name="data_transfer_service_description">Ova usluga je potrebna za prikaz stalnih obavijesti tijekom prijenosa datoteka.</string>
   <!--About dialog-->
@@ -26,7 +26,7 @@
   <string name="menu_item_settings">Postavke</string>
   <string name="menu_item_account_settings">Nastavke računa</string>
   <string name="menu_item_share">Dijeli moj račun</string>
-  <string name="menu_item_about">O Jami-u</string>
+  <string name="menu_item_about">O Glowmate-u</string>
   <string name="video_setting_title">Nastavke video</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
@@ -168,7 +168,7 @@
   <string name="conversation_reply_you">Ti si</string>
   <string name="conversation_preference_color">Boja razgovora</string>
   <string name="conversation_preference_emoji">Emoji razgovora</string>
-  <string name="conversation_type_contact">Kontakt s Jamijem</string>
+  <string name="conversation_type_contact">Kontakt s Glowmatejem</string>
   <string name="conversation_type_private">Privredni</string>
   <string name="conversation_type_group">Grupa</string>
   <string name="conversation_search_hint">Razgovor za pretragu</string>
@@ -179,11 +179,11 @@
   <string name="prompt_new_password">Nova lozinka</string>
   <string name="prompt_new_password_optional">Nova lozinka (opcionalno)</string>
   <string name="prompt_new_password_repeat">Potvrdi novu lozinku</string>
-  <string name="account_create_title">Stvoriti račun Jami</string>
+  <string name="account_create_title">Stvoriti račun Glowmate</string>
   <string name="prompt_new_username">Unesite novo korisničko ime</string>
   <string name="prompt_hint_username">Korisničko ime</string>
-  <string name="help_password_choose">Odaberite jaku lozinku koje ćete se sjećati da biste zaštitili vaš Jami račun.</string>
-  <string name="help_password_enter">Ubaci lozinku za glavni račun Jamija.</string>
+  <string name="help_password_choose">Odaberite jaku lozinku koje ćete se sjećati da biste zaštitili vaš Glowmate račun.</string>
+  <string name="help_password_enter">Ubaci lozinku za glavni račun Glowmateja.</string>
   <string name="help_server_enter">Ubaci URL-a za upravljački server.</string>
   <string name="wizard_next">Slijedeće</string>
   <string name="wizard_back">Natrag</string>
@@ -208,7 +208,7 @@
   <string name="devices">Povezani uređaji</string>
   <string name="total_devices">Ukupna količina uređaja: </string>
   <!--Share fragment-->
-  <string name="share_message">Skenirajte ovaj kod sa Jamijem.</string>
+  <string name="share_message">Skenirajte ovaj kod sa Glowmatejem.</string>
   <string name="share_message_no_account">Molim odaberite račun za djeljenje</string>
   <string name="share_your_account_information">Podeli moje kontaktne podatke</string>
   <string name="share_label">Podijeli</string>
@@ -305,13 +305,13 @@
   <string name="dialog_hint_description">Opisivanje</string>
   <string name="picker_title">Izbor kontaktova</string>
   <string name="picker_btn">Izbor kontaktova</string>
-  <string name="bottomsheet_contact">Kontakt s Jami\n%1$s</string>
+  <string name="bottomsheet_contact">Kontakt s Glowmate\n%1$s</string>
   <string name="bottomsheet_remove">Uklonite član</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">Upis korisničkog imena</string>
   <string name="jami_id_choose_username">Izaberite korisničko ime</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">Dobrodošli u Jami</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">Dobrodošli u Glowmate</string>
   <!--Conversation details-->
   <string name="details">Pojedinosti</string>
   <string name="Private">Privredni</string>

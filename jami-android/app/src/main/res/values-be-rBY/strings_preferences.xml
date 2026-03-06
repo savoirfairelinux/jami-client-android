@@ -10,7 +10,7 @@
   <string name="pref_category_connectivity">Злучнасць</string>
   <string name="pref_category_video_settings">Пашыранныя налады відэа</string>
   <string name="pref_mobileData_title">Мабільная сетка</string>
-  <string name="pref_mobileData_summary">Дазволіць Jami працаваць на сетках 3G/LTE і так сама праз Wi-Fi</string>
+  <string name="pref_mobileData_summary">Дазволіць Glowmate працаваць на сетках 3G/LTE і так сама праз Wi-Fi</string>
   <string name="pref_pushNotifications_title">Push-Паведамленні</string>
   <string name="pref_pushNotifications_summary">Выкарыстоўваць серверы карпарацыі Google каб дазволіць атрыманне званкоў/паведамленняў як фанавы працэс</string>
   <string name="pref_unifiedPush_summary">Выкарыстоўвайце сэрвіс UnifiedPush, каб дазволіць атрымліваць званкі / паведамленні ў фоне</string>
@@ -25,9 +25,9 @@
   <string name="pref_videoResolution_summary">Выберыце папярэднюю выхадную відэа-развіццё</string>
   <string name="pref_systemContacts_title">Выкарыстоўвайце кантакты сістэмы</string>
   <string name="pref_systemContacts_summary">Выкарыстоўвайце кантакты сістэмы, каб паказаць дэталі кліента.</string>
-  <string name="pref_systemDialer_title">Звяртацца ў сістэму з дапамогай Jami</string>
+  <string name="pref_systemDialer_title">Звяртацца ў сістэму з дапамогай Glowmate</string>
   <string name="pref_systemDialer_summary">Выкарыстоўвайце Джамі, каб размясціць сістэмныя званкі, калі гэта магчыма.</string>
-  <string name="pref_startOnBoot_title">Пачніце Jami на запуску</string>
+  <string name="pref_startOnBoot_title">Пачніце Glowmate на запуску</string>
   <string name="pref_startOnBoot_summary">Запускай Джані ў фоне, калі сістэма пачне.</string>
   <string name="pref_clearHistory_title">Ясная гісторыя</string>
   <string name="pref_notification_title">Відавочнасць паведамленняў</string>
@@ -36,7 +36,7 @@
   <string name="pref_blackList_summary">Праверце ваш спіс блокаў.</string>
   <string name="pref_delete_account_title">Знішчыць рахунак</string>
   <string name="pref_newGroup_title">Уключыць груповы чат</string>
-  <string name="pref_newGroup_summary">Дазвольце ствараць групы ў Jami.</string>
+  <string name="pref_newGroup_summary">Дазвольце ствараць групы ў Glowmate.</string>
   <string name="pref_logs_title">Дзякуючы дыягнасту</string>
   <string name="pref_logs_summary">Адкрытыя налады дыягнастычнага часопіса</string>
   <string name="pref_logs_start">Пачаць запіс</string>

@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <cx.ring.views.BoundedScrollView
+    <com.glowmate.views.BoundedScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -219,5 +219,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </RelativeLayout>
 
         </LinearLayout>
-    </cx.ring.views.BoundedScrollView>
+    </com.glowmate.views.BoundedScrollView>
 </RelativeLayout>

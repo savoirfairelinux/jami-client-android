@@ -10,7 +10,7 @@
   <string name="pref_category_connectivity">การเชื่อมต่อ</string>
   <string name="pref_category_video_settings">การตั้งค่าวิดีโอขั้นสูง</string>
   <string name="pref_mobileData_title">ข้อมูลมือถือ</string>
-  <string name="pref_mobileData_summary">อนุญาต Jami บนเครือข่าย 3G/LTE เพิ่มเติมกับ Wi-Fi</string>
+  <string name="pref_mobileData_summary">อนุญาต Glowmate บนเครือข่าย 3G/LTE เพิ่มเติมกับ Wi-Fi</string>
   <string name="pref_pushNotifications_title">การแจ้งเตือนแบบพุช</string>
   <string name="pref_pushNotifications_summary">ใช้เซิร์ฟเวอร์ของ Google เพื่ออนุญาตให้รับสาย/ข้อความในพื้นหลัง</string>
   <string name="pref_unifiedPush_summary">ใช้บริการ UnifiedPush เพื่ออนุญาตรับโทร / ข้อความในพื้นฐาน</string>
@@ -25,10 +25,10 @@
   <string name="pref_videoResolution_summary">เลือกความละเอียดวิดีโอขาออกเริ่มต้น</string>
   <string name="pref_systemContacts_title">ใช้ผู้ติดต่อระบบ</string>
   <string name="pref_systemContacts_summary">ใช้ผู้ติดต่อของระบบเพื่อแสดงรายละเอียดผู้โทร</string>
-  <string name="pref_systemDialer_title">โทรระบบโดยใช้ Jami</string>
-  <string name="pref_systemDialer_summary">ใช้ Jami เพื่อโทรออกระบบเมื่อทำได้</string>
-  <string name="pref_startOnBoot_title">ริ่ม Jami เมื่อเริ่มต้นทำงาน</string>
-  <string name="pref_startOnBoot_summary">เรียกใช้ Jami ในพื้นหลังเมื่อระบบเริ่มทำงาน</string>
+  <string name="pref_systemDialer_title">โทรระบบโดยใช้ Glowmate</string>
+  <string name="pref_systemDialer_summary">ใช้ Glowmate เพื่อโทรออกระบบเมื่อทำได้</string>
+  <string name="pref_startOnBoot_title">ริ่ม Glowmate เมื่อเริ่มต้นทำงาน</string>
+  <string name="pref_startOnBoot_summary">เรียกใช้ Glowmate ในพื้นหลังเมื่อระบบเริ่มทำงาน</string>
   <string name="pref_clearHistory_title">ล้างประวัติ</string>
   <string name="pref_notification_title">การมองเห็นการแจ้งเตือน</string>
   <string name="pref_notification_summary">ตั้งค่าการมองเห็นการแจ้งเตือนแอปพลิเคชันบนหน้าจอล็อค</string>
@@ -36,7 +36,7 @@
   <string name="pref_blackList_summary">ตรวจสอบรายการบล็อกของคุณ</string>
   <string name="pref_delete_account_title">ลบบัญชี</string>
   <string name="pref_newGroup_title">เปิดใช้งานการแชทเป็นกลุ่ม</string>
-  <string name="pref_newGroup_summary">เปิดใช้งานการสร้างกลุ่มใน Jami</string>
+  <string name="pref_newGroup_summary">เปิดใช้งานการสร้างกลุ่มใน Glowmate</string>
   <string name="pref_logs_title">บันทึกการวินิจฉัย</string>
   <string name="pref_logs_summary">เปิดการตั้งค่าบันทึกการวินิจฉัย</string>
   <string name="pref_logs_start">เริ่มการบันทึก</string>

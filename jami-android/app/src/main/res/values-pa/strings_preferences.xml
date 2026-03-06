@@ -8,7 +8,7 @@
   <string name="pref_category_diagnostic">ਜਾਂਚ-ਪੜਤਾਲ</string>
   <string name="pref_category_video_settings">ਉੱਨਤ ਵੀਡੀਓ ਸੈਟਿੰਗਾਂ</string>
   <string name="pref_mobileData_title">ਮੋਬਾਈਲ ਡਾਟਾ</string>
-  <string name="pref_mobileData_summary">Jami ਨੂੰ ਵਾਈ-ਫਾਈ ਦੀ ਥਾਂ 3G/LTE ਨੈੱਟਵਰਕ ਵਰਤਣ ਦਿਓ</string>
+  <string name="pref_mobileData_summary">Glowmate ਨੂੰ ਵਾਈ-ਫਾਈ ਦੀ ਥਾਂ 3G/LTE ਨੈੱਟਵਰਕ ਵਰਤਣ ਦਿਓ</string>
   <string name="pref_pushNotifications_title">ਪੁਸ਼ ਸੂਚਨਾਵਾਂ</string>
   <string name="pref_pushNotifications_summary">ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਕਾਲਾਂ/ਸੁਨੇਹੇ ਲੈਂਦੇ ਰਹਿਣ ਲਈ Google ਸਰਵਰ ਵਰਤੋ</string>
   <string name="pref_video_advanced_title">ਉੱਨਤ ਵੀਡੀਓ ਸੈਟਿੰਗਾਂ</string>
@@ -17,10 +17,10 @@
   <string name="pref_hwEncode_summary">ਪ੍ਰਯੋਗਮਈ ਵਿਸ਼ੇਸ਼ਤਾ</string>
   <string name="pref_systemContacts_title">ਸਿਸਟਮ ਸੰਪਰਕ ਵਰਤੋ</string>
   <string name="pref_systemContacts_summary">ਕਾਲ ਕਰਨ ਵਾਲੇ ਦੇ ਵੇਰਵੇ ਦਿਖਾਉਣ ਲਈ ਸਿਸਟਮ ਸੰਪਰਕ ਵਰਤੋ।</string>
-  <string name="pref_systemDialer_title">Jami ਵਰਤ ਕੇ ਸਿਸਟਮ ਕਾਲਾਂ ਕਰੋ</string>
-  <string name="pref_systemDialer_summary">ਸਿਸਟਮ ਕਾਲਾਂ ਕਰਨ ਲਈ Jami ਵਰਤੋ, ਜਦੋਂ ਵੀ ਸੰਭਵ ਹੋਵੇ।</string>
-  <string name="pref_startOnBoot_title">ਸਿਸਟਮ ਸ਼ੁਰੂ ਹੋਣ \'ਤੇ Jami ਸ਼ੁਰੂ ਕਰੋ</string>
-  <string name="pref_startOnBoot_summary">ਸਿਸਟਮ ਸ਼ੁਰੂ ਹੋਣ \'ਤੇ Jami ਨੂੰ ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਚਲਾਓ।</string>
+  <string name="pref_systemDialer_title">Glowmate ਵਰਤ ਕੇ ਸਿਸਟਮ ਕਾਲਾਂ ਕਰੋ</string>
+  <string name="pref_systemDialer_summary">ਸਿਸਟਮ ਕਾਲਾਂ ਕਰਨ ਲਈ Glowmate ਵਰਤੋ, ਜਦੋਂ ਵੀ ਸੰਭਵ ਹੋਵੇ।</string>
+  <string name="pref_startOnBoot_title">ਸਿਸਟਮ ਸ਼ੁਰੂ ਹੋਣ \'ਤੇ Glowmate ਸ਼ੁਰੂ ਕਰੋ</string>
+  <string name="pref_startOnBoot_summary">ਸਿਸਟਮ ਸ਼ੁਰੂ ਹੋਣ \'ਤੇ Glowmate ਨੂੰ ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਚਲਾਓ।</string>
   <string name="pref_clearHistory_title">ਇਤਿਹਾਸ ਮਿਟਾਓ</string>
   <string name="pref_blackList_title">ਬੰਦਸ਼ ਸੂਚੀ</string>
   <string name="pref_blackList_summary">ਆਪਣੀ ਬੰਦਸ਼ ਸੂਚੀ ਵੇਖੋ।</string>

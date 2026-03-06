@@ -7,7 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Hesap ekle</string>
   <string name="add_sip_account_title">SIP hesabı ekle</string>
-  <string name="ring_account_default_name">Jami hesabı %1$s</string>
+  <string name="ring_account_default_name">Glowmate hesabı %1$s</string>
   <string name="prompt_alias">Takma ad</string>
   <string name="prompt_hostname">Sunucu adı</string>
   <string name="prompt_username">Kullanıcı adı</string>
@@ -22,7 +22,7 @@
   <string name="dialog_wait_update">Hesap güncelleniyor</string>
   <string name="dialog_wait_update_details">Yeni hesabınız güncellenirken lütfen bekleyin...</string>
   <string name="account_type_ip2ip">IP hesabı</string>
-  <string name="help_ring">Jami hesabı, tümüyle dağıtık ağdan insanlara uçtan uca güvenle ulaşmanızı sağlar.</string>
+  <string name="help_ring">Glowmate hesabı, tümüyle dağıtık ağdan insanlara uçtan uca güvenle ulaşmanızı sağlar.</string>
   <string name="help_sip_title">SIP hesabı ekle</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">Bu eylem geri alınamaz.</string>
@@ -122,10 +122,10 @@
   <string name="account_export_file">Hesabı yedekle</string>
   <string name="account_export_file_summary">Daha sonra geri yüklemek için aygıtınızdaki hesabı yedekleyin.</string>
   <string name="account_enter_password">Parolayı gir</string>
-  <string name="account_contact_me">Benimle Jami\'de iletişime geç!</string>
+  <string name="account_contact_me">Benimle Glowmate\'de iletişime geç!</string>
   <string name="update_account">Hesabı güncelle</string>
-  <string name="account_migration">Jami hesabınız güncellenebilir.\nParolanızı girin.</string>
-  <string name="ring_account">Jami hesabı </string>
+  <string name="account_migration">Glowmate hesabınız güncellenebilir.\nParolanızı girin.</string>
+  <string name="ring_account">Glowmate hesabı </string>
   <string name="sip_account">SIP hesabı</string>
   <string name="ring_account_identity">Kimlik</string>
   <string name="account_migration_title_dialog">Hesap taşıma</string>
@@ -140,7 +140,7 @@
   <string name="account_tv_advance_settings_header">Gelişmiş ayarlar</string>
   <string name="account_tv_add_contact">Kişi ekle</string>
   <string name="account_tv_advanced_settings">Genel ayarları değiştir</string>
-  <string name="account_tv_about">Jami Hakkında</string>
+  <string name="account_tv_about">Glowmate Hakkında</string>
   <string name="tv_about_version">Sürüm</string>
   <string name="tv_about_license">Lisans</string>
   <string name="tv_about_author">Yönetici izinleri</string>
@@ -148,7 +148,7 @@
   <string name="account_link_device">Başka aygıttan bağlan</string>
   <string name="account_link_button">Ağdan bağlan</string>
   <string name="account_link_archive_button">Yedekten bağlan</string>
-  <string name="account_new_button">Jami hesabı oluştur</string>
+  <string name="account_new_button">Glowmate hesabı oluştur</string>
   <string name="account_link_export_button">Yeni aygıt bağla</string>
   <string name="account_link_show_button">Diğer %d bağlı aygıtı göster</string>
   <string name="account_link_hide_button">Bağlı aygıtı gizle</string>
@@ -179,9 +179,9 @@
   <string name="account_status_offline">Çevrim Dışı</string>
   <string name="account_status_error">Hata</string>
   <!--Create account-->
-  <string name="account_creation_home">Jami\'ye Hoşgeldiniz</string>
+  <string name="account_creation_home">Glowmate\'ye Hoşgeldiniz</string>
   <string name="account_creation_profile">Profilinizi oluşturun</string>
-  <string name="account_creation_ring">Jami hesabınızı oluşturun</string>
+  <string name="account_creation_ring">Glowmate hesabınızı oluşturun</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Onaylamak için parolayı girin</string>

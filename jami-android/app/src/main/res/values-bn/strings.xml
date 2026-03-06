@@ -305,10 +305,10 @@
   <string name="bottomsheet_contact">জ্যামি %1$s এর সাথে যোগাযোগ করুন</string>
   <string name="bottomsheet_remove">সদস্য অপসারণ</string>
   <string name="error_open_no_app_found">এই ফাইলটি সামলানোর জন্য কোন আপ্লিকেশন পাওয়া যাইনি: 1%1$s</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">ব্যবহারকারীর নাম নিবন্ধন</string>
   <string name="jami_id_choose_username">একটি ব্যবহারকারীর নাম নির্বাচন করুন</string>
-  <!--WelcomeJami-->
+  <!--WelcomeGlowmate-->
   <string name="welcome_jami_title">জামিতে স্বাগতম</string>
   <!--Conversation details-->
   <string name="details">বিস্তারিত</string>

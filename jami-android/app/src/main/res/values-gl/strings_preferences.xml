@@ -11,7 +11,7 @@
   <string name="pref_category_extensions">Complementos</string>
   <string name="pref_category_video_settings">Axustes avanzados de video</string>
   <string name="pref_mobileData_title">Datos móbiles</string>
-  <string name="pref_mobileData_summary">Permitir que Jami acceda a redes 3G/LTE ademáis de a Wi-Fi.</string>
+  <string name="pref_mobileData_summary">Permitir que Glowmate acceda a redes 3G/LTE ademáis de a Wi-Fi.</string>
   <string name="pref_pushNotifications_title">Notificacións Push</string>
   <string name="pref_pushNotifications_summary">Usar servidores Google para permitir recibir chamadas e mensaxes en segundo plano</string>
   <string name="pref_unifiedPush_summary">Utilice un servizo UnifiedPush para permitir recibir chamadas/mensaxes en segundo plano</string>
@@ -26,10 +26,10 @@
   <string name="pref_videoResolution_summary">Establecer a resolución por omisión</string>
   <string name="pref_systemContacts_title">Usar contactos do sistema</string>
   <string name="pref_systemContacts_summary">Usar contactos do sistema para mostrar detalles do contacto.</string>
-  <string name="pref_systemDialer_title">Facer as chamadas dos sistema usando Jami</string>
-  <string name="pref_systemDialer_summary">Usar Jami cando sexa posible para facer chamadas.</string>
-  <string name="pref_startOnBoot_title">Inciar Jami ao inicio do sistema</string>
-  <string name="pref_startOnBoot_summary">Executar Jami en segundo plano cando se inicia o sistema.</string>
+  <string name="pref_systemDialer_title">Facer as chamadas dos sistema usando Glowmate</string>
+  <string name="pref_systemDialer_summary">Usar Glowmate cando sexa posible para facer chamadas.</string>
+  <string name="pref_startOnBoot_title">Inciar Glowmate ao inicio do sistema</string>
+  <string name="pref_startOnBoot_summary">Executar Glowmate en segundo plano cando se inicia o sistema.</string>
   <string name="pref_clearHistory_title">Eliminar historial</string>
   <string name="pref_notification_title">Visibilidade da notificación</string>
   <string name="pref_notification_summary">Establecer a visibilidade das notificacións coa pantalla bloqueada.</string>
@@ -37,7 +37,7 @@
   <string name="pref_blackList_summary">Comproba a lista de bloqueo.</string>
   <string name="pref_delete_account_title">Eliminar conta</string>
   <string name="pref_newGroup_title">Activar a parola en grupo</string>
-  <string name="pref_newGroup_summary">Permitir crear grupos en Jami.</string>
+  <string name="pref_newGroup_summary">Permitir crear grupos en Glowmate.</string>
   <string name="pref_logs_title">Rexistros do diagnóstico</string>
   <string name="pref_logs_summary">Abrir axustes do rexistro dos diagnósticos</string>
   <string name="pref_logs_start">Comezar a rexistrar</string>

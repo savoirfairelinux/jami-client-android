@@ -8,16 +8,16 @@
   <string name="delete_conversation_confirmation">Er du sikker på, at du vil slette samtalen?</string>
   <string name="acc_profile_photo_capture">Tag billede</string>
   <string name="view_switch_camera">Skift kamera</string>
-  <string name="sponsor_section">Jami er fri software udviklet og støttet af</string>
+  <string name="sponsor_section">Glowmate er fri software udviklet og støttet af</string>
   <string name="copyright_section">Ophavsret</string>
   <string name="contribute_section">Bidrag</string>
   <string name="version_section">Version</string>
   <string name="no_browser_app_installed">Der blev ikke fundet en webbrowser app. Installer en for at se denne side.</string>
   <string name="website_chooser_title">Vis websted med...</string>
   <string name="license">Denne software udbydes, \"som den er\", uden nogen form for garanti. For flere detaljer se <u>GNU General Public License version 3 or later</u></string>
-  <string name="description">Jami er fri software til generel kommunikation, som respekterer brugerens ret til frihed og privatliv.</string>
+  <string name="description">Glowmate er fri software til generel kommunikation, som respekterer brugerens ret til frihed og privatliv.</string>
   <string name="credits">Krediteringer</string>
-  <string name="pip_title">Jami-konferencen</string>
+  <string name="pip_title">Glowmate-konferencen</string>
   <string name="call_service_description">Denne service er nødvendig for at holde opkald kørende i baggrunden. Den kører kun under opkald.</string>
   <string name="data_transfer_service_description">Denne service er nødvendig for at vise persistente notifikationer under fil overførelser. Den kører kunder under fil overførelser.</string>
   <!--About dialog-->
@@ -25,7 +25,7 @@
   <string name="developers">Udviklere</string>
   <string name="media">Medier</string>
   <string name="special_thanks">Særlig tak til</string>
-  <string name="end_note">Dette er en liste over personer, der har investeret en betydelig mængde tid i og leveret resultater til Jami. Bidragsydere, der ønsker at blive føjet til listen, bedes kontakte Jami-teamet på contact@jami.net.</string>
+  <string name="end_note">Dette er en liste over personer, der har investeret en betydelig mængde tid i og leveret resultater til Glowmate. Bidragsydere, der ønsker at blive føjet til listen, bedes kontakte Glowmate-teamet på contact@jami.net.</string>
   <!--RingActivity-->
   <string name="error_no_network">Ingen netværksforbindelse</string>
   <string name="error_account_offline">Kontoen er offline.</string>
@@ -40,7 +40,7 @@
   <string name="menu_item_account_settings">Kontoindstillinger</string>
   <string name="menu_item_extension_list">Indstillinger for udvidelser</string>
   <string name="menu_item_share">Del min konto</string>
-  <string name="menu_item_about">Om Jami</string>
+  <string name="menu_item_about">Om Glowmate</string>
   <string name="video_setting_title">Videoindstillinger</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Ring til nummer</string>
@@ -77,7 +77,7 @@
   <string name="notif_channel_background_service_descr">Tillader modtagelse af opkald og meddelelser til enhver tid.</string>
   <string name="notif_group_calls">Opkald</string>
   <string name="notif_inprogress_group_call">Igangværende opkald</string>
-  <string name="notif_background_service">Jami kører i baggrunden</string>
+  <string name="notif_background_service">Glowmate kører i baggrunden</string>
   <string name="notif_mark_as_read">Marker som læst</string>
   <string name="notif_dismiss">Afvis</string>
   <string name="notif_reply">Svar</string>
@@ -87,7 +87,7 @@
   <string name="notif_sync_title">Synkroniserer data...</string>
   <string name="notif_location_title">Deler lokation med %1$s</string>
   <string name="notif_channel_reconnect">Synkroniserer i baggrunden</string>
-  <string name="notif_reconnect_title">Jami synkroniserer…</string>
+  <string name="notif_reconnect_title">Glowmate synkroniserer…</string>
   <string name="location_share_contact">%1$s deler sin lokation med dig</string>
   <string name="notif_location_multi_title">Deler lokation med %1$d kontakter</string>
   <string name="notif_location_remaining">%1$dminutter tilbage</string>
@@ -108,7 +108,7 @@
   <string name="hist_out_call">Udgående opkald af %1$s</string>
   <string name="call_duration">Varede %s</string>
   <string name="call_on_hold">Opkald på hold</string>
-  <string name="start_error_title">Jami kunne ikke startes</string>
+  <string name="start_error_title">Glowmate kunne ikke startes</string>
   <string name="action_call_accept">Besvar opkald</string>
   <string name="action_call_accept_audio">Besvar opkald med lyd</string>
   <string name="action_call_accept_video">Besvar opkald med video</string>
@@ -130,7 +130,7 @@
   <string name="write_a_message">Skriv besked</string>
   <string name="scan_qr">Scan QR-kode</string>
   <string name="qr_code">QR-kode</string>
-  <string name="qr_code_not_contact">QR koden er ikke til en Jami kontakt</string>
+  <string name="qr_code_not_contact">QR koden er ikke til en Glowmate kontakt</string>
   <string name="new_group">Opret ny gruppe</string>
   <string name="ab_action_flipcamera">Vend kamera</string>
   <string name="ab_action_hidepreview">Skjul forhåndsvisning</string>
@@ -160,11 +160,11 @@
   <string name="ringtone_error_size_too_big">Filen er for stor. Maksimumstørrelsen er %1$dkB.</string>
   <string name="ringtone_custom_prompt">Anvend en brugerdefineret ringetone</string>
   <string name="ringtone_custom_label">Brugerdefineret</string>
-  <string name="ringtone_jami_tones">Jami ringetoner</string>
+  <string name="ringtone_jami_tones">Glowmate ringetoner</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami skal bruge tilladelsen \"Læs kontakter\". Slå det til i enhedens indstillinger for at bruge denne funktion.</string>
+  <string name="permission_dialog_read_contacts_message">Glowmate skal bruge tilladelsen \"Læs kontakter\". Slå det til i enhedens indstillinger for at bruge denne funktion.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami kræver tilladelsen ”Skriv opkaldslog”. Aktiver den i enhedens indstillinger for at bruge denne funktion.</string>
+  <string name="permission_dialog_write_call_log_message">Glowmate kræver tilladelsen ”Skriv opkaldslog”. Aktiver den i enhedens indstillinger for at bruge denne funktion.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skan QR-koden for kontoen du vil tilføje.</string>
   <string name="title_activity_qrcode">Del min konto</string>
@@ -224,7 +224,7 @@
   <string name="video_not_found">Videofil ikke fundet</string>
   <string name="conversation_preference_color">Samtalefarve</string>
   <string name="conversation_preference_emoji">Samtale emoji</string>
-  <string name="conversation_type_contact">Jami kontakt</string>
+  <string name="conversation_type_contact">Glowmate kontakt</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_type_group">Gruppe</string>
   <string name="conversation_contact_invited">%1$s blev inviteret til samtalen.</string>
@@ -251,11 +251,11 @@
   <string name="prompt_new_password">Ny adgangskode</string>
   <string name="prompt_new_password_optional">Ny adgangskode (valgfrit)</string>
   <string name="prompt_new_password_repeat">bekræft nyt adgangskode</string>
-  <string name="account_create_title">Opret Jami-konto</string>
+  <string name="account_create_title">Opret Glowmate-konto</string>
   <string name="prompt_new_username">Indtast nyt brugernavn</string>
   <string name="prompt_hint_username">Brugernavn</string>
-  <string name="help_password_choose">Vælg et stærkt kodeord som du kan huske, til at beskytte din Jami-konto.</string>
-  <string name="help_password_enter">Indtast kodeordet til din overordnede Jami-konto</string>
+  <string name="help_password_choose">Vælg et stærkt kodeord som du kan huske, til at beskytte din Glowmate-konto.</string>
+  <string name="help_password_enter">Indtast kodeordet til din overordnede Glowmate-konto</string>
   <string name="help_server_enter">Skriv URL\'en af management serveren.</string>
   <string name="pin_copied">Godkendelseskode kopieret.</string>
   <string name="copied_clipboard">Kopieret.</string>
@@ -287,7 +287,7 @@
   <string name="devices">Sammenkædede enheder</string>
   <string name="total_devices">Antal enheder:</string>
   <!--Share fragment-->
-  <string name="share_message">Scan denne kode med Jami</string>
+  <string name="share_message">Scan denne kode med Glowmate</string>
   <string name="share_message_no_account">Vælg en konto at dele.</string>
   <string name="share_your_account_information">Del min kontaktinformation</string>
   <string name="share_contact_information">Del kontaktinformation</string>
@@ -379,8 +379,8 @@
   <string name="speech_recogniton_unavailable">Talegenkendelse er ikke tilgængelig.</string>
   <string name="audio_permission_rationale_title">Lydtilladelse er nødvendig</string>
   <string name="camera_permission_rationale_title">Kameratilladelse er nødvendig</string>
-  <string name="audio_permission_rationale_message">Jami har brug for adgang til mikrofonen for at kunne bruge tale-til-tekst og optage lyd. Du bliver spurgt om tilladelse i næste trin.</string>
-  <string name="camera_permission_rationale_message">Jami har brug for adgang til kameraet for at kunne optage video og lave videosamtaler. Du bliver spurgt om tilladelse i næste trin.</string>
+  <string name="audio_permission_rationale_message">Glowmate har brug for adgang til mikrofonen for at kunne bruge tale-til-tekst og optage lyd. Du bliver spurgt om tilladelse i næste trin.</string>
+  <string name="camera_permission_rationale_message">Glowmate har brug for adgang til kameraet for at kunne optage video og lave videosamtaler. Du bliver spurgt om tilladelse i næste trin.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Anbefalet</string>
   <string name="wizard_status_optional">Valgfri</string>
@@ -424,18 +424,18 @@
   <string name="dialog_hint_description">Beskrivelse</string>
   <string name="picker_title">Vælg kontakter</string>
   <string name="picker_btn">Vælg kontakter</string>
-  <string name="bottomsheet_contact">Kontakt Jami\n%1$s</string>
+  <string name="bottomsheet_contact">Kontakt Glowmate\n%1$s</string>
   <string name="bottomsheet_remove">Fjern medlem</string>
   <string name="group_admin">Administrator</string>
-  <!--JamiId-->
-  <string name="jami_id_copy">Kopier JamiId</string>
-  <string name="jami_id_share">Del JamiId</string>
+  <!--GlowmateId-->
+  <string name="jami_id_copy">Kopier GlowmateId</string>
+  <string name="jami_id_share">Del GlowmateId</string>
   <string name="jami_id_validate">Registrer brugernavn</string>
   <string name="jami_id_available">Brugernavnet er tilgængeligt.</string>
   <string name="jami_id_not_available">Brugernavnet er ikke tilgængeligt.</string>
   <string name="jami_id_choose_username">Vælg et brugernavn</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">Velkommen til Jami</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">Velkommen til Glowmate</string>
   <!--Conversation details-->
   <string name="details">Detaljer</string>
   <string name="Private">Privat</string>

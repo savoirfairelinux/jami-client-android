@@ -25,7 +25,7 @@
   <string name="pref_videoResolution_summary">Чыгыш видеоның алдан билгеләнгән разрешениесен сайлагыз</string>
   <string name="pref_systemContacts_title">Система контактларын куллану</string>
   <string name="pref_systemContacts_summary">Телефон номеры буенча хәбәр итү өчен, системадагы контактларны куллан.</string>
-  <string name="pref_systemDialer_title">Jami кулланып система буенча шалтыратулар ясагыз</string>
+  <string name="pref_systemDialer_title">Glowmate кулланып система буенча шалтыратулар ясагыз</string>
   <string name="pref_systemDialer_summary">Мөмкин булганда, Джами белән телефон аша шалтыратыгыз.</string>
   <string name="pref_startOnBoot_title">Җәмине старттан башлап җибәр</string>
   <string name="pref_startOnBoot_summary">Система эшли башлагач, Джамины фонында куегыз.</string>

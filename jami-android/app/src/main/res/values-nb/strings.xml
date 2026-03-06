@@ -7,9 +7,9 @@
   <string name="version_section">Versjon</string>
   <string name="website_chooser_title">Vis nettside ved bruk av…</string>
   <string name="license">Denne programvaren tilbys «som den er», uten garantier av noe slag.  For detaljer, se <u>GNU General Public License versjon 3 eller senere</u></string>
-  <string name="description">Jami er fri programvare for allsidig kommunikasjon som respekterer brukernes frihet og retten til privatliv.</string>
+  <string name="description">Glowmate er fri programvare for allsidig kommunikasjon som respekterer brukernes frihet og retten til privatliv.</string>
   <string name="credits">Bidragsytere</string>
-  <string name="pip_title">Jami-konferanse</string>
+  <string name="pip_title">Glowmate-konferanse</string>
   <string name="call_service_description">Denne tjenesten er nødvendig for å holde samtalene dine i forgrunnen. Tjenesten kjører bare under samtaler.</string>
   <string name="data_transfer_service_description">Denne tjenesten er nødvendig for å vise vedvarende varsler under filoverføring. Tjenesten kjøres bare under filoverføring.</string>
   <!--About dialog-->
@@ -26,7 +26,7 @@
   <string name="menu_item_settings">Innstillinger</string>
   <string name="menu_item_account_settings">Kontoinnstillinger</string>
   <string name="menu_item_share">Del min konto</string>
-  <string name="menu_item_about">Om Jami</string>
+  <string name="menu_item_about">Om Glowmate</string>
   <string name="video_setting_title">Videoinnstillinger</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
@@ -169,7 +169,7 @@
   <string name="conversation_reply_you">Deg</string>
   <string name="conversation_preference_color">Samtalefarge</string>
   <string name="conversation_preference_emoji">Samtale-emoji</string>
-  <string name="conversation_type_contact">Jami-kontakt</string>
+  <string name="conversation_type_contact">Glowmate-kontakt</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_type_group">Gruppe</string>
   <string name="conversation_search_hint">Søk samtale</string>
@@ -180,11 +180,11 @@
   <string name="prompt_new_password">Nytt passord</string>
   <string name="prompt_new_password_optional">Nytt passord (valgfritt)</string>
   <string name="prompt_new_password_repeat">Bekreft nytt passord</string>
-  <string name="account_create_title">opprette Jami-konto</string>
+  <string name="account_create_title">opprette Glowmate-konto</string>
   <string name="prompt_new_username">Skriv inn nytt brukernavn</string>
   <string name="prompt_hint_username">Brukernavn</string>
-  <string name="help_password_choose">Velg et sterkt passord som du husker, for å beskytte Jami-kontoen din.</string>
-  <string name="help_password_enter">Tast inn ditt Jami konto passord.</string>
+  <string name="help_password_choose">Velg et sterkt passord som du husker, for å beskytte Glowmate-kontoen din.</string>
+  <string name="help_password_enter">Tast inn ditt Glowmate konto passord.</string>
   <string name="help_server_enter">Fyll ut URL til administrasjonstjener</string>
   <string name="wizard_next">Neste</string>
   <string name="wizard_back">Tilbake</string>
@@ -209,7 +209,7 @@
   <string name="devices">Koblede enheter</string>
   <string name="total_devices">Antall enheter:</string>
   <!--Share fragment-->
-  <string name="share_message">Søk etter denne koden med Jami</string>
+  <string name="share_message">Søk etter denne koden med Glowmate</string>
   <string name="share_message_no_account">Velg en konto å dele.</string>
   <string name="share_your_account_information">Del min kontaktinformasjon</string>
   <string name="share_label">Del</string>
@@ -306,13 +306,13 @@
   <string name="dialog_hint_description">Beskrivelse</string>
   <string name="picker_title">Velg kontakter</string>
   <string name="picker_btn">Velg kontakter</string>
-  <string name="bottomsheet_contact">Kontakt Jami\n%1$s</string>
+  <string name="bottomsheet_contact">Kontakt Glowmate\n%1$s</string>
   <string name="bottomsheet_remove">Fjern medlem</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">Registrer brukernavn</string>
   <string name="jami_id_choose_username">Velg et brukernavn</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">Velkommen til Jami</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">Velkommen til Glowmate</string>
   <!--Conversation details-->
   <string name="details">Detaljer</string>
   <string name="Private">Privat</string>

@@ -19,7 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <cx.ring.views.TwoButtonEditText
+    <com.glowmate.views.TwoButtonEditText
         android:id="@+id/txt_device_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

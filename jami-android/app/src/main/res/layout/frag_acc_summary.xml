@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     android:layout_height="match_parent"
     android:background="@color/background"
     android:fitsSystemWindows="true"
-    tools:context=".account.JamiAccountSummaryFragment">
+    tools:context=".account.GlowmateAccountSummaryFragment">
 
     <!-- Attribute  app:liftOnScrollTargetViewId="@id/..." : is managed dynamically in fragment -->
     <com.google.android.material.appbar.AppBarLayout
@@ -39,7 +39,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         app:navigationIcon="@drawable/abc_ic_ab_back_material"
         app:title="@string/menu_item_account_settings">
 
-        <cx.ring.views.SwitchButton
+        <com.glowmate.views.SwitchButton
             android:id="@+id/account_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -319,7 +319,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_marginEnd="0dp"
                 style="@style/CustomRelativeLayout">
 
-                <cx.ring.views.TwoButtonEditText
+                <com.glowmate.views.TwoButtonEditText
                     android:id="@+id/linked_devices"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
