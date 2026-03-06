@@ -43,7 +43,7 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
         } catch (e: Exception) {
             Log.w(TAG, "Can't acquire wake lock", e)
         }
-        try {
+        /*try {
             val isForeground = isAppInForeground()
             val shouldStartService = !isForeground && remoteMessage.priority == RemoteMessage.PRIORITY_HIGH
             if (shouldStartService) {
@@ -58,7 +58,7 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
             }
         } catch (e: Exception) {
             Log.w(TAG, "Failed to start foreground service for push notification", e)
-        }
+        }*/
         serviceScope.launch {
             try {
                 val app = JamiApplication.instance as JamiApplicationFirebase?
