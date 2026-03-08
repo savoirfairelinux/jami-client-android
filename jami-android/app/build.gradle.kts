@@ -5,7 +5,7 @@ val buildFirebase = project.hasProperty("buildFirebase") || gradle.startParamete
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
+// alias(libs.plugins.kotlin.android) // Removed - built into AGP 9.0
     alias(libs.plugins.hilt)
     alias(libs.plugins.protobuf)
     alias(libs.plugins.ksp)
