@@ -22,9 +22,23 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Build Debug APK
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y autoconf automake autopoint bc bison \
+            build-essential bzip2 cmake curl gettext git lib32stdc++6 \
+            lib32z1 libtool m4 nasm ninja-build pkg-config python-is-python3 \
+            ruby ruby-dev unzip yasm zip swig
+
+      - name: Install Android NDK and CMake
+        run: |
+          yes | sdkmanager --licenses
+          sdkmanager "ndk;29.0.14206865" "cmake;4.1.2" "platforms;android-36" "build-tools;35.0.0"
+
+      - name: Build Glowmate APK
         run: |
           cd jami-android
+          export ANDROID_NDK=$ANDROID_SDK_ROOT/ndk/29.0.14206865
           ./gradlew assembleWithoutFirebaseDebug
 
       - name: Upload APK
@@ -32,3 +46,4 @@ jobs:
         with:
           name: Glowmate-debug
           path: jami-android/app/build/outputs/apk/**/**.apk
+          retention-days: 7
