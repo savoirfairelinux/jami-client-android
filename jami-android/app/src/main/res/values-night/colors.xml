@@ -54,7 +54,7 @@
     <color name="invitation_drawable_p1_color">#00223c</color>
     <color name="invitation_drawable_p2_color">#005699</color>
 
-    <!--  JamiId  -->
+    <!--  GlowmateId  -->
     <color name="jami_id_background_color">#4C000000</color>
     <color name="jami_id_surface_color">#03B9E9</color>
     <color name="jami_id_edit_text_underline_color">#4DFFFFFF</color>

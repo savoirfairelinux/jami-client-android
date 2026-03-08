@@ -8,16 +8,16 @@
   <string name="delete_conversation_confirmation">Haluatko poistaa tämän keskustelun?</string>
   <string name="acc_profile_photo_capture">Ota valokuva</string>
   <string name="view_switch_camera">Vaihda kamera</string>
-  <string name="sponsor_section">Jami on vapaa ohjelmisto, jota kehittää ja tukee</string>
+  <string name="sponsor_section">Glowmate on vapaa ohjelmisto, jota kehittää ja tukee</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Osallistu</string>
   <string name="version_section">Versio</string>
   <string name="no_browser_app_installed">Selainta ei löytynyt. Asenna selain ja katso tämä sivu uudelleen.</string>
   <string name="website_chooser_title">Katso verkkosivu käyttäen...</string>
   <string name="license">Tämä ohjelmisto toimitetaan \"sellaisenaan\" ilman minkäänlaista takuuta. Katso lisätietoja <u>GNU General Public License versio 3 tai uudempi</u></string>
-  <string name="description">Jami on ilmainen viestintäalusta, joka kunnioittaa käyttäjiensä vapauksia ja yksityisyyttä.</string>
+  <string name="description">Glowmate on ilmainen viestintäalusta, joka kunnioittaa käyttäjiensä vapauksia ja yksityisyyttä.</string>
   <string name="credits">Tekijät</string>
-  <string name="pip_title">Jami-konferenssi</string>
+  <string name="pip_title">Glowmate-konferenssi</string>
   <string name="call_service_description">Tämä palvelu on välttämätön puhelusi pitämiseksi etualalla. Se toimii vain puheluiden aikana.</string>
   <string name="data_transfer_service_description">Tämä palvelu on välttämätön ilmoitusten näyttämiseksi tiedostosiirron aikana. Se toimii vain tiedostojen siirtämisen aikana.</string>
   <!--About dialog-->
@@ -26,7 +26,7 @@
   <string name="media">Media</string>
   <string name="community_management">Yhteisön hallinnointi</string>
   <string name="special_thanks">Erityiset kiitokset</string>
-  <string name="end_note">Luettelo ihmisistä, jotka ovat investoineet aikaa merkittävästi Jamiin. Kaikki, jotka haluavat päästä listalle, tulee ottaa yhteyttä Jami-tiimiin contact@jami.net</string>
+  <string name="end_note">Luettelo ihmisistä, jotka ovat investoineet aikaa merkittävästi Glowmatein. Kaikki, jotka haluavat päästä listalle, tulee ottaa yhteyttä Glowmate-tiimiin contact@jami.net</string>
   <!--RingActivity-->
   <string name="error_no_network">Ei yhteyttä verkkoon</string>
   <string name="error_account_offline">Tili on offline-tilassa</string>
@@ -41,7 +41,7 @@
   <string name="menu_item_account_settings">Tiliasetukset</string>
   <string name="menu_item_extension_list">Laajennusten asetukset</string>
   <string name="menu_item_share">Jaa tunnukseni</string>
-  <string name="menu_item_about">Tietoja Jami\'sta</string>
+  <string name="menu_item_about">Tietoja Glowmate\'sta</string>
   <string name="video_setting_title">Videoasetukset</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Valitse numero</string>
@@ -78,7 +78,7 @@
   <string name="notif_channel_background_service_descr">Sallii puheluiden ja viestien vastaanotto milloin tahansa.</string>
   <string name="notif_group_calls">Puhelut</string>
   <string name="notif_inprogress_group_call">Puhelu käynnissä</string>
-  <string name="notif_background_service">Jami toimii taustalla</string>
+  <string name="notif_background_service">Glowmate toimii taustalla</string>
   <string name="notif_mark_as_read">Merkitse luetuksi</string>
   <string name="notif_dismiss">Hylkää</string>
   <string name="notif_reply">Vastaa</string>
@@ -88,7 +88,7 @@
   <string name="notif_sync_title">Synkronoidaan tietoja...</string>
   <string name="notif_location_title">Sijainnin jakaminen %1$s</string>
   <string name="notif_channel_reconnect">Synkronointi taustalla</string>
-  <string name="notif_reconnect_title">Jami synkronoi…</string>
+  <string name="notif_reconnect_title">Glowmate synkronoi…</string>
   <string name="location_share_contact">%1$s jakaa sijainnin kanssasi</string>
   <string name="notif_location_multi_title">Sijainnin jako %1$d kontaktien kanssa</string>
   <string name="notif_location_remaining">%1$d minuuttia jäljellä</string>
@@ -109,7 +109,7 @@
   <string name="hist_out_call">Lähtevä puhelu %1$s</string>
   <string name="call_duration">Kesto %s</string>
   <string name="call_on_hold">Puhelu pidossa</string>
-  <string name="start_error_title">Jamia ei voi käynnistää</string>
+  <string name="start_error_title">Glowmatea ei voi käynnistää</string>
   <string name="action_call_accept">Hyväksy puhelu</string>
   <string name="action_call_accept_audio">Hyväksy äänellä</string>
   <string name="action_call_accept_video">Hyväksy videolla</string>
@@ -131,7 +131,7 @@
   <string name="write_a_message">Kirjoita viesti</string>
   <string name="scan_qr">Skannaa QR-koodi</string>
   <string name="qr_code">QR-koodi</string>
-  <string name="qr_code_not_contact">Ei Jamissa - henkilön QR-koodi</string>
+  <string name="qr_code_not_contact">Ei Glowmatessa - henkilön QR-koodi</string>
   <string name="new_group">Luo uusi ryhmä</string>
   <string name="ab_action_flipcamera">Käännä kamera</string>
   <string name="ab_action_hidepreview">Piilota esikatselu</string>
@@ -161,11 +161,11 @@
   <string name="ringtone_error_size_too_big">Tiedosto on liian suuri. Maksimi on %1$dkt.</string>
   <string name="ringtone_custom_prompt">Aseta oma soittoääni</string>
   <string name="ringtone_custom_label">Oma</string>
-  <string name="ringtone_jami_tones">Jami soittoäänet</string>
+  <string name="ringtone_jami_tones">Glowmate soittoäänet</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami vaatii toimiakseen oikeuden “Lukea yhteystietoja”. Ota käyttöön laitteen asetuksissa, jotta voit käyttää ominaisuutta.</string>
+  <string name="permission_dialog_read_contacts_message">Glowmate vaatii toimiakseen oikeuden “Lukea yhteystietoja”. Ota käyttöön laitteen asetuksissa, jotta voit käyttää ominaisuutta.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami vaatii toimiakseen oikeudet “Kirjoittaa puhelulokia”. Ota käyttöön laitteen asetuksissa, jotta voit käyttää ominaisuutta.</string>
+  <string name="permission_dialog_write_call_log_message">Glowmate vaatii toimiakseen oikeudet “Kirjoittaa puhelulokia”. Ota käyttöön laitteen asetuksissa, jotta voit käyttää ominaisuutta.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skannaa lisättävän tilin QR-koodi.</string>
   <string name="title_activity_qrcode">Jaa minun tili</string>
@@ -225,7 +225,7 @@
   <string name="video_not_found">Videotiedostoa ei löytynyt</string>
   <string name="conversation_preference_color">Keskustelun väri</string>
   <string name="conversation_preference_emoji">Keskustelun hymiö</string>
-  <string name="conversation_type_contact">Jami kontakti</string>
+  <string name="conversation_type_contact">Glowmate kontakti</string>
   <string name="conversation_type_private">Yksityinen</string>
   <string name="conversation_type_group">Ryhmä</string>
   <string name="conversation_contact_invited">%1$s kutsuttiin keskusteluun.</string>
@@ -254,11 +254,11 @@
   <string name="prompt_new_password">Uusi salasana</string>
   <string name="prompt_new_password_optional">Uusi salasana (valinnainen)</string>
   <string name="prompt_new_password_repeat">Vahvista uusi salasana</string>
-  <string name="account_create_title">Luo Jami-tili</string>
+  <string name="account_create_title">Luo Glowmate-tili</string>
   <string name="prompt_new_username">Anna uusi käyttäjänimi</string>
   <string name="prompt_hint_username">Käyttäjänimi</string>
-  <string name="help_password_choose">Valitse muistettava, vahva salasana jota käytät Jami-tilin suojaamiseen.</string>
-  <string name="help_password_enter">Anna Jami-tilisi pääsalasana.</string>
+  <string name="help_password_choose">Valitse muistettava, vahva salasana jota käytät Glowmate-tilin suojaamiseen.</string>
+  <string name="help_password_enter">Anna Glowmate-tilisi pääsalasana.</string>
   <string name="help_server_enter">Anna hallintapalvelimen URL.</string>
   <string name="pin_copied">Todennuskoodi kopioitu leikepöydälle.</string>
   <string name="copied_clipboard">Kopioitu leikepöydälle</string>
@@ -290,7 +290,7 @@
   <string name="devices">Linkitetyt laitteet</string>
   <string name="total_devices">Laitteita yhteensä: </string>
   <!--Share fragment-->
-  <string name="share_message">Skannaa tämä koodi Jamilla</string>
+  <string name="share_message">Skannaa tämä koodi Glowmatella</string>
   <string name="share_message_no_account">Valitse jaettava tunnus.</string>
   <string name="share_your_account_information">Jaa yhteystietoni</string>
   <string name="share_contact_information">Jaa yhteystiedot</string>
@@ -382,8 +382,8 @@
   <string name="speech_recogniton_unavailable">Puheentunnistus ei ole käytettävissä.</string>
   <string name="audio_permission_rationale_title">Audion käyttöoikeus vaaditaan</string>
   <string name="camera_permission_rationale_title">Kameran käyttöoikeus vaaditaan</string>
-  <string name="audio_permission_rationale_message">Jami vaatii mikrofonin käyttöoikeuden puhetta tekstiksi ja äänen äänitysominaisuuksia varten. Sitä kysytään seuraavassa vaiheessa.</string>
-  <string name="camera_permission_rationale_message">Jami vaatii kameran käyttöoikeuden tallentaakseen videota ja videopuheluiden soittamiseen. Sitä kysytään seuraavassa vaiheessa.</string>
+  <string name="audio_permission_rationale_message">Glowmate vaatii mikrofonin käyttöoikeuden puhetta tekstiksi ja äänen äänitysominaisuuksia varten. Sitä kysytään seuraavassa vaiheessa.</string>
+  <string name="camera_permission_rationale_message">Glowmate vaatii kameran käyttöoikeuden tallentaakseen videota ja videopuheluiden soittamiseen. Sitä kysytään seuraavassa vaiheessa.</string>
   <string name="unable_to_start_recorder">Äänen tallennusta ei voi aloittaa.</string>
   <string name="error_sharing_file">Tiedostoa jaettaessa tapahtui virhe.</string>
   <string name="error_opening_file">Tiedostoa avattaessa tapahtui virhe.</string>
@@ -436,25 +436,25 @@
   <string name="picker_title">Valitse henkilöt</string>
   <string name="picker_btn">Valitse henkilöt</string>
   <string name="no_contact_to_add">Sinulla ei ole henkilöä lisättävänä</string>
-  <string name="bottomsheet_contact">Jami yhteystiedot\n%1$s</string>
+  <string name="bottomsheet_contact">Glowmate yhteystiedot\n%1$s</string>
   <string name="bottomsheet_remove">Poista jäsen</string>
   <string name="error_open_no_app_found">Ei löytynyt sopivaa sovellusta tiedostolle: %1$s</string>
   <string name="swarm_detail_no_document">Sinulla ei ole vielä asiakirjoja.</string>
   <string name="group_admin">Ylläpitäjät</string>
-  <string name="share_contact_intent_title">Lisää tämä henkilö Jamiin!</string>
-  <string name="share_contact_intent_body">Voit lisätä tämän henkilön \"%1$s\" Jamin viestintäalustaan: %2$s</string>
-  <!--JamiId-->
-  <string name="jami_id_copy">Kopioi Jami-id</string>
-  <string name="jami_id_share">Jaa Jami-id</string>
+  <string name="share_contact_intent_title">Lisää tämä henkilö Glowmatein!</string>
+  <string name="share_contact_intent_body">Voit lisätä tämän henkilön \"%1$s\" Glowmaten viestintäalustaan: %2$s</string>
+  <!--GlowmateId-->
+  <string name="jami_id_copy">Kopioi Glowmate-id</string>
+  <string name="jami_id_share">Jaa Glowmate-id</string>
   <string name="jami_id_validate">Rekisteröi käyttäjänimi</string>
   <string name="jami_id_available">Käyttäjänimi on saatavilla.</string>
   <string name="jami_id_not_available">Käyttäjänimi ei ole saatavilla.</string>
   <string name="jami_id_info">• Enintään 32 merkkiä\n• Erikoismerkit: viiva (-), alaviiva (_)</string>
   <string name="jami_id_looking_for_availability">Tarkistetaan käyttäjänimen saatavuutta…</string>
   <string name="jami_id_choose_username">Valitse käyttäjänimi</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">Tervetuloa Jamiin</string>
-  <string name="welcome_jami_description">Jaa Jami-tunnuksesi, jotta sinuun saa helpommin yhteyttä!</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">Tervetuloa Glowmatein</string>
+  <string name="welcome_jami_description">Jaa Glowmate-tunnuksesi, jotta sinuun saa helpommin yhteyttä!</string>
   <!--Conversation details-->
   <string name="details">Tiedot</string>
   <string name="secure_p2p_connection">Suojattu peer-to-peer-yhteys</string>
@@ -465,7 +465,7 @@
   <string name="show_certificate">Näytä sertifikaatti</string>
   <string name="mute_conversation">Mykistä keskustelu</string>
   <!--Donation-->
-  <string name="donation_card_description">Jos pidät Jamista ja uskot tehtäväämme, Haluatko tehdä lahjoituksen?</string>
+  <string name="donation_card_description">Jos pidät Glowmatesta ja uskot tehtäväämme, Haluatko tehdä lahjoituksen?</string>
   <string name="donation_card_not_now">Ei nyt</string>
   <string name="donation_donate">Lahjoita</string>
   <string name="donation_setting_title">Lahjoituksen muistutus</string>

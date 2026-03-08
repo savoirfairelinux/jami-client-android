@@ -10,7 +10,7 @@
   <string name="pref_category_connectivity">Uunganisho</string>
   <string name="pref_category_video_settings">Mipangilio ya video ya juu</string>
   <string name="pref_mobileData_title">Data za simu</string>
-  <string name="pref_mobileData_summary">Ruhusu Jami kwenye mitandao ya 3G / LTE pamoja na Wi-Fi</string>
+  <string name="pref_mobileData_summary">Ruhusu Glowmate kwenye mitandao ya 3G / LTE pamoja na Wi-Fi</string>
   <string name="pref_pushNotifications_title">Kutuma taarifa</string>
   <string name="pref_pushNotifications_summary">Tumia seva za Google kuruhusu kupokea simu/ ujumbe katika background</string>
   <string name="pref_unifiedPush_summary">Tumia huduma ya UnifiedPush kuruhusu kupokea simu/ ujumbe katika background</string>
@@ -25,10 +25,10 @@
   <string name="pref_videoResolution_summary">Chagua azimio la video ya kuondoka</string>
   <string name="pref_systemContacts_title">Tumia mawasiliano ya mfumo</string>
   <string name="pref_systemContacts_summary">Tumia mawasiliano ya mfumo kuonyesha maelezo ya simu.</string>
-  <string name="pref_systemDialer_title">Fanya simu za mfumo kwa kutumia Jami</string>
-  <string name="pref_systemDialer_summary">Tumia Jami kufanya simu za mfumo ikiwezekana.</string>
-  <string name="pref_startOnBoot_title">Kuanza Jami katika kuanza</string>
-  <string name="pref_startOnBoot_summary">Kuendesha Jami katika background wakati mfumo kuanza.</string>
+  <string name="pref_systemDialer_title">Fanya simu za mfumo kwa kutumia Glowmate</string>
+  <string name="pref_systemDialer_summary">Tumia Glowmate kufanya simu za mfumo ikiwezekana.</string>
+  <string name="pref_startOnBoot_title">Kuanza Glowmate katika kuanza</string>
+  <string name="pref_startOnBoot_summary">Kuendesha Glowmate katika background wakati mfumo kuanza.</string>
   <string name="pref_clearHistory_title">Historia ya wazi</string>
   <string name="pref_notification_title">Kuonekana kwa taarifa</string>
   <string name="pref_notification_summary">Weka maonyesho ya maombi ya maonyesho kwenye screen lock.</string>
@@ -36,7 +36,7 @@
   <string name="pref_blackList_summary">Angalia orodha yako ya kuzuia.</string>
   <string name="pref_delete_account_title">Futa akaunti</string>
   <string name="pref_newGroup_title">Kuwezesha gumzo la kikundi</string>
-  <string name="pref_newGroup_summary">Kuwezesha kuunda makundi katika Jami.</string>
+  <string name="pref_newGroup_summary">Kuwezesha kuunda makundi katika Glowmate.</string>
   <string name="pref_logs_title">Rekodi za utambuzi</string>
   <string name="pref_logs_summary">Mipangilio ya wazi ya rekodi ya uchunguzi</string>
   <string name="pref_logs_start">Kuanza Kuweka</string>

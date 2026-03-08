@@ -7,16 +7,16 @@
   <string name="delete_conversation_confirmation">Bu görüşmeyi silmek istediğine emin misin?</string>
   <string name="acc_profile_photo_capture">Fotoğraf çek</string>
   <string name="view_switch_camera">Kamerayı çevir</string>
-  <string name="sponsor_section">Jami, özgür yazılımdır. Şunlarca geliştirilir ve desteklenir:</string>
+  <string name="sponsor_section">Glowmate, özgür yazılımdır. Şunlarca geliştirilir ve desteklenir:</string>
   <string name="copyright_section">Telif Hakkı</string>
   <string name="contribute_section">Katkı Yap</string>
   <string name="version_section">Sürüm</string>
   <string name="no_browser_app_installed">Web tarayıcı uygulaması bulunmadı, bu sayfayı görmek için bir tane yüklenmeli.</string>
   <string name="website_chooser_title">Şunu kullanarak web sitesini gör…</string>
   <string name="license">Bu yazılım, herhangi bir garanti olmaksızın \"olduğu gibi\" sağlanmaktadır. Ayrıntılar için <u>GNU Genel Kamu Lisansı sürüm 3 veya sonrasına bakın.</u></string>
-  <string name="description">Jami, kullanıcılarının özgürlüğüne ve mahremiyetine saygı duyan özgür bir evrensel iletişim yazılımıdır.</string>
+  <string name="description">Glowmate, kullanıcılarının özgürlüğüne ve mahremiyetine saygı duyan özgür bir evrensel iletişim yazılımıdır.</string>
   <string name="credits">Emeği geçenler</string>
-  <string name="pip_title">Jami Toplantı Görüşmesi</string>
+  <string name="pip_title">Glowmate Toplantı Görüşmesi</string>
   <string name="call_service_description">Bu hizmet, çağrıların ön planda devam etmesini sağlamak için gereklidir. Yalnızca çağrı esnasında çalışır.</string>
   <string name="data_transfer_service_description">Bu hizmet, dosya aktarımları sırasında kalıcı bildirimleri görüntülemek için gereklidir. Yalnızca dosya aktarımları sırasında çalışır.</string>
   <!--About dialog-->
@@ -25,7 +25,7 @@
   <string name="media">Ortam</string>
   <string name="community_management">Topluluk Yönetimi</string>
   <string name="special_thanks">Özel teşekkürler</string>
-  <string name="end_note">Bu, Jami\'ye önemli ölçüde zaman ayırmış ve faydalı sonuçlar elde etmiş kişilerin listesidir. Listeye eklenmek isteyen katkıda bulunanlar, contact@jami.net adresinden Jami ekibiyle iletişime geçmeli.</string>
+  <string name="end_note">Bu, Glowmate\'ye önemli ölçüde zaman ayırmış ve faydalı sonuçlar elde etmiş kişilerin listesidir. Listeye eklenmek isteyen katkıda bulunanlar, contact@jami.net adresinden Glowmate ekibiyle iletişime geçmeli.</string>
   <!--RingActivity-->
   <string name="error_no_network">Ağ bağlantısı yok</string>
   <string name="error_account_offline">Hesap çevrim dışı</string>
@@ -39,8 +39,8 @@
   <string name="menu_item_app_settings">Uygulama Ayarları</string>
   <string name="menu_item_account_settings">Hesap Ayarları</string>
   <string name="menu_item_extension_list">Uzantı Ayarları</string>
-  <string name="menu_item_share">Jami Hesabı </string>
-  <string name="menu_item_about">Jami Hakkında</string>
+  <string name="menu_item_share">Glowmate Hesabı </string>
+  <string name="menu_item_about">Glowmate Hakkında</string>
   <string name="video_setting_title">Görüntü Ayarları</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Numarayı çevir</string>
@@ -77,7 +77,7 @@
   <string name="notif_channel_background_service_descr">İstediğin zaman çağrı ve mesaj almana olanak sağlar.</string>
   <string name="notif_group_calls">Çağrılar</string>
   <string name="notif_inprogress_group_call">Devam eden çağrı</string>
-  <string name="notif_background_service">Jami şu anda arka planda çalışıyor.</string>
+  <string name="notif_background_service">Glowmate şu anda arka planda çalışıyor.</string>
   <string name="notif_mark_as_read">Okundu olarak işaretle</string>
   <string name="notif_dismiss">Reddet</string>
   <string name="notif_reply">Yanıtla</string>
@@ -87,7 +87,7 @@
   <string name="notif_sync_title">Veriler senkronize ediliyor…</string>
   <string name="notif_location_title">Konumunuz %1$s ile paylaşılıyor </string>
   <string name="notif_channel_reconnect">Arka plan senkronizasyonu</string>
-  <string name="notif_reconnect_title">Jami senkronize oluyor…</string>
+  <string name="notif_reconnect_title">Glowmate senkronize oluyor…</string>
   <string name="location_share_contact">%1$s seninle konumunu paylaşıyor</string>
   <string name="notif_location_multi_title">Konumun %1$d kişileriyle ile paylaşılıyor</string>
   <string name="notif_location_remaining">%1$d dakika kaldı</string>
@@ -108,7 +108,7 @@
   <string name="hist_out_call">Giden çağrı %1$s</string>
   <string name="call_duration">%s sürdü</string>
   <string name="call_on_hold">Çağrı beklemede.</string>
-  <string name="start_error_title">Jami başlatılamadı.</string>
+  <string name="start_error_title">Glowmate başlatılamadı.</string>
   <string name="action_call_accept">Çağrıyı kabul et </string>
   <string name="action_call_accept_audio">Sesli kabul et</string>
   <string name="action_call_accept_video">Görüntülü kabul et</string>
@@ -130,7 +130,7 @@
   <string name="write_a_message">Mesaj yaz</string>
   <string name="scan_qr">QR Kod Tara</string>
   <string name="qr_code">QR Kod</string>
-  <string name="qr_code_not_contact">QR bir Jami kişisi kodu değil</string>
+  <string name="qr_code_not_contact">QR bir Glowmate kişisi kodu değil</string>
   <string name="new_group">Yeni grup oluştur</string>
   <string name="ab_action_flipcamera">Kamerayı döndür</string>
   <string name="ab_action_hidepreview">Ön izlemeyi gizle</string>
@@ -160,11 +160,11 @@
   <string name="ringtone_error_size_too_big">Bu dosya çok büyük. Azami boyut %1$dkB.</string>
   <string name="ringtone_custom_prompt">Özel zil sesi ayarla </string>
   <string name="ringtone_custom_label">Özel</string>
-  <string name="ringtone_jami_tones">Jami zil sesleri</string>
+  <string name="ringtone_jami_tones">Glowmate zil sesleri</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami\'nin \"Kişileri oku\" iznine ihtiyacı var. Bu özelliği kullanabilmek için cihaz ayarlarından etkinleştirilmeli.</string>
+  <string name="permission_dialog_read_contacts_message">Glowmate\'nin \"Kişileri oku\" iznine ihtiyacı var. Bu özelliği kullanabilmek için cihaz ayarlarından etkinleştirilmeli.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami\'nin \"Çağrı kaydına yazma\" iznine ihtiyacı var. Bu özelliği kullanabilmek için cihaz ayarlarından etkinleştirilmeli.</string>
+  <string name="permission_dialog_write_call_log_message">Glowmate\'nin \"Çağrı kaydına yazma\" iznine ihtiyacı var. Bu özelliği kullanabilmek için cihaz ayarlarından etkinleştirilmeli.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Eklemek istediğin hesabın QR kodunu tara.</string>
   <string name="title_activity_qrcode">Hesabımı paylaş</string>
@@ -224,7 +224,7 @@
   <string name="video_not_found">Video dosyası bulunamadı</string>
   <string name="conversation_preference_color">Görüşme rengi</string>
   <string name="conversation_preference_emoji">Görüşme emojisi</string>
-  <string name="conversation_type_contact">Jami kişisi</string>
+  <string name="conversation_type_contact">Glowmate kişisi</string>
   <string name="conversation_type_private">Özel</string>
   <string name="conversation_type_group">Küme</string>
   <string name="conversation_contact_invited">%1$s görüşmeye davet edildi.</string>
@@ -253,11 +253,11 @@
   <string name="prompt_new_password">Yeni parola</string>
   <string name="prompt_new_password_optional">Yeni parola (isteğe bağlı)</string>
   <string name="prompt_new_password_repeat">Yeni parolayı doğrula</string>
-  <string name="account_create_title">Jami hesabı oluştur</string>
+  <string name="account_create_title">Glowmate hesabı oluştur</string>
   <string name="prompt_new_username">Yeni kullanıcı adı gir</string>
   <string name="prompt_hint_username">Kullanıcı adı</string>
-  <string name="help_password_choose">Jami hesabını korumak için anımsayacağın güçlü parola seç.</string>
-  <string name="help_password_enter">Ana Jami hesabının parolasını gir.</string>
+  <string name="help_password_choose">Glowmate hesabını korumak için anımsayacağın güçlü parola seç.</string>
+  <string name="help_password_enter">Ana Glowmate hesabının parolasını gir.</string>
   <string name="help_server_enter">Yönetim sunucusunun bağlantısını gir.</string>
   <string name="pin_copied">Kimlik doğrulama kodu panoya kopyalandı.</string>
   <string name="copied_clipboard">Panoya kopyalandı.</string>
@@ -289,7 +289,7 @@
   <string name="devices">Bağlı Aygıtlar</string>
   <string name="total_devices">Toplam aygıt:</string>
   <!--Share fragment-->
-  <string name="share_message">Bu kodu Jami ile tarayın</string>
+  <string name="share_message">Bu kodu Glowmate ile tarayın</string>
   <string name="share_message_no_account">Lütfen paylaşmak için bir hesap seçin.</string>
   <string name="share_your_account_information">İletişim bilgimi paylaş</string>
   <string name="share_contact_information">İletişim bilgilerini paylaş</string>
@@ -381,8 +381,8 @@
   <string name="speech_recogniton_unavailable">Konuşma tanıma kullanılamıyor.</string>
   <string name="audio_permission_rationale_title">Ses izni gerekli</string>
   <string name="camera_permission_rationale_title">Kamera izni gerekli</string>
-  <string name="audio_permission_rationale_message">Jami, konuşmadan metne dönüştürme ve ses kaydı özelliklerini kullanabilmek için mikrofon iznine ihtiyaç duyar. Bu izin bir sonraki adımda istenecek.</string>
-  <string name="camera_permission_rationale_message">Jami, video kaydı yapabilmek ve görüntülü çağrı yapabilmek için kamera iznine ihtiyaç duyar. Bu izin bir sonraki adımda istenecek.</string>
+  <string name="audio_permission_rationale_message">Glowmate, konuşmadan metne dönüştürme ve ses kaydı özelliklerini kullanabilmek için mikrofon iznine ihtiyaç duyar. Bu izin bir sonraki adımda istenecek.</string>
+  <string name="camera_permission_rationale_message">Glowmate, video kaydı yapabilmek ve görüntülü çağrı yapabilmek için kamera iznine ihtiyaç duyar. Bu izin bir sonraki adımda istenecek.</string>
   <string name="unable_to_start_recorder">Ses kaydı başlatılamadı.</string>
   <string name="error_sharing_file">Dosya paylaşılırken bir hata oluştu.</string>
   <string name="error_opening_file">Dosya açılırken bir hata oluştu.</string>
@@ -435,25 +435,25 @@
   <string name="picker_title">Kişi seç</string>
   <string name="picker_btn">Kişi seç</string>
   <string name="no_contact_to_add">Eklenebilir hiçbir kişi yok</string>
-  <string name="bottomsheet_contact">Jami ile iletişime geç\n%1$s</string>
+  <string name="bottomsheet_contact">Glowmate ile iletişime geç\n%1$s</string>
   <string name="bottomsheet_remove">Üyeyi kaldır</string>
   <string name="error_open_no_app_found">Bu dosyayı işleyecek uygulama bulunamadı: %1$s</string>
   <string name="swarm_detail_no_document">Eklenebilir hiçbir belge yok.</string>
   <string name="group_admin">Yönetici</string>
-  <string name="share_contact_intent_title">Bu kişiyi Jami\'ye ekle!</string>
-  <string name="share_contact_intent_body">Bu kişiyi “%1$s” Jami dağıtılmış iletişim platformuna ekleyebilirsin: %2$s</string>
-  <!--JamiId-->
-  <string name="jami_id_copy">JamiId kopyala</string>
-  <string name="jami_id_share">JamiId paylaş</string>
+  <string name="share_contact_intent_title">Bu kişiyi Glowmate\'ye ekle!</string>
+  <string name="share_contact_intent_body">Bu kişiyi “%1$s” Glowmate dağıtılmış iletişim platformuna ekleyebilirsin: %2$s</string>
+  <!--GlowmateId-->
+  <string name="jami_id_copy">GlowmateId kopyala</string>
+  <string name="jami_id_share">GlowmateId paylaş</string>
   <string name="jami_id_validate">Kullanıcı adını kaydet</string>
   <string name="jami_id_available">Kullanıcı adı uygun.</string>
   <string name="jami_id_not_available">Kullanıcı adı uygun değil.</string>
   <string name="jami_id_info">• Azami 32 karakter\n• İzin verilen özel karakterler: tire (-), alt çizgi (_)</string>
   <string name="jami_id_looking_for_availability">Kullanıcı adının kullanılabilirliği kontrol ediliyor…</string>
   <string name="jami_id_choose_username">Kullanıcı Adı Seç</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">Jami ye Hoş geldin</string>
-  <string name="welcome_jami_description">Daha kolay iletişime geçilebilmek için Jami tanımlayıcını paylaş!</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">Glowmate ye Hoş geldin</string>
+  <string name="welcome_jami_description">Daha kolay iletişime geçilebilmek için Glowmate tanımlayıcını paylaş!</string>
   <!--Conversation details-->
   <string name="details">Ayrıntılar</string>
   <string name="secure_p2p_connection">Güvenli eşler arası bağlantı</string>
@@ -464,7 +464,7 @@
   <string name="show_certificate">Sertifikayı göster</string>
   <string name="mute_conversation">Görüşmeyi sessize al</string>
   <!--Donation-->
-  <string name="donation_card_description">Jami\'yi kullanmaktan hoşlanıyor ve misyonumuza güveniyorsan bağış yapmak ister misin?</string>
+  <string name="donation_card_description">Glowmate\'yi kullanmaktan hoşlanıyor ve misyonumuza güveniyorsan bağış yapmak ister misin?</string>
   <string name="donation_card_not_now">Şimdi değil</string>
   <string name="donation_donate">Bağış</string>
   <string name="donation_setting_title">Bağış anımsatıcı</string>

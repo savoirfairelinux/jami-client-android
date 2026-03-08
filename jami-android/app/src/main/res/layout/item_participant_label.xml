@@ -15,7 +15,7 @@
         android:layout_margin="@dimen/call_participant_margin"
         android:scaleType="fitCenter" />
 
-    <cx.ring.views.VideoSinkView
+    <com.glowmate.views.VideoSinkView
         android:id="@+id/sink"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

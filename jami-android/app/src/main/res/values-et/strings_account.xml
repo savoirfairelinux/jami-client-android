@@ -8,7 +8,7 @@
   <string name="account_selection">Vali kasutajakonto</string>
   <string name="add_ring_account_title">Lisa kasutajakonto</string>
   <string name="add_sip_account_title">Lisa SIP-konto</string>
-  <string name="ring_account_default_name">Jami kasutajakonto %1$s</string>
+  <string name="ring_account_default_name">Glowmate kasutajakonto %1$s</string>
   <string name="account_creation_error">Kasutajakonto loomisel tekkis viga.</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Serveri nimi</string>
@@ -28,7 +28,7 @@
 Seega saad saad teha ja vastu võtta ainult otseseid IP-kõnesid.
 Saad oma kontot hiljem muuta</string>
   <string name="account_type_ip2ip">IP-konto</string>
-  <string name="help_ring">Jami konto kasutaja võimaldab sul inimestega turvaliselt suhelda hajutatud võrdõigusvõrgus.</string>
+  <string name="help_ring">Glowmate konto kasutaja võimaldab sul inimestega turvaliselt suhelda hajutatud võrdõigusvõrgus.</string>
   <string name="help_sip_title">Lisa SIP-konto</string>
   <string name="help_sip">Seadista olemasolev SIP-konto</string>
   <string name="create_sip_account">Seadista SIP-kontot</string>
@@ -157,27 +157,27 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_export_file_summary">Hilisemaks taastamiseks varunda kasutajakonto oma seadmesse.</string>
   <string name="account_export_end_decryption_message">Vigane salasõna. Palun proovi uuesti õige salasõnaga.</string>
   <string name="account_enter_password">Sisesta salasõna</string>
-  <string name="account_share_body">Kasutades „%1$s“ suhtle minuga hajutatud suhtlusvõrgus Jami: %2$s</string>
-  <string name="account_share_body_with_username">Kasutades „%1$s“ või minu avalikku kasutajanime „%2$s“ suhtle minuga hajutatud suhtlusvõrgus Jami: %3$s</string>
-  <string name="account_contact_me">Suhtle minuga Jami võrgus!</string>
+  <string name="account_share_body">Kasutades „%1$s“ suhtle minuga hajutatud suhtlusvõrgus Glowmate: %2$s</string>
+  <string name="account_share_body_with_username">Kasutades „%1$s“ või minu avalikku kasutajanime „%2$s“ suhtle minuga hajutatud suhtlusvõrgus Glowmate: %3$s</string>
+  <string name="account_contact_me">Suhtle minuga Glowmate võrgus!</string>
   <string name="update_account">Uuenda kasutajakontot</string>
-  <string name="account_migration">Sinu Jami kasutajakontot saab ajakohastada.\nPalun sisesta oma salasõna.</string>
-  <string name="ring_account">Jami kasutajakonto</string>
+  <string name="account_migration">Sinu Glowmate kasutajakontot saab ajakohastada.\nPalun sisesta oma salasõna.</string>
+  <string name="ring_account">Glowmate kasutajakonto</string>
   <string name="sip_account">SIP-konto</string>
   <string name="ring_account_identity">Identiteet</string>
   <string name="account_migration_title_dialog">Kasutajakonto uuendus</string>
   <string name="account_migration_message_dialog">Sinu kasutajakonto vajab ajakohastamist. Kas soovid selle tegevuse jaoks avada Kasutajakonto haldusvaate?</string>
   <string name="account_update_needed">Ajakohastamine on vajalik</string>
   <string name="account_cannot_be_found_title">Kasutajakontoga seotud viga</string>
-  <string name="account_cannot_be_found_message">Kasutajakontot ei leidu Jami võrgustikust. Veendu, et sa eksportisid ta Jami võrku olemasolevast seadmest ning et konto nimi ja salasõna on õiged.</string>
+  <string name="account_cannot_be_found_message">Kasutajakontot ei leidu Glowmate võrgustikust. Veendu, et sa eksportisid ta Glowmate võrku olemasolevast seadmest ning et konto nimi ja salasõna on õiged.</string>
   <string name="jams_account_cannot_be_found_message">Kasutajakontoga ühendamisel tekkis viga. Palun kontrolli et konto nimi ja salasõna on õiged.</string>
   <string name="account_sip_cannot_be_registered_message">Sa saad jätkata kasutajakonto loomisega või muuta siinolevat teavet. Lisaks saad hiljem muuta andmeid kasutajakonto seadistustest.</string>
   <string name="account_no_network_title">Võrgu viga</string>
-  <string name="account_no_network_message">Kasutajakonto lisamisel Jami hajutatud võrku tekkis võrguühenduse viga. Palun kontrolli oma seadme võrguühenduse toimivust.</string>
+  <string name="account_no_network_message">Kasutajakonto lisamisel Glowmate hajutatud võrku tekkis võrguühenduse viga. Palun kontrolli oma seadme võrguühenduse toimivust.</string>
   <string name="account_device_added_title">Kasutajakonto seade on lisatud</string>
-  <string name="account_device_added_message">Jami kasutajakonto ülesseadmine selles seadmes õnnestus. </string>
+  <string name="account_device_added_message">Glowmate kasutajakonto ülesseadmine selles seadmes õnnestus. </string>
   <string name="account_device_updated_title">Kasutajakonto seade on uuendatud</string>
-  <string name="account_device_updated_message">Jami kasutajakonto uuendamine õnnestus. </string>
+  <string name="account_device_updated_message">Glowmate kasutajakonto uuendamine õnnestus. </string>
   <string name="account_cannot_be_updated_message">Kasutajakonto uuendamisel tekkis viga. Palun kontrolli, et kasutasid õiget salasõna.</string>
   <string name="account_sip_success_title">SIP-konto on registreeritud</string>
   <string name="account_sip_success_message">SIP-konto registreerimine õnnestus.</string>
@@ -187,7 +187,7 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_tv_advance_settings_header">Täiendavad seadistused</string>
   <string name="account_tv_add_contact">Lisa kontakt</string>
   <string name="account_tv_advanced_settings">Muuda üldised seadistusi</string>
-  <string name="account_tv_about">Jami teave</string>
+  <string name="account_tv_about">Glowmate teave</string>
   <string name="tv_about_version">Versioon</string>
   <string name="tv_about_license">Litsents</string>
   <string name="tv_about_author">Autoriõigused</string>
@@ -195,7 +195,7 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_link_device">Loo ühendus teisest seadmest</string>
   <string name="account_link_button">Loo ühendus võrgust</string>
   <string name="account_link_archive_button">Loo ühendus varukoopia abil</string>
-  <string name="account_new_button">Loo Jami konto</string>
+  <string name="account_new_button">Loo Glowmate konto</string>
   <string name="account_link_export_button">Seo uus seade</string>
   <string name="account_link_show_button">Näita veel %d seotud seadet</string>
   <string name="account_link_hide_button">Peida seotud seade</string>
@@ -204,7 +204,7 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_export_title">Ühenda kasutajakonto muude seadmetega</string>
   <string name="account_connect_server_button">Ühenda kasutajakonto haldusserveriga</string>
   <string name="account_connect_button">Ühenda</string>
-  <string name="prompt_server">Jami haldusserveri võrguaadress</string>
+  <string name="prompt_server">Glowmate haldusserveri võrguaadress</string>
   <string name="help_credentials_enter">Sisesta oma organisatsiooni kasutajanimi</string>
   <string name="help_connect_password_enter">Sisesta oma organisatsiooni salasõna</string>
   <string name="account_connect_prompt_username">Kasutajanimi</string>
@@ -231,9 +231,9 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_status_offline">Pole võrgus</string>
   <string name="account_status_error">Viga</string>
   <!--Create account-->
-  <string name="account_creation_home">Tere tulemast kasutama suhtlusrakendust Jami</string>
+  <string name="account_creation_home">Tere tulemast kasutama suhtlusrakendust Glowmate</string>
   <string name="account_creation_profile">Loo oma profiil</string>
-  <string name="account_creation_ring">Loo oma Jami kasutajakonto</string>
+  <string name="account_creation_ring">Loo oma Glowmate kasutajakonto</string>
   <string name="account_sip_cannot_be_registered">SIP-konto loomisel tekkis viga.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Muuda profiili</string>
@@ -245,7 +245,7 @@ Saad oma kontot hiljem muuta</string>
   <string name="revoke_device_wait_title">Palun oota...</string>
   <string name="revoke_device_wait_message">Eemaldame seadet</string>
   <string name="rename_device_title">Muuda selle seadme nime</string>
-  <string name="rename_device_message">Vali uus nimi selle seadme seostamiseks sinu Jami kasutajakontoga</string>
+  <string name="rename_device_message">Vali uus nimi selle seadme seostamiseks sinu Glowmate kasutajakontoga</string>
   <string name="rename_device_button">Muuda seadme nime</string>
   <string name="account_rename_device_hint">Vali uus seadme nimi</string>
   <string name="account_device_name_empty">Seadme nimi ei saa olla tühi</string>
@@ -254,28 +254,28 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_device_id">Seadme tunnus</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">See vorming pole toetatud</string>
-  <string name="account_link_info">Skaneeri uue nutiseadme Jami rakenduses QR-koodi või sisesta tuvastuskood käsitsi.</string>
+  <string name="account_link_info">Skaneeri uue nutiseadme Glowmate rakenduses QR-koodi või sisesta tuvastuskood käsitsi.</string>
   <string name="account_link_device_title">Seo uus seade</string>
   <string name="account_link_password">Selle kasutajakonto andmed on krüptitud salasõnaga. Tuvastuskoodi loomiseks palun sisesta oma salasõna.</string>
   <string name="account_link_generate_button">Loo</string>
   <string name="account_link_time_valid">See tuvastuskood saab olema vigane: %1$s.</string>
-  <string name="account_link_device_info">Oma teisest Jami rakendusest vali „Seo uus seade“ ning kuva QR-koodi või sisesta tuvastuskood.</string>
+  <string name="account_link_device_info">Oma teisest Glowmate rakendusest vali „Seo uus seade“ ning kuva QR-koodi või sisesta tuvastuskood.</string>
   <string name="account_generate_export_device">Teises seadmes</string>
-  <string name="account_generate_export_info">Paigalda ja käivita Jami ning vali „Impordi teisest seadmest“ ning skaneeri QR-koodi. Alternatiivina võid PIN-koodi sisesta käsitsi.</string>
+  <string name="account_generate_export_info">Paigalda ja käivita Glowmate ning vali „Impordi teisest seadmest“ ning skaneeri QR-koodi. Alternatiivina võid PIN-koodi sisesta käsitsi.</string>
   <string name="content_description_qr_generated">Kasutajakonto QR-kood</string>
   <string name="account_generate_export_invalid">See tuvastuskood enam ei kehti.\nUue seadme sidumiseks sisesta salasõna ja loo uus tuvastuskood.</string>
   <string name="account_generate_export_invalid_two">See tuvastuskood enam ei kehti.\nUue seadme sidumiseks loo uus tuvastuskood.</string>
   <string name="help_pin_info">Nõutav, kui konto on salasõnaga krüptitud.</string>
   <string name="account_link_device_button">Ühenda</string>
   <!--Biometry-->
-  <string name="account_biometry_auth_title">Eemalda Jami kasutajakonto lukustus</string>
+  <string name="account_biometry_auth_title">Eemalda Glowmate kasutajakonto lukustus</string>
   <string name="account_biometry_auth_message">Oma kasutajakonto avamiseks kasuta biomeetrilist tuvastust</string>
   <string name="account_biometry_enroll_title">Kas kasutame biomeetrilist tuvastamist?</string>
   <string name="account_biometry_enroll_message">Sinu nutiseade võimaldab kasutada biomeetrilist tuvastamist.
-See pakub täiendava mugava ligipääsu sinu Jami kasutajakontole. Jätkuvalt jääb alles võimalus kasutada salasõna.</string>
+See pakub täiendava mugava ligipääsu sinu Glowmate kasutajakontole. Jätkuvalt jääb alles võimalus kasutada salasõna.</string>
   <string name="account_biometry_enroll_accept">Kasuta biomeetrilist tuvastamist</string>
   <string name="no_thanks">Tänan, ei</string>
-  <string name="account_biometry_enroll_auth_title">Lisa oma Jami kasutajakontole tuvastamine</string>
+  <string name="account_biometry_enroll_auth_title">Lisa oma Glowmate kasutajakontole tuvastamine</string>
   <string name="account_biometry_enroll_auth_message">Alternatiiviks salasõnale lisa oma kasutajakontole biomeetriline või seadmepõhine tuvastamine</string>
   <string name="account_auth_error">Viga tuvastamisel: %1$s</string>
   <string name="account_auth_success">Tuvastamine õnnestus</string>

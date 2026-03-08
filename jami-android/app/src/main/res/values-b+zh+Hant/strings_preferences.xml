@@ -10,7 +10,7 @@
   <string name="pref_clearHistory_title">清除记录</string>
   <string name="pref_clearHistory_summary">清除所有对话的历史记录。此操作无法撤消。</string>
   <string name="pref_connectivity_title">连接模式</string>
-  <string name="pref_connectivity_summary">选择如何将Jami连接到分布式系统以接收呼叫和消息。</string>
+  <string name="pref_connectivity_summary">选择如何将Glowmate连接到分布式系统以接收呼叫和消息。</string>
   <string name="pref_delete_account_summary">从此设备中删除帐户</string>
   <string name="pref_persistNotification_title">在后台运行</string>
   <string name="pref_persistNotification_summary">允许在后台运行以接收呼叫和消息。</string>
@@ -30,7 +30,7 @@
   <string name="connectivity_google_services_title">谷歌服务</string>
   <string name="connectivity_google_services_description">使用Google Firebase和DHT代理接收推送通知。</string>
   <string name="connectivity_local_node_title">本地DHT节点</string>
-  <string name="connectivity_local_node_description">使用本地DHT节点与其他Jami设备和联系人连接。</string>
+  <string name="connectivity_local_node_description">使用本地DHT节点与其他Glowmate设备和联系人连接。</string>
   <string name="connectivity_unified_push_description">使用自定义UnifiedPush服务器接收推送通知。</string>
   <string name="connectivity_custom_title">自訂</string>
   <string name="connectivity_custom_description">当前未使用任何可用的配置预设。</string>

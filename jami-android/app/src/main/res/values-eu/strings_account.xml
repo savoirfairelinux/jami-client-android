@@ -7,7 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Gehitu kontua</string>
   <string name="add_sip_account_title">Gehitu SIP kontua</string>
-  <string name="ring_account_default_name">%1$s Jami kontua</string>
+  <string name="ring_account_default_name">%1$s Glowmate kontua</string>
   <string name="prompt_alias">Ezizena</string>
   <string name="prompt_hostname">Ostalari-izena</string>
   <string name="prompt_username">Erabiltzaile-izena</string>
@@ -22,7 +22,7 @@
   <string name="dialog_wait_update">Kontua eguneratzen</string>
   <string name="dialog_wait_update_details">Itxaron zure kontu berria eguneratzen den bitartean...</string>
   <string name="account_type_ip2ip">IP kontua</string>
-  <string name="help_ring">Jami-ren kontua da jendearekin harremanetan jartzeko aukera.</string>
+  <string name="help_ring">Glowmate-ren kontua da jendearekin harremanetan jartzeko aukera.</string>
   <string name="help_sip_title">Gehitu SIP kontua</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">Ekintza hau ezin da desegin.</string>
@@ -120,10 +120,10 @@
   <string name="account_export_file">Egin kontuaren babes-kopia</string>
   <string name="account_export_file_summary">Zure kontua zure gailuan babestu eta gero berreskuratu.</string>
   <string name="account_enter_password">Sartu pasahitza</string>
-  <string name="account_contact_me">Jarri harremanetan Jami-rekin!</string>
+  <string name="account_contact_me">Jarri harremanetan Glowmate-rekin!</string>
   <string name="update_account">Eguneratu kontua</string>
-  <string name="account_migration">Zure Jami kontua eguneratu daiteke. Mesedez sartu pasahitza.</string>
-  <string name="ring_account">Jami kontua</string>
+  <string name="account_migration">Zure Glowmate kontua eguneratu daiteke. Mesedez sartu pasahitza.</string>
+  <string name="ring_account">Glowmate kontua</string>
   <string name="sip_account">SIP kontuak</string>
   <string name="ring_account_identity">Identitatea</string>
   <string name="account_migration_title_dialog">Kontuaren migrazioa</string>
@@ -138,7 +138,7 @@
   <string name="account_tv_advance_settings_header">Ezarpen aurreratuak</string>
   <string name="account_tv_add_contact">Gehitu kontaktua</string>
   <string name="account_tv_advanced_settings">Aldatu jarduera orokorrak</string>
-  <string name="account_tv_about">Jamiri buruz</string>
+  <string name="account_tv_about">Glowmateri buruz</string>
   <string name="tv_about_version">Bertsioa</string>
   <string name="tv_about_license">Lizentzia</string>
   <string name="tv_about_author">Egile eskubideak</string>
@@ -146,7 +146,7 @@
   <string name="account_link_device">Beste gailu batetik konektatu</string>
   <string name="account_link_button">Konektatu saretik</string>
   <string name="account_link_archive_button">Konektatu babes-kopiatik</string>
-  <string name="account_new_button">Jarri kontu bat Jami-n</string>
+  <string name="account_new_button">Jarri kontu bat Glowmate-n</string>
   <string name="account_link_export_button">Estekatu gailu berria</string>
   <string name="account_link_show_button">%d gehiagoren konektatutako gailua erakutsi</string>
   <string name="account_link_hide_button">Ezkutatu lotutako gailua</string>
@@ -174,9 +174,9 @@
   <string name="account_status_offline">Deskonektatuta</string>
   <string name="account_status_error">Errorea</string>
   <!--Create account-->
-  <string name="account_creation_home">Ongi etorri Jamira</string>
+  <string name="account_creation_home">Ongi etorri Glowmatera</string>
   <string name="account_creation_profile">Sortu zure profila</string>
-  <string name="account_creation_ring">Sortu zure Jami kontua</string>
+  <string name="account_creation_ring">Sortu zure Glowmate kontua</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Sartu pasahitza berresteko</string>

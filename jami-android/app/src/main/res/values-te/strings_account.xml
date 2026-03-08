@@ -120,7 +120,7 @@
   <string name="account_export_file">బ్యాకప్ ఖాతా</string>
   <string name="account_export_file_summary">మీ ఖాతాను మీ పరికరంలో బ్యాకప్ చేసి, తరువాత దాన్ని పునరుద్ధరించండి.</string>
   <string name="account_enter_password">పాస్వర్డ్ను నమోదు చేయండి</string>
-  <string name="account_contact_me">Jami వద్ద నాకు సంప్రదించండి!</string>
+  <string name="account_contact_me">Glowmate వద్ద నాకు సంప్రదించండి!</string>
   <string name="update_account">ఖాతా నవీకరణ</string>
   <string name="account_migration">మీ జమీ ఖాతా నవీకరించబడుతుంది. దయచేసి మీ పాస్వర్డ్ను నమోదు చేయండి.</string>
   <string name="ring_account">జామి ఖాతా</string>

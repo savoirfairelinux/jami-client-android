@@ -26,7 +26,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="account_selection">Select account</string>
     <string name="add_ring_account_title">Add account</string>
     <string name="add_sip_account_title">Add SIP account</string>
-    <string name="ring_account_default_name">Jami account %1$s</string>
+    <string name="ring_account_default_name">Glowmate account %1$s</string>
     <string name="account_creation_error">An error occurred while creating the account.</string>
 
     <string name="prompt_alias">Alias</string>
@@ -50,7 +50,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         You can edit your account later</string>
 
     <string name="account_type_ip2ip">IP account</string>
-    <string name="help_ring">A Jami account allows you to reach people securely in peer to peer through a fully distributed network.</string>
+    <string name="help_ring">A Glowmate account allows you to reach people securely in peer to peer through a fully distributed network.</string>
 
     <string name="help_sip_title">Add SIP account</string>
     <string name="help_sip">Configure existing SIP account</string>
@@ -199,27 +199,27 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="account_export_file_summary">Backup your account on your device to restore it later.</string>
     <string name="account_export_end_decryption_message">Incorrect password. Please try again with the correct password.</string>
     <string name="account_enter_password">Enter password</string>
-    <string name="account_share_body">Contact me using “%1$s” on the Jami distributed communication platform: %2$s</string>
-    <string name="account_share_body_with_username">Contact me using “%1$s” or my public username “%2$s” on the Jami distributed communication platform: %3$s</string>
-    <string name="account_contact_me">Contact me on Jami!</string>
+    <string name="account_share_body">Contact me using “%1$s” on the Glowmate distributed communication platform: %2$s</string>
+    <string name="account_share_body_with_username">Contact me using “%1$s” or my public username “%2$s” on the Glowmate distributed communication platform: %3$s</string>
+    <string name="account_contact_me">Contact me on Glowmate!</string>
     <string name="update_account">Update account</string>
-    <string name="account_migration">Your Jami account can be updated.\nPlease enter your password.</string>
-    <string name="ring_account">Jami account</string>
+    <string name="account_migration">Your Glowmate account can be updated.\nPlease enter your password.</string>
+    <string name="ring_account">Glowmate account</string>
     <string name="sip_account">SIP account</string>
     <string name="ring_account_identity">Identity</string>
     <string name="account_migration_title_dialog">Account migration</string>
     <string name="account_migration_message_dialog">Your accounts need to be updated. Do you want to go the Account management screen to perform this operation?</string>
     <string name="account_update_needed">Update needed</string>
     <string name="account_cannot_be_found_title">Account error</string>
-    <string name="account_cannot_be_found_message">Unable to find account on the Jami network. Make sure it was exported on Jami from an existing device, and that provided credentials are correct.</string>
+    <string name="account_cannot_be_found_message">Unable to find account on the Glowmate network. Make sure it was exported on Glowmate from an existing device, and that provided credentials are correct.</string>
     <string name="jams_account_cannot_be_found_message">An error occurred while connecting the account. Please check credentials and try again.</string>
     <string name="account_sip_cannot_be_registered_message">You can continue with the account creation process or edit your information here. Edition is still possible later in the account settings.</string>
     <string name="account_no_network_title">Network error</string>
-    <string name="account_no_network_message">A connectivity error occurred while adding the Jami account to the distributed network. Check your device connectivity.</string>
+    <string name="account_no_network_message">A connectivity error occurred while adding the Glowmate account to the distributed network. Check your device connectivity.</string>
     <string name="account_device_added_title">Account device added</string>
-    <string name="account_device_added_message">Jami account set up successfully on this device.</string>
+    <string name="account_device_added_message">Glowmate account set up successfully on this device.</string>
     <string name="account_device_updated_title">Account device updated</string>
-    <string name="account_device_updated_message">Jami account updated successfully.</string>
+    <string name="account_device_updated_message">Glowmate account updated successfully.</string>
     <string name="account_cannot_be_updated_message">An error occurred while updating the account. Please check account password.</string>
     <string name="account_sip_success_title">SIP account registered</string>
     <string name="account_sip_success_message">SIP account registered successfully.</string>
@@ -230,7 +230,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="account_tv_advance_settings_header">Advanced settings</string>
     <string name="account_tv_add_contact">Add contact</string>
     <string name="account_tv_advanced_settings">Change the general settings</string>
-    <string name="account_tv_about">About Jami</string>
+    <string name="account_tv_about">About Glowmate</string>
     <string name="tv_about_version">Version</string>
     <string name="tv_about_license">License</string>
     <string name="tv_about_author">Author rights</string>
@@ -239,7 +239,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="account_link_device">Connect from another device</string>
     <string name="account_link_button">Connect from network</string>
     <string name="account_link_archive_button">Connect from backup</string>
-    <string name="account_new_button">Create Jami account</string>
+    <string name="account_new_button">Create Glowmate account</string>
     <string name="account_link_export_button">Link new device</string>
     <string name="account_link_show_button">Show %d more linked device</string>
     <string name="account_link_hide_button">Hide linked device</string>
@@ -277,9 +277,9 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="account_status_error">Error</string>
 
     <!-- Create account -->
-    <string name="account_creation_home">Welcome to Jami</string>
+    <string name="account_creation_home">Welcome to Glowmate</string>
     <string name="account_creation_profile">Create your profile</string>
-    <string name="account_creation_ring">Create your Jami account</string>
+    <string name="account_creation_ring">Create your Glowmate account</string>
     <string name="account_sip_cannot_be_registered">An error occurred while registering the SIP account.</string>
 
     <!-- Edit profile-->
@@ -293,7 +293,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="revoke_device_wait_title">Please wait…</string>
     <string name="revoke_device_wait_message">Revoking device</string>
     <string name="rename_device_title">Rename this device</string>
-    <string name="rename_device_message">Enter device name to identify this device in your Jami account</string>
+    <string name="rename_device_message">Enter device name to identify this device in your Glowmate account</string>
     <string name="rename_device_button">Rename device</string>
     <string name="account_rename_device_hint">Choose new device name</string>
     <string name="account_device_name_empty">Device name cannot be empty.</string>
@@ -303,14 +303,14 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
     <!-- Link a new device -->
     <string name="error_format_not_supported">This format is not supported.</string>
-    <string name="account_link_info">In the Jami app on the new device, scan the QR code or enter the authentication code manually.</string>
+    <string name="account_link_info">In the Glowmate app on the new device, scan the QR code or enter the authentication code manually.</string>
     <string name="account_link_device_title">Link a new device</string>
     <string name="account_link_password">This account is password-encrypted, enter the password to generate the authentication code.</string>
     <string name="account_link_generate_button">Generate</string>
     <string name="account_link_time_valid">The authentication code will be invalid: %1$s.</string>
-    <string name="account_link_device_info">Choose “Link a new device” from the other Jami app to show the QR code or the authentication code.</string>
+    <string name="account_link_device_info">Choose “Link a new device” from the other Glowmate app to show the QR code or the authentication code.</string>
     <string name="account_generate_export_device">On the other device</string>
-    <string name="account_generate_export_info">Install and launch Jami. Select “Import from another device,” and scan the QR code. Alternatively, enter the PIN code manually.</string>
+    <string name="account_generate_export_info">Install and launch Glowmate. Select “Import from another device,” and scan the QR code. Alternatively, enter the PIN code manually.</string>
     <string name="content_description_qr_generated">Account QR code</string>
     <string name="account_generate_export_invalid">The authentication code is no longer valid.\nEnter the password and generate another one to link the new device.</string>
     <string name="account_generate_export_invalid_two">The authentication code is no longer valid.\nGenerate another one to link the new device.</string>
@@ -318,15 +318,15 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="account_link_device_button">Connect</string>
 
     <!-- Biometry -->
-    <string name="account_biometry_auth_title">Unlock Jami account</string>
+    <string name="account_biometry_auth_title">Unlock Glowmate account</string>
     <string name="account_biometry_auth_message">Use biometry to unlock your account</string>
     <string name="account_biometry_enroll_title">Use biometric authentication?</string>
     <string name="account_biometry_enroll_message">Your device supports secure biometric authentication.
-Biometric or device authentication adds a convenient way to locally unlock access to your Jami account. You will still be able to use your password.</string>
+Biometric or device authentication adds a convenient way to locally unlock access to your Glowmate account. You will still be able to use your password.</string>
     <string name="account_biometry_enroll_accept">Use biometrics</string>
     <string name="no_thanks">No thanks</string>
 
-    <string name="account_biometry_enroll_auth_title">Add authentication for your Jami account</string>
+    <string name="account_biometry_enroll_auth_title">Add authentication for your Glowmate account</string>
     <string name="account_biometry_enroll_auth_message">Add secure biometric or device authentication as an alternative to your password</string>
     <string name="account_auth_error">Authentication error: %1$s</string>
     <string name="account_auth_success">Authentication succeeded</string>

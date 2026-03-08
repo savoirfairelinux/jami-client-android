@@ -27,7 +27,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/account_audio_label">
-        <cx.ring.fragments.CodecPreference
+        <com.glowmate.fragments.CodecPreference
             android:key="Account.audioCodecs"
             android:layout="@layout/frag_audio_mgmt"
             android:persistent="false" />
@@ -39,7 +39,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             android:persistent="false"
             android:title="@string/account_video_enable"
             android:icon="@drawable/baseline_videocam_24"/>
-        <cx.ring.fragments.CodecPreference
+        <com.glowmate.fragments.CodecPreference
             android:dependency="Account.videoEnabled"
             android:key="Account.videoCodecs"
             android:layout="@layout/frag_audio_mgmt"

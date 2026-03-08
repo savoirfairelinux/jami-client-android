@@ -25,9 +25,9 @@
   <string name="pref_videoResolution_summary">기본 출력 비디오 해상도를 선택</string>
   <string name="pref_systemContacts_title">시스템 연락처를 사용</string>
   <string name="pref_systemContacts_summary">전화자의 세부 정보를 표시하기 위해 시스템 연락처를 사용하십시오.</string>
-  <string name="pref_systemDialer_title">Jami 를 사용하여 시스템 호출을 합니다</string>
+  <string name="pref_systemDialer_title">Glowmate 를 사용하여 시스템 호출을 합니다</string>
   <string name="pref_systemDialer_summary">가능하면 제미를 이용해 시스템 통화를 할 수 있어</string>
-  <string name="pref_startOnBoot_title">시작 시 Jami를 시작</string>
+  <string name="pref_startOnBoot_title">시작 시 Glowmate를 시작</string>
   <string name="pref_startOnBoot_summary">시스템 시작될 때 자미를 배경으로 </string>
   <string name="pref_clearHistory_title">명확한 역사</string>
   <string name="pref_notification_title">알림의 가시성</string>
@@ -36,7 +36,7 @@
   <string name="pref_blackList_summary">블록 리스트를 확인해</string>
   <string name="pref_delete_account_title">계정을 삭제</string>
   <string name="pref_newGroup_title">그룹 채팅을 활성화</string>
-  <string name="pref_newGroup_summary">Jami에서 그룹을 만들 수 있도록 한다.</string>
+  <string name="pref_newGroup_summary">Glowmate에서 그룹을 만들 수 있도록 한다.</string>
   <string name="pref_logs_title">진단 기록</string>
   <string name="pref_logs_summary">진단 로그 열 설정</string>
   <string name="pref_logs_start">로그링 시작</string>

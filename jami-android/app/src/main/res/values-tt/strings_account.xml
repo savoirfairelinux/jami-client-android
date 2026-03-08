@@ -7,7 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Аккаунт өстәгез</string>
   <string name="add_sip_account_title">SIP хисабын өстәү</string>
-  <string name="ring_account_default_name">Jami хисабы %1$s</string>
+  <string name="ring_account_default_name">Glowmate хисабы %1$s</string>
   <string name="prompt_alias">Исемдәшләр</string>
   <string name="prompt_hostname">Кунак исеме</string>
   <string name="prompt_username">Исем кулланучы</string>
@@ -22,7 +22,7 @@
   <string name="dialog_wait_update">Актуальләштерү хисабы</string>
   <string name="dialog_wait_update_details">Яңа хисабыгыз яңаланганчы, көтсәгез...</string>
   <string name="account_type_ip2ip">IP хисабы</string>
-  <string name="help_ring">Jami хисабы ярдәмендә сез кешеләргә тулы таралган челтәр аша бер-берсенә туры килә аласыз.</string>
+  <string name="help_ring">Glowmate хисабы ярдәмендә сез кешеләргә тулы таралган челтәр аша бер-берсенә туры килә аласыз.</string>
   <string name="help_sip_title">SIP хисабын өстәү</string>
   <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
@@ -121,7 +121,7 @@
   <string name="account_enter_password">Пароль кертегез</string>
   <string name="account_contact_me">Җәми белән элемтәгә керегез!</string>
   <string name="update_account">Аккаунтны яңарту</string>
-  <string name="account_migration">Сезнең Jami хисабыгыз яңартыла ала.</string>
+  <string name="account_migration">Сезнең Glowmate хисабыгыз яңартыла ала.</string>
   <string name="ring_account">Җәми хисабы</string>
   <string name="sip_account">СИП хисабы</string>
   <string name="ring_account_identity">Идентификация</string>
@@ -145,7 +145,7 @@
   <string name="account_link_device">Башка җайланмадан тоташтыру</string>
   <string name="account_link_button">Авырулар</string>
   <string name="account_link_archive_button">Ярдәмдән тоташтыру</string>
-  <string name="account_new_button">Jami хисабы булдыру</string>
+  <string name="account_new_button">Glowmate хисабы булдыру</string>
   <string name="account_link_export_button">Яңа җайланманы бәйлә</string>
   <string name="account_link_show_button">%d күбрәк бәйләнгән җайланманы күрсәтү</string>
   <string name="account_link_hide_button">Яшереп куелган җайланма</string>
@@ -175,7 +175,7 @@
   <!--Create account-->
   <string name="account_creation_home">Җәмигә рәхим итегез.</string>
   <string name="account_creation_profile">Профиль төзегез</string>
-  <string name="account_creation_ring">Jami хисабыгызны булдырыгыз</string>
+  <string name="account_creation_ring">Glowmate хисабыгызны булдырыгыз</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Ышаныч бирү өчен пароль кертегез</string>

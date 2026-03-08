@@ -7,9 +7,9 @@
   <string name="version_section">Eldono</string>
   <string name="website_chooser_title">Vidu retejon uzante...</string>
   <string name="license">Tiu programaro estas disponigita "kiel ĝi estas", sen garantio de iu speco. Por detaloj, vidu GNU General Public License version 3 aŭ pli posta&lt;/u&gt;</string>
-  <string name="description">Jami estas libera softvaro por universala komunikado, kiu respektas la liberecojn kaj privatecon de siaj uzantoj.</string>
+  <string name="description">Glowmate estas libera softvaro por universala komunikado, kiu respektas la liberecojn kaj privatecon de siaj uzantoj.</string>
   <string name="credits">Kredito</string>
-  <string name="pip_title">Jamia konferenco</string>
+  <string name="pip_title">Glowmatea konferenco</string>
   <string name="call_service_description">Tiu servo estas necesa por teni viajn alvokojn funkciantajn en la unua plano. Ĝi funkcias nur dum alvokoj.</string>
   <string name="data_transfer_service_description">Tiu servo estas necesa por montri persistajn sciigojn dum dosiertransferoj. Ĝi nur funkcias dum dosiertransferoj.</string>
   <!--About dialog-->
@@ -26,7 +26,7 @@
   <string name="menu_item_settings">Agordoj</string>
   <string name="menu_item_account_settings">Konto-sekcioj</string>
   <string name="menu_item_share">Dividi mian konton</string>
-  <string name="menu_item_about">Pri Jami</string>
+  <string name="menu_item_about">Pri Glowmate</string>
   <string name="video_setting_title">Video-aj agordoj</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
@@ -177,11 +177,11 @@
   <string name="prompt_new_password">Nova pasvorto</string>
   <string name="prompt_new_password_optional">Nova pasvorto (favora)</string>
   <string name="prompt_new_password_repeat">Konfirmu novan pasvorton</string>
-  <string name="account_create_title">Kreu konto Jami</string>
+  <string name="account_create_title">Kreu konto Glowmate</string>
   <string name="prompt_new_username">Enigu novan uzantnomon</string>
   <string name="prompt_hint_username">Uzantnomo</string>
-  <string name="help_password_choose">Elektu fortan pasvorton, kiun vi memorigos por protekti vian konto Jami.</string>
-  <string name="help_password_enter">Enigu vian ĉefan pasvorton de la konto Jami.</string>
+  <string name="help_password_choose">Elektu fortan pasvorton, kiun vi memorigos por protekti vian konto Glowmate.</string>
+  <string name="help_password_enter">Enigu vian ĉefan pasvorton de la konto Glowmate.</string>
   <string name="help_server_enter">Enigu la URL-adreson de administradservilo.</string>
   <string name="wizard_next">Sekva</string>
   <string name="wizard_back">Reiri</string>
@@ -206,7 +206,7 @@
   <string name="devices">Interligitaj aparatoj</string>
   <string name="total_devices">Tutmondaj aparatoj: </string>
   <!--Share fragment-->
-  <string name="share_message">Skenu ĉi tiun kodon kun Jami</string>
+  <string name="share_message">Skenu ĉi tiun kodon kun Glowmate</string>
   <string name="share_message_no_account">Bonvolu elekti konton por dividi.</string>
   <string name="share_your_account_information">Dividi mian kontaktinformon</string>
   <string name="share_label">Kunhavi</string>
@@ -302,13 +302,13 @@
   <string name="dialog_hint_description">Desegno</string>
   <string name="picker_title">Elektu kontaktojn</string>
   <string name="picker_btn">Elektu kontaktojn</string>
-  <string name="bottomsheet_contact">Kontaktu Jami\n%1$s</string>
+  <string name="bottomsheet_contact">Kontaktu Glowmate\n%1$s</string>
   <string name="bottomsheet_remove">Forigu la membro</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">Registru uzantnomon</string>
   <string name="jami_id_choose_username">Elektu uzantnomon</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">Bonvenon al Jami.</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">Bonvenon al Glowmate.</string>
   <!--Conversation details-->
   <string name="details">Detaloj</string>
   <string name="Private">Privata</string>

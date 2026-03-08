@@ -39,7 +39,7 @@
         tools:text="@string/time_just_now"
         tools:visibility="visible" />
 
-    <cx.ring.views.MessageStatusView
+    <com.glowmate.views.MessageStatusView
         android:id="@+id/status_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

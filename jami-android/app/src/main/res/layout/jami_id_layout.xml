@@ -23,7 +23,7 @@
             android:paddingStart="14dp"
             android:paddingEnd="10dp">
 
-            <!-- Jami ID icon -->
+            <!-- Glowmate ID icon -->
             <ImageView
                 android:id="@+id/jami_id_icon"
                 android:layout_width="30dp"
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <!-- Jami ID text -->
+                <!-- Glowmate ID text -->
                 <EditText
                     android:id="@+id/jami_id_edit_text"
                     android:layout_width="match_parent"
@@ -58,7 +58,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Saperlipopette" />
 
-                <!-- Jami ID progress bar (displayed when searching username) -->
+                <!-- Glowmate ID progress bar (displayed when searching username) -->
                 <ProgressBar
                     android:id="@+id/jami_id_progress_bar"
                     style="?android:attr/progressBarStyle"

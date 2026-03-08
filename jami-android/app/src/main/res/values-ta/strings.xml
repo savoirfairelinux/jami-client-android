@@ -64,7 +64,7 @@
   <string name="notif_channel_background_service_descr">எந்த நேரத்திலும் அழைப்புகள் மற்றும் செய்திகளை பெற அனுமதிக்கிறது.</string>
   <string name="notif_group_calls">அழைப்புகள்</string>
   <string name="notif_inprogress_group_call">அழைப்பு செயலில் உள்ளது</string>
-  <string name="notif_background_service">Jami தற்போது பின்னணியில் இயங்குகிறது</string>
+  <string name="notif_background_service">Glowmate தற்போது பின்னணியில் இயங்குகிறது</string>
   <string name="notif_mark_as_read">படித்தபடி குறி</string>
   <string name="notif_dismiss">விலக்கு</string>
   <string name="notif_reply">பதில்</string>
@@ -90,7 +90,7 @@
   <string name="ongoing_call">தொடர்ச்சியான அழைப்பு</string>
   <string name="hist_in_call">%1$s இன் வருகின்ற அழைப்பு</string>
   <string name="hist_out_call">%1$s இன் வெளிவரும் அழைப்பு</string>
-  <string name="start_error_title">Jami-ஐத் தொடங்க முடியவில்லை.</string>
+  <string name="start_error_title">Glowmate-ஐத் தொடங்க முடியவில்லை.</string>
   <string name="action_call_accept">அழைப்பை ஏற்கவும்</string>
   <string name="action_call_accept_audio">ஆடியோவுடன் ஏற்றுக்கொள்ளுங்கள்</string>
   <string name="action_call_accept_video">வீடியோவுடன் ஏற்றுக்கொள்ளுங்கள்</string>
@@ -139,9 +139,9 @@
   <string name="ringtone_error_size_too_big">இந்த கோப்பு மிகப்பெரியது. அதிகபட்ச அளவு %1$dkB ஆகும்.</string>
   <string name="ringtone_custom_prompt">தனிப்பயன் ரிங்டோன் அமைக்கவும்</string>
   <string name="ringtone_custom_label">தனிப்பயன்</string>
-  <string name="ringtone_jami_tones">Jami ரிங்டோன்கள்</string>
+  <string name="ringtone_jami_tones">Glowmate ரிங்டோன்கள்</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jamiக்கு \"தொடர்புகளைப் படிக்க\" அனுமதி தேவை. இந்த அம்சத்தைப் பயன்படுத்த, சாதன அமைப்புகளில் அதை இயக்கவும்.</string>
+  <string name="permission_dialog_read_contacts_message">Glowmateக்கு \"தொடர்புகளைப் படிக்க\" அனுமதி தேவை. இந்த அம்சத்தைப் பயன்படுத்த, சாதன அமைப்புகளில் அதை இயக்கவும்.</string>
   <!--Write call log permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">நீங்கள் சேர்க்க விரும்பும் கணக்கின் QR குறியீட்டை ஸ்கேன் செய்யவும்.</string>
@@ -323,12 +323,12 @@
   <string name="dialog_hint_description">விவரக்குறிப்பு</string>
   <string name="picker_title">தொடர்புகளைத் தேர்ந்தெடுக்கவும்</string>
   <string name="picker_btn">தொடர்புகளைத் தேர்ந்தெடுக்கவும்</string>
-  <string name="bottomsheet_contact">Jami\n%1$s உடன் தொடர்பு கொள்ளவும்</string>
+  <string name="bottomsheet_contact">Glowmate\n%1$s உடன் தொடர்பு கொள்ளவும்</string>
   <string name="bottomsheet_remove">உறுப்பினர் நீக்க</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">பயனர்பெயரை பதிவு செய்யவும்</string>
   <string name="jami_id_choose_username">ஒரு பயனர்பெயரைத் தேர்ந்தெடுக்கவும்</string>
-  <!--WelcomeJami-->
+  <!--WelcomeGlowmate-->
   <string name="welcome_jami_title">ஜாமிக்கு வரவேற்கிறோம்</string>
   <!--Conversation details-->
   <string name="details">விவரங்கள்</string>

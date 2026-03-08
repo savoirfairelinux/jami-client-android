@@ -7,7 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Legg til konto</string>
   <string name="add_sip_account_title">Legg til SIP-konto</string>
-  <string name="ring_account_default_name">Jami konto %1$s</string>
+  <string name="ring_account_default_name">Glowmate konto %1$s</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Vertsnavn</string>
   <string name="prompt_username">Brukernavn</string>
@@ -22,7 +22,7 @@
   <string name="dialog_wait_update">Oppdaterer konto</string>
   <string name="dialog_wait_update_details">Vent mens din nye konto oppdateres…</string>
   <string name="account_type_ip2ip">IP-konto</string>
-  <string name="help_ring">En Jami-konto lar deg nå folk trygt node til node gjennom et fullstendig distribuert nettverk.</string>
+  <string name="help_ring">En Glowmate-konto lar deg nå folk trygt node til node gjennom et fullstendig distribuert nettverk.</string>
   <string name="help_sip_title">Legg til SIP-konto</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">Denne handlingen kan ikke angres.</string>
@@ -120,10 +120,10 @@
   <string name="account_export_file">Sikkerhetskopier konto</string>
   <string name="account_export_file_summary">Sikkerhetskopier din konto på din enhet for å gjenopprette den senere.</string>
   <string name="account_enter_password">Skriv inn passord</string>
-  <string name="account_contact_me">Kontakt meg på Jami!</string>
+  <string name="account_contact_me">Kontakt meg på Glowmate!</string>
   <string name="update_account">Oppdater konto</string>
-  <string name="account_migration">Din Jami konto kan bli oppdatert.\nVennligst tast inn ditt passord.</string>
-  <string name="ring_account">Jami konto</string>
+  <string name="account_migration">Din Glowmate konto kan bli oppdatert.\nVennligst tast inn ditt passord.</string>
+  <string name="ring_account">Glowmate konto</string>
   <string name="sip_account">SIP-konto</string>
   <string name="ring_account_identity">Identitet</string>
   <string name="account_migration_title_dialog">Kontomigrering</string>
@@ -138,7 +138,7 @@
   <string name="account_tv_advance_settings_header">Avanserte innstillinger</string>
   <string name="account_tv_add_contact">Legg til kontakt</string>
   <string name="account_tv_advanced_settings">Endre innstilinger</string>
-  <string name="account_tv_about">Om Jami</string>
+  <string name="account_tv_about">Om Glowmate</string>
   <string name="tv_about_version">Versjon</string>
   <string name="tv_about_license">Lisens</string>
   <string name="tv_about_author">Opphavsrett</string>
@@ -146,7 +146,7 @@
   <string name="account_link_device">Koble til fra en annen enhet</string>
   <string name="account_link_button">Koble til fra nettverk</string>
   <string name="account_link_archive_button">Koble til fra sikkerhetskopi</string>
-  <string name="account_new_button">opprette Jami-konto</string>
+  <string name="account_new_button">opprette Glowmate-konto</string>
   <string name="account_link_export_button">Tilknytt ny enhet</string>
   <string name="account_link_show_button">Vis %d flere tilknyttede enheter</string>
   <string name="account_link_hide_button">Skjul tilknyttet enhet</string>
@@ -175,9 +175,9 @@
   <string name="account_status_offline">Frakoblet</string>
   <string name="account_status_error">Feil</string>
   <!--Create account-->
-  <string name="account_creation_home">Velkommen til Jami</string>
+  <string name="account_creation_home">Velkommen til Glowmate</string>
   <string name="account_creation_profile">Opprett din profil</string>
-  <string name="account_creation_ring">Opprett din Jami konto</string>
+  <string name="account_creation_ring">Opprett din Glowmate konto</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Skriv inn passord for å bekrefte</string>

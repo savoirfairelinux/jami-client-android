@@ -11,7 +11,7 @@
   <string name="pref_category_extensions">Bővítmények</string>
   <string name="pref_category_video_settings">Haladó videóbeállítások</string>
   <string name="pref_mobileData_title">Adathasználat</string>
-  <string name="pref_mobileData_summary">A Jami engedélyezése 3G/LTE és Wi-Fi hálózatokon</string>
+  <string name="pref_mobileData_summary">A Glowmate engedélyezése 3G/LTE és Wi-Fi hálózatokon</string>
   <string name="pref_pushNotifications_title">Push-értesítések</string>
   <string name="pref_pushNotifications_summary">Használja a Google kiszolgálóit a háttérben lévő hívások és üzenetek fogadásához</string>
   <string name="pref_unifiedPush_summary">A UnifiedPush-szolgáltatás használata lehetővé teszi a hívások/üzenetek fogadását a háttérben</string>
@@ -26,8 +26,8 @@
   <string name="pref_videoResolution_summary">Alapértelmezett kimenő videofelbontás kijelölése</string>
   <string name="pref_systemContacts_title">Rendszer kapcsolattartóinak használata</string>
   <string name="pref_systemContacts_summary">A rendszer kapcsolattartóinak használata a hívó adatainak megjelenítéséhez.</string>
-  <string name="pref_systemDialer_title">Jami használata telefonhívásokhoz</string>
-  <string name="pref_systemDialer_summary">A Jami használata a telefonhívásokhoz, ha az lehetséges.</string>
+  <string name="pref_systemDialer_title">Glowmate használata telefonhívásokhoz</string>
+  <string name="pref_systemDialer_summary">A Glowmate használata a telefonhívásokhoz, ha az lehetséges.</string>
   <string name="pref_startOnBoot_title">Alkalmazás futtatása rendszerindításkor</string>
   <string name="pref_startOnBoot_summary">Alkalmazás háttérfuttatása rendszerindításkor</string>
   <string name="pref_clearHistory_title">Előzmények törlése</string>
@@ -35,7 +35,7 @@
   <string name="pref_notification_title">Az értesítés láthatósága </string>
   <string name="pref_notification_summary">Állítsa be az alkalmazás értesítéseinek láthatóságát a zárolási képernyőn.</string>
   <string name="pref_connectivity_title">Kapcsolódási mód</string>
-  <string name="pref_connectivity_summary">Jami-kapcsolat kijelölése az elosztott rendszerhez hívások és üzenetek fogadásához.</string>
+  <string name="pref_connectivity_summary">Glowmate-kapcsolat kijelölése az elosztott rendszerhez hívások és üzenetek fogadásához.</string>
   <string name="pref_blackList_title">Tiltólista</string>
   <string name="pref_blackList_summary">Letiltási lista ellenőrzése</string>
   <string name="pref_delete_account_title">Fiók törlése</string>
@@ -67,7 +67,7 @@
   <string name="connectivity_google_services_title">Google szolgáltatások</string>
   <string name="connectivity_google_services_description">A Google Firebase és egy DHT-proxy használatával push-értesítések fogadására.</string>
   <string name="connectivity_local_node_title">Helyi DHT-csomópont</string>
-  <string name="connectivity_local_node_description">Helyi DHT-csomópont használatával csatlakozni más Jami eszközökhöz és kapcsolattartókhoz.</string>
+  <string name="connectivity_local_node_description">Helyi DHT-csomópont használatával csatlakozni más Glowmate eszközökhöz és kapcsolattartókhoz.</string>
   <string name="connectivity_unified_push_description">Egyéni UnifiedPush-kiszolgáló használata a push-értesítések fogadásához.</string>
   <string name="connectivity_custom_title">Szokás</string>
   <string name="connectivity_custom_description">Jelenleg nem használja a rendelkezésre álló előre beállított konfigurációs beállításokat.</string>

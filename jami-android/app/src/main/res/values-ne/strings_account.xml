@@ -22,7 +22,7 @@
   <string name="dialog_wait_update">खाता अपडेट गर्ने</string>
   <string name="dialog_wait_update_details">कृपया तपाईंको नयाँ खाता अपडेट हुँदा प्रतीक्षा गर्नुहोस्...</string>
   <string name="account_type_ip2ip">आईपी खाता</string>
-  <string name="help_ring">एक Jami खाता तपाईं एक पूर्ण रूपमा वितरित नेटवर्क मार्फत सुरक्षित रूपमा पीयर-टु-पीयर व्यक्तिहरू पुग्न अनुमति दिन्छ।</string>
+  <string name="help_ring">एक Glowmate खाता तपाईं एक पूर्ण रूपमा वितरित नेटवर्क मार्फत सुरक्षित रूपमा पीयर-टु-पीयर व्यक्तिहरू पुग्न अनुमति दिन्छ।</string>
   <string name="help_sip_title">SIP खाता थप्नुहोस्</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">यो कार्यलाई उल्टाउन सकिँदैन।</string>
@@ -120,7 +120,7 @@
   <string name="account_export_file">ब्याकअप खाता</string>
   <string name="account_export_file_summary">तपाईँको खातालाई तपाईँको यन्त्रमा ब्याकअप गर्नुहोस् र यसलाई पछि पुनःस्थापित गर्नुहोस्।</string>
   <string name="account_enter_password">पासवर्ड प्रविष्ट गर्नुहोस्</string>
-  <string name="account_contact_me">मलाई Jami मा सम्पर्क!</string>
+  <string name="account_contact_me">मलाई Glowmate मा सम्पर्क!</string>
   <string name="update_account">खाता अपडेट गर्ने</string>
   <string name="account_migration">तपाईंको जेमी खाता अपडेट गर्न सकिन्छ। कृपया आफ्नो पासवर्ड प्रविष्ट गर्नुहोस्।</string>
   <string name="ring_account">जमी खाता</string>
@@ -146,7 +146,7 @@
   <string name="account_link_device">अर्को उपकरणबाट जडान</string>
   <string name="account_link_button">नेटवर्कबाट जडान</string>
   <string name="account_link_archive_button">ब्याकअपबाट जडान</string>
-  <string name="account_new_button">Jami खाता सिर्जना गर्नुहोस्</string>
+  <string name="account_new_button">Glowmate खाता सिर्जना गर्नुहोस्</string>
   <string name="account_link_export_button">नयाँ यन्त्रलाई लिंक गर्नुहोस्</string>
   <string name="account_link_show_button">%d थप जोडिएको उपकरण देखाउनुहोस्</string>
   <string name="account_link_hide_button">छुपाएर जडान गरिएको उपकरण</string>
@@ -176,7 +176,7 @@
   <!--Create account-->
   <string name="account_creation_home">जामीमा स्वागत छ</string>
   <string name="account_creation_profile">आफ्नो प्रोफाइल सिर्जना गर्नुहोस्</string>
-  <string name="account_creation_ring">आफ्नो Jami खाता सिर्जना गर्नुहोस्</string>
+  <string name="account_creation_ring">आफ्नो Glowmate खाता सिर्जना गर्नुहोस्</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">पुष्टि गर्न पासवर्ड प्रविष्ट गर्नुहोस्</string>

@@ -8,7 +8,7 @@
   <string name="account_selection">Vyberte účet</string>
   <string name="add_ring_account_title">Přidat účet</string>
   <string name="add_sip_account_title">Přidat účet SIP</string>
-  <string name="ring_account_default_name">Účet Jami %1$s</string>
+  <string name="ring_account_default_name">Účet Glowmate %1$s</string>
   <string name="account_creation_error">Při vytváření účtu došlo k chybě.</string>
   <string name="prompt_alias">Přezdívka</string>
   <string name="prompt_hostname">Hostitelské jméno</string>
@@ -28,7 +28,7 @@
     Budete moci volat a přijímat pouze přímá IP volání.
     Svůj účet můžete upravit později</string>
   <string name="account_type_ip2ip">Účet IP</string>
-  <string name="help_ring">Účet Jami vám umožňuje spojit se s lidmi bezpečně, uživatel s uživatelem, skrze plně rozptýlenou síť.</string>
+  <string name="help_ring">Účet Glowmate vám umožňuje spojit se s lidmi bezpečně, uživatel s uživatelem, skrze plně rozptýlenou síť.</string>
   <string name="help_sip_title">Přidat účet SIP</string>
   <string name="help_sip">Nakonfigurujte stávající SIP účet</string>
   <string name="create_sip_account">Nakonfigurujte účet SIP</string>
@@ -155,28 +155,28 @@
   <string name="account_export_file_summary">Zálohujte svůj účet v zařízení, abyste jej mohli později obnovit.</string>
   <string name="account_export_end_decryption_message">Nesprávné heslo. Zkuste to znovu se správným heslem.</string>
   <string name="account_enter_password">Zadejte heslo</string>
-  <string name="account_share_body">Kontaktujte mě pomocí “%1$s” na platformě distribuované komunikace Jami: %2$s</string>
-  <string name="account_share_body_with_username">Kontaktujte mě pomocí “%1$s” nebo mého veřejného uživatelského jména “%2$s” na platformě distribuované komunikace Jami: %3$s</string>
-  <string name="account_contact_me">Spojte se se mnou přes Jami!</string>
+  <string name="account_share_body">Kontaktujte mě pomocí “%1$s” na platformě distribuované komunikace Glowmate: %2$s</string>
+  <string name="account_share_body_with_username">Kontaktujte mě pomocí “%1$s” nebo mého veřejného uživatelského jména “%2$s” na platformě distribuované komunikace Glowmate: %3$s</string>
+  <string name="account_contact_me">Spojte se se mnou přes Glowmate!</string>
   <string name="update_account">Aktualizovat účet</string>
-  <string name="account_migration">Váš účet Jami lze aktualizovat.
+  <string name="account_migration">Váš účet Glowmate lze aktualizovat.
 Zadejte, prosím, své heslo.</string>
-  <string name="ring_account">Účet Jami</string>
+  <string name="ring_account">Účet Glowmate</string>
   <string name="sip_account">Účet SIP</string>
   <string name="ring_account_identity">Totožnost</string>
   <string name="account_migration_title_dialog">Převod účtu</string>
   <string name="account_migration_message_dialog">Vaše účty je třeba aktualizovat. Chcete přejít na obrazovku Správa účtu a provést tuto operaci?</string>
   <string name="account_update_needed">Nutná aktualizace</string>
   <string name="account_cannot_be_found_title">Chyba účtu</string>
-  <string name="account_cannot_be_found_message">Nelze najít účet v síti Jami. Ujistěte se, že byl exportován na Jami z existujícího zařízení a že poskytnuté přihlašovací údaje jsou správné.</string>
+  <string name="account_cannot_be_found_message">Nelze najít účet v síti Glowmate. Ujistěte se, že byl exportován na Glowmate z existujícího zařízení a že poskytnuté přihlašovací údaje jsou správné.</string>
   <string name="jams_account_cannot_be_found_message">Při připojování účtu došlo k chybě. Zkontrolujte přihlašovací údaje a zkuste to znovu.</string>
   <string name="account_sip_cannot_be_registered_message">Můžete pokračovat v postupu vytvoření účtu nebo údaje upravit zde. Úpravy jsou možné i později v nastavení účtu.</string>
   <string name="account_no_network_title">Chyba sítě</string>
-  <string name="account_no_network_message">Při přidávání účtu Jami do distribuované sítě došlo k chybě připojení. Zkontrolujte připojení zařízení.</string>
+  <string name="account_no_network_message">Při přidávání účtu Glowmate do distribuované sítě došlo k chybě připojení. Zkontrolujte připojení zařízení.</string>
   <string name="account_device_added_title">Přístroj přidán k účtu</string>
-  <string name="account_device_added_message">Účet Jami byl na tomto zařízení úspěšně nastaven.</string>
+  <string name="account_device_added_message">Účet Glowmate byl na tomto zařízení úspěšně nastaven.</string>
   <string name="account_device_updated_title">Aktualizován přístroj v účtu</string>
-  <string name="account_device_updated_message">Účet Jami byl úspěšně aktualizován.</string>
+  <string name="account_device_updated_message">Účet Glowmate byl úspěšně aktualizován.</string>
   <string name="account_cannot_be_updated_message">Při aktualizaci účtu došlo k chybě. Zkontrolujte heslo účtu.</string>
   <string name="account_sip_success_title">SIP účet registrován</string>
   <string name="account_sip_success_message">SIP účet úspěšně registrován</string>
@@ -186,7 +186,7 @@ Zadejte, prosím, své heslo.</string>
   <string name="account_tv_advance_settings_header">Pokročilá nastavení</string>
   <string name="account_tv_add_contact">Přidat kontakt</string>
   <string name="account_tv_advanced_settings">Změna obecného nastavení</string>
-  <string name="account_tv_about">O Jami</string>
+  <string name="account_tv_about">O Glowmate</string>
   <string name="tv_about_version">Verze</string>
   <string name="tv_about_license">Povolení</string>
   <string name="tv_about_author">Práva autora</string>
@@ -194,7 +194,7 @@ Zadejte, prosím, své heslo.</string>
   <string name="account_link_device">Připojit z jiného zařízení</string>
   <string name="account_link_button">Připojit ze sítě</string>
   <string name="account_link_archive_button">Připojit ze zálohy</string>
-  <string name="account_new_button">Vytvoři Jami účet</string>
+  <string name="account_new_button">Vytvoři Glowmate účet</string>
   <string name="account_link_export_button">Připojit nové zařízení</string>
   <string name="account_link_show_button">Zobrazit %d další propojené zařízení</string>
   <string name="account_link_hide_button">Skrýt propojené zařízení</string>
@@ -228,9 +228,9 @@ Zadejte, prosím, své heslo.</string>
   <string name="account_status_offline">Nepřipojen</string>
   <string name="account_status_error">Chyba</string>
   <!--Create account-->
-  <string name="account_creation_home">Vítejte v Jami</string>
+  <string name="account_creation_home">Vítejte v Glowmate</string>
   <string name="account_creation_profile">Vytvořit vlastní profil</string>
-  <string name="account_creation_ring">Vytvořit váš účet Jami</string>
+  <string name="account_creation_ring">Vytvořit váš účet Glowmate</string>
   <string name="account_sip_cannot_be_registered">Při registraci účtu SIP došlo k chybě.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Upravit profil</string>
@@ -242,7 +242,7 @@ Zadejte, prosím, své heslo.</string>
   <string name="revoke_device_wait_title">Počkejte prosím…</string>
   <string name="revoke_device_wait_message">Odebírá se účet</string>
   <string name="rename_device_title">Přejmenovat toto zařízení</string>
-  <string name="rename_device_message">Zadejte název zařízení k identifikaci tohoto zařízení ve vašem účtu Jami</string>
+  <string name="rename_device_message">Zadejte název zařízení k identifikaci tohoto zařízení ve vašem účtu Glowmate</string>
   <string name="rename_device_button">Přejmenovat zařízení</string>
   <string name="account_rename_device_hint">Zvolit si název nového zařízení</string>
   <string name="account_device_name_empty">Název zařízení nesmí být prázdný.</string>
@@ -256,14 +256,14 @@ Zadejte, prosím, své heslo.</string>
   <string name="content_description_qr_generated">QR kód účtu</string>
   <string name="account_link_device_button">Připojit</string>
   <!--Biometry-->
-  <string name="account_biometry_auth_title">Odemkněte Jami účet</string>
+  <string name="account_biometry_auth_title">Odemkněte Glowmate účet</string>
   <string name="account_biometry_auth_message">Odemkněte svůj účet pomocí biometrického ověřování</string>
   <string name="account_biometry_enroll_title">Použít biometrické ověřování?</string>
   <string name="account_biometry_enroll_message">Vaše zařízení podporuje zabezpečené biometrické ověřování.
-Biometrické ověřování nebo ověřování zařízení přidává pohodlný způsob, jak lokálně odemknout přístup k vašemu účtu Jami. Stále budete moci používat své heslo.</string>
+Biometrické ověřování nebo ověřování zařízení přidává pohodlný způsob, jak lokálně odemknout přístup k vašemu účtu Glowmate. Stále budete moci používat své heslo.</string>
   <string name="account_biometry_enroll_accept">Použít biometrické ověřování</string>
   <string name="no_thanks">Ne, děkuji</string>
-  <string name="account_biometry_enroll_auth_title">Přidejte ověření pro svůj účet Jami</string>
+  <string name="account_biometry_enroll_auth_title">Přidejte ověření pro svůj účet Glowmate</string>
   <string name="account_biometry_enroll_auth_message">Přidejte zabezpečenou biometrickou nebo autentizaci pomocí zařízení jako alternativu k vašemu heslu</string>
   <string name="account_auth_error">Chyba ověření: %1$s</string>
   <string name="account_auth_success">Ověření proběhlo úspěšně</string>

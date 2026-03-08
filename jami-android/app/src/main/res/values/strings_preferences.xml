@@ -12,7 +12,7 @@
     <string name="pref_category_video_settings">Advanced video settings</string>
 
     <string name="pref_mobileData_title">Mobile data</string>
-    <string name="pref_mobileData_summary">Allow Jami on 3G/LTE networks additionally to Wi-Fi</string>
+    <string name="pref_mobileData_summary">Allow Glowmate on 3G/LTE networks additionally to Wi-Fi</string>
 
     <string name="pref_pushNotifications_title">Push notifications</string>
     <string name="pref_pushNotifications_summary">Use Google servers to allow receiving calls/messages in the background</string>
@@ -38,11 +38,11 @@
     <string name="pref_systemCamera_key" translatable="false">pref_systemCamera</string>
 
     <string name="pref_systemDialer_key" translatable="false">pref_systemDialer</string>
-    <string name="pref_systemDialer_title">Place system calls using Jami</string>
-    <string name="pref_systemDialer_summary">Use Jami to place system calls when possible.</string>
+    <string name="pref_systemDialer_title">Place system calls using Glowmate</string>
+    <string name="pref_systemDialer_summary">Use Glowmate to place system calls when possible.</string>
 
-    <string name="pref_startOnBoot_title">Start Jami on startup</string>
-    <string name="pref_startOnBoot_summary">Run Jami in the background when the system starts.</string>
+    <string name="pref_startOnBoot_title">Start Glowmate on startup</string>
+    <string name="pref_startOnBoot_summary">Run Glowmate in the background when the system starts.</string>
 
     <string name="pref_clearHistory_title">Clear history</string>
     <string name="pref_clearHistory_summary">Clear the history of all conversations. This action cannot be undone.</string>
@@ -51,7 +51,7 @@
     <string name="pref_notification_summary">Set application notifications visibility on lock screen.</string>
 
     <string name="pref_connectivity_title">Connectivity mode</string>
-    <string name="pref_connectivity_summary">Select how to connect Jami to the distributed system to receive calls and messages.</string>
+    <string name="pref_connectivity_summary">Select how to connect Glowmate to the distributed system to receive calls and messages.</string>
 
     <string name="pref_blackList_title">Block list</string>
     <string name="pref_blackList_summary">Check your block list.</string>
@@ -63,7 +63,7 @@
     <string name="pref_persistNotification_summary">Allow running in the background to receive calls and messages.</string>
 
     <string name="pref_newGroup_title">Enable group chat</string>
-    <string name="pref_newGroup_summary">Enable creating groups in Jami.</string>
+    <string name="pref_newGroup_summary">Enable creating groups in Glowmate.</string>
 
     <string name="pref_logs_title">Diagnostic logs</string>
     <string name="pref_logs_summary">Open diagnostic log settings</string>
@@ -95,7 +95,7 @@
     <string name="connectivity_google_services_title">Google services</string>
     <string name="connectivity_google_services_description">Use Google Firebase and a DHT proxy to receive push notifications.</string>
     <string name="connectivity_local_node_title">Local DHT node</string>
-    <string name="connectivity_local_node_description">Use a local DHT node to connect with other Jami devices and contacts.</string>
+    <string name="connectivity_local_node_description">Use a local DHT node to connect with other Glowmate devices and contacts.</string>
     <string name="connectivity_unified_push_title" translatable="false">UnifiedPush</string>
     <string name="connectivity_unified_push_description">Use a custom UnifiedPush server to receive push notifications.</string>
     <string name="connectivity_custom_title">Custom</string>

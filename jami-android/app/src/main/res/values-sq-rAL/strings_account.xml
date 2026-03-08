@@ -8,7 +8,7 @@
   <string name="account_selection">Përzgjidhni llogari</string>
   <string name="add_ring_account_title">Shtoni llogari</string>
   <string name="add_sip_account_title">Shtoni llogari SIP</string>
-  <string name="ring_account_default_name">Llogari Jami %1$s</string>
+  <string name="ring_account_default_name">Llogari Glowmate %1$s</string>
   <string name="account_creation_error">Ndodhi një gabim teksa krijohej llogaria.</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Strehëemër</string>
@@ -28,7 +28,7 @@
         Do të jeni në gjendje vetëm të bëni dhe merrni thirrje të drejtpërdrejta IP.
         Mundeni ta përpunoni më vonë llogarinë tuaj</string>
   <string name="account_type_ip2ip">Llogari IP</string>
-  <string name="help_ring">Një llogari Jami ju lejon të lidheni në mënyrë të sigurt me njerëz, sipas modelit tek për tek, përmes një rrjeti tërësisht të shpërndarë.</string>
+  <string name="help_ring">Një llogari Glowmate ju lejon të lidheni në mënyrë të sigurt me njerëz, sipas modelit tek për tek, përmes një rrjeti tërësisht të shpërndarë.</string>
   <string name="help_sip_title">Shtoni llogari SIP</string>
   <string name="help_sip">Formësoni llogari SIP ekzistuese</string>
   <string name="create_sip_account">Formësoni llogari SIP</string>
@@ -157,27 +157,27 @@
   <string name="account_export_file_summary">Kopjeruajeni llogarinë tuaj në pajisjen tuaj për ta rikthyer më vonë.</string>
   <string name="account_export_end_decryption_message">Fjalëkalim i pasaktë. Ju lutemi, riprovoni me fjalëkalimin e saktë.</string>
   <string name="account_enter_password">Jepni fjalëkalimin</string>
-  <string name="account_share_body">Lidhuni me mua duke përdorur “%1$s” në platformën Jami të komunikimeve të shpërndara: %2$s</string>
-  <string name="account_share_body_with_username">Lidhuni me mua duke përdorur “%1$s”, ose emrin tim publik të përdoruesit “%2$s” në platformën Jami të komunikimeve të shpërndara: %3$s</string>
-  <string name="account_contact_me">Lidhuni me mua në Jami!</string>
+  <string name="account_share_body">Lidhuni me mua duke përdorur “%1$s” në platformën Glowmate të komunikimeve të shpërndara: %2$s</string>
+  <string name="account_share_body_with_username">Lidhuni me mua duke përdorur “%1$s”, ose emrin tim publik të përdoruesit “%2$s” në platformën Glowmate të komunikimeve të shpërndara: %3$s</string>
+  <string name="account_contact_me">Lidhuni me mua në Glowmate!</string>
   <string name="update_account">Përditësoje llogarinë</string>
-  <string name="account_migration">Llogaria juaj Jami mund të përditësohet.\nJu lutemi, jepni fjalëkalimin tuaj.</string>
-  <string name="ring_account">Llogari Jami</string>
+  <string name="account_migration">Llogaria juaj Glowmate mund të përditësohet.\nJu lutemi, jepni fjalëkalimin tuaj.</string>
+  <string name="ring_account">Llogari Glowmate</string>
   <string name="sip_account">Llogari SIP</string>
   <string name="ring_account_identity">Identitet</string>
   <string name="account_migration_title_dialog">Migrim llogarie</string>
   <string name="account_migration_message_dialog">Llogaritë tuaja lypset të përditësohen. Doni të kalohet te skena e administrimit të Llogarive që të kryeni këtë veprim?</string>
   <string name="account_update_needed">Lypset përditësim</string>
   <string name="account_cannot_be_found_title">Gabim lidhjeje</string>
-  <string name="account_cannot_be_found_message">S’arrihet të gjendet llogari në rrjetin Jami. Sigurohuni që qe eksportuar në Jami që prej një pajisjeje ekzistuese dhe se kredencialet e dhëna për hyrjen janë të sakta.</string>
+  <string name="account_cannot_be_found_message">S’arrihet të gjendet llogari në rrjetin Glowmate. Sigurohuni që qe eksportuar në Glowmate që prej një pajisjeje ekzistuese dhe se kredencialet e dhëna për hyrjen janë të sakta.</string>
   <string name="jams_account_cannot_be_found_message">Ndodhi një gabim teksa lidhej llogaria. Ju lutemi, kontrolloni kredencialet dhe riprovoni.</string>
   <string name="account_sip_cannot_be_registered_message">Mund të vazhdoni me procesin e krijimit të llogarisë ose të përpunoni këtu të dhënat tuaja. Përpunimi është i mundshëm edhe më vonë, që nga rregullimet llogarie.</string>
   <string name="account_no_network_title">Gabim rrjeti</string>
-  <string name="account_no_network_message">Ndodhi një gabim lidhjeje, teksa shtohej llogaria Jami te rrjeti i shpërndarë. Kontrolloni lidhjen e pajisjes tuaj.</string>
+  <string name="account_no_network_message">Ndodhi një gabim lidhjeje, teksa shtohej llogaria Glowmate te rrjeti i shpërndarë. Kontrolloni lidhjen e pajisjes tuaj.</string>
   <string name="account_device_added_title">Pajisja e llogarisë u shtua</string>
-  <string name="account_device_added_message">Llogaria Jami u ujdis me sukses në këtë pajisje.</string>
+  <string name="account_device_added_message">Llogaria Glowmate u ujdis me sukses në këtë pajisje.</string>
   <string name="account_device_updated_title">Pajisja e llogarisë u përditësua</string>
-  <string name="account_device_updated_message">Llogaria Jami u përditësua me sukses.</string>
+  <string name="account_device_updated_message">Llogaria Glowmate u përditësua me sukses.</string>
   <string name="account_cannot_be_updated_message">Ndodhi një gabim teksa përditësohej llogaria. Ju lutemi, kontrolloni fjalëkalimin e llogarisë.</string>
   <string name="account_sip_success_title">U regjistrua llogari SIP</string>
   <string name="account_sip_success_message">Llogaria SIP u regjistrua me sukses.</string>
@@ -187,7 +187,7 @@
   <string name="account_tv_advance_settings_header">Rregullime të mëtejshme</string>
   <string name="account_tv_add_contact">Shtoni kontakt</string>
   <string name="account_tv_advanced_settings">Ndryshoni rregullimet e përgjithshme</string>
-  <string name="account_tv_about">Mbi Jami-n</string>
+  <string name="account_tv_about">Mbi Glowmate-n</string>
   <string name="tv_about_version">Version</string>
   <string name="tv_about_license">Licencë</string>
   <string name="tv_about_author">Të drejta autori</string>
@@ -195,7 +195,7 @@
   <string name="account_link_device">Lidhuni prej një pajisje tjetër</string>
   <string name="account_link_button">Lidhu prej rrjeti</string>
   <string name="account_link_archive_button">Lidhje prej kopjeruajtjeje</string>
-  <string name="account_new_button">Krijoni një llogari Jami</string>
+  <string name="account_new_button">Krijoni një llogari Glowmate</string>
   <string name="account_link_export_button">Lidhni pajisje të re</string>
   <string name="account_link_show_button">Shfaq %d pajisje të tjera të lidhura</string>
   <string name="account_link_hide_button">Fshihe pajisjen e lidhur</string>
@@ -231,9 +231,9 @@
   <string name="account_status_offline">Jo në linjë</string>
   <string name="account_status_error">Gabim</string>
   <!--Create account-->
-  <string name="account_creation_home">Mirë se vini te Jami</string>
+  <string name="account_creation_home">Mirë se vini te Glowmate</string>
   <string name="account_creation_profile">Krijoni profilin tuaj</string>
-  <string name="account_creation_ring">Krijoni llogarinë tuaj Jami</string>
+  <string name="account_creation_ring">Krijoni llogarinë tuaj Glowmate</string>
   <string name="account_sip_cannot_be_registered">Ndodhi një gabim teksa regjistrohej llogaria SIP.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Përpunoni profil</string>
@@ -245,7 +245,7 @@
   <string name="revoke_device_wait_title">Ju lutemi, pritni…</string>
   <string name="revoke_device_wait_message">Pajisja po shfuqizohet</string>
   <string name="rename_device_title">Riemërtojeni këtë pajisje</string>
-  <string name="rename_device_message">Jepni emër pajisje për identifikim të saj në llogarinë tuaj Jami</string>
+  <string name="rename_device_message">Jepni emër pajisje për identifikim të saj në llogarinë tuaj Glowmate</string>
   <string name="rename_device_button">Riemërtoje pajisjen</string>
   <string name="account_rename_device_hint">Zgjidhni një emër të ri për pajisjen</string>
   <string name="account_device_name_empty">Emri i pajisjes s\’mund të jetë i zbrazët</string>
@@ -254,28 +254,28 @@
   <string name="account_device_id">ID Pajisjeje</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Ky format nuk mbulohet.</string>
-  <string name="account_link_info">Te aplikacioni Jami në pajisjen e re, skanoni kodin QR, ose jepeni dorazi kodin e mirëfilltësimit.</string>
+  <string name="account_link_info">Te aplikacioni Glowmate në pajisjen e re, skanoni kodin QR, ose jepeni dorazi kodin e mirëfilltësimit.</string>
   <string name="account_link_device_title">Lidhni një pajisje të re</string>
   <string name="account_link_password">Kjo llogari është e fshehtëzuar me fjalëkalim, jepni fjalëkalimin që të prodhohet kodi i mirëfilltësimit.</string>
   <string name="account_link_generate_button">Prodhoje</string>
   <string name="account_link_time_valid">Kodi i mirëfilltësimit do të jetë i pavlefshëm: %1$s.</string>
-  <string name="account_link_device_info">Zgjidhni “Lidhni një pajisje të re”, që nga aplikacioni tjetër Jami, që të shfaqet kodi QR, ose kodi i mirëfilltësimit.</string>
+  <string name="account_link_device_info">Zgjidhni “Lidhni një pajisje të re”, që nga aplikacioni tjetër Glowmate, që të shfaqet kodi QR, ose kodi i mirëfilltësimit.</string>
   <string name="account_generate_export_device">Te pajisja tjetër</string>
-  <string name="account_generate_export_info">Instaloni dhe nisni Jami-n. Përzgjidhni “Importo prej pajisje tjetër” dhe skanoni kodin QR. Ndryshe jepeni kodin PIN dorazi.</string>
+  <string name="account_generate_export_info">Instaloni dhe nisni Glowmate-n. Përzgjidhni “Importo prej pajisje tjetër” dhe skanoni kodin QR. Ndryshe jepeni kodin PIN dorazi.</string>
   <string name="content_description_qr_generated">Kod QR llogarie</string>
   <string name="account_generate_export_invalid">Kodi i mirëfilltësimit s’është më i vlefshëm.\n Që të lidhni pajisjen e re, jepni fjalëkalimin dhe prodhoni një tjetër.</string>
   <string name="account_generate_export_invalid_two">Kodi i mirëfilltësimit s’është më i vlefshëm.\nQë të lidhni pajisjen e re, prodhoni një tjetër.</string>
   <string name="help_pin_info">E domosdoshme, nëse llogaria është e fshehtëzuar me fjalëkalim.</string>
   <string name="account_link_device_button">Lidhu</string>
   <!--Biometry-->
-  <string name="account_biometry_auth_title">Shkyçni llogari Jami</string>
+  <string name="account_biometry_auth_title">Shkyçni llogari Glowmate</string>
   <string name="account_biometry_auth_message">Përdorni biometri për të shkyçur llogarinë tuaj</string>
   <string name="account_biometry_enroll_title">Të përdoret mirëfilltësim biometrik?</string>
   <string name="account_biometry_enroll_message">Pajisja juaj mbulon mirëfilltësim të siguruar biometrik.
-Mirëfilltësimi biometrik, ose përmes pajisjes, shton një rrugë të leverdishme për të shkyçur lokalisht hyrjen në llogarinë tuaj Jami. Do të jeni prapë në gjendje të përdorni fjalëkalimin tuaj.</string>
+Mirëfilltësimi biometrik, ose përmes pajisjes, shton një rrugë të leverdishme për të shkyçur lokalisht hyrjen në llogarinë tuaj Glowmate. Do të jeni prapë në gjendje të përdorni fjalëkalimin tuaj.</string>
   <string name="account_biometry_enroll_accept">Përdor biometri</string>
   <string name="no_thanks">Jo, faleminderit</string>
-  <string name="account_biometry_enroll_auth_title">Shtoni mirëfilltësim për llogarinë tuaj Jami</string>
+  <string name="account_biometry_enroll_auth_title">Shtoni mirëfilltësim për llogarinë tuaj Glowmate</string>
   <string name="account_biometry_enroll_auth_message">Shtoni mirëfilltësim të siguruar biometrik, ose përmes pajisjes, si një alternativë e fjalëkalimit tuaj</string>
   <string name="account_auth_error">Gabim mirëfilltësimi: %1$s</string>
   <string name="account_auth_success">Mirëfilltësimi pat sukses</string>

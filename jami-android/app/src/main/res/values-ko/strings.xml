@@ -95,7 +95,7 @@
   <string name="share_via">공유</string>
   <string name="scan_qr">QR 코드를 스캔</string>
   <string name="qr_code">QR 코드</string>
-  <string name="qr_code_not_contact">Jami 연락처 QR 코드가 아닙니다</string>
+  <string name="qr_code_not_contact">Glowmate 연락처 QR 코드가 아닙니다</string>
   <string name="new_group">새 그룹 만들기</string>
   <string name="ab_action_flipcamera"> 카메라</string>
   <string name="ab_action_hidepreview">미리보기 숨기기</string>
@@ -183,7 +183,7 @@
   <string name="prompt_new_password">새로운 비밀번호</string>
   <string name="prompt_new_password_optional">새 비밀번호 (선택)</string>
   <string name="prompt_new_password_repeat">새로운 비밀번호를 확인</string>
-  <string name="account_create_title">Jami 계정을 생성</string>
+  <string name="account_create_title">Glowmate 계정을 생성</string>
   <string name="prompt_new_username">새로운 사용자 이름을 입력</string>
   <string name="prompt_hint_username">사용자명</string>
   <string name="help_password_choose">자미 계정을 보호하기 위해 기억할 강력한 비밀번호를 선택하세요.</string>
@@ -309,12 +309,12 @@
   <string name="dialog_hint_description">설명</string>
   <string name="picker_title">연락처를 선택</string>
   <string name="picker_btn">연락처를 선택</string>
-  <string name="bottomsheet_contact">Jami\n%1$s에 연락하세요</string>
+  <string name="bottomsheet_contact">Glowmate\n%1$s에 연락하세요</string>
   <string name="bottomsheet_remove">멤버를 제거</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">사용자 이름을 등록</string>
   <string name="jami_id_choose_username">사용자 이름을 선택</string>
-  <!--WelcomeJami-->
+  <!--WelcomeGlowmate-->
   <string name="welcome_jami_title">자미에 오신 것을 환영합니다</string>
   <!--Conversation details-->
   <string name="details">세부 사항</string>

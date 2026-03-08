@@ -36,7 +36,7 @@
         android:paddingStart="@dimen/padding_medium"
         android:paddingEnd="@dimen/padding_large">
 
-        <cx.ring.views.AvatarView
+        <com.glowmate.views.AvatarView
             android:id="@+id/photo"
             android:layout_width="@dimen/conversation_avatar_size"
             android:layout_height="@dimen/conversation_avatar_size"

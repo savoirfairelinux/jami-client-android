@@ -2,6 +2,6 @@
 
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/shareFragment"
-    android:name="cx.ring.fragments.ShareWithFragment"
+    android:name="com.glowmate.fragments.ShareWithFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />

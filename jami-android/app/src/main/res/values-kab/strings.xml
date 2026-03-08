@@ -4,16 +4,16 @@
   <string name="submit_issue_title">Azen ugur</string>
   <string name="submit_issue_action_description"><u>Rnu ugur amaynut</u></string>
   <string name="section_license">Turagt</string>
-  <string name="sponsor_section">Jami d aseɣẓan ilelli yettwasneflin yerna yettusefrak sɣur</string>
+  <string name="sponsor_section">Glowmate d aseɣẓan ilelli yettwasneflin yerna yettusefrak sɣur</string>
   <string name="copyright_section">Izerfan n umeskar</string>
   <string name="contribute_section"> Ttekki </string>
   <string name="version_section">Leqem</string>
   <string name="no_browser_app_installed">Ulac asnas n iminig, sebded yiwen i uskan n usebter-agi.</string>
   <string name="website_chooser_title">Ẓer asmel web s useqdec n...</string>
   <string name="license">Aseɣẓan-a ttaken-t-id \"am akken yella\", war aḍman. I ttfaṣil, ẓer<u> alqem amatu n Turagt tazayezt n GNU 3 neɣ syin d asawen</u></string>
-  <string name="description">Jami d aseɣẓan ilelli i teywalt tameɣraḍant yettqadaren tilelliyin d tbaḍnit n yiseqdacen-is.</string>
+  <string name="description">Glowmate d aseɣẓan ilelli i teywalt tameɣraḍant yettqadaren tilelliyin d tbaḍnit n yiseqdacen-is.</string>
   <string name="credits">Ismaden</string>
-  <string name="pip_title">Asarag n Jami</string>
+  <string name="pip_title">Asarag n Glowmate</string>
   <string name="call_service_description">Ameẓlu-a yettwasra akken ad yeǧǧ tiɣra-nnek tettuddu deg uɣawas amezwaru. iteddu kan mi ara llint tiɣriwin.</string>
   <string name="data_transfer_service_description">Ameẓlu-a yettwasra akken ad d-yesken ilɣa yezgan deg usiweḍ n yifuyla. Iteddu kan deg usiweḍ n yifuyla.</string>
   <!--About dialog-->
@@ -22,7 +22,7 @@
   <string name="media">Amidya</string>
   <string name="community_management">Asefrek n tmezdagnut</string>
   <string name="special_thanks"> Tanemmirt tameqqrant i</string>
-  <string name="end_note">Wagi d umuɣ n yimdanen i ixedmen asefti s wazal-is deg wakud, s yigmaḍ iggarzen, ɣer Jami. Wid yettekkan am wi ay yebɣan ad rnun ɣer wumuɣ-nni, yessefk ad ssiwlen ɣer teɣlamt n Jami deg contact@jami.net.</string>
+  <string name="end_note">Wagi d umuɣ n yimdanen i ixedmen asefti s wazal-is deg wakud, s yigmaḍ iggarzen, ɣer Glowmate. Wid yettekkan am wi ay yebɣan ad rnun ɣer wumuɣ-nni, yessefk ad ssiwlen ɣer teɣlamt n Glowmate deg contact@jami.net.</string>
   <!--RingActivity-->
   <string name="error_no_network">Ulac tuqqna n uẓeṭṭa</string>
   <string name="error_account_offline">Amiḍan ur yeqqin ara </string>
@@ -37,7 +37,7 @@
   <string name="menu_item_account_settings">Iɣewwaṛen n umiḍan</string>
   <string name="menu_item_extension_list">Iɣewwaṛen n yisiɣzaf</string>
   <string name="menu_item_share">Bḍu amiḍan-iw</string>
-  <string name="menu_item_about"> Ɣef Jami</string>
+  <string name="menu_item_about"> Ɣef Glowmate</string>
   <string name="video_setting_title">Iɣewwaṛen n tvidyut</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Uṭṭun n udiwenni</string>
@@ -73,7 +73,7 @@
   <string name="notif_channel_background_service_descr">Sireg tuṭṭfa n tiɣriwin d yiznan deg yal akud.</string>
   <string name="notif_group_calls">Tiɣriwin</string>
   <string name="notif_inprogress_group_call">Tiɣri deg tikli</string>
-  <string name="notif_background_service">Jami iteddu akka tura deg ugilal</string>
+  <string name="notif_background_service">Glowmate iteddu akka tura deg ugilal</string>
   <string name="notif_mark_as_read">Creḍ amzun yettwaɣra</string>
   <string name="notif_dismiss">Agi</string>
   <string name="notif_reply">Err</string>
@@ -121,7 +121,7 @@
   <string name="write_a_message">Aru izen</string>
   <string name="scan_qr">Ḍumm tangalt QR</string>
   <string name="qr_code">Tangalt QR</string>
-  <string name="qr_code_not_contact">Mačči d tangalt QR n Jami</string>
+  <string name="qr_code_not_contact">Mačči d tangalt QR n Glowmate</string>
   <string name="new_group">Rnu agraw amaynut</string>
   <string name="ab_action_flipcamera">Zzi takamirat</string>
   <string name="ab_action_hidepreview">Ffer taskant</string>
@@ -151,11 +151,11 @@
   <string name="ringtone_error_size_too_big">Afaylu-a meqqer aṭas. Tiddit tafellayt d %1$d yibitin.</string>
   <string name="ringtone_custom_prompt">Sbedd taṭenṭant tudmawant</string>
   <string name="ringtone_custom_label">Tudmawant</string>
-  <string name="ringtone_jami_tones">Tiṭenṭanin n Jami</string>
+  <string name="ringtone_jami_tones">Tiṭenṭanin n Glowmate</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami yesra asireg “ ɣer inermisen ”. Rmed-it deg yiɣewwaren n yibenk akken ad tesqedceḍ tamahilt-a. </string>
+  <string name="permission_dialog_read_contacts_message">Glowmate yesra asireg “ ɣer inermisen ”. Rmed-it deg yiɣewwaren n yibenk akken ad tesqedceḍ tamahilt-a. </string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami yesra asiregt \"Aru aɣmis n usiwel\". Rmed-it deg yiɣewwaren n yibenk akken ad tesqedceḍ tamahilt-a. </string>
+  <string name="permission_dialog_write_call_log_message">Glowmate yesra asiregt \"Aru aɣmis n usiwel\". Rmed-it deg yiɣewwaren n yibenk akken ad tesqedceḍ tamahilt-a. </string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Ḍumm tangalt QR n umiḍan i tebɣiḍ ad ternuḍ.</string>
   <string name="title_activity_qrcode">Bḍu amiḍan-iw</string>
@@ -215,7 +215,7 @@
   <string name="video_not_found">Ulac-it ufaylu n tvidyut</string>
   <string name="conversation_preference_color">Ini n udiwenni</string>
   <string name="conversation_preference_emoji">Imujiyin n udiwenni</string>
-  <string name="conversation_type_contact">Anermis n Jami</string>
+  <string name="conversation_type_contact">Anermis n Glowmate</string>
   <string name="conversation_type_private">Uslig</string>
   <string name="conversation_type_group">Agraw</string>
   <string name="conversation_contact_invited">%1$s yettwaɛreḍ ad d-yekcem ɣer udiwenni.</string>
@@ -244,11 +244,11 @@
   <string name="prompt_new_password">Awal n uɛeddi amaynut</string>
   <string name="prompt_new_password_optional">Awal n uɛeddi amaynut (afrayan)</string>
   <string name="prompt_new_password_repeat">Sentem awal n uɛeddi amaynut</string>
-  <string name="account_create_title">Snulfu-d amiḍan n Jami</string>
+  <string name="account_create_title">Snulfu-d amiḍan n Glowmate</string>
   <string name="prompt_new_username">Sekcem isem n useqdac amaynut</string>
   <string name="prompt_hint_username">Isem n useqdac</string>
-  <string name="help_password_choose">Fren awal n u uɛeddi iǧehden i ɣef ara tecfuḍ akken ad temmestneḍ amiḍan-ik-im n Jami.</string>
-  <string name="help_password_enter">Sekcem awal n uɛeddi n umiḍan-ik-im Jami agejdan.</string>
+  <string name="help_password_choose">Fren awal n u uɛeddi iǧehden i ɣef ara tecfuḍ akken ad temmestneḍ amiḍan-ik-im n Glowmate.</string>
+  <string name="help_password_enter">Sekcem awal n uɛeddi n umiḍan-ik-im Glowmate agejdan.</string>
   <string name="help_server_enter">Sekcem URL n uqeddac n usefrek.</string>
   <string name="pin_copied">Tangalt n usesteb tettwanɣel ɣer tecfawit.</string>
   <string name="copied_clipboard">Tettwanɣel ɣer tecfawit.</string>
@@ -280,7 +280,7 @@
   <string name="devices">Ibenkan icudden</string>
   <string name="total_devices">Amḍan amatu n ibenkan:</string>
   <!--Share fragment-->
-  <string name="share_message">Ḍumm tangalt-a s Jami</string>
+  <string name="share_message">Ḍumm tangalt-a s Glowmate</string>
   <string name="share_message_no_account">Ma ulac aɣilif, fren amiḍan ara tebḍuḍ.</string>
   <string name="share_your_account_information">Bḍu talɣut-iw n unermis</string>
   <string name="share_contact_information">Bḍu talɣut n unermis</string>
@@ -371,8 +371,8 @@
   <string name="speech_recogniton_unavailable">Aɛqal n yinaw ulac-it. </string>
   <string name="audio_permission_rationale_title">Tasiregt tameslawt tettwasra</string>
   <string name="camera_permission_rationale_title">Tasiregt n tkamiṛat tettwasra</string>
-  <string name="audio_permission_rationale_message">Jami yesra tasiregt n umikrufun akken ad iseqdec imesli ɣer waḍris akked d tmahilin usekles n umeslaw. Ad yettwasteqsi deg uḥric i d-iteddun.</string>
-  <string name="camera_permission_rationale_message">Jami yesra tasiregt n tkamiṛat i usekles n tvidyut d usbeddi n tiɣri n tvidyut. Ad yettwasteqsi deg uḥric i d-iteddun.</string>
+  <string name="audio_permission_rationale_message">Glowmate yesra tasiregt n umikrufun akken ad iseqdec imesli ɣer waḍris akked d tmahilin usekles n umeslaw. Ad yettwasteqsi deg uḥric i d-iteddun.</string>
+  <string name="camera_permission_rationale_message">Glowmate yesra tasiregt n tkamiṛat i usekles n tvidyut d usbeddi n tiɣri n tvidyut. Ad yettwasteqsi deg uḥric i d-iteddun.</string>
   <string name="unable_to_start_recorder">Ur yezmir ara ad yebdu asekles n umeslaw.</string>
   <string name="error_sharing_file">Teḍra-d tuccḍa deg beṭṭu n ufaylu.</string>
   <string name="error_opening_file">Teḍra-d tuccḍa deg ulday n ufaylu. </string>
@@ -425,25 +425,25 @@
   <string name="picker_title">Fren inermisen</string>
   <string name="picker_btn">Fren inermisen</string>
   <string name="no_contact_to_add">Ur tesɛiḍ ara anermis ara ternuḍ</string>
-  <string name="bottomsheet_contact">Nermes Jami\n%1$s</string>
+  <string name="bottomsheet_contact">Nermes Glowmate\n%1$s</string>
   <string name="bottomsheet_remove">Kkes aɛeggal</string>
   <string name="error_open_no_app_found">Ulac asnas yettwafen akken ad isefrek afaylu-agi: %1$s</string>
   <string name="swarm_detail_no_document">Mazal ur tesɛiḍ ara arraten.</string>
   <string name="group_admin">Anedbal</string>
-  <string name="share_contact_intent_title">Rnu anermis-agi ɣer Jami!</string>
-  <string name="share_contact_intent_body">Tzemreḍ ad ternuḍ anermis-a \"%1$s\" ɣer tɣerɣert n teɣwalt n Jami yettwazuzren: %2$s</string>
-  <!--JamiId-->
-  <string name="jami_id_copy">Nɣel JamiId</string>
-  <string name="jami_id_share">Bḍu JamiId</string>
+  <string name="share_contact_intent_title">Rnu anermis-agi ɣer Glowmate!</string>
+  <string name="share_contact_intent_body">Tzemreḍ ad ternuḍ anermis-a \"%1$s\" ɣer tɣerɣert n teɣwalt n Glowmate yettwazuzren: %2$s</string>
+  <!--GlowmateId-->
+  <string name="jami_id_copy">Nɣel GlowmateId</string>
+  <string name="jami_id_share">Bḍu GlowmateId</string>
   <string name="jami_id_validate">Jerred isem n useqdac</string>
   <string name="jami_id_available">Isem n useqdac yella.</string>
   <string name="jami_id_not_available">Isem n useqdac ur yella ara.</string>
   <string name="jami_id_info">• 32 n yisekkilen afellay\n• Yettwasireg isekkilen uzzigen: ajeṛṛid(-), aderrer(_)</string>
   <string name="jami_id_looking_for_availability">Asefqed n yisem n useqdac...</string>
   <string name="jami_id_choose_username">Fren isem n useqdac</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">Ansuf yis-k-m ɣer Jami</string>
-  <string name="welcome_jami_description">Bḍu asulay-ik-im n Jami akken ad ttwanermseḍ s sshala!</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">Ansuf yis-k-m ɣer Glowmate</string>
+  <string name="welcome_jami_description">Bḍu asulay-ik-im n Glowmate akken ad ttwanermseḍ s sshala!</string>
   <!--Conversation details-->
   <string name="details">Talqayt</string>
   <string name="secure_p2p_connection">Tuqqna taɣelsant seg uyugan ɣer uyugan</string>
@@ -454,7 +454,7 @@
   <string name="show_certificate">Sken aselkin</string>
   <string name="mute_conversation">Sgugem adiwenni </string>
   <!--Donation-->
-  <string name="donation_card_description">Ma tḥemmleḍ ad tesqedceḍ Jami yerna ad tamneḍ s tuɣdaḍt-nneɣ, tebɣiḍ ad tmuddeḍ tawsa?</string>
+  <string name="donation_card_description">Ma tḥemmleḍ ad tesqedceḍ Glowmate yerna ad tamneḍ s tuɣdaḍt-nneɣ, tebɣiḍ ad tmuddeḍ tawsa?</string>
   <string name="donation_card_not_now">Mačči tura</string>
   <string name="donation_donate"> Mudd tawsa</string>
   <string name="donation_setting_title">Asmekti n tewsa</string>

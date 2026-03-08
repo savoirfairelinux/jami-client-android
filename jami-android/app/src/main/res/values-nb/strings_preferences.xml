@@ -10,7 +10,7 @@
   <string name="pref_category_connectivity">Forbindelsesstatus</string>
   <string name="pref_category_video_settings">Avanserte video-innstillinger</string>
   <string name="pref_mobileData_title">Mobildata</string>
-  <string name="pref_mobileData_summary">Tillat Jami på 3G/LTE-nettverk i tillegg til Wi-Fi</string>
+  <string name="pref_mobileData_summary">Tillat Glowmate på 3G/LTE-nettverk i tillegg til Wi-Fi</string>
   <string name="pref_pushNotifications_title">Push-varsler</string>
   <string name="pref_pushNotifications_summary">Bruk Google-tjenere for å tillate mottak av samtaler/meldinger i bakgrunnen</string>
   <string name="pref_unifiedPush_summary">Bruk en UnifiedPush-tjeneste for å tillate mottak av samtaler/meldinger i bakgrunnen</string>
@@ -25,10 +25,10 @@
   <string name="pref_videoResolution_summary">Velg standard utgående video oppløsning</string>
   <string name="pref_systemContacts_title">Bruk systemkontakter</string>
   <string name="pref_systemContacts_summary">Bruk systemkontakter for å vise innringerdetaljer</string>
-  <string name="pref_systemDialer_title">Benytt Jami til systemanrop</string>
-  <string name="pref_systemDialer_summary">Bruk Jami til systemanrop når det er mulig.</string>
-  <string name="pref_startOnBoot_title">Start Jami ved oppstart</string>
-  <string name="pref_startOnBoot_summary">Kjør Jami i bakgrunnen når systemet starter.</string>
+  <string name="pref_systemDialer_title">Benytt Glowmate til systemanrop</string>
+  <string name="pref_systemDialer_summary">Bruk Glowmate til systemanrop når det er mulig.</string>
+  <string name="pref_startOnBoot_title">Start Glowmate ved oppstart</string>
+  <string name="pref_startOnBoot_summary">Kjør Glowmate i bakgrunnen når systemet starter.</string>
   <string name="pref_clearHistory_title">Slett historikk</string>
   <string name="pref_notification_title">Synlige varsler</string>
   <string name="pref_notification_summary">Vis varsler på låsekjermen</string>
@@ -36,7 +36,7 @@
   <string name="pref_blackList_summary">Sjekk din blokkeringsliste.</string>
   <string name="pref_delete_account_title">Slett konto</string>
   <string name="pref_newGroup_title">Aktiverer gruppechat</string>
-  <string name="pref_newGroup_summary">Oppmuntre til å opprette grupper i Jami.</string>
+  <string name="pref_newGroup_summary">Oppmuntre til å opprette grupper i Glowmate.</string>
   <string name="pref_logs_title">Feilfinningslogger</string>
   <string name="pref_logs_summary">Åpne innstillinger for feilfinningsloggen</string>
   <string name="pref_logs_start">Sett i gang loggføring</string>

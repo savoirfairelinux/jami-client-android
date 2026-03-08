@@ -8,16 +8,16 @@
   <string name="delete_conversation_confirmation">Biztosan szeretné törölni ezt a beszélgetést?</string>
   <string name="acc_profile_photo_capture">Fénykép rögzítése</string>
   <string name="view_switch_camera">Fényképezőgépváltás</string>
-  <string name="sponsor_section">A Jami ingyenes szoftver, amely fejlesztett és támogatott:</string>
+  <string name="sponsor_section">A Glowmate ingyenes szoftver, amely fejlesztett és támogatott:</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Közreműködés</string>
   <string name="version_section">Verzió</string>
   <string name="no_browser_app_installed">Nem található webböngésző alkalmazás. Webböngésző telepítése szükséges ennek az oldalnak a megtekintéséhez.</string>
   <string name="website_chooser_title">Honlap megtekintése a következővel…</string>
   <string name="license">Ez a szoftver a „jelen állapotában” kerül kiadásra, mindenféle garanciavállalás nélkül. A részletekért lásd a <u>GNU általános nyilvános engedély 3-as vagy újabb verzióját</u></string>
-  <string name="description">A Jami egy ingyenes szoftver általános kommunikációs célokra, mely tiszteletben tartja a felhasználói szabadságát és magánéletét.</string>
+  <string name="description">A Glowmate egy ingyenes szoftver általános kommunikációs célokra, mely tiszteletben tartja a felhasználói szabadságát és magánéletét.</string>
   <string name="credits">Készítők</string>
-  <string name="pip_title">Jami-konferencia</string>
+  <string name="pip_title">Glowmate-konferencia</string>
   <string name="call_service_description">Ez a szolgáltatás szükséges a hívások előtérben történő futtatásához. Csak hívások alatt fut.</string>
   <string name="data_transfer_service_description">Ez a szolgáltatás szükséges az állandó értesítések megjelenítéséhez fájlküldések közben. Csak fájlküldések alatt fut.</string>
   <!--About dialog-->
@@ -26,7 +26,7 @@
   <string name="media">Média</string>
   <string name="community_management">Közösségkezelés</string>
   <string name="special_thanks">Külön köszönet a következőknek:</string>
-  <string name="end_note">Ez azoknak az embereknek a listája, akik jelentős időt fektettek a Jami alkalmazásba, hasznos eredményekkel. Bármely ilyen közreműködő, aki szeretne felkerülni a listára, lépjen kapcsolatba a Jami csapatával a contact@jami.net e-mail-címen.</string>
+  <string name="end_note">Ez azoknak az embereknek a listája, akik jelentős időt fektettek a Glowmate alkalmazásba, hasznos eredményekkel. Bármely ilyen közreműködő, aki szeretne felkerülni a listára, lépjen kapcsolatba a Glowmate csapatával a contact@jami.net e-mail-címen.</string>
   <!--RingActivity-->
   <string name="error_no_network">Nincs hálózati kapcsolat</string>
   <string name="error_account_offline">A fiók kapcsolat nélküli állapotban van</string>
@@ -41,7 +41,7 @@
   <string name="menu_item_account_settings">Fiókbeállítások</string>
   <string name="menu_item_extension_list">Bővítmények beállításai</string>
   <string name="menu_item_share">Fiók megosztása</string>
-  <string name="menu_item_about">A Jami névjegye</string>
+  <string name="menu_item_about">A Glowmate névjegye</string>
   <string name="video_setting_title">Videóbeállítások</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Szám tárcsázása</string>
@@ -78,7 +78,7 @@
   <string name="notif_channel_background_service_descr">Bejövő hívások és üzenetek engedélyezése bármikor.</string>
   <string name="notif_group_calls">Hívások</string>
   <string name="notif_inprogress_group_call">Folyamatban lévő hívás</string>
-  <string name="notif_background_service">Jami jelenleg a háttérben fut</string>
+  <string name="notif_background_service">Glowmate jelenleg a háttérben fut</string>
   <string name="notif_mark_as_read">Megjelölés olvasottként</string>
   <string name="notif_dismiss">Elutasítás</string>
   <string name="notif_reply">Válasz</string>
@@ -88,7 +88,7 @@
   <string name="notif_sync_title">Adatok összehangolása…</string>
   <string name="notif_location_title">Tartózkodási hely megosztása a következővel: %1$s</string>
   <string name="notif_channel_reconnect">Háttérösszehangolás</string>
-  <string name="notif_reconnect_title">Jami összehangol…</string>
+  <string name="notif_reconnect_title">Glowmate összehangol…</string>
   <string name="location_share_contact">%1$s megosztja veled a tartózkodási helyét</string>
   <string name="notif_location_multi_title">Tartózkodási hely megosztása velük: %1$d</string>
   <string name="notif_location_remaining">%1$d perc van hátra</string>
@@ -109,7 +109,7 @@
   <string name="hist_out_call">Kimenő hívás (%1$s)</string>
   <string name="call_duration">%s tartott</string>
   <string name="call_on_hold">A hívás várakoztatva van</string>
-  <string name="start_error_title">Nem sikerült elindítani a Jamit</string>
+  <string name="start_error_title">Nem sikerült elindítani a Glowmatet</string>
   <string name="action_call_accept">Hívás fogadása</string>
   <string name="action_call_accept_audio">Elfogadás hanggal</string>
   <string name="action_call_accept_video">Elfogadás videóval</string>
@@ -131,7 +131,7 @@
   <string name="write_a_message">Üzenet írása</string>
   <string name="scan_qr">QR-kód beolvasása</string>
   <string name="qr_code">QR-kód</string>
-  <string name="qr_code_not_contact">Nem Jami kapcsolati QR-kód</string>
+  <string name="qr_code_not_contact">Nem Glowmate kapcsolati QR-kód</string>
   <string name="new_group">Új csoport létrehozása</string>
   <string name="ab_action_flipcamera">Fényképezőgép tükrözése</string>
   <string name="ab_action_hidepreview">Előnézet elrejtése</string>
@@ -161,11 +161,11 @@
   <string name="ringtone_error_size_too_big">Ez a fájl túl nagy. A legnagyobb méret %1$d kB.</string>
   <string name="ringtone_custom_prompt">Egyéni csengőhang beállítása</string>
   <string name="ringtone_custom_label">Szokás</string>
-  <string name="ringtone_jami_tones">Jami-csengőhangok</string>
+  <string name="ringtone_jami_tones">Glowmate-csengőhangok</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">A „Névjegyek olvasása” használati engedélye szükséges a Jaminak. A funkció használatát engedélyezze az eszköz beállításaiban.</string>
+  <string name="permission_dialog_read_contacts_message">A „Névjegyek olvasása” használati engedélye szükséges a Glowmatenak. A funkció használatát engedélyezze az eszköz beállításaiban.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">A „Hívásnapló írása” használati engedélye szükséges a Jaminak. A funkció használatát engedélyezze az eszköz beállításaiban.</string>
+  <string name="permission_dialog_write_call_log_message">A „Hívásnapló írása” használati engedélye szükséges a Glowmatenak. A funkció használatát engedélyezze az eszköz beállításaiban.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Olvassa be a hozzáadandó fiók QR-kódját.</string>
   <string name="title_activity_qrcode">Fiók megosztása</string>
@@ -225,7 +225,7 @@
   <string name="video_not_found">Videofájl nem található</string>
   <string name="conversation_preference_color">Beszélgetés színe</string>
   <string name="conversation_preference_emoji">Beszélgetés hangulatjel</string>
-  <string name="conversation_type_contact">Jami-kapcsolattartó</string>
+  <string name="conversation_type_contact">Glowmate-kapcsolattartó</string>
   <string name="conversation_type_private">Magánjellegű</string>
   <string name="conversation_type_group">Csoport</string>
   <string name="conversation_contact_invited">%1$s meghívást kapott, hogy csatlakozzon a beszélgetéshez.</string>
@@ -254,11 +254,11 @@
   <string name="prompt_new_password">Új jelszó</string>
   <string name="prompt_new_password_optional">Új jelszó (nem kötelező)</string>
   <string name="prompt_new_password_repeat">Új jelszó megerősítése</string>
-  <string name="account_create_title">Jami-fiók létrehozása</string>
+  <string name="account_create_title">Glowmate-fiók létrehozása</string>
   <string name="prompt_new_username">Új felhasználónév megadása</string>
   <string name="prompt_hint_username">Felhasználónév</string>
-  <string name="help_password_choose">Válasszon erős jelszót, amelyre emlékezni fog, hogy megvédje a Jami-fiókját.</string>
-  <string name="help_password_enter">Fő Jami-fiók jelszavának megadása.</string>
+  <string name="help_password_choose">Válasszon erős jelszót, amelyre emlékezni fog, hogy megvédje a Glowmate-fiókját.</string>
+  <string name="help_password_enter">Fő Glowmate-fiók jelszavának megadása.</string>
   <string name="help_server_enter">Adja meg a felügyeleti kiszolgáló URL-jét.</string>
   <string name="pin_copied">A hitelesítési kód kimásolva a vágólapra.</string>
   <string name="copied_clipboard">A vágólapra másolva.</string>
@@ -290,7 +290,7 @@
   <string name="devices">Összekapcsolt eszközök</string>
   <string name="total_devices">Összes eszköz: </string>
   <!--Share fragment-->
-  <string name="share_message">Olvassa be a kódot a Jami programmal</string>
+  <string name="share_message">Olvassa be a kódot a Glowmate programmal</string>
   <string name="share_message_no_account">Fiókmegosztás kijelölése</string>
   <string name="share_your_account_information">Névjegy adatainak megosztása</string>
   <string name="share_contact_information">Kapcsolattartó részletei megosztása</string>
@@ -382,8 +382,8 @@
   <string name="speech_recogniton_unavailable">A beszédfelismerés nem érhető el.</string>
   <string name="audio_permission_rationale_title">Hang használati engedélye szükséges</string>
   <string name="camera_permission_rationale_title">Fényképezőgép használati engedélye szükséges</string>
-  <string name="audio_permission_rationale_message">A Jaminak mikrofonengedélyre van szüksége a beszéd-szövegké alakításhoz és a hangrögzítéshez. A következő lépésben rákérdez.</string>
-  <string name="camera_permission_rationale_message">Jaminak szüksége van a fényképezőgép engedélyére a videó rögzítéséhez és a videohívás kezdeményezéséhez. A következő lépésben rákérdez.</string>
+  <string name="audio_permission_rationale_message">A Glowmatenak mikrofonengedélyre van szüksége a beszéd-szövegké alakításhoz és a hangrögzítéshez. A következő lépésben rákérdez.</string>
+  <string name="camera_permission_rationale_message">Glowmatenak szüksége van a fényképezőgép engedélyére a videó rögzítéséhez és a videohívás kezdeményezéséhez. A következő lépésben rákérdez.</string>
   <string name="unable_to_start_recorder">Nem sikerült elindítani a hangfelvételt.</string>
   <string name="error_sharing_file">Hiba történt a fájl megosztása közben.</string>
   <string name="error_opening_file">Hiba történt a fájl megnyitásakor.</string>
@@ -436,25 +436,25 @@
   <string name="picker_title">Kapcsolattartók kijelölése</string>
   <string name="picker_btn">Kapcsolattartók kijelölése</string>
   <string name="no_contact_to_add">Nincsenek hozzáadható kapcsolattartók.</string>
-  <string name="bottomsheet_contact">Forduljon a Jamihez\n%1$s</string>
+  <string name="bottomsheet_contact">Forduljon a Glowmatehez\n%1$s</string>
   <string name="bottomsheet_remove">Tag eltávolítása</string>
   <string name="error_open_no_app_found">Nem található alkalmazás a fájl kezelésére: %1$s</string>
   <string name="swarm_detail_no_document">Még nincsenek dokumentumai.</string>
   <string name="group_admin">Rendszergazda</string>
-  <string name="share_contact_intent_title">Add hozzá ezt a Jami-kapcsolattartót!</string>
-  <string name="share_contact_intent_body">Felveheti a(z) „%1$s” kapcsolattartót a Jami elosztott kommunikációs platformon: %2$s</string>
-  <!--JamiId-->
-  <string name="jami_id_copy">Jami-azonosító másolása</string>
-  <string name="jami_id_share">Jami-azonosító megosztása</string>
+  <string name="share_contact_intent_title">Add hozzá ezt a Glowmate-kapcsolattartót!</string>
+  <string name="share_contact_intent_body">Felveheti a(z) „%1$s” kapcsolattartót a Glowmate elosztott kommunikációs platformon: %2$s</string>
+  <!--GlowmateId-->
+  <string name="jami_id_copy">Glowmate-azonosító másolása</string>
+  <string name="jami_id_share">Glowmate-azonosító megosztása</string>
   <string name="jami_id_validate">Felhasználónév bejegyeztetése</string>
   <string name="jami_id_available">A felhasználónév elérhető.</string>
   <string name="jami_id_not_available">A felhasználónév nem érhető el.</string>
   <string name="jami_id_info">• Legfeljebb 32 karakter\n• Megengedett speciális karakterek: kötőjel (-), aláhúzás (_)</string>
   <string name="jami_id_looking_for_availability">Felhasználónév elérhetőségének ellenőrzése…</string>
   <string name="jami_id_choose_username">Felhasználónév kiválasztása</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">Üdvözli a Jami</string>
-  <string name="welcome_jami_description">Oszd meg ennek a fióknak a Jami-azonosítóját, hogy mások könnyebben kapcsolatba léphessenek Önnel!</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">Üdvözli a Glowmate</string>
+  <string name="welcome_jami_description">Oszd meg ennek a fióknak a Glowmate-azonosítóját, hogy mások könnyebben kapcsolatba léphessenek Önnel!</string>
   <!--Conversation details-->
   <string name="details">Részletek</string>
   <string name="secure_p2p_connection">Biztonságos társ-társ kapcsolata</string>
@@ -465,7 +465,7 @@
   <string name="show_certificate">Tanúsítvány megjelenítése</string>
   <string name="mute_conversation">Beszélgetés elnémítása</string>
   <!--Donation-->
-  <string name="donation_card_description">Ha értékeli a Jami használatát, és hisz a küldetésünkben, szeretne adományozni?</string>
+  <string name="donation_card_description">Ha értékeli a Glowmate használatát, és hisz a küldetésünkben, szeretne adományozni?</string>
   <string name="donation_card_not_now">Máskor</string>
   <string name="donation_donate">Adományozás</string>
   <string name="donation_setting_title">Adományozási emlékeztető</string>

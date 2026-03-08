@@ -7,11 +7,11 @@
   <string name="delete_conversation_confirmation">你确定要删除这个对话吗？</string>
   <string name="acc_profile_photo_capture">拍摄照片</string>
   <string name="view_switch_camera">翻轉相機</string>
-  <string name="sponsor_section">Jami 是自由软件，它的开发和支持者是：</string>
+  <string name="sponsor_section">Glowmate 是自由软件，它的开发和支持者是：</string>
   <string name="no_browser_app_installed">未找到web浏览器应用程序，请安装一个以查看此页面。</string>
   <string name="website_chooser_title">使用…浏览网站</string>
   <string name="license">本软件由版权持有人及其他责任者“按原样”提供，不提供任何形式的担保。详细信息请参阅 <u>GNU 通用公共许可证版本 3 或更新</u></string>
-  <string name="description">Jami 是一款用于通用通信的自由软件，它尊重用户的自由和隐私。</string>
+  <string name="description">Glowmate 是一款用于通用通信的自由软件，它尊重用户的自由和隐私。</string>
   <string name="credits">致謝</string>
   <!--About dialog-->
   <string name="thank_note">我们要感谢我们的贡献者，他们多年来的努力使这个软件成为现在的样子。</string>
@@ -19,7 +19,7 @@
   <string name="media">媒体</string>
   <string name="community_management">社区管理</string>
   <string name="special_thanks">特别感谢</string>
-  <string name="end_note">这是一份为Jami投入大量时间并取得有益成果的人的名单。任何希望被添加到列表中的此类贡献者都应通过以下方式联系Jami团队contact@jami.net.</string>
+  <string name="end_note">这是一份为Glowmate投入大量时间并取得有益成果的人的名单。任何希望被添加到列表中的此类贡献者都应通过以下方式联系Glowmate团队contact@jami.net.</string>
   <!--RingActivity-->
   <!--AB menus-->
   <!--Sections-->
@@ -53,14 +53,14 @@
   <string name="notif_channel_sync">数据同步</string>
   <string name="notif_group_calls">通话</string>
   <string name="notif_inprogress_group_call">通话中</string>
-  <string name="notif_background_service">Jami 正在后台运行</string>
+  <string name="notif_background_service">Glowmate 正在后台运行</string>
   <string name="notif_mark_as_read">标记为已读</string>
   <string name="notif_dismiss">移除</string>
   <string name="notif_reply">回覆</string>
   <string name="notif_incoming_file_transfer_title">从%1$s收到文件</string>
   <string name="notif_sync_title">正在同步数据……</string>
   <string name="notif_channel_reconnect">后台同步</string>
-  <string name="notif_reconnect_title">Jami正在同步中…</string>
+  <string name="notif_reconnect_title">Glowmate正在同步中…</string>
   <!--Call Fragment-->
   <string name="action_call_hangup">結束電話</string>
   <string name="action_call_resume">继续</string>
@@ -70,7 +70,7 @@
   <string name="hist_out_call">%1$s 的去电</string>
   <string name="call_duration">最后的%s</string>
   <string name="call_on_hold">通话已挂起</string>
-  <string name="start_error_title">无法启动Jami</string>
+  <string name="start_error_title">无法启动Glowmate</string>
   <string name="action_call_accept">接听通话</string>
   <string name="action_call_accept_audio">接受音频</string>
   <string name="action_call_accept_video">接受视频</string>
@@ -87,7 +87,7 @@
   <string name="ab_action_video_call">開始視訊通話</string>
   <string name="ab_action_change_screen_orientation">更改屏幕方向</string>
   <string name="write_a_message">写消息</string>
-  <string name="qr_code_not_contact">不是Jami的二维码</string>
+  <string name="qr_code_not_contact">不是Glowmate的二维码</string>
   <string name="new_group">建立新群組</string>
   <string name="ab_action_flipcamera">翻转相机</string>
   <!--Text messages-->
@@ -103,11 +103,11 @@
   <!--Ringtone activity-->
   <string name="ringtone_error_format_not_supported">不支持此格式。</string>
   <string name="ringtone_custom_label">自定义</string>
-  <string name="ringtone_jami_tones">Jami铃声</string>
+  <string name="ringtone_jami_tones">Glowmate铃声</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami需要“读取联系人”权限才能启用此功能。请批准。</string>
+  <string name="permission_dialog_read_contacts_message">Glowmate需要“读取联系人”权限才能启用此功能。请批准。</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami需要“写入通话记录”权限才能启用此功能。请批准。</string>
+  <string name="permission_dialog_write_call_log_message">Glowmate需要“写入通话记录”权限才能启用此功能。请批准。</string>
   <!--QRCode Scan-->
   <string name="title_activity_qrcode">分享我的账户</string>
   <string name="error_scan_no_camera_permissions">二维码扫描仪需要相机许可。相机权限已禁用。在设备设置中启用它以使用此功能。</string>
@@ -177,7 +177,7 @@
   <!--Contacts-->
   <string name="prompt_new_password">新密码</string>
   <string name="prompt_new_password_repeat">确认新密码</string>
-  <string name="account_create_title">建立 Jami 帳號</string>
+  <string name="account_create_title">建立 Glowmate 帳號</string>
   <string name="prompt_new_username">输入新用户名</string>
   <string name="pin_copied">验证码已复制到剪贴板。</string>
   <string name="copied_clipboard">已复制到剪贴板。</string>
@@ -257,8 +257,8 @@
   <string name="speech_recogniton_unavailable">语音识别不可用。</string>
   <string name="audio_permission_rationale_title">需要音频权限</string>
   <string name="camera_permission_rationale_title">需要相机权限</string>
-  <string name="audio_permission_rationale_message">Jami需要获得麦克风许可才能使用语音转文本和录制音频功能。下一步将对此进行询问</string>
-  <string name="camera_permission_rationale_message">Jami需要摄像头许可才能录制视频和进行视频通话。下一步将对此进行询问</string>
+  <string name="audio_permission_rationale_message">Glowmate需要获得麦克风许可才能使用语音转文本和录制音频功能。下一步将对此进行询问</string>
+  <string name="camera_permission_rationale_message">Glowmate需要摄像头许可才能录制视频和进行视频通话。下一步将对此进行询问</string>
   <string name="unable_to_start_recorder">无法开始录制音频</string>
   <string name="error_sharing_file">共享文件时出错。</string>
   <string name="error_opening_file">打开文件时出错。</string>
@@ -286,15 +286,15 @@
   <string name="picker_title">選擇聯繫人</string>
   <string name="picker_btn">選擇聯繫人</string>
   <string name="no_contact_to_add">您没有要添加的联系人</string>
-  <string name="bottomsheet_contact">聯繫Jami\n%1$s</string>
+  <string name="bottomsheet_contact">聯繫Glowmate\n%1$s</string>
   <string name="bottomsheet_remove">移除成员</string>
   <string name="error_open_no_app_found">找不到处理此文件的应用程序：%1$s</string>
   <string name="swarm_detail_no_document">你还没有文件</string>
   <string name="group_admin">管理</string>
-  <string name="share_contact_intent_title">在Jami上添加此联系人！</string>
-  <string name="share_contact_intent_body">您可以在Jami分布式通信平台上添加此联系人“%1$s”：%2$s</string>
-  <!--JamiId-->
-  <string name="jami_id_copy">复制Jami的Id</string>
+  <string name="share_contact_intent_title">在Glowmate上添加此联系人！</string>
+  <string name="share_contact_intent_body">您可以在Glowmate分布式通信平台上添加此联系人“%1$s”：%2$s</string>
+  <!--GlowmateId-->
+  <string name="jami_id_copy">复制Glowmate的Id</string>
   <string name="jami_id_share">分享jami的ID</string>
   <string name="jami_id_validate">注册用户名</string>
   <string name="jami_id_available">用户名可用。</string>
@@ -302,9 +302,9 @@
   <string name="jami_id_info">• 最多32字符\n• 允许使用的特殊字符：破折号（-），下划线（_）</string>
   <string name="jami_id_looking_for_availability">检查用户名是否可用...</string>
   <string name="jami_id_choose_username">选择一个用户名</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">欢迎使用 Jami</string>
-  <string name="welcome_jami_description">分享您的 Jami 识别码，以便更方便地与您联系！</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">欢迎使用 Glowmate</string>
+  <string name="welcome_jami_description">分享您的 Glowmate 识别码，以便更方便地与您联系！</string>
   <!--Conversation details-->
   <string name="details">详细</string>
   <string name="secure_p2p_connection">安全的对等连接</string>
@@ -315,7 +315,7 @@
   <string name="show_certificate">显示证书</string>
   <string name="mute_conversation">静音对话</string>
   <!--Donation-->
-  <string name="donation_card_description">如果您喜欢使用 Jami 并相信我们的使命，您愿意捐款吗？</string>
+  <string name="donation_card_description">如果您喜欢使用 Glowmate 并相信我们的使命，您愿意捐款吗？</string>
   <string name="donation_card_not_now">现在不要</string>
   <string name="donation_donate">捐助</string>
   <string name="donation_setting_title">捐赠提醒</string>

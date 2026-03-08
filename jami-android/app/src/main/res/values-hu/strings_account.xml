@@ -8,7 +8,7 @@
   <string name="account_selection">Fiók kijelölése</string>
   <string name="add_ring_account_title">Fiók hozzáadása</string>
   <string name="add_sip_account_title">SIP-fiók hozzáadása</string>
-  <string name="ring_account_default_name">Jami-fiók: %1$s</string>
+  <string name="ring_account_default_name">Glowmate-fiók: %1$s</string>
   <string name="account_creation_error">Hiba történt a fiók létrehozásakor.</string>
   <string name="prompt_alias">Álnév</string>
   <string name="prompt_hostname">Állomásnév</string>
@@ -28,7 +28,7 @@
         Csak közvetlen IP-hívásokat kezdeményezhet és fogadhat.
         Fiókját később szerkesztheti.</string>
   <string name="account_type_ip2ip">IP-fiók</string>
-  <string name="help_ring">A Jami-fiók lehetővé teszi az emberek biztonságos elérését egy egyenrangú, teljesen elosztott hálózaton keresztül.</string>
+  <string name="help_ring">A Glowmate-fiók lehetővé teszi az emberek biztonságos elérését egy egyenrangú, teljesen elosztott hálózaton keresztül.</string>
   <string name="help_sip_title">SIP-fiók hozzáadása</string>
   <string name="help_sip">Meglévő SIP-fiók beállítása</string>
   <string name="create_sip_account">SIP-fiók beállítása</string>
@@ -157,27 +157,27 @@
   <string name="account_export_file_summary">Készítsen biztonsági másolatot a fiókjáról eszközén, hogy később visszaállítsa.</string>
   <string name="account_export_end_decryption_message">Hibás jelszó. Próbálja meg újra a helyes jelszó megadásával.</string>
   <string name="account_enter_password">Jelszó megadása</string>
-  <string name="account_share_body">Lépjen kapcsolatba velem a(z) „%1$s” használatával a Jami elosztott kommunikációs platformon: %2$s</string>
-  <string name="account_share_body_with_username">Lépjen kapcsolatba velem a(z) „%1$s” vagy a(z) „%2$s” nyilvános felhasználónevem használatával a Jami elosztott kommunikációs platformon: %3$s</string>
-  <string name="account_contact_me">Lépjen kapcsolatba velem a Jami-n!</string>
+  <string name="account_share_body">Lépjen kapcsolatba velem a(z) „%1$s” használatával a Glowmate elosztott kommunikációs platformon: %2$s</string>
+  <string name="account_share_body_with_username">Lépjen kapcsolatba velem a(z) „%1$s” vagy a(z) „%2$s” nyilvános felhasználónevem használatával a Glowmate elosztott kommunikációs platformon: %3$s</string>
+  <string name="account_contact_me">Lépjen kapcsolatba velem a Glowmate-n!</string>
   <string name="update_account">Fiók frissítése</string>
-  <string name="account_migration">Jami-fiókja frissíthető.\nAdja meg a jelszavát.</string>
-  <string name="ring_account">Jami-fiók</string>
+  <string name="account_migration">Glowmate-fiókja frissíthető.\nAdja meg a jelszavát.</string>
+  <string name="ring_account">Glowmate-fiók</string>
   <string name="sip_account">SIP-fiók</string>
   <string name="ring_account_identity">Személyazonosság</string>
   <string name="account_migration_title_dialog">Fiók áttelepítése</string>
   <string name="account_migration_message_dialog">A fiókjait frissíteni kell. Szeretne a Fiókkezelési lapra ugrani a művelet elvégzéséhez?</string>
   <string name="account_update_needed">Frissítés szükséges</string>
   <string name="account_cannot_be_found_title">Fiókhiba</string>
-  <string name="account_cannot_be_found_message">Nem található fiók a Jami hálózaton. Győződjön meg arról, hogy a Jami-re exportálták egy meglévő eszközről, és hogy a megadott hitelesítő adatok helyesek.</string>
+  <string name="account_cannot_be_found_message">Nem található fiók a Glowmate hálózaton. Győződjön meg arról, hogy a Glowmate-re exportálták egy meglévő eszközről, és hogy a megadott hitelesítő adatok helyesek.</string>
   <string name="jams_account_cannot_be_found_message">Hiba történt a fiók csatlakoztatása közben. Kérjük, ellenőrizze a hitelesítő adatokat, és próbálkozzon újra.</string>
   <string name="account_sip_cannot_be_registered_message">Folytathatja a fiók létrehozásának folyamatát vagy itt szerkesztheti adatait. A fiókbeállítások később is szerkeszthetők.</string>
   <string name="account_no_network_title">Hálózati hiba</string>
-  <string name="account_no_network_message">Kapcsolódási hiba történt a Jami-fióknak az elosztott hálózathoz való hozzáadása közben. Ellenőrizze az eszköz csatlakoztatását.</string>
+  <string name="account_no_network_message">Kapcsolódási hiba történt a Glowmate-fióknak az elosztott hálózathoz való hozzáadása közben. Ellenőrizze az eszköz csatlakoztatását.</string>
   <string name="account_device_added_title">Fiókeszköz hozzáadva</string>
-  <string name="account_device_added_message">A Jami-fiók beállítása sikerült az eszközön.</string>
+  <string name="account_device_added_message">A Glowmate-fiók beállítása sikerült az eszközön.</string>
   <string name="account_device_updated_title">A fiókeszköz frissítve</string>
-  <string name="account_device_updated_message">A Jami-fiók frissítése sikerült.</string>
+  <string name="account_device_updated_message">A Glowmate-fiók frissítése sikerült.</string>
   <string name="account_cannot_be_updated_message">Hiba történt a fiók frissítése közben. Kérjük, ellenőrizze a fiók jelszavát.</string>
   <string name="account_sip_success_title">SIP-fiók regisztrálva</string>
   <string name="account_sip_success_message">A SIP-fiók regisztrációja sikerült.</string>
@@ -187,7 +187,7 @@
   <string name="account_tv_advance_settings_header">Haladó beállítások</string>
   <string name="account_tv_add_contact">Kapcsolattartó hozzáadása</string>
   <string name="account_tv_advanced_settings">Általános beállítások szerkesztése</string>
-  <string name="account_tv_about">A Jami névjegye</string>
+  <string name="account_tv_about">A Glowmate névjegye</string>
   <string name="tv_about_version">Verzió</string>
   <string name="tv_about_license">Licenc</string>
   <string name="tv_about_author">Szerző engedélye</string>
@@ -195,7 +195,7 @@
   <string name="account_link_device">Fiók létrehozása más eszközről</string>
   <string name="account_link_button">Kapcsolódás a hálózatról</string>
   <string name="account_link_archive_button">Kapcsolódás biztonsági másolatból</string>
-  <string name="account_new_button">Jami-fiók létrehozása</string>
+  <string name="account_new_button">Glowmate-fiók létrehozása</string>
   <string name="account_link_export_button">Új eszköz összekapcsolása</string>
   <string name="account_link_show_button">További %d összekapcsolt eszköz megjelenítése</string>
   <string name="account_link_hide_button">Összekapcsolt eszköz elrejtése</string>
@@ -231,9 +231,9 @@
   <string name="account_status_offline">Nem elérhető</string>
   <string name="account_status_error">Hiba</string>
   <!--Create account-->
-  <string name="account_creation_home">Üdvözli a Jami</string>
+  <string name="account_creation_home">Üdvözli a Glowmate</string>
   <string name="account_creation_profile">Saját névjegy létrehozása</string>
-  <string name="account_creation_ring">Jami-fiók létrehozása</string>
+  <string name="account_creation_ring">Glowmate-fiók létrehozása</string>
   <string name="account_sip_cannot_be_registered">Hiba történt a SIP-fiók regisztrálásakor.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Névjegy szerkesztése</string>
@@ -245,7 +245,7 @@
   <string name="revoke_device_wait_title">Kérjük, várjon…</string>
   <string name="revoke_device_wait_message">Eszköz visszavonása</string>
   <string name="rename_device_title">Eszköz átnevezése</string>
-  <string name="rename_device_message">Írja be az eszköz nevét az eszköz azonosításához a Jami-fiókjában</string>
+  <string name="rename_device_message">Írja be az eszköz nevét az eszköz azonosításához a Glowmate-fiókjában</string>
   <string name="rename_device_button">Eszköz átnevezése</string>
   <string name="account_rename_device_hint">Új eszköznév kiválasztása</string>
   <string name="account_device_name_empty">Az eszköznév nem lehet üres.</string>
@@ -254,28 +254,28 @@
   <string name="account_device_id">Eszközazonosító</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Ez a formátum nem támogatott</string>
-  <string name="account_link_info">Az új eszközön található Jami alkalmazásban olvasd be a QR-kódot, vagy írd be kézzel a hitelesítési kódot.</string>
+  <string name="account_link_info">Az új eszközön található Glowmate alkalmazásban olvasd be a QR-kódot, vagy írd be kézzel a hitelesítési kódot.</string>
   <string name="account_link_device_title">Új eszköz összekapcsolása</string>
   <string name="account_link_password">Ez a fiók jelszóval titkosított, adja meg a jelszót a hitelesítési kód létrehozásához.</string>
   <string name="account_link_generate_button">Létrehozás</string>
   <string name="account_link_time_valid">Hitelesítési kód lejárata: %1$s.</string>
-  <string name="account_link_device_info">Jelöld ki az „Új eszköz összekapcsolása” lehetőséget a másik Jami alkalmazásban a QR-kód vagy a hitelesítési kód megjelenítéséhez.</string>
+  <string name="account_link_device_info">Jelöld ki az „Új eszköz összekapcsolása” lehetőséget a másik Glowmate alkalmazásban a QR-kód vagy a hitelesítési kód megjelenítéséhez.</string>
   <string name="account_generate_export_device">A másik eszközön</string>
-  <string name="account_generate_export_info">Telepítse és indítsa el a Jami alkalmazást. Válassza az „Importálás másik eszközről” lehetőséget, és olvassa be a QR-kódot. Vagy adja meg kézzel a PIN-kódot.</string>
+  <string name="account_generate_export_info">Telepítse és indítsa el a Glowmate alkalmazást. Válassza az „Importálás másik eszközről” lehetőséget, és olvassa be a QR-kódot. Vagy adja meg kézzel a PIN-kódot.</string>
   <string name="content_description_qr_generated">Fiók QR-kódja</string>
   <string name="account_generate_export_invalid">A hitelesítési kód már nem érvényes.\nAdja meg a jelszót, és hozzon létre egy másikat az új eszköz összekapcsolásához.</string>
   <string name="account_generate_export_invalid_two">A hitelesítési kód már nem érvényes.\nAz új eszköz összekapcsolásához hozzon létre egy újat.</string>
   <string name="help_pin_info">Szükséges, ha a fiók jelszóval titkosított.</string>
   <string name="account_link_device_button">Kapcsolódás</string>
   <!--Biometry-->
-  <string name="account_biometry_auth_title">Jami-fiók zárolásának feloldása</string>
+  <string name="account_biometry_auth_title">Glowmate-fiók zárolásának feloldása</string>
   <string name="account_biometry_auth_message">Fiók zárolásának feloldása biometria használata</string>
   <string name="account_biometry_enroll_title">Használja a biometrikus hitelesítést?</string>
   <string name="account_biometry_enroll_message">Ez az eszköz támogatja a biztonságos biometrikus hitelesítést.
-A biometrikus vagy eszközhitelesítés kényelmes módot kínál a Jami-fiókhoz való hozzáférés helyi zárolásának feloldására. A jelszó továbbra is használható.</string>
+A biometrikus vagy eszközhitelesítés kényelmes módot kínál a Glowmate-fiókhoz való hozzáférés helyi zárolásának feloldására. A jelszó továbbra is használható.</string>
   <string name="account_biometry_enroll_accept">Biometrikus adatok használata</string>
   <string name="no_thanks">Köszönöm, nem</string>
-  <string name="account_biometry_enroll_auth_title">Hitelesítés hozzáadása a Jami-fiókhoz</string>
+  <string name="account_biometry_enroll_auth_title">Hitelesítés hozzáadása a Glowmate-fiókhoz</string>
   <string name="account_biometry_enroll_auth_message">Adjon hozzá biztonságos biometrikus vagy eszközhitelesítést jelszava helyett</string>
   <string name="account_auth_error">Hitelesítési hiba: %1$s</string>
   <string name="account_auth_success">Hitelesítés sikerült</string>

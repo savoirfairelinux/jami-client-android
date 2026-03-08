@@ -303,10 +303,10 @@
   <string name="picker_btn">കോൺടാക്റ്റുകൾ തിരഞ്ഞെടുക്കുക</string>
   <string name="bottomsheet_contact">ജാമി %1$s നെ ബന്ധപ്പെടുക</string>
   <string name="bottomsheet_remove">അംഗം നീക്കം ചെയ്യുക</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">ഉപയോക്തൃനാമം രജിസ്റ്റർ ചെയ്യുക</string>
   <string name="jami_id_choose_username">ഒരു ഉപയോക്തൃനാമം തിരഞ്ഞെടുക്കുക</string>
-  <!--WelcomeJami-->
+  <!--WelcomeGlowmate-->
   <string name="welcome_jami_title">ജാമിയിൽ സ്വാഗതം</string>
   <!--Conversation details-->
   <string name="details">Maklumat</string>

@@ -7,9 +7,9 @@
   <string name="version_section">Bertsioa</string>
   <string name="website_chooser_title">Ikusi webgunea hau erabiliz…</string>
   <string name="license">Software hau \"den moduan\" eskaintzen da, inolako bermeik gabe. Xehetasunetarako ikusi <u>General Public License lizentzia, 3. bertsioa edo berriagoa</u></string>
-  <string name="description">Jami komunikazio unibertsalerako software librea da, erabiltzaileek askatasunak eta pribatutasuna aintzat hartzen dituena</string>
+  <string name="description">Glowmate komunikazio unibertsalerako software librea da, erabiltzaileek askatasunak eta pribatutasuna aintzat hartzen dituena</string>
   <string name="credits">Kredituak</string>
-  <string name="pip_title">Jami Konferentzia</string>
+  <string name="pip_title">Glowmate Konferentzia</string>
   <string name="call_service_description">Zerbitzu hau ezinbestekoa da zure deiak lehen planoan abian mantentzeko. Deietan zehar ari da soilik.</string>
   <string name="data_transfer_service_description">Zerbitzu hau ezinbestekoa da fitxategi transferentzien zehar jakinarazpen iraunkorrak bistaratzeko. Fitxategi transferentzietan zehar ari da soilik.</string>
   <!--About dialog-->
@@ -26,7 +26,7 @@
   <string name="menu_item_settings">Ezarpenak</string>
   <string name="menu_item_account_settings">Kontuaren ezarpenak</string>
   <string name="menu_item_share">partekatu nire kontua</string>
-  <string name="menu_item_about">Jamiri buruz</string>
+  <string name="menu_item_about">Glowmateri buruz</string>
   <string name="video_setting_title">Bideoaren ezarpenak</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
@@ -167,7 +167,7 @@
   <string name="conversation_reply_you">Zuk</string>
   <string name="conversation_preference_color">Elkarrizketaren kolorea</string>
   <string name="conversation_preference_emoji">Elkarrizketaren emojia</string>
-  <string name="conversation_type_contact">Jami kontaktua</string>
+  <string name="conversation_type_contact">Glowmate kontaktua</string>
   <string name="conversation_type_private">Pribatua</string>
   <string name="conversation_search_hint">Bilaketa elkarrizketa</string>
   <string name="today">Gaur egun</string>
@@ -177,11 +177,11 @@
   <string name="prompt_new_password">Pasahitz berria</string>
   <string name="prompt_new_password_optional">Pasahitz berria (aukerakoa)</string>
   <string name="prompt_new_password_repeat">Baieztatu pasahitza berria</string>
-  <string name="account_create_title">Jarri kontu bat Jami-n</string>
+  <string name="account_create_title">Jarri kontu bat Glowmate-n</string>
   <string name="prompt_new_username">Sartu erabiltzaile-izen berria</string>
   <string name="prompt_hint_username">Erabiltzaile-izena</string>
-  <string name="help_password_choose">Hautatu gogoratuko duzun pasahitz sendo bat zure Jami kontua babesteko.</string>
-  <string name="help_password_enter">Sartu zure Jami kontuaren pasahitza.</string>
+  <string name="help_password_choose">Hautatu gogoratuko duzun pasahitz sendo bat zure Glowmate kontua babesteko.</string>
+  <string name="help_password_enter">Sartu zure Glowmate kontuaren pasahitza.</string>
   <string name="help_server_enter">Sartu kudeaketa zerbitzariaren URLa</string>
   <string name="wizard_next">Hurrengoa</string>
   <string name="wizard_back">Atzera</string>
@@ -206,7 +206,7 @@
   <string name="devices">Estekatuta dauden gailuak</string>
   <string name="total_devices">Gailuak:</string>
   <!--Share fragment-->
-  <string name="share_message">Eskaneatu kode hau Jami erabiliz</string>
+  <string name="share_message">Eskaneatu kode hau Glowmate erabiliz</string>
   <string name="share_message_no_account">Hautatu kontu bat partekatzeko.</string>
   <string name="share_your_account_information">Partekatu nire kontaktu-informazioa</string>
   <string name="share_label">Partekatu</string>
@@ -302,13 +302,13 @@
   <string name="dialog_hint_description">Deskripzioa</string>
   <string name="picker_title">Kontaktua hautatu</string>
   <string name="picker_btn">Kontaktua hautatu</string>
-  <string name="bottomsheet_contact">Jarri harremanetan Jami\n%1$s</string>
+  <string name="bottomsheet_contact">Jarri harremanetan Glowmate\n%1$s</string>
   <string name="bottomsheet_remove">Kendu kideak</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">Erabiltzaile izena erregistratzea</string>
   <string name="jami_id_choose_username">Erabiltzaile izena aukeratu</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">Ongi etorri Jamira</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">Ongi etorri Glowmatera</string>
   <!--Conversation details-->
   <string name="details">Xehetasunak</string>
   <string name="Private">Pribatua</string>

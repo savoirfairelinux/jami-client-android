@@ -14,11 +14,11 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package cx.ring.services
+package com.glowmate.services
 
 import android.util.Log
-import cx.ring.application.JamiApplication
-import cx.ring.application.JamiApplicationUnifiedPush
+import com.glowmate.application.JamiApplication
+import com.glowmate.application.JamiApplicationUnifiedPush
 import org.json.JSONObject
 import org.unifiedpush.android.connector.FailedReason
 import org.unifiedpush.android.connector.PushService

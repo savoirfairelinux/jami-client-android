@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <androidx.preference.PreferenceCategory
         android:key="Account.credentials"
         android:title="@string/account_credentials_label">
-        <cx.ring.views.CredentialsPreference
+        <com.glowmate.views.CredentialsPreference
             android:icon="@drawable/baseline_add_24"
             android:key="Add.credentials"
             android:title="@string/account_credentials_add" />
@@ -39,7 +39,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:persistent="false"
             android:title="@string/account_tls_transport_switch_label" />
 
-        <cx.ring.views.EditTextIntegerPreference
+        <com.glowmate.views.EditTextIntegerPreference
             android:dependency="TLS.enable"
             android:key="TLS.listenerPort"
             android:persistent="false"
@@ -89,7 +89,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:singleLine="true"
             android:title="@string/account_tls_server_name_label" />
 
-        <cx.ring.views.EditTextIntegerPreference
+        <com.glowmate.views.EditTextIntegerPreference
             android:dependency="TLS.enable"
             android:key="TLS.negotiationTimeoutSec"
             android:persistent="false"

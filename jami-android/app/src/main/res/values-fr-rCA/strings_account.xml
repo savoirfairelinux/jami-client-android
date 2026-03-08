@@ -8,7 +8,7 @@
   <string name="account_selection">Choisir le compte</string>
   <string name="add_ring_account_title">Ajouter le compte</string>
   <string name="add_sip_account_title">Ajouter un compte SIP</string>
-  <string name="ring_account_default_name">Compte Jami %1$s</string>
+  <string name="ring_account_default_name">Compte Glowmate %1$s</string>
   <string name="account_creation_error">Une erreur s\'est produite pendant la création du compte.</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Nom d’hôte</string>
@@ -28,7 +28,7 @@
 Vous ne pourrez recevoir que des appels IP directs.
 Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <string name="account_type_ip2ip">Compte IP</string>
-  <string name="help_ring">Un compte Jami vous permet de joindre des personnes en pair-à-pair de façon sécurisée au travers d\'un réseau entièrement distribué.</string>
+  <string name="help_ring">Un compte Glowmate vous permet de joindre des personnes en pair-à-pair de façon sécurisée au travers d\'un réseau entièrement distribué.</string>
   <string name="help_sip_title">Ajouter un compte SIP</string>
   <string name="help_sip">Configurer un compte SIP existant.</string>
   <string name="create_sip_account">Configurer un compte SIP</string>
@@ -159,23 +159,23 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <string name="account_enter_password">Entrer le mot de passe</string>
   <string name="account_share_body">Contactez-moi en utilisant l\'identifiant \"%1$s\" sur la plateforme de communication distribuée %2$s</string>
   <string name="account_share_body_with_username">Contactez-moi en utilisant l\'identifiant \'%1$s\' ou mon nom d\'utilisateur public \'%2$s\' sur la plateforme de communication distribuée : %3$s</string>
-  <string name="account_contact_me">Contactez moi sur Jami !</string>
+  <string name="account_contact_me">Contactez moi sur Glowmate !</string>
   <string name="update_account">Mettre à jour le compte</string>
-  <string name="account_migration">Votre compte Jami va être mis à jour.\nVeuillez saisir votre mot de passe.</string>
-  <string name="ring_account">Compte Jami</string>
+  <string name="account_migration">Votre compte Glowmate va être mis à jour.\nVeuillez saisir votre mot de passe.</string>
+  <string name="ring_account">Compte Glowmate</string>
   <string name="sip_account">Compte SIP</string>
   <string name="ring_account_identity">Identité</string>
   <string name="account_migration_title_dialog">Migration de compte</string>
   <string name="account_migration_message_dialog">Vos comptes doivent être mis à jour. Souhaitez-vous vous rendre au panneau des comptes pour effectuer cette opération ?</string>
   <string name="account_update_needed">Mise à jour nécessaire</string>
   <string name="account_cannot_be_found_title">Erreur liée au compte</string>
-  <string name="account_cannot_be_found_message">Le compte ne peut être trouvé sur le réseau Jami. Vérifiez qu\'il a bien été exporté par un autre appareil et que les identifiants fournis sont corrects.</string>
+  <string name="account_cannot_be_found_message">Le compte ne peut être trouvé sur le réseau Glowmate. Vérifiez qu\'il a bien été exporté par un autre appareil et que les identifiants fournis sont corrects.</string>
   <string name="jams_account_cannot_be_found_message">Une erreur s\'est produite pendant la connexion du compte. Veuillez vérifier votre mot de passe.</string>
   <string name="account_sip_cannot_be_registered_message">Vous pouvez continuer avec le processus de création de compte ou modifier vos informations ici. Vous pourrez effectuer des modifications plus tard dans les paramètres du compte.</string>
   <string name="account_no_network_title">Erreur de réseau</string>
   <string name="account_no_network_message">Une erreur de connectivité s\'est produite lors de l\'ajout de compte. Veuillez vérifier votre connectivité.</string>
   <string name="account_device_added_title">Compte de l\'appareil ajouté</string>
-  <string name="account_device_added_message">Le compte Jami a été configuré correctement.</string>
+  <string name="account_device_added_message">Le compte Glowmate a été configuré correctement.</string>
   <string name="account_device_updated_title">Compte de l\'appareil mis à jour</string>
   <string name="account_device_updated_message">Le compte a été modifié.</string>
   <string name="account_cannot_be_updated_message">La mise à jour de l\'appareil associé au compte a échoué. Vérifiez votre mot de passe.</string>
@@ -187,7 +187,7 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <string name="account_tv_advance_settings_header">Réglages avancés</string>
   <string name="account_tv_add_contact">Ajouter un contact</string>
   <string name="account_tv_advanced_settings">Modifier les paramètres généraux</string>
-  <string name="account_tv_about">À propos de Jami</string>
+  <string name="account_tv_about">À propos de Glowmate</string>
   <string name="tv_about_version">Version</string>
   <string name="tv_about_license">Licence</string>
   <string name="tv_about_author">Droits d\'auteur</string>
@@ -195,7 +195,7 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <string name="account_link_device">Se connecter à partir d\'un autre appareil</string>
   <string name="account_link_button">Se connecter à partir d\'un réseau</string>
   <string name="account_link_archive_button">Se connecter à partir d\'une sauvegarde</string>
-  <string name="account_new_button">Créer un compte Jami</string>
+  <string name="account_new_button">Créer un compte Glowmate</string>
   <string name="account_link_export_button">Lier un Appareil</string>
   <string name="account_link_show_button">Montrer %d appareils liés supplémentaires</string>
   <string name="account_link_hide_button">Cacher les appareils liés</string>
@@ -231,9 +231,9 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <string name="account_status_offline">Hors ligne</string>
   <string name="account_status_error">Erreur</string>
   <!--Create account-->
-  <string name="account_creation_home">Bienvenue sur Jami</string>
+  <string name="account_creation_home">Bienvenue sur Glowmate</string>
   <string name="account_creation_profile">Créer votre profil</string>
-  <string name="account_creation_ring">Créer un compte Jami</string>
+  <string name="account_creation_ring">Créer un compte Glowmate</string>
   <string name="account_sip_cannot_be_registered">Une erreur s\'est produite pendant l\'enregistrement du compte SIP.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Modifier votre profile</string>
@@ -245,7 +245,7 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <string name="revoke_device_wait_title">Veuillez patienter...</string>
   <string name="revoke_device_wait_message">Révocation de l\'appareil en cours</string>
   <string name="rename_device_title">Renommer cet appareil</string>
-  <string name="rename_device_message">Choisissez un nom pour identifier cet appareil dans votre compte Jami</string>
+  <string name="rename_device_message">Choisissez un nom pour identifier cet appareil dans votre compte Glowmate</string>
   <string name="rename_device_button">Renommer l\'appareil</string>
   <string name="account_rename_device_hint">Choisir un nouveau nom d\'appareil</string>
   <string name="account_device_name_empty">Le nom d\'appareil ne peut être vide.</string>
@@ -254,28 +254,28 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <string name="account_device_id">Identifiant d\'appareil</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Ce format n\'est pas supporté.</string>
-  <string name="account_link_info">Dans Jami, sur le nouvel appareil, scanner le code QR ou bien entrer le code d\'authentification manuellement.</string>
+  <string name="account_link_info">Dans Glowmate, sur le nouvel appareil, scanner le code QR ou bien entrer le code d\'authentification manuellement.</string>
   <string name="account_link_device_title">Associer un nouvel appareil</string>
   <string name="account_link_password">Le compte est encrypté, veuillez entrer le mot de passe afin de générer le code d\'authentification.</string>
   <string name="account_link_generate_button">Générer</string>
   <string name="account_link_time_valid">Le code d\'authentification sera invalide : %1$s.</string>
-  <string name="account_link_device_info">Choose “Link a new device” from the other Jami app to show the QR code or the authentication code.</string>
+  <string name="account_link_device_info">Choose “Link a new device” from the other Glowmate app to show the QR code or the authentication code.</string>
   <string name="account_generate_export_device">Sur l\'autre appareil</string>
-  <string name="account_generate_export_info">Installer et lancer Jami, choisissez \"Importer d\'un nouvel appareil\" et scanner le code QR ou entrer manuellement le NIP.</string>
+  <string name="account_generate_export_info">Installer et lancer Glowmate, choisissez \"Importer d\'un nouvel appareil\" et scanner le code QR ou entrer manuellement le NIP.</string>
   <string name="content_description_qr_generated">Code QR du compte</string>
   <string name="account_generate_export_invalid">Le code d\'authentification n\'est plus valide.\nEntrez le mot de passe et générez-en un autre pour connecter le nouvel appareil.</string>
   <string name="account_generate_export_invalid_two">The authentication code is no longer valid.\nGenerate another one to link the new device.</string>
   <string name="help_pin_info">Nécessaire si le compte est chiffré par mot de passe.</string>
   <string name="account_link_device_button">Se connecter</string>
   <!--Biometry-->
-  <string name="account_biometry_auth_title">Déverrouiller le compte Jami</string>
+  <string name="account_biometry_auth_title">Déverrouiller le compte Glowmate</string>
   <string name="account_biometry_auth_message">Utiliser la biométrie pour déverrouiller votre compte</string>
   <string name="account_biometry_enroll_title">Utiliser l\'authentification biométrique ?</string>
   <string name="account_biometry_enroll_message">Votre appareil prend en charge l\'authentification biométrique sécurisée.
-L\'authentification biométrique ou par appareil est un moyen pratique de déverrouiller localement l\'accès à votre compte Jami. Vous pourrez toujours utiliser votre mot de passe.</string>
+L\'authentification biométrique ou par appareil est un moyen pratique de déverrouiller localement l\'accès à votre compte Glowmate. Vous pourrez toujours utiliser votre mot de passe.</string>
   <string name="account_biometry_enroll_accept">Utiliser la biométrie</string>
   <string name="no_thanks">Non merci</string>
-  <string name="account_biometry_enroll_auth_title">Ajouter l\'authentification pour votre compte Jami</string>
+  <string name="account_biometry_enroll_auth_title">Ajouter l\'authentification pour votre compte Glowmate</string>
   <string name="account_biometry_enroll_auth_message">Ajoutez une authentification biométrique sécurisée ou une authentification de l\'appareil comme alternative à votre mot de passe.</string>
   <string name="account_auth_error">Erreur d\'authentification : %1$s</string>
   <string name="account_auth_success">Authentification réussie</string>

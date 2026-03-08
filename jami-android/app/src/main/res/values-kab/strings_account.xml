@@ -8,7 +8,7 @@
   <string name="account_selection">Fren amiḍan</string>
   <string name="add_ring_account_title">Rnu amiḍan</string>
   <string name="add_sip_account_title">Rnu amiḍan SIP</string>
-  <string name="ring_account_default_name">Amiḍan n Jami %1$s</string>
+  <string name="ring_account_default_name">Amiḍan n Glowmate %1$s</string>
   <string name="account_creation_error">Teḍra-d tuccḍa deg tmerna n umiḍan.</string>
   <string name="prompt_alias">Mefferisem </string>
   <string name="prompt_hostname">isem n usenneftaɣ</string>
@@ -28,7 +28,7 @@
  Ad tizmireḍ kan ad tgeḍ u ad d-teṭṭfeḍ tiɣriwin IP usriden.
 Tzemreḍ ad tẓergeḍ amiḍan-ik-im ticki</string>
   <string name="account_type_ip2ip">Amiḍan IP</string>
-  <string name="help_ring">Amiḍan n Jami ad k-m-yeǧǧ ad tawḍeḍ imdanen s wudem aɣelsan deg uyugan ɣer uyugan s uẓeṭṭa yettwazuzren akken ma yella. </string>
+  <string name="help_ring">Amiḍan n Glowmate ad k-m-yeǧǧ ad tawḍeḍ imdanen s wudem aɣelsan deg uyugan ɣer uyugan s uẓeṭṭa yettwazuzren akken ma yella. </string>
   <string name="help_sip_title">Rnu amiḍan SIP</string>
   <string name="help_sip">Swel amiḍan SIP yellan</string>
   <string name="create_sip_account">Swel amiḍan SIP</string>
@@ -157,27 +157,27 @@ Tzemreḍ ad tẓergeḍ amiḍan-ik-im ticki</string>
   <string name="account_export_file_summary">Ḥrez amiḍan-ik-im ɣef yibenk-ik-im akken ad t-id-terreḍ ticki.</string>
   <string name="account_export_end_decryption_message">Awal n uɛeddi mačči d ameɣtu. Ma ulac aɣilif, ɛreḍ tikelt nniḍen s wawal n uɛeddi ameɣtu.</string>
   <string name="account_enter_password">Sekcem awal n uɛeddi</string>
-  <string name="account_share_body">Nermes-iyi-d s useqdec n \"%1$s\" ɣef tɣerɣert n teywalt n Jami yettwazuzren: %2$s</string>
-  <string name="account_share_body_with_username">Nermes-iyi-d s useqdec n \"%1$s\" Neɣ isem-iw n useqdac azayez \"%2$s\" ɣef tɣerɣert n teɣwalt n Jami yettwazuzren: %3$s</string>
-  <string name="account_contact_me">Nermes-iyi-d ɣer Jami!</string>
+  <string name="account_share_body">Nermes-iyi-d s useqdec n \"%1$s\" ɣef tɣerɣert n teywalt n Glowmate yettwazuzren: %2$s</string>
+  <string name="account_share_body_with_username">Nermes-iyi-d s useqdec n \"%1$s\" Neɣ isem-iw n useqdac azayez \"%2$s\" ɣef tɣerɣert n teɣwalt n Glowmate yettwazuzren: %3$s</string>
+  <string name="account_contact_me">Nermes-iyi-d ɣer Glowmate!</string>
   <string name="update_account">Leqqem amiḍan</string>
   <string name="account_migration">Amiḍan-ik-im n jami yezmer ad yettwaleqqem.\nMa ulac aɣilif, sekcem awal-ik-im n uɛeddi. </string>
-  <string name="ring_account">Amiḍan n Jami</string>
+  <string name="ring_account">Amiḍan n Glowmate</string>
   <string name="sip_account">Amiḍan SIP</string>
   <string name="ring_account_identity">Tamagit</string>
   <string name="account_migration_title_dialog">Tinigt n umiḍan</string>
   <string name="account_migration_message_dialog">Imiḍanen-ik-im ilaq ad ttwaleqmen. Tebɣiḍ ad tedduḍ ɣer ugdil n usefrek n umiḍan akken ad tgeḍ tamhelt-a?</string>
   <string name="account_update_needed">Aleqqem yettwsra</string>
   <string name="account_cannot_be_found_title">Tuccḍa deg umiḍan</string>
-  <string name="account_cannot_be_found_message">Ur izmir ara ad yaf amiḍan deg uẓeṭṭa n Jami. Wali ma yella yettwasifeḍ ɣef jami seg yibenk yellan, u daɣen yefka-d talɣut n usesteb tameɣtut.</string>
+  <string name="account_cannot_be_found_message">Ur izmir ara ad yaf amiḍan deg uẓeṭṭa n Glowmate. Wali ma yella yettwasifeḍ ɣef jami seg yibenk yellan, u daɣen yefka-d talɣut n usesteb tameɣtut.</string>
   <string name="jams_account_cannot_be_found_message">Teḍra-d tuccḍa deg tuqqna n umiḍan. Ma ulac aɣilif, senqed talɣut n usesteb tikelt nniḍen.</string>
   <string name="account_sip_cannot_be_registered_message">Tzemreḍ ad tkemmleḍ deg ukala n usnulfu n umiḍan neɣ ad tbeddleḍ talɣut-ik dagi. Taẓrigt mazal tezmer ad tili ticki deg iɣewwaṛen n umiḍan.</string>
   <string name="account_no_network_title">Tuccḍa deg uẓeṭṭa</string>
-  <string name="account_no_network_message">Tuccḍa n tuqqna teḍra-d deg tmerna n umiḍan Jami ɣer uẓeṭṭa yettwazuzren. Senqed tuqqna yinek-ik-im.</string>
+  <string name="account_no_network_message">Tuccḍa n tuqqna teḍra-d deg tmerna n umiḍan Glowmate ɣer uẓeṭṭa yettwazuzren. Senqed tuqqna yinek-ik-im.</string>
   <string name="account_device_added_title">Yerna-d yibenk n umiḍan</string>
   <string name="account_device_added_message">Amiḍan n jami yettusbadu akken iwata deg yibenk-agi. </string>
   <string name="account_device_updated_title">Amiḍan n yibenk yettwaleqqem</string>
-  <string name="account_device_updated_message">Amiḍan n Jami yettwalqem akken iwata. </string>
+  <string name="account_device_updated_message">Amiḍan n Glowmate yettwalqem akken iwata. </string>
   <string name="account_cannot_be_updated_message">Teḍra-d tuccḍa deg uleqqem n umiḍan. Ma ulac aɣilif, senqed awal n uɛeddi n umiḍan.</string>
   <string name="account_sip_success_title">Amiḍan SIP yettwasekles</string>
   <string name="account_sip_success_message">Amiḍan SIP yettwasekles akken iwata.</string>
@@ -187,7 +187,7 @@ Tzemreḍ ad tẓergeḍ amiḍan-ik-im ticki</string>
   <string name="account_tv_advance_settings_header">Iɣewwaṛen leqqayen</string>
   <string name="account_tv_add_contact">Rnu anermis</string>
   <string name="account_tv_advanced_settings">Beddel iɣewwaren imatuyen</string>
-  <string name="account_tv_about"> Ɣef Jami</string>
+  <string name="account_tv_about"> Ɣef Glowmate</string>
   <string name="tv_about_version">Leqqem</string>
   <string name="tv_about_license">Turagt</string>
   <string name="tv_about_author">Izerfan n umeskar</string>
@@ -195,7 +195,7 @@ Tzemreḍ ad tẓergeḍ amiḍan-ik-im ticki</string>
   <string name="account_link_device">Qqen seg yibenk-nniḍen</string>
   <string name="account_link_button">Qqen seg uẓeṭṭa</string>
   <string name="account_link_archive_button">Qqen seg uḥraz</string>
-  <string name="account_new_button">Snulfu-d amiḍan n Jami</string>
+  <string name="account_new_button">Snulfu-d amiḍan n Glowmate</string>
   <string name="account_link_export_button">Aseɣwen n yibenk amaynut</string>
   <string name="account_link_show_button">Sken %d ugar n yibenk icudden</string>
   <string name="account_link_hide_button">Ffer ibenk icudden</string>
@@ -231,9 +231,9 @@ Tzemreḍ ad tẓergeḍ amiḍan-ik-im ticki</string>
   <string name="account_status_offline">Ur iqqin ara</string>
   <string name="account_status_error">Tuccḍa</string>
   <!--Create account-->
-  <string name="account_creation_home">Ansuf yis-k/m ɣer Jami</string>
+  <string name="account_creation_home">Ansuf yis-k/m ɣer Glowmate</string>
   <string name="account_creation_profile">Snulfu-d amaɣnu-inek-inem</string>
-  <string name="account_creation_ring">Snulfu-d amiḍan-ik-im Jami</string>
+  <string name="account_creation_ring">Snulfu-d amiḍan-ik-im Glowmate</string>
   <string name="account_sip_cannot_be_registered">Teḍra-d tuccḍa deg usekles n umiḍan SIP. </string>
   <!--Edit profile-->
   <string name="account_edit_profile">Ẓreg amaɣnu</string>
@@ -245,7 +245,7 @@ Tzemreḍ ad tẓergeḍ amiḍan-ik-im ticki</string>
   <string name="revoke_device_wait_title">Ma ulac aɣilif ṛǧu...</string>
   <string name="revoke_device_wait_message">Aḥwi n yibenk</string>
   <string name="rename_device_title">Snifel isem n yibenk-a</string>
-  <string name="rename_device_message">Ssekcem isem n yibenk akken ad tεeqleḍ ibenk-a deg umiḍan-ik-im n Jami</string>
+  <string name="rename_device_message">Ssekcem isem n yibenk akken ad tεeqleḍ ibenk-a deg umiḍan-ik-im n Glowmate</string>
   <string name="rename_device_button">Snifel isem n yibenk</string>
   <string name="account_rename_device_hint">Fren isem n yibenk amaynut</string>
   <string name="account_device_name_empty">Isem n yibenk ur yezmir ara ad yili d ilem. </string>
@@ -259,23 +259,23 @@ Tzemreḍ ad tẓergeḍ amiḍan-ik-im ticki</string>
   <string name="account_link_password">Amiḍan-a yettwawgelhen s wawal n uɛeddi, sekcem awal n uɛeddi i usirew n tangalt n usesteb.</string>
   <string name="account_link_generate_button">Sirew </string>
   <string name="account_link_time_valid">Tangalt n usesteb mačči d tameɣtut : %1$s.</string>
-  <string name="account_link_device_info">Fren “qqen ibenk amaynut” seg usnas-nniḍen n Jami akken ad d-sekneḍ tangalt QR neɣ tangalt n usesteb. </string>
+  <string name="account_link_device_info">Fren “qqen ibenk amaynut” seg usnas-nniḍen n Glowmate akken ad d-sekneḍ tangalt QR neɣ tangalt n usesteb. </string>
   <string name="account_generate_export_device">Ɣef yibenk-nniḍen</string>
-  <string name="account_generate_export_info">Sebded u senker Jami. Fren “kter seg yibenk-nniḍen,” sakin ḍumm tangalt QR. Neɣ akken nniḍen sekcem tangalt PIN s ufus.</string>
+  <string name="account_generate_export_info">Sebded u senker Glowmate. Fren “kter seg yibenk-nniḍen,” sakin ḍumm tangalt QR. Neɣ akken nniḍen sekcem tangalt PIN s ufus.</string>
   <string name="content_description_qr_generated">Tangalt QR n umiḍan</string>
   <string name="account_generate_export_invalid">Tangalt n usesteb ur teqqim ara d tameɣtut.\nSekcem awal n uɛeddi sakin sirew-d wayeḍ akken ad teqqneḍ ibenk amaynut.</string>
   <string name="account_generate_export_invalid_two">Tangalt n usesteb ur teqqim ara d tameɣtut.\nSirew-d wayeḍ akken ad teqqneḍ ibenk amaynut.</string>
   <string name="help_pin_info">Yettwasra ma yella umiḍan yettwawgelhen s wawal n uɛeddi.</string>
   <string name="account_link_device_button">Qqen</string>
   <!--Biometry-->
-  <string name="account_biometry_auth_title">Kkes asekkeṛ i umiḍan Jami</string>
+  <string name="account_biometry_auth_title">Kkes asekkeṛ i umiḍan Glowmate</string>
   <string name="account_biometry_auth_message">Seqdec tabiyumitrit akken ad d-teldiḍ amiḍan-ik-im</string>
   <string name="account_biometry_enroll_title">Seqdec asesteb abiyumitri?</string>
   <string name="account_biometry_enroll_message">Ibenk-ik-im isefrak asesteb abiyumitri aɣelsan.
-Asesteb abiyumitri neɣ n yibenk irennu abrid iwatan i unekcum ɣer umiḍan-ik-im Jami. Mazal ad tizmireḍ ad tesqedceḍ awal-ik-im n uɛeddi.</string>
+Asesteb abiyumitri neɣ n yibenk irennu abrid iwatan i unekcum ɣer umiḍan-ik-im Glowmate. Mazal ad tizmireḍ ad tesqedceḍ awal-ik-im n uɛeddi.</string>
   <string name="account_biometry_enroll_accept">Seqdec tabiyumitrit</string>
   <string name="no_thanks">Ala tanemmirt</string>
-  <string name="account_biometry_enroll_auth_title">Rnu asesteb i umiḍan-ik-im Jami</string>
+  <string name="account_biometry_enroll_auth_title">Rnu asesteb i umiḍan-ik-im Glowmate</string>
   <string name="account_biometry_enroll_auth_message">Rnu asesteb abiyumitri neɣ n yibenk aɣelsan d amlellay i wawal-ik-im n uɛeddi</string>
   <string name="account_auth_error">Tuccḍa n usesteb: %1$s</string>
   <string name="account_auth_success">Asesteb yedda akken iwata</string>

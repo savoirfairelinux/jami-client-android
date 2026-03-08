@@ -7,7 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Προσθήκη λογαριασμού</string>
   <string name="add_sip_account_title">Προσθήκη λογαριασμού SIP</string>
-  <string name="ring_account_default_name">Λογαριασμός Jami %1$s</string>
+  <string name="ring_account_default_name">Λογαριασμός Glowmate %1$s</string>
   <string name="prompt_alias">Ψευδώνυμο</string>
   <string name="prompt_hostname">Hostname</string>
   <string name="prompt_username">Όνομα χρήστη</string>
@@ -22,7 +22,7 @@
   <string name="dialog_wait_update">Αναβάθμιση λογαριασμού</string>
   <string name="dialog_wait_update_details">Παρακαλώ περιμένετε για την αναβάθμιση του λογαριασμού σας...</string>
   <string name="account_type_ip2ip">Λογαριασμός IP</string>
-  <string name="help_ring">Ένας λογαριασμός Jami σας επιτρέπει να επικοινωνείτε με ασφάλεια μέσω ενός πλήρως αποκεντρωμένου δικτύου peer-to-peer</string>
+  <string name="help_ring">Ένας λογαριασμός Glowmate σας επιτρέπει να επικοινωνείτε με ασφάλεια μέσω ενός πλήρως αποκεντρωμένου δικτύου peer-to-peer</string>
   <string name="help_sip_title">Προσθήκη λογαριασμού SIP</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">Η ενέργεια δεν μπορεί να αναιρεθεί.</string>
@@ -138,7 +138,7 @@
   <string name="account_tv_advance_settings_header">Προχωρημένες ρυθμίσεις</string>
   <string name="account_tv_add_contact">Προσθήκη επαφής</string>
   <string name="account_tv_advanced_settings">Αλλαγή των γενικών ρυθμίσεων</string>
-  <string name="account_tv_about">Σχετικά με το Jami</string>
+  <string name="account_tv_about">Σχετικά με το Glowmate</string>
   <string name="tv_about_version">Έκδοση</string>
   <string name="tv_about_license">Άδεια</string>
   <string name="tv_about_author">Δικαιώματα του δημιουργού</string>
@@ -146,7 +146,7 @@
   <string name="account_link_device">Συνδέστε από άλλη συσκευή</string>
   <string name="account_link_button">Συνδέστε από το δίκτυο</string>
   <string name="account_link_archive_button">Συνδέστε από την υποστήριξη</string>
-  <string name="account_new_button">Δημιουργήστε λογαριασμό Jami</string>
+  <string name="account_new_button">Δημιουργήστε λογαριασμό Glowmate</string>
   <string name="account_link_export_button">Σύνδεση νέας συσκευής</string>
   <string name="account_link_show_button">Δείξτε %d περισσότερες συνδεδεμένες συσκευές</string>
   <string name="account_link_hide_button">Κρύψτε το συνδεδεμένο όργανο</string>
@@ -174,9 +174,9 @@
   <string name="account_status_offline">Απαλλαγή</string>
   <string name="account_status_error">Σφάλμα</string>
   <!--Create account-->
-  <string name="account_creation_home">Καλώς ήλθατε στο  Jami</string>
+  <string name="account_creation_home">Καλώς ήλθατε στο  Glowmate</string>
   <string name="account_creation_profile">Δημιουργήστε το προφίλ σας</string>
-  <string name="account_creation_ring">Δημιουργήστε το λογαριασμό σας στο Jami</string>
+  <string name="account_creation_ring">Δημιουργήστε το λογαριασμό σας στο Glowmate</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Εισάγετε κωδικό πρόσβασης για να επιβεβαιώσετε</string>

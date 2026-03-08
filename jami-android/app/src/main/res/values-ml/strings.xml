@@ -418,10 +418,10 @@
   <string name="bottomsheet_contact">ജാമി %1$s നെ ബന്ധപ്പെടുക</string>
   <string name="bottomsheet_remove">അംഗത്തെ നീക്കം ചെയ്യുക</string>
   <string name="group_admin">അഡ്മിൻ</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">ഉപയോക്തൃനാമം രജിസ്റ്റർ ചെയ്യുക</string>
   <string name="jami_id_choose_username">ഒരു ഉപയോക്തൃനാമം തിരഞ്ഞെടുക്കുക</string>
-  <!--WelcomeJami-->
+  <!--WelcomeGlowmate-->
   <string name="welcome_jami_title">ജാമിയിൽ സ്വാഗതം</string>
   <string name="welcome_jami_description">കൂടുതൽ എളുപ്പത്തിൽ ബന്ധപ്പെടുവാനായി താങ്കളുടെ ജാമി ഐഡന്റിഫയർ പങ്കിടു!</string>
   <!--Conversation details-->

@@ -10,7 +10,7 @@
   <string name="pref_category_connectivity">接続性</string>
   <string name="pref_category_video_settings">ビデオの高度な設定</string>
   <string name="pref_mobileData_title">モバイル通信</string>
-  <string name="pref_mobileData_summary">Wi-Fiに加えて3G / LTEでの使用をJamiに許可する</string>
+  <string name="pref_mobileData_summary">Wi-Fiに加えて3G / LTEでの使用をGlowmateに許可する</string>
   <string name="pref_pushNotifications_title">プッシュ通知</string>
   <string name="pref_pushNotifications_summary">Google のサーバーを使って通話とメッセージを受信します</string>
   <string name="pref_unifiedPush_summary">UnifiedPush サービスを使って,背景で電話/メッセージを受け取ることができます</string>
@@ -25,10 +25,10 @@
   <string name="pref_videoResolution_summary">送信するビデオのデフォルト解像度を選択</string>
   <string name="pref_systemContacts_title">システムの連絡先を使用する</string>
   <string name="pref_systemContacts_summary">システムの連絡先を使用して通話先の詳細を表示します。</string>
-  <string name="pref_systemDialer_title">Jamiを使用して発信する</string>
-  <string name="pref_systemDialer_summary">可能な場合、Jamiを使用して発信する</string>
-  <string name="pref_startOnBoot_title">起動時にJamiを開始</string>
-  <string name="pref_startOnBoot_summary">端末の起動時にバックグラウンドで Jami を実行します</string>
+  <string name="pref_systemDialer_title">Glowmateを使用して発信する</string>
+  <string name="pref_systemDialer_summary">可能な場合、Glowmateを使用して発信する</string>
+  <string name="pref_startOnBoot_title">起動時にGlowmateを開始</string>
+  <string name="pref_startOnBoot_summary">端末の起動時にバックグラウンドで Glowmate を実行します</string>
   <string name="pref_clearHistory_title">履歴を消去</string>
   <string name="pref_notification_title">ロック画面上での通知</string>
   <string name="pref_notification_summary">ロック画面上でもアプリからの通知が見えるようにします。</string>

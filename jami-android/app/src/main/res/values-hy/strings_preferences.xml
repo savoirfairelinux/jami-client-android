@@ -10,7 +10,7 @@
   <string name="pref_category_connectivity">Կապակցվածություն</string>
   <string name="pref_category_video_settings">Հրատարակված տեսանյութի կարգավորումները</string>
   <string name="pref_mobileData_title">Մոբիլի տվյալներ</string>
-  <string name="pref_mobileData_summary">Թույլ տվեք Jami- ին 3G / LTE ցանցերում Wi-Fi- ի հետ միասին</string>
+  <string name="pref_mobileData_summary">Թույլ տվեք Glowmate- ին 3G / LTE ցանցերում Wi-Fi- ի հետ միասին</string>
   <string name="pref_pushNotifications_title">Հուշումներ</string>
   <string name="pref_pushNotifications_summary">Օգտագործեք Google սերվերներ ՝ ֆոնում զանգեր / հաղորդագրություններ ստանալու համար</string>
   <string name="pref_unifiedPush_summary">Օգտագործեք UnifiedPush ծառայություն ՝ ֆոնում զանգեր / հաղորդագրություններ ստանալու համար</string>
@@ -25,9 +25,9 @@
   <string name="pref_videoResolution_summary">Ընտրեք արտադրանքի տեսանյութի կանխարգելված կարգավորումը</string>
   <string name="pref_systemContacts_title">Օգտագործել համակարգային կոնտակտներ</string>
   <string name="pref_systemContacts_summary">Օգտագործեք համակարգի կոնտակտները զանգահարողի մանրամասները ցույց տալու համար:</string>
-  <string name="pref_systemDialer_title">Համակարգային զանգեր կատարեք Jami- ի միջոցով</string>
+  <string name="pref_systemDialer_title">Համակարգային զանգեր կատարեք Glowmate- ի միջոցով</string>
   <string name="pref_systemDialer_summary">Օգտագործեք Ջամի\' հնարավորության դեպքում համակարգային զանգեր կատարելու համար:</string>
-  <string name="pref_startOnBoot_title">Սկսեք Jami- ն սկսելու համար</string>
+  <string name="pref_startOnBoot_title">Սկսեք Glowmate- ն սկսելու համար</string>
   <string name="pref_startOnBoot_summary">Ջամիին հուշում է համակարգի սկսման ժամանակ:</string>
   <string name="pref_clearHistory_title">Հստակ պատմություն</string>
   <string name="pref_notification_title">Հրավերագրության տեսանելիություն</string>

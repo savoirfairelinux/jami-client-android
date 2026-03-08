@@ -147,7 +147,7 @@
   <string name="account_link_device">दुसर्या डिव्हाइसवरून कनेक्ट करा</string>
   <string name="account_link_button">नेटवर्कवरून कनेक्ट</string>
   <string name="account_link_archive_button">बॅकअप पासून कनेक्ट</string>
-  <string name="account_new_button">Jami खाते तयार करा</string>
+  <string name="account_new_button">Glowmate खाते तयार करा</string>
   <string name="account_link_export_button">नवीन डिव्हाइस लिंक करा</string>
   <string name="account_link_show_button">%d अधिक जोडलेले डिव्हाइस दाखवा</string>
   <string name="account_link_hide_button">कनेक्ट केलेले डिव्हाइस लपवा</string>

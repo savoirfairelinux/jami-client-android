@@ -30,7 +30,7 @@
         tools:src="@tools:sample/backgrounds/scenic"
         tools:visibility="gone" />
 
-    <cx.ring.views.PreviewVideoView
+    <com.glowmate.views.PreviewVideoView
         android:id="@+id/previewVideo"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/share_preview_height"

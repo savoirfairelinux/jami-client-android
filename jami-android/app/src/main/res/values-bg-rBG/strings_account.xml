@@ -7,7 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Добавяне на акаунт</string>
   <string name="add_sip_account_title">Добавяне на профил за SIP</string>
-  <string name="ring_account_default_name">акаунт на Jami %1$s</string>
+  <string name="ring_account_default_name">акаунт на Glowmate %1$s</string>
   <string name="prompt_alias">Псевдоним</string>
   <string name="prompt_hostname">Име на сървъра</string>
   <string name="prompt_username">Потребителско име</string>
@@ -22,7 +22,7 @@
   <string name="dialog_wait_update">Обновяване на профила</string>
   <string name="dialog_wait_update_details">Моля, изчакайте докато новият Ви профил бъде обновен…</string>
   <string name="account_type_ip2ip">IP профил</string>
-  <string name="help_ring">Jami ви позволява да се свържете с хора безопасно чрез изцяло разпределена мрежова структура.</string>
+  <string name="help_ring">Glowmate ви позволява да се свържете с хора безопасно чрез изцяло разпределена мрежова структура.</string>
   <string name="help_sip_title">Добавяне на профил за SIP</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">Това действие е необратимо.</string>
@@ -122,8 +122,8 @@
   <string name="account_enter_password">Въведете парола</string>
   <string name="account_contact_me">Свържете се с мен по Джами!</string>
   <string name="update_account">Обновяване на профила</string>
-  <string name="account_migration">Сметката ви в Jami може да бъде актуализирана. Моля въведете паролата си.</string>
-  <string name="ring_account">Jami профил</string>
+  <string name="account_migration">Сметката ви в Glowmate може да бъде актуализирана. Моля въведете паролата си.</string>
+  <string name="ring_account">Glowmate профил</string>
   <string name="sip_account">Сметка за СИП</string>
   <string name="ring_account_identity">Идентичност</string>
   <string name="account_migration_title_dialog">Пренасяне на профил</string>
@@ -138,7 +138,7 @@
   <string name="account_tv_advance_settings_header">Разширени настройки</string>
   <string name="account_tv_add_contact">Добавяне на контакт</string>
   <string name="account_tv_advanced_settings">Промените общите настройки</string>
-  <string name="account_tv_about">Относно Jami</string>
+  <string name="account_tv_about">Относно Glowmate</string>
   <string name="tv_about_version">Версия</string>
   <string name="tv_about_license">Лиценз</string>
   <string name="tv_about_author">Авторски права</string>
@@ -146,7 +146,7 @@
   <string name="account_link_device">Свържете се от друго устройство</string>
   <string name="account_link_button">Свържете се от мрежата</string>
   <string name="account_link_archive_button">Свържете се от резервното</string>
-  <string name="account_new_button">Създаване на акаунт Jami</string>
+  <string name="account_new_button">Създаване на акаунт Glowmate</string>
   <string name="account_link_export_button">Свържете ново устройство</string>
   <string name="account_link_hide_button">Скрийте свързано устройство</string>
   <string name="account_end_export_button">затваряне</string>
@@ -174,9 +174,9 @@
   <string name="account_status_offline">Извън линия</string>
   <string name="account_status_error">Грешка</string>
   <!--Create account-->
-  <string name="account_creation_home">Добре дошли в Jami</string>
+  <string name="account_creation_home">Добре дошли в Glowmate</string>
   <string name="account_creation_profile">Създаване на профил</string>
-  <string name="account_creation_ring">Създаване на профил в Jami</string>
+  <string name="account_creation_ring">Създаване на профил в Glowmate</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Въведете парола, за да продължите</string>

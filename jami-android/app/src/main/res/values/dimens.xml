@@ -114,12 +114,12 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <dimen name="edit_text_radius">12dp</dimen>
     <dimen name="dialog_radius">@dimen/bottom_sheet_radius</dimen>
 
-    <!--  JamiId  -->
+    <!--  GlowmateId  -->
     <dimen name="jami_id_small_font_size">14sp</dimen>
     <dimen name="jami_id_regular_font_size">20sp</dimen>
     <dimen name="jami_id_edit_text_drawable_size">24dp</dimen>
 
-    <!--  WelcomeJami  -->
+    <!--  WelcomeGlowmate  -->
     <dimen name="welcome_jami_logo_default_size">60dp</dimen>
 
     <!--  ChatView  -->

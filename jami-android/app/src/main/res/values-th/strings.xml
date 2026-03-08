@@ -7,9 +7,9 @@
   <string name="version_section">เวอร์ชั่น</string>
   <string name="website_chooser_title">ดูเว็บไซต์โดยใช้...</string>
   <string name="license">ซอฟต์แวร์นี้มีให้ "ตามที่เป็น" โดยไม่มีการรับประกันใดๆ สำหรับรายละเอียด โปรดดูที่&lt;u&gt; GNU General Public License เวอร์ชัน 3 หรือใหม่กว่า</string>
-  <string name="description">Jami เป็นซอฟต์แวร์ฟรีสำหรับการสื่อสารแบบสากลซึ่งเคารพเสรีภาพและความเป็นส่วนตัวของผู้ใช้</string>
+  <string name="description">Glowmate เป็นซอฟต์แวร์ฟรีสำหรับการสื่อสารแบบสากลซึ่งเคารพเสรีภาพและความเป็นส่วนตัวของผู้ใช้</string>
   <string name="credits">เครดิต</string>
-  <string name="pip_title">การประชุม Jami</string>
+  <string name="pip_title">การประชุม Glowmate</string>
   <string name="call_service_description">บริการนี้จำเป็นเพื่อให้การโทรของคุณทำงานอยู่เบื้องหน้า มันทำงานระหว่างการโทรเท่านั้น</string>
   <string name="data_transfer_service_description">บริการนี้จำเป็นสำหรับการแสดงการแจ้งเตือนอย่างต่อเนื่องระหว่างการถ่ายโอนไฟล์ มันทำงานเฉพาะระหว่างการถ่ายโอนไฟล์</string>
   <!--About dialog-->
@@ -26,7 +26,7 @@
   <string name="menu_item_settings">การตั้งค่า</string>
   <string name="menu_item_account_settings">การตั้งค่าบัญชี</string>
   <string name="menu_item_share">แบ่งปันบัญชีของฉัน</string>
-  <string name="menu_item_about">เกี่ยวกับ Jami</string>
+  <string name="menu_item_about">เกี่ยวกับ Glowmate</string>
   <string name="video_setting_title">การตั้งค่าวีดีโอ</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
@@ -166,7 +166,7 @@
   <string name="conversation_reply_you">คุณ</string>
   <string name="conversation_preference_color">สีของการสนทนา</string>
   <string name="conversation_preference_emoji">อิโมจิการสนทนา</string>
-  <string name="conversation_type_contact">๋ติดต่อ Jami</string>
+  <string name="conversation_type_contact">๋ติดต่อ Glowmate</string>
   <string name="conversation_type_private">เอกชน</string>
   <string name="conversation_search_hint">ค้นหาบทสนทนา</string>
   <string name="today">วัน นี้</string>
@@ -176,11 +176,11 @@
   <string name="prompt_new_password">รหัสผ่านใหม่</string>
   <string name="prompt_new_password_optional">รหัสผ่านใหม่ (ไม่บังคับ)</string>
   <string name="prompt_new_password_repeat">ยืนยันคําว่าใหม่</string>
-  <string name="account_create_title">สร้างบัญชี Jami</string>
+  <string name="account_create_title">สร้างบัญชี Glowmate</string>
   <string name="prompt_new_username">ใส่ชื่อผู้ใช้ใหม่</string>
   <string name="prompt_hint_username">ชื่อผู้ใช้</string>
-  <string name="help_password_choose">เลือกรหัสผ่านที่รัดกุมซึ่งคุณจะต้องจำไว้เพื่อปกป้องบัญชี Jami ของคุณ</string>
-  <string name="help_password_enter">ป้อนรหัสผ่านบัญชี Jami หลักของคุณ</string>
+  <string name="help_password_choose">เลือกรหัสผ่านที่รัดกุมซึ่งคุณจะต้องจำไว้เพื่อปกป้องบัญชี Glowmate ของคุณ</string>
+  <string name="help_password_enter">ป้อนรหัสผ่านบัญชี Glowmate หลักของคุณ</string>
   <string name="help_server_enter">ป้อน URL ของเซิร์ฟเวอร์การจัดการ</string>
   <string name="wizard_next">ต่อไป</string>
   <string name="wizard_back">กลับ</string>
@@ -205,7 +205,7 @@
   <string name="devices">อุปกรณ์ที่เชื่อมโยง</string>
   <string name="total_devices">อุปกรณ์ทั้งหมด:</string>
   <!--Share fragment-->
-  <string name="share_message">สแกนรหัสนี้ด้วย Jami</string>
+  <string name="share_message">สแกนรหัสนี้ด้วย Glowmate</string>
   <string name="share_message_no_account">โปรดเลือกบัญชีที่จะแบ่งปัน</string>
   <string name="share_your_account_information">แบ่งปันข้อมูลการติดต่อของฉัน</string>
   <string name="share_label">แบ่งปัน</string>
@@ -301,13 +301,13 @@
   <string name="dialog_hint_description">คําอธิบาย</string>
   <string name="picker_title">เลือกติดต่อ</string>
   <string name="picker_btn">เลือกติดต่อ</string>
-  <string name="bottomsheet_contact">ติดต่อ Jami\n%1$s</string>
+  <string name="bottomsheet_contact">ติดต่อ Glowmate\n%1$s</string>
   <string name="bottomsheet_remove">ยกสมาชิก</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">จดทะเบียนชื่อผู้ใช้</string>
   <string name="jami_id_choose_username">เลือกชื่อผู้ใช้งาน</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">ยินดีต้อนรับสู่ Jami</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">ยินดีต้อนรับสู่ Glowmate</string>
   <!--Conversation details-->
   <string name="details">รายละเอียด</string>
   <string name="Private">เอกชน</string>

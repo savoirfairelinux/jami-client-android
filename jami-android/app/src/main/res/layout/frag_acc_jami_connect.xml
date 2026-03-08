@@ -21,9 +21,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_primary_dark"
-    tools:context="cx.ring.account.AccountWizardActivity">
+    tools:context="com.glowmate.account.AccountWizardActivity">
 
-    <cx.ring.views.BoundedRelativeLayout
+    <com.glowmate.views.BoundedRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
@@ -186,6 +186,6 @@
 
         </androidx.cardview.widget.CardView>
 
-    </cx.ring.views.BoundedRelativeLayout>
+    </com.glowmate.views.BoundedRelativeLayout>
 
 </FrameLayout>

@@ -7,7 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">เพิ่มบัญชี</string>
   <string name="add_sip_account_title">เพิ่มบัญชี SIP</string>
-  <string name="ring_account_default_name">%1$sบัญชี Jami</string>
+  <string name="ring_account_default_name">%1$sบัญชี Glowmate</string>
   <string name="prompt_alias">นามแฝง</string>
   <string name="prompt_hostname">ชื่อโฮสต์</string>
   <string name="prompt_username">ชื่อผู้ใช้</string>
@@ -22,7 +22,7 @@
   <string name="dialog_wait_update">กำลังอัปเดตบัญชี</string>
   <string name="dialog_wait_update_details">โปรดรอสักครู่ในขณะที่บัญชีใหม่ของคุณได้รับการอัปเดต...</string>
   <string name="account_type_ip2ip">บัญชีไอพี</string>
-  <string name="help_ring">บัญชี Jami ช่วยให้คุณเข้าถึงผู้คนได้อย่างปลอดภัยแบบ peer-to-peer ผ่านเครือข่ายแบบกระจายอย่างสมบูรณ์</string>
+  <string name="help_ring">บัญชี Glowmate ช่วยให้คุณเข้าถึงผู้คนได้อย่างปลอดภัยแบบ peer-to-peer ผ่านเครือข่ายแบบกระจายอย่างสมบูรณ์</string>
   <string name="help_sip_title">เพิ่มบัญชี SIP</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">การดำเนินการนี้ไม่สามารถยกเลิกได้</string>
@@ -120,7 +120,7 @@
   <string name="account_export_file">บาคเกปบัญชี</string>
   <string name="account_export_file_summary">ทําสํารองบัญชีของคุณในเครื่องของคุณ เพื่อนํากลับมาในภายหลัง</string>
   <string name="account_enter_password">ใส่รหัสผ่าน</string>
-  <string name="account_contact_me">ติดต่อฉันใน Jami!</string>
+  <string name="account_contact_me">ติดต่อฉันใน Glowmate!</string>
   <string name="update_account">การอัพเดทบัญชี</string>
   <string name="account_migration">บัญชีของจามิของคุณสามารถปรับปรุงได้ครับ กรุณาใส่รหัสผ่านของคุณ</string>
   <string name="ring_account">รายการของจามิ</string>
@@ -138,7 +138,7 @@
   <string name="account_tv_advance_settings_header">ตั้งค่าขั้นสูง</string>
   <string name="account_tv_add_contact">เพิ่มติดต่อ</string>
   <string name="account_tv_advanced_settings">เปลี่ยนการตั้งค่าทั่วไป</string>
-  <string name="account_tv_about">เกี่ยวกับ Jami</string>
+  <string name="account_tv_about">เกี่ยวกับ Glowmate</string>
   <string name="tv_about_version">เวอร์ชั่น</string>
   <string name="tv_about_license">ใบอนุญาต</string>
   <string name="tv_about_author">อนุญาตผู้เขียน</string>
@@ -146,7 +146,7 @@
   <string name="account_link_device">เชื่อมต่อจากอุปกรณ์อื่น</string>
   <string name="account_link_button">เชื่อมต่อจากเครือข่าย</string>
   <string name="account_link_archive_button">เชื่อมต่อจากสํารอง</string>
-  <string name="account_new_button">สร้างบัญชี Jami</string>
+  <string name="account_new_button">สร้างบัญชี Glowmate</string>
   <string name="account_link_export_button">เชื่อมโยงอุปกรณ์ใหม่</string>
   <string name="account_link_show_button">แสดง %d หน่วยที่เชื่อมต่อมากกว่า</string>
   <string name="account_link_hide_button">ปิดอุปกรณ์เชื่อมโยง</string>
@@ -174,9 +174,9 @@
   <string name="account_status_offline">ภายนอกระบบ</string>
   <string name="account_status_error">ข้อผิดพลาด</string>
   <!--Create account-->
-  <string name="account_creation_home">ยินดีต้อนรับสู่ Jami</string>
+  <string name="account_creation_home">ยินดีต้อนรับสู่ Glowmate</string>
   <string name="account_creation_profile">สร้างโปรไฟล์ของคุณ</string>
-  <string name="account_creation_ring">สร้างบัญชี Jami</string>
+  <string name="account_creation_ring">สร้างบัญชี Glowmate</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">กรอกปัสผ่านเพื่อยืนยัน</string>

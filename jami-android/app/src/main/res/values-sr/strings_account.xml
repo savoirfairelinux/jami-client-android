@@ -8,7 +8,7 @@
   <string name="account_selection">Izaberi nalog</string>
   <string name="add_ring_account_title">Dodaj nalog</string>
   <string name="add_sip_account_title">Dodaj SIP nalog</string>
-  <string name="ring_account_default_name">Jami nalog %1$s</string>
+  <string name="ring_account_default_name">Glowmate nalog %1$s</string>
   <string name="account_creation_error">Desila se greška prilikom pravljenja naloga.</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Ime hosta</string>
@@ -26,7 +26,7 @@
   <string name="dialog_warn_ip2ip_account_title">Napravite prazan SIP nalog?</string>
   <string name="dialog_warn_ip2ip_account_message">Upravo ćete kreirati SIP nalog bez važećeg imena hosta. Moći ćete samo da upućujete i primate direktne IP pozive. Kasnije možete da izmenite svoj nalog</string>
   <string name="account_type_ip2ip">IP nalog</string>
-  <string name="help_ring">Jami nalog ti omogućava da bezbedno dođeš do ljudi peer to peer preko potpuno distribuirane mreže.</string>
+  <string name="help_ring">Glowmate nalog ti omogućava da bezbedno dođeš do ljudi peer to peer preko potpuno distribuirane mreže.</string>
   <string name="help_sip_title">Dodaj SIP nalog</string>
   <string name="help_sip">Конфигуришите постојећи SIP налог</string>
   <string name="create_sip_account">Konfigurišite SIP nalog</string>
@@ -153,27 +153,27 @@
   <string name="account_export_file_summary">Napravite rezervnu kopiju naloga na uređaju da biste ga kasnije vratili.</string>
   <string name="account_export_end_decryption_message">Netačna lozinka. Pokušajte ponovo sa tačnom lozinkom.</string>
   <string name="account_enter_password">Unesi lozinku</string>
-  <string name="account_share_body">Kontaktirajte me koristeći „%1$s“ na Jami distribuiranoj komunikacionoj platformi: %2$s</string>
-  <string name="account_share_body_with_username">Kontaktirajte me koristeći „%1$s“ ili moje javno korisničko ime „%2$s“ na Jami distribuiranoj komunikacionoj platformi: %3$s</string>
-  <string name="account_contact_me">Kontaktiraj me na Jami!</string>
+  <string name="account_share_body">Kontaktirajte me koristeći „%1$s“ na Glowmate distribuiranoj komunikacionoj platformi: %2$s</string>
+  <string name="account_share_body_with_username">Kontaktirajte me koristeći „%1$s“ ili moje javno korisničko ime „%2$s“ na Glowmate distribuiranoj komunikacionoj platformi: %3$s</string>
+  <string name="account_contact_me">Kontaktiraj me na Glowmate!</string>
   <string name="update_account">Ažuriraj nalog</string>
-  <string name="account_migration">Vaš Jami nalog može biti ažuriran.\nMolim Vas unesite lozinku.</string>
-  <string name="ring_account">Jami nalog</string>
+  <string name="account_migration">Vaš Glowmate nalog može biti ažuriran.\nMolim Vas unesite lozinku.</string>
+  <string name="ring_account">Glowmate nalog</string>
   <string name="sip_account">SIP nalog</string>
   <string name="ring_account_identity">Identitet</string>
   <string name="account_migration_title_dialog">Migracija naloga</string>
   <string name="account_migration_message_dialog">Vaše naloge treba ažurirati. Da li želite da odete na ekran za upravljanje nalogom da biste izvršili ovu operaciju?</string>
   <string name="account_update_needed">Potrebno je ažuriranje</string>
   <string name="account_cannot_be_found_title">Greška naloga</string>
-  <string name="account_cannot_be_found_message">Nije moguće pronaći nalog na Jami mreži. Uverite se da je izvezeno na Jami sa postojećeg uređaja i da su obezbeđeni akreditivi tačni.</string>
+  <string name="account_cannot_be_found_message">Nije moguće pronaći nalog na Glowmate mreži. Uverite se da je izvezeno na Glowmate sa postojećeg uređaja i da su obezbeđeni akreditivi tačni.</string>
   <string name="jams_account_cannot_be_found_message">Došlo je do greške pri povezivanju naloga. Proverite akreditive i pokušajte ponovo.</string>
   <string name="account_sip_cannot_be_registered_message">Možete nastaviti sa procesom pravljenja naloga ili možete uređivati svoje informacije ovde. Uređivanje će biti moguće i kasnije u podešavanju naloga.</string>
   <string name="account_no_network_title">Greška na mreži</string>
-  <string name="account_no_network_message">Došlo je do greške pri povezivanju prilikom dodavanja Jami naloga u distribuiranu mrežu. Proverite povezanost uređaja.</string>
+  <string name="account_no_network_message">Došlo je do greške pri povezivanju prilikom dodavanja Glowmate naloga u distribuiranu mrežu. Proverite povezanost uređaja.</string>
   <string name="account_device_added_title">Uređaj naloga je dodat</string>
-  <string name="account_device_added_message">Jami nalog je uspešno podešen na ovom uređaju.</string>
+  <string name="account_device_added_message">Glowmate nalog je uspešno podešen na ovom uređaju.</string>
   <string name="account_device_updated_title">Uređaj naloga je ažuriran</string>
-  <string name="account_device_updated_message">Jami nalog je uspešno ažuriran.</string>
+  <string name="account_device_updated_message">Glowmate nalog je uspešno ažuriran.</string>
   <string name="account_cannot_be_updated_message">Došlo je do greške pri ažuriranju naloga. Proverite lozinku naloga.</string>
   <string name="account_sip_success_title">SIP nalog je registrovan</string>
   <string name="account_sip_success_message">SIP nalog je uspešno registrovan.</string>
@@ -183,7 +183,7 @@
   <string name="account_tv_advance_settings_header">Napredna podešavanja</string>
   <string name="account_tv_add_contact">Dodaj kontakt</string>
   <string name="account_tv_advanced_settings">Promeni opšta podešavanja</string>
-  <string name="account_tv_about">O Jami</string>
+  <string name="account_tv_about">O Glowmate</string>
   <string name="tv_about_version">Verzija</string>
   <string name="tv_about_license">Licenca</string>
   <string name="tv_about_author">Autorska prava</string>
@@ -191,7 +191,7 @@
   <string name="account_link_device">Poveži se sa drugog uređaja</string>
   <string name="account_link_button">Poveži se sa mreže</string>
   <string name="account_link_archive_button">Poveži se sa rezervne kopije</string>
-  <string name="account_new_button">Napravite Jami nalog</string>
+  <string name="account_new_button">Napravite Glowmate nalog</string>
   <string name="account_link_export_button">Povežite novi uređaj</string>
   <string name="account_link_show_button">Prikaži %d više povezanih uređaja</string>
   <string name="account_link_hide_button">Sakri povezane uređaje</string>
@@ -225,9 +225,9 @@
   <string name="account_status_offline">Nije na vezi</string>
   <string name="account_status_error">Greška</string>
   <!--Create account-->
-  <string name="account_creation_home">Dobrodošli na Jami</string>
+  <string name="account_creation_home">Dobrodošli na Glowmate</string>
   <string name="account_creation_profile">Napravi svoj profil</string>
-  <string name="account_creation_ring">Napravi svoj Jami nalog</string>
+  <string name="account_creation_ring">Napravi svoj Glowmate nalog</string>
   <string name="account_sip_cannot_be_registered">Došlo je do greške pri registraciji SIP naloga.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Uredi profil</string>
@@ -253,13 +253,13 @@
   <string name="content_description_qr_generated">QR код налога</string>
   <string name="account_link_device_button">Poveži</string>
   <!--Biometry-->
-  <string name="account_biometry_auth_title">Otključajte Jami nalog</string>
+  <string name="account_biometry_auth_title">Otključajte Glowmate nalog</string>
   <string name="account_biometry_auth_message">Koristite biometriju za otključavanje naloga</string>
   <string name="account_biometry_enroll_title">Koristite biometrijsku autentifikaciju?</string>
-  <string name="account_biometry_enroll_message">Vaš uređaj podržava bezbednu biometrijsku autentifikaciju. Biometrijska autentifikacija ili autentifikacija uređaja dodaje zgodan način za lokalno otključavanje pristupa vašem Jami nalogu. I dalje ćete moći da koristite svoju lozinku.</string>
+  <string name="account_biometry_enroll_message">Vaš uređaj podržava bezbednu biometrijsku autentifikaciju. Biometrijska autentifikacija ili autentifikacija uređaja dodaje zgodan način za lokalno otključavanje pristupa vašem Glowmate nalogu. I dalje ćete moći da koristite svoju lozinku.</string>
   <string name="account_biometry_enroll_accept">Koristite biometriju</string>
   <string name="no_thanks">Ne hvala</string>
-  <string name="account_biometry_enroll_auth_title">Dodajte autentifikaciju za svoj Jami nalog</string>
+  <string name="account_biometry_enroll_auth_title">Dodajte autentifikaciju za svoj Glowmate nalog</string>
   <string name="account_biometry_enroll_auth_message">Dodajte bezbednu biometrijsku ili autentifikaciju uređaja kao alternativu lozinki</string>
   <string name="account_auth_error">Greška potvrda identiteta: %1$s</string>
   <string name="account_auth_success">Autentifikacija je uspela</string>

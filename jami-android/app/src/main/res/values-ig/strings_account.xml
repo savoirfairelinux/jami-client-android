@@ -7,7 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Tinye akaụntụ</string>
   <string name="add_sip_account_title">Tinye akaụntụ SIP</string>
-  <string name="ring_account_default_name">Akaụntụ Jami %1$s</string>
+  <string name="ring_account_default_name">Akaụntụ Glowmate %1$s</string>
   <string name="prompt_alias">Ndị a na-akpọ</string>
   <string name="prompt_hostname">Aha nnabata</string>
   <string name="prompt_username">Aha njirimara</string>
@@ -22,7 +22,7 @@
   <string name="dialog_wait_update">Akụkọ nke akụkọ</string>
   <string name="dialog_wait_update_details">Biko chere ruo mgbe akaụntụ ọhụrụ gị emelitere...</string>
   <string name="account_type_ip2ip">Akụkọ IP</string>
-  <string name="help_ring">Ihe ndekọ Jami na-enye gị ohere iru ndị mmadụ n\'enweghị nsogbu site na ibe site na netwọk zuru oke.</string>
+  <string name="help_ring">Ihe ndekọ Glowmate na-enye gị ohere iru ndị mmadụ n\'enweghị nsogbu site na ibe site na netwọk zuru oke.</string>
   <string name="help_sip_title">Tinye akaụntụ SIP</string>
   <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
@@ -119,10 +119,10 @@
   <string name="account_export_file">Akaụntụ ndabere</string>
   <string name="account_export_file_summary">Mee nkwado ndabere na mpaghara akaụntụ gị na ngwaọrụ gị iji weghachite ya mgbe e mesịrị.</string>
   <string name="account_enter_password">Tinye paswọọdụ</string>
-  <string name="account_contact_me">Kpọtụrụ m na Jami!</string>
+  <string name="account_contact_me">Kpọtụrụ m na Glowmate!</string>
   <string name="update_account">Akụkọ mmelite</string>
-  <string name="account_migration">Enwere ike imelite akaụntụ Jami gị. Biko tinye paswọọdụ gị.</string>
-  <string name="ring_account">Akaụntụ Jami</string>
+  <string name="account_migration">Enwere ike imelite akaụntụ Glowmate gị. Biko tinye paswọọdụ gị.</string>
+  <string name="ring_account">Akaụntụ Glowmate</string>
   <string name="sip_account">Akụ̀ SIP</string>
   <string name="ring_account_identity">Ihe Ndị A Kpọrọ Mmadụ</string>
   <string name="account_migration_title_dialog">Mbugharị akaụntụ</string>
@@ -137,7 +137,7 @@
   <string name="account_tv_advance_settings_header">Ntọala dị elu</string>
   <string name="account_tv_add_contact">Tinye kọntaktị</string>
   <string name="account_tv_advanced_settings">Gbanwee ntọala ndị ọzọ</string>
-  <string name="account_tv_about">Banyere Jami</string>
+  <string name="account_tv_about">Banyere Glowmate</string>
   <string name="tv_about_version">Version</string>
   <string name="tv_about_license">Akwụkwọ ikike</string>
   <string name="tv_about_author">Ikike ndị dere akwụkwọ</string>
@@ -145,7 +145,7 @@
   <string name="account_link_device">Jikọọ site na ngwaọrụ ọzọ</string>
   <string name="account_link_button">Jikọọ site na netwọk</string>
   <string name="account_link_archive_button">Jikọọ site nkwado ndabere</string>
-  <string name="account_new_button">Mepụta akaụntụ Jami</string>
+  <string name="account_new_button">Mepụta akaụntụ Glowmate</string>
   <string name="account_link_export_button">Jikọọ ngwaọrụ ọhụrụ</string>
   <string name="account_link_show_button">Gosi %d ọzọ jikọrọ ngwaọrụ</string>
   <string name="account_link_hide_button">Ochechi njikọ ngwaọrụ</string>
@@ -173,9 +173,9 @@
   <string name="account_status_offline">N\'ịntanetị</string>
   <string name="account_status_error">Njehie</string>
   <!--Create account-->
-  <string name="account_creation_home">Mmadụ Bịa na Jami</string>
+  <string name="account_creation_home">Mmadụ Bịa na Glowmate</string>
   <string name="account_creation_profile">Mepụta profaịlụ gị</string>
-  <string name="account_creation_ring">Mepụta akaụntụ Jami gị</string>
+  <string name="account_creation_ring">Mepụta akaụntụ Glowmate gị</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Tinye paswọọdụ iji kwado</string>

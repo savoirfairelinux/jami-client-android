@@ -7,7 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Pridať účet</string>
   <string name="add_sip_account_title">Pridať SIP účet</string>
-  <string name="ring_account_default_name">Jami účet %1$s</string>
+  <string name="ring_account_default_name">Glowmate účet %1$s</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Názov hostiteľa</string>
   <string name="prompt_username">Používateľské meno</string>
@@ -22,7 +22,7 @@
   <string name="dialog_wait_update">Aktualizácia účtu</string>
   <string name="dialog_wait_update_details">Čakajte, prosím, kým sa váš účet aktualizuje...</string>
   <string name="account_type_ip2ip">IP účet</string>
-  <string name="help_ring">Jami účet vám umožňuje kontaktovať ľudí pomocou P2P pripojenia na plne distribuovanej sieti.</string>
+  <string name="help_ring">Glowmate účet vám umožňuje kontaktovať ľudí pomocou P2P pripojenia na plne distribuovanej sieti.</string>
   <string name="help_sip_title">Pridať SIP účet</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">Túto operáciu nie je možné vrátiť.</string>
@@ -120,10 +120,10 @@
   <string name="account_export_file">Zálohovať účet</string>
   <string name="account_export_file_summary">Zálohujte si účet na zariadenie, aby ste ho neskôr obnovili.</string>
   <string name="account_enter_password">Zadajte heslo</string>
-  <string name="account_contact_me">Kontaktujte ma na Jami!</string>
+  <string name="account_contact_me">Kontaktujte ma na Glowmate!</string>
   <string name="update_account">Aktualizovať účet</string>
-  <string name="account_migration">Váš Jami účet môže byť aktualizovaný.\nZadajte vaše heslo.</string>
-  <string name="ring_account">Jami účet</string>
+  <string name="account_migration">Váš Glowmate účet môže byť aktualizovaný.\nZadajte vaše heslo.</string>
+  <string name="ring_account">Glowmate účet</string>
   <string name="sip_account">Účet SIP</string>
   <string name="ring_account_identity">Identita</string>
   <string name="account_migration_title_dialog">Migrácia účtu</string>
@@ -138,7 +138,7 @@
   <string name="account_tv_advance_settings_header">Pokročilé nastavenia</string>
   <string name="account_tv_add_contact">Pridať kontakt</string>
   <string name="account_tv_advanced_settings">Zmeniť všeobecné nastavenia</string>
-  <string name="account_tv_about">O programe Jami</string>
+  <string name="account_tv_about">O programe Glowmate</string>
   <string name="tv_about_version">Verzia</string>
   <string name="tv_about_license">Licencia</string>
   <string name="tv_about_author">Právo autorov</string>
@@ -146,7 +146,7 @@
   <string name="account_link_device">Pripojenie z iného zariadenia</string>
   <string name="account_link_button">Pripojiť zo siete</string>
   <string name="account_link_archive_button">Pripojiť zo zálohy</string>
-  <string name="account_new_button">Vytvorte účet Jami</string>
+  <string name="account_new_button">Vytvorte účet Glowmate</string>
   <string name="account_link_export_button">Prepojiť nové zariadenie</string>
   <string name="account_link_hide_button">Skryjte prepojené zariadenie</string>
   <string name="account_end_export_button">Zavrieť</string>
@@ -174,9 +174,9 @@
   <string name="account_status_offline">Offline</string>
   <string name="account_status_error">Chyba</string>
   <!--Create account-->
-  <string name="account_creation_home">Vitajte v Jami</string>
+  <string name="account_creation_home">Vitajte v Glowmate</string>
   <string name="account_creation_profile">Vytvoriť váš profil</string>
-  <string name="account_creation_ring">Vytvorte si svoj Jami účet</string>
+  <string name="account_creation_ring">Vytvorte si svoj Glowmate účet</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Zadajte heslo na potvrdenie</string>

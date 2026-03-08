@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/details_fragment"
-        android:name="cx.ring.tv.contact.TVContactFragment"
+        android:name="com.glowmate.tv.contact.TVContactFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

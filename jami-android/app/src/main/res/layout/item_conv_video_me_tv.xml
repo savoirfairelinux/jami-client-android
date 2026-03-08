@@ -56,7 +56,7 @@
 
         </androidx.cardview.widget.CardView>
 
-        <cx.ring.views.MessageStatusView
+        <com.glowmate.views.MessageStatusView
             android:id="@+id/status_icon"
             android:layout_width="14dp"
             android:layout_height="14dp"

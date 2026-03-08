@@ -8,7 +8,7 @@
   <string name="account_selection">Alege contul</string>
   <string name="add_ring_account_title">Adaugă un cont</string>
   <string name="add_sip_account_title">Adaugă un cont SIP</string>
-  <string name="ring_account_default_name">Cont Jami %1$s</string>
+  <string name="ring_account_default_name">Cont Glowmate %1$s</string>
   <string name="account_creation_error">A apărut o eroare la crearea contului.</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Numele serverului</string>
@@ -28,7 +28,7 @@
         Vei putea face și primi doar apeluri IP directe.
         Îți vei putea modifica contul mai tîrziu</string>
   <string name="account_type_ip2ip">Cont IP</string>
-  <string name="help_ring">Un cont Jami îți permite să comunici direct cu alții, în siguranță, fără server, printr-o rețea complet distribuită.</string>
+  <string name="help_ring">Un cont Glowmate îți permite să comunici direct cu alții, în siguranță, fără server, printr-o rețea complet distribuită.</string>
   <string name="help_sip_title">Adaugă un cont SIP</string>
   <string name="help_sip">Configurează un cont SIP existent</string>
   <string name="create_sip_account">Configurează contul SIP</string>
@@ -152,32 +152,32 @@
   <string name="error_password_char_count">minimum 6 caractere</string>
   <string name="error_passwords_not_equals">Parolele nu se potrivesc.</string>
   <string name="export_account_wait_title">Așteaptă...</string>
-  <string name="export_account_wait_message">Se exportă contul Jami</string>
+  <string name="export_account_wait_message">Se exportă contul Glowmate</string>
   <string name="account_export_file">Copiază contul</string>
   <string name="account_export_file_summary">Fă o copie de rezervă a contului pentru a-l recupera la nevoie.</string>
   <string name="account_export_end_decryption_message">Parolă greșită. Încearcă din nou cu parola corectă.</string>
   <string name="account_enter_password">Introdu parola</string>
-  <string name="account_share_body">Contactează-mă folosind „%1$s” pe platforma distribuită de comunicare Jami: %2$s</string>
-  <string name="account_share_body_with_username">Contactează-mă folosind „%1$s” sau numele meu public de utilizator „%2$s” pe platforma distribuită de comunicare Jami: %3$s </string>
-  <string name="account_contact_me">Contactează-mă pe Jami!</string>
+  <string name="account_share_body">Contactează-mă folosind „%1$s” pe platforma distribuită de comunicare Glowmate: %2$s</string>
+  <string name="account_share_body_with_username">Contactează-mă folosind „%1$s” sau numele meu public de utilizator „%2$s” pe platforma distribuită de comunicare Glowmate: %3$s </string>
+  <string name="account_contact_me">Contactează-mă pe Glowmate!</string>
   <string name="update_account">Actualizează contul</string>
-  <string name="account_migration">Contul tău Jami poate fi actualizat.\nIntrodu parola ta.</string>
-  <string name="ring_account">Cont Jami</string>
+  <string name="account_migration">Contul tău Glowmate poate fi actualizat.\nIntrodu parola ta.</string>
+  <string name="ring_account">Cont Glowmate</string>
   <string name="sip_account">Cont SIP</string>
   <string name="ring_account_identity">Identitate</string>
   <string name="account_migration_title_dialog">Transferul contului</string>
   <string name="account_migration_message_dialog">Conturile tale trebuie actualizate. Vrei să te duci la „Gestionează contul” pentru a face acest lucru?</string>
   <string name="account_update_needed">Actualizare necesară</string>
   <string name="account_cannot_be_found_title">Eroare a contului</string>
-  <string name="account_cannot_be_found_message">Contul nu poate fi găsit în rețeaua Jami. Asigură-te că a fost exportat pe Jami dintr-un aparat existent și datele de autentificare sînt corecte.</string>
+  <string name="account_cannot_be_found_message">Contul nu poate fi găsit în rețeaua Glowmate. Asigură-te că a fost exportat pe Glowmate dintr-un aparat existent și datele de autentificare sînt corecte.</string>
   <string name="jams_account_cannot_be_found_message">A apărut o eroare în timpul conectării contului. Verifică datele și încearcă din nou.</string>
   <string name="account_sip_cannot_be_registered_message">Poți continua cu procesul de creare a contului sau poți modifica datele tale aici. Modificarea e posibilă ulterior în reglările contului.</string>
   <string name="account_no_network_title">Eroare de rețea</string>
-  <string name="account_no_network_message">A apărut o eroare de conectare în timpul adăugării contului Jami la rețeaua distribuită. Verifică conectarea.</string>
+  <string name="account_no_network_message">A apărut o eroare de conectare în timpul adăugării contului Glowmate la rețeaua distribuită. Verifică conectarea.</string>
   <string name="account_device_added_title">Aparat adăugat</string>
-  <string name="account_device_added_message">Contul Jami a fost configurat cu succes în acest aparat.</string>
+  <string name="account_device_added_message">Contul Glowmate a fost configurat cu succes în acest aparat.</string>
   <string name="account_device_updated_title">Aparat actualizat</string>
-  <string name="account_device_updated_message">Contul Jami a fost actualizat cu succes.</string>
+  <string name="account_device_updated_message">Contul Glowmate a fost actualizat cu succes.</string>
   <string name="account_cannot_be_updated_message">A apărut o eroare în timpul actualizării contului. Verifică parola.</string>
   <string name="account_sip_success_title">Cont SIP înscris</string>
   <string name="account_sip_success_message">Contul SIP a fost înscris cu succes.</string>
@@ -187,7 +187,7 @@
   <string name="account_tv_advance_settings_header">Reglări avansate</string>
   <string name="account_tv_add_contact">Adaugă contactul</string>
   <string name="account_tv_advanced_settings">Schimbă reglările generale</string>
-  <string name="account_tv_about">Despre Jami</string>
+  <string name="account_tv_about">Despre Glowmate</string>
   <string name="tv_about_version">Versiune</string>
   <string name="tv_about_license">Licența</string>
   <string name="tv_about_author">Drepturi de autor</string>
@@ -195,7 +195,7 @@
   <string name="account_link_device">Conectează-te de la alt aparat</string>
   <string name="account_link_button">Conectează-te dintr-o rețea</string>
   <string name="account_link_archive_button">Conectare din copia de rezervă</string>
-  <string name="account_new_button">Creează un cont Jami</string>
+  <string name="account_new_button">Creează un cont Glowmate</string>
   <string name="account_link_export_button">Asociază un nou aparat</string>
   <string name="account_link_show_button">Arată încă %d aparate asociate</string>
   <string name="account_link_hide_button">Ascunde aparatul asociat</string>
@@ -231,9 +231,9 @@
   <string name="account_status_offline">Deconectat</string>
   <string name="account_status_error">Eroare</string>
   <!--Create account-->
-  <string name="account_creation_home">Bine ai venit pe Jami</string>
+  <string name="account_creation_home">Bine ai venit pe Glowmate</string>
   <string name="account_creation_profile">Creează profilul tău</string>
-  <string name="account_creation_ring">Creează contul tău Jami</string>
+  <string name="account_creation_ring">Creează contul tău Glowmate</string>
   <string name="account_sip_cannot_be_registered">A apărut o eroare la înscrierea contului SIP.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Modifică profilul</string>
@@ -245,7 +245,7 @@
   <string name="revoke_device_wait_title">Așteaptă...</string>
   <string name="revoke_device_wait_message">Se elimină aparatul</string>
   <string name="rename_device_title">Redenumește acest aparat</string>
-  <string name="rename_device_message">Introdu numele aparatului pentru a-l identifica în contul tău Jami</string>
+  <string name="rename_device_message">Introdu numele aparatului pentru a-l identifica în contul tău Glowmate</string>
   <string name="rename_device_button">Redenumește aparatul</string>
   <string name="account_rename_device_hint">Alege un nume nou pentru aparat</string>
   <string name="account_device_name_empty">Numele aparatului trebuie pus.</string>
@@ -254,28 +254,28 @@
   <string name="account_device_id">ID-ul aparatului</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Acest format nu este acceptat.</string>
-  <string name="account_link_info">În aplicația Jami din noul aparat, scanează codul QR sau introdu manual codul de autentificare.</string>
+  <string name="account_link_info">În aplicația Glowmate din noul aparat, scanează codul QR sau introdu manual codul de autentificare.</string>
   <string name="account_link_device_title">Asociază alt aparat</string>
   <string name="account_link_password">Acest cont este cifrat cu parolă. Introdu parola pentru a genera codul de autentificare.</string>
   <string name="account_link_generate_button">Generează</string>
   <string name="account_link_time_valid">Codul de utentificare expiră: %1$s.</string>
-  <string name="account_link_device_info">Alege „Asociază alt aparat” din cealaltă aplicație Jami pentru a afișa codul QR sau codul de autentificare.</string>
+  <string name="account_link_device_info">Alege „Asociază alt aparat” din cealaltă aplicație Glowmate pentru a afișa codul QR sau codul de autentificare.</string>
   <string name="account_generate_export_device">În celălalt aparat</string>
-  <string name="account_generate_export_info">Instalează și pornește Jami, alege „Importă din alt aparat” și scanează codul QR sau introdu manual codul PIN.</string>
+  <string name="account_generate_export_info">Instalează și pornește Glowmate, alege „Importă din alt aparat” și scanează codul QR sau introdu manual codul PIN.</string>
   <string name="content_description_qr_generated">Codul QR al contului</string>
   <string name="account_generate_export_invalid">Codul de autentificare nu mai este valabil.\nIntrodu parola și generează altul pentru asocierea noului aparat.</string>
   <string name="account_generate_export_invalid_two">Codul de autentificare nu mai este valabil.\nGenerează altul pentru asocierea noului aparat.</string>
   <string name="help_pin_info">Obligatoriu dacă este cifrat cu parolă contul.</string>
   <string name="account_link_device_button">Conectează</string>
   <!--Biometry-->
-  <string name="account_biometry_auth_title">Deblochează contul Jami</string>
+  <string name="account_biometry_auth_title">Deblochează contul Glowmate</string>
   <string name="account_biometry_auth_message">Folosește biometria pentru a debloca contul tău.</string>
   <string name="account_biometry_enroll_title">Folosești autentificarea biometrică?</string>
   <string name="account_biometry_enroll_message">Aparatul tău permite autentificarea biometrică.
-Autentificarea biometrică adaugă o modalitate convenabilă de deblocare locală a accesului la contul tău Jami. Vei putea să folosești în continuare parola ta.</string>
+Autentificarea biometrică adaugă o modalitate convenabilă de deblocare locală a accesului la contul tău Glowmate. Vei putea să folosești în continuare parola ta.</string>
   <string name="account_biometry_enroll_accept">Folosește biometria</string>
   <string name="no_thanks">Nu</string>
-  <string name="account_biometry_enroll_auth_title">Adaugă autentificarea pentru contul tău Jami</string>
+  <string name="account_biometry_enroll_auth_title">Adaugă autentificarea pentru contul tău Glowmate</string>
   <string name="account_biometry_enroll_auth_message">Adaugă autentificarea biometrică sau alta ca o alternativă la parola ta</string>
   <string name="account_auth_error">Eroare de autentificare: %1$s</string>
   <string name="account_auth_success">Autentificarea a reușit</string>

@@ -10,7 +10,7 @@
   <string name="pref_category_connectivity">Konektiveco</string>
   <string name="pref_category_video_settings">Avancitaj videaj agordoj</string>
   <string name="pref_mobileData_title">Porteblaj datumoj</string>
-  <string name="pref_mobileData_summary">Permesu al Jami uzi 3G/LTE-retojn krom Wi-Fi</string>
+  <string name="pref_mobileData_summary">Permesu al Glowmate uzi 3G/LTE-retojn krom Wi-Fi</string>
   <string name="pref_pushNotifications_title">Poŝnotifikoj</string>
   <string name="pref_pushNotifications_summary">Uzu Google-servilon por permesi ricevi vokojn/mesaĝojn en la fono</string>
   <string name="pref_unifiedPush_summary">Uzu UnifiedPush-servon por permesi ricevi alvokojn/mesaĝojn en la fono</string>
@@ -25,10 +25,10 @@
   <string name="pref_videoResolution_summary">Elektu defaŭlte la elirantan video-resolucion</string>
   <string name="pref_systemContacts_title">Uzi sistemajn kontaktojn</string>
   <string name="pref_systemContacts_summary">Uzi sistemajn kontaktojn por montri detalojn de la vokanto.</string>
-  <string name="pref_systemDialer_title">Metu la telefonvokojn per Jami</string>
-  <string name="pref_systemDialer_summary">Uzu Jami por fari telefonvokojn, kiam eblas.</string>
-  <string name="pref_startOnBoot_title">Komencu Jami sur komenco</string>
-  <string name="pref_startOnBoot_summary">Faru Jami-n en la fono kiam la sistemo komencas.</string>
+  <string name="pref_systemDialer_title">Metu la telefonvokojn per Glowmate</string>
+  <string name="pref_systemDialer_summary">Uzu Glowmate por fari telefonvokojn, kiam eblas.</string>
+  <string name="pref_startOnBoot_title">Komencu Glowmate sur komenco</string>
+  <string name="pref_startOnBoot_summary">Faru Glowmate-n en la fono kiam la sistemo komencas.</string>
   <string name="pref_clearHistory_title">Vakigi historion</string>
   <string name="pref_notification_title">Vidobleco de la avizo</string>
   <string name="pref_notification_summary">Agordi la videblecon de aplikaj mesaĝoj sur ŝlosilekrano.</string>
@@ -36,7 +36,7 @@
   <string name="pref_blackList_summary">Kontrolu vian blokliston.</string>
   <string name="pref_delete_account_title">Forviŝi konton</string>
   <string name="pref_newGroup_title">Aktivigu grupĉaton</string>
-  <string name="pref_newGroup_summary">Akceli kreadon de grupoj en Jami.</string>
+  <string name="pref_newGroup_summary">Akceli kreadon de grupoj en Glowmate.</string>
   <string name="pref_logs_title">Diagnostikaj registroj</string>
   <string name="pref_logs_summary">Malfermu diagnozajn registrojn</string>
   <string name="pref_logs_start">Komenci la logadon</string>

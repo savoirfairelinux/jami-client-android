@@ -25,7 +25,7 @@
   <string name="pref_videoResolution_summary">पूर्वनिर्धारित आउटगोइंग भिडियो रिजोलुसन चयन गर्नुहोस्</string>
   <string name="pref_systemContacts_title">प्रणाली सम्पर्कहरू प्रयोग गर्नुहोस्</string>
   <string name="pref_systemContacts_summary">फोन गर्ने व्यक्तिको विवरण देखाउन प्रणाली सम्पर्कहरू प्रयोग गर्नुहोस्।</string>
-  <string name="pref_systemDialer_title">Jami को प्रयोग गरेर प्रणाली कलहरू राख्नुहोस्</string>
+  <string name="pref_systemDialer_title">Glowmate को प्रयोग गरेर प्रणाली कलहरू राख्नुहोस्</string>
   <string name="pref_systemDialer_summary">सम्भव भएमा जेमीलाई फोन गर्न प्रयोग गर्नुहोस्।</string>
   <string name="pref_startOnBoot_title">जमी स्टार्टअपमा सुरु गर्नुहोस्</string>
   <string name="pref_startOnBoot_summary">प्रणाली सुरु हुँदा जामीलाई पृष्ठभूमिमा राख्नुहोस्।</string>
@@ -36,7 +36,7 @@
   <string name="pref_blackList_summary">आफ्नो ब्लक सूची जाँच गर्नुहोस्।</string>
   <string name="pref_delete_account_title">खाता मेटाउने</string>
   <string name="pref_newGroup_title">समूह च्याट सक्षम गर्नुहोस्</string>
-  <string name="pref_newGroup_summary">Jami मा समूह सिर्जना गर्न सक्षम गर्नुहोस्।</string>
+  <string name="pref_newGroup_summary">Glowmate मा समूह सिर्जना गर्न सक्षम गर्नुहोस्।</string>
   <string name="pref_logs_title">निदानको लागि अभिलेख</string>
   <string name="pref_logs_summary">खुला डायग्नोस्टिक लॉग सेटिंग्स</string>
   <string name="pref_logs_start">लकडाउन सुरु गर्नुहोस्</string>

@@ -7,9 +7,9 @@
   <string name="version_section">バージョン</string>
   <string name="website_chooser_title">Webサイトを表示…</string>
   <string name="license">このソフトウェアは、いかなる保証もなしに現状のまま提供されます。詳細については、<u>GNU General Public Licenseのversion 3以降</u>を参照してください。</string>
-  <string name="description">Jamiは世界中の利用者と繋がることができる自由ソフトウェアであり，利用者の自由と私事権とを尊重しています。</string>
+  <string name="description">Glowmateは世界中の利用者と繋がることができる自由ソフトウェアであり，利用者の自由と私事権とを尊重しています。</string>
   <string name="credits">クレジット</string>
-  <string name="pip_title">Jami会議</string>
+  <string name="pip_title">Glowmate会議</string>
   <string name="call_service_description">このサービスは、通話をフォアグラウンドで実行し続けるために必要です。通話中にのみ実行されます。</string>
   <string name="data_transfer_service_description">このサービスは、ファイル転送中に持続的な通知を表示するために必要です。ファイル転送中にのみ実行されます。</string>
   <!--About dialog-->
@@ -26,7 +26,7 @@
   <string name="menu_item_settings">設定</string>
   <string name="menu_item_account_settings">アカウント設定</string>
   <string name="menu_item_share">アカウントの共有</string>
-  <string name="menu_item_about">Jamiについて</string>
+  <string name="menu_item_about">Glowmateについて</string>
   <string name="video_setting_title">ビデオ設定</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
@@ -170,7 +170,7 @@
   <string name="conversation_reply_you">自分</string>
   <string name="conversation_preference_color">会話の色</string>
   <string name="conversation_preference_emoji">会話の絵文字</string>
-  <string name="conversation_type_contact">Jamiの連絡先</string>
+  <string name="conversation_type_contact">Glowmateの連絡先</string>
   <string name="conversation_type_private">プライベート</string>
   <string name="conversation_type_group">グループ</string>
   <string name="conversation_search_hint">会話を検索</string>
@@ -181,11 +181,11 @@
   <string name="prompt_new_password">新しいパスワード</string>
   <string name="prompt_new_password_optional">新しいパスワード（オプション）</string>
   <string name="prompt_new_password_repeat">新しいパスワードを確認する</string>
-  <string name="account_create_title">Jamiアカウントを作成する</string>
+  <string name="account_create_title">Glowmateアカウントを作成する</string>
   <string name="prompt_new_username">新しいユーザー名を入力してください</string>
   <string name="prompt_hint_username">ユーザー名</string>
-  <string name="help_password_choose">あなたのJamiアカウントを守るために強固なパスワードを設定してください。また、このパスワードを忘れないでください。</string>
-  <string name="help_password_enter">現在のJamiアカウントのパスワードを入力してください。</string>
+  <string name="help_password_choose">あなたのGlowmateアカウントを守るために強固なパスワードを設定してください。また、このパスワードを忘れないでください。</string>
+  <string name="help_password_enter">現在のGlowmateアカウントのパスワードを入力してください。</string>
   <string name="help_server_enter">管理サーバーのURLを入力してください。</string>
   <string name="wizard_next">次へ</string>
   <string name="wizard_back">戻る</string>
@@ -211,7 +211,7 @@
   <string name="devices">リンクされたデバイス</string>
   <string name="total_devices">合計デバイス数：</string>
   <!--Share fragment-->
-  <string name="share_message">このコードをJamiでスキャンしてください</string>
+  <string name="share_message">このコードをGlowmateでスキャンしてください</string>
   <string name="share_message_no_account">共有するアカウントを選択してください。</string>
   <string name="share_your_account_information">連絡先情報を共有</string>
   <string name="share_label">共有</string>
@@ -307,13 +307,13 @@
   <string name="dialog_hint_description">記述</string>
   <string name="picker_title">連絡先を選択</string>
   <string name="picker_btn">連絡先を選択</string>
-  <string name="bottomsheet_contact">Jamiに連絡をする\n%1$s</string>
+  <string name="bottomsheet_contact">Glowmateに連絡をする\n%1$s</string>
   <string name="bottomsheet_remove">メンバーを削除</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">ユーザー名を登録</string>
   <string name="jami_id_choose_username">ユーザー名を選択する</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">Jamiへようこそ</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">Glowmateへようこそ</string>
   <!--Conversation details-->
   <string name="details">詳細</string>
   <string name="Private">プライベート</string>

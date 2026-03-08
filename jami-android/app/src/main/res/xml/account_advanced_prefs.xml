@@ -103,7 +103,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:summary=""
             android:title="@string/account_turn_username_label" />
 
-        <cx.ring.views.PasswordPreference
+        <com.glowmate.views.PasswordPreference
             android:defaultValue=""
             android:dependency="TURN.enable"
             android:key="TURN.password"
@@ -115,13 +115,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <PreferenceCategory android:title="@string/account_rtp_port_range">
 
-        <cx.ring.views.EditTextIntegerPreference
+        <com.glowmate.views.EditTextIntegerPreference
             android:defaultValue="0"
             android:key="Account.audioPortMin"
             android:persistent="false"
             android:title="@string/account_rtp_min_port" />
 
-        <cx.ring.views.EditTextIntegerPreference
+        <com.glowmate.views.EditTextIntegerPreference
             android:defaultValue="65535"
             android:key="Account.audioPortMax"
             android:persistent="false"

@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 -->
 
-<cx.ring.views.FitsWindowsLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.glowmate.views.FitsWindowsLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                  xmlns:tools="http://schemas.android.com/tools"
                                  android:id="@+id/main_call_layout"
                                  android:layout_width="match_parent"
@@ -23,4 +23,4 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                  android:background="@color/cardview_dark_background"
                                  tools:context=".tv.call.TVCallActivity">
 
-</cx.ring.views.FitsWindowsLayout>
+</com.glowmate.views.FitsWindowsLayout>

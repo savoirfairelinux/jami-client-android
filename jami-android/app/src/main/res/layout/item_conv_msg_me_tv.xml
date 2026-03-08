@@ -38,7 +38,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         android:paddingStart="@dimen/padding_large"
         android:paddingEnd="0dp">
 
-        <cx.ring.views.MessageStatusView
+        <com.glowmate.views.MessageStatusView
             android:id="@+id/status_icon"
             android:layout_width="@dimen/conversation_status_icon_size"
             android:layout_height="@dimen/conversation_status_icon_size"

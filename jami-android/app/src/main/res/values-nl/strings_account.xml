@@ -7,7 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Account toevoegen</string>
   <string name="add_sip_account_title">SIP-account toevoegen</string>
-  <string name="ring_account_default_name">Jami-account %1$s</string>
+  <string name="ring_account_default_name">Glowmate-account %1$s</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Hostnaam</string>
   <string name="prompt_username">Gebruikersnaam</string>
@@ -22,7 +22,7 @@
   <string name="dialog_wait_update">Account wordt bijgewerkt</string>
   <string name="dialog_wait_update_details">Uw account wordt bijgewerkt, even geduld…</string>
   <string name="account_type_ip2ip">IP-account</string>
-  <string name="help_ring">Een Jami-account stelt u in staat andere mensen veilig te bereiken in peer-to-peer middels een volledig gedistribueerd netwerk.</string>
+  <string name="help_ring">Een Glowmate-account stelt u in staat andere mensen veilig te bereiken in peer-to-peer middels een volledig gedistribueerd netwerk.</string>
   <string name="help_sip_title">SIP-account toevoegen</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">Deze handeling kan niet ongedaan gemaakt worden.</string>
@@ -120,10 +120,10 @@
   <string name="account_export_file">Reservekopie van account maken</string>
   <string name="account_export_file_summary">Backup je account op je apparaat om het later te herstellen.</string>
   <string name="account_enter_password">Voer wachtwoord in</string>
-  <string name="account_contact_me">Contacteer me op Jami!</string>
+  <string name="account_contact_me">Contacteer me op Glowmate!</string>
   <string name="update_account">Account bijwerken</string>
-  <string name="account_migration">Uw Jami-account kan worden bijgewerkt.\nVoer uw wachtwoord in.</string>
-  <string name="ring_account">Jami-account</string>
+  <string name="account_migration">Uw Glowmate-account kan worden bijgewerkt.\nVoer uw wachtwoord in.</string>
+  <string name="ring_account">Glowmate-account</string>
   <string name="sip_account">SIP-rekening</string>
   <string name="ring_account_identity">Identiteit</string>
   <string name="account_migration_title_dialog">Accountmigratie</string>
@@ -138,7 +138,7 @@
   <string name="account_tv_advance_settings_header">Geavanceerde instellingen</string>
   <string name="account_tv_add_contact">Voeg contact toe</string>
   <string name="account_tv_advanced_settings">Verander de algemene instellingen</string>
-  <string name="account_tv_about">Over Jami</string>
+  <string name="account_tv_about">Over Glowmate</string>
   <string name="tv_about_version">Versie</string>
   <string name="tv_about_license">Licentie</string>
   <string name="tv_about_author">Schrijverrechten</string>
@@ -146,7 +146,7 @@
   <string name="account_link_device">Dit apparaat koppelen</string>
   <string name="account_link_button">Verbinden uit netwerk</string>
   <string name="account_link_archive_button">Verbinden uit back-up</string>
-  <string name="account_new_button">Maak een account op Jami</string>
+  <string name="account_new_button">Maak een account op Glowmate</string>
   <string name="account_link_export_button">Nieuw apparaat koppelen</string>
   <string name="account_link_show_button">Toon %d meer gekoppelde apparaten</string>
   <string name="account_link_hide_button">Gekoppelde apparaten verbergen</string>
@@ -175,9 +175,9 @@
   <string name="account_status_offline">Offline</string>
   <string name="account_status_error">Fout</string>
   <!--Create account-->
-  <string name="account_creation_home">Welkom bij Jami</string>
+  <string name="account_creation_home">Welkom bij Glowmate</string>
   <string name="account_creation_profile">Maak uw profiel aan</string>
-  <string name="account_creation_ring">Maak uw Jami-account aan</string>
+  <string name="account_creation_ring">Maak uw Glowmate-account aan</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Voer wachtwoord in om te bevestigen</string>

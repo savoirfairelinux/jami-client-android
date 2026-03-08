@@ -45,16 +45,16 @@
         <item name="extendedFloatingActionButtonStyle">@style/Widget.AppTheme.MainActionButton</item>
         <item name="materialSearchBarStyle">@style/Widget.Material3Expressive.SearchBar.CenteredText</item>
 
-        <item name="preferenceTheme">@style/JamiPreferenceThemeOverlay</item>
+        <item name="preferenceTheme">@style/GlowmatePreferenceThemeOverlay</item>
         <item name="popupMenuBackground">@drawable/custom_popup_background</item>
         <item name="materialSwitchStyle">@style/CustomMaterialSwitch</item>
 
         <item name="textInputOutlinedStyle">@style/Widget.Material3.TextInputLayout.OutlinedBox</item>
-        <item name="textInputFilledStyle">@style/Widget.Jami.TextInputLayout</item>
+        <item name="textInputFilledStyle">@style/Widget.Glowmate.TextInputLayout</item>
 
     </style>
 
-    <style name="JamiPreferenceThemeOverlay" parent="@style/PreferenceThemeOverlay">
+    <style name="GlowmatePreferenceThemeOverlay" parent="@style/PreferenceThemeOverlay">
         <item name="switchPreferenceCompatStyle">
             @style/AppThemeBase.Preference.SwitchPreferenceCompat
         </item>
@@ -290,7 +290,7 @@
         <item name="searchOrbViewStyle">@style/CustomSearchOrbView</item>
     </style>
 
-    <style name="Theme.Jami.Leanback.Main" parent="Theme.Ring.LeanbackBrowse">
+    <style name="Theme.Glowmate.Leanback.Main" parent="Theme.Ring.LeanbackBrowse">
         <item name="browseTitleViewLayout">@layout/titleview</item>
     </style>
 
@@ -410,7 +410,7 @@
     </style>
 
 
-    <style name="Widget.Jami.TextInputLayout" parent="Widget.Material3.TextInputLayout.FilledBox">
+    <style name="Widget.Glowmate.TextInputLayout" parent="Widget.Material3.TextInputLayout.FilledBox">
         <item name="boxStrokeWidth">0dp</item>
         <item name="boxStrokeWidthFocused">0dp</item>
         <item name="boxBackgroundColor">@color/edit_text_background</item>

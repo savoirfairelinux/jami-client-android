@@ -27,7 +27,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     android:paddingBottom="8dp"
     android:layout_marginTop="8dp">
 
-    <cx.ring.views.AvatarView
+    <com.glowmate.views.AvatarView
         android:id="@+id/photo"
         android:layout_width="48dp"
         android:layout_height="48dp"

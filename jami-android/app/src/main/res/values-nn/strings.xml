@@ -8,9 +8,9 @@
   <string name="version_section">Utgåve</string>
   <string name="website_chooser_title">Vis nettstad ved å bruka ...</string>
   <string name="license">Dette programvaren er levert "som det er", utan nokon garanti. For meir informasjon, sjå GNU General Public License versjon 3 eller seinare&lt;/u&gt;</string>
-  <string name="description">Jami er fri programvare for universell kommunikasjon som respekterer fridomane og privatlivet til brukarane sine.</string>
+  <string name="description">Glowmate er fri programvare for universell kommunikasjon som respekterer fridomane og privatlivet til brukarane sine.</string>
   <string name="credits">Treningar</string>
-  <string name="pip_title">Jami-konferansen</string>
+  <string name="pip_title">Glowmate-konferansen</string>
   <string name="call_service_description">Denne tenesta er naudsynt for å halda samtalane dine i framgrunnen. Han vert berre brukt under samtalar.</string>
   <string name="data_transfer_service_description">Denne tenesta er naudsynt for å visa vedvarande meldingar under filoverføringar.</string>
   <!--About dialog-->
@@ -18,7 +18,7 @@
   <string name="developers">Utviklarar</string>
   <string name="media">Media</string>
   <string name="special_thanks">Særleg takk til</string>
-  <string name="end_note">Dette er ei liste over folk som har lagt inn mykje tid, med utviklande resultat, inn i Jami. Kven som helst av desse bidragsytarane som ynskjer å verta lagt til burde kontakta Jami-teamet på contact@jami.net.</string>
+  <string name="end_note">Dette er ei liste over folk som har lagt inn mykje tid, med utviklande resultat, inn i Glowmate. Kven som helst av desse bidragsytarane som ynskjer å verta lagt til burde kontakta Glowmate-teamet på contact@jami.net.</string>
   <!--RingActivity-->
   <string name="error_no_network">Ingen nettverkstilslutning</string>
   <string name="error_account_offline">Denne kontoen er avlogga</string>
@@ -33,7 +33,7 @@
   <string name="menu_item_account_settings">Kontoinnstillingar</string>
   <string name="menu_item_extension_list">Utvidingsinstillingar</string>
   <string name="menu_item_share">Dela kontoen min</string>
-  <string name="menu_item_about">Om Jami</string>
+  <string name="menu_item_about">Om Glowmate</string>
   <string name="video_setting_title">Videoinnstillingar</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Slå inn nummer</string>
@@ -113,7 +113,7 @@
   <string name="write_a_message">Skriv melding</string>
   <string name="scan_qr">Skanna QR-kode</string>
   <string name="qr_code">QR-kode</string>
-  <string name="qr_code_not_contact">Dette er ikkje ein QR kode for å kontakta andre på Jami</string>
+  <string name="qr_code_not_contact">Dette er ikkje ein QR kode for å kontakta andre på Glowmate</string>
   <string name="new_group">Lag ei ny gruppe</string>
   <string name="ab_action_flipcamera">Flip-kamera</string>
   <string name="ab_action_hidepreview">Skjå ut forhandsvisning</string>
@@ -188,7 +188,7 @@
   <string name="conversation_reply_you">Du er det</string>
   <string name="conversation_preference_color">Farge for samtal</string>
   <string name="conversation_preference_emoji">Samtal emoji</string>
-  <string name="conversation_type_contact">Jami kontakt</string>
+  <string name="conversation_type_contact">Glowmate kontakt</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_search_hint">Søk samtale</string>
   <string name="today">I dag</string>
@@ -198,10 +198,10 @@
   <string name="prompt_new_password">Nøiv password</string>
   <string name="prompt_new_password_optional">Nøiv password (valgleg)</string>
   <string name="prompt_new_password_repeat">Bekreft nytt passord</string>
-  <string name="account_create_title">Skapa Jami-konto</string>
+  <string name="account_create_title">Skapa Glowmate-konto</string>
   <string name="prompt_new_username">Skriv inn nytt brukernavn</string>
   <string name="prompt_hint_username">Bruksnamn</string>
-  <string name="help_password_choose">Velg eit sterkt passord du vil huske for å verne kontoen din Jami.</string>
+  <string name="help_password_choose">Velg eit sterkt passord du vil huske for å verne kontoen din Glowmate.</string>
   <string name="help_password_enter">Skriv inn password for kontoen din.</string>
   <string name="help_server_enter">Skriv inn URL til styringsservern.</string>
   <string name="wizard_next">Neste</string>
@@ -227,7 +227,7 @@
   <string name="devices">Kopplande utstyr</string>
   <string name="total_devices">Totalt utstyr: </string>
   <!--Share fragment-->
-  <string name="share_message">Skanna denne koden med Jami</string>
+  <string name="share_message">Skanna denne koden med Glowmate</string>
   <string name="share_message_no_account">Velg ein konto du vil dele.</string>
   <string name="share_your_account_information">Deila min kontaktinformasjon</string>
   <string name="share_label">Deling</string>
@@ -329,20 +329,20 @@
   <string name="dialog_hint_description">Beskriving</string>
   <string name="picker_title">Velg kontakt</string>
   <string name="picker_btn">Velg kontakt</string>
-  <string name="bottomsheet_contact">Kontakt Jami\n%1$s</string>
+  <string name="bottomsheet_contact">Kontakt Glowmate\n%1$s</string>
   <string name="bottomsheet_remove">Ta bort medlem</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">Registrer brukernavn</string>
   <string name="jami_id_choose_username">Velg ein brukernavn</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">Velkommen til Jami</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">Velkommen til Glowmate</string>
   <!--Conversation details-->
   <string name="details">Detaljer</string>
   <string name="swarm_type">Samtaletype</string>
   <string name="Private">Privat</string>
   <string name="mute_conversation">Taus samtale</string>
   <!--Donation-->
-  <string name="donation_card_description">Dersom du likar å bruka Jami og trur på saka vår, har du lyst til å donera?</string>
+  <string name="donation_card_description">Dersom du likar å bruka Glowmate og trur på saka vår, har du lyst til å donera?</string>
   <string name="donation_card_not_now">Ikkje no</string>
   <string name="donation_donate">Doner</string>
   <!--Extension-->

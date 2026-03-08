@@ -8,7 +8,7 @@
   <string name="account_selection">Valitse tili</string>
   <string name="add_ring_account_title">Lisää tili</string>
   <string name="add_sip_account_title">Lisää SIP-tili</string>
-  <string name="ring_account_default_name">Jami-tili %1$s</string>
+  <string name="ring_account_default_name">Glowmate-tili %1$s</string>
   <string name="account_creation_error">Tilin luomisen aikana tapahtui virhe.</string>
   <string name="prompt_alias">Lempinimi</string>
   <string name="prompt_hostname">Yhteysosoite</string>
@@ -28,7 +28,7 @@
 Voit soittaa sekä vastaanottaa vain suoria IP-puheluita.
 Voit muokata tiliäsi myöhemmin</string>
   <string name="account_type_ip2ip">IP-tunnus</string>
-  <string name="help_ring">Jami-tilillä tavoitat ihmiset turvallisesti vertaisverkossa täysin hajautetun verkoston kautta.</string>
+  <string name="help_ring">Glowmate-tilillä tavoitat ihmiset turvallisesti vertaisverkossa täysin hajautetun verkoston kautta.</string>
   <string name="help_sip_title">Lisää SIP-tili</string>
   <string name="help_sip">Määritä olemassa oleva SIP-tili</string>
   <string name="create_sip_account">Määritä SIP-tili</string>
@@ -157,27 +157,27 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_export_file_summary">Varmuuskopioi tili laitteellesi niin voit palauttaa sen myöhemmin.</string>
   <string name="account_export_end_decryption_message">Väärä salasana. Yritä uudelleen oikealla salasanalla.</string>
   <string name="account_enter_password">Anna salasana</string>
-  <string name="account_share_body">Ota minuun yhteyttä käyttämällä \"%1$s\" Jami viestintäalustalla: %2$s</string>
-  <string name="account_share_body_with_username">Ota minuun yhteyttä käyttämällä \"%1$s\" tai julkista käyttäjänimeä \"%2$s\" Jami viestintäalustalla: %3$s</string>
-  <string name="account_contact_me">Ota minuun yhteyttä Jamilla!</string>
+  <string name="account_share_body">Ota minuun yhteyttä käyttämällä \"%1$s\" Glowmate viestintäalustalla: %2$s</string>
+  <string name="account_share_body_with_username">Ota minuun yhteyttä käyttämällä \"%1$s\" tai julkista käyttäjänimeä \"%2$s\" Glowmate viestintäalustalla: %3$s</string>
+  <string name="account_contact_me">Ota minuun yhteyttä Glowmatella!</string>
   <string name="update_account">Päivitä tili</string>
-  <string name="account_migration">Jami-tilisi voidaan päivittää.\nAnna salasanasi.</string>
-  <string name="ring_account">Jami-tili</string>
+  <string name="account_migration">Glowmate-tilisi voidaan päivittää.\nAnna salasanasi.</string>
+  <string name="ring_account">Glowmate-tili</string>
   <string name="sip_account">SIP-tili</string>
   <string name="ring_account_identity">Identiteetti</string>
   <string name="account_migration_title_dialog">Tilin siirto</string>
   <string name="account_migration_message_dialog">Sinun tilisi on päivitettävä. Haluatko siirtyä Tilinhallintaan ja suorittaa tämän toiminnon?</string>
   <string name="account_update_needed">Päivitys tarvitaan</string>
   <string name="account_cannot_be_found_title">Tilivirhe</string>
-  <string name="account_cannot_be_found_message">Tiliä ei löydy Jami-verkosta. Varmista, että se vietiin Jamiin olemassa olevasta laitteesta ja annetut kirjautumistiedot ovat oikein.</string>
+  <string name="account_cannot_be_found_message">Tiliä ei löydy Glowmate-verkosta. Varmista, että se vietiin Glowmatein olemassa olevasta laitteesta ja annetut kirjautumistiedot ovat oikein.</string>
   <string name="jams_account_cannot_be_found_message">Tilin yhdistämisen aikana tapahtui virhe. Tarkista kirjautumistiedot ja yritä uudelleen.</string>
   <string name="account_sip_cannot_be_registered_message">Voit jatkaa tilin luontia tai muokata tietojasi täällä. Muokkaus on mahdollista tehdä tiliasetuksissa myöhemmin.</string>
   <string name="account_no_network_title">Verkkovirhe</string>
-  <string name="account_no_network_message">Tapahtui virhe lisättäessä Jami-tiliä hajautettuun verkkoon. Tarkista laitteesi yhteys.</string>
+  <string name="account_no_network_message">Tapahtui virhe lisättäessä Glowmate-tiliä hajautettuun verkkoon. Tarkista laitteesi yhteys.</string>
   <string name="account_device_added_title">Tili lisätty laitteelle</string>
-  <string name="account_device_added_message">Jami-tilin luominen onnistui tällä laitteella.</string>
+  <string name="account_device_added_message">Glowmate-tilin luominen onnistui tällä laitteella.</string>
   <string name="account_device_updated_title">Tili päivitetty laitteelle</string>
-  <string name="account_device_updated_message">Jami-tilin päivitys onnistui.</string>
+  <string name="account_device_updated_message">Glowmate-tilin päivitys onnistui.</string>
   <string name="account_cannot_be_updated_message">Tiliä päivitettäessä tapahtui virhe. Tarkista salasana.</string>
   <string name="account_sip_success_title">SIP-tili rekisteröity</string>
   <string name="account_sip_success_message">SIP-tilin rekisteröinti onnistui.</string>
@@ -187,7 +187,7 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_tv_advance_settings_header">Lisäasetukset</string>
   <string name="account_tv_add_contact">Lisää henkilö</string>
   <string name="account_tv_advanced_settings">Muuta yleiset asetukset</string>
-  <string name="account_tv_about">Tietoa Jamista</string>
+  <string name="account_tv_about">Tietoa Glowmatesta</string>
   <string name="tv_about_version">Versio</string>
   <string name="tv_about_license">Lisenssi</string>
   <string name="tv_about_author">Tekijän oikeudet</string>
@@ -195,7 +195,7 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_link_device">Yhdistä toisesta laitteesta</string>
   <string name="account_link_button">Yhdistä verkosta</string>
   <string name="account_link_archive_button">Yhdistä varmuuskopiosta</string>
-  <string name="account_new_button">Luo Jami-tili</string>
+  <string name="account_new_button">Luo Glowmate-tili</string>
   <string name="account_link_export_button">Linkitä uusi laite</string>
   <string name="account_link_show_button">Näytä %d muuta linkitettyä laitetta</string>
   <string name="account_link_hide_button">Piilota linkitetty laite</string>
@@ -231,9 +231,9 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_status_offline">Poissa</string>
   <string name="account_status_error">Virhe</string>
   <!--Create account-->
-  <string name="account_creation_home">Tervetuloa Jamiin</string>
+  <string name="account_creation_home">Tervetuloa Glowmatein</string>
   <string name="account_creation_profile">Luo sinun profiili</string>
-  <string name="account_creation_ring">Luo sinun Jami-tili</string>
+  <string name="account_creation_ring">Luo sinun Glowmate-tili</string>
   <string name="account_sip_cannot_be_registered">SIP-tilin rekisteröinnin aikana tapahtui virhe.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Muokkaa profiilia</string>
@@ -245,7 +245,7 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="revoke_device_wait_title">Odota hetki...</string>
   <string name="revoke_device_wait_message">Laitetta peruutetaan</string>
   <string name="rename_device_title">Nimeä tämä laite</string>
-  <string name="rename_device_message">Anna laitenimi, jotta tunnistat sen Jami-tililläsi</string>
+  <string name="rename_device_message">Anna laitenimi, jotta tunnistat sen Glowmate-tililläsi</string>
   <string name="rename_device_button">Nimeä laite</string>
   <string name="account_rename_device_hint">Valitse laitteelle uusi nimi</string>
   <string name="account_device_name_empty">Laitteen nimi ei voi olla tyhjä.</string>
@@ -254,27 +254,27 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_device_id">Laite id</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Tätä tiedostomuotoa ei tueta.</string>
-  <string name="account_link_info">Lue QR-koodi uuden laitteen Jami-sovelluksessa tai anna koodi käsin.</string>
+  <string name="account_link_info">Lue QR-koodi uuden laitteen Glowmate-sovelluksessa tai anna koodi käsin.</string>
   <string name="account_link_device_title">Linkitä uusi laite</string>
   <string name="account_link_password">Tili on salasanalla salattu. Anna salasana ja luo todennuskoodi.</string>
   <string name="account_link_generate_button">Luo</string>
   <string name="account_link_time_valid">Koodi ei kelpaa: %1$s</string>
-  <string name="account_link_device_info">Valitse toisesta Jami-sovelluksesta \"Linkitä uusi laite\" saadaksesi QR-koodin tai todennuskoodin.</string>
+  <string name="account_link_device_info">Valitse toisesta Glowmate-sovelluksesta \"Linkitä uusi laite\" saadaksesi QR-koodin tai todennuskoodin.</string>
   <string name="account_generate_export_device">Toisella laitteella</string>
-  <string name="account_generate_export_info">Asenna ja käynnistä Jami. Valitse \"Tuo toiselta laitteelta\" ja skannaa QR-koodi tai anna PIN-koodi käsin.</string>
+  <string name="account_generate_export_info">Asenna ja käynnistä Glowmate. Valitse \"Tuo toiselta laitteelta\" ja skannaa QR-koodi tai anna PIN-koodi käsin.</string>
   <string name="content_description_qr_generated">Tilin QR-koodi</string>
   <string name="account_generate_export_invalid">Koodi ei ole enää voimassa.\nAnna salasana ja luo uusi koodi linkittääksesi uuden laitteen.</string>
   <string name="account_generate_export_invalid_two">Koodi ei ole enää voimassa.\nLuo uusi koodi linkittääksesi uuden laitteen.</string>
   <string name="help_pin_info">Pakollinen, jos tili on salasanalla salattu.</string>
   <string name="account_link_device_button">Yhdistä</string>
   <!--Biometry-->
-  <string name="account_biometry_auth_title">Avaa Jami-tilin lukitus</string>
+  <string name="account_biometry_auth_title">Avaa Glowmate-tilin lukitus</string>
   <string name="account_biometry_auth_message">Käytä biometristä tapaa tilisi lukituksen avaamiseen</string>
   <string name="account_biometry_enroll_title">Käytätkö biometristä tunnistautumista?</string>
-  <string name="account_biometry_enroll_message">Laitteesi tukee biometristä todennusta. Biometrinen tai laitetodennus lisää kätevän tavan avata pääsy Jami-tilillesi. Voit silti käyttää salasanaasi.</string>
+  <string name="account_biometry_enroll_message">Laitteesi tukee biometristä todennusta. Biometrinen tai laitetodennus lisää kätevän tavan avata pääsy Glowmate-tilillesi. Voit silti käyttää salasanaasi.</string>
   <string name="account_biometry_enroll_accept">Käytä biometristä</string>
   <string name="no_thanks">Ei kiitos</string>
-  <string name="account_biometry_enroll_auth_title">Lisää todennus sinun Jami-tilille</string>
+  <string name="account_biometry_enroll_auth_title">Lisää todennus sinun Glowmate-tilille</string>
   <string name="account_biometry_enroll_auth_message">Lisää suojattu biometrinen tai laitetodennus vaihtoehtona salasanallesi</string>
   <string name="account_auth_error">Todennusvirhe: %1$s</string>
   <string name="account_auth_success">Todennus onnistui</string>

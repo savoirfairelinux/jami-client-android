@@ -10,7 +10,7 @@
   <string name="pref_category_connectivity">Lotura</string>
   <string name="pref_category_video_settings">Bideo ezarpen aurreratuak</string>
   <string name="pref_mobileData_title">Datu mugikorrak</string>
-  <string name="pref_mobileData_summary">Baimendu Jami  3G/LTE sareetan, wifi sareetan gain</string>
+  <string name="pref_mobileData_summary">Baimendu Glowmate  3G/LTE sareetan, wifi sareetan gain</string>
   <string name="pref_pushNotifications_title">Push jakinarazpenak</string>
   <string name="pref_pushNotifications_summary">Erabili Google zerbitzariak deiak eta mezuak bigarren planoan jasotzea ahalbidetzeko</string>
   <string name="pref_unifiedPush_summary">UnifiedPush zerbitzua erabili deiak/mezuak atzean jasotzeko</string>
@@ -25,10 +25,10 @@
   <string name="pref_videoResolution_summary">Irteera bideoa hautatu</string>
   <string name="pref_systemContacts_title">Erabili sistemako kontaktuak</string>
   <string name="pref_systemContacts_summary">Erakutsi sistemako kontaktuak deitzailearen xehetasunak erakusteko.</string>
-  <string name="pref_systemDialer_title">Egin sistemako deiak Jami erabiliz</string>
-  <string name="pref_systemDialer_summary">Erabili Jami sistemako deiak egiteko ahal denean.</string>
-  <string name="pref_startOnBoot_title">Hasi Jami abioan</string>
-  <string name="pref_startOnBoot_summary">Hasi Jami bigarren planoan sistema abiatzean.</string>
+  <string name="pref_systemDialer_title">Egin sistemako deiak Glowmate erabiliz</string>
+  <string name="pref_systemDialer_summary">Erabili Glowmate sistemako deiak egiteko ahal denean.</string>
+  <string name="pref_startOnBoot_title">Hasi Glowmate abioan</string>
+  <string name="pref_startOnBoot_summary">Hasi Glowmate bigarren planoan sistema abiatzean.</string>
   <string name="pref_clearHistory_title">Garbitu historiala</string>
   <string name="pref_notification_title">Oharretako ikusgarritasuna</string>
   <string name="pref_notification_summary">Aplikazioen jakinarazpenak itxita dagoen pantailan ikusgai jartzea.</string>
@@ -36,7 +36,7 @@
   <string name="pref_blackList_summary">Begiratu zure blokeo zerrenda.</string>
   <string name="pref_delete_account_title">Kontua ezabatu</string>
   <string name="pref_newGroup_title">Talde-txata aktibatu</string>
-  <string name="pref_newGroup_summary">Jami-n taldeak sortzea ahalbidetu.</string>
+  <string name="pref_newGroup_summary">Glowmate-n taldeak sortzea ahalbidetu.</string>
   <string name="pref_logs_title">Diagnostikoen egunerokoa</string>
   <string name="pref_logs_summary">Diagnostikoaren egunerokoaren konfigurazioa ireki</string>
   <string name="pref_logs_start">Hasten da eguraldia.</string>

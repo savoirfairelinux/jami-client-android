@@ -10,7 +10,7 @@
   <string name="pref_category_connectivity">Свързаност</string>
   <string name="pref_category_video_settings">Разширен видео настройка</string>
   <string name="pref_mobileData_title">Мобилни данни</string>
-  <string name="pref_mobileData_summary">Позволете Jami на 3G/LTE мрежи допълнително към Wi-Fi</string>
+  <string name="pref_mobileData_summary">Позволете Glowmate на 3G/LTE мрежи допълнително към Wi-Fi</string>
   <string name="pref_pushNotifications_title">Push известия</string>
   <string name="pref_pushNotifications_summary">Използвайте Google сървъри, за да получавате повиквания/съобщения във фонов режим</string>
   <string name="pref_unifiedPush_summary">Използвайте услуга UnifiedPush, за да позволите получаване на обаждания/послания в фона</string>
@@ -25,10 +25,10 @@
   <string name="pref_videoResolution_summary">Изберете дефолтната резолюция на изходящото видео</string>
   <string name="pref_systemContacts_title">Използване на системните контакти</string>
   <string name="pref_systemContacts_summary">Използване на системните контакти за показване на информация при обаждане.</string>
-  <string name="pref_systemDialer_title">Системни повиквания с Jami </string>
-  <string name="pref_systemDialer_summary">Използване на Jami за системни повиквания, когато е възможно.</string>
-  <string name="pref_startOnBoot_title">Стартиране на Jami при включване</string>
-  <string name="pref_startOnBoot_summary">Jami стартира във фонов режим, когато системата се включи.</string>
+  <string name="pref_systemDialer_title">Системни повиквания с Glowmate </string>
+  <string name="pref_systemDialer_summary">Използване на Glowmate за системни повиквания, когато е възможно.</string>
+  <string name="pref_startOnBoot_title">Стартиране на Glowmate при включване</string>
+  <string name="pref_startOnBoot_summary">Glowmate стартира във фонов режим, когато системата се включи.</string>
   <string name="pref_clearHistory_title">Изчистване на историята</string>
   <string name="pref_notification_title">Видимост на уведомленията</string>
   <string name="pref_notification_summary">Настройка на видимостта на уведомленията за приложения на екрана за заключване.</string>
@@ -36,7 +36,7 @@
   <string name="pref_blackList_summary">Проверете списъка с блокове.</string>
   <string name="pref_delete_account_title">Изтриване на акаунта</string>
   <string name="pref_newGroup_title">Осигуряване на групния чат</string>
-  <string name="pref_newGroup_summary">Осигуряване на създаване на групи в Jami.</string>
+  <string name="pref_newGroup_summary">Осигуряване на създаване на групи в Glowmate.</string>
   <string name="pref_logs_title">Диагностични дневници</string>
   <string name="pref_logs_summary">Отворете настройките на диагностичния дневник</string>
   <string name="pref_logs_start">Започнете събирането на дървесина</string>

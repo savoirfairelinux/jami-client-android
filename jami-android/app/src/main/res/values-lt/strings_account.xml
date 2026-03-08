@@ -8,7 +8,7 @@
   <string name="account_selection">Pasirinkite paskyrą</string>
   <string name="add_ring_account_title">Pridėti paskyrą</string>
   <string name="add_sip_account_title">Pridėti SIP paskyrą</string>
-  <string name="ring_account_default_name">Jami paskyra %1$s</string>
+  <string name="ring_account_default_name">Glowmate paskyra %1$s</string>
   <string name="account_creation_error">Kuriant paskyrą įvyko klaida.</string>
   <string name="prompt_alias">Slapyvardis</string>
   <string name="prompt_hostname">Kompiuterio vardas</string>
@@ -25,7 +25,7 @@
   <string name="dialog_wait_update_details">Prašome palaukti, kol jūsų naujoji paskyra yra atnaujinama...</string>
   <string name="dialog_warn_ip2ip_account_title">Sukurti tuščią SIP paskyrą?</string>
   <string name="account_type_ip2ip">IP paskyra</string>
-  <string name="help_ring">Jami paskyra leidžia jums saugiai pasiekti žmones per visiškai paskirstytą tinklą.</string>
+  <string name="help_ring">Glowmate paskyra leidžia jums saugiai pasiekti žmones per visiškai paskirstytą tinklą.</string>
   <string name="help_sip_title">Pridėti SIP paskyrą</string>
   <string name="create_sip_account">Konfigūruoti SIP paskyrą</string>
   <!--Strings related to account deletion-->
@@ -118,8 +118,8 @@
   <string name="account_export_end_decryption_message">Neteisingas slaptažodis. Bandykite dar kartą naudodami teisingą slaptažodį</string>
   <string name="account_enter_password">Įveskite slaptažodį</string>
   <string name="update_account">Atnaujinti paskyrą</string>
-  <string name="account_migration">Jūsų Jami paskyra gali būti atnaujinta.\nĮveskite slaptažodį.</string>
-  <string name="ring_account">Jami paskyra</string>
+  <string name="account_migration">Jūsų Glowmate paskyra gali būti atnaujinta.\nĮveskite slaptažodį.</string>
+  <string name="ring_account">Glowmate paskyra</string>
   <string name="sip_account">SIP paskyra</string>
   <string name="ring_account_identity">Tapatybė</string>
   <string name="account_migration_title_dialog">Paskyros perkėlimas</string>
@@ -128,9 +128,9 @@
   <string name="account_sip_cannot_be_registered_message">Galite tęsti paskyros kūrimo procesą arba taisyti savo informaciją čia. Vėliau taisymas taip pat yra įmanomas paskyros nustatymuose.</string>
   <string name="account_no_network_title">Tinklo klaida</string>
   <string name="account_device_added_title">Paskyros įrenginys pridėtas</string>
-  <string name="account_device_added_message">Šiame įrenginyje sėkmingai nustatyta Jami paskyra.</string>
+  <string name="account_device_added_message">Šiame įrenginyje sėkmingai nustatyta Glowmate paskyra.</string>
   <string name="account_device_updated_title">Paskyros įrenginys atnaujintas</string>
-  <string name="account_device_updated_message">Jami paskyra sėkmingai atnaujinta.</string>
+  <string name="account_device_updated_message">Glowmate paskyra sėkmingai atnaujinta.</string>
   <string name="account_cannot_be_updated_message">Atnaujinant paskyrą įvyko klaida. Patikrinkite paskyros slaptažodį.</string>
   <string name="account_sip_register_anyway">Vis tiek registruoti</string>
   <!--TV-->
@@ -138,7 +138,7 @@
   <string name="account_tv_advance_settings_header">Išplėstiniai nustatymai</string>
   <string name="account_tv_add_contact">Pridėti adresatą</string>
   <string name="account_tv_advanced_settings">Keisti bendrus nustatymus</string>
-  <string name="account_tv_about">Apie Jami</string>
+  <string name="account_tv_about">Apie Glowmate</string>
   <string name="tv_about_version">Versija</string>
   <string name="tv_about_license">Licencija</string>
   <string name="tv_about_author">Autorių teisės</string>
@@ -146,7 +146,7 @@
   <string name="account_link_device">Prisijungti iš kito įrenginio</string>
   <string name="account_link_button">Prijungti iš tinklo</string>
   <string name="account_link_archive_button">Prijungti iš atsarginės kopijos</string>
-  <string name="account_new_button">Susikurkite Jami paskyrą</string>
+  <string name="account_new_button">Susikurkite Glowmate paskyrą</string>
   <string name="account_link_export_button">Susieti naują įrenginį</string>
   <string name="account_link_hide_button">Slėpti susietą įrenginį</string>
   <string name="account_end_export_button">užverti</string>
@@ -172,9 +172,9 @@
   <string name="account_status_offline">Atsijungęs</string>
   <string name="account_status_error">Klaida</string>
   <!--Create account-->
-  <string name="account_creation_home">Sveiki atvykę į Jami</string>
+  <string name="account_creation_home">Sveiki atvykę į Glowmate</string>
   <string name="account_creation_profile">Susikurkite profilį</string>
-  <string name="account_creation_ring">Susikurkite Jami paskyrą</string>
+  <string name="account_creation_ring">Susikurkite Glowmate paskyrą</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Taisyti profilį</string>
   <!--Devices-->

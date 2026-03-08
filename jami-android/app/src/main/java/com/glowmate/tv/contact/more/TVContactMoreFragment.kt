@@ -1,0 +1,135 @@
+/*
+ *  Copyright (C) 2004-2025 Savoir-faire Linux Inc.
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+package com.glowmate.tv.contact.more
+
+import android.app.Activity
+import android.content.DialogInterface
+import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AlertDialog
+import androidx.leanback.preference.LeanbackSettingsFragmentCompat
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceScreen
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.glowmate.R
+import com.glowmate.tv.account.JamiPreferenceFragment
+import com.glowmate.utils.ConversationPath.Companion.fromIntent
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
+class TVContactMoreFragment : LeanbackSettingsFragmentCompat() {
+    override fun onPreferenceStartInitialScreen() {
+        startPreferenceFragment(PrefsFragment.newInstance())
+    }
+
+    override fun onPreferenceStartFragment(preferenceFragment: PreferenceFragmentCompat, preference: Preference): Boolean {
+        return false
+    }
+
+    override fun onPreferenceStartScreen(caller: PreferenceFragmentCompat, pref: PreferenceScreen): Boolean {
+        return false
+    }
+
+    @AndroidEntryPoint
+    class PrefsFragment : JamiPreferenceFragment<TVContactMorePresenter>(), TVContactMoreView {
+        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+            setPreferencesFromResource(R.xml.tv_contact_more_pref, rootKey)
+        }
+
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+            presenter.setContact(fromIntent(requireActivity().intent)!!)
+            val isGroup = presenter.getConversation()?.isSwarmGroup() == true
+
+            findPreference<Preference>("Contact.remove")?.isVisible = !isGroup
+            findPreference<Preference>("Contact.delete")?.setTitle(
+                if (isGroup) {
+                    R.string.swarm_group_action_leave
+                } else {
+                    R.string.delete_contact
+                }
+            )
+        }
+
+        override fun onPreferenceTreeClick(preference: Preference): Boolean {
+            val isGroup =
+                presenter.getConversation()?.isSwarmGroup() == true
+
+            if (preference.key == "Contact.delete") {
+                val message = if (isGroup) {
+                    R.string.swarm_group_action_leave_message
+                } else {
+                    R.string.conversation_action_remove_this_message
+                }
+
+                createDialog(getString(message)) { _, _ ->
+                    presenter.removeContact()
+                }
+            } else if (preference.key == "Contact.remove") {
+                if (!isGroup) {
+                    createDialog(
+                        getString(R.string.conversation_action_remove_message)
+                    ) { _, _ ->
+                        presenter.removeConversation()
+                    }
+                }
+            }
+
+            return super.onPreferenceTreeClick(preference)
+        }
+
+        private fun createDialog(
+            title: String,
+            onClickListener: DialogInterface.OnClickListener
+        ) {
+            val alertDialog = MaterialAlertDialogBuilder(requireContext(), com.google.android.material.R.style.Theme_MaterialComponents_Dialog)
+                .setTitle(title)
+                .setMessage("")
+                .setPositiveButton(android.R.string.ok, onClickListener)
+                .setNegativeButton(android.R.string.cancel, null)
+                .create()
+            alertDialog.setOwnerActivity(requireActivity())
+            alertDialog.setOnShowListener {
+                val positive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                positive.isFocusable = true
+                positive.isFocusableInTouchMode = true
+                positive.requestFocus()
+            }
+            alertDialog.show()
+        }
+
+        override fun finishView() {
+            val activity: Activity? = activity
+            if (activity != null) {
+                activity.setResult(DELETE)
+                activity.finish()
+            }
+        }
+
+        companion object {
+            fun newInstance(): PrefsFragment {
+                return PrefsFragment()
+            }
+        }
+    }
+
+    companion object {
+        const val REMOVE = 101
+        const val DELETE = 102
+    }
+}

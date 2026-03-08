@@ -7,7 +7,7 @@
   <string name="version_section">Версия</string>
   <string name="website_chooser_title">Сайтны...</string>
   <string name="license">Бу программа бернинди гарантиясез \"кайчан булса\" бирелә.</string>
-  <string name="description">Jami - үз кулланучыларының ирекләрен һәм шәхси тормышын хөрмәт итүче универсаль коммуникация өчен ирекле программа.</string>
+  <string name="description">Glowmate - үз кулланучыларының ирекләрен һәм шәхси тормышын хөрмәт итүче универсаль коммуникация өчен ирекле программа.</string>
   <string name="credits">Кредитлар</string>
   <string name="pip_title">Җәми конференциясе</string>
   <string name="call_service_description">Бу хезмәт сезнең шалтыратуларны беренче планда тоту өчен кирәк. Ул бары тик шалтыратулар вакытында гына эшли.</string>
@@ -88,7 +88,7 @@
   <string name="yesterday">Кичә</string>
   <!--Contacts-->
   <string name="prompt_new_password_repeat">Яңа шифәрне раслау</string>
-  <string name="account_create_title">Jami хисабы булдыру</string>
+  <string name="account_create_title">Glowmate хисабы булдыру</string>
   <string name="prompt_hint_username">Исем кулланучы</string>
   <string name="wizard_next">Киләсесе</string>
   <string name="wizard_back">Кайт!</string>
@@ -158,10 +158,10 @@
   <string name="dialog_hint_title">Исем</string>
   <string name="dialog_hint_description">Тәрҗемәсе</string>
   <string name="bottomsheet_remove">Алып баручыны алып ташлау</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">Кулланучы исемен теркәгез</string>
   <string name="jami_id_choose_username">Кулланучы исемен сайлагыз</string>
-  <!--WelcomeJami-->
+  <!--WelcomeGlowmate-->
   <string name="welcome_jami_title">Җәмигә рәхим итегез.</string>
   <!--Conversation details-->
   <string name="details">Мәгълүматлар</string>

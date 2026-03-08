@@ -8,7 +8,7 @@
   <string name="account_selection">ਖਾਤਾ ਚੁਣੋ</string>
   <string name="add_ring_account_title">ਖਾਤਾ ਜੋੜੋ</string>
   <string name="add_sip_account_title">SIP ਖਾਤਾ ਜੋੜੋ</string>
-  <string name="ring_account_default_name">Jami ਖਾਤਾ %1$s</string>
+  <string name="ring_account_default_name">Glowmate ਖਾਤਾ %1$s</string>
   <string name="account_creation_error">ਖਾਤਾ ਬਣਾਉਣ ਵੇਲੇ ਕੋਈ ਗੜਬੜ ਹੋਈ।</string>
   <string name="prompt_alias">ਦੂਜਾ ਨਾਂ</string>
   <string name="prompt_hostname">ਮੇਜ਼ਬਾਨ ਦਾ ਨਾਂ</string>
@@ -24,7 +24,7 @@
   <string name="dialog_wait_update">ਖਾਤਾ ਅੱਪਡੇਟ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</string>
   <string name="dialog_wait_update_details">ਕਿਰਪਾ ਕਰਕੇ ਤੁਹਾਡਾ ਨਵਾਂ ਖਾਤਾ ਅੱਪਡੇਟ ਕੀਤੇ ਜਾਣ ਤੱਕ ਉਡੀਕ ਕਰੋ…</string>
   <string name="account_type_ip2ip">ਆਈ.ਪੀ. ਖਾਤਾ</string>
-  <string name="help_ring">Jami ਖਾਤੇ ਨਾਲ ਤੁਸੀਂ ਸਾਥੀ ਤੋਂ ਸਾਥੀ ਵਾਲੇ ਸੰਪੂਰਨ ਵੰਡਮਈ ਨੈੱਟਵਰਕ ਰਾਹੀਂ ਲੋਕਾਂ ਨੂੰ ਸੁਰੱਖਿਅਤ ਢੰਗ ਨਾਲ ਸੰਪਰਕ ਕਰ ਸਕਦੇ ਹੋ।</string>
+  <string name="help_ring">Glowmate ਖਾਤੇ ਨਾਲ ਤੁਸੀਂ ਸਾਥੀ ਤੋਂ ਸਾਥੀ ਵਾਲੇ ਸੰਪੂਰਨ ਵੰਡਮਈ ਨੈੱਟਵਰਕ ਰਾਹੀਂ ਲੋਕਾਂ ਨੂੰ ਸੁਰੱਖਿਅਤ ਢੰਗ ਨਾਲ ਸੰਪਰਕ ਕਰ ਸਕਦੇ ਹੋ।</string>
   <string name="help_sip_title">SIP ਖਾਤਾ ਜੋੜੋ</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">ਇਹ ਕਾਰਵਾਈ ਹੋਣ ਤੋਂ ਬਾਅਦ ਬਦਲੀ ਨਹੀਂ ਜਾ ਸਕਦੀ।</string>
@@ -118,8 +118,8 @@
   <string name="account_export_file_summary">ਆਪਣੇ ਡੀਵਾਈਸ \'ਤੇ ਖਾਤੇ ਦਾ ਬੈਕਅੱਪ ਲਓ ਤਾਂ ਕਿ ਬਾਅਦ ਵਿੱਚ ਮੁੜ-ਬਹਾਲ ਕਰ ਸਕੋ।</string>
   <string name="account_enter_password">ਪਾਸਵਰਡ ਦਾਖਲ ਕਰੋ</string>
   <string name="update_account">ਖਾਤਾ ਅੱਪਡੇਟ ਕਰੋ</string>
-  <string name="account_migration">ਤੁਹਾਡਾ Jami ਖਾਤਾ ਅੱਪਡੇਟ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ।\nਕਿਰਪਾ ਕਰਕੇ ਆਪਣਾ ਪਾਸਵਰਡ ਦਾਖਲ ਕਰੋ।</string>
-  <string name="ring_account">Jami ਖਾਤਾ</string>
+  <string name="account_migration">ਤੁਹਾਡਾ Glowmate ਖਾਤਾ ਅੱਪਡੇਟ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ।\nਕਿਰਪਾ ਕਰਕੇ ਆਪਣਾ ਪਾਸਵਰਡ ਦਾਖਲ ਕਰੋ।</string>
+  <string name="ring_account">Glowmate ਖਾਤਾ</string>
   <string name="ring_account_identity">ਪਛਾਣ</string>
   <string name="account_migration_title_dialog">ਖਾਤਾ ਤਬਾਦਲਾ</string>
   <string name="account_update_needed">ਅੱਪਡੇਟ ਕਰਨ ਦੀ ਲੋੜ ਹੈ</string>
@@ -133,7 +133,7 @@
   <string name="account_tv_advance_settings_header">ਉੱਨਤ ਸੈਟਿੰਗਾਂ</string>
   <string name="account_tv_add_contact">ਸੰਪਰਕ ਜੋੜੋ</string>
   <string name="account_tv_advanced_settings">ਆਮ ਸੈਟਿੰਗਾਂ ਬਦਲੋ</string>
-  <string name="account_tv_about">Jami ਬਾਰੇ</string>
+  <string name="account_tv_about">Glowmate ਬਾਰੇ</string>
   <string name="tv_about_version">ਵਰਜਨ</string>
   <string name="tv_about_license">ਲਾਇਸੰਸ</string>
   <string name="tv_about_credits">ਸ਼ਲਾਘਾਯੋਗ ਵਿਅਕਤੀ</string>
@@ -164,9 +164,9 @@
   <string name="account_status_offline">ਆਫ਼ਲਾਈਨ</string>
   <string name="account_status_error">ਗੜਬੜ</string>
   <!--Create account-->
-  <string name="account_creation_home">Jami ਵਿੱਚ ਜੀ ਆਇਆਂ ਨੂੰ</string>
+  <string name="account_creation_home">Glowmate ਵਿੱਚ ਜੀ ਆਇਆਂ ਨੂੰ</string>
   <string name="account_creation_profile">ਆਪਣਾ ਪ੍ਰੋਫਾਈਲ ਬਣਾਓ</string>
-  <string name="account_creation_ring">ਆਪਣਾ Jami ਖਾਤਾ ਬਣਾਓ</string>
+  <string name="account_creation_ring">ਆਪਣਾ Glowmate ਖਾਤਾ ਬਣਾਓ</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">ਪੁਸ਼ਟੀ ਕਰਨ ਲਈ ਪਾਸਵਰਡ ਦਾਖਲ ਕਰੋ</string>

@@ -48,7 +48,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         android:layout_marginStart="12dp"
         android:gravity="start">
 
-        <cx.ring.views.AvatarView
+        <com.glowmate.views.AvatarView
             android:id="@+id/photo"
             android:layout_width="@dimen/conversation_avatar_size"
             android:layout_height="@dimen/conversation_avatar_size"

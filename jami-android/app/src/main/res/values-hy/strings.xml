@@ -7,7 +7,7 @@
   <string name="version_section">Վարկած</string>
   <string name="website_chooser_title">Տեսնել կայքը օգտագործելով...</string>
   <string name="license">Այս ծրագրային ապահովումը տրամադրվում է \"ինչպես կա\", առանց որեւէ երաշխիքի: Մասնավորապես, տես GNU General Public License տարբերակը 3 կամ ավելի ուշ</string>
-  <string name="description">Jami- ն ազատ ծրագրային ապահովում է համընդհանուր հաղորդակցության համար, որը հարգում է օգտատերերի ազատությունները եւ գաղտնիությունը:</string>
+  <string name="description">Glowmate- ն ազատ ծրագրային ապահովում է համընդհանուր հաղորդակցության համար, որը հարգում է օգտատերերի ազատությունները եւ գաղտնիությունը:</string>
   <string name="credits">Վարկեր</string>
   <string name="pip_title">Ջամիի համաժողով</string>
   <string name="call_service_description">Այս ծառայությունը անհրաժեշտ է ձեր զանգերի առաջատարում պահելու համար: Այն գործում է միայն զանգերի ժամանակ:</string>
@@ -177,7 +177,7 @@
   <string name="prompt_new_password">Նոր գաղտնաբառ</string>
   <string name="prompt_new_password_optional">Նոր գաղտնաբառ (ընտրանքային)</string>
   <string name="prompt_new_password_repeat">Համոզվեք նոր գաղտնաբառը</string>
-  <string name="account_create_title">Ստեղծեք Jami հաշիվ</string>
+  <string name="account_create_title">Ստեղծեք Glowmate հաշիվ</string>
   <string name="prompt_new_username">Նշեք նոր օգտատերու անուն</string>
   <string name="prompt_hint_username">Օգտագործողի անունը</string>
   <string name="help_password_choose">Ընտրեք ուժեղ գաղտնաբառ, որը կհիշեք ձեր Ջամի հաշիվը պաշտպանելու համար:</string>
@@ -302,12 +302,12 @@
   <string name="dialog_hint_description">Բացատրություն</string>
   <string name="picker_title">Ընտրեք կոնտակտները</string>
   <string name="picker_btn">Ընտրեք կոնտակտները</string>
-  <string name="bottomsheet_contact">Հաղորդակցիր Jami\n%1$s</string>
+  <string name="bottomsheet_contact">Հաղորդակցիր Glowmate\n%1$s</string>
   <string name="bottomsheet_remove">Հեռացնել անդամ</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">Գրանցել օգտվողի անունը</string>
   <string name="jami_id_choose_username">Ընտրեք օգտատերու անուն</string>
-  <!--WelcomeJami-->
+  <!--WelcomeGlowmate-->
   <string name="welcome_jami_title">Բարի գալուստ Ջամի:</string>
   <!--Conversation details-->
   <string name="details">Մասնավորապես</string>

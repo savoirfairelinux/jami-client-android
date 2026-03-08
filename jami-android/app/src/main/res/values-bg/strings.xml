@@ -26,7 +26,7 @@
   <string name="menu_item_settings">Настройки</string>
   <string name="menu_item_account_settings">Настройки на сметката</string>
   <string name="menu_item_share">Споделете ми профила.</string>
-  <string name="menu_item_about">Относно Jami</string>
+  <string name="menu_item_about">Относно Glowmate</string>
   <string name="video_setting_title">Настройки на видео</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
@@ -178,7 +178,7 @@
   <string name="prompt_new_password">Нова парола</string>
   <string name="prompt_new_password_optional">Нова парола (незадължително)</string>
   <string name="prompt_new_password_repeat">Потвърди новия парол</string>
-  <string name="account_create_title">Създаване на акаунт Jami</string>
+  <string name="account_create_title">Създаване на акаунт Glowmate</string>
   <string name="prompt_new_username">Въведете ново потребителско име</string>
   <string name="prompt_hint_username">Потребителско име</string>
   <string name="help_password_choose">Изберете сигурна парола, която ще запомните, за да е защитен профилът ви.</string>
@@ -207,7 +207,7 @@
   <string name="devices">Свързани устройства</string>
   <string name="total_devices">Общо устройства: </string>
   <!--Share fragment-->
-  <string name="share_message">Сканирайте този код с Jami</string>
+  <string name="share_message">Сканирайте този код с Glowmate</string>
   <string name="share_message_no_account">Моля, изберете кой профил искате да споделите.</string>
   <string name="share_your_account_information">Споделяне на информацията аз връзка с мен</string>
   <string name="share_label">Споделяне</string>
@@ -303,13 +303,13 @@
   <string name="dialog_hint_description">Описание</string>
   <string name="picker_title">Изберете контакти</string>
   <string name="picker_btn">Изберете контакти</string>
-  <string name="bottomsheet_contact">Свържете се с Jami\n%1$s</string>
+  <string name="bottomsheet_contact">Свържете се с Glowmate\n%1$s</string>
   <string name="bottomsheet_remove">Извадете член</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">Регистрирайте потребителско име</string>
   <string name="jami_id_choose_username">Изберете потребителско име</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">Добре дошли в Jami</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">Добре дошли в Glowmate</string>
   <!--Conversation details-->
   <string name="details">Подробности</string>
   <string name="Private">Приватна</string>

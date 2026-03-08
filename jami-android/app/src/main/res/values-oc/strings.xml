@@ -7,9 +7,9 @@
   <string name="version_section">Version</string>
   <string name="website_chooser_title">Vejatz lo site utilizant...</string>
   <string name="license">Lo logicial es provesit "tal coma es", sens garantia de cap mena. Per detalhs, véder la version 3 o mai tard de la Licéncia publica generala GNU&lt;/u&gt;</string>
-  <string name="description">Jami es un logicial liure per comunicacions universalas que respèctan la libertat e la vida privada de sos utilizaires.</string>
+  <string name="description">Glowmate es un logicial liure per comunicacions universalas que respèctan la libertat e la vida privada de sos utilizaires.</string>
   <string name="credits">Crèdit</string>
-  <string name="pip_title">Conferéncia de Jami</string>
+  <string name="pip_title">Conferéncia de Glowmate</string>
   <string name="call_service_description">Aqueste servici es necessari per gardar las vosas telefonadas en foncion.</string>
   <string name="data_transfer_service_description">Aquel servici es necessari per mostrar las notificacions persistentas pendent los transferiments de fichièrs.</string>
   <!--About dialog-->
@@ -26,7 +26,7 @@
   <string name="menu_item_settings">Paramètres</string>
   <string name="menu_item_account_settings">Configuracion de compte</string>
   <string name="menu_item_share">Comparta mon compte</string>
-  <string name="menu_item_about">A prepaus de Jami</string>
+  <string name="menu_item_about">A prepaus de Glowmate</string>
   <string name="video_setting_title">Ajustaments de vidèo</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
@@ -167,7 +167,7 @@
   <string name="conversation_reply_you">Tu</string>
   <string name="conversation_preference_color">Color de conversacion</string>
   <string name="conversation_preference_emoji">Emoji de conversacion</string>
-  <string name="conversation_type_contact">Contacte Jami</string>
+  <string name="conversation_type_contact">Contacte Glowmate</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_search_hint">Conversacion de cercaire</string>
   <string name="today">Uèi</string>
@@ -177,11 +177,11 @@
   <string name="prompt_new_password">Senhal novèl</string>
   <string name="prompt_new_password_optional">Nòva contraròtle (opcional)</string>
   <string name="prompt_new_password_repeat">Confirmar lo nòu senhal</string>
-  <string name="account_create_title">Creacion d\' un compte Jami</string>
+  <string name="account_create_title">Creacion d\' un compte Glowmate</string>
   <string name="prompt_new_username">Introducir un nòu nom d\' utilizaire</string>
   <string name="prompt_hint_username">Nom d’utilizaire</string>
-  <string name="help_password_choose">Escòli una contraròtle fòrta que te remembraràs per protegir ton compte Jami.</string>
-  <string name="help_password_enter">Introducètz lo vòstre mot de passe de compte Jami principal.</string>
+  <string name="help_password_choose">Escòli una contraròtle fòrta que te remembraràs per protegir ton compte Glowmate.</string>
+  <string name="help_password_enter">Introducètz lo vòstre mot de passe de compte Glowmate principal.</string>
   <string name="help_server_enter">Introducir l\'URL del servidor de gestion.</string>
   <string name="wizard_next">Seguent</string>
   <string name="wizard_back">Tornar</string>
@@ -207,7 +207,7 @@
   <string name="devices">Dispositius ligats</string>
   <string name="total_devices">Dispositius totals: </string>
   <!--Share fragment-->
-  <string name="share_message">Escanar aqueste còdi amb Jami</string>
+  <string name="share_message">Escanar aqueste còdi amb Glowmate</string>
   <string name="share_message_no_account">Seleccionatz un compte per partejar.</string>
   <string name="share_your_account_information">Comparta las miás informacions de contacte</string>
   <string name="share_label">Compartilhar</string>
@@ -303,13 +303,13 @@
   <string name="dialog_hint_description">Descripcion</string>
   <string name="picker_title">Seleccionar los contactes</string>
   <string name="picker_btn">Seleccionar los contactes</string>
-  <string name="bottomsheet_contact">Contactar Jami\n%1$s</string>
+  <string name="bottomsheet_contact">Contactar Glowmate\n%1$s</string>
   <string name="bottomsheet_remove">Retirar membre</string>
-  <!--JamiId-->
+  <!--GlowmateId-->
   <string name="jami_id_validate">Registrar nom d\' utilizaire</string>
   <string name="jami_id_choose_username">Escotar un nom d\' utilizaire</string>
-  <!--WelcomeJami-->
-  <string name="welcome_jami_title">Benvenguts a Jami</string>
+  <!--WelcomeGlowmate-->
+  <string name="welcome_jami_title">Benvenguts a Glowmate</string>
   <!--Conversation details-->
   <string name="details">Detalhs</string>
   <string name="Private">Privat</string>

@@ -26,7 +26,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     android:paddingEnd="24dp"
     android:paddingBottom="@dimen/padding_xsmall">
 
-    <cx.ring.views.AvatarView
+    <com.glowmate.views.AvatarView
         android:id="@+id/photo"
         android:layout_width="@dimen/conversation_avatar_size"
         android:layout_height="@dimen/conversation_avatar_size"
