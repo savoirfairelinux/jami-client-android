@@ -77,6 +77,20 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
                 binding.convLastTime.text = ""
                 binding.convParticipant.text = ""
                 binding.photo.setAvatar(null)
+
+            // Verified badge logic
+            val username = conversation.uri.toString()
+            val badge = binding.verifiedBadge
+            when {
+                username.contains("glowmate") || username.contains("quantainc") -> {
+                    badge.visibility = View.VISIBLE
+                    badge.setImageResource(com.glowmate.R.drawable.ic_verified_gold)
+                }
+                else -> {
+                    badge.visibility = View.VISIBLE
+                    badge.setImageResource(com.glowmate.R.drawable.ic_verified_blue)
+                }
+            }
             }
 
             itemView.setOnClickListener { clickListener.onItemClick(conversation) }

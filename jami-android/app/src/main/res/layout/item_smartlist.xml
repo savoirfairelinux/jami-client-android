@@ -59,6 +59,17 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             android:textStyle="bold"
             tools:text="@tools:sample/full_names" />
 
+
+        <ImageView
+            android:id="@+id/verified_badge"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_alignTop="@+id/conv_participant"
+            android:layout_toEndOf="@+id/conv_participant"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="1dp"
+            android:visibility="gone"
+            android:contentDescription="Verified" />
         <TextView
             android:id="@+id/conv_last_item"
             android:layout_width="wrap_content"
