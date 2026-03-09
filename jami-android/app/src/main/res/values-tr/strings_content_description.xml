@@ -1,10 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">Hızlı çağrı</string>
+  <string name="contact_picture_description">Kişi görseli</string>
   <string name="dial_numeric_pad">Sayısal tuşlar</string>
   <string name="contact_unblock">Engeli kaldır</string>
+  <string name="video_extensions">Video uzantıları</string>
   <string name="file_download_button">İndir</string>
   <string name="control_play">Oynat</string>
   <string name="control_replay">Yeniden oynat</string>
   <string name="control_pause">Duraklat</string>
+  <string name="searchbar_navigation_account">Hesap seç</string>
+  <string name="add_conversation_member">Görüşme üyesi ekle</string>
+  <string name="qrcode_to_scan">Taranacak QR kodu</string>
 </resources>
