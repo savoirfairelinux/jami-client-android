@@ -80,6 +80,7 @@ abstract class HardwareService(
     abstract fun isSpeakerphoneOn(): Boolean
 
     abstract fun toggleSpeakerphone(conf: Conference, checked: Boolean)
+    abstract fun selectAudioOutput(conf: Conference, output: AudioOutput)
     abstract fun abandonAudioFocus()
     abstract fun decodingStarted(id: String, shmPath: String, width: Int, height: Int, isMixer: Boolean)
     abstract fun decodingStopped(id: String, shmPath: String, isMixer: Boolean)

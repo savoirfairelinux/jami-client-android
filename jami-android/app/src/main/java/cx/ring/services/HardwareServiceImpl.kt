@@ -30,6 +30,7 @@ import android.media.MediaRecorder
 import android.media.projection.MediaProjection
 import android.os.Build
 import android.os.Handler
+import android.telecom.CallEndpoint
 import android.telecom.CallAudioState
 import android.util.Log
 import android.util.Size
@@ -165,8 +166,12 @@ class HardwareServiceImpl(
     @SuppressLint("NewApi")
     override fun getAudioState(conf: Conference): Observable<AudioState> =
         (conf.call ?: conf.hostCall ?: conf.firstCall)!!.systemConnection
-            .flatMapObservable { a -> (a as CallServiceImpl.AndroidCall).connection!!.audioState }
-            .map { a -> AudioState(routeToType(a.route), maskToList(a.supportedRouteMask)) }
+            .flatMapObservable { systemCall ->
+                val connection = (systemCall as CallServiceImpl.AndroidCall).connection!!
+                connection.audioState.map { audioState ->
+                    connectionToAudioState(connection, audioState)
+                }
+            }
             .onErrorResumeWith { audioState }
 
     private fun routeToType(a: Int): AudioOutput = when(a) {
@@ -186,6 +191,60 @@ class HardwareServiceImpl(
             add(OUTPUT_SPEAKERS)
         if ((routeMask and CallAudioState.ROUTE_BLUETOOTH) != 0)
             add(OUTPUT_BLUETOOTH)
+    }
+
+    private fun routeListForOutput(output: AudioOutput): List<Int> = when (output.type) {
+        AudioOutputType.SPEAKERS -> CallConnection.ROUTE_LIST_SPEAKER_EXPLICIT
+        AudioOutputType.BLUETOOTH -> listOf(
+            CallAudioState.ROUTE_BLUETOOTH,
+            CallAudioState.ROUTE_WIRED_HEADSET,
+            CallAudioState.ROUTE_WIRED_OR_EARPIECE,
+            CallAudioState.ROUTE_SPEAKER
+        )
+        AudioOutputType.WIRED -> listOf(
+            CallAudioState.ROUTE_WIRED_HEADSET,
+            CallAudioState.ROUTE_BLUETOOTH,
+            CallAudioState.ROUTE_WIRED_OR_EARPIECE,
+            CallAudioState.ROUTE_SPEAKER
+        )
+        AudioOutputType.INTERNAL -> listOf(
+            CallAudioState.ROUTE_WIRED_OR_EARPIECE,
+            CallAudioState.ROUTE_WIRED_HEADSET,
+            CallAudioState.ROUTE_BLUETOOTH,
+            CallAudioState.ROUTE_SPEAKER
+        )
+    }
+
+    private fun connectionToAudioState(connection: CallConnection, state: CallAudioState): AudioState {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            val availableOutputs = connection.availableAudioEndpoints.map { endpointToAudioOutput(it) }
+            val currentOutput = connection.currentAudioEndpoint?.let { endpointToAudioOutput(it) }
+            if (currentOutput != null || availableOutputs.isNotEmpty()) {
+                return AudioState(
+                    output = currentOutput ?: availableOutputs.first(),
+                    availableOutputs = availableOutputs
+                )
+            }
+        }
+        return AudioState(routeToType(state.route), maskToList(state.supportedRouteMask))
+    }
+
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    private fun endpointToAudioOutput(endpoint: CallEndpoint): AudioOutput = AudioOutput(
+        type = endpointTypeToAudioOutputType(endpoint.endpointType),
+        outputName = endpoint.endpointName.toString(),
+        outputId = endpoint.identifier.toString()
+    )
+
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    private fun endpointTypeToAudioOutputType(type: Int): AudioOutputType = when (type) {
+        CallEndpoint.TYPE_EARPIECE -> AudioOutputType.INTERNAL
+        CallEndpoint.TYPE_WIRED_HEADSET -> AudioOutputType.WIRED
+        CallEndpoint.TYPE_BLUETOOTH -> AudioOutputType.BLUETOOTH
+        CallEndpoint.TYPE_SPEAKER,
+        CallEndpoint.TYPE_STREAMING,
+        CallEndpoint.TYPE_UNKNOWN -> AudioOutputType.SPEAKERS
+        else -> AudioOutputType.SPEAKERS
     }
 
     @RequiresApi(CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY)
@@ -410,6 +469,45 @@ class HardwareServiceImpl(
                 }
             }
         }
+    }
+
+    @SuppressLint("NewApi")
+    @Synchronized
+    override fun selectAudioOutput(conf: Conference, output: AudioOutput) {
+        Log.w(TAG, "selectAudioOutput $conf $output")
+
+        conf.call?.let { call ->
+            disposables.add(
+                call.systemConnection
+                    .map {
+                        (it as CallServiceImpl.AndroidCall).connection!!
+                    }
+                    .subscribe({
+                        it.setWantedAudioState(routeListForOutput(output), output.outputId)
+                    }) {
+                        JamiService.setAudioPlugin(JamiService.getCurrentAudioOutputPlugin())
+                        when (output.type) {
+                            AudioOutputType.SPEAKERS -> {
+                                mShouldSpeakerphone = true
+                                routeToSpeaker()
+                            }
+                            AudioOutputType.BLUETOOTH -> {
+                                mShouldSpeakerphone = false
+                                if (mBluetoothWrapper != null && mBluetoothWrapper!!.canBluetooth()) {
+                                    routeToBTHeadset()
+                                } else {
+                                    resetAudio()
+                                }
+                            }
+                            AudioOutputType.WIRED,
+                            AudioOutputType.INTERNAL -> {
+                                mShouldSpeakerphone = false
+                                resetAudio()
+                            }
+                        }
+                    }
+            )
+        } ?: Log.e(TAG, "This is a bug. Cannot select audio output as conference call is null.")
     }
 
     override fun decodingStopped(id: String, shmPath: String, isMixer: Boolean) {
