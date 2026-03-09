@@ -67,7 +67,6 @@ import javax.inject.Inject
 import androidx.core.view.isGone
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.toDrawable
-import androidx.core.view.isInvisible
 import cx.ring.utils.ConversationPath
 
 @Suppress("DEPRECATION")

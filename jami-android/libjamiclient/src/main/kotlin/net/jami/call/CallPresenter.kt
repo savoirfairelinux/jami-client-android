@@ -31,6 +31,7 @@ import net.jami.model.Call
 import net.jami.model.Call.CallStatus
 import net.jami.mvp.RootPresenter
 import net.jami.services.*
+import net.jami.services.HardwareService.AudioOutput
 import net.jami.services.HardwareService.AudioState
 import net.jami.services.HardwareService.VideoEvent
 import net.jami.utils.Log
@@ -238,6 +239,11 @@ class CallPresenter @Inject constructor(
     fun speakerClick(checked: Boolean) {
         val conference = mConference ?: return
         mHardwareService.toggleSpeakerphone(conference, checked)
+    }
+
+    fun selectAudioOutput(output: AudioOutput) {
+        val conference = mConference ?: return
+        mHardwareService.selectAudioOutput(conference, output)
     }
 
     /**

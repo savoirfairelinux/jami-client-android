@@ -593,6 +593,12 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="bottomSheet_hangup_btn">End call</string>
     <string name="bottomSheet_mute_microphone_btn">Micro</string>
     <string name="bottomSheet_sound_output_btn">Sounds</string>
+    <string name="audio_output_dialog_title">Audio output</string>
+    <string name="audio_output_content_description">Audio output: %1$s</string>
+    <string name="audio_output_speaker">Speaker</string>
+    <string name="audio_output_earpiece">Earpiece</string>
+    <string name="audio_output_headset">Headset</string>
+    <string name="audio_output_bluetooth">Bluetooth</string>
     <string name="bottomSheet_raiseHand_btn">Raise hand</string>
     <string name="open_account_extension_settings">Open Account Extension Settings</string>
     <string name="open_general_extension_settings">Open General Extension Settings</string>

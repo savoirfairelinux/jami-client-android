@@ -50,6 +50,8 @@ import android.view.animation.Animation
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
@@ -57,6 +59,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.view.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import cx.ring.R
 import cx.ring.adapters.ConfParticipantAdapter
 import cx.ring.adapters.ConfParticipantAdapter.ConfParticipantSelected
@@ -87,6 +90,7 @@ import net.jami.model.ContactViewModel
 import net.jami.model.Uri
 import net.jami.services.DeviceRuntimeService
 import net.jami.services.HardwareService
+import net.jami.services.HardwareService.AudioOutput
 import net.jami.services.HardwareService.AudioState
 import net.jami.services.NotificationService
 import java.util.*
@@ -133,6 +137,9 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private var bottomSheetParams: BottomSheetBehavior<View>? = null
     private var extensionsAdapter: ExtensionsAdapter? = null
     private var isVideoMode: Boolean = false
+    private var currentAudioState: AudioState? = null
+    private var currentAudioHasVideo = false
+    private var audioOutputBottomSheetDialog: BottomSheetDialog? = null
 
     private val cameraPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
         if (isGranted) {
@@ -496,6 +503,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     override fun onDestroyView() {
         super.onDestroyView()
         presenter.onCallViewDestroyed()
+        audioOutputBottomSheetDialog?.dismiss()
+        audioOutputBottomSheetDialog = null
         mOrientationListener?.disable()
         mOrientationListener = null
         mCompositeDisposable.clear()
@@ -864,13 +873,9 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
      * @param hasVideo true if the call has camera.
      */
     override fun updateAudioState(state: AudioState, hasVideo: Boolean) {
-        // available mode = available outputs - (internal if hasVideo)
-        // if (available mode >= 2) we enable the speaker button else disable it
-        // display the current mode (decided by the call).
-        val availableOutput = state.availableOutputs.filter { if (hasVideo) it.type != HardwareService.AudioOutputType.INTERNAL else true }
-        // If there is only one output, we disable the speaker button.
-       binding!!.callSpeakerBtn.isEnabled =  availableOutput.size > 1
-       binding!!.callSpeakerBtn.isChecked = state.output.type == HardwareService.AudioOutputType.SPEAKERS
+        currentAudioState = state
+        currentAudioHasVideo = hasVideo
+        renderAudioOutputState(state, hasVideo)
     }
 
     override fun updateTime(duration: Long) {
@@ -1365,9 +1370,108 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         presenter.startAddParticipant()
     }
 
-    //todo if videomode, should mute/unmute audio output, if audio only, should switch between speaker options
     fun speakerClicked() {
-        presenter.speakerClick(binding!!.callSpeakerBtn.isChecked)
+        val state = currentAudioState ?: return
+        renderAudioOutputState(state, currentAudioHasVideo)
+        val availableOutputs = availableAudioOutputs(state)
+        if (availableOutputs.size <= 1) return
+
+        if (!hasExternalAudioDevice(availableOutputs)) {
+            selectAudioOutput(nextSimpleAudioOutput(state.output, availableOutputs) ?: return)
+            return
+        }
+
+        showAudioOutputBottomSheet(availableOutputs, state.output)
+    }
+
+    private fun audioOutputLabel(output: AudioOutput): String =
+        output.outputName?.takeIf { it.isNotBlank() } ?: when (output.type) {
+            HardwareService.AudioOutputType.INTERNAL -> getString(R.string.audio_output_earpiece)
+            HardwareService.AudioOutputType.WIRED -> getString(R.string.audio_output_headset)
+            HardwareService.AudioOutputType.SPEAKERS -> getString(R.string.audio_output_speaker)
+            HardwareService.AudioOutputType.BLUETOOTH -> getString(R.string.audio_output_bluetooth)
+        }
+
+    private fun availableAudioOutputs(state: AudioState): List<AudioOutput> =
+        state.availableOutputs.filter {
+            if (currentAudioHasVideo) it.type != HardwareService.AudioOutputType.INTERNAL else true
+        }
+
+    private fun renderAudioOutputState(state: AudioState, hasVideo: Boolean) {
+        val binding = binding ?: return
+        val availableOutput = state.availableOutputs.filter {
+            if (hasVideo) it.type != HardwareService.AudioOutputType.INTERNAL else true
+        }
+        binding.callSpeakerBtn.isEnabled = availableOutput.size > 1
+        binding.callSpeakerBtn.isChecked = state.output.type == HardwareService.AudioOutputType.SPEAKERS
+        binding.textViewCallSpeaker.text = audioOutputLabel(state.output)
+        binding.callSpeakerBtn.contentDescription = getString(
+            R.string.audio_output_content_description,
+            audioOutputLabel(state.output)
+        )
+    }
+
+    private fun hasExternalAudioDevice(outputs: List<AudioOutput>): Boolean =
+        outputs.any {
+            it.type == HardwareService.AudioOutputType.WIRED || it.type == HardwareService.AudioOutputType.BLUETOOTH
+        }
+
+    private fun nextSimpleAudioOutput(currentOutput: AudioOutput, outputs: List<AudioOutput>): AudioOutput? {
+        val speakerOutput = outputs.firstOrNull { it.type == HardwareService.AudioOutputType.SPEAKERS }
+        val internalOutput = outputs.firstOrNull { it.type == HardwareService.AudioOutputType.INTERNAL }
+        return if (isCurrentAudioOutput(currentOutput, speakerOutput)) {
+            internalOutput ?: outputs.firstOrNull { !isCurrentAudioOutput(currentOutput, it) }
+        } else {
+            speakerOutput ?: outputs.firstOrNull { !isCurrentAudioOutput(currentOutput, it) }
+        }
+    }
+
+    private fun selectAudioOutput(output: AudioOutput) {
+        presenter.selectAudioOutput(output)
+    }
+
+    private fun showAudioOutputBottomSheet(outputs: List<AudioOutput>, currentOutput: AudioOutput) {
+        val context = requireContext()
+        val contentView = layoutInflater.inflate(R.layout.bottom_sheet_audio_output, null)
+        val container = contentView.findViewById<LinearLayout>(R.id.audio_output_list)
+        audioOutputBottomSheetDialog?.dismiss()
+        audioOutputBottomSheetDialog = BottomSheetDialog(context).apply {
+            setContentView(contentView)
+            setOnDismissListener {
+                audioOutputBottomSheetDialog = null
+                currentAudioState?.let { renderAudioOutputState(it, currentAudioHasVideo) }
+            }
+        }
+
+        outputs.forEach { output ->
+            val itemView = layoutInflater.inflate(R.layout.item_audio_output_option, container, false)
+            itemView.findViewById<ImageView>(R.id.audio_output_icon).setImageResource(audioOutputIconRes(output))
+            itemView.findViewById<com.google.android.material.textview.MaterialTextView>(R.id.audio_output_title).text = audioOutputLabel(output)
+            itemView.findViewById<ImageView>(R.id.audio_output_selected).isVisible = isCurrentAudioOutput(currentOutput, output)
+            itemView.setOnClickListener {
+                selectAudioOutput(output)
+                audioOutputBottomSheetDialog?.dismiss()
+            }
+            container.addView(itemView)
+        }
+
+        audioOutputBottomSheetDialog?.show()
+    }
+
+    private fun isCurrentAudioOutput(currentOutput: AudioOutput, candidate: AudioOutput?): Boolean {
+        if (candidate == null) return false
+        return if (currentOutput.outputId != null && candidate.outputId != null) {
+            currentOutput.outputId == candidate.outputId
+        } else {
+            currentOutput.type == candidate.type
+        }
+    }
+
+    private fun audioOutputIconRes(output: AudioOutput): Int = when (output.type) {
+        HardwareService.AudioOutputType.INTERNAL -> R.drawable.baseline_sound_24
+        HardwareService.AudioOutputType.SPEAKERS -> R.drawable.baseline_volume_up_24
+        HardwareService.AudioOutputType.WIRED -> R.drawable.baseline_devices_24
+        HardwareService.AudioOutputType.BLUETOOTH -> R.drawable.baseline_settings_ethernet_24
     }
 
     private fun startScreenShare(resultCode: Int, data: Intent) {
