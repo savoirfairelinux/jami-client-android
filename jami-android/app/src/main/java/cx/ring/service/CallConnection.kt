@@ -17,7 +17,11 @@
 
 package cx.ring.service
 
+import android.os.Build
+import android.os.OutcomeReceiver
 import android.telecom.CallAudioState
+import android.telecom.CallEndpoint
+import android.telecom.CallEndpointException
 import android.telecom.Connection
 import android.telecom.ConnectionRequest
 import android.telecom.DisconnectCause
@@ -51,11 +55,28 @@ class CallConnection(
     private val showIncomingCallUi: ((CallConnection, CallRequestResult) -> Unit)?
 ) : Connection() {
 
+    private data class WantedAudioState(
+        val routes: List<Int>,
+        val endpointId: String? = null
+    )
+
     private val audioStateSubject: Subject<CallAudioState> = BehaviorSubject.create()
-    private val wantedAudioStateSubject: Subject<List<Int>> = BehaviorSubject.create()
+    private val wantedAudioStateSubject: Subject<WantedAudioState> = BehaviorSubject.create()
+    private var currentEndpoint: CallEndpoint? = null
+    private var availableEndpoints: List<CallEndpoint> = emptyList()
 
     val audioState: Observable<CallAudioState>
         get() = audioStateSubject
+
+    val currentAudioEndpoint: CallEndpoint?
+        get() = currentEndpoint
+
+    val availableAudioEndpoints: List<CallEndpoint>
+        get() = if (availableEndpoints.isEmpty() && currentEndpoint != null) {
+            listOf(currentEndpoint!!)
+        } else {
+            availableEndpoints
+        }
 
     var call: Call? = null
         set(value) {
@@ -75,7 +96,7 @@ class CallConnection(
                             connectionCapabilities and CAPABILITY_HOLD.inv()
                         }
                         if (status == CallStatus.CURRENT)
-                            callAudioState?.let { audioStateSubject.onNext(it) }
+                            callAudioState?.let { emitAudioState(it) }
                         // Update call status
                         when (status) {
                             CallStatus.RINGING -> if (call.isIncoming) setRinging() else setDialing()
@@ -91,9 +112,31 @@ class CallConnection(
                     })
                 disposable.add(Observable
                     .combineLatest(audioStateSubject, wantedAudioStateSubject) { a, w -> Pair(a, w) }
-                    .subscribe { (audioState, wantedList) ->
+                    .subscribe { (audioState, wantedState) ->
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                            val endpoint = wantedState.endpointId?.let(::findEndpoint)
+                            if (endpoint != null) {
+                                if (currentEndpoint?.identifier == endpoint.identifier) {
+                                    return@subscribe
+                                }
+                                requestCallEndpointChange(
+                                    endpoint,
+                                    service.mainExecutor,
+                                    object : OutcomeReceiver<Void, CallEndpointException> {
+                                        override fun onResult(result: Void?) {
+                                            Log.w(TAG, "setWantedAudioState endpoint success: $endpoint")
+                                        }
+
+                                        override fun onError(error: CallEndpointException) {
+                                            Log.e(TAG, "setWantedAudioState endpoint failed: $endpoint", error)
+                                        }
+                                    }
+                                )
+                                return@subscribe
+                            }
+                        }
                         val supported = audioState.supportedRouteMask
-                        wantedList.firstOrNull { it and supported != 0 }?.let {
+                        wantedState.routes.firstOrNull { it and supported != 0 }?.let {
                             setAudioRoute(it)
                         }
                     })
@@ -153,7 +196,21 @@ class CallConnection(
 
     override fun onCallAudioStateChanged(state: CallAudioState) {
         Log.w(TAG, "onCallAudioStateChanged: $state")
-        audioStateSubject.onNext(state)
+        emitAudioState(state)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    override fun onAvailableCallEndpointsChanged(availableEndpoints: MutableList<CallEndpoint>) {
+        Log.w(TAG, "onAvailableCallEndpointsChanged: $availableEndpoints")
+        this.availableEndpoints = availableEndpoints.toList()
+        callAudioState?.let { emitAudioState(it) }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    override fun onCallEndpointChanged(callEndpoint: CallEndpoint) {
+        Log.w(TAG, "onCallEndpointChanged: $callEndpoint")
+        currentEndpoint = callEndpoint
+        callAudioState?.let { emitAudioState(it) }
     }
 
     override fun onShowIncomingCallUi() {
@@ -161,8 +218,19 @@ class CallConnection(
         showIncomingCallUi?.invoke(this, CallRequestResult.SHOW_UI)
     }
 
-    fun setWantedAudioState(wanted: List<Int>) {
-        wantedAudioStateSubject.onNext(wanted)
+    fun setWantedAudioState(wanted: List<Int>, endpointId: String? = null) {
+        wantedAudioStateSubject.onNext(WantedAudioState(wanted, endpointId))
+    }
+
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    private fun findEndpoint(endpointId: String): CallEndpoint? {
+        val current = currentEndpoint
+        return availableEndpoints.firstOrNull { it.identifier.toString() == endpointId }
+            ?: current?.takeIf { it.identifier.toString() == endpointId }
+    }
+
+    private fun emitAudioState(state: CallAudioState) {
+        audioStateSubject.onNext(state)
     }
 
     companion object {
