@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af59cdd8_871ba29f",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1403,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-03-10T20:54:52Z",
+      "side": 1,
+      "message": "availableAudioOutputs()",
+      "range": {
+        "startLine": 1402,
+        "startChar": 30,
+        "endLine": 1403,
+        "endChar": 87
+      },
+      "revId": "0732e9fa60ba6c510c8546a6eb69a4abde9549b6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c299757_77fda0fe",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1474,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-03-10T20:54:52Z",
+      "side": 1,
+      "message": "shows ethernet icon for bluetooth",
+      "range": {
+        "startLine": 1474,
+        "startChar": 0,
+        "endLine": 1474,
+        "endChar": 2
+      },
+      "revId": "0732e9fa60ba6c510c8546a6eb69a4abde9549b6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1d7abcc_da316e4a",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/HardwareServiceImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-03-10T20:54:52Z",
+      "side": 1,
+      "message": "required min API 28",
+      "range": {
+        "startLine": 486,
+        "startChar": 24,
+        "endLine": 486,
+        "endChar": 91
+      },
+      "revId": "0732e9fa60ba6c510c8546a6eb69a4abde9549b6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
