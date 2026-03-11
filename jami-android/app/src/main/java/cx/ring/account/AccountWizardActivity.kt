@@ -47,6 +47,8 @@ import net.jami.account.AccountWizardPresenter
 import net.jami.account.AccountWizardView
 import net.jami.model.Account
 import net.jami.model.AccountConfig
+import net.jami.model.AccountCreationModel
+import java.io.File
 
 @AndroidEntryPoint
 class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWizardView {
@@ -64,6 +66,7 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
 
         // ======= check if migration is needed =======
         val path = intent?.data?.lastPathSegment
+        val archivePath = intent?.getStringExtra(ImportArchiveReceiverActivity.EXTRA_ARCHIVE_PATH)
         if (path != null) {     // start migration
             val fragment = AccountMigrationFragment().apply {
                 arguments = Bundle().apply { putString(AccountEditionFragment.ACCOUNT_ID_KEY, path) }
@@ -72,6 +75,17 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
             supportFragmentManager.beginTransaction()
                     .replace(R.id.wizard_container, fragment)
                     .commit()
+        } else if (archivePath != null) {
+            presenter.init(AccountConfig.ACCOUNT_TYPE_JAMI)
+            val archiveFile = File(archivePath)
+            val viewModel: AccountCreationViewModel by viewModels()
+            viewModel.model = AccountCreationModel().apply {
+                archive = archiveFile
+            }
+
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.wizard_container, JamiImportBackupFragment(), JamiImportBackupFragment.TAG)
+                .commit()
         } else  // migration is not needed
             presenter.init(intent.action ?: AccountConfig.ACCOUNT_TYPE_JAMI)
 
