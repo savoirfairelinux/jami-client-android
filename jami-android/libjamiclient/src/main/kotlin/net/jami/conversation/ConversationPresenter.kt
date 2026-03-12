@@ -144,7 +144,12 @@ class ConversationPresenter @Inject constructor(
             } else if (c.mode === Conversation.Mode.Syncing) {
                 view.switchToSyncingView()
             } else if (c.mode == Conversation.Mode.Request) {
-                view.switchToIncomingTrustRequestView(c.uriTitle, c.request!!.mode)
+                val req = c.request
+                if (req == null) {
+                    view.switchToUnknownView()
+                } else {
+                    view.switchToIncomingTrustRequestView(c.uriTitle, req.mode)
+                }
             } else if (c.isSwarm || account.isContact(c.uri)) {
                 if ((c.mode == Conversation.Mode.OneToOne) && c.getContact()?.contact?.isBlocked == true) {
                     view.switchToBlockedView()
