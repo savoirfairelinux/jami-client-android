@@ -16,8 +16,12 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 -->
 
 <resources>
+    <!-- Call error -->
+    <string name="call_error">Çağrı başlatılırken bir hata oluştu.</string>
     <string name="call_error_no_microphone">Çağrı iptal edildi. Mikrofon algılanmadı.</string>
     <string name="call_error_no_camera_no_microphone">Çağrı iptal edildi. Kamera veya mikrofon algılanmadı.</string>
+    <string name="screen_sharing_error">Ekran paylaşımı başlatılırken bir hata oluştu.</string>
+
     <!-- SipCalls -->
     <string name="call_human_state_searching">Aranıyor</string>
     <string name="call_human_state_incoming">Gelen</string>

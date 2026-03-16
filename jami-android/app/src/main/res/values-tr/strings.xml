@@ -212,7 +212,7 @@
   <string name="block_contact_completed">%1$s engellendi.</string>
   <string name="unblock_contact_dialog_title">%1$s engeli kaldırılsın mı?</string>
   <string name="unblock_contact_dialog_message">%1$s seninle tekrar iletişime geçebilecek.</string>
-  <string name="unblock_contact_completed">%1$s engellenmedi.</string>
+  <string name="unblock_contact_completed">%1$s engeli kaldırıldı.</string>
   <string name="conversation_contact_is_typing">Kişi yazıyor…</string>
   <string name="conversation_info_contact_you">Siz</string>
   <string name="conversation_members">Üyeler</string>
@@ -226,12 +226,12 @@
   <string name="conversation_preference_emoji">Görüşme emojisi</string>
   <string name="conversation_type_contact">Jami kişisi</string>
   <string name="conversation_type_private">Özel</string>
-  <string name="conversation_type_group">Küme</string>
+  <string name="conversation_type_group">Grup</string>
   <string name="conversation_contact_invited">%1$s görüşmeye davet edildi.</string>
   <string name="conversation_contact_added">%1$s görüşmeye katıldı.</string>
   <string name="conversation_contact_left">%1$s görüşmeden ayrıldı.</string>
   <string name="conversation_contact_blocked">%1$s görüşmeye katılması engellendi.</string>
-  <string name="conversation_contact_unblocked">%1$s görüşmeye erişim engeli kaldırıldı.</string>
+  <string name="conversation_contact_unblocked">%1$s görüşme engeli kaldırıldı.</string>
   <string name="conversation_search_hint">Görüşmede ara</string>
   <string name="audio_recorder_error">Ses kayıt uygulaması bulunamadı.</string>
   <string name="video_recorder_error">Video kayıt uygulaması bulunamadı.</string>
@@ -256,7 +256,7 @@
   <string name="account_create_title">Jami hesabı oluştur</string>
   <string name="prompt_new_username">Yeni kullanıcı adı gir</string>
   <string name="prompt_hint_username">Kullanıcı adı</string>
-  <string name="help_password_choose">Jami hesabını korumak için anımsayacağın güçlü parola seç.</string>
+  <string name="help_password_choose">Jami hesabını korumak için anımsayacağın güçlü bir parola seç.</string>
   <string name="help_password_enter">Ana Jami hesabının parolasını gir.</string>
   <string name="help_server_enter">Yönetim sunucusunun bağlantısını gir.</string>
   <string name="pin_copied">Kimlik doğrulama kodu panoya kopyalandı.</string>
@@ -278,7 +278,7 @@
   <string name="open_the_gallery">Galeriyi aç</string>
   <string name="take_a_photo">Fotoğraf çek</string>
   <string name="remove_photo">Fotoğrafı kaldır</string>
-  <string name="profile_name_hint">İsim gir</string>
+  <string name="profile_name_hint">Adını gir</string>
   <string name="registered_name">Kayıtlı Ad</string>
   <string name="no_registered_name">Kayıtlı ad yok</string>
   <string name="identity">Kimlik</string>
@@ -300,7 +300,7 @@
   <!--Pending invitations-->
   <string name="accept">Kabul et</string>
   <string name="decline">Reddet</string>
-  <string name="block">Engelleme</string>
+  <string name="block">Engelle</string>
   <string name="decline_invitation">Daveti reddet</string>
   <string name="accept_invitation">Daveti kabul et</string>
   <string name="accept_invitation_body">Şuradan %s davet alındı.</string>
@@ -361,12 +361,12 @@
   <string name="navigation_item_conversation">Görüşmeler</string>
   <string name="navigation_item_contact_request">Davetiyeler</string>
   <string name="navigation_item_account">Hesap</string>
-  <string name="search_results_public_directory">Aleni dizin</string>
+  <string name="search_results_public_directory">Genel dizin</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Sesli ileti gönderilsin mi?</string>
-  <string name="tv_send_image_dialog_message">Görüntü gönderilsin mi?</string>
+  <string name="tv_send_image_dialog_message">Görsel gönderilsin mi?</string>
   <string name="tv_send_video_dialog_message">Görüntü gönderilsin mi?</string>
-  <string name="tv_media_preview">Ön İzle</string>
+  <string name="tv_media_preview">Ön izle</string>
   <string name="tv_audio_play">Oynat</string>
   <string name="tv_audio_pause">Duraklat</string>
   <string name="tv_dialog_send">Gönder</string>
@@ -398,7 +398,7 @@
   <string name="wizard_password_button">Parola seç</string>
   <string name="wizard_password_skip">Hesap oluştur</string>
   <string name="wizard_password_switch">Hesabı parola ile şifrele</string>
-  <string name="wizard_password_warning">Unutma parola kurtarılamaz</string>
+  <string name="wizard_password_warning">Unutma parola tekrar kurtarılamaz</string>
   <string name="wizard_profile_info">Profil, yalnızca kişilerle paylaşılır</string>
   <string name="wizard_profile_button">Profili kaydet</string>
   <string name="wizard_profile_skip">Atla ve daha sonra yap</string>
@@ -435,10 +435,10 @@
   <string name="picker_title">Kişi seç</string>
   <string name="picker_btn">Kişi seç</string>
   <string name="no_contact_to_add">Eklenebilir hiçbir kişi yok</string>
-  <string name="bottomsheet_contact">Jami ile iletişime geç\n%1$s</string>
+  <string name="bottomsheet_contact">Jami kişisi\n%1$s</string>
   <string name="bottomsheet_remove">Üyeyi kaldır</string>
   <string name="error_open_no_app_found">Bu dosyayı işleyecek uygulama bulunamadı: %1$s</string>
-  <string name="swarm_detail_no_document">Eklenebilir hiçbir belge yok.</string>
+  <string name="swarm_detail_no_document">Henüz belge yok.</string>
   <string name="group_admin">Yönetici</string>
   <string name="share_contact_intent_title">Bu kişiyi Jami\'ye ekle!</string>
   <string name="share_contact_intent_body">Bu kişiyi “%1$s” Jami dağıtılmış iletişim platformuna ekleyebilirsin: %2$s</string>
@@ -449,24 +449,24 @@
   <string name="jami_id_available">Kullanıcı adı uygun.</string>
   <string name="jami_id_not_available">Kullanıcı adı uygun değil.</string>
   <string name="jami_id_info">• Azami 32 karakter\n• İzin verilen özel karakterler: tire (-), alt çizgi (_)</string>
-  <string name="jami_id_looking_for_availability">Kullanıcı adının kullanılabilirliği kontrol ediliyor…</string>
-  <string name="jami_id_choose_username">Kullanıcı Adı Seç</string>
+  <string name="jami_id_looking_for_availability">Kullanıcı adının uygunluğu kontrol ediliyor…</string>
+  <string name="jami_id_choose_username">Bir kullanıcı adı seç</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Jami ye Hoş geldin</string>
   <string name="welcome_jami_description">Daha kolay iletişime geçilebilmek için Jami tanımlayıcını paylaş!</string>
   <!--Conversation details-->
   <string name="details">Ayrıntılar</string>
-  <string name="secure_p2p_connection">Güvenli eşler arası bağlantı</string>
+  <string name="secure_p2p_connection">Eşler arası bağlantı güvenli</string>
   <string name="swarm_type">Görüşme tipi</string>
   <string name="Private">Özel</string>
-  <string name="swarm_id">Swarm kimliği</string>
+  <string name="swarm_id">Swarm Kimliği</string>
   <string name="show_qr_code">QR kodu göster</string>
   <string name="show_certificate">Sertifikayı göster</string>
   <string name="mute_conversation">Görüşmeyi sessize al</string>
   <!--Donation-->
   <string name="donation_card_description">Jami\'yi kullanmaktan hoşlanıyor ve misyonumuza güveniyorsan bağış yapmak ister misin?</string>
   <string name="donation_card_not_now">Şimdi değil</string>
-  <string name="donation_donate">Bağış</string>
+  <string name="donation_donate">Bağış yap</string>
   <string name="donation_setting_title">Bağış anımsatıcı</string>
   <string name="donation_setting_description">Bağış anımsatıcısını etkinleştir.</string>
   <!--Extension-->
