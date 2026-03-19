@@ -43,22 +43,30 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
         } catch (e: Exception) {
             Log.w(TAG, "Can't acquire wake lock", e)
         }
-        /*try {
-            val isForeground = isAppInForeground()
-            val shouldStartService = !isForeground && remoteMessage.priority == RemoteMessage.PRIORITY_HIGH
-            if (shouldStartService) {
-                Handler(Looper.getMainLooper()).post {
-                    try {
-                        val intent = Intent(this, PushForegroundService::class.java)
-                        startForegroundService(intent)
-                    } catch (e: Exception) {
-                        Log.e(TAG, "Failed to start service on main thread", e)
+
+        val pushType = remoteMessage.data["pt"] ?: ""
+        val isCallNotification = (pushType.contains("audioCall")
+                || pushType.contains("videoCall"))
+                && remoteMessage.priority == RemoteMessage.PRIORITY_HIGH
+
+        if (isCallNotification) {
+            try {
+                val isForeground = isAppInForeground()
+                if (!isForeground) {
+                    Handler(Looper.getMainLooper()).post {
+                        try {
+                            val intent = Intent(this, PushForegroundService::class.java)
+                            startForegroundService(intent)
+                        } catch (e: Exception) {
+                            Log.e(TAG, "Failed to start foreground service on main thread", e)
+                        }
                     }
                 }
+            } catch (e: Exception) {
+                Log.w(TAG, "Failed to start foreground service for push notification", e)
             }
-        } catch (e: Exception) {
-            Log.w(TAG, "Failed to start foreground service for push notification", e)
-        }*/
+        }
+
         serviceScope.launch {
             try {
                 val app = JamiApplication.instance as JamiApplicationFirebase?
