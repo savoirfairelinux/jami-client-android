@@ -38,6 +38,7 @@
   <string name="account_device_revoke">Panaikinti įrenginį</string>
   <string name="account_device_revocation_success_title">Pavyko</string>
   <string name="account_device_revocation_success">Dabar įrenginys yra panaikintas!</string>
+  <string name="account_device_revocation_error_title">Įrenginio panaikinimo klaida</string>
   <string name="account_device_revocation_wrong_password">Neteisingas slaptažodis.</string>
   <string name="account_device_revocation_unknown_device">Nežinomas įrenginys.</string>
   <string name="account_device_revocation_error_unknown">Nežinoma klaida.</string>
@@ -47,6 +48,7 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Bendra</string>
   <string name="account_basic_category">Pagrindiniai nustatymai</string>
+  <string name="account_alias_label">Rodomas vardas</string>
   <string name="account_bootstrap_label">Pradinė įkeltis</string>
   <string name="account_name_server_label">Vardų serveris</string>
   <string name="account_username_label">Naudotojo vardas</string>
@@ -76,6 +78,7 @@
   <string name="account_local_interface_label">Vietinė sąsaja</string>
   <string name="account_local_port_label">Vietinis prievadas</string>
   <string name="account_stun_enable_label">Naudoti STUN</string>
+  <string name="account_stun_server_label">STUN serveris</string>
   <string name="account_accept_files">Automatiškai priimti gaunamuosius failus</string>
   <string name="account_conversation_settings_title">Pokalbio nustatymai</string>
   <string name="account_accept_files_max_size">Didžiausias failo, kurį automatiškai priimti, dydis</string>
@@ -106,6 +109,7 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Naudoti TLS perdavimą</string>
+  <string name="account_tls_certificate_file_label">Liudijimo failas</string>
   <string name="account_tls_password_label">Privačiojo rakto slaptažodis</string>
   <string name="account_rtp_max_port">Didžiausias</string>
   <string name="account_rtp_min_port">Mažiausias</string>
@@ -181,6 +185,7 @@
   <string name="account_revoke_device_hint">Norėdami patvirtinti, įveskite slaptažodį</string>
   <string name="enter_password">Įveskite slaptažodį</string>
   <string name="revoke_device_title">Panaikinti įrenginį</string>
+  <string name="revoke_device_message">Ar norite panaikinti %1$s?</string>
   <string name="revoke_device_wait_title">Prašome palaukti...</string>
   <string name="revoke_device_wait_message">Panaikinamas įrenginys</string>
   <string name="rename_device_title">Pervadinti šį įrenginį</string>
@@ -189,13 +194,17 @@
   <string name="account_device_name_empty">Įrenginio pavadinimas negali būti tuščias.</string>
   <string name="account_device_this_indicator">Šis įrenginys</string>
   <string name="account_disabled_indicator">Išjungta</string>
+  <string name="account_device_id">Įrenginio ID</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Šis formatas yra nepalaikomas.</string>
   <string name="account_link_device_title">Susieti naują įrenginį</string>
   <string name="account_link_generate_button">Generuoti</string>
   <string name="account_link_device_button">Prisijungti</string>
   <!--Biometry-->
+  <string name="account_biometry_auth_title">Atrakinti Jami paskyrą</string>
   <string name="no_thanks">Ne, ačiū</string>
   <string name="account_auth_error">Tapatybės nustatymo klaida: %1$s</string>
   <string name="account_auth_success">Tapatybė sėkmingai nustatyta</string>
+  <string name="account_auth_key_error">Iššifruojant paskyros raktą įvyko klaida.</string>
+  <string name="account_auth_password">Naudoti paskyros slaptažodį</string>
 </resources>

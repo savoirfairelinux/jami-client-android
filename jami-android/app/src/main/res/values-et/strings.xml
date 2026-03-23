@@ -6,6 +6,7 @@
   <string name="section_license">Litsents</string>
   <string name="switch_conversation">Vaheta vestlust</string>
   <string name="delete_conversation_confirmation">Kas sa oled kindel, et soovid selle vestluse kustutada?</string>
+  <string name="acc_profile_photo_capture">Pildista</string>
   <string name="view_switch_camera">Vaheta kaamerat</string>
   <string name="sponsor_section">Jami on vaba tarkvara, mida arendab ja toetab</string>
   <string name="copyright_section">Autoriõigused</string>
@@ -86,6 +87,8 @@
   <string name="notif_incoming_picture">Pilt kasutajalt %1$s</string>
   <string name="notif_sync_title">Sünkroniseerin andmeid...</string>
   <string name="notif_location_title">Jagad asukohta kasutajaga %1$s</string>
+  <string name="notif_channel_reconnect">Sünkroonimine taustal</string>
+  <string name="notif_reconnect_title">Jami sünkroonib andmeid…</string>
   <string name="location_share_contact">%1$s jagab sinuga asukohta</string>
   <string name="notif_location_multi_title">Asukoha jagamine %1$d kasutajaga</string>
   <string name="notif_location_remaining">Jäänud on %1$d minutit</string>

@@ -12,8 +12,8 @@
   <string name="pref_category_video_settings">Išplėstiniai vaizdo nustatymai</string>
   <string name="pref_mobileData_title">Mobilūs duomenys</string>
   <string name="pref_mobileData_summary">Leisti Jami 3G/LTE tinkluose, papildomai prie belaidžio tinklo (Wi-Fi)</string>
-  <string name="pref_pushNotifications_title">\"Push\" pranešimai</string>
-  <string name="pref_pushNotifications_summary">Naudoti Google serverius, kad būtų leista fone gauti skambučius/žinutes</string>
+  <string name="pref_pushNotifications_title">„Push“ pranešimai</string>
+  <string name="pref_pushNotifications_summary">Naudoti „Google“ serverius, kad būtų leista fone gauti skambučius/žinutes</string>
   <string name="pref_video_advanced_title">Išplėstiniai vaizdo nustatymai</string>
   <string name="pref_video_advanced_summary">Keisti vaizdo pralaidumą, raišką, o taip pat eksperimentines ypatybes</string>
   <string name="pref_hd_summary">Įjungti aukštos raiškos (HD) vaizdo siuntimą</string>
@@ -40,6 +40,7 @@
   <string name="pref_link_preview_title">Žiniatinklio nuorodų peržiūra</string>
   <string name="pref_link_preview_summary">Išankstinė peržiūra reikalauja atsisiųsti turinį iš trečiųjų šalių serverių.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_google_services_title">„Google“ paslaugos</string>
   <string name="connectivity_local_node_title">Vietinis DHT mazgas</string>
   <!--Extension-->
   <string name="pref_enable_extensions_title">Įjungti plėtinius</string>
@@ -48,4 +49,6 @@
   <string name="extension_uninstall_title">Pašalinti plėtinį?</string>
   <string name="extension_reset_preferences">Atstatyti plėtinio nuostatas</string>
   <string name="extension_successfully_installed"><b>%1$s</b> plėtinys sėkmingai įdiegtas.</string>
+  <string name="extension_recent_version_exception">Yra įdiegta naujesnė <b>%1$s</b> versija.</string>
+  <string name="extension_same_version_exception">Yra įdiegta ta pati <b>%1$s</b> versija.</string>
 </resources>

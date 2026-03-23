@@ -23,19 +23,19 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="screen_sharing_error">Beim Starten der Bildschirmfreigabe ist ein Fehler aufgetreten.</string>
 
     <!-- SipCalls -->
-    <string name="call_human_state_searching">Suchen</string>
+    <string name="call_human_state_searching">Suche</string>
     <string name="call_human_state_incoming">Eingehend</string>
     <string name="call_human_state_connecting">Verbindet</string>
     <string name="call_human_state_ringing">Klingelt</string>
     <string name="call_human_state_current">Sprechend</string>
-    <string name="call_human_state_hungup">Über</string>
+    <string name="call_human_state_hungup">Beendet</string>
     <string name="call_human_state_busy">Beschäftigt</string>
     <string name="call_human_state_failure">Fehlgeschlagen</string>
     <string name="call_human_state_hold">Halten</string>
-    <string name="call_human_state_over">Über</string>
+    <string name="call_human_state_over">Beendet</string>
     <!-- Conferences -->
     <string name="call_moderator">Moderator</string>
-    <string name="call_muted">stummgeschaltet</string>
+    <string name="call_muted">Stummgeschaltet</string>
     <string name="call_handRaised">Hand gehoben</string>
 
 </resources>
