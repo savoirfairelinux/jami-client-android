@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import androidx.appcompat.app.AlertDialog
 import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
@@ -132,6 +133,15 @@ class AdvancedAccountFragment : BasePreferenceFragment<AdvancedAccountPresenter>
         publishedAddress?.isVisible = !isJamiAccount
         val dhtproxy = findPreference<Preference>(ConfigKey.PROXY_ENABLED.key)
         dhtproxy?.parent?.isVisible = isJamiAccount
+
+        findPreference<Preference>(KEY_RESET_ACTION)?.setOnPreferenceClickListener {
+            AlertDialog.Builder(requireContext())
+                .setMessage(R.string.account_advanced_reset_confirm)
+                .setPositiveButton(android.R.string.ok) { _, _ -> presenter.resetToDefaults() }
+                .setNegativeButton(android.R.string.cancel, null)
+                .show()
+            true
+        }
     }
 
     override fun updateVolatileDetails(details: AccountConfig) {
@@ -139,6 +149,25 @@ class AdvancedAccountFragment : BasePreferenceFragment<AdvancedAccountPresenter>
         findPreference<TwoStatePreference>(ConfigKey.PROXY_ENABLED.key)?.summaryOn =
             if (used.isBlank()) ""
             else getString(R.string.account_proxy_server_used, details[ConfigKey.PROXY_SERVER])
+    }
+
+    override fun refreshView(config: AccountConfig) {
+        for (confKey in config.keys) {
+            val pref = findPreference<Preference>(confKey.key) ?: continue
+            if (!confKey.isBool) {
+                val value = config[confKey]
+                if (confKey == ConfigKey.RINGNS_HOST && value.isEmpty()) {
+                    pref.summary = getString(R.string.default_value)
+                } else {
+                    pref.summary = value
+                }
+                if (pref is EditTextPreference) {
+                    pref.text = value
+                }
+            } else {
+                (pref as TwoStatePreference).isChecked = config.getBool(confKey)
+            }
+        }
     }
 
     override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {
@@ -168,5 +197,6 @@ class AdvancedAccountFragment : BasePreferenceFragment<AdvancedAccountPresenter>
     companion object {
         val TAG = AdvancedAccountFragment::class.simpleName!!
         private const val DIALOG_FRAGMENT_TAG = "androidx.preference.PreferenceFragment.DIALOG"
+        private const val KEY_RESET_ACTION = "action_reset_advanced_settings"
     }
 }

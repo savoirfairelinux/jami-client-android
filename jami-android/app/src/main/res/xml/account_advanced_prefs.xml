@@ -128,4 +128,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:title="@string/account_rtp_max_port" />
     </PreferenceCategory>
 
+    <PreferenceCategory>
+        <Preference
+            android:icon="@drawable/baseline_replay_24"
+            android:key="action_reset_advanced_settings"
+            android:persistent="false"
+            android:summary="@string/account_advanced_reset_summary"
+            android:title="@string/account_advanced_reset" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

@@ -18,9 +18,12 @@ package net.jami.settings
 
 import io.reactivex.rxjava3.core.Scheduler
 import net.jami.model.Account
+import net.jami.model.AccountConfig
 import net.jami.model.ConfigKey
 import net.jami.mvp.RootPresenter
 import net.jami.services.AccountService
+import net.jami.services.DeviceRuntimeService
+import net.jami.services.PreferencesService
 import net.jami.utils.Log
 import java.net.NetworkInterface
 import java.net.SocketException
@@ -30,6 +33,8 @@ import javax.inject.Named
 
 class AdvancedAccountPresenter @Inject constructor(
     private var accountService: AccountService,
+    private val preferencesService: PreferencesService,
+    private val deviceService: DeviceRuntimeService,
     @param:Named("UiScheduler") private val uiScheduler: Scheduler
 ) : RootPresenter<AdvancedAccountView>() {
     private var mAccount: Account? = null
@@ -66,6 +71,46 @@ class AdvancedAccountPresenter @Inject constructor(
         }
         mAccount?.setDetail(configKey, value)
         updateAccount()
+    }
+
+    fun resetToDefaults() {
+        val account = mAccount ?: return
+        mCompositeDisposable.add(
+            accountService.getAccountTemplate(AccountConfig.ACCOUNT_TYPE_JAMI)
+                .observeOn(uiScheduler)
+                .subscribe({ templateDetails ->
+                    val resetKeys = listOf(
+                        ConfigKey.RINGNS_HOST,
+                        ConfigKey.ACCOUNT_HOSTNAME,
+                        ConfigKey.PROXY_SERVER,
+                        ConfigKey.PROXY_LIST_ENABLED,
+                        ConfigKey.PROXY_SERVER_LIST,
+                        ConfigKey.ACCOUNT_PEER_DISCOVERY,
+                        ConfigKey.ACCOUNT_UPNP_ENABLE,
+                        ConfigKey.TURN_ENABLE,
+                        ConfigKey.TURN_SERVER,
+                        ConfigKey.TURN_USERNAME,
+                        ConfigKey.TURN_PASSWORD,
+                        ConfigKey.AUDIO_PORT_MIN,
+                        ConfigKey.AUDIO_PORT_MAX,
+                    )
+                    for (key in resetKeys) {
+                        templateDetails[key.key]?.let { account.setDetail(key, it) }
+                    }
+                    account.setDetail(ConfigKey.ACCOUNT_UPNP_ENABLE, AccountConfig.TRUE_STR)
+                    val pushEnabled = preferencesService.settings.enablePushNotifications
+                    account.setDetail(ConfigKey.PROXY_ENABLED, if (pushEnabled) AccountConfig.TRUE_STR else AccountConfig.FALSE_STR)
+                    if (pushEnabled) {
+                        deviceService.pushToken?.let { (token, topic) ->
+                            account.setDetail(ConfigKey.PROXY_PUSH_TOKEN, token)
+                            account.setDetail(ConfigKey.PROXY_PUSH_TOPIC, topic)
+                            account.setDetail(ConfigKey.PROXY_PUSH_PLATFORM, deviceService.pushPlatform)
+                        }
+                    }
+                    updateAccount()
+                    view?.refreshView(account.config)
+                }, { e -> Log.e(TAG, "resetToDefaults failed", e) })
+        )
     }
 
     private fun updateAccount() {
