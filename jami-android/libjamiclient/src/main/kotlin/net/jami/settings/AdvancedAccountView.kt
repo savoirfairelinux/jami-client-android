@@ -26,4 +26,6 @@ interface AdvancedAccountView {
     )
 
     fun updateVolatileDetails(details: AccountConfig)
+
+    fun refreshView(config: AccountConfig)
 }
