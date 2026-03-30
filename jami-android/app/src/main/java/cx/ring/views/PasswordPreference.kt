@@ -27,4 +27,10 @@ class PasswordPreference : EditTextPreference {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
 
     constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
+
+    init {
+        summaryProvider = SummaryProvider<PasswordPreference> { pref ->
+            if (pref.text.isNullOrEmpty()) "" else "\u2022\u2022\u2022\u2022\u2022\u2022"
+        }
+    }
 }
