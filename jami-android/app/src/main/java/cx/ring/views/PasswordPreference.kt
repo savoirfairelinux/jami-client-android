@@ -30,7 +30,7 @@ class PasswordPreference : EditTextPreference {
 
     init {
         summaryProvider = SummaryProvider<PasswordPreference> { pref ->
-            if (pref.text.isNullOrEmpty()) "" else "\u2022\u2022\u2022\u2022\u2022\u2022"
+            if (pref.text.isNullOrEmpty()) "" else "••••••"
         }
     }
 }
