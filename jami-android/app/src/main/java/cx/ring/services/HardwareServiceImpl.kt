@@ -52,6 +52,7 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.daemon.IntVect
 import net.jami.daemon.JamiService
@@ -655,7 +656,7 @@ class HardwareServiceImpl(
     ) {
         val conf = mCameraPreviewCall.get()
         videoParams.isCapturing = true
-        mUiScheduler.scheduleDirect {
+        Schedulers.io().scheduleDirect {
             cameraService.openCamera(videoParams, previewSurface,
                 object : CameraListener {
                     override fun onOpened() {
