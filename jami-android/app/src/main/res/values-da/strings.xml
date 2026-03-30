@@ -398,6 +398,7 @@
   <string name="wizard_profile_button">Gem profil</string>
   <string name="wizard_profile_skip">Springer over og gør det senere</string>
   <string name="fab_path_choose">Vælg en anden fil</string>
+  <string name="chat_extensions">Chatudvidelser</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Del</string>
   <string name="bottomSheet_dialpad_btn">Væsen</string>
@@ -418,6 +419,7 @@
   <string name="tab_members">Medlemmer</string>
   <string name="tab_files">Filer</string>
   <string name="tab_settings">Indstillinger</string>
+  <string name="dialog_title_contact">Rediger kaldenavn</string>
   <string name="dialogtitle_title">Rediger gruppetitel</string>
   <string name="dialogtitle_description">Rediger gruppebeskrivelse</string>
   <string name="dialog_hint_title">Titel</string>
@@ -426,34 +428,54 @@
   <string name="picker_btn">Vælg kontakter</string>
   <string name="bottomsheet_contact">Kontakt Jami\n%1$s</string>
   <string name="bottomsheet_remove">Fjern medlem</string>
+  <string name="error_open_no_app_found">Der blev ikke fundet en app til at åbne denne slags fil: %1$s</string>
+  <string name="swarm_detail_no_document">Du har endnu ikke nogen dokumenter.</string>
   <string name="group_admin">Administrator</string>
+  <string name="share_contact_intent_title">Føj denne kontakt til Jami!</string>
   <!--JamiId-->
   <string name="jami_id_copy">Kopier JamiId</string>
   <string name="jami_id_share">Del JamiId</string>
   <string name="jami_id_validate">Registrer brugernavn</string>
   <string name="jami_id_available">Brugernavnet er tilgængeligt.</string>
   <string name="jami_id_not_available">Brugernavnet er ikke tilgængeligt.</string>
+  <string name="jami_id_info">• Højst 32 tegn\n• Du kan bruge disse specialtegn: bindestreg (-) og understreg (_)</string>
+  <string name="jami_id_looking_for_availability">Tjekker om brugernavnet er ledigt…</string>
   <string name="jami_id_choose_username">Vælg et brugernavn</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Velkommen til Jami</string>
   <!--Conversation details-->
   <string name="details">Detaljer</string>
+  <string name="secure_p2p_connection">Sikker P2P forbindelse</string>
+  <string name="swarm_type">Samtaletype</string>
   <string name="Private">Privat</string>
+  <string name="swarm_id">Sværm ID</string>
   <string name="show_qr_code">Vis QR kode</string>
   <string name="show_certificate">Vis certifikat</string>
   <string name="mute_conversation">Stemme samtaler</string>
   <!--Donation-->
   <string name="donation_card_not_now">Ikke nu</string>
   <string name="donation_donate">Donér</string>
+  <string name="donation_setting_title">Donationspåmindelse</string>
+  <string name="donation_setting_description">Slå donationspåmindelse til</string>
   <!--Extension-->
+  <string name="unable_to_load">Kunne ikke starte %1$s</string>
+  <string name="load_success">%1$s: Startet</string>
+  <string name="unload_success">%1$s: Stoppet</string>
+  <string name="install_success">Udvidelsen %1$s blev installeret.</string>
   <string name="export_side_main_title">Eksporter konto</string>
   <string name="import_side_main_title">Importer konto</string>
+  <string name="export_side_step1_switch_to_code">Eller tryk her for at skrive godkendelseskode</string>
+  <string name="export_side_step1_switch_to_qr">Eller tryk her for at scanne QR kode</string>
   <string name="export_side_step1_code_connect">Køb</string>
   <string name="export_side_step2_cancel">Annuller</string>
   <string name="export_side_step2_confirm">- Det bekræfter jeg.</string>
+  <string name="export_side_step3_exit">Afslut</string>
   <string name="import_side_step1_share">Del</string>
+  <string name="import_side_step1_preparing_device">Forbereder enhed…</string>
   <string name="import_side_step2_password_import">Importér</string>
+  <string name="import_side_step3_exit">Afslut</string>
   <string name="link_device_error_timeout">Det tog for lang tid at udføre handlingen.</string>
+  <string name="link_device_error_unknown">Der skete en fejl.</string>
   <!--Accessibility-->
   <string name="step_title_create_username">Opret brugernavn</string>
   <string name="step_title_set_password">Indstil adgangskode</string>

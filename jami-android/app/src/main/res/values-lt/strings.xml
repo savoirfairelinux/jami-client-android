@@ -81,6 +81,7 @@
   <string name="action_call_accept">Atsiliepti</string>
   <string name="action_call_accept_audio">Atsiliepti su garsu</string>
   <string name="action_call_accept_video">Atsiliepti su vaizdu</string>
+  <string name="switch_to_audio">Išjungti vaizdą</string>
   <string name="switch_to_video">Įjungti vaizdą</string>
   <string name="action_call_decline">Atmesti</string>
   <string name="action_call_mic_mute">Išjungti mikrofoną</string>
@@ -142,6 +143,7 @@
   <string name="conversation_action_remove_this_title">Ištrinti šį adresatą?</string>
   <string name="conversation_action_remove_this_message">Tai ištrins adresatą ir išvalys pokalbio istoriją.</string>
   <string name="remove_conversation">Šalinti pokalbį</string>
+  <string name="conversation_action_remove_title">Šalinti pokalbį?</string>
   <string name="swarm_group_action_leave">Išeiti iš grupės</string>
   <string name="swarm_group_action_leave_title">Išeiti iš šios grupės?</string>
   <string name="swarm_group_action_leave_message">Tai pašalins pokalbį iš jūsų pokalbių sąrašo</string>
@@ -232,6 +234,7 @@
   <string name="conversation_placeholder">Kol kas neturite jokių pokalbių</string>
   <string name="contact_request_sent">Adresato užklausa išsiųsta</string>
   <string name="start_conversation">Pradėti pokalbį</string>
+  <string name="search_results">Paieškos rezultatai</string>
   <string name="tv_contact_row_header">Adresatai</string>
   <string name="gallery_error_title">Nerasta jokios Galerijos programėlės</string>
   <string name="gallery_error_message">Įrenginyje nerasta jokios programėlės atverti Galeriją</string>
@@ -240,6 +243,7 @@
   <string name="file_transfer_status_created">Inicijuojama</string>
   <string name="file_transfer_status_invalid_file">Neteisingas failas</string>
   <string name="file_transfer_status_canceled">Atsisakyta</string>
+  <string name="file_transfer_status_timed_out">Pasibaigė operacijai skirtas laikas.</string>
   <string name="file_saved_in">Failas įrašytas į %s.</string>
   <string name="file_download">Atsisiųsti</string>
   <string name="title_media_viewer">Medijos žiūryklė</string>
@@ -331,17 +335,25 @@
   <string name="show_certificate">Rodyti liudijimą</string>
   <!--Donation-->
   <string name="donation_card_not_now">Ne dabar</string>
+  <string name="donation_donate">Paremkite</string>
   <!--Extension-->
   <string name="unable_to_load">Nepavyko įkelti %1$s</string>
   <string name="load_success">%1$s: įjungta</string>
   <string name="unload_success">%1$s: išjungta</string>
   <string name="export_side_main_title">Eksportuoti paskyrą</string>
+  <string name="import_side_main_title">Importuoti paskyrą</string>
   <string name="export_side_step1_code_connect">Prisijungti</string>
   <string name="export_side_step2_cancel">Atsisakyti</string>
   <string name="export_side_step2_confirm">Patvirtinti</string>
   <string name="import_side_step1_share">Bendrinti</string>
+  <string name="import_side_step1_preparing_device">Ruošiamas įrenginys…</string>
   <string name="import_side_step2_password_import">Importuoti</string>
+  <string name="import_side_step2_password_unlocking">Atrakinama paskyra…</string>
+  <string name="import_side_step3_body_done">Paskyra buvo sėkmingai importuota.</string>
+  <string name="import_side_step3_go_to_account">Eiti į naują paskyrą</string>
+  <string name="link_device_error_timeout">Pasibaigė operacijai skirtas laikas.</string>
   <string name="link_device_error_unknown">Įvyko klaida.</string>
   <!--Accessibility-->
   <string name="step_title_set_password">Nustatyti slaptažodį</string>
+  <string name="step_format">Žingsnis %1$d iš %2$d: %3$s</string>
 </resources>
