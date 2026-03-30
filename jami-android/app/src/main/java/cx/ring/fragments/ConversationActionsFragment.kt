@@ -225,7 +225,8 @@ class ConversationActionsFragment : Fragment() {
                 else if (conversation.mode.blockingFirst() == Conversation.Mode.Request)
                     ActionHelper.launchAcceptInvitation(
                         context = requireContext(),
-                        conversation = conversation
+                        conversation = conversation,
+                        disposable = mDisposableBag
                     ) {
                         mConversationFacade.acceptRequest(it)
                         val resultIntent = Intent()
@@ -254,7 +255,8 @@ class ConversationActionsFragment : Fragment() {
                     ActionHelper.launchBlockContactAction(
                         context = requireContext(),
                         accountId = mAccountService.currentAccount!!.accountId,
-                        contact = conversation.contact!!
+                        contact = conversation.contact!!,
+                        disposable = mDisposableBag
                     ) { accountId: String, _: Uri ->
                         mConversationFacade.blockConversation(accountId, conversation.uri)
                         mConversationFacade.discardRequest(accountId, conversation.uri)
@@ -268,6 +270,7 @@ class ConversationActionsFragment : Fragment() {
                         context = requireContext(),
                         accountId = mAccountService.currentAccount!!.accountId,
                         contact = conversation.contact!!,
+                        disposable = mDisposableBag
                     ) { accountId: String, contactUri: Uri ->
                         mAccountService.addContact(accountId, contactUri.uri)
                         val resultIntent = Intent()
@@ -280,6 +283,7 @@ class ConversationActionsFragment : Fragment() {
                         context = requireContext(),
                         accountId = mAccountService.currentAccount!!.accountId,
                         contact = conversation.contact!!,
+                        disposable = mDisposableBag
                     ) { accountId: String, contactUri: Uri ->
                         mAccountService.removeContact(accountId, contactUri.uri, true)
                         val resultIntent = Intent()
@@ -336,7 +340,8 @@ class ConversationActionsFragment : Fragment() {
                 if (conversation.mode.blockingFirst() == Conversation.Mode.Request)
                     ActionHelper.launchAcceptInvitation(
                         context = requireContext(),
-                        conversation = conversation
+                        conversation = conversation,
+                        disposable = mDisposableBag
                     ) {
                         mConversationFacade.acceptRequest(it)
                         val resultIntent = Intent()

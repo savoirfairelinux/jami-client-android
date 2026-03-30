@@ -50,6 +50,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     SmartListListeners, ConversationActionCallback, SmartListView {
     private var mSmartListAdapter: SmartListAdapter? = null
     private var binding: FragSmartlistBinding? = null
+    private val mDisposableBag = CompositeDisposable()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragSmartlistBinding.inflate(inflater, container, false).apply {
@@ -61,6 +62,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
 
     override fun onDestroyView() {
         super.onDestroyView()
+        mDisposableBag.clear()
         binding = null
     }
 
@@ -126,7 +128,8 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         ActionHelper.launchBlockContactAction(
             context = requireContext(),
             accountId = accountId,
-            contact = contact
+            contact = contact,
+            disposable = mDisposableBag
         ) { _, _ -> presenter.blockContact(accountId, contact) }
 
     override fun copyNumber(uri: Uri) {

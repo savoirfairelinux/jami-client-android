@@ -29,6 +29,7 @@ import cx.ring.interfaces.AppBarStateListener
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.utils.ActionHelper.launchUnblockContactAction
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.contactrequests.BlockListPresenter
 import net.jami.contactrequests.BlockListView
 import net.jami.model.Contact
@@ -47,6 +48,7 @@ class BlockListFragment : BaseSupportFragment<BlockListPresenter, BlockListView>
 
     private var mAdapter: BlockListAdapter? = null
     private var binding: FragBlocklistBinding? = null
+    private val mDisposableBag = CompositeDisposable()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -58,6 +60,7 @@ class BlockListFragment : BaseSupportFragment<BlockListPresenter, BlockListView>
 
     override fun onDestroyView() {
         super.onDestroyView()
+        mDisposableBag.clear()
         binding = null
     }
 
@@ -71,7 +74,8 @@ class BlockListFragment : BaseSupportFragment<BlockListPresenter, BlockListView>
         launchUnblockContactAction(
             context = requireContext(),
             accountId = mAccountService.currentAccount!!.accountId,
-            contact = contact
+            contact = contact,
+            disposable = mDisposableBag
         ) { _, _ -> presenter.unblockClicked(contact) }
     }
 
