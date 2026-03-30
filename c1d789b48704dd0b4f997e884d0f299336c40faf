@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "368bba41_33379cb4",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/PasswordPreference.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2026-03-30T17:34:49Z",
+      "side": 1,
+      "message": "use character \u0027•\u0027 directly.",
+      "range": {
+        "startLine": 33,
+        "startChar": 52,
+        "endLine": 33,
+        "endChar": 58
+      },
+      "revId": "c1d789b48704dd0b4f997e884d0f299336c40faf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
