@@ -17,7 +17,6 @@
 package cx.ring.fragments
 
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AlertDialog
@@ -106,7 +105,7 @@ class AdvancedAccountFragment : BasePreferenceFragment<AdvancedAccountPresenter>
                     var value = config[confKey]
                     if (confKey == ConfigKey.RINGNS_HOST && value.isEmpty()) {
                         pref.summary = getString(R.string.default_value)
-                    } else {
+                    } else if (pref !is PasswordPreference) {
                         pref.summary = value
                     }
                     if (pref is EditTextPreference) {
@@ -158,7 +157,7 @@ class AdvancedAccountFragment : BasePreferenceFragment<AdvancedAccountPresenter>
                 val value = config[confKey]
                 if (confKey == ConfigKey.RINGNS_HOST && value.isEmpty()) {
                     pref.summary = getString(R.string.default_value)
-                } else {
+                } else if (pref !is PasswordPreference) {
                     pref.summary = value
                 }
                 if (pref is EditTextPreference) {
@@ -179,7 +178,6 @@ class AdvancedAccountFragment : BasePreferenceFragment<AdvancedAccountPresenter>
             }
             is PasswordPreference -> {
                 presenter.passwordPreferenceChanged(key, newValue)
-                preference.setSummary(if (TextUtils.isEmpty(newValue.toString())) "" else "••••••")
             }
             else -> {
                 presenter.preferenceChanged(key, newValue)
