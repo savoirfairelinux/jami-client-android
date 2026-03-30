@@ -223,7 +223,7 @@ class ConversationActionsFragment : Fragment() {
                         requireActivity().finish()
                     }
                 else if (conversation.mode.blockingFirst() == Conversation.Mode.Request)
-                    ActionHelper.launchAcceptInvitation(
+                    mDisposableBag.add(ActionHelper.launchAcceptInvitation(
                         context = requireContext(),
                         conversation = conversation
                     ) {
@@ -232,7 +232,7 @@ class ConversationActionsFragment : Fragment() {
                             .putExtra(EXIT_REASON, ExitReason.INVITATION_ACCEPTED.toString())
                         requireActivity().setResult(Activity.RESULT_OK, resultIntent)
                         requireActivity().finish()
-                    }
+                    })
                 else
                     ActionHelper.launchDeleteSwarmOneToOneAction(
                         context = requireContext(),
@@ -251,7 +251,7 @@ class ConversationActionsFragment : Fragment() {
             descriptionPanel.isVisible = false  // Disable description edit for 1-to-1 conversation
             blockContact.setOnClickListener {
                 if(conversation.mode.blockingFirst()==Conversation.Mode.Request)
-                    ActionHelper.launchBlockContactAction(
+                    mDisposableBag.add(ActionHelper.launchBlockContactAction(
                         context = requireContext(),
                         accountId = mAccountService.currentAccount!!.accountId,
                         contact = conversation.contact!!
@@ -262,31 +262,31 @@ class ConversationActionsFragment : Fragment() {
                             .putExtra(EXIT_REASON, ExitReason.CONTACT_BLOCKED.toString())
                         requireActivity().setResult(Activity.RESULT_OK, resultIntent)
                         requireActivity().finish()
-                    }
+                    })
                 else if (conversation.contact!!.isBlocked)
-                    ActionHelper.launchUnblockContactAction(
+                    mDisposableBag.add(ActionHelper.launchUnblockContactAction(
                         context = requireContext(),
                         accountId = mAccountService.currentAccount!!.accountId,
-                        contact = conversation.contact!!,
+                        contact = conversation.contact!!
                     ) { accountId: String, contactUri: Uri ->
                         mAccountService.addContact(accountId, contactUri.uri)
                         val resultIntent = Intent()
                             .putExtra(EXIT_REASON, ExitReason.CONTACT_UNBLOCKED.toString())
                         requireActivity().setResult(Activity.RESULT_OK, resultIntent)
                         requireActivity().finish()
-                    }
+                    })
                 else
-                    ActionHelper.launchBlockContactAction(
+                    mDisposableBag.add(ActionHelper.launchBlockContactAction(
                         context = requireContext(),
                         accountId = mAccountService.currentAccount!!.accountId,
-                        contact = conversation.contact!!,
+                        contact = conversation.contact!!
                     ) { accountId: String, contactUri: Uri ->
                         mAccountService.removeContact(accountId, contactUri.uri, true)
                         val resultIntent = Intent()
                             .putExtra(EXIT_REASON, ExitReason.CONTACT_BLOCKED.toString())
                         requireActivity().setResult(Activity.RESULT_OK, resultIntent)
                         requireActivity().finish()
-                    }
+                    })
             }
 
             conversationRemove.setOnClickListener {
@@ -334,7 +334,7 @@ class ConversationActionsFragment : Fragment() {
             conversationDelete.text = resources.getString(R.string.leave_conversation)
             conversationDelete.setOnClickListener {
                 if (conversation.mode.blockingFirst() == Conversation.Mode.Request)
-                    ActionHelper.launchAcceptInvitation(
+                    mDisposableBag.add(ActionHelper.launchAcceptInvitation(
                         context = requireContext(),
                         conversation = conversation
                     ) {
@@ -343,7 +343,7 @@ class ConversationActionsFragment : Fragment() {
                             .putExtra(EXIT_REASON, ExitReason.INVITATION_ACCEPTED.toString())
                         requireActivity().setResult(Activity.RESULT_OK, resultIntent)
                         requireActivity().finish()
-                    }
+                    })
                 else
                     ActionHelper.launchDeleteSwarmGroupAction(
                         context = requireContext(),

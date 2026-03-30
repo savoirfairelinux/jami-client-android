@@ -67,13 +67,12 @@ class BlockListFragment : BaseSupportFragment<BlockListPresenter, BlockListView>
         presenter.setAccountId(accountId)
     }
 
-    override fun onUnblockClicked(contact: Contact) {
-        launchUnblockContactAction(
+    override fun onUnblockClicked(contact: Contact) =
+        presenter.addDisposable(launchUnblockContactAction(
             context = requireContext(),
             accountId = mAccountService.currentAccount!!.accountId,
             contact = contact
-        ) { _, _ -> presenter.unblockClicked(contact) }
-    }
+        ) { _, _ -> presenter.unblockClicked(contact) })
 
     override fun updateView(list: Collection<ContactViewModel>) {
         if (binding!!.blocklist.adapter != null) {

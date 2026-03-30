@@ -123,11 +123,11 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     }
 
     override fun displayBlockDialog(accountId: String, contact: Contact) =
-        ActionHelper.launchBlockContactAction(
+        presenter.addDisposable(ActionHelper.launchBlockContactAction(
             context = requireContext(),
             accountId = accountId,
             contact = contact
-        ) { _, _ -> presenter.blockContact(accountId, contact) }
+        ) { _, _ -> presenter.blockContact(accountId, contact) })
 
     override fun copyNumber(uri: Uri) {
         copyContactNumberToClipboard(uri.toString())
