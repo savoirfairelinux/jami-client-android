@@ -56,10 +56,12 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mConversationPath = if (arguments != null)
-            ConversationPath.fromBundle(arguments)!!
-        else
-            ConversationPath.fromIntent(requireActivity().intent)!!
+        mConversationPath = ConversationPath.fromBundle(arguments)
+            ?: ConversationPath.fromIntent(requireActivity().intent)
+            ?: run {
+                finishView()
+                return
+            }
         iconSize = resources.getDimensionPixelSize(R.dimen.tv_avatar_size)
         setupAdapter()
         presenter.setContact(mConversationPath)
