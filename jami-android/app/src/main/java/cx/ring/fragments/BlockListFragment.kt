@@ -29,6 +29,7 @@ import cx.ring.interfaces.AppBarStateListener
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.utils.ActionHelper.launchUnblockContactAction
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.contactrequests.BlockListPresenter
 import net.jami.contactrequests.BlockListView
 import net.jami.model.Contact
@@ -67,13 +68,12 @@ class BlockListFragment : BaseSupportFragment<BlockListPresenter, BlockListView>
         presenter.setAccountId(accountId)
     }
 
-    override fun onUnblockClicked(contact: Contact) {
-        launchUnblockContactAction(
+    override fun onUnblockClicked(contact: Contact) =
+        presenter.addDisposable(launchUnblockContactAction(
             context = requireContext(),
             accountId = mAccountService.currentAccount!!.accountId,
             contact = contact
-        ) { _, _ -> presenter.unblockClicked(contact) }
-    }
+        ) { _, _ -> presenter.unblockClicked(contact) })
 
     override fun updateView(list: Collection<ContactViewModel>) {
         if (binding!!.blocklist.adapter != null) {

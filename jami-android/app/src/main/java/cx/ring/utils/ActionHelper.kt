@@ -26,12 +26,16 @@ import android.widget.Toast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.views.AvatarView
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Contact
 import net.jami.model.Conversation
 import net.jami.model.Conversation.ConversationActionCallback
 import net.jami.model.Uri
 import java.util.*
 import androidx.core.net.toUri
+import io.reactivex.rxjava3.disposables.Disposable
 
 object ActionHelper {
     val TAG = ActionHelper::class.simpleName!!
@@ -201,28 +205,39 @@ object ActionHelper {
         accountId: String,
         contact: Contact,
         callback: (accountId: String, uri: Uri) -> Unit,
-    ) {
-        val displayName =
-            contact.username?.blockingGet().takeIf { !it.isNullOrEmpty() } ?: contact.uri.uri
-        MaterialAlertDialogBuilder(context)
-            .setTitle(context.getString(R.string.block_contact_dialog_title, displayName))
-            .setMessage(context.getString(R.string.block_contact_dialog_message, displayName))
-            .setPositiveButton(android.R.string.ok) { _, _ -> callback(accountId, contact.uri) }
-            .setNegativeButton(android.R.string.cancel) { _, _ -> }.show()
-    }
+    ): Disposable =
+        (contact.username ?: Single.just(""))
+            .map { name -> name.takeIf { it.isNotEmpty() } ?: contact.uri.uri }
+            .onErrorReturn { contact.uri.uri }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { displayName ->
+                MaterialAlertDialogBuilder(context)
+                    .setTitle(context.getString(R.string.block_contact_dialog_title, displayName))
+                    .setMessage(context.getString(R.string.block_contact_dialog_message, displayName))
+                    .setPositiveButton(android.R.string.ok) { _, _ -> callback(accountId, contact.uri) }
+                    .setNegativeButton(android.R.string.cancel) { _, _ -> }.show()
+            }
 
     fun launchAcceptInvitation(
         context: Context,
         conversation: Conversation,
         callback: (conversation: Conversation) -> Unit,
-    ) {
-        val displayName = conversation.contact!!.username?.blockingGet()
-            .takeIf { !it.isNullOrEmpty() } ?: conversation.contact!!.uri.uri
-        MaterialAlertDialogBuilder(context)
-            .setTitle(R.string.accept_invitation)
-            .setMessage(context.getString(R.string.accept_invitation_body, displayName))
-            .setPositiveButton(android.R.string.ok) { _, _ -> callback(conversation) }
-            .setNegativeButton(android.R.string.cancel) { _, _ -> }.show()
+    ): Disposable {
+        val contact = conversation.contact
+            ?: return Disposable.empty()
+        return (contact.username ?: Single.just(""))
+            .map { name -> name.takeIf { it.isNotEmpty() } ?: contact.uri.uri }
+            .onErrorReturn { contact.uri.uri }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { displayName ->
+                MaterialAlertDialogBuilder(context)
+                    .setTitle(R.string.accept_invitation)
+                    .setMessage(context.getString(R.string.accept_invitation_body, displayName))
+                    .setPositiveButton(android.R.string.ok) { _, _ -> callback(conversation) }
+                    .setNegativeButton(android.R.string.cancel) { _, _ -> }.show()
+            }
     }
 
     fun launchUnblockContactAction(
@@ -230,15 +245,19 @@ object ActionHelper {
         accountId: String,
         contact: Contact,
         callback: (accountId: String, uri: Uri) -> Unit,
-    ) {
-        val displayName =
-            contact.username?.blockingGet().takeIf { !it.isNullOrEmpty() } ?: contact.uri.uri
-        MaterialAlertDialogBuilder(context)
-            .setTitle(context.getString(R.string.unblock_contact_dialog_title, displayName))
-            .setMessage(context.getString(R.string.unblock_contact_dialog_message, displayName))
-            .setPositiveButton(android.R.string.ok) { _, _ -> callback(accountId, contact.uri) }
-            .setNegativeButton(android.R.string.cancel) { _, _ -> }.show()
-    }
+    ): Disposable =
+        (contact.username ?: Single.just(""))
+            .map { name -> name.takeIf { it.isNotEmpty() } ?: contact.uri.uri }
+            .onErrorReturn { contact.uri.uri }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { displayName ->
+                MaterialAlertDialogBuilder(context)
+                    .setTitle(context.getString(R.string.unblock_contact_dialog_title, displayName))
+                    .setMessage(context.getString(R.string.unblock_contact_dialog_message, displayName))
+                    .setPositiveButton(android.R.string.ok) { _, _ -> callback(accountId, contact.uri) }
+                    .setNegativeButton(android.R.string.cancel) { _, _ -> }.show()
+            }
 
     fun getAddNumberIntentForContact(contact: Contact): Intent {
         val intent = Intent(Intent.ACTION_INSERT_OR_EDIT)

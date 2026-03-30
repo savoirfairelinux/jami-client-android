@@ -17,6 +17,7 @@
 package net.jami.mvp
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 import java.lang.ref.WeakReference
 
 abstract class RootPresenter<T> {
@@ -25,6 +26,10 @@ abstract class RootPresenter<T> {
 
     open fun bindView(view: T) {
         mView = WeakReference(view)
+    }
+
+    fun addDisposable(d: Disposable) {
+        mCompositeDisposable.add(d)
     }
 
     open fun unbindView() {
