@@ -114,7 +114,7 @@ class AccountCreation {
      */
     @Test
     fun accountCreation_SpecifyPasswordOnly() {
-        onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
+        clickCreateAccountBtn()
 
         onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
 
@@ -135,7 +135,7 @@ class AccountCreation {
      */
     @Test
     fun accountCreation_SpecifyUsernameAndPassword() {
-        onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
+        clickCreateAccountBtn()
 
         val randomUsername = "JamiTest_" + System.currentTimeMillis()
         onView(allOf(withId(R.id.input_username), isDisplayed()))
@@ -162,7 +162,7 @@ class AccountCreation {
      */
     @Test
     fun accountCreation_SpecifyProfileName() {
-        onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
+        clickCreateAccountBtn()
 
         onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
 
@@ -192,7 +192,7 @@ class AccountCreation {
      */
     @Test
     fun accountCreation_SpecifyProfilePictureViaCamera() {
-        onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
+        clickCreateAccountBtn()
 
         onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
 
@@ -230,7 +230,7 @@ class AccountCreation {
      */
     @Test
     fun accountCreation_SpecifyProfilePictureViaGallery() {
-        onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
+        clickCreateAccountBtn()
 
         onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
 
@@ -278,7 +278,7 @@ class AccountCreation {
      */
     @Test
     fun accountCreation_SpecifyProfilePicture_CanCancel(){
-        onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
+        clickCreateAccountBtn()
 
         onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
 
@@ -319,7 +319,7 @@ class AccountCreation {
     @Test
     fun usernameSelection_LessThan3Characters_InvalidUsername() {
 
-        onView(allOf(withId(R.id.ring_create_btn), isDisplayed())).perform(scrollTo(), click())
+        clickCreateAccountBtn()
 
         onView(withId(R.id.input_username)).perform(replaceText("ab"), closeSoftKeyboard())
 
@@ -338,7 +338,7 @@ class AccountCreation {
     @Test
     fun usernameSelection_UsernameAlreadyTaken() {
 
-        onView(allOf(withId(R.id.ring_create_btn), isDisplayed())).perform(scrollTo(), click())
+        clickCreateAccountBtn()
 
         onView(withId(R.id.input_username)).perform(replaceText("abc"), closeSoftKeyboard())
 
@@ -355,7 +355,7 @@ class AccountCreation {
      */
     @Test
     fun usernameSelection_ValidUsername() {
-        onView(allOf(withId(R.id.ring_create_btn), isDisplayed())).perform(scrollTo(), click())
+        clickCreateAccountBtn()
 
         val randomUsername = "JamiTest_" + System.currentTimeMillis()
         onView(allOf(withId(R.id.input_username), isDisplayed()))
@@ -372,7 +372,7 @@ class AccountCreation {
      */
     @Test
     fun passwordSelection_EnableSection() {
-        onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
+        clickCreateAccountBtn()
 
         onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
 
@@ -390,7 +390,7 @@ class AccountCreation {
      */
     @Test
     fun passwordSelection_LessThan6Characters_InvalidPassword() {
-        onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
+        clickCreateAccountBtn()
 
         onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
 
@@ -413,7 +413,7 @@ class AccountCreation {
      */
     @Test
     fun passwordSelection_WrongRecopy() {
-        onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
+        clickCreateAccountBtn()
 
         onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
 
@@ -438,7 +438,7 @@ class AccountCreation {
      */
     @Test
     fun passwordSelection_ValidPassword() {
-        onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
+        clickCreateAccountBtn()
 
         onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
 
@@ -454,8 +454,12 @@ class AccountCreation {
     fun removeAccount() =
         AccountUtils.removeAllAccounts()
 
+    private fun clickCreateAccountBtn() {
+        waitForView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
+    }
+
     private fun createDefaultAccount() {
-        onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
+        clickCreateAccountBtn()
 
         onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
 
@@ -485,7 +489,7 @@ class AccountCreation {
     }
 
     private fun createAccountWithUsername(username: String) {
-        onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
+        clickCreateAccountBtn()
 
         onView(allOf(withId(R.id.input_username), isDisplayed()))
             .perform(replaceText(username), closeSoftKeyboard())
