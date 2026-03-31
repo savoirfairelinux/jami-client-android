@@ -26,7 +26,11 @@ import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import cx.ring.R
 import cx.ring.databinding.FragmentImportSideStep2Binding
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import cx.ring.linkdevice.viewmodel.AddDeviceImportState
 import cx.ring.linkdevice.viewmodel.ImportSideViewModel
+import kotlinx.coroutines.launch
 import cx.ring.views.AvatarDrawable
 import net.jami.model.Uri
 
@@ -61,6 +65,17 @@ class ImportSideStep2Fragment : Fragment() {
             Log.i(TAG, "Connect button clicked.")
             showLoading()
             callback.onAuthentication(binding.password.text.toString())
+        }
+        val viewModel = ViewModelProvider(requireActivity())[ImportSideViewModel::class.java]
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.uiState.collect { state ->
+                when (state) {
+                    is AddDeviceImportState.Connecting -> showActionRequired()
+                    is AddDeviceImportState.Authenticating ->
+                        showAuthentication(state.needPassword, state.id, state.registeredName, state.error)
+                    else -> {}
+                }
+            }
         }
     }
 

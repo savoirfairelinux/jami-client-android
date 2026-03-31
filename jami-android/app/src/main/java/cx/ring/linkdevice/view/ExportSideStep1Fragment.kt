@@ -30,6 +30,8 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import cx.ring.databinding.FragmentExportSideStep1Binding
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.ResultPoint
@@ -37,7 +39,10 @@ import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.DefaultDecoderFactory
 import cx.ring.R
+import cx.ring.linkdevice.viewmodel.AddDeviceExportState
 import cx.ring.linkdevice.viewmodel.ExportSideInputError
+import cx.ring.linkdevice.viewmodel.ExportSideViewModel
+import kotlinx.coroutines.launch
 
 
 class ExportSideStep1Fragment : Fragment() {
@@ -138,6 +143,15 @@ class ExportSideStep1Fragment : Fragment() {
             Log.i(TAG, "Connect button clicked, authentication uri = ${binding.code.text}")
             showInputCode(loading = true)
             callback.onAuthenticationUri(binding.code.text.toString())
+        }
+        val viewModel = ViewModelProvider(requireActivity())[ExportSideViewModel::class.java]
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.uiState.collect { state ->
+                when (state) {
+                    is AddDeviceExportState.Init -> state.error?.let { showError(it) }
+                    else -> {}
+                }
+            }
         }
     }
 

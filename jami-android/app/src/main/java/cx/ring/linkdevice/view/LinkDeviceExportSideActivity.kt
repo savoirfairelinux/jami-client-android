@@ -64,49 +64,18 @@ class LinkDeviceExportSideActivity : AppCompatActivity(),
                 Log.d(TAG, "UI state: $it")
                 when (it) {
                     is AddDeviceExportState.Init -> {
-                        binding.viewPager.apply {
-                            currentItem = 0
-                            if (it.error != null) {
-                                post { // Post is used to let the fragment inflate its views.
-                                    (adapter as ViewPagerAdapter).exportSideStep1.showError(it.error)
-                                }
-                            }
-                        }
+                        binding.viewPager.currentItem = 0
                     }
                     is AddDeviceExportState.TokenAvailable -> throw UnsupportedOperationException()
                     is AddDeviceExportState.Connecting -> {}
                     is AddDeviceExportState.Authenticating -> {
-                        binding.viewPager.apply {
-                            currentItem = 1
-                            post { // Post is used to let the fragment inflate its views.
-                                if (!it.peerAddress.isNullOrEmpty())
-                                    (adapter as ViewPagerAdapter).exportSideStep2.showIP(it.peerAddress)
-                                else
-                                    (adapter as ViewPagerAdapter).exportSideStep2.showPasswordProtection()
-                            }
-                        }
+                        binding.viewPager.currentItem = 1
                     }
-
                     is AddDeviceExportState.InProgress -> {
-                        binding.viewPager.apply {
-                            currentItem = 2
-                            post { // Post is used to let the fragment inflate its views.
-                                (adapter as ViewPagerAdapter).exportSideStep3.showLoading()
-                            }
-                        }
+                        binding.viewPager.currentItem = 2
                     }
-
                     is AddDeviceExportState.Done -> {
-                        binding.viewPager.apply {
-                            currentItem = 2
-                            post { // Post is used to let the fragment inflate its views.
-                                if (it.error != null) {
-                                    (adapter as ViewPagerAdapter).exportSideStep3.showError(it.error)
-                                } else {
-                                    (adapter as ViewPagerAdapter).exportSideStep3.showDone()
-                                }
-                            }
-                        }
+                        binding.viewPager.currentItem = 2
                     }
                 }
             }
@@ -138,13 +107,6 @@ class LinkDeviceExportSideActivity : AppCompatActivity(),
 
     private inner class ViewPagerAdapter(activity: AppCompatActivity) :
         FragmentStateAdapter(activity) {
-        // Dynamic access since fragments can be recreated on configuration change (ex: rotation).
-        val exportSideStep1
-            get() = supportFragmentManager.findFragmentByTag("f0") as ExportSideStep1Fragment
-        val exportSideStep2
-            get() = supportFragmentManager.findFragmentByTag("f1") as ExportSideStep2Fragment
-        val exportSideStep3
-            get() = supportFragmentManager.findFragmentByTag("f2") as ExportSideStep3Fragment
 
         override fun getItemCount(): Int = 3
 
