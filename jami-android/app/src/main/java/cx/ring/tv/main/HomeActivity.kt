@@ -266,14 +266,15 @@ class HomeActivity : FragmentActivity() {
         super.onPause()
         paused = true
         mCameraPreview?.let { preview ->
-            mCamera?.let { camera ->
-                camera.setPreviewCallback(null)
-                camera.release();
-                mCamera = null
-            }
-            preview.stop()
             mCameraPreview = null
+            val camera = mCamera
+            mCamera = null
+            preview.surfaceTextureListener = null
             mPreviewView.removeAllViews()
+            Schedulers.io().scheduleDirect {
+                camera?.setPreviewCallback(null)
+                preview.stop()
+            }
         }
         mDisposableBag.clear()
     }
@@ -283,9 +284,11 @@ class HomeActivity : FragmentActivity() {
         mDisposableBag.dispose()
         mCameraManager?.unregisterAvailabilityCallback(mCameraAvailabilityCallback)
         mCamera?.let { camera ->
-            camera.setPreviewCallback(null)
-            camera.release();
             mCamera = null
+            Schedulers.io().scheduleDirect {
+                camera.setPreviewCallback(null)
+                try { camera.release() } catch (e: Exception) { Log.e(TAG, "onDestroy: error releasing camera", e) }
+            }
         }
         mBlurOutputBitmap?.let { blurOutputBitmap ->
             input?.destroy()
