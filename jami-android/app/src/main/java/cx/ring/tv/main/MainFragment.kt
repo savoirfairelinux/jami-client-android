@@ -85,8 +85,8 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        mTitleView = view.findViewById<CustomTitleView>(R.id.browse_title_group).apply {
-            settingsButton.setOnClickListener { presenter.onSettingsClicked() }
+        mTitleView = view.findViewById<CustomTitleView>(R.id.browse_title_group)?.also {
+            it.settingsButton.setOnClickListener { presenter.onSettingsClicked() }
         }
         onItemViewClickedListener = ItemViewClickedListener()
         setOnSearchClickedListener { startActivity(Intent(context, SearchActivity::class.java)) }
