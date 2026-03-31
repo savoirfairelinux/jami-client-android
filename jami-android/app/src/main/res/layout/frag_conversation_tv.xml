@@ -29,7 +29,7 @@
         android:clipChildren="false"
         android:clipToPadding="false">
 
-        <androidx.core.widget.NestedScrollView
+        <cx.ring.views.BoundedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="16dp"
@@ -46,7 +46,7 @@
                 android:paddingBottom="10dp"
                 tools:listitem="@layout/item_conv_msg_peer_tv" />
 
-        </androidx.core.widget.NestedScrollView>
+        </cx.ring.views.BoundedScrollView>
 
         <FrameLayout
             android:layout_width="match_parent"
