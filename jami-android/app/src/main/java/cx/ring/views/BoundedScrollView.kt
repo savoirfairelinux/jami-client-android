@@ -54,4 +54,13 @@ class BoundedScrollView : NestedScrollView {
         }
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
+
+
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        try {
+            super.onSizeChanged(w, h, oldw, oldh)
+        } catch (e: IllegalArgumentException) {
+            // focused child was recycled and detached — nothing to scroll to
+        }
+    }
 }
