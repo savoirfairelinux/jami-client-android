@@ -24,9 +24,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.databinding.FragmentExportSideStep2Binding
+import cx.ring.linkdevice.viewmodel.AddDeviceExportState
+import cx.ring.linkdevice.viewmodel.ExportSideViewModel
+import kotlinx.coroutines.launch
 
 class ExportSideStep2Fragment : Fragment() {
     private var _binding: FragmentExportSideStep2Binding? = null
@@ -70,6 +75,18 @@ class ExportSideStep2Fragment : Fragment() {
             Log.i(TAG, "Confirm button clicked.")
             showLoading()
             callback.onIdentityConfirmation(true)
+        }
+        val viewModel = ViewModelProvider(requireActivity())[ExportSideViewModel::class.java]
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.uiState.collect { state ->
+                when (state) {
+                    is AddDeviceExportState.Authenticating -> {
+                        if (!state.peerAddress.isNullOrEmpty()) showIP(state.peerAddress)
+                        else showPasswordProtection()
+                    }
+                    else -> {}
+                }
+            }
         }
     }
 

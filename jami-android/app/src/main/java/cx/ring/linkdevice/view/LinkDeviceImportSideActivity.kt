@@ -71,63 +71,21 @@ class LinkDeviceImportSideActivity : AppCompatActivity(),
                 when (it) {
                     is AddDeviceImportState.Init -> {}
                     is AddDeviceImportState.TokenAvailable -> {
-                        binding.viewPager.apply {
-                            currentItem = 0
-                            post { // Post is used to let the fragment inflate its views.
-                                (adapter as ViewPagerAdapter).importSideStep1.apply {
-                                    if (it.token.isEmpty()) showLoading()
-                                    else showOutput(it.token)
-                                }
-                            }
-                        }
+                        binding.viewPager.currentItem = 0
                     }
-
                     is AddDeviceImportState.Connecting -> {
-                        binding.viewPager.apply {
-                            currentItem = 1
-                            post { // Post is used to let the fragment inflate its views.
-                                (adapter as ViewPagerAdapter).importSideStep2.showActionRequired()
-                            }
-                        }
+                        binding.viewPager.currentItem = 1
                     }
-
                     is AddDeviceImportState.Authenticating -> {
-                        binding.viewPager.apply {
-                            currentItem = 1
-                            post { // Post is used to let the fragment inflate its views.
-                                (adapter as ViewPagerAdapter).importSideStep2
-                                    .showAuthentication(
-                                        it.needPassword,
-                                        it.id,
-                                        it.registeredName,
-                                        it.error
-                                    )
-                            }
-                        }
+                        binding.viewPager.currentItem = 1
                     }
-
                     is AddDeviceImportState.InProgress -> {
                         exitDialog?.dismiss()
-                        binding.viewPager.apply {
-                            currentItem = 2
-                            post { // Post is used to let the fragment inflate its views.
-                                (adapter as ViewPagerAdapter).importSideStep3.showLoading()
-                            }
-                        }
+                        binding.viewPager.currentItem = 2
                     }
-
                     is AddDeviceImportState.Done -> {
                         exitDialog?.dismiss()
-                        binding.viewPager.apply {
-                            currentItem = 2
-                            post { // Post is used to let the fragment inflate its views.
-                                if (it.error != null) {
-                                    (adapter as ViewPagerAdapter).importSideStep3.showError(it.error)
-                                } else {
-                                    (adapter as ViewPagerAdapter).importSideStep3.showDone()
-                                }
-                            }
-                        }
+                        binding.viewPager.currentItem = 2
                     }
                 }
             }
@@ -143,13 +101,6 @@ class LinkDeviceImportSideActivity : AppCompatActivity(),
 
     private inner class ViewPagerAdapter(activity: AppCompatActivity) :
         FragmentStateAdapter(activity) {
-        // Dynamic access since fragments can be recreated on configuration change (ex: rotation).
-        val importSideStep1
-            get() = supportFragmentManager.findFragmentByTag("f0") as ImportSideStep1Fragment
-        val importSideStep2
-            get() = supportFragmentManager.findFragmentByTag("f1") as ImportSideStep2Fragment
-        val importSideStep3
-            get() = supportFragmentManager.findFragmentByTag("f2") as ImportSideStep3Fragment
 
         override fun getItemCount(): Int = 3
 

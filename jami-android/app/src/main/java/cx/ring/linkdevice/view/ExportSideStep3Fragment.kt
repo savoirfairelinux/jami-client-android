@@ -24,8 +24,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import cx.ring.R
 import cx.ring.databinding.FragmentExportSideStep3Binding
+import cx.ring.linkdevice.viewmodel.AddDeviceExportState
+import cx.ring.linkdevice.viewmodel.ExportSideViewModel
+import kotlinx.coroutines.launch
 import net.jami.services.AccountService.AuthError
 
 class ExportSideStep3Fragment : Fragment() {
@@ -48,6 +53,22 @@ class ExportSideStep3Fragment : Fragment() {
         savedInstanceState: Bundle?
     ): View = FragmentExportSideStep3Binding.inflate(inflater, container, false)
         .apply { _binding = this }.root
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val viewModel = ViewModelProvider(requireActivity())[ExportSideViewModel::class.java]
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.uiState.collect { state ->
+                when (state) {
+                    is AddDeviceExportState.InProgress -> showLoading()
+                    is AddDeviceExportState.Done ->
+                        if (state.error != null) showError(state.error) else showDone()
+                    else -> {}
+                }
+            }
+        }
+    }
 
     fun showLoading() {
         Log.i(TAG, "Showing loading...")

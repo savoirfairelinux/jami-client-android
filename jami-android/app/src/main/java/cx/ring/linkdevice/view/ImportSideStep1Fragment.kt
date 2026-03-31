@@ -28,6 +28,11 @@ import cx.ring.R
 import cx.ring.utils.ActionHelper
 import cx.ring.utils.QRCodeLoaderUtils
 import androidx.core.graphics.createBitmap
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import cx.ring.linkdevice.viewmodel.AddDeviceImportState
+import cx.ring.linkdevice.viewmodel.ImportSideViewModel
+import kotlinx.coroutines.launch
 
 class ImportSideStep1Fragment : Fragment() {
     private var _binding: FragmentImportSideStep1Binding? = null
@@ -62,6 +67,17 @@ class ImportSideStep1Fragment : Fragment() {
         }
         binding.share.setOnClickListener {
             ActionHelper.shareAuthenticationToken(requireContext(), currentAuthenticationToken)
+        }
+        val viewModel = ViewModelProvider(requireActivity())[ImportSideViewModel::class.java]
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.uiState.collect { state ->
+                when (state) {
+                    is AddDeviceImportState.TokenAvailable -> {
+                        if (state.token.isEmpty()) showLoading() else showOutput(state.token)
+                    }
+                    else -> {}
+                }
+            }
         }
     }
 
