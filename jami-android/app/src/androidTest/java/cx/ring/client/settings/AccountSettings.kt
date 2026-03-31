@@ -372,10 +372,10 @@ class AccountSettings {
         onView(withText(android.R.string.ok)).perform(click())
 
         // Check that the registered name is displayed.
-        onView(withId(R.id.registered_name)).check(matches(withText(randomUsername)))
+        onView(withId(R.id.registered_name)).perform(waitUntil(withText(randomUsername)))
 
         // Check that the `register name` button is disabled.
-        onView(withId(R.id.register_name)).check(matches(not(isDisplayed())))
+        onView(withId(R.id.register_name)).perform(waitUntil(not(isDisplayed())))
     }
 
     /**
