@@ -1386,19 +1386,13 @@ class AccountService(
         return interaction
     }
 
-    private fun addMessage(account: Account, conversation: Conversation, message: SwarmMessage, newMessage: Boolean): Interaction {
-        val interaction = getInteractionFromSwarmMessage(account, conversation, message)
-        conversation.addSwarmElement(interaction, newMessage)
-        return interaction
-    }
-
     fun swarmLoaded(id: Long, accountId: String, conversationId: String, messages: SwarmMessageVect) {
         try {
             val task = loadingTasks.remove(id)
             getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
-                val interactions: List<Interaction>
+                val interactions = messages.map { getInteractionFromSwarmMessage(account, conversation, it) }
                 val subject = synchronized(conversation) {
-                    interactions = messages.map { addMessage(account, conversation, it, false) }
+                    interactions.forEach { conversation.addSwarmElement(it, false) }
                     conversation.stopLoading()
                 }
                 subject?.onSuccess(conversation)
@@ -1521,21 +1515,22 @@ class AccountService(
 
     fun swarmMessageReceived(accountId: String, conversationId: String, message: SwarmMessage) {
         getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
+            val interaction = getInteractionFromSwarmMessage(account, conversation, message)
             synchronized(conversation) {
-                val interaction = addMessage(account, conversation, message, true)
-                val isIncoming = !interaction.contact!!.isUser
-                if (isIncoming)
-                    incomingSwarmMessageSubject.onNext(interaction)
-                if (interaction is DataTransfer)
-                    dataTransfersProcessor.onNext(interaction)
+                conversation.addSwarmElement(interaction, true)
             }
+            val isIncoming = !interaction.contact!!.isUser
+            if (isIncoming)
+                incomingSwarmMessageSubject.onNext(interaction)
+            if (interaction is DataTransfer)
+                dataTransfersProcessor.onNext(interaction)
         }}
     }
 
     fun swarmMessageUpdated(accountId: String, conversationId: String, message: SwarmMessage) {
         getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
+            val interaction = getInteractionFromSwarmMessage(account, conversation, message)
             synchronized(conversation) {
-                val interaction = getInteractionFromSwarmMessage(account, conversation, message)
                 conversation.updateSwarmMessage(interaction)
             }
         }}
@@ -1543,8 +1538,8 @@ class AccountService(
 
     fun reactionAdded(accountId: String, conversationId: String, messageId: String, reaction: StringMap) {
         getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
+            val interaction = getInteraction(account, conversation, reaction)
             synchronized(conversation) {
-                val interaction = getInteraction(account, conversation, reaction)
                 conversation.addReaction(interaction, messageId)
             }
         }}
