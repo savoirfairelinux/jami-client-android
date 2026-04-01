@@ -238,20 +238,20 @@ class AccountCreation {
 
         // Start recording intents and subscribe to the callback.
         Intents.init()
-
-        intending(hasAction(MediaStore.ACTION_PICK_IMAGES))
-            .respondWith(
-                Instrumentation.ActivityResult(
-                    Activity.RESULT_OK,
-                    Intent().setData(downloadedImagesUri[1])
+        try {
+            intending(hasAction(MediaStore.ACTION_PICK_IMAGES))
+                .respondWith(
+                    Instrumentation.ActivityResult(
+                        Activity.RESULT_OK,
+                        Intent().setData(downloadedImagesUri[1])
+                    )
                 )
-            )
 
-        // Click on camera (should launch a gallery explorer).
-        onView(withId(R.id.gallery)).perform(click())
-
-        // Stop recording intents and remove the callback.
-        Intents.release()
+            // Click on camera (should launch a gallery explorer).
+            onView(withId(R.id.gallery)).perform(click())
+        } finally {
+            Intents.release()
+        }
 
         // Check if the image is displayed.
          onView(withId(R.id.profile_photo)).check(matches(withImageUri(downloadedImagesUri[1])))
@@ -286,20 +286,20 @@ class AccountCreation {
 
         // Start recording intents and subscribe to the callback.
         Intents.init()
-
-        intending(hasAction(MediaStore.ACTION_PICK_IMAGES))
-            .respondWith(
-                Instrumentation.ActivityResult(
-                    Activity.RESULT_OK,
-                    Intent().setData(downloadedImagesUri[1])
+        try {
+            intending(hasAction(MediaStore.ACTION_PICK_IMAGES))
+                .respondWith(
+                    Instrumentation.ActivityResult(
+                        Activity.RESULT_OK,
+                        Intent().setData(downloadedImagesUri[1])
+                    )
                 )
-            )
 
-        // Click on camera (should launch a gallery explorer).
-        onView(withId(R.id.gallery)).perform(click())
-
-        // Stop recording intents and remove the callback.
-        Intents.release()
+            // Click on camera (should launch a gallery explorer).
+            onView(withId(R.id.gallery)).perform(click())
+        } finally {
+            Intents.release()
+        }
 
         // Click on delete photo.
         onView(allOf(withId(R.id.remove_photo), isDisplayed())).perform(click())
@@ -451,8 +451,10 @@ class AccountCreation {
     }
 
     @After
-    fun removeAccount() =
+    fun removeAccount() {
+        try { Intents.release() } catch (_: IllegalStateException) {}
         AccountUtils.removeAllAccounts()
+    }
 
     private fun clickCreateAccountBtn() {
         waitForView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
