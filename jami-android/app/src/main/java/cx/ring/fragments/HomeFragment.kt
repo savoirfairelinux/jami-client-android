@@ -514,7 +514,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             .currentAccountSubject
             .switchMap { mAccountService.getObservableAccountProfile(it.accountId) }
             .observeOn(DeviceUtils.uiScheduler)
-            .subscribe { profile ->
+            .subscribe({ profile ->
                 val binding = mBinding ?: return@subscribe
                 binding.searchBar.navigationIcon =
                     BitmapUtils.withPadding(
@@ -534,7 +534,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
                 binding.searchView.toolbar.navigationIcon = AppCompatResources.getDrawable(
                     binding.root.context, R.drawable.baseline_arrow_back_24
                 )
-            }
+            }, { e -> Log.w(TAG, "Error loading account profile", e) })
         )
 
         if (mBinding!!.searchView.isShowing)

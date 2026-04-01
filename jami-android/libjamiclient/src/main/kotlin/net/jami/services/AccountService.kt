@@ -411,9 +411,13 @@ class AccountService(
             mVCardService.loadProfile(a).map { profile -> Pair(a, profile) }
         }
 
-    fun getObservableAccount(accountId: String): Observable<Account> =
-        Observable.fromCallable<Account> { getAccount(accountId)!! }
-            .concatWith(getObservableAccountUpdates(accountId))
+    fun getObservableAccount(accountId: String): Observable<Account> {
+        val account = getAccount(accountId)
+        return if (account != null)
+            Observable.just(account).concatWith(getObservableAccountUpdates(accountId))
+        else
+            getObservableAccountUpdates(accountId)
+    }
 
     fun getObservableAccount(account: Account): Observable<Account> =
         Observable.just(account)
