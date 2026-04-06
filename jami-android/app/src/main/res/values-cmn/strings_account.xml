@@ -131,6 +131,7 @@
   <string name="revoke_device_wait_message">正在注销设备</string>
   <string name="rename_device_message">输入设备名称以在Jami帐户中标识此设备</string>
   <string name="account_device_name_empty">设备名不可为空</string>
+  <string name="account_device_this_indicator">此设备</string>
   <string name="account_disabled_indicator">已停用</string>
   <string name="account_device_id">设备标识符</string>
   <!--Link a new device-->

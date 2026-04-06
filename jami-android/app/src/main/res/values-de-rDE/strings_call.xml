@@ -19,6 +19,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <!-- SipCalls -->
     <string name="call_human_state_searching">Suche</string>
     <string name="call_human_state_connecting">Verbindet…</string>
+    <string name="call_human_state_ringing">Es klingelt …</string>
     <string name="call_human_state_hungup">Beendet</string>
     <string name="call_human_state_failure">Fehlgeschlagen</string>
     <string name="call_human_state_over">Beendet</string>

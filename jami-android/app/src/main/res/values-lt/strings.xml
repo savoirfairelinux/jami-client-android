@@ -2,21 +2,18 @@
 <resources>
   <!--About-->
   <string name="section_license">Licencija</string>
+  <string name="delete_conversation_confirmation">Ar tikrai norite ištrinti šį pokalbį?</string>
   <string name="view_switch_camera">Perjungti kamerą</string>
-  <string name="sponsor_section">Jami - tai atvirojo kodo prgrama, kurią sukūrė ir palaiko</string>
   <string name="copyright_section">Autorių teisės</string>
   <string name="contribute_section">Talkinti</string>
   <string name="version_section">Versija</string>
-  <string name="no_browser_app_installed">Nerasta jokia interneto naršyklė. Įdiekite interneto naršyklę, kad peržiūrėti šį puslapį.</string>
   <string name="website_chooser_title">Rodyti svetainę naudojant...</string>
   <string name="license">Ši programinė įranga yra pateikiama \"tokia, kokia yra\", be jokios garantijos. Išsamesnei informacijai, žiūrėkite <u>GNU Bendrąją Viešąją Licenciją, versiją 3 arba vėlesnę</u></string>
   <string name="description">Jami yra visuotiniam bendravimui skirta laisva programinė įranga, kuri gerbia savo naudotojų laisves ir privatumą.</string>
   <string name="credits">Padėkos</string>
   <string name="pip_title">Jami konferencija</string>
-  <string name="call_service_description">Ši tarnyba būtina, kad jūsų skambučiai veiktų, kai programėlė yra aktyvi. Tarnyba veikia tik skambučių metu.</string>
-  <string name="data_transfer_service_description">Ši tarnyba būtina nuolatiniams pranešimams rodyti failų perkėlimo metu. Ji veikia tik failų perkėlimo metu.</string>
   <!--About dialog-->
-  <string name="thank_note">Norėtume padėkoti mūsų pagalbininkams, kurių daugiamečių pastangų dėka ši programa tapo tokia, kokia yra dabar.</string>
+  <string name="developers">Plėtotojai</string>
   <string name="media">Medija</string>
   <string name="special_thanks">Ypatingai dėkojame</string>
   <!--RingActivity-->
@@ -74,6 +71,7 @@
   <!--Call Fragment-->
   <string name="you_txt_prefix">Jūs:</string>
   <string name="action_call_hangup">Baigti skambutį</string>
+  <string name="action_call_maximize">Išskleisti</string>
   <string name="hist_in_call">%1$s gaunamasis skambutis</string>
   <string name="hist_out_call">%1$s išsiunčiamasis skambutis</string>
   <string name="call_duration">Trukmė: %s</string>
@@ -290,7 +288,6 @@
   <string name="wizard_password_placeholder">Pasirinkite slaptažodį, skirtą šifruoti paskyros raktą šiame įrenginyje</string>
   <string name="wizard_password_skip">Sukurti paskyrą</string>
   <string name="wizard_password_switch">Šifruoti paskyrą slaptažodžiu</string>
-  <string name="wizard_password_warning">Atkreipkite dėmesį, kad slaptažodis negali būti atkurtas</string>
   <string name="wizard_profile_info">Profilis yra bendrinamas tik su adresatais</string>
   <string name="wizard_profile_button">Įrašyti profilį</string>
   <string name="wizard_profile_skip">Praleisti ir atlikti tai vėliau</string>
@@ -303,19 +300,18 @@
   <string name="bottomSheet_hangup_btn">Baigti skambutį</string>
   <string name="bottomSheet_sound_output_btn">Garsai</string>
   <string name="bottomSheet_raiseHand_btn">Pakelti ranką</string>
+  <string name="uninstall">Pašalinti</string>
   <string name="reset">Atstatyti</string>
   <!--Swarm Details-->
   <string name="rename_btn">Patvirtinti</string>
   <string name="swarm_description">Pridėti aprašą</string>
   <string name="tab_members">Nariai</string>
-  <string name="tab_files">Failai</string>
   <string name="tab_settings">Nustatymai</string>
   <string name="not_admin_toast">Tik administratoriai gali taisyti šios grupės informaciją</string>
   <string name="dialogtitle_title">Taisyti grupės pavadinimą</string>
   <string name="dialogtitle_description">Taisyti grupės aprašą</string>
   <string name="dialog_hint_title">Pavadinimas</string>
   <string name="dialog_hint_description">Aprašas</string>
-  <string name="bottomsheet_contact">Susisiekite su Jami\n%1$s</string>
   <string name="bottomsheet_remove">Ištrinti narį</string>
   <string name="swarm_detail_no_document">Kol kas neturite jokių dokumentų.</string>
   <!--JamiId-->
@@ -324,7 +320,6 @@
   <string name="jami_id_available">Naudotojo vardas yra prieinamas.</string>
   <string name="jami_id_not_available">Naudotojo vardas yra neprieinamas.</string>
   <string name="jami_id_looking_for_availability">Tikrinamas naudotojo vardo prieinamumas…</string>
-  <string name="jami_id_choose_username">Pasirinkite naudotojo vardą</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Sveiki atvykę į Jami</string>
   <!--Conversation details-->
@@ -351,6 +346,7 @@
   <string name="import_side_step2_password_unlocking">Atrakinama paskyra…</string>
   <string name="import_side_step3_body_done">Paskyra buvo sėkmingai importuota.</string>
   <string name="import_side_step3_go_to_account">Eiti į naują paskyrą</string>
+  <string name="link_device_error_authentication">Susiejant paskyrą įvyko tapatybės nustatymo klaida. Patikrinkite prisijungimo duomenis ir bandykite dar kartą.</string>
   <string name="link_device_error_timeout">Pasibaigė operacijai skirtas laikas.</string>
   <string name="link_device_error_unknown">Įvyko klaida.</string>
   <!--Accessibility-->

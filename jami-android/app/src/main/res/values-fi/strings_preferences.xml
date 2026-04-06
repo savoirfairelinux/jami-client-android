@@ -65,7 +65,7 @@
   <string name="notification_private">Yksityinen\n(näytä ilmoitukset, piilota sisältö lukitusnäytöllä)\n</string>
   <string name="notification_secret">Salainen\n(ei ilmoituksia lukitusnäytöllä)</string>
   <string name="connectivity_google_services_title">Googlen palvelut</string>
-  <string name="connectivity_google_services_description">Käytä Google Firebase ja DHT-välityspalvelinta ilmoitusten vastaanottamiseen.</string>
+  <string name="connectivity_google_services_description">Käytä Google Firebase ja DHT proxy-palvelinta ilmoitusten vastaanottamiseen.</string>
   <string name="connectivity_local_node_title">Paikallinen DHT-solmu</string>
   <string name="connectivity_local_node_description">Käytä paikallista DHT-solmua hoitamaan Jamin tietoliikennettä.</string>
   <string name="connectivity_unified_push_description">Käytä mukautettua UnifiedPush-palvelinta ilmoitusten vastaanottamiseen.</string>

@@ -23,7 +23,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="screen_sharing_error">Beim Starten der Bildschirmfreigabe ist ein Fehler aufgetreten.</string>
 
     <!-- SipCalls -->
-    <string name="call_human_state_searching">Suchen</string>
+    <string name="call_human_state_searching">Suchlauf</string>
     <string name="call_human_state_incoming">Eingehend</string>
     <string name="call_human_state_connecting">Verbindung wird hergestellt</string>
     <string name="call_human_state_ringing">Klingelt</string>

@@ -20,7 +20,7 @@
   <string name="action_settings">Einstellungen</string>
   <string name="error_field_required">Dieses Feld ist erforderlich</string>
   <string name="dialog_wait_create">Konto hinzufügen</string>
-  <string name="dialog_wait_create_details">Bitte warten Sie während Ihr neues Konto eingerichtet wird...</string>
+  <string name="dialog_wait_create_details">Bitte warten Sie während Ihr neues Konto eingerichtet wird ...</string>
   <string name="dialog_wait_update">Konto wird aktualisiert</string>
   <string name="dialog_wait_update_details">Bitte warten Sie während ihr Konto aktualisiert wird</string>
   <string name="dialog_warn_ip2ip_account_title">Leeres SIP-Konto erstellen?</string>
@@ -151,10 +151,10 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="account_new_device_password">Geben Sie das Hauptpasswort ein, um das Konto zu entsperren</string>
   <string name="error_password_char_count">Mindestens 6 Zeichen</string>
   <string name="error_passwords_not_equals">Passwörter stimmen nicht überein.</string>
-  <string name="export_account_wait_title">Bitte warten…</string>
+  <string name="export_account_wait_title">Bitte warten …</string>
   <string name="export_account_wait_message">Kontodaten werden exportiert</string>
   <string name="account_export_file">Konto sichern</string>
-  <string name="account_export_file_summary">Machen Sie eine Sicherheitskopie Ihrer Benutzerkennung auf ihrem Gerät um sie im Fehlerfall wiederherstellen zu können.</string>
+  <string name="account_export_file_summary">Sichern Sie Ihr Konto auf Ihrem Gerät, um es später wiederherstellen zu können.</string>
   <string name="account_export_end_decryption_message">Falsches Passwort. Bitte versuchen Sie es erneut mit dem richtigen Passwort.</string>
   <string name="account_enter_password">Passwort eingeben</string>
   <string name="account_share_body">Kontaktieren Sie mich über „%1$s“ auf der Jami-Plattform für verteilte Kommunikation: %2$s</string>
@@ -223,7 +223,7 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="username_already_taken">Benutzername bereits vergeben</string>
   <string name="invalid_username">Ungültiger Benutzername</string>
   <string name="unknown_error">Unbekannter Fehler. Bitte überprüfen sie ihre Netzwerkverbindung!</string>
-  <string name="looking_for_username_availability">Verfügbarkeit des Benutzernamens wird geprüft…</string>
+  <string name="looking_for_username_availability">Verfügbarkeit des Benutzernamens wird geprüft …</string>
   <string name="account_status_connecting">Verbindung wird hergestellt</string>
   <string name="account_status_connection_error">Verbindungsfehler</string>
   <string name="account_status_online">Online</string>
@@ -242,7 +242,7 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="enter_password">Passwort eingeben</string>
   <string name="revoke_device_title">Gerät widerrufen</string>
   <string name="revoke_device_message">Möchten Sie %1$s widerrufen?</string>
-  <string name="revoke_device_wait_title">Bitte warten…</string>
+  <string name="revoke_device_wait_title">Bitte warten …</string>
   <string name="revoke_device_wait_message">Gerät wird widerrufen</string>
   <string name="rename_device_title">Dieses Gerät umbenennen</string>
   <string name="rename_device_message">Gerätenamen eingeben, um dieses Gerät in Ihrem Jami-Konto zu identifizieren</string>

@@ -79,6 +79,7 @@
   <string name="notif_sync_title">Gleiche Daten ab ...</string>
   <string name="notif_channel_reconnect">Hintergrundsynchronisierung</string>
   <string name="notif_reconnect_title">Jami synchronisiert…</string>
+  <string name="location_share_contact">%1$s teilt Ihren Standort mit Ihnen</string>
   <string name="notif_location_remaining">%1$d Minuten verbleiben</string>
   <string name="notif_location_action_stop">Standort teilen beenden</string>
   <string name="location_share_action_start">Teilen starten</string>
@@ -170,6 +171,7 @@
   <string name="clip_message">Nachrichteninhalt</string>
   <string name="block_contact_dialog_message">%1$s wird nicht in der Lage sein, Sie zu kontaktieren, bis Sie die Blockierung aufheben.</string>
   <string name="unblock_contact_dialog_message">%1$s wird in der Lage sein, Sie wieder zu kontaktieren.</string>
+  <string name="conversation_contact_is_typing">Kontakt tippt ...</string>
   <string name="conversation_message_deleted">%s hat eine Nachricht gelöscht</string>
   <string name="video_not_found">Videodatei nicht gefunden</string>
   <string name="conversation_type_private">Privat</string>
@@ -213,6 +215,7 @@
   <string name="share_contact_information">Kontaktinformationen teilen</string>
   <string name="share_label">Teilen</string>
   <string name="generic_error_migration_message">Beim Migrieren des Kontos ist ein Fehler aufgetreten.</string>
+  <string name="title_share_with">Teilen mit ...</string>
   <!--Pending invitations-->
   <string name="decline">Ablehnen</string>
   <string name="decline_invitation">Einladung ablehnen</string>
@@ -257,6 +260,7 @@
   <string name="tv_audio_play">Wiedergeben</string>
   <string name="tv_audio_pause">Pause</string>
   <string name="tv_audio_recording">Aufnahme läuft…</string>
+  <string name="conversation_input_speech_hint">Sagen Sie etwas ...</string>
   <string name="audio_permission_denied">Die Mikrofonberechtigung ist deaktiviert. Aktivieren Sie diese in den Geräteeinstellungen, um diese Funktion zu nutzen.</string>
   <string name="camera_permission_denied">Die Kameraberechtigung ist deaktiviert. Aktivieren Sie diese in den Geräteeinstellungen, um diese Funktion zu nutzen.</string>
   <string name="speech_recogniton_unavailable">Die Spracherkennung ist nicht verfügbar.</string>

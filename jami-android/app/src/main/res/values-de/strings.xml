@@ -85,11 +85,11 @@
   <string name="notif_incoming_file_transfer_title">Eingehende Datei von %1$s</string>
   <string name="notif_outgoing_file_transfer_title">Datei an %1$s senden</string>
   <string name="notif_incoming_picture">Bild von %1$s</string>
-  <string name="notif_sync_title">Daten synchronisieren...</string>
+  <string name="notif_sync_title">Daten synchronisieren ...</string>
   <string name="notif_location_title">Standort mit %1$s teilen</string>
   <string name="notif_channel_reconnect">Hintergrundsynchronisierung</string>
-  <string name="notif_reconnect_title">Jami synchronisiert…</string>
-  <string name="location_share_contact">%1$s teilt den Standort mit dir</string>
+  <string name="notif_reconnect_title">Jami synchronisiert …</string>
+  <string name="location_share_contact">%1$s teilt den Standort mit Ihnen</string>
   <string name="notif_location_multi_title">Geteilter Standort mit %1$d Kontakten</string>
   <string name="notif_location_remaining">%1$d Minuten verbleiben</string>
   <string name="notif_location_action_stop">Standortfreigabe beenden</string>
@@ -138,7 +138,7 @@
   <string name="remote_recording">%s Aufnahme läuft …</string>
   <!--Text messages-->
   <string name="send_message">Nachricht senden</string>
-  <string name="message_sending">Nachricht wird gesendet…</string>
+  <string name="message_sending">Nachricht wird gesendet …</string>
   <string name="message_failed">Fehlgeschlagen</string>
   <string name="time_just_now">Gerade eben</string>
   <string name="send_file">Datei senden</string>
@@ -214,7 +214,7 @@
   <string name="unblock_contact_dialog_title">Blockierung von %1$s aufheben?</string>
   <string name="unblock_contact_dialog_message">%1$s wird in der Lage sein, Sie wieder zu kontaktieren.</string>
   <string name="unblock_contact_completed">Blockierung von %1$s aufgehoben.</string>
-  <string name="conversation_contact_is_typing">Kontakt tippt...</string>
+  <string name="conversation_contact_is_typing">Kontakt tippt ...</string>
   <string name="conversation_info_contact_you">Sie</string>
   <string name="conversation_members">Mitglieder</string>
   <string name="conversation_syncing">Unterhaltung des Teilnehmers herunterladen</string>
@@ -297,7 +297,7 @@
   <string name="share_label">Teilen</string>
   <string name="generic_error_migration">Fehler</string>
   <string name="generic_error_migration_message">Beim Migrieren des Kontos ist ein Fehler aufgetreten.</string>
-  <string name="title_share_with">Teilen mit...</string>
+  <string name="title_share_with">Teilen mit ...</string>
   <!--Pending invitations-->
   <string name="accept">Annehmen</string>
   <string name="decline">Ablehnen</string>
@@ -325,10 +325,10 @@
   <!--File Transfer-->
   <string name="invalid_file">Ungültige Datei.</string>
   <string name="not_able_to_write_file">Die Datei konnte nicht geschrieben werden.</string>
-  <string name="file_transfer_status_created">Initialisiere</string>
+  <string name="file_transfer_status_created">Wird initialisiert</string>
   <string name="file_transfer_status_unsupported">Nicht unterstützt</string>
   <string name="file_transfer_status_wait_peer_acceptance">Warte auf die Annahme durch den Teilnehmer …</string>
-  <string name="file_transfer_status_wait_host_acceptance">Warte auf Annahme durch den Veranstalter…</string>
+  <string name="file_transfer_status_wait_host_acceptance">Warte auf Annahme durch den Veranstalter …</string>
   <string name="file_transfer_status_ongoing">Im Gange</string>
   <string name="file_transfer_status_finished">Fertiggestellt</string>
   <string name="file_transfer_status_closed_by_host">Vom Veranstalter geschlossen</string>
@@ -371,12 +371,12 @@
   <string name="tv_audio_play">Abspielen</string>
   <string name="tv_audio_pause">Pause</string>
   <string name="tv_dialog_send">Senden</string>
-  <string name="tv_audio_recording">Aufnahme läuft…</string>
+  <string name="tv_audio_recording">Aufnahme läuft …</string>
   <string name="tv_send_text">Text senden</string>
   <string name="tv_send_audio">Audio senden</string>
   <string name="tv_send_video">Medien senden</string>
   <string name="tv_action_more">Mehr</string>
-  <string name="conversation_input_speech_hint">Sagen Sie etwas...</string>
+  <string name="conversation_input_speech_hint">Sagen Sie etwas ...</string>
   <string name="audio_permission_denied">Die Mikrofonberechtigung ist deaktiviert. Aktivieren Sie diese in den Geräteeinstellungen, um diese Funktion zu nutzen.</string>
   <string name="camera_permission_denied">Die Kameraberechtigung ist deaktiviert. Aktivieren Sie diese in den Geräteeinstellungen, um diese Funktion zu nutzen.</string>
   <string name="speech_recogniton_unavailable">Die Spracherkennung ist nicht verfügbar.</string>
@@ -492,7 +492,7 @@
   <string name="export_side_step2_cancel">Abbrechen</string>
   <string name="export_side_step2_confirm">Bestätigen</string>
   <string name="export_side_step2_password">Das Konto ist passwortgeschützt.\nUm fortzufahren, authentifizieren Sie sich auf dem neuen Gerät.</string>
-  <string name="export_side_step3_body_loading">Der Vorgang zum Export des Kontos auf das neue Gerät läuft. Bitte warten…</string>
+  <string name="export_side_step3_body_loading">Der Vorgang zum Export des Kontos auf das neue Gerät läuft. Bitte warten …</string>
   <string name="export_side_step3_body_done">Das Konto wurde erfolgreich auf das neue Gerät importiert.</string>
   <string name="export_side_step3_exit">Abschließen</string>
   <string name="import_side_step1_advice_qr">Starten Sie den Export auf dem Quellgerät.\n<b>Wählen Sie Konto &gt; Kontoeinstellungen &gt; Neues Gerät verknüpfen</b>\nWenn Sie bereit sind, scannen Sie den untenstehenden QR-Code.</string>
@@ -500,11 +500,11 @@
   <string name="import_side_step1_share">Teilen</string>
   <string name="import_side_step1_switch_to_code">Oder klicken Sie hier, um den Authentifizierungscode anzuzeigen</string>
   <string name="import_side_step1_switch_to_qr">Oder klicken Sie hier, um den QR-Code anzuzeigen</string>
-  <string name="import_side_step1_connecting">Verbindung zum Quellgerät wird hergestellt…</string>
+  <string name="import_side_step1_connecting">Verbindung zum Quellgerät wird hergestellt …</string>
   <string name="import_side_step1_preparing_device">Gerät wird vorbereitet…</string>
   <string name="import_side_step2_password_prompt">Das Konto ist passwortgeschützt.\nEntsperren Sie es, um fortzufahren.</string>
   <string name="import_side_step2_password_import">Importieren</string>
-  <string name="import_side_step2_password_unlocking">Konto entsperren…</string>
+  <string name="import_side_step2_password_unlocking">Konto entsperren …</string>
   <string name="import_side_step2_action_required">Aktion erforderlich. Bitte bestätigen Sie das Konto auf dem Quellgerät.</string>
   <string name="import_side_step3_body_loading">Das Konto wird auf das neue Gerät importiert. Bitte warten…</string>
   <string name="import_side_step3_body_done">Das Konto wurde erfolgreich importiert.</string>

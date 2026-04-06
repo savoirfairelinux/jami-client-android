@@ -68,7 +68,7 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_rendezvous_label">Kohtaamispaikka</string>
   <string name="account_rendezvous_summary">Kohtaamispaikassa saapuvat puhelut lisätään keskusteluhuoneeseen.</string>
   <string name="account_upnp_label">Käytä UPnP</string>
-  <string name="account_proxy_field">Välityspalvelin</string>
+  <string name="account_proxy_field">Proxy</string>
   <!--Extension Details-->
   <string name="account_preferences_extension_tab">Laajennukset</string>
   <!--Audio Details-->
@@ -112,13 +112,13 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="disabled">Poistettu</string>
   <string name="enabled">Päällä</string>
   <string name="default_value">Oletus</string>
-  <string name="account_proxy_label">DHT välityspalvelin</string>
-  <string name="account_proxy_enable_label">Käytä DHT välityspalvelinta</string>
-  <string name="account_proxy_list_enable_label">Käytä DHT-välityspalvelin luetteloa</string>
-  <string name="account_proxy_server_label">DHT välityspalvelimen osoite</string>
-  <string name="account_proxy_server_list_label">DHT-välityspalvelimen luettelon URL</string>
+  <string name="account_proxy_label">DHT proxy</string>
+  <string name="account_proxy_enable_label">Käytä DHT proxy-palvelinta</string>
+  <string name="account_proxy_list_enable_label">Käytä DHT proxy-palvelinlistaa</string>
+  <string name="account_proxy_server_label">DHT proxy osoite</string>
+  <string name="account_proxy_server_list_label">DHT proxy-palvelinlistan URL</string>
   <string name="account_proxy_server_used">Käytetään: %1$s</string>
-  <string name="account_sip_proxy_label">Välityspalvelin</string>
+  <string name="account_sip_proxy_label">Proxy</string>
   <string name="account_peer_discovery_label">Paikallinen vertaisten haku</string>
   <string name="account_peer_discovery_enable_label">Salli paikallinen vertaisten haku</string>
   <string name="account_peer_discovery_enable_summary">Yhdistä muihin DHT-solmuihin, jotka ilmoittautuvat meidän verkossa</string>
