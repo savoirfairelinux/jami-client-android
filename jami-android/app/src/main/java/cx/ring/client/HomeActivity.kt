@@ -19,10 +19,13 @@ package cx.ring.client
 import androidx.core.content.IntentSanitizer
 import android.app.SearchManager
 import android.content.ComponentName
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import android.os.PowerManager
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
@@ -218,6 +221,16 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         }
         onBackPressedDispatcher.addCallback(this, conversationBackPressedCallback)
         handleIntent(intent)
+        requestIgnoreBatteryOptimizations()
+    }
+
+    private fun requestIgnoreBatteryOptimizations() {
+        val pm = getSystemService(Context.POWER_SERVICE) as PowerManager
+        if (!pm.isIgnoringBatteryOptimizations(packageName)) {
+            startActivity(Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
+                data = android.net.Uri.parse("package:$packageName")
+            })
+        }
     }
 
     override fun onDestroy() {
