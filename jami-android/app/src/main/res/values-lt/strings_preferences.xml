@@ -6,7 +6,6 @@
   <string name="pref_category_system">Sistema</string>
   <string name="pref_category_privacy">Privatumas</string>
   <string name="pref_category_diagnostic">Diagnostika</string>
-  <string name="pref_category_appearance">Išvaizda</string>
   <string name="pref_category_connectivity">Jungiamumas</string>
   <string name="pref_category_extensions">Plėtiniai</string>
   <string name="pref_category_video_settings">Išplėstiniai vaizdo nustatymai</string>
@@ -37,8 +36,7 @@
   <string name="pref_logs_start">Pradėti registravimą</string>
   <string name="pref_logs_stop">Stabdyti registravimą</string>
   <string name="pref_connection_monitor">Ryšio prižiūryklė</string>
-  <string name="pref_link_preview_title">Žiniatinklio nuorodų peržiūra</string>
-  <string name="pref_link_preview_summary">Išankstinė peržiūra reikalauja atsisiųsti turinį iš trečiųjų šalių serverių.</string>
+  <string name="pref_link_preview_title">Saityno nuorodų peržiūra</string>
   <!--Notifications Visibility-->
   <string name="connectivity_google_services_title">„Google“ paslaugos</string>
   <string name="connectivity_local_node_title">Vietinis DHT mazgas</string>

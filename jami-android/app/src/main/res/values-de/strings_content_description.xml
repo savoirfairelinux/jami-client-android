@@ -8,7 +8,7 @@
   <string name="video_extensions">Videoerweiterungen</string>
   <string name="file_download_button">Herunterladen</string>
   <string name="control_play">Abspielen</string>
-  <string name="control_replay">Erneut wiedergeben</string>
+  <string name="control_replay">Erneut abspielen</string>
   <string name="control_pause">Pause</string>
   <string name="searchbar_navigation_account">Konto auswählen</string>
   <string name="add_conversation_member">Unterhaltungsmitglied hinzufügen</string>

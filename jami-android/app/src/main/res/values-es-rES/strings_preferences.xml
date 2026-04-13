@@ -3,4 +3,7 @@
   <string name="connection_monitor_channels">Canales</string>
   <!--Notifications Visibility-->
   <!--Extension-->
+  <string name="account_advanced_reset">Restablecer la configuración avanzada</string>
+  <string name="account_advanced_reset_summary">Restaurar la configuración avanzada predeterminada</string>
+  <string name="account_advanced_reset_confirm">¿Restablecer todas las configuraciones avanzadas a las predeterminadas?</string>
 </resources>

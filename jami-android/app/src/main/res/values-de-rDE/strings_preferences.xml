@@ -59,6 +59,9 @@
   <string name="extension_reset_preferences_summary">Erweiterung auf die Standardeinstellungen zurückgesetzt</string>
   <string name="extension_reset_preferences_ask">Möchten Sie die allgemeinen Erweiterungseinstellungen zurücksetzen?</string>
   <string name="extension_reset_account_preferences_ask">Möchten Sie die Kontoerweiterungseinstellungen zurücksetzen?</string>
+  <string name="account_advanced_reset">Erweiterte Einstellungen zurücksetzen</string>
+  <string name="account_advanced_reset_summary">Erweiterte Standardeinstellungen wiederherstellen</string>
+  <string name="account_advanced_reset_confirm">Alle erweiterten Einstellungen auf Standard zurücksetzen</string>
   <string name="extension_successfully_installed">Erweiterung <b>%1$s</b> erfolgreich installiert.</string>
   <string name="extension_install_failure">Bei der Installation der folgenden Erweiterung ist ein Fehler aufgetreten: <b>%1$s</b></string>
   <string name="extension_recent_version_exception">Eine neuere Version von <b>%1$s</b> ist installiert.</string>

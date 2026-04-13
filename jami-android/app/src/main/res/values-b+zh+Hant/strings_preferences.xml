@@ -45,6 +45,9 @@
   <string name="extension_reset_preferences_summary">扩展已恢复为默认设置</string>
   <string name="extension_reset_preferences_ask">您想重置通用扩展设置吗？</string>
   <string name="extension_reset_account_preferences_ask">您想重置帐户扩展设置吗？</string>
+  <string name="account_advanced_reset">重置高级设置</string>
+  <string name="account_advanced_reset_summary">恢复默认高级设置</string>
+  <string name="account_advanced_reset_confirm">将所有高级设置重置为默认值？</string>
   <string name="extension_successfully_installed">扩展<b>%1$s</b>已成功安装。</string>
   <string name="extension_install_failure">安装以下扩展时出错：<b>%1$s</b></string>
   <string name="extension_recent_version_exception">已安装<b>%1$s</b>的较新版本。</string>

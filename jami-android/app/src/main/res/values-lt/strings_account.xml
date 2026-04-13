@@ -27,6 +27,7 @@
   <string name="account_type_ip2ip">IP paskyra</string>
   <string name="help_ring">Jami paskyra leidžia jums saugiai pasiekti žmones per visiškai paskirstytą tinklą.</string>
   <string name="help_sip_title">Pridėti SIP paskyrą</string>
+  <string name="help_sip">Konfigūruoti esamą SIP paskyrą</string>
   <string name="create_sip_account">Konfigūruoti SIP paskyrą</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Ištrinti paskyrą?</string>
@@ -45,6 +46,9 @@
   <string name="account_password_change">Pakeisti slaptažodį</string>
   <string name="account_password_set">Nustatyti slaptažodį</string>
   <string name="account_password_change_wait_message">Keičiamas paskyros slaptažodis</string>
+  <string name="account_biometric_disable">Išjungti biometrinį tapatybės nustatymą</string>
+  <string name="account_biometric_set">Įjungti biometrinį tapatybės nustatymą</string>
+  <string name="account_biometric_summary">Tvarkyti paskyros biometrinį tapatybės nustatymą.</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Bendra</string>
   <string name="account_basic_category">Pagrindiniai nustatymai</string>
@@ -72,6 +76,7 @@
   <string name="account_video_enable">Įjungti vaizdą</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Išplėstiniai</string>
+  <string name="account_chat_settings_title">Pokalbio nustatymai</string>
   <string name="account_call_settings_title">Skambučio nustatymai</string>
   <string name="account_dht_public_in_calls_label">Leisti gaunamuosius skambučius nuo nežinomų adresatų</string>
   <string name="account_registration_exp_label">Registracijos galiojimo laikas</string>
@@ -94,7 +99,6 @@
   <string name="account_published_address_label">Paskelbtas adresas</string>
   <string name="disabled">Išjungta</string>
   <string name="enabled">Įjungta</string>
-  <string name="default_value">Numatytasis</string>
   <string name="account_proxy_label">DHT įgaliotasis serveris</string>
   <string name="account_proxy_enable_label">Naudoti DHT įgaliotąjį serverį</string>
   <string name="account_proxy_server_label">DHT įgaliotojo serverio adresas</string>
@@ -110,12 +114,14 @@
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Naudoti TLS perdavimą</string>
   <string name="account_tls_certificate_file_label">Liudijimo failas</string>
+  <string name="account_tls_private_key_file_label">Privačiojo rakto failas</string>
   <string name="account_tls_password_label">Privačiojo rakto slaptažodis</string>
   <string name="account_rtp_max_port">Didžiausias</string>
   <string name="account_rtp_min_port">Mažiausias</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Norėdami atrakinti paskyrą, įveskite pagrindinį slaptažodį</string>
   <string name="error_password_char_count">Mažiausiai 6 simboliai</string>
+  <string name="error_passwords_not_equals">Slaptažodžiai nesutampa.</string>
   <string name="export_account_wait_title">Prašome palaukti...</string>
   <string name="export_account_wait_message">Eksportuojama paskyros informacija</string>
   <string name="account_export_file">Padaryti paskyros atsarginę kopiją</string>
