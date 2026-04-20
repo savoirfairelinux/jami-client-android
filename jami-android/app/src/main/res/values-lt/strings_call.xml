@@ -17,10 +17,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 <resources>
     <!-- Call error -->
-    <string name="call_error">Sutrikimas skambučio metu.</string>
-    <string name="call_error_no_microphone">Skambučio atsisakyta. Neaptikta jokio mikrofono.</string>
-    <string name="call_error_no_camera_no_microphone">Skambučio atsisakyta. Neaptikta jokios kameros ar mikrofono.</string>
-    <string name="screen_sharing_error">Sutrikimas bendrinant ekraną.</string>
+    <string name="call_error">Pradedant skambutį įvyko klaida.</string>
+    <string name="call_error_no_microphone">Skambučio atsisakyta. Neaptiktas joks mikrofonas.</string>
+    <string name="call_error_no_camera_no_microphone">Skambučio atsisakyta. Neaptikta jokia kamera ar mikrofonas.</string>
+    <string name="screen_sharing_error">Pradedant bendrinti ekraną įvyko klaida.</string>
 
     <!-- SipCalls -->
     <string name="call_human_state_searching">Ieškoma</string>

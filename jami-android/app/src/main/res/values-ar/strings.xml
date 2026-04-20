@@ -1,6 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">إرسال مشكلہ</string>
+  <string name="submit_issue_action_description">إنشاء قضية جديدة</string>
   <string name="section_license">الرخصة</string>
   <string name="copyright_section">حقوق النشر</string>
   <string name="contribute_section">مساهمة</string>

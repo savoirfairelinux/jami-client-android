@@ -181,7 +181,7 @@
   <string name="contact_details">Kontakt-detajler</string>
   <string name="conversation_action_delete_this">Slet denne samtale</string>
   <string name="conversation_action_delete_this_title">Slet samtalen?</string>
-  <string name="leave_conversation">Lad samtalen være</string>
+  <string name="leave_conversation">Forlad samtalen</string>
   <string name="conversation_action_delete_this_message">Handlingen kan ikke fortrydes.</string>
   <string name="conversation_action_history_clear">Ryd historiken</string>
   <string name="conversation_action_history_clear_title">Ryd samtalehistorikken?</string>

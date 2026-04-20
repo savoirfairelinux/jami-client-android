@@ -27,10 +27,11 @@
   <string name="account_type_ip2ip">IP paskyra</string>
   <string name="help_ring">Jami paskyra leidžia jums saugiai pasiekti žmones per visiškai paskirstytą tinklą.</string>
   <string name="help_sip_title">Pridėti SIP paskyrą</string>
+  <string name="help_sip">Konfigūruoti esamą SIP paskyrą</string>
   <string name="create_sip_account">Konfigūruoti SIP paskyrą</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Ištrinti paskyrą?</string>
-  <string name="account_delete_dialog_message">Šio veiksmo neįmanoma bus atšaukti.</string>
+  <string name="account_delete_dialog_message">Šį veiksmą neįmanoma bus atšaukti.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nėra užregistruotų paskyrų</string>
   <string name="normal_accounts_titles">Paskyros</string>
@@ -44,7 +45,11 @@
   <string name="account_device_revocation_error_unknown">Nežinoma klaida.</string>
   <string name="account_password_change">Pakeisti slaptažodį</string>
   <string name="account_password_set">Nustatyti slaptažodį</string>
+  <string name="account_password_summary">Tvarkyti paskyros slaptažodį.</string>
   <string name="account_password_change_wait_message">Keičiamas paskyros slaptažodis</string>
+  <string name="account_biometric_disable">Išjungti biometrinį tapatybės nustatymą</string>
+  <string name="account_biometric_set">Įjungti biometrinį tapatybės nustatymą</string>
+  <string name="account_biometric_summary">Tvarkyti paskyros biometrinį tapatybės nustatymą.</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Bendra</string>
   <string name="account_basic_category">Pagrindiniai nustatymai</string>
@@ -56,6 +61,8 @@
   <string name="account_optionnal_category">Pasirinktini nustatymai</string>
   <string name="account_useragent_label">Naudotojo agentas</string>
   <string name="account_autoanswer_label">Automatinis atsiliepimas</string>
+  <string name="account_rendezvous_label">Susitikimo veiksena</string>
+  <string name="account_rendezvous_summary">Susitikimo veiksenoje gaunamieji skambučiai bus pridėti į konferencijos kambarį.</string>
   <string name="account_upnp_label">Įjungti UPnP</string>
   <string name="account_proxy_field">Įgaliotasis serveris</string>
   <!--Extension Details-->
@@ -67,13 +74,16 @@
   <string name="account_ringtone_enabled_label">Aktyvuoti skambučių melodijas</string>
   <string name="account_ringtone_path_label">Skambučio melodijos kelias</string>
   <string name="account_ringtone_custom_label">Naudoti tinkintą skambučio melodiją</string>
+  <string name="account_ringtone_title">Pasirinkti skambučio melodiją</string>
+  <string name="account_ringtone_summary">Pasirinkti prieinamą ar nuosavą skambučio melodiją</string>
   <!--Video Details-->
   <string name="account_video_label">Vaizdas</string>
   <string name="account_video_enable">Įjungti vaizdą</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Išplėstiniai</string>
+  <string name="account_chat_settings_title">Pokalbio nustatymai</string>
   <string name="account_call_settings_title">Skambučio nustatymai</string>
-  <string name="account_dht_public_in_calls_label">Leisti gaunamuosius skambučius nuo nežinomų adresatų</string>
+  <string name="account_dht_public_in_calls_label">Leisti skambučius nuo nežinomų adresatų</string>
   <string name="account_registration_exp_label">Registracijos galiojimo laikas</string>
   <string name="account_local_interface_label">Vietinė sąsaja</string>
   <string name="account_local_port_label">Vietinis prievadas</string>
@@ -81,7 +91,7 @@
   <string name="account_stun_server_label">STUN serveris</string>
   <string name="account_accept_files">Automatiškai priimti gaunamuosius failus</string>
   <string name="account_conversation_settings_title">Pokalbio nustatymai</string>
-  <string name="account_accept_files_max_size">Didžiausias failo, kurį automatiškai priimti, dydis</string>
+  <string name="account_accept_files_max_size">Maks. automatiškai priimamo failo dydis</string>
   <string name="account_accept_files_never">Niekada nepriimti automatiškai</string>
   <string name="account_accept_files_always">Visada priimti automatiškai</string>
   <string name="size_mb">%1$d MB</string>
@@ -92,13 +102,16 @@
   <string name="account_published_same_as_local_label">Paskelbtas toks pats kaip vietinis</string>
   <string name="account_published_port_label">Paskelbtas prievadas</string>
   <string name="account_published_address_label">Paskelbtas adresas</string>
+  <string name="account_connectivity_label">Lygiarangių sujungimas</string>
   <string name="disabled">Išjungta</string>
   <string name="enabled">Įjungta</string>
-  <string name="default_value">Numatytasis</string>
   <string name="account_proxy_label">DHT įgaliotasis serveris</string>
   <string name="account_proxy_enable_label">Naudoti DHT įgaliotąjį serverį</string>
   <string name="account_proxy_server_label">DHT įgaliotojo serverio adresas</string>
+  <string name="account_proxy_server_used">Naudojamas: %1$s</string>
   <string name="account_sip_proxy_label">Įgaliotasis serveris</string>
+  <string name="account_peer_discovery_label">Vietinis lygiarangių atradimas</string>
+  <string name="account_peer_discovery_enable_label">Įjungti vietinį lygiarangių atradimą</string>
   <!--Security Details-->
   <string name="account_credentials_label">Prisijungimo duomenys</string>
   <string name="account_credentials_edit">Taisyti prisijungimo duomenis</string>
@@ -110,12 +123,15 @@
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Naudoti TLS perdavimą</string>
   <string name="account_tls_certificate_file_label">Liudijimo failas</string>
+  <string name="account_tls_private_key_file_label">Privačiojo rakto failas</string>
   <string name="account_tls_password_label">Privačiojo rakto slaptažodis</string>
   <string name="account_rtp_max_port">Didžiausias</string>
   <string name="account_rtp_min_port">Mažiausias</string>
+  <string name="account_rtp_port_range">Garso RTP prievadų rėžis</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Norėdami atrakinti paskyrą, įveskite pagrindinį slaptažodį</string>
   <string name="error_password_char_count">Mažiausiai 6 simboliai</string>
+  <string name="error_passwords_not_equals">Slaptažodžiai nesutampa.</string>
   <string name="export_account_wait_title">Prašome palaukti...</string>
   <string name="export_account_wait_message">Eksportuojama paskyros informacija</string>
   <string name="account_export_file">Padaryti paskyros atsarginę kopiją</string>
@@ -160,6 +176,7 @@
   <string name="account_enter_username">Įveskite naudotojo vardą</string>
   <!--Name registration-->
   <string name="error_username_empty">Įveskite naudotojo vardą</string>
+  <string name="no_registered_name_for_account">Nėra registruoto vardo</string>
   <string name="username_available">Naudotojo vardas yra prieinamas.</string>
   <string name="trying_to_register_name">Vyksta naudotojo vardo registracija. Palaukite…</string>
   <string name="registered_username">Registruotas naudotojo vardas</string>

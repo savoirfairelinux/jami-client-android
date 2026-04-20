@@ -13,6 +13,8 @@
   <string name="license">本软件由版权持有人及其他责任者“按原样”提供，不提供任何形式的担保。详细信息请参阅 <u>GNU 通用公共许可证版本 3 或更新</u></string>
   <string name="description">Jami 是一款用于通用通信的自由软件，它尊重用户的自由和隐私。</string>
   <string name="credits">致謝</string>
+  <string name="call_service_description">此项服务为保持您的通话在前台运行所必需。仅在您通话时运行。</string>
+  <string name="data_transfer_service_description">此项服务为在文件传输过程中显示持久通知所必需。仅在传输文件时运行。</string>
   <!--About dialog-->
   <string name="thank_note">我们要感谢我们的贡献者，他们多年来的努力使这个软件成为现在的样子。</string>
   <string name="developers">开发者</string>
@@ -91,6 +93,7 @@
   <string name="new_group">建立新群組</string>
   <string name="ab_action_flipcamera">翻转相机</string>
   <!--Text messages-->
+  <string name="send_message">发送消息</string>
   <string name="send_file">发送文件</string>
   <string name="select_media">打开相册</string>
   <string name="ongoing_group_call">尚在進行中的通話</string>
@@ -198,6 +201,7 @@
   <string name="account">账户</string>
   <string name="devices_header">裝置</string>
   <!--Share fragment-->
+  <string name="share_message">用 Jami 扫描此代码</string>
   <string name="share_contact_information">分享联系人</string>
   <string name="generic_error_migration_message">迁移帐户时出错。</string>
   <!--Pending invitations-->

@@ -6,7 +6,7 @@
   <string name="pref_category_system">System</string>
   <string name="pref_category_privacy">Privatsphäre</string>
   <string name="pref_category_diagnostic">Diagnose</string>
-  <string name="pref_category_appearance">Aussehen</string>
+  <string name="pref_category_appearance">Erscheinungsbild</string>
   <string name="pref_category_connectivity">Verbindung</string>
   <string name="pref_category_extensions">Erweiterungen</string>
   <string name="pref_category_video_settings">Erweiterte Videoeinstellungen</string>
@@ -54,11 +54,11 @@
   <string name="pref_push_notifications_logs_title">Push-Benachrichtigungsprotokolle</string>
   <string name="pref_push_notifications_logs_summary">Von Push-Benachrichtigung erfassten Protokolle anzeigen</string>
   <string name="pref_typing_title">Tipp-Indikator</string>
-  <string name="pref_typing_summary">Anzeigen wenn Nachrichten getippt werden.</string>
+  <string name="pref_typing_summary">Anzeigen, wenn Nachrichten getippt werden.</string>
   <string name="pref_block_record_title">Screenshot und Aufzeichnung blockieren</string>
   <string name="pref_block_record_summary">Aufnahme von Screenshots oder Videos blockieren.</string>
   <string name="pref_link_preview_title">Vorschau für Weblinks</string>
-  <string name="pref_link_preview_summary">Vorschau erfordert dass Inhalte von Drittanbieter-Servern heruntergeladen werden.</string>
+  <string name="pref_link_preview_summary">Vorschau erfordert, dass Inhalte von Drittanbieter-Servern heruntergeladen werden.</string>
   <!--Notifications Visibility-->
   <string name="notification_public">Öffentlich\n(Benachrichtigungen und deren Inhalt auf dem Sperrbildschirm anzeigen)\n</string>
   <string name="notification_private">Privat\n(Benachrichtigungen anzeigen, aber deren Inhalt auf dem Sperrbildschirm ausblenden)\n</string>
@@ -81,6 +81,9 @@
   <string name="extension_reset_preferences_summary">Erweiterung auf die Standardeinstellungen zurückgesetzt</string>
   <string name="extension_reset_preferences_ask">Möchten Sie die allgemeinen Erweiterungseinstellungen zurücksetzen?</string>
   <string name="extension_reset_account_preferences_ask">Möchten Sie die Kontoerweiterungseinstellungen zurücksetzen?</string>
+  <string name="account_advanced_reset">Erweiterte Einstellungen zurücksetzen</string>
+  <string name="account_advanced_reset_summary">Erweiterte Standardeinstellungen wiederherstellen</string>
+  <string name="account_advanced_reset_confirm">Alle erweiterten Einstellungen auf Standard zurücksetzen</string>
   <string name="extension_successfully_installed">Erweiterung <b>%1$s</b> erfolgreich installiert.</string>
   <string name="extension_install_failure">Bei der Installation der folgenden Erweiterung ist ein Fehler aufgetreten: <b>%1$s</b></string>
   <string name="extension_recent_version_exception">Eine neuere Version von <b>%1$s</b> ist installiert.</string>
