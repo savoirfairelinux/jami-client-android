@@ -67,6 +67,11 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
             }
         }
 
+        if (remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH && !isAppInForeground()) {
+            val app = JamiApplication.instance as JamiApplicationFirebase?
+            app?.hardwareService?.connectivityChanged(true)
+        }
+
         serviceScope.launch {
             try {
                 val app = JamiApplication.instance as JamiApplicationFirebase?
