@@ -67,15 +67,11 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
             }
         }
 
-        if (remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH && !isAppInForeground()) {
-            val app = JamiApplication.instance as JamiApplicationFirebase?
-            app?.hardwareService?.connectivityChanged(true)
-        }
-
+        val reconnect = remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH && !isAppInForeground()
         serviceScope.launch {
             try {
                 val app = JamiApplication.instance as JamiApplicationFirebase?
-                app?.onMessageReceived(remoteMessage)
+                app?.onMessageReceived(remoteMessage, reconnect)
             } catch (e: Exception) {
                 Log.e(TAG, "Error in processing message", e)
             }
