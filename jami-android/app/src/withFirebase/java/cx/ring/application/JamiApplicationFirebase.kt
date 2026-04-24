@@ -68,9 +68,10 @@ class JamiApplicationFirebase : JamiApplication() {
         return formatter.format(Date())
     }
 
-    fun onMessageReceived(remoteMessage: RemoteMessage) {
+    fun onMessageReceived(remoteMessage: RemoteMessage, reconnect: Boolean = false) {
         // Log.d(TAG, "onMessageReceived: ${remoteMessage.from} ${remoteMessage.priority} ${remoteMessage.originalPriority}")
-        mAccountService.pushNotificationReceived(remoteMessage.from ?: "", remoteMessage.data)
+        val data = if (reconnect) remoteMessage.data + ("reconnect" to "1") else remoteMessage.data
+        mAccountService.pushNotificationReceived(remoteMessage.from ?: "", data)
         mNotificationService.processPush()
         when (remoteMessage.priority) {
             RemoteMessage.PRIORITY_HIGH -> hardwareService.highPriorityPushCount++
