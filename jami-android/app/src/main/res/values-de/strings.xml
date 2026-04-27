@@ -85,7 +85,7 @@
   <string name="notif_incoming_file_transfer_title">Eingehende Datei von %1$s</string>
   <string name="notif_outgoing_file_transfer_title">Datei an %1$s senden</string>
   <string name="notif_incoming_picture">Bild von %1$s</string>
-  <string name="notif_sync_title">Daten synchronisieren ...</string>
+  <string name="notif_sync_title">Daten werden synchronisiert ...</string>
   <string name="notif_location_title">Standort mit %1$s teilen</string>
   <string name="notif_channel_reconnect">Hintergrundsynchronisierung</string>
   <string name="notif_reconnect_title">Jami synchronisiert …</string>
@@ -501,10 +501,10 @@
   <string name="import_side_step1_switch_to_code">Oder klicken Sie hier, um den Authentifizierungscode anzuzeigen</string>
   <string name="import_side_step1_switch_to_qr">Oder klicken Sie hier, um den QR-Code anzuzeigen</string>
   <string name="import_side_step1_connecting">Verbindung zum Quellgerät wird hergestellt …</string>
-  <string name="import_side_step1_preparing_device">Gerät wird vorbereitet…</string>
+  <string name="import_side_step1_preparing_device">Gerät wird vorbereitet …</string>
   <string name="import_side_step2_password_prompt">Das Konto ist passwortgeschützt.\nEntsperren Sie es, um fortzufahren.</string>
   <string name="import_side_step2_password_import">Importieren</string>
-  <string name="import_side_step2_password_unlocking">Konto entsperren …</string>
+  <string name="import_side_step2_password_unlocking">Konto wird entsperrt …</string>
   <string name="import_side_step2_action_required">Aktion erforderlich. Bitte bestätigen Sie das Konto auf dem Quellgerät.</string>
   <string name="import_side_step3_body_loading">Das Konto wird auf das neue Gerät importiert. Bitte warten…</string>
   <string name="import_side_step3_body_done">Das Konto wurde erfolgreich importiert.</string>
