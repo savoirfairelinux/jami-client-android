@@ -1770,7 +1770,8 @@ class AccountService(
      */
     fun provideAccountAuthentication(accountId: String, password: String) {
         Log.d(TAG, "Provide account authentication")
-        JamiService.provideAccountAuthentication(accountId, password, "password")
+        val scheme = if (password.isEmpty()) "" else "password"
+        JamiService.provideAccountAuthentication(accountId, password, scheme)
     }
 
     /**
