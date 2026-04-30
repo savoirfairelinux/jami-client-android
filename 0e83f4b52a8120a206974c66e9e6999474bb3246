@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a877998a_e93614b6",
+        "filename": "jami-android/gradle.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-04-30T20:44:04Z",
+      "side": 1,
+      "message": "not related to this patch",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "0e83f4b52a8120a206974c66e9e6999474bb3246",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
