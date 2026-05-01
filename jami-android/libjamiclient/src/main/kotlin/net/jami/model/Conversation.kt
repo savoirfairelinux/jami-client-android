@@ -751,7 +751,7 @@ class Conversation(
         }
         preferences[KEY_PREFERENCE_CONVERSATION_NOTIFICATION]?.let {
             isNotificationEnabledSubject.onNext(it.toBoolean())
-        }?: Log.w(TAG, "No notification preference found")
+        }
     }
 
     /** Tells if the conversation is a swarm:group with more than 2 participants (including user) */
