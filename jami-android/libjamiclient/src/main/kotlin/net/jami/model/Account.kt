@@ -137,7 +137,7 @@ class Account(
         synchronized(conversations) { swarmConversations[conversationId] }
 
     fun newSwarm(conversationId: String, mode: Conversation.Mode): Conversation {
-        Log.d(TAG, "newSwarm $conversationId")
+        // Log.d(TAG, "newSwarm $conversationId")
         val conv: Conversation?
         synchronized(conversations) {
             conv = swarmConversations[conversationId]
