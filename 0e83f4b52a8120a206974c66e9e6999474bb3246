@@ -22,6 +22,30 @@
       },
       "revId": "0e83f4b52a8120a206974c66e9e6999474bb3246",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b86f0e0_44fb61d5",
+        "filename": "jami-android/gradle.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1141
+      },
+      "writtenOn": "2026-05-01T15:33:31Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "a877998a_e93614b6",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "0e83f4b52a8120a206974c66e9e6999474bb3246",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
