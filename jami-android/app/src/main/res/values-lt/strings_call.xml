@@ -28,14 +28,14 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="call_human_state_connecting">Sujungiama</string>
     <string name="call_human_state_ringing">Skambina</string>
     <string name="call_human_state_current">Kalbama</string>
-    <string name="call_human_state_hungup">Baigta</string>
+    <string name="call_human_state_hungup">Baigtas</string>
     <string name="call_human_state_busy">Užimta</string>
     <string name="call_human_state_failure">Nepavyko</string>
-    <string name="call_human_state_hold">Užlaikyta</string>
-    <string name="call_human_state_over">Baigta</string>
+    <string name="call_human_state_hold">Užlaikytas</string>
+    <string name="call_human_state_over">Baigtas</string>
     <!-- Conferences -->
     <string name="call_moderator">Moderatorius</string>
-    <string name="call_muted">Nutildyta</string>
+    <string name="call_muted">Nutildytas</string>
     <string name="call_handRaised">Pakelta ranka</string>
 
 </resources>

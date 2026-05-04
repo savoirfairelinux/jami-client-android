@@ -125,6 +125,7 @@
   <string name="account_tls_certificate_file_label">Liudijimo failas</string>
   <string name="account_tls_private_key_file_label">Privačiojo rakto failas</string>
   <string name="account_tls_password_label">Privačiojo rakto slaptažodis</string>
+  <string name="account_tls_negotiation_timeout_sec">Suderinimui skirtas laikas (sek.)</string>
   <string name="account_rtp_max_port">Didžiausias</string>
   <string name="account_rtp_min_port">Mažiausias</string>
   <string name="account_rtp_port_range">Garso RTP prievadų rėžis</string>
@@ -215,7 +216,11 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Šis formatas yra nepalaikomas.</string>
   <string name="account_link_device_title">Susieti naują įrenginį</string>
+  <string name="account_link_password">Ši paskyra yra apsaugota slaptažodžiu, įveskite slaptažodį norėdami sugeneruoti tapatybės nustatymo kodą.</string>
   <string name="account_link_generate_button">Generuoti</string>
+  <string name="account_generate_export_invalid">Tapatybės nustatymo kodas daugiau nebegalioja.\nNorėdami susieti naują įrenginį įveskite slaptažodį ir sugeneruokite kitą kodą.</string>
+  <string name="account_generate_export_invalid_two">Tapatybės nustatymo kodas daugiau nebegalioja.\nNorėdami susieti naują įrenginį sugeneruokite kitą kodą.</string>
+  <string name="help_pin_info">Būtinas, jei paskyra yra apsaugota slaptažodžiu.</string>
   <string name="account_link_device_button">Prisijungti</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Atrakinti Jami paskyrą</string>

@@ -163,6 +163,7 @@
   <string name="conversation_action_remove_this_message">Tai ištrins adresatą ir išvalys pokalbio istoriją.</string>
   <string name="remove_conversation">Šalinti pokalbį</string>
   <string name="conversation_action_remove_title">Šalinti pokalbį?</string>
+  <string name="conversation_action_remove_message">Tai pašalins šį pokalbį, bet nepašalins adresato.</string>
   <string name="swarm_group_action_leave">Išeiti iš grupės</string>
   <string name="swarm_group_action_leave_title">Išeiti iš šios grupės?</string>
   <string name="swarm_group_action_leave_message">Tai pašalins pokalbį iš jūsų pokalbių sąrašo</string>
@@ -175,6 +176,7 @@
   <string name="conversation_action_incoming_call">Gaunamasis skambutis</string>
   <string name="conversation_open_file_error">Nėra įdiegtos programos, kuri galėtų atverti šį failo tipą.</string>
   <string name="clip_contact_uri">Adresato adresas</string>
+  <string name="clip_message">Žinutės turinys</string>
   <string name="block_contact_dialog_title">Užblokuoti %1$s?</string>
   <string name="block_contact_dialog_message">%1$s negalės su jumis susisiekti tol, kol neatblokuosite.</string>
   <string name="block_contact_completed">%1$s buvo užblokuota(s).</string>
@@ -184,6 +186,7 @@
   <string name="conversation_contact_is_typing">Adresatas rašo…</string>
   <string name="conversation_info_contact_you">Jūs</string>
   <string name="conversation_members">Nariai</string>
+  <string name="conversation_syncing">Atsiunčiamas pokalbis iš lygiarangio</string>
   <string name="conversation_blocked">Šis adresatas yra užblokuotas.</string>
   <string name="conversation_ended">Pokalbis pasibaigė.</string>
   <string name="conversation_message_deleted">Žinutę ištrynė: %s</string>
@@ -271,7 +274,9 @@
   <string name="gallery_error_message">Įrenginyje nerasta jokios programėlės atverti Galeriją</string>
   <string name="generic_error">Įvyko nežinoma klaida.</string>
   <!--File Transfer-->
+  <string name="invalid_file">Neteisingas failas.</string>
   <string name="file_transfer_status_created">Inicijuojama</string>
+  <string name="file_transfer_status_unsupported">Nepalaikoma</string>
   <string name="file_transfer_status_invalid_file">Neteisingas failas</string>
   <string name="file_transfer_status_canceled">Atsisakyta</string>
   <string name="file_transfer_status_timed_out">Pasibaigė operacijai skirtas laikas.</string>
@@ -322,12 +327,15 @@
   <string name="wizard_username_skip">Praleisti naudotojo vardo pasirinkimą</string>
   <string name="wizard_password_info">Paskyros slaptažodis</string>
   <string name="wizard_password_placeholder">Pasirinkite slaptažodį, skirtą šifruoti paskyros raktą šiame įrenginyje</string>
+  <string name="wizard_password_button">Pasirinkti slaptažodį</string>
   <string name="wizard_password_skip">Sukurti paskyrą</string>
   <string name="wizard_password_switch">Šifruoti paskyrą slaptažodžiu</string>
   <string name="wizard_password_warning">Turėkite omenyje, kad slaptažodis negali būti atkurtas</string>
   <string name="wizard_profile_info">Profilis yra bendrinamas tik su adresatais</string>
   <string name="wizard_profile_button">Įrašyti profilį</string>
   <string name="wizard_profile_skip">Praleisti ir atlikti tai vėliau</string>
+  <string name="fab_path_choose">Pasirinkti kitą failą</string>
+  <string name="chat_extensions">Pokalbio plėtiniai</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Bendrinti</string>
   <string name="bottomSheet_dialpad_btn">Numerio rinkiklis</string>
@@ -336,12 +344,14 @@
   <string name="bottomSheet_change_camera_btn">Keisti</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
   <string name="bottomSheet_hangup_btn">Baigti skambutį</string>
+  <string name="bottomSheet_mute_microphone_btn">Mikrofonas</string>
   <string name="bottomSheet_sound_output_btn">Garsai</string>
   <string name="bottomSheet_raiseHand_btn">Pakelti ranką</string>
   <string name="uninstall">Pašalinti</string>
   <string name="reset">Atstatyti</string>
   <!--Swarm Details-->
   <string name="rename_btn">Patvirtinti</string>
+  <string name="rename_error">negali būti tuščias.</string>
   <string name="swarm_description">Pridėti aprašą</string>
   <string name="tab_members">Nariai</string>
   <string name="tab_files">Failai</string>
@@ -383,9 +393,17 @@
   <string name="install_error">Importuojant plėtinį įvyko klaida.</string>
   <string name="export_side_main_title">Eksportuoti paskyrą</string>
   <string name="import_side_main_title">Importuoti paskyrą</string>
+  <string name="export_side_step1_switch_to_code">Arba spustelėkite čia norėdami įvesti tapatybės nustatymo kodą</string>
+  <string name="export_side_step1_switch_to_qr">Arba spustelėkite čia norėdami nuskenuoti QR kodą</string>
   <string name="export_side_step1_code_connect">Prisijungti</string>
+  <string name="export_side_step2_advice">Naujo įrenginio vieta yra štai čia. Ar tai esate jūs?\nNorėdami tęsti paskyros eksportavimo operaciją spustelėkite „Patvirtinti“.</string>
+  <string name="export_side_step2_advice_ip_only">Naujas įrenginys prisijungęs žemiau nurodytu adresu. Ar tai esate jūs?\nNorėdami tęsti paskyros eksportavimą spustelėkite „Patvirtinti“.</string>
+  <string name="export_side_step2_ip_only">Naujo įrenginio IP adresas: %1$s</string>
   <string name="export_side_step2_cancel">Atsisakyti</string>
   <string name="export_side_step2_confirm">Patvirtinti</string>
+  <string name="export_side_step2_password">Paskyra yra apsaugota slaptažodžiu.\nNorėdami tęsti atlikite naujame įrenginyje tapatybės nustatymą.</string>
+  <string name="export_side_step3_body_loading">Vyksta paskyros eksportavimo į naują įrenginį operacija. Palaukite…</string>
+  <string name="export_side_step3_body_done">Paskyra buvo sėkmingai importuota naujame įrenginyje.</string>
   <string name="export_side_step3_exit">Užbaigti</string>
   <string name="import_side_step1_share">Bendrinti</string>
   <string name="import_side_step1_switch_to_code">Arba spustelėkite čia norėdami rodyti tapatybės nustatymo kodą</string>
@@ -393,15 +411,19 @@
   <string name="import_side_step1_preparing_device">Ruošiamas įrenginys…</string>
   <string name="import_side_step2_password_import">Importuoti</string>
   <string name="import_side_step2_password_unlocking">Atrakinama paskyra…</string>
+  <string name="import_side_step3_body_loading">Paskyra importuojama naujame įrenginyje. Palaukite…</string>
   <string name="import_side_step3_body_done">Paskyra buvo sėkmingai importuota.</string>
   <string name="import_side_step3_go_to_account">Eiti į naują paskyrą</string>
   <string name="import_side_step3_exit">Užbaigti</string>
+  <string name="link_device_error_network">Susiejant įrenginį įvyko tinklo klaida. Patikrinkite ryšį ir bandykite dar kartą.</string>
   <string name="link_device_error_authentication">Susiejant paskyrą įvyko tapatybės nustatymo klaida. Patikrinkite prisijungimo duomenis ir bandykite dar kartą.</string>
   <string name="link_device_error_timeout">Pasibaigė operacijai skirtas laikas.</string>
+  <string name="link_device_error_canceled">Naudotojas atsisakė operacijos.</string>
   <string name="link_device_error_unknown">Įvyko klaida.</string>
   <string name="link_device_error_bad_password">Patikrinkite prisijungimo duomenis ir bandykite dar kartą.</string>
   <!--Accessibility-->
   <string name="step_title_create_username">Sukurti naudotojo vardą</string>
   <string name="step_title_set_password">Nustatyti slaptažodį</string>
+  <string name="step_title_create_profile">Susikurkite profilį</string>
   <string name="step_format">Žingsnis %1$d iš %2$d: %3$s</string>
 </resources>
