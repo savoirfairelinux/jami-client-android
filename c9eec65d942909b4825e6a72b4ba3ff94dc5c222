@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc19710a_b00a44ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 943
+      },
+      "writtenOn": "2026-05-09T13:36:12Z",
+      "side": 1,
+      "message": "I have now adjusted the string formatting so that there is always a line break before “by”. This should at least ensure that the names of the participants who are recording are visible, and that there is hardly any overlapping text anymore.\n\nAs mentioned, I would keep the entire text unchanged, i.e. in the form “This call is being recorded by %1”, and not modify it, because in my opinion it is the easiest to translate and also remains unambiguous across other languages.\n\nOnly if this is an absolute no-go would we need to consider alternative source texts that also allow for unambiguous translation into all languages. See the following link for details: https://git.jami.net/savoirfairelinux/jami-client-qt/-/work_items/2250#note_57653",
+      "revId": "c9eec65d942909b4825e6a72b4ba3ff94dc5c222",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
