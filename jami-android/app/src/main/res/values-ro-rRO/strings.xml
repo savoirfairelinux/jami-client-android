@@ -3,7 +3,7 @@
   <!--About-->
   <string name="submit_issue_title">Defecțiuni</string>
   <string name="submit_issue_action_description"><u>Defecțiune nouă</u></string>
-  <string name="section_license">Licență</string>
+  <string name="section_license">Licența</string>
   <string name="switch_conversation">Schimbă conversația</string>
   <string name="delete_conversation_confirmation">Chiar vrei să ștergi această conversație?</string>
   <string name="acc_profile_photo_capture">Fă o poză</string>

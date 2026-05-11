@@ -11,7 +11,7 @@
   <string name="sponsor_section">Jami este un program liber, creat și susținut de</string>
   <string name="copyright_section">Drepturi de autor</string>
   <string name="contribute_section">Contribuie</string>
-  <string name="version_section">Versiune</string>
+  <string name="version_section">Versiunea</string>
   <string name="no_browser_app_installed">Nu a fost găsită o aplicație de navigare în internet. Instalează una pentru a vedea această pagină.</string>
   <string name="website_chooser_title">Vezi adresa de internet folosind...</string>
   <string name="license">Acest program este furnizat „așa cum este”, fără nicio garanție. A se vedea <u>GNU General Public License versiunea 3 sau ulterioară</u></string>

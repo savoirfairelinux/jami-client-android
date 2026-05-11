@@ -64,7 +64,7 @@
   <string name="notification_private">Privat\n(Benachrichtigungen anzeigen, aber deren Inhalt auf dem Sperrbildschirm ausblenden)\n</string>
   <string name="notification_secret">Geheim\n(Benachrichtigungen nicht auf Sperrbildschirm anzeigen)</string>
   <string name="connectivity_google_services_title">Google-Dienste</string>
-  <string name="connectivity_google_services_description">Google Firebase und einen DHT-Proxy verwenden um Push-Benachrichtigungen zu erhalten.</string>
+  <string name="connectivity_google_services_description">Google Firebase und einen DHT-Proxy verwenden, um Push-Benachrichtigungen zu empfangen.</string>
   <string name="connectivity_local_node_title">Lokaler DHT-Knoten</string>
   <string name="connectivity_local_node_description">Einen lokalen DHT-Knoten verwenden, um sich mit anderen Jami-Geräten und Kontakten zu verbinden.</string>
   <string name="connectivity_unified_push_description">Einen benutzerdefinierten UnifiedPush-Server verwenden, um Push-Benachrichtigungen zu empfangen.</string>

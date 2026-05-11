@@ -8,6 +8,7 @@
   <string name="pref_category_diagnostic">진단</string>
   <string name="pref_category_appearance">외모</string>
   <string name="pref_category_connectivity">연결성</string>
+  <string name="pref_category_extensions">확장</string>
   <string name="pref_category_video_settings">고급 비디오 설정</string>
   <string name="pref_mobileData_title">모바일 데이터</string>
   <string name="pref_mobileData_summary">자미를 Wi-Fi 이외에 3G/LTE 네트워크에 사용할 수 있도록 허용</string>
@@ -41,12 +42,24 @@
   <string name="pref_logs_summary">진단 로그 열 설정</string>
   <string name="pref_logs_start">로그링 시작</string>
   <string name="pref_logs_stop">나무를 끊어라</string>
+  <string name="connection_monitor_channels">채널</string>
   <string name="pref_typing_title">타이핑 지표</string>
   <string name="pref_block_record_title">스크린샷 및 녹화 차단</string>
   <string name="pref_block_record_summary">스크린샷이나 동영상 촬영을 차단하세요.</string>
   <string name="pref_link_preview_title">웹 링크 미리 보기</string>
   <string name="pref_link_preview_summary">미리보기에는 제3자 서버에서 콘텐츠를 다운로드해야 합니다.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_google_services_title">구글 서비스</string>
+  <string name="connectivity_local_node_title">로컬 DHT 노드</string>
   <string name="connectivity_custom_title">관습</string>
   <!--Extension-->
+  <string name="pref_enable_extensions_title">확장 활성화</string>
+  <string name="pref_available_extensions_title">사용 가능한 확장</string>
+  <string name="fab_extensions_add">새 확장 추가</string>
+  <string name="extension_uninstall_title">확장을 제거하시겠습니까?</string>
+  <string name="account_advanced_reset">고급 설정 초기화</string>
+  <string name="account_advanced_reset_summary">기본 고급 설정 복구</string>
+  <string name="account_advanced_reset_confirm">모든 고급 설정을 기본값으로 초기화하시겠습니까?</string>
+  <string name="extension_force_install">강제\n설치</string>
+  <string name="extension_path_image_add">새 이미지 추가</string>
 </resources>

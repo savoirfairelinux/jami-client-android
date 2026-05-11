@@ -11,6 +11,7 @@
   <string name="dialog_warn_ip2ip_account_message">Sie sind dabei, ein SIP-Konto ohne gültigen Hostnamen zu erstellen.
 Sie können nur direkte IP-Anrufe tätigen und empfangen.
 Sie können Ihr Konto später bearbeiten</string>
+  <string name="help_ring">Ein Jami-Konto ermöglicht es Ihnen, Menschen sicher per Peer-to-Peer über ein vollständig verteiltes Netzwerk zu erreichen.</string>
   <string name="help_sip_title">SIP-Konto hinzufügen</string>
   <string name="help_sip">Vorhandenes SIP-Konto konfigurieren</string>
   <string name="create_sip_account">SIP-Konto konfigurieren</string>

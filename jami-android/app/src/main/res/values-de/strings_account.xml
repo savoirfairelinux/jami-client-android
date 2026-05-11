@@ -28,7 +28,7 @@
 Sie können nur direkte IP-Anrufe tätigen und empfangen.
 Sie können Ihr Konto später bearbeiten</string>
   <string name="account_type_ip2ip">IP-Konto</string>
-  <string name="help_ring">Ein Jami-Konto erlaubt es Ihnen andere Menschen auf sichere Art direkt über ein verteiltes Netzwerk zu erreichen</string>
+  <string name="help_ring">Ein Jami-Konto ermöglicht es Ihnen, Menschen sicher per Peer-to-Peer über ein vollständig verteiltes Netzwerk zu erreichen.</string>
   <string name="help_sip_title">SIP-Konto hinzufügen</string>
   <string name="help_sip">Vorhandenes SIP-Konto konfigurieren</string>
   <string name="create_sip_account">SIP-Konto konfigurieren</string>
@@ -103,7 +103,7 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="size_mb">%1$d MB</string>
   <string name="account_turn_enable_label">TURN verwenden</string>
   <string name="account_turn_server_label">TURN-Server</string>
-  <string name="account_turn_username_label">TURN-Benutzer</string>
+  <string name="account_turn_username_label">TURN-Benutzername</string>
   <string name="account_turn_password_label">TURN-Passwort</string>
   <string name="account_published_same_as_local_label">Gleich wie lokal veröffentlicht</string>
   <string name="account_published_port_label">Veröffentlichter Port</string>
