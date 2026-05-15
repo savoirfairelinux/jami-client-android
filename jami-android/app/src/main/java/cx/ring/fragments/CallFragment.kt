@@ -44,6 +44,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.util.Rational
 import android.view.*
+import android.view.accessibility.AccessibilityManager
 import android.view.TextureView.SurfaceTextureListener
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
@@ -1107,8 +1108,18 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             halfExpandedRatio = if (halfRatio <= 0 || halfRatio >= 1) 0.4f else halfRatio
             peekHeight = desiredPeekHeight.toInt()
             saveFlags = BottomSheetBehavior.SAVE_PEEK_HEIGHT
+            if (isTalkBackActive) {
+                isHideable = false
+                state = BottomSheetBehavior.STATE_EXPANDED
+            }
         }
     }
+
+    private val isTalkBackActive: Boolean
+        get() {
+            val am = requireContext().getSystemService(Context.ACCESSIBILITY_SERVICE) as? AccessibilityManager
+            return am?.isTouchExplorationEnabled == true
+        }
 
     private fun displayBottomSheet(display: Boolean) {
         val binding = binding ?: return
@@ -1119,7 +1130,11 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     override fun resetBottomSheetState() {
         bottomSheetParams?.let { bs ->
             bs.isHideable = false
-            bs.state = BottomSheetBehavior.STATE_COLLAPSED
+            if (isTalkBackActive) {
+                bs.state = BottomSheetBehavior.STATE_EXPANDED
+            } else {
+                bs.state = BottomSheetBehavior.STATE_COLLAPSED
+            }
         }
     }
 
@@ -1143,6 +1158,10 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 setBottomSheet()
             }
             BottomSheetAnimation.DOWN -> {
+                if (isTalkBackActive) {
+                    bottomSheetParams?.state = BottomSheetBehavior.STATE_EXPANDED
+                    return
+                }
                 binding.callCoordinatorOptionContainer.apply {
                     this@apply.updatePadding(bottom = 0)
                     binding.callOptionsBottomSheet.updatePadding(bottom = 0)

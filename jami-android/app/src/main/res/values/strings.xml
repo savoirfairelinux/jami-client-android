@@ -594,6 +594,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="bottomSheet_mute_microphone_btn">Micro</string>
     <string name="bottomSheet_sound_output_btn">Sounds</string>
     <string name="bottomSheet_raiseHand_btn">Raise hand</string>
+    <string name="camera_toggle_btn_description">Toggle camera</string>
+    <string name="camera_flip_btn_description">Flip camera</string>
+    <string name="add_participant_btn_description">Add participant</string>
+    <string name="screen_share_btn_description">Share screen</string>
     <string name="open_account_extension_settings">Open Account Extension Settings</string>
     <string name="open_general_extension_settings">Open General Extension Settings</string>
     <string name="uninstall">Uninstall</string>
