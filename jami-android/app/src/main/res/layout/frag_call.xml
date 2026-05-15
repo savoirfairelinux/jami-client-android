@@ -489,6 +489,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:background="@drawable/call_hangup_btn_background"
+                            android:contentDescription="@string/action_call_hangup"
                             android:padding="16dp"
                             app:srcCompat="@drawable/baseline_call_end_24"
                             app:tint="@color/white" />
@@ -508,7 +509,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:textSize="11sp" />
                     </LinearLayout>
 
-                    <!-- Camera switch button -->
+                    <!-- Camera toggle button -->
                     <LinearLayout
                         android:id="@+id/videocam_btn_container"
                         android:layout_width="0dp"
@@ -524,6 +525,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:background="@drawable/call_button_background_checkable"
+                            android:contentDescription="@string/camera_toggle_btn_description"
                             android:padding="16dp"
                             app:srcCompat="@drawable/baseline_videocam_24"
                             app:tint="@color/call_button" />
@@ -543,7 +545,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:textSize="11sp" />
                     </LinearLayout>
 
-                    <!-- Camera switch button -->
+                    <!-- Flip camera button -->
                     <LinearLayout
                         android:id="@+id/Flip_cam_btn_container"
                         android:layout_width="0dp"
@@ -559,6 +561,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:background="@drawable/call_button_background_pressable"
+                            android:contentDescription="@string/camera_flip_btn_description"
                             android:padding="16dp"
                             app:srcCompat="@drawable/baseline_flip_camera_24" />
 
@@ -593,6 +596,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:background="@drawable/call_button_background_pressable"
+                            android:contentDescription="@string/add_participant_btn_description"
                             android:padding="16dp"
                             app:srcCompat="@drawable/baseline_person_add_24"
                             app:tint="@color/white" />
@@ -628,6 +632,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:background="@drawable/call_button_background_checkable"
+                            android:contentDescription="@string/screen_share_btn_description"
                             android:padding="16dp"
                             app:srcCompat="@drawable/baseline_mobile_screen_share_24"
                             app:tint="@color/white" />
@@ -665,6 +670,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:background="@drawable/call_button_background_checkable"
+                            android:contentDescription="@string/bottomSheet_dialpad_btn"
                             android:padding="16dp"
                             app:srcCompat="@drawable/baseline_dialpad_24"
                             app:tint="@color/white" />
@@ -700,6 +706,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:background="@drawable/call_button_background_checkable"
+                            android:contentDescription="@string/bottomSheet_raiseHand_btn"
                             android:padding="16dp"
                             app:srcCompat="@drawable/baseline_raisehand_24" />
 
@@ -734,6 +741,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:background="@drawable/call_button_background_checkable"
+                            android:contentDescription="@string/bottomSheet_extensions_btn"
                             android:padding="16dp"
                             app:srcCompat="@drawable/baseline_settings_24"
                             app:tint="@color/white" />
