@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25123ca3_b003379e",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/CertificateViewerActivity.kt",
+        "patchSetId": 13
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-05-15T20:44:20Z",
+      "side": 1,
+      "message": "tab space",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 4
+      },
+      "revId": "cc2e675b0f2c542aa0e37da5d7bbecc3007796c0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
