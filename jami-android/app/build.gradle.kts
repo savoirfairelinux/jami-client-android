@@ -11,12 +11,12 @@ plugins {
 
 android {
     namespace = "cx.ring"
-    compileSdk = 36
+    compileSdk = 37
     buildToolsVersion = "36.1.0"
     ndkVersion = "29.0.14206865"
     defaultConfig {
         minSdk = 26
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 494
         versionName = "20260515-01"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
