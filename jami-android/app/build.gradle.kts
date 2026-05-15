@@ -86,6 +86,12 @@ android {
     }
 }
 
+configurations {
+    all {
+        exclude(group = "com.j256.ormlite", module = "ormlite-core")
+    }
+}
+
 dependencies {
     implementation(project(":libjamiclient"))
     implementation(libs.kotlin.stdlib)
