@@ -33,6 +33,7 @@ import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
+import android.view.accessibility.AccessibilityManager
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -160,6 +161,20 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         mAdapter?.let { adapter ->
             if (adapter.itemCount > 0)
                 binding?.histList?.scrollToPosition(adapter.itemCount - 1)
+        }
+    }
+
+    private fun announceIncomingMessageForAccessibility() {
+        val recyclerView = binding?.histList ?: return
+        val am = requireContext().getSystemService(Context.ACCESSIBILITY_SERVICE) as? AccessibilityManager
+        if (am?.isTouchExplorationEnabled != true) return
+        recyclerView.doOnNextLayout {
+            val lastPosition = (mAdapter?.itemCount ?: 0) - 1
+            if (lastPosition < 0) return@doOnNextLayout
+            recyclerView.layoutManager?.findViewByPosition(lastPosition)
+                ?.performAccessibilityAction(
+                    android.view.accessibility.AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null
+                )
         }
     }
 
@@ -702,8 +717,12 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun addElement(element: Interaction) {
-        if (mAdapter!!.add(element) && element.type != Interaction.InteractionType.INVALID)
+        if (mAdapter!!.add(element) && element.type != Interaction.InteractionType.INVALID) {
             scrollToEnd()
+            if (element.isIncoming && !element.body.isNullOrEmpty()) {
+                announceIncomingMessageForAccessibility()
+            }
+        }
         loading = false
     }
 
