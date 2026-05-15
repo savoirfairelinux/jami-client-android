@@ -167,7 +167,8 @@ class GeneralAccountFragment : BasePreferenceFragment<GeneralAccountPresenter>()
                 val value = details[confKey]
                 (pref as EditTextPreference).text = value
                 if (pref is PasswordPreference) {
-                    pref.setSummary(value.map { "•" }.joinToString(""))
+                    pref.summaryProvider = null
+                    pref.summary = value.map { "•" }.joinToString("")
                 } else {
                     pref.setSummary(value)
                 }
