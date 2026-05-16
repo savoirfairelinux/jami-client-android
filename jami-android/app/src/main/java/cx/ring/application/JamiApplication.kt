@@ -49,6 +49,7 @@ import net.jami.daemon.JamiService
 import net.jami.services.*
 import java.io.File
 import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -103,6 +104,10 @@ abstract class JamiApplication : Application() {
 
     var androidPhoneAccountHandle: PhoneAccountHandle? = null
 
+    private val bootstrapLock = Object()
+    @Volatile private var bootstrapDone = false
+    @Volatile private var bootstrapInProgress = false
+
     open fun activityInit(activityContext: Context) {}
 
     private var mBound = false
@@ -134,13 +139,27 @@ abstract class JamiApplication : Application() {
 
     fun bootstrapDaemon() {
         if (daemon.isStarted) {
+            synchronized(bootstrapLock) {
+                bootstrapDone = true
+                bootstrapLock.notifyAll()
+            }
             return
+        }
+        synchronized(bootstrapLock) {
+            if (bootstrapInProgress) return
+            bootstrapInProgress = true
+            bootstrapDone = false
         }
         Log.d(TAG, "bootstrapDaemon")
         mExecutor.execute {
             try {
                 Log.d(TAG, "bootstrapDaemon: START")
                 if (daemon.isStarted) {
+                    synchronized(bootstrapLock) {
+                        bootstrapDone = true
+                        bootstrapInProgress = false
+                        bootstrapLock.notifyAll()
+                    }
                     return@execute
                 }
                 daemon.startDaemon()
@@ -169,10 +188,46 @@ abstract class JamiApplication : Application() {
                     putExtra("connected", daemon.isStarted)
                 })
                 scheduleRefreshJob()
+                synchronized(bootstrapLock) {
+                    bootstrapDone = true
+                    bootstrapInProgress = false
+                    bootstrapLock.notifyAll()
+                }
             } catch (e: Exception) {
                 Log.e(TAG, "DRingService start failed", e)
+                synchronized(bootstrapLock) {
+                    bootstrapDone = true
+                    bootstrapInProgress = false
+                    bootstrapLock.notifyAll()
+                }
             }
         }
+    }
+
+    /**
+     * Ensures the daemon is fully started (accounts loaded, push token set).
+     * Blocks the calling thread up to 25 seconds waiting for bootstrap to complete.
+     * Safe to call from any thread except the DaemonExecutor thread.
+     * @return true if daemon is ready, false if timeout or start failure
+     */
+    fun ensureDaemonStarted(): Boolean {
+        if (daemon.isStarted) return true
+        bootstrapDaemon()
+        synchronized(bootstrapLock) {
+            val deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(25)
+            while (!bootstrapDone) {
+                val remaining = deadline - System.nanoTime()
+                if (remaining <= 0) return false
+                try {
+                    @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
+                    (bootstrapLock as java.lang.Object).wait(remaining / 1_000_000)
+                } catch (e: InterruptedException) {
+                    Log.e(TAG, "ensureDaemonStarted: interrupted", e)
+                    return false
+                }
+            }
+        }
+        return daemon.isStarted
     }
 
     private fun scheduleRefreshJob() {
