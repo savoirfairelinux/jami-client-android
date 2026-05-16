@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ed0fbbb_49f5d83a",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-16T22:39:01Z",
+      "side": 1,
+      "message": "Line 108: 🟡 Suggestion: The `CountDownLatch` is a single-use object initialized at field declaration time, but `bootstrapDaemon()` can be invoked multiple times throughout the app lifecycle (e.g., reconnect scenarios). After the first bootstrap (success or failure), the latch is permanently at zero and will never gate subsequent bootstrap attempts. If the daemon is ever restarted after a crash, `ensureDaemonStarted()` will return immediately without waiting for the new bootstrap to complete.\n\nConsider using a resettable synchronization mechanism (e.g., a `Mutex` + `Condition`, or an `AtomicReference\u003cCompletableFuture\u003cBoolean\u003e\u003e` that is replaced on each bootstrap attempt).",
+      "revId": "129c962b78a28478b65da379649e37004db31b34",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9cc05590_1be17b81",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-16T22:39:01Z",
+      "side": 1,
+      "message": "[critical] Line 196: 🔴 Critical: `CountDownLatch` is a one-shot primitive — once counted down it can never be reset. If `bootstrapDaemon()` throws an exception, the latch is still counted down (line 181). Any subsequent call to `ensureDaemonStarted()` will have `await()` return `true` immediately, even though the daemon never actually started. The method will report success when the daemon is broken.\n\nConsider replacing `CountDownLatch` with a `CompletableFuture\u003cBoolean\u003e` or a simple `@Volatile var` + `Object.wait()/notifyAll()` that records the actual start result, so callers can distinguish success from failure. Alternatively, check `daemon.isStarted` after the await:\n\n```suggestion\n            daemonStartedLatch.await(25, TimeUnit.SECONDS) \u0026\u0026 daemon.isStarted\n```",
+      "revId": "129c962b78a28478b65da379649e37004db31b34",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14d23d9a_69a25efc",
+        "filename": "jami-android/app/src/main/java/cx/ring/service/DRingService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-16T22:39:01Z",
+      "side": 1,
+      "message": "Line 207: 🟡 Suggestion: On Android 14+ (API 34), `onTimeout()` is the system\u0027s signal that a short-lived foreground service has exceeded its allowed duration. Simply returning without calling `stopForeground()`/`stopSelf()` does not guarantee the service stays alive — the system may force-stop it anyway, and ignoring the callback could lead to undefined behavior or future compatibility issues.\n\nIf active calls need longer foreground time, consider transitioning to a different foreground service type (e.g., `FOREGROUND_SERVICE_TYPE_PHONE_CALL`) when a call begins, rather than ignoring the timeout.",
+      "revId": "129c962b78a28478b65da379649e37004db31b34",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ac69434_ad51bba4",
+        "filename": "jami-android/app/src/main/java/cx/ring/service/PushForegroundService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-16T22:39:01Z",
+      "side": 1,
+      "message": "[good] Line 15: 🟢 Good: Increasing timeout from 5s to 30s is well-matched to the new `ensureDaemonStarted()` 25s timeout, providing adequate coverage for daemon bootstrap + push processing.",
+      "revId": "129c962b78a28478b65da379649e37004db31b34",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19f538cf_4966d055",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-16T22:39:01Z",
+      "side": 1,
+      "message": "[good] Line 36: 🟢 Good: Guarding `setPushNotificationConfig` behind `daemon.isStarted` prevents a race where the token is set before accounts are loaded. The token is correctly applied later during `bootstrapDaemon()` (line 170 of JamiApplication.kt).",
+      "revId": "129c962b78a28478b65da379649e37004db31b34",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2522176_16649524",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-16T22:39:01Z",
+      "side": 1,
+      "message": "Line 42: 🟡 Suggestion: The WakeLock is acquired for 30 seconds but is never explicitly released after processing completes. If `ensureDaemonStarted()` + `onMessageReceived()` finishes in 2 seconds, the CPU stays held for the remaining 28 seconds unnecessarily, increasing battery drain. Consider storing the WakeLock reference and releasing it in a `finally` block of the coroutine, or at least after `onMessageReceived` returns.",
+      "revId": "129c962b78a28478b65da379649e37004db31b34",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c5e6cbc_83705d5c",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-16T22:39:01Z",
+      "side": 1,
+      "message": "Line 48: 🟡 Suggestion: Starting a foreground service for *all* push notifications (not just calls) is a significant behavioral change. Normal-priority message pushes now trigger a visible notification via `PushForegroundService`, which may confuse users with a persistent \u0027syncing\u0027 notification for every chat message. Consider keeping the foreground service only for high-priority pushes (calls), or at minimum ensure the `PushForegroundService` notification is sufficiently discrete.",
+      "revId": "129c962b78a28478b65da379649e37004db31b34",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fa69d3f_2c7453d2",
+        "filename": "jami-android/app/src/withUnifiedPush/java/cx/ring/application/JamiApplicationUnifiedPush.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-16T22:39:01Z",
+      "side": 1,
+      "message": "[critical] Line 74: 🔴 Critical: `ensureDaemonStarted()` blocks for up to 25 seconds. This method is called from `JamiPushService.onMessage()`, which runs on the main thread (Service lifecycle callback). Blocking the main thread for more than 5 seconds triggers an ANR.\n\nThis should be moved to a background thread, similar to how the Firebase variant uses `serviceScope.launch(Dispatchers.Default) { ... }`. For example:\n\n```suggestion\n    fun onMessage(remoteMessage: Map\u003cString, String\u003e) {\n        // Move to background thread to avoid ANR — ensureDaemonStarted blocks\n        Thread {\n            if (!ensureDaemonStarted()) {\n                Log.e(TAG, \"onMessage: daemon failed to start within timeout, push may be lost\")\n            }\n            mAccountService.pushNotificationReceived(\"\", remoteMessage)\n            mNotificationService.processPush()\n        }.start()\n    }\n```",
+      "revId": "129c962b78a28478b65da379649e37004db31b34",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd5b3ab0_0dbd00fb",
+        "filename": "jami-android/app/src/withUnifiedPush/java/cx/ring/services/JamPushService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-16T22:39:01Z",
+      "side": 1,
+      "message": "Line 53: 🟡 Suggestion: Hardcoded string `\"JamiPushReceiver\"` is used as the log tag in multiple places instead of a `companion object` `TAG` constant. This is inconsistent with the rest of the codebase which uses `TAG \u003d ClassName::class.simpleName`. Consider defining a `TAG` constant.",
+      "revId": "129c962b78a28478b65da379649e37004db31b34",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
