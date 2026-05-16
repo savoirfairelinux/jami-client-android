@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f34eb47_aa340576",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-16T22:39:31Z",
+      "side": 1,
+      "message": "Line 116: 🟡 Suggestion: `@Volatile` is unnecessary here. Both `ProcessLifecycleOwner` callbacks (`onStart`/`onStop`) and the `idleShutdownRunnable` (posted to main looper Handler) execute on the main thread, so all reads and writes to `isInForeground` are already serialized. The only cross-thread read is in `onPushProcessed()` which checks `isInForeground` — but that just gates whether to schedule the idle shutdown and is tolerant of a stale read. Consider removing `@Volatile` or documenting why cross-thread access is expected.",
+      "revId": "a4af0f6a6b27fcb737c10471e848f9bb4ef57843",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bb2850d_ac6b0b91",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-16T22:39:31Z",
+      "side": 1,
+      "message": "Line 121: 🟡 Suggestion: `IDLE_SHUTDOWN_DELAY_MS` uses SCREAMING_SNAKE_CASE but is an instance property, not a compile-time constant. In Kotlin, this naming convention is reserved for `const val` in companion objects. Move it to the companion object as a `const val`, or rename to `idleShutdownDelayMs`.\n\n```suggestion\n    companion object {\n        private const val IDLE_SHUTDOWN_DELAY_MS \u003d 90_000L\n        // ... existing companion members\n    }\n```",
+      "revId": "a4af0f6a6b27fcb737c10471e848f9bb4ef57843",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed0abd23_697a9fd0",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-16T22:39:31Z",
+      "side": 1,
+      "message": "Line 243: 🟡 Suggestion: `onPushReceived()` calls `mAccountService.setAccountsActive(true)` which checks `daemon.isStarted`, but in the Firebase path, the daemon might not be started yet (the coroutine calls `ensureDaemonStarted()` *after* `onPushReceived()`). If the daemon isn\u0027t started, this call is silently skipped but accounts won\u0027t be reactivated until `onStart()` fires (which may never happen for a background push). Consider moving the reactivation call to after `ensureDaemonStarted()` succeeds, or making `onPushReceived()` aware that the daemon may not be ready.",
+      "revId": "a4af0f6a6b27fcb737c10471e848f9bb4ef57843",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac4879f2_57342a54",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-16T22:39:31Z",
+      "side": 1,
+      "message": "[info] Line 345: 🟢 Good practice: Using `ProcessLifecycleOwner` with `DefaultLifecycleObserver` is the right approach for tracking app-level foreground/background state. The guard conditions (checking active calls and permanent service setting) before scheduling idle shutdown are well-considered.",
+      "revId": "a4af0f6a6b27fcb737c10471e848f9bb4ef57843",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f09147b_1ae9b6f7",
+        "filename": "jami-android/app/src/main/java/cx/ring/service/PushForegroundService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-16T22:39:31Z",
+      "side": 1,
+      "message": "Line 27: 🟡 Suggestion: If `ACTION_PUSH_DONE` is the very first intent delivered to the service (edge case race), `stopForeground(STOP_FOREGROUND_REMOVE)` is called on a service that never called `startForeground()`. While this is a no-op today, it\u0027s fragile. Consider adding a boolean flag to track whether the service has entered foreground state, and only call `stopForeground` when it has.",
+      "revId": "a4af0f6a6b27fcb737c10471e848f9bb4ef57843",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba772c8e_09aee176",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-16T22:39:31Z",
+      "side": 1,
+      "message": "[critical] Line 77: 🔴 Critical: Same issue as in UnifiedPush path. `app.onMessageReceived(remoteMessage)` dispatches to the daemon executor asynchronously — `pushNotificationReceived` and `processPush` queue work but don\u0027t block until it completes. The `finally` block then releases the WakeLock and calls `onPushProcessed()`, which stops the foreground service via `ACTION_PUSH_DONE`. The daemon may still be processing the push (e.g., ICE negotiation for an incoming call). Without either a WakeLock or a foreground service, the process is vulnerable to being killed by the OOM killer.\n\nAt minimum, defer `onPushProcessed()` until the daemon signals it has finished processing the push notification.",
+      "revId": "a4af0f6a6b27fcb737c10471e848f9bb4ef57843",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5bfd8b01_e94996e7",
+        "filename": "jami-android/app/src/withUnifiedPush/java/cx/ring/services/JamPushService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-16T22:39:31Z",
+      "side": 1,
+      "message": "[critical] Line 74: 🔴 Critical: `onPushProcessed()` is called in the `finally` block immediately after `app?.onMessage(msg)` returns. However, `onMessage()` internally dispatches work to the daemon asynchronously (via `pushNotificationReceived` and `processPush`). Calling `onPushProcessed()` here releases the WakeLock AND stops the foreground service (via `ACTION_PUSH_DONE`) before the daemon has finished processing the push message. On low-memory devices this can cause the process to be killed mid-processing, resulting in lost messages.\n\nThe same pattern existed before (30s WakeLock as safety net), but now the WakeLock is released early *and* the foreground service is torn down. You need a completion signal from the daemon processing, or at minimum keep the foreground service alive for the full timeout and only release the WakeLock early.\n\nConsider adding a callback/suspending mechanism so `onPushProcessed()` is only called after `pushNotificationReceived` and `processPush` have completed their work.",
+      "revId": "a4af0f6a6b27fcb737c10471e848f9bb4ef57843",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c77c0c0d_bd760dd9",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-16T22:39:31Z",
+      "side": 1,
+      "message": "[info] Line 582: 🟢 Good practice: The `forceAll` parameter with a default value of `false` maintains backward compatibility while enabling the new idle shutdown behavior. The KDoc is clear.",
+      "revId": "a4af0f6a6b27fcb737c10471e848f9bb4ef57843",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
