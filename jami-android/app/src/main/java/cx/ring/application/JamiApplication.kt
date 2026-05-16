@@ -24,7 +24,9 @@ import android.content.*
 import android.media.AudioManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.system.Os
 import android.telecom.PhoneAccount
 import android.telecom.PhoneAccountHandle
@@ -32,12 +34,16 @@ import android.telecom.TelecomManager
 import android.util.Log
 import android.view.WindowManager
 import androidx.core.content.getSystemService
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
 import com.bumptech.glide.Glide
 import cx.ring.BuildConfig
 import cx.ring.service.ConnectionService
 import cx.ring.R
 import cx.ring.service.DRingService
 import cx.ring.service.JamiJobService
+import cx.ring.service.PushForegroundService
 import cx.ring.linkpreview.LinkPreview
 import cx.ring.services.CallServiceImpl.Companion.CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY
 import cx.ring.utils.AndroidFileUtils
@@ -107,6 +113,19 @@ abstract class JamiApplication : Application() {
     private val bootstrapLock = Object()
     @Volatile private var bootstrapDone = false
     @Volatile private var bootstrapInProgress = false
+
+    var isInForeground = false
+        private set
+
+    private val idleHandler = Handler(Looper.getMainLooper())
+    private val idleShutdownDelayMs = 90_000L
+
+    private val idleShutdownRunnable = Runnable {
+        if (isInForeground || mPreferencesService.settings.enablePermanentService) return@Runnable
+        if (mCallService.currentConferences().isNotEmpty()) return@Runnable
+        Log.i(TAG, "Idle shutdown: deactivating all accounts (including proxy)")
+        mAccountService.setAccountsActive(false, forceAll = true)
+    }
 
     open fun activityInit(activityContext: Context) {}
 
@@ -230,6 +249,50 @@ abstract class JamiApplication : Application() {
         return daemon.isStarted
     }
 
+    /**
+     * Schedules account deactivation after [IDLE_SHUTDOWN_DELAY_MS] if the app stays in background
+     * with no active calls. Skipped when permanent service is enabled.
+     */
+    fun scheduleIdleShutdown() {
+        if (mPreferencesService.settings.enablePermanentService) return
+        idleHandler.removeCallbacks(idleShutdownRunnable)
+        idleHandler.postDelayed(idleShutdownRunnable, idleShutdownDelayMs)
+    }
+
+    fun cancelIdleShutdown() {
+        idleHandler.removeCallbacks(idleShutdownRunnable)
+    }
+
+    /**
+     * Called by push handlers when a push notification arrives.
+     * Cancels any pending idle shutdown and reactivates accounts.
+     */
+    fun onPushReceived() {
+        cancelIdleShutdown()
+        if (daemon.isStarted) {
+            mAccountService.setAccountsActive(true)
+        }
+    }
+
+    /**
+     * Called by push handlers after push processing is complete.
+     * Posts to the daemon executor to ensure it runs AFTER the daemon
+     * has finished processing the push notification.
+     */
+    fun onPushProcessed() {
+        mExecutor.execute {
+            if (!isInForeground) {
+                scheduleIdleShutdown()
+            }
+            try {
+                startService(Intent(this, PushForegroundService::class.java)
+                    .setAction(PushForegroundService.ACTION_PUSH_DONE))
+            } catch (e: Exception) {
+                Log.w(TAG, "Can't signal push done to foreground service", e)
+            }
+        }
+    }
+
     private fun scheduleRefreshJob() {
         Log.w(TAG, "JobScheduler: scheduling job")
         getSystemService(JobScheduler::class.java)
@@ -303,6 +366,27 @@ abstract class JamiApplication : Application() {
 
         bootstrapDaemon()
         mPreferencesService.loadDarkMode()
+
+        // Track app foreground/background state for battery optimization.
+        // When the app goes to background with no active calls (and permanent service
+        // is disabled), we schedule deactivation of all accounts after a grace period
+        // to close network connections and save battery.
+        ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
+            override fun onStart(owner: LifecycleOwner) {
+                isInForeground = true
+                cancelIdleShutdown()
+                if (daemon.isStarted) {
+                    mAccountService.setAccountsActive(true)
+                }
+            }
+            override fun onStop(owner: LifecycleOwner) {
+                isInForeground = false
+                if (mCallService.currentConferences().isEmpty()
+                    && !mPreferencesService.settings.enablePermanentService) {
+                    scheduleIdleShutdown()
+                }
+            }
+        })
         Completable.fromAction {
             val caRootFile = getString(R.string.ca_root_file)
             val dest = File(filesDir, caRootFile)
