@@ -23,6 +23,14 @@ class PushForegroundService : Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        // Early stop when push processing is done
+        if (intent?.action == ACTION_PUSH_DONE) {
+            handler.removeCallbacks(stopRunnable)
+            stopForeground(STOP_FOREGROUND_REMOVE)
+            stopSelf()
+            return START_NOT_STICKY
+        }
+
         val notification = NotificationCompat.Builder(this, NOTIF_CHANNEL_PUSH_SYNC)
             .setContentTitle(getString(R.string.notif_reconnect_title))
             .setSmallIcon(R.drawable.ic_ring_logo_white)
@@ -62,6 +70,7 @@ class PushForegroundService : Service() {
 
     companion object {
         private const val NOTIFICATION_ID = 2001
+        const val ACTION_PUSH_DONE = "cx.ring.action.PUSH_DONE"
     }
 }
 

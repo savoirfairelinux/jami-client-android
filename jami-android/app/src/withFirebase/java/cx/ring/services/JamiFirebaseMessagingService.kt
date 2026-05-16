@@ -33,6 +33,9 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        val app = JamiApplication.instance as JamiApplicationFirebase?
+        app?.onPushReceived()
+
         var wl: PowerManager.WakeLock? = null
         try {
             val pm = getSystemService(POWER_SERVICE) as PowerManager
@@ -56,13 +59,11 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
         }
 
         if (remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH && !isAppInForeground()) {
-            val app = JamiApplication.instance as JamiApplicationFirebase?
             app?.hardwareService?.connectivityChanged(true)
         }
 
         serviceScope.launch {
             try {
-                val app = JamiApplication.instance as JamiApplicationFirebase?
                 if (app != null) {
                     // Ensure daemon is fully started before dispatching push
                     app.ensureDaemonStarted()
@@ -72,6 +73,7 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
                 Log.e(TAG, "Error in processing message", e)
             } finally {
                 try { wl?.release() } catch (_: Exception) {}
+                app?.onPushProcessed()
             }
         }
     }

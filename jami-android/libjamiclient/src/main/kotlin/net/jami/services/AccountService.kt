@@ -575,15 +575,17 @@ class AccountService(
     }
 
     /**
-     * Sets the activation state of all the accounts in the Daemon
+     * Sets the activation state of all the accounts in the Daemon.
+     * @param active whether to activate or deactivate accounts
+     * @param forceAll if true, also deactivates proxy-backed accounts (for idle shutdown)
      */
-    fun setAccountsActive(active: Boolean) {
+    fun setAccountsActive(active: Boolean, forceAll: Boolean = false) {
         mExecutor.execute {
-            Log.i(TAG, "setAccountsActive() running… $active")
+            Log.i(TAG, "setAccountsActive() running… $active (forceAll=$forceAll)")
             for (a in mAccountList) {
                 // If the proxy is enabled we can considered the account
-                // as always active
-                if (a.isDhtProxyEnabled) {
+                // as always active, unless forceAll is set (idle shutdown)
+                if (a.isDhtProxyEnabled && !forceAll) {
                     JamiService.setAccountActive(a.accountId, true)
                 } else {
                     JamiService.setAccountActive(a.accountId, active)
