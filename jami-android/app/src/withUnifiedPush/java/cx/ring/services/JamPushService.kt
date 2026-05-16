@@ -16,9 +16,12 @@
  */
 package cx.ring.services
 
+import android.content.Intent
+import android.os.PowerManager
 import android.util.Log
 import cx.ring.application.JamiApplication
 import cx.ring.application.JamiApplicationUnifiedPush
+import cx.ring.service.PushForegroundService
 import org.json.JSONObject
 import org.unifiedpush.android.connector.FailedReason
 import org.unifiedpush.android.connector.PushService
@@ -40,6 +43,21 @@ class JamiPushService : PushService() {
         message: PushMessage,
         instance: String
     ) {
+        try {
+            // Acquire WakeLock to keep CPU awake during push processing
+            val pm = getSystemService(POWER_SERVICE) as PowerManager
+            val wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "jami:push-up")
+            wl.setReferenceCounted(false)
+            wl.acquire((30 * 1000).toLong())
+        } catch (e: Exception) {
+            Log.w("JamiPushReceiver", "Can't acquire wake lock", e)
+        }
+        try {
+            // Start foreground service to prevent process kill during push processing
+            startForegroundService(Intent(this, PushForegroundService::class.java))
+        } catch (e: Exception) {
+            Log.w("JamiPushReceiver", "Can't start foreground service", e)
+        }
         try {
             val msgStr = String(message.content)
             Log.w("JamiPushReceiver", "onMessage $msgStr $instance")

@@ -34,36 +34,25 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         try {
-            // Even if wakeLock is deprecated, without this part, some devices are blocking
-            // during the call negotiation. So, re-add this code to avoid to block here.
+            // Acquire a WakeLock to keep the CPU awake during push processing.
+            // 30s covers daemon bootstrap + account load + ICE negotiation start.
             val pm = getSystemService(POWER_SERVICE) as PowerManager
-            val wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "wake:push")
+            val wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "jami:push")
             wl.setReferenceCounted(false)
-            wl.acquire((10 * 1000).toLong())
+            wl.acquire((30 * 1000).toLong())
         } catch (e: Exception) {
             Log.w(TAG, "Can't acquire wake lock", e)
         }
 
-        val pushType = remoteMessage.data["pt"] ?: ""
-        val isCallNotification = (pushType.contains("audioCall")
-                || pushType.contains("videoCall"))
-                && remoteMessage.priority == RemoteMessage.PRIORITY_HIGH
-
-        if (isCallNotification) {
-            try {
-                val isForeground = isAppInForeground()
-                if (!isForeground) {
-                    Handler(Looper.getMainLooper()).post {
-                        try {
-                            val intent = Intent(this, PushForegroundService::class.java)
-                            startForegroundService(intent)
-                        } catch (e: Exception) {
-                            Log.e(TAG, "Failed to start foreground service on main thread", e)
-                        }
-                    }
+        // Start foreground service for all pushes to prevent process kill
+        if (!isAppInForeground()) {
+            Handler(Looper.getMainLooper()).post {
+                try {
+                    val intent = Intent(this, PushForegroundService::class.java)
+                    startForegroundService(intent)
+                } catch (e: Exception) {
+                    Log.e(TAG, "Failed to start foreground service", e)
                 }
-            } catch (e: Exception) {
-                Log.w(TAG, "Failed to start foreground service for push notification", e)
             }
         }
 
@@ -75,7 +64,11 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
         serviceScope.launch {
             try {
                 val app = JamiApplication.instance as JamiApplicationFirebase?
-                app?.onMessageReceived(remoteMessage)
+                if (app != null) {
+                    // Ensure daemon is fully started before dispatching push
+                    app.ensureDaemonStarted()
+                    app.onMessageReceived(remoteMessage)
+                }
             } catch (e: Exception) {
                 Log.e(TAG, "Error in processing message", e)
             }

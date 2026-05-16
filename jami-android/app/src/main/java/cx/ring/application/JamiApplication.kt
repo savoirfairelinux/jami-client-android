@@ -48,7 +48,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.daemon.JamiService
 import net.jami.services.*
 import java.io.File
+import java.util.concurrent.CountDownLatch
 import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -103,6 +105,8 @@ abstract class JamiApplication : Application() {
 
     var androidPhoneAccountHandle: PhoneAccountHandle? = null
 
+    private val daemonStartedLatch = CountDownLatch(1)
+
     open fun activityInit(activityContext: Context) {}
 
     private var mBound = false
@@ -134,6 +138,7 @@ abstract class JamiApplication : Application() {
 
     fun bootstrapDaemon() {
         if (daemon.isStarted) {
+            daemonStartedLatch.countDown()
             return
         }
         Log.d(TAG, "bootstrapDaemon")
@@ -141,6 +146,7 @@ abstract class JamiApplication : Application() {
             try {
                 Log.d(TAG, "bootstrapDaemon: START")
                 if (daemon.isStarted) {
+                    daemonStartedLatch.countDown()
                     return@execute
                 }
                 daemon.startDaemon()
@@ -169,9 +175,28 @@ abstract class JamiApplication : Application() {
                     putExtra("connected", daemon.isStarted)
                 })
                 scheduleRefreshJob()
+                daemonStartedLatch.countDown()
             } catch (e: Exception) {
                 Log.e(TAG, "DRingService start failed", e)
+                daemonStartedLatch.countDown()
             }
+        }
+    }
+
+    /**
+     * Ensures the daemon is fully started (accounts loaded, push token set).
+     * Blocks the calling thread up to 25 seconds waiting for bootstrap to complete.
+     * Safe to call from any thread except the DaemonExecutor thread.
+     * @return true if daemon is ready, false if timeout elapsed
+     */
+    fun ensureDaemonStarted(): Boolean {
+        if (daemon.isStarted && daemonStartedLatch.count == 0L) return true
+        bootstrapDaemon()
+        return try {
+            daemonStartedLatch.await(25, TimeUnit.SECONDS)
+        } catch (e: InterruptedException) {
+            Log.e(TAG, "ensureDaemonStarted: interrupted", e)
+            false
         }
     }
 

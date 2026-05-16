@@ -31,10 +31,14 @@ class JamiApplicationUnifiedPush : JamiApplication() {
         set(token) {
             Log.d(TAG, "setPushToken: $token");
             field = token
-            if (mPreferencesService.settings.enablePushNotifications) {
-                mAccountService.setPushNotificationConfig(token.first, token.second, PUSH_PLATFORM)
+            if (daemon.isStarted) {
+                if (mPreferencesService.settings.enablePushNotifications) {
+                    mAccountService.setPushNotificationConfig(token.first, token.second, PUSH_PLATFORM)
+                } else {
+                    mAccountService.setPushNotificationToken("")
+                }
             } else {
-                mAccountService.setPushNotificationToken("")
+                Log.w(TAG, "setPushToken: daemon not started, token will be applied at bootstrap")
             }
         }
 
@@ -66,7 +70,10 @@ class JamiApplicationUnifiedPush : JamiApplication() {
     }
 
     fun onMessage(remoteMessage: Map<String, String>) {
-        //Log.d(TAG, "onMessage: from:${remoteMessage.from} priority:${remoteMessage.priority} (was ${remoteMessage.originalPriority})")
+        // Ensure daemon is fully started before dispatching push to native layer
+        if (!ensureDaemonStarted()) {
+            Log.e(TAG, "onMessage: daemon failed to start within timeout, push may be lost")
+        }
         mAccountService.pushNotificationReceived("", remoteMessage)
         mNotificationService.processPush()
     }

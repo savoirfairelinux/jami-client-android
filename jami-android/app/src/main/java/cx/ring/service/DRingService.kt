@@ -202,6 +202,11 @@ class DRingService : Service() {
     }
 
     override fun onTimeout(startId: Int, fgsType: Int) {
+        // Don't stop foreground if there are active calls
+        if (mCallService.currentConferences().isNotEmpty()) {
+            Log.w(TAG, "onTimeout: active calls present, keeping foreground")
+            return
+        }
         try {
             stopForeground(STOP_FOREGROUND_REMOVE)
         } catch (e: Exception) {
