@@ -43,17 +43,19 @@ class JamiPushService : PushService() {
         message: PushMessage,
         instance: String
     ) {
+        val app = JamiApplication.instance as JamiApplicationUnifiedPush?
+        app?.onPushReceived()
+
+        var wl: PowerManager.WakeLock? = null
         try {
-            // Acquire WakeLock to keep CPU awake during push processing
             val pm = getSystemService(POWER_SERVICE) as PowerManager
-            val wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "jami:push-up")
+            wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "jami:push-up")
             wl.setReferenceCounted(false)
             wl.acquire((30 * 1000).toLong())
         } catch (e: Exception) {
             Log.w("JamiPushReceiver", "Can't acquire wake lock", e)
         }
         try {
-            // Start foreground service to prevent process kill during push processing
             startForegroundService(Intent(this, PushForegroundService::class.java))
         } catch (e: Exception) {
             Log.w("JamiPushReceiver", "Can't start foreground service", e)
@@ -64,10 +66,13 @@ class JamiPushService : PushService() {
             val obj = JSONObject(msgStr)
             val msg = HashMap<String, String>()
             obj.keys().forEach { msg[it] = obj.getString(it) }
-            val app = JamiApplication.instance as JamiApplicationUnifiedPush?
             app?.onMessage(msg)
         } catch(e: Exception) {
             Log.e("JamiPushReceiver", "onMessage", e)
+        } finally {
+            // Release WakeLock early and signal push processing complete
+            try { wl?.release() } catch (_: Exception) {}
+            app?.onPushProcessed()
         }
     }
 

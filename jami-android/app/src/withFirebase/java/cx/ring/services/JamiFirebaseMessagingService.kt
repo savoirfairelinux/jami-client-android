@@ -33,11 +33,13 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        val app = JamiApplication.instance as JamiApplicationFirebase?
+        app?.onPushReceived()
+
+        var wl: PowerManager.WakeLock? = null
         try {
-            // Acquire a WakeLock to keep the CPU awake during push processing.
-            // 30s covers daemon bootstrap + account load + ICE negotiation start.
             val pm = getSystemService(POWER_SERVICE) as PowerManager
-            val wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "jami:push")
+            wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "jami:push")
             wl.setReferenceCounted(false)
             wl.acquire((30 * 1000).toLong())
         } catch (e: Exception) {
@@ -57,13 +59,11 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
         }
 
         if (remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH && !isAppInForeground()) {
-            val app = JamiApplication.instance as JamiApplicationFirebase?
             app?.hardwareService?.connectivityChanged(true)
         }
 
         serviceScope.launch {
             try {
-                val app = JamiApplication.instance as JamiApplicationFirebase?
                 if (app != null) {
                     // Ensure daemon is fully started before dispatching push
                     app.ensureDaemonStarted()
@@ -71,6 +71,10 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Error in processing message", e)
+            } finally {
+                // Release WakeLock early and signal push processing complete
+                try { wl?.release() } catch (_: Exception) {}
+                app?.onPushProcessed()
             }
         }
     }
