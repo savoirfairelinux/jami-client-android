@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "738d623a_3cb81e21",
+        "filename": "daemon",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-16T22:48:58Z",
+      "side": 1,
+      "message": "Line 1: 🟡 Suggestion: The daemon submodule is bumped to 54ea30d. This review cannot inspect the daemon-side change that adds the third parameter to `setAccountActive`. Please ensure the daemon-side change is reviewed separately and that the new boolean parameter is well-documented (e.g., what exactly \"shutting down P2P connections\" entails — ICE candidates, TURN relays, etc.).",
+      "revId": "4f6eb8bc41c0dfe3b6374860972f8839684add73",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91931cb2_d1beb892",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-16T22:48:58Z",
+      "side": 1,
+      "message": "Line 573: 🟡 Suggestion: The `setAccountActive` public API now always passes `false` for the new third parameter, meaning callers can never request P2P shutdown through this single-account method. Consider exposing the new parameter (with a default of `false`) so that callers who need per-account P2P shutdown don\u0027t have to go through `setAccountsActive`.\n\n```suggestion\n    fun setAccountActive(accountId: String, active: Boolean, shutdownConnections: Boolean \u003d false) {\n        mExecutor.execute { JamiService.setAccountActive(accountId, active, shutdownConnections) }\n    }\n```",
+      "revId": "4f6eb8bc41c0dfe3b6374860972f8839684add73",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b80e08d_5db10471",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-16T22:48:58Z",
+      "side": 1,
+      "message": "Line 588: 🟡 Suggestion (minor): Pre-existing typo in the comment — \"considered\" should be \"consider\". Since you\u0027re already touching adjacent lines, it would be a nice clean-up.\n\n```suggestion\n                // If the proxy is enabled we can consider the account\n```",
+      "revId": "4f6eb8bc41c0dfe3b6374860972f8839684add73",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37de0306_5f29294c",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-16T22:48:58Z",
+      "side": 1,
+      "message": "[info] Line 593: 🟢 Good practice: The expression `forceAll \u0026\u0026 !active` correctly ensures P2P connections are only shut down when accounts are being deactivated during an idle/background shutdown, not when they are being reactivated. This prevents accidentally tearing down connections on the activation path.",
+      "revId": "4f6eb8bc41c0dfe3b6374860972f8839684add73",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
