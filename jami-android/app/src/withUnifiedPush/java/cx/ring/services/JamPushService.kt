@@ -43,6 +43,9 @@ class JamiPushService : PushService() {
         message: PushMessage,
         instance: String
     ) {
+        val app = JamiApplication.instance as JamiApplicationUnifiedPush?
+        app?.onPushReceived()
+
         var wl: PowerManager.WakeLock? = null
         try {
             val pm = getSystemService(POWER_SERVICE) as PowerManager
@@ -65,12 +68,12 @@ class JamiPushService : PushService() {
                 val obj = JSONObject(msgStr)
                 val msg = HashMap<String, String>()
                 obj.keys().forEach { msg[it] = obj.getString(it) }
-                val app = JamiApplication.instance as JamiApplicationUnifiedPush?
                 app?.onMessage(msg)
             } catch(e: Exception) {
                 Log.e(TAG, "onMessage", e)
             } finally {
                 try { wl?.release() } catch (_: Exception) {}
+                app?.onPushProcessed()
             }
         }.start()
     }
