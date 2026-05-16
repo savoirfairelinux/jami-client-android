@@ -577,7 +577,8 @@ class AccountService(
     /**
      * Sets the activation state of all the accounts in the Daemon.
      * @param active whether to activate or deactivate accounts
-     * @param forceAll if true, also deactivates proxy-backed accounts (for idle shutdown)
+     * @param forceAll if true, also deactivates proxy-backed accounts and shuts down
+     *                 P2P connections (for idle/background shutdown)
      */
     fun setAccountsActive(active: Boolean, forceAll: Boolean = false) {
         mExecutor.execute {
@@ -588,6 +589,8 @@ class AccountService(
                 if (a.isDhtProxyEnabled && !forceAll) {
                     JamiService.setAccountActive(a.accountId, true)
                 } else {
+                    // TODO: pass shutdownConnections=true when forceAll && !active
+                    // once daemon patch #34036 is merged (exposes 3rd param in JNI)
                     JamiService.setAccountActive(a.accountId, active)
                 }
             }
