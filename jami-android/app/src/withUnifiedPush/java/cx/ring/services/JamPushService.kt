@@ -16,8 +16,6 @@
  */
 package cx.ring.services
 
-import android.content.Intent
-import android.os.PowerManager
 import android.util.Log
 import cx.ring.application.JamiApplication
 import cx.ring.application.JamiApplicationUnifiedPush

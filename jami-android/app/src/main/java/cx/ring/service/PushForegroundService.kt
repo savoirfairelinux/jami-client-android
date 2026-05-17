@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import cx.ring.R
 import cx.ring.services.NotificationServiceImpl.Companion.NOTIF_CHANNEL_PUSH_SYNC
@@ -23,6 +24,13 @@ class PushForegroundService : Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        // Android requires that every Service started via startForegroundService()
+        // calls startForeground() within ~5 s, otherwise it throws
+        // ForegroundServiceDidNotStartInTimeException and kills the process.
+        // We therefore ALWAYS promote to foreground first, even when the very
+        // first delivered intent is ACTION_PUSH_DONE (race possible because the
+        // app-side helper may signal completion before the service's first
+        // onStartCommand runs).
         val notification = NotificationCompat.Builder(this, NOTIF_CHANNEL_PUSH_SYNC)
             .setContentTitle(getString(R.string.notif_reconnect_title))
             .setSmallIcon(R.drawable.ic_ring_logo_white)
@@ -33,20 +41,34 @@ class PushForegroundService : Service() {
             .setVibrate(null)
             .build()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            startForeground(
-                NOTIFICATION_ID,
-                notification,
-                ServiceInfo.FOREGROUND_SERVICE_TYPE_REMOTE_MESSAGING
-            )
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            startForeground(
-                NOTIFICATION_ID,
-                notification,
-                ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
-            )
-        } else {
-            startForeground(NOTIFICATION_ID, notification)
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                startForeground(
+                    NOTIFICATION_ID,
+                    notification,
+                    ServiceInfo.FOREGROUND_SERVICE_TYPE_REMOTE_MESSAGING
+                )
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                startForeground(
+                    NOTIFICATION_ID,
+                    notification,
+                    ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+                )
+            } else {
+                startForeground(NOTIFICATION_ID, notification)
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to promote push service to foreground", e)
+            stopSelf()
+            return START_NOT_STICKY
+        }
+
+        // Early stop when push processing is done
+        if (intent?.action == ACTION_PUSH_DONE) {
+            handler.removeCallbacks(stopRunnable)
+            try { stopForeground(STOP_FOREGROUND_REMOVE) } catch (_: Exception) {}
+            stopSelf()
+            return START_NOT_STICKY
         }
 
         handler.removeCallbacks(stopRunnable)
@@ -62,6 +84,7 @@ class PushForegroundService : Service() {
 
     companion object {
         private const val NOTIFICATION_ID = 2001
+        const val ACTION_PUSH_DONE = "cx.ring.action.PUSH_DONE"
     }
 }
 
