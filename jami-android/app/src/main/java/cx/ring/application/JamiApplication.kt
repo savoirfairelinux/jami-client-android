@@ -24,7 +24,9 @@ import android.content.*
 import android.media.AudioManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.os.PowerManager
 import android.system.Os
 import android.telecom.PhoneAccount
@@ -33,6 +35,9 @@ import android.telecom.TelecomManager
 import android.util.Log
 import android.view.WindowManager
 import androidx.core.content.getSystemService
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
 import com.bumptech.glide.Glide
 import cx.ring.BuildConfig
 import cx.ring.service.ConnectionService
@@ -44,15 +49,18 @@ import cx.ring.linkpreview.LinkPreview
 import cx.ring.services.CallServiceImpl.Companion.CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.views.AvatarFactory
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.daemon.JamiService
 import net.jami.services.*
 import java.io.File
 import java.util.concurrent.ScheduledExecutorService
-import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -111,27 +119,36 @@ abstract class JamiApplication : Application() {
     @Volatile private var bootstrapDone = false
     @Volatile private var bootstrapInProgress = false
 
-    // Push processing state. Centralized here (instead of in the push services)
-    // so that the WakeLock and the foreground service have a well-defined
-    // lifecycle even when the originating service is destroyed mid-coroutine.
+    var isInForeground = false
+        private set
+
+    private val idleHandler = Handler(Looper.getMainLooper())
+    private val idleShutdownDelayMs = 90_000L
+
+    private val idleShutdownRunnable = Runnable {
+        if (isInForeground || mPreferencesService.settings.enablePermanentService) return@Runnable
+        if (mCallService.currentConferences().isNotEmpty()) return@Runnable
+        if (activePushCount.get() > 0) return@Runnable
+        Log.i(TAG, "Idle shutdown: deactivating all accounts (including proxy)")
+        mAccountService.setAccountsActive(false, forceAll = true)
+    }
+
+    // Push lifecycle tracking. Push processing is asynchronous inside the daemon
+    // (decryption, proxy reconnect, message fetch, call signaling) so we must
+    // hold a WakeLock + foreground service until either a daemon event signals
+    // completion or a maximum window elapses.
     private val pushLock = Object()
-    private var pushWakeLock: PowerManager.WakeLock? = null
     private val activePushCount = AtomicInteger(0)
-    private val activityStartCount = AtomicInteger(0)
-    private val pushWakeLockTimeoutMs = 35_000L // > daemon wait (25s) + dispatch buffer
+    private var pushWakeLock: PowerManager.WakeLock? = null
+    private var pushEventDisposable: Disposable? = null
+    private val pushReleaseHandler = Handler(Looper.getMainLooper())
+    private val pushMaxWindowMs = 25_000L
+    private val pushEventBufferMs = 5_000L
 
-    /**
-     * True if at least one [Activity] is currently started (visible to the
-     * user). Used to skip starting a foreground service when the user is
-     * already interacting with the app.
-     */
-    val isInForeground: Boolean
-        get() = activityStartCount.get() > 0
-
-    // Set to true on threads owned by [mExecutor]. Used to detect (and refuse)
-    // reentrant calls to [ensureDaemonStarted] which would otherwise deadlock
-    // since bootstrap itself runs on that executor.
-    private val onDaemonExecutor = ThreadLocal.withInitial { false }
+    private val pushReleaseRunnable = Runnable {
+        Log.i(TAG, "Push: release window elapsed")
+        releasePushHold()
+    }
 
     open fun activityInit(activityContext: Context) {}
 
@@ -171,21 +188,12 @@ abstract class JamiApplication : Application() {
             return
         }
         synchronized(bootstrapLock) {
-            // Re-check inside the lock to avoid a race where another caller
-            // already finished bootstrap between the early-return above and
-            // this point.
-            if (daemon.isStarted) {
-                bootstrapDone = true
-                bootstrapLock.notifyAll()
-                return
-            }
             if (bootstrapInProgress) return
             bootstrapInProgress = true
             bootstrapDone = false
         }
         Log.d(TAG, "bootstrapDaemon")
         mExecutor.execute {
-            onDaemonExecutor.set(true)
             try {
                 Log.d(TAG, "bootstrapDaemon: START")
                 if (daemon.isStarted) {
@@ -234,11 +242,6 @@ abstract class JamiApplication : Application() {
                     bootstrapInProgress = false
                     bootstrapLock.notifyAll()
                 }
-            } finally {
-                // Executor threads are reused; clearing the flag here ensures
-                // that a later unrelated task running on the same thread is
-                // not mistaken for a bootstrap task by ensureDaemonStarted().
-                onDaemonExecutor.set(false)
             }
         }
     }
@@ -250,9 +253,6 @@ abstract class JamiApplication : Application() {
      * @return true if daemon is ready, false if timeout or start failure
      */
     fun ensureDaemonStarted(): Boolean {
-        check(!onDaemonExecutor.get()) {
-            "ensureDaemonStarted must not be called from the DaemonExecutor thread"
-        }
         if (daemon.isStarted) return true
         bootstrapDaemon()
         synchronized(bootstrapLock) {
@@ -262,7 +262,7 @@ abstract class JamiApplication : Application() {
                 if (remaining <= 0) return false
                 try {
                     @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
-                    (bootstrapLock as java.lang.Object).wait(maxOf(1, remaining / 1_000_000), (remaining % 1_000_000).toInt())
+                    (bootstrapLock as java.lang.Object).wait(remaining / 1_000_000)
                 } catch (e: InterruptedException) {
                     Log.e(TAG, "ensureDaemonStarted: interrupted", e)
                     return false
@@ -273,43 +273,60 @@ abstract class JamiApplication : Application() {
     }
 
     /**
+     * Schedules account deactivation after [IDLE_SHUTDOWN_DELAY_MS] if the app stays in background
+     * with no active calls. Skipped when permanent service is enabled.
+     */
+    fun scheduleIdleShutdown() {
+        if (mPreferencesService.settings.enablePermanentService) return
+        idleHandler.removeCallbacks(idleShutdownRunnable)
+        idleHandler.postDelayed(idleShutdownRunnable, idleShutdownDelayMs)
+    }
+
+    fun cancelIdleShutdown() {
+        idleHandler.removeCallbacks(idleShutdownRunnable)
+    }
+
+    /**
      * Called by push handlers as soon as a push payload arrives.
      *
-     * Acquires a single app-level [PowerManager.WakeLock] (with a generous
-     * 35 s timeout so it strictly outlives the 25 s daemon bootstrap wait
-     * plus the dispatch) and optionally starts [PushForegroundService] so
-     * Android does not kill the process before the daemon has had a chance
-     * to handle the message.
+     * Performs all the work needed for the daemon to be able to process the push:
+     *  - cancels any pending idle shutdown
+     *  - acquires an app-level WakeLock (covers the full processing window,
+     *    independent of the push service lifetime)
+     *  - starts [PushForegroundService] so Android does not kill the process
+     *  - **synchronously** reactivates accounts (otherwise the daemon would drop
+     *    the push because [setAccountActive] is queued on the daemon executor)
+     *  - subscribes to daemon "interesting events" (incoming call, message,
+     *    swarm message, trust request) so we can release resources shortly
+     *    after the push has actually been consumed, falling back to a
+     *    [pushMaxWindowMs] timeout
      *
-     * The foreground service is only started for high-priority pushes
-     * (incoming calls, direct/swarm messages, contact requests) and only
-     * when the app is not already in foreground. Low-priority pushes
-     * (keep-alive, presence sync) avoid the foreground-service cost so we
-     * don't drain the battery on every push (addresses review comment from
-     * Pavan).
-     *
-     * The matching call to [onPushProcessed] is made by the push handler
-     * once the synchronous dispatch returned.
-     *
-     * @param isHighPriority true if the push must be treated as time-critical
-     *   (e.g. FCM `priority=high`). When unknown (UnifiedPush has no
-     *   priority field in its API), pass `true` since the Jami push proxy
-     *   only sends critical events over UnifiedPush.
+     * @param isHighPriority when false (e.g. FCM PRIORITY_NORMAL data push and
+     *  the app is already in background), skip starting the foreground service
+     *  to avoid the battery / Doze impact flagged in code review. The WakeLock
+     *  and synchronous account reactivation still run unconditionally so the
+     *  daemon can complete decryption.
      */
-    fun onPushReceived(isHighPriority: Boolean) {
+    @JvmOverloads
+    fun onPushReceived(isHighPriority: Boolean = true) {
+        cancelIdleShutdown()
         activePushCount.incrementAndGet()
 
         synchronized(pushLock) {
             try {
-                if (pushWakeLock == null) {
-                    val pm = getSystemService(POWER_SERVICE) as PowerManager
-                    pushWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "jami:push").apply {
-                        setReferenceCounted(false)
-                    }
+                // If a previous push is still in flight, refresh the WakeLock
+                // so it doesn't time out before the new push has been handled.
+                val existing = pushWakeLock
+                if (existing != null) {
+                    try { if (existing.isHeld) existing.release() } catch (_: Exception) {}
                 }
-                pushWakeLock?.acquire(pushWakeLockTimeoutMs)
+                val pm = getSystemService(POWER_SERVICE) as PowerManager
+                pushWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "jami:push-app").apply {
+                    setReferenceCounted(false)
+                    acquire(pushMaxWindowMs + 10_000L)
+                }
             } catch (e: Exception) {
-                Log.w(TAG, "Can't acquire push wake lock", e)
+                Log.w(TAG, "Can't acquire app-level push wakelock", e)
             }
         }
 
@@ -317,7 +334,46 @@ abstract class JamiApplication : Application() {
             try {
                 startForegroundService(Intent(this, PushForegroundService::class.java))
             } catch (e: Exception) {
-                Log.w(TAG, "Can't start push foreground service", e)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+                    && e is android.app.ForegroundServiceStartNotAllowedException) {
+                    Log.w(TAG, "Push FGS start not allowed (background restrictions)", e)
+                } else {
+                    Log.w(TAG, "Can't start push foreground service", e)
+                }
+            }
+        }
+
+        // Reactivate accounts BEFORE the native push dispatch happens. This must
+        // be synchronous: the dispatch runs on a different thread and would
+        // otherwise race with the daemon executor and the daemon would silently
+        // drop the push because all accounts are still inactive.
+        if (daemon.isStarted) {
+            mAccountService.setAccountsActive(true, forceAll = false, awaitCompletion = true)
+        }
+
+        // (Re)arm the max-window timer.
+        pushReleaseHandler.removeCallbacks(pushReleaseRunnable)
+        pushReleaseHandler.postDelayed(pushReleaseRunnable, pushMaxWindowMs)
+
+        // Subscribe to interesting daemon signals only once per release cycle.
+        synchronized(pushLock) {
+            if (pushEventDisposable == null || pushEventDisposable?.isDisposed == true) {
+                try {
+                    pushEventDisposable = Observable.merge(listOf(
+                        mAccountService.incomingMessages.cast(Any::class.java),
+                        mAccountService.incomingSwarmMessages.cast(Any::class.java),
+                        mAccountService.incomingRequests.cast(Any::class.java),
+                        mCallService.callsUpdates.cast(Any::class.java)
+                    ))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            Log.i(TAG, "Push: daemon event observed, will release in ${pushEventBufferMs}ms")
+                            pushReleaseHandler.removeCallbacks(pushReleaseRunnable)
+                            pushReleaseHandler.postDelayed(pushReleaseRunnable, pushEventBufferMs)
+                        }, { e -> Log.e(TAG, "Push event subscription error", e) })
+                } catch (e: Exception) {
+                    Log.e(TAG, "Can't subscribe to push events", e)
+                }
             }
         }
     }
@@ -325,15 +381,46 @@ abstract class JamiApplication : Application() {
     /**
      * Called by push handlers after the synchronous dispatch returned.
      *
-     * The native `JamiService.pushNotificationReceived` only **schedules**
-     * decryption/fetch inside the daemon, so we must NOT release the
-     * WakeLock here — it would defeat the whole point of holding one. The
-     * WakeLock is released by its own [pushWakeLockTimeoutMs] timeout, which
-     * gives the daemon enough time to fetch the message. The
-     * [PushForegroundService] auto-stops after its own timeout.
+     * The native [JamiService.pushNotificationReceived] only **schedules**
+     * decryption/fetch inside the daemon, so we must NOT tear anything down
+     * here. Resources are released by [releasePushHold], driven by either a
+     * daemon event or [pushMaxWindowMs].
      */
     fun onPushProcessed() {
         activePushCount.decrementAndGet()
+    }
+
+    private fun releasePushHold() {
+        // If a new push came in while we were waiting, keep the subscription
+        // and the WakeLock alive — disposing them here would lose events for
+        // the still-in-flight push (VE PS9 comment #4).
+        if (activePushCount.get() > 0) {
+            Log.d(TAG, "Push: still ${activePushCount.get()} in flight, deferring release")
+            pushReleaseHandler.postDelayed(pushReleaseRunnable, pushMaxWindowMs)
+            return
+        }
+
+        synchronized(pushLock) {
+            pushEventDisposable?.dispose()
+            pushEventDisposable = null
+            try { pushWakeLock?.release() } catch (_: Exception) {}
+            pushWakeLock = null
+        }
+
+        if (!isInForeground) {
+            scheduleIdleShutdown()
+        }
+        try {
+            startForegroundService(Intent(this, PushForegroundService::class.java)
+                .setAction(PushForegroundService.ACTION_PUSH_DONE))
+        } catch (e: Exception) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+                && e is android.app.ForegroundServiceStartNotAllowedException) {
+                Log.w(TAG, "Push FGS stop signal not allowed (background restrictions)", e)
+            } else {
+                Log.w(TAG, "Can't signal push done to foreground service", e)
+            }
+        }
     }
 
     private fun scheduleRefreshJob() {
@@ -409,6 +496,27 @@ abstract class JamiApplication : Application() {
 
         bootstrapDaemon()
         mPreferencesService.loadDarkMode()
+
+        // Track app foreground/background state for battery optimization.
+        // When the app goes to background with no active calls (and permanent service
+        // is disabled), we schedule deactivation of all accounts after a grace period
+        // to close network connections and save battery.
+        ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
+            override fun onStart(owner: LifecycleOwner) {
+                isInForeground = true
+                cancelIdleShutdown()
+                if (daemon.isStarted) {
+                    mAccountService.setAccountsActive(true)
+                }
+            }
+            override fun onStop(owner: LifecycleOwner) {
+                isInForeground = false
+                if (mCallService.currentConferences().isEmpty()
+                    && !mPreferencesService.settings.enablePermanentService) {
+                    scheduleIdleShutdown()
+                }
+            }
+        })
         Completable.fromAction {
             val caRootFile = getString(R.string.ca_root_file)
             val dest = File(filesDir, caRootFile)
@@ -471,14 +579,10 @@ abstract class JamiApplication : Application() {
                 }
             }
 
-            override fun onActivityStarted(activity: Activity) {
-                activityStartCount.incrementAndGet()
-            }
+            override fun onActivityStarted(activity: Activity) {}
             override fun onActivityResumed(activity: Activity) {}
             override fun onActivityPaused(activity: Activity) {}
-            override fun onActivityStopped(activity: Activity) {
-                activityStartCount.decrementAndGet()
-            }
+            override fun onActivityStopped(activity: Activity) {}
             override fun onActivitySaveInstanceState(activity: Activity, bundle: Bundle) {}
             override fun onActivityDestroyed(activity: Activity) {}
         })

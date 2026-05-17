@@ -22,7 +22,6 @@ import cx.ring.application.JamiApplicationUnifiedPush
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import org.unifiedpush.android.connector.FailedReason
@@ -32,11 +31,6 @@ import org.unifiedpush.android.connector.data.PushMessage
 
 class JamiPushService : PushService() {
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-
-    override fun onDestroy() {
-        super.onDestroy()
-        serviceScope.cancel()
-    }
 
     override fun onNewEndpoint(
         endpoint: PushEndpoint,
@@ -53,21 +47,23 @@ class JamiPushService : PushService() {
         instance: String
     ) {
         val app = JamiApplication.instance as JamiApplicationUnifiedPush?
-        // Centralised push lifecycle. UnifiedPush has no priority field in
-        // its API; the Jami push proxy only sends critical events over
-        // UnifiedPush so we always treat them as high priority.
+        // UnifiedPush has no priority field — treat every push as high priority.
         app?.onPushReceived(isHighPriority = true)
 
-        // Process in coroutine scope for structured concurrency and cancellation support
         serviceScope.launch {
             try {
+                if (app == null) return@launch
+                if (!app.ensureDaemonStarted()) {
+                    Log.w(TAG, "Daemon not started, dropping push")
+                    return@launch
+                }
                 val msgStr = String(message.content)
-                Log.d(TAG, "onMessage instance=$instance")
+                Log.w(TAG, "onMessage $msgStr $instance")
                 val obj = JSONObject(msgStr)
                 val msg = HashMap<String, String>()
                 obj.keys().forEach { msg[it] = obj.getString(it) }
-                app?.onMessage(msg)
-            } catch(e: Exception) {
+                app.onMessage(msg)
+            } catch (e: Exception) {
                 Log.e(TAG, "onMessage", e)
             } finally {
                 // Do NOT release WakeLock or stop foreground service here:
