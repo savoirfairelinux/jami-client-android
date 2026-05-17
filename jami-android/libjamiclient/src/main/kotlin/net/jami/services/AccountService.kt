@@ -577,19 +577,40 @@ class AccountService(
     /**
      * Sets the activation state of all the accounts in the Daemon.
      * @param active whether to activate or deactivate accounts
-     * @param forceAll if true, also deactivates proxy-backed accounts (for idle shutdown)
+     * @param forceAll if true, also deactivates proxy-backed accounts and shuts down
+     *                 P2P connections (for idle/background shutdown)
+     * @param awaitCompletion if true, blocks the caller until the daemon executor
+     *                 has applied the change. Must not be called from the daemon
+     *                 executor thread itself.
      */
-    fun setAccountsActive(active: Boolean, forceAll: Boolean = false) {
+    fun setAccountsActive(active: Boolean, forceAll: Boolean = false, awaitCompletion: Boolean = false) {
+        val latch = if (awaitCompletion) java.util.concurrent.CountDownLatch(1) else null
         mExecutor.execute {
-            Log.i(TAG, "setAccountsActive() running… $active (forceAll=$forceAll)")
-            for (a in mAccountList) {
-                // If the proxy is enabled we can considered the account
-                // as always active, unless forceAll is set (idle shutdown)
-                if (a.isDhtProxyEnabled && !forceAll) {
-                    JamiService.setAccountActive(a.accountId, true)
-                } else {
-                    JamiService.setAccountActive(a.accountId, active)
+            try {
+                Log.i(TAG, "setAccountsActive() running… $active (forceAll=$forceAll)")
+                for (a in mAccountList) {
+                    // If the proxy is enabled we can considered the account
+                    // as always active, unless forceAll is set (idle shutdown)
+                    if (a.isDhtProxyEnabled && !forceAll) {
+                        JamiService.setAccountActive(a.accountId, true)
+                    } else {
+                        // TODO: pass shutdownConnections=true when forceAll && !active
+                        // once daemon patch #34036 is merged (exposes 3rd param in JNI)
+                        JamiService.setAccountActive(a.accountId, active)
+                    }
                 }
+            } finally {
+                latch?.countDown()
+            }
+        }
+        if (latch != null) {
+            try {
+                if (!latch.await(5, java.util.concurrent.TimeUnit.SECONDS)) {
+                    Log.w(TAG, "setAccountsActive: timed out waiting for daemon executor")
+                }
+            } catch (e: InterruptedException) {
+                Log.w(TAG, "setAccountsActive: interrupted", e)
+                Thread.currentThread().interrupt()
             }
         }
     }

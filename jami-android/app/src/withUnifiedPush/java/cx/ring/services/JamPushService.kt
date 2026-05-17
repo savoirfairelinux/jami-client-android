@@ -16,12 +16,9 @@
  */
 package cx.ring.services
 
-import android.content.Intent
-import android.os.PowerManager
 import android.util.Log
 import cx.ring.application.JamiApplication
 import cx.ring.application.JamiApplicationUnifiedPush
-import cx.ring.service.PushForegroundService
 import org.json.JSONObject
 import org.unifiedpush.android.connector.FailedReason
 import org.unifiedpush.android.connector.PushService
@@ -44,22 +41,10 @@ class JamiPushService : PushService() {
         instance: String
     ) {
         val app = JamiApplication.instance as JamiApplicationUnifiedPush?
+        // onPushReceived() handles WakeLock acquisition, foreground service
+        // start, synchronous account reactivation and event-driven release.
         app?.onPushReceived()
 
-        var wl: PowerManager.WakeLock? = null
-        try {
-            val pm = getSystemService(POWER_SERVICE) as PowerManager
-            wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "jami:push-up")
-            wl.setReferenceCounted(false)
-            wl.acquire((30 * 1000).toLong())
-        } catch (e: Exception) {
-            Log.w(TAG, "Can't acquire wake lock", e)
-        }
-        try {
-            startForegroundService(Intent(this, PushForegroundService::class.java))
-        } catch (e: Exception) {
-            Log.w(TAG, "Can't start foreground service", e)
-        }
         // Process on background thread to avoid ANR (ensureDaemonStarted blocks)
         Thread {
             try {
@@ -72,7 +57,8 @@ class JamiPushService : PushService() {
             } catch(e: Exception) {
                 Log.e(TAG, "onMessage", e)
             } finally {
-                try { wl?.release() } catch (_: Exception) {}
+                // Do NOT release WakeLock or stop foreground service here:
+                // the native dispatch only schedules work inside the daemon.
                 app?.onPushProcessed()
             }
         }.start()
