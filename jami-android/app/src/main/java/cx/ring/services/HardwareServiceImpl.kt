@@ -751,6 +751,18 @@ class HardwareServiceImpl(
         return cameraService.switchInput(setDefaultCamera)
     }
 
+    /** Zoom range [min,max] for the camera currently used as preview source. */
+    fun getCurrentCameraZoomRange(): Pair<Float, Float>? {
+        val camId = mPreviewCamId ?: return null
+        return cameraService.getZoomRange(camId)
+    }
+
+    /** Apply a zoom ratio to the current preview camera. @return the clamped ratio actually applied. */
+    fun setCurrentCameraZoom(ratio: Float): Float {
+        val camId = mPreviewCamId ?: return 1f
+        return cameraService.setZoomRatio(camId, ratio)
+    }
+
     override fun setPendingScreenShareProjection(screenCaptureSession: Any?) {
         pendingScreenSharingSession = screenCaptureSession as MediaProjection?
     }
