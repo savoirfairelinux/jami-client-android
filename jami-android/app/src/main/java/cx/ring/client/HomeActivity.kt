@@ -17,14 +17,23 @@
 package cx.ring.client
 
 import androidx.core.content.IntentSanitizer
+import android.Manifest
 import android.app.SearchManager
 import android.content.ComponentName
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.net.Uri as AndroidUri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.View
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -131,6 +140,8 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             }
         }
 
+    private var notifPermissionPromptShown = false
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -218,6 +229,75 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         }
         onBackPressedDispatcher.addCallback(this, conversationBackPressedCallback)
         handleIntent(intent)
+        checkPostNotificationsPermission()
+    }
+
+    private fun checkPostNotificationsPermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
+        if (notifPermissionPromptShown) return
+        val granted = ContextCompat.checkSelfPermission(
+            this, Manifest.permission.POST_NOTIFICATIONS
+        ) == PackageManager.PERMISSION_GRANTED
+        if (granted) return
+
+        val prefs: SharedPreferences = getSharedPreferences(PREFS_NOTIF_PERM, Context.MODE_PRIVATE)
+        val askedOnce = prefs.getBoolean(PREF_NOTIF_PERM_ASKED, false)
+        val showRationale = ActivityCompat.shouldShowRequestPermissionRationale(
+            this, Manifest.permission.POST_NOTIFICATIONS
+        )
+
+        when {
+            !askedOnce && !showRationale -> {
+                notifPermissionPromptShown = true
+                prefs.edit().putBoolean(PREF_NOTIF_PERM_ASKED, true).apply()
+                ActivityCompat.requestPermissions(
+                    this, arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    REQUEST_PERMISSION_POST_NOTIFICATIONS
+                )
+            }
+            showRationale -> {
+                notifPermissionPromptShown = true
+                MaterialAlertDialogBuilder(this)
+                    .setTitle(R.string.permission_dialog_post_notifications_title)
+                    .setMessage(R.string.permission_dialog_post_notifications_message)
+                    .setNegativeButton(R.string.permission_dialog_later, null)
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
+                        prefs.edit().putBoolean(PREF_NOTIF_PERM_ASKED, true).apply()
+                        ActivityCompat.requestPermissions(
+                            this, arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                            REQUEST_PERMISSION_POST_NOTIFICATIONS
+                        )
+                    }
+                    .show()
+            }
+            else -> {
+                notifPermissionPromptShown = true
+                MaterialAlertDialogBuilder(this)
+                    .setTitle(R.string.permission_dialog_post_notifications_title)
+                    .setMessage(R.string.permission_dialog_post_notifications_blocked_message)
+                    .setNegativeButton(R.string.permission_dialog_later, null)
+                    .setPositiveButton(R.string.permission_dialog_open_settings) { _, _ ->
+                        try {
+                            startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                                .setData(AndroidUri.fromParts("package", packageName, null))
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                        } catch (e: Exception) {
+                            Log.w(TAG, "Cannot open app settings", e)
+                        }
+                    }
+                    .show()
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_PERMISSION_POST_NOTIFICATIONS) {
+            Log.d(TAG, "POST_NOTIFICATIONS result: " +
+                (grantResults.firstOrNull() == PackageManager.PERMISSION_GRANTED))
+        }
     }
 
     override fun onDestroy() {
@@ -615,6 +695,9 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         const val REQUEST_CODE_CONVERSATION = 4
         const val REQUEST_PERMISSION_CAMERA = 113
         const val REQUEST_PERMISSION_READ_STORAGE = 114
+        const val REQUEST_PERMISSION_POST_NOTIFICATIONS = 115
+        private const val PREFS_NOTIF_PERM = "notif_permission"
+        private const val PREF_NOTIF_PERM_ASKED = "asked_once"
         private const val CONVERSATIONS_CATEGORY = "conversations"
         val shareIntentSanitizer = IntentSanitizer.Builder()
             .allowAction(Intent.ACTION_SEND)
