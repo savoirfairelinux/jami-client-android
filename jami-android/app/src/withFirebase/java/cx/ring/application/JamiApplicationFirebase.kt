@@ -33,10 +33,14 @@ class JamiApplicationFirebase : JamiApplication() {
         set(token) {
             //Log.d(TAG, "setPushToken: $token");
             field = token
-            if (token != null && mPreferencesService.settings.enablePushNotifications) {
-                mAccountService.setPushNotificationConfig(token.first, token.second, PUSH_PLATFORM)
+            if (daemon.isStarted) {
+                if (token != null && mPreferencesService.settings.enablePushNotifications) {
+                    mAccountService.setPushNotificationConfig(token.first, token.second, PUSH_PLATFORM)
+                } else {
+                    mAccountService.setPushNotificationToken("")
+                }
             } else {
-                mAccountService.setPushNotificationToken("")
+                Log.w(TAG, "setPushToken: daemon not started, token will be applied at bootstrap")
             }
         }
 

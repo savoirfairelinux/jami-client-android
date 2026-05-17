@@ -202,10 +202,13 @@ class DRingService : Service() {
     }
 
     override fun onTimeout(startId: Int, fgsType: Int) {
+        if (mCallService.currentConferences().isNotEmpty()) {
+            Log.w(TAG, "onTimeout: active calls present, transitioning out of foreground")
+        }
         try {
             stopForeground(STOP_FOREGROUND_REMOVE)
         } catch (e: Exception) {
-            Log.e(TAG, "Can't start or stop foreground service: ${e.message}")
+            Log.e(TAG, "Can't stop foreground service: ${e.message}")
         }
     }
 
