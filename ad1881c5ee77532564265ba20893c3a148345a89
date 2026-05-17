@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "929733ee_2f04d0a0",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-17T23:32:11Z",
+      "side": 1,
+      "message": "[warning] Line 136: 🟡 `currentCameraZoom` is reset in `cameraFlip()` but not when the call ends, the camera session is torn down, or the Fragment is destroyed. If the Fragment is reused (e.g. orientation change), the stale zoom value could be applied to a new camera session. Consider resetting it in `onDestroyView()` or whenever the camera session is re-created.",
+      "revId": "ad1881c5ee77532564265ba20893c3a148345a89",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c78854d4_fcf4677a",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-17T23:32:11Z",
+      "side": 1,
+      "message": "[critical] Line 140: 🔴 Downcasting to `HardwareServiceImpl` breaks abstraction and couples the Fragment to a concrete implementation. If the injected `HardwareService` is ever a mock or a different impl (e.g. in tests), this silently does nothing. Instead, add `getCurrentCameraZoomRange()` and `setCurrentCameraZoom()` to the `HardwareService` interface (or to the Presenter layer) so the Fragment never needs to know about `HardwareServiceImpl`.\n\nThis same downcast appears in the double-tap detector (line 151) and the preview touch listener (line 651/652). All three should be fixed.",
+      "revId": "ad1881c5ee77532564265ba20893c3a148345a89",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f51c8cd_4ffca1a3",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-17T23:32:11Z",
+      "side": 1,
+      "message": "[warning] Line 673: 🟡 `applyZoom` early-returns when `ratio \u003c\u003d 1f`, which means if the user was previously zoomed and then double-taps to reset to 1.0, the zoom reset won\u0027t be applied via `CONTROL_ZOOM_RATIO` or `SCALER_CROP_REGION`. On pre-R devices, an old crop region could persist. Remove or change the guard to `if (ratio \u003d\u003d 1f \u0026\u0026 /* no previous zoom */)` or always apply the zoom setting.\n\n```suggestion\n        if (ratio \u003c\u003d 1f) {\n            // Still need to explicitly reset crop/zoom if it was previously set.\n            if (Build.VERSION.SDK_INT \u003e\u003d Build.VERSION_CODES.R) {\n                builder.set(CaptureRequest.CONTROL_ZOOM_RATIO, 1f)\n            }\n            return\n        }\n```",
+      "revId": "ad1881c5ee77532564265ba20893c3a148345a89",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39f44d83_453c039b",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-17T23:32:11Z",
+      "side": 1,
+      "message": "[info] Line 677: 🟢 Good backward-compatibility handling: using `CONTROL_ZOOM_RATIO` on API 30+ and falling back to `SCALER_CROP_REGION` on older APIs. Error handling with try-catch and logging is appropriate for camera operations.",
+      "revId": "ad1881c5ee77532564265ba20893c3a148345a89",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e2c0558_5ac6fc95",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-17T23:32:11Z",
+      "side": 1,
+      "message": "[critical] Line 731: 🔴 `manager!!` will throw an NPE if `manager` has been nulled (e.g. after cleanup). Earlier in the same method (line 700), `manager` is accessed safely with `?: return`. Use the same safe pattern here:\n\n```suggestion\n                    val cc \u003d (manager ?: return@post).getCameraCharacteristics(params.id)\n```\n\nAlternatively, capture `manager` in a local val before the `handler.post` block.",
+      "revId": "ad1881c5ee77532564265ba20893c3a148345a89",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43279f45_95301a4a",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/ParticipantsContainerView.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-17T23:32:11Z",
+      "side": 1,
+      "message": "[warning] Line 133: 🟡 `setPinchToZoomEnabled(true)` is called unconditionally on every layout pass for every participant, but there is no corresponding `false` path or cleanup. This means:\n1. Each call creates a new `VideoDisplayZoomHelper` and re-attaches a touch listener if the zoom helper was previously null (first call is fine, but the intent is unclear).\n2. More importantly, zoom is enabled for *all* remote participant views including small grid tiles where pinch-to-zoom is likely unwanted and may interfere with other touch gestures (e.g. tap-to-focus a participant).\n\nConsider enabling it only for the active/focused participant: `setPinchToZoomEnabled(i.active \u0026\u0026 !pipMode)`.",
+      "revId": "ad1881c5ee77532564265ba20893c3a148345a89",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5404b044_7942726d",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/VideoDisplayZoomHelper.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-17T23:32:11Z",
+      "side": 1,
+      "message": "[info] Line 64: 🟢 Good use of `onScroll` gating on `scale \u003c\u003d minScale` to prevent panning when not zoomed in. The focus-point-aware scaling math in `onScale` is correct and provides a natural zoom experience.",
+      "revId": "ad1881c5ee77532564265ba20893c3a148345a89",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4aaff985_ee895524",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/VideoDisplayZoomHelper.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-17T23:32:11Z",
+      "side": 1,
+      "message": "[warning] Line 98: 🟡 The `attach()` method sets an `OnTouchListener` that always returns `true`, which swallows all touch events and prevents accessibility services (TalkBack) from interacting with the view. Also, the `v` parameter in the lambda is unused. Consider calling `v.performClick()` on ACTION_UP for accessibility compliance, or at least on single-tap.",
+      "revId": "ad1881c5ee77532564265ba20893c3a148345a89",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e7e90b1_0a808b47",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/VideoDisplayZoomHelper.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-17T23:32:11Z",
+      "side": 1,
+      "message": "[warning] Line 125: 🟡 `apply()` is called from gesture callbacks on the UI thread, creating a new `Matrix` object on every frame of a pinch or scroll gesture. Consider reusing a pre-allocated `combined` matrix field to reduce GC pressure during animations:\n\n```suggestion\n    private val combined \u003d Matrix()\n\n    private fun apply() {\n        val cx \u003d view.width / 2f\n        val cy \u003d view.height / 2f\n        combined.set(baseMatrix)\n        combined.postScale(scale, scale, cx, cy)\n        combined.postTranslate(translateX, translateY)\n        view.setTransform(combined)\n    }\n```",
+      "revId": "ad1881c5ee77532564265ba20893c3a148345a89",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f4ec3f9_2843b5a7",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/VideoSinkView.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-17T23:32:11Z",
+      "side": 1,
+      "message": "[warning] Line 26: 🟡 `import android.view.MotionEvent` is added but never used in this file. Remove the unused import.",
+      "revId": "ad1881c5ee77532564265ba20893c3a148345a89",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
