@@ -325,6 +325,13 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <!-- Write call log permission -->
     <string name="permission_dialog_write_call_log_message">Jami requires the “Write call log” permission. Enable it in device settings in order to use this feature.</string>
 
+    <!-- Post notifications permission -->
+    <string name="permission_dialog_post_notifications_title">Allow notifications</string>
+    <string name="permission_dialog_post_notifications_message">Jami needs the notifications permission to alert you of incoming calls and messages, even when the app is in the background. Without it, you may miss calls.</string>
+    <string name="permission_dialog_post_notifications_blocked_message">Notifications are disabled for Jami. Without them you will miss incoming calls and messages. Please enable notifications for Jami in the device settings.</string>
+    <string name="permission_dialog_open_settings">Open settings</string>
+    <string name="permission_dialog_later">Later</string>
+
     <!-- QRCode Scan -->
     <string name="scan_qr_account_message">Scan the QR Code of the account you want to add.</string>
     <string name="title_activity_qrcode">Share my account</string>
