@@ -16,9 +16,16 @@
  */
 package cx.ring.services
 
+import android.content.Intent
+import android.os.PowerManager
 import android.util.Log
 import cx.ring.application.JamiApplication
 import cx.ring.application.JamiApplicationUnifiedPush
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import org.unifiedpush.android.connector.FailedReason
 import org.unifiedpush.android.connector.PushService
@@ -26,11 +33,18 @@ import org.unifiedpush.android.connector.data.PushEndpoint
 import org.unifiedpush.android.connector.data.PushMessage
 
 class JamiPushService : PushService() {
+    private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+
+    override fun onDestroy() {
+        super.onDestroy()
+        serviceScope.cancel()
+    }
+
     override fun onNewEndpoint(
         endpoint: PushEndpoint,
         instance: String
     ) {
-        Log.w("JamiPushReceiver", "onNewEndpoint $endpoint $instance")
+        Log.w(TAG, "onNewEndpoint $endpoint $instance")
         val app = JamiApplication.instance as JamiApplicationUnifiedPush?
         val topicKey = endpoint.pubKeySet?.let { "${it.pubKey}|${it.auth}" } ?: ""
         app?.pushToken = Pair(endpoint.url, topicKey)
@@ -40,16 +54,27 @@ class JamiPushService : PushService() {
         message: PushMessage,
         instance: String
     ) {
-        try {
-            val msgStr = String(message.content)
-            Log.w("JamiPushReceiver", "onMessage $msgStr $instance")
-            val obj = JSONObject(msgStr)
-            val msg = HashMap<String, String>()
-            obj.keys().forEach { msg[it] = obj.getString(it) }
-            val app = JamiApplication.instance as JamiApplicationUnifiedPush?
-            app?.onMessage(msg)
-        } catch(e: Exception) {
-            Log.e("JamiPushReceiver", "onMessage", e)
+        val app = JamiApplication.instance as JamiApplicationUnifiedPush?
+        // onPushReceived() handles WakeLock acquisition, foreground service
+        // start, synchronous account reactivation and event-driven release.
+        app?.onPushReceived()
+
+        // Process in coroutine scope for structured concurrency and cancellation support
+        serviceScope.launch {
+            try {
+                val msgStr = String(message.content)
+                Log.d(TAG, "onMessage instance=$instance")
+                val obj = JSONObject(msgStr)
+                val msg = HashMap<String, String>()
+                obj.keys().forEach { msg[it] = obj.getString(it) }
+                app?.onMessage(msg)
+            } catch(e: Exception) {
+                Log.e(TAG, "onMessage", e)
+            } finally {
+                // Do NOT release WakeLock or stop foreground service here:
+                // the native dispatch only schedules work inside the daemon.
+                app?.onPushProcessed()
+            }
         }
     }
 
@@ -57,11 +82,14 @@ class JamiPushService : PushService() {
         reason: FailedReason,
         instance: String
     ) {
-        Log.w("JamiPushReceiver", "onRegistrationFailed $instance")
+        Log.w(TAG, "onRegistrationFailed $instance")
     }
 
     override fun onUnregistered(instance: String) {
-        Log.w("JamiPushReceiver", "onUnregistered $instance")
+        Log.w(TAG, "onUnregistered $instance")
     }
 
+    companion object {
+        private val TAG = JamiPushService::class.simpleName
+    }
 }
