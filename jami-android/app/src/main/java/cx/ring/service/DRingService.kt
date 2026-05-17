@@ -235,11 +235,29 @@ class DRingService : Service() {
         updateConnectivityState(mPreferencesService.hasNetworkConnected())
     }
 
-    private fun updateConnectivityState(isConnected: Boolean) {
+    // Debounce + deduplicate connectivity events. On modern Android the
+    // NetworkCallback fires onAvailable for every network (Wi-Fi, cellular,
+    // VPN, ethernet) and the legacy CONNECTIVITY_ACTION broadcast piles
+    // additional notifications on top. Each native connectivityChanged()
+    // tears down sockets in the daemon and triggers a full reconnect, so
+    // we must coalesce bursts and skip no-op transitions.
+    @Volatile private var lastConnectivityState: Boolean? = null
+    private val connectivityDebounceMs = 500L
+    private val connectivityDebounceRunnable = Runnable {
+        val isConnected = mPreferencesService.hasNetworkConnected()
+        if (lastConnectivityState == isConnected) {
+            return@Runnable
+        }
+        lastConnectivityState = isConnected
         if (mDaemonService.isStarted) {
             mAccountService.setAccountsActive(isConnected)
             mHardwareService.connectivityChanged(isConnected)
         }
+    }
+
+    private fun updateConnectivityState(isConnected: Boolean) {
+        mHandler.removeCallbacks(connectivityDebounceRunnable)
+        mHandler.postDelayed(connectivityDebounceRunnable, connectivityDebounceMs)
     }
 
     private fun parseIntent(intent: Intent) {
