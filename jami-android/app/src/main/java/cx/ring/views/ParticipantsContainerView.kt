@@ -130,6 +130,7 @@ class ParticipantsContainerView// adding name, mic etc..
             val isPipFocus = pipFocusParticipant?.tag == i.tag
             participantInfoOverlay.root.isVisible = !pipMode || isPipFocus
             participantInfoOverlay.sink.setFitToContent(i.active && !pipMode)
+            participantInfoOverlay.sink.setPinchToZoomEnabled(i.active && !pipMode)
             participantInfoOverlay.root.radius = if(pipMode) 0f else cornerRadius
 
             participantInfoOverlay.sink.videoListener = { hasVideo ->

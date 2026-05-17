@@ -18,6 +18,7 @@ package cx.ring.services
 
 import android.content.Context
 import android.graphics.ImageFormat
+import android.graphics.Rect
 import android.hardware.camera2.*
 import android.hardware.camera2.CameraCaptureSession.CaptureCallback
 import android.hardware.camera2.CameraManager.AvailabilityCallback
@@ -265,6 +266,8 @@ class CameraService internal constructor(c: Context) {
         var cameraSession: CameraCaptureSession? = null
         var previewSurface: Surface? = null
         var captureSurface: Surface? = null
+        // User-controlled camera zoom; survives capture-request rebuilds.
+        var zoomRatio: Float = 1f
 
         fun getAndroidCodec() = when (val codec = codec) {
             "H264" -> MediaFormat.MIMETYPE_VIDEO_AVC
@@ -385,6 +388,8 @@ class CameraService internal constructor(c: Context) {
             params.camera?.let { camera ->
                 camera.close()
                 params.camera = null
+                params.previewSurface = null
+                params.captureSurface = null
             }
             params.projection?.let { mediaProjection ->
                 // delay the media projection stop call to avoid destroying the screen capture
@@ -660,7 +665,96 @@ class CameraService internal constructor(c: Context) {
             set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON)
             set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, fpsRange)
             set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_AUTO)
+            applyZoom(this, camera.id)
         }.build()
+    }
+
+    private fun applyZoom(builder: CaptureRequest.Builder, cameraId: String) {
+        val params = mParams[cameraId] ?: return
+        val ratio = params.zoomRatio
+        val manager = manager ?: return
+        try {
+            val cc = manager.getCameraCharacteristics(cameraId)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                val range = cc.get(CameraCharacteristics.CONTROL_ZOOM_RATIO_RANGE)
+                val clamped = if (range != null)
+                    ratio.coerceIn(range.lower, range.upper)
+                else ratio
+                builder.set(CaptureRequest.CONTROL_ZOOM_RATIO, clamped)
+            } else {
+                val active = cc.get(CameraCharacteristics.SENSOR_INFO_ACTIVE_ARRAY_SIZE) ?: return
+                if (ratio <= 1f) {
+                    builder.set(CaptureRequest.SCALER_CROP_REGION, active)
+                    return
+                }
+                val maxZoom = cc.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM) ?: 1f
+                val clamped = ratio.coerceIn(1f, maxZoom)
+                val w = (active.width() / clamped).toInt()
+                val h = (active.height() / clamped).toInt()
+                val left = (active.width() - w) / 2
+                val top = (active.height() - h) / 2
+                builder.set(CaptureRequest.SCALER_CROP_REGION, Rect(left, top, left + w, top + h))
+            }
+        } catch (e: Exception) {
+            Log.w(TAG, "applyZoom failed", e)
+        }
+    }
+
+    /** Returns the available zoom ratio range [min,max] for the given camera. */
+    fun getZoomRange(cameraId: String): Pair<Float, Float> {
+        val manager = manager ?: return 1f to 1f
+        return try {
+            val cc = manager.getCameraCharacteristics(cameraId)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                val r = cc.get(CameraCharacteristics.CONTROL_ZOOM_RATIO_RANGE)
+                if (r != null) r.lower to r.upper else 1f to 1f
+            } else {
+                val maxZoom = cc.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM) ?: 1f
+                1f to maxZoom
+            }
+        } catch (e: Exception) {
+            Log.w(TAG, "getZoomRange failed", e)
+            1f to 1f
+        }
+    }
+
+    /**
+     * Set the zoom ratio for [cameraId]. Updates the active capture session if any.
+     * @return the actually applied (clamped) ratio.
+     */
+    fun setZoomRatio(cameraId: String, ratio: Float): Float {
+        val params = mParams[cameraId] ?: return 1f
+        val (minZ, maxZ) = getZoomRange(cameraId)
+        val clamped = ratio.coerceIn(minZ, maxZ)
+        params.zoomRatio = clamped
+        // Read params.cameraSession/camera/previewSurface on the camera handler
+        // thread (the only thread that mutates them) to avoid a stale-snapshot
+        // race when called from the UI thread (gesture detectors).
+        handler.post {
+            try {
+                val session = params.cameraSession ?: return@post
+                val camera = params.camera ?: return@post
+                val previewSurface = params.previewSurface ?: return@post
+                val mgr = manager ?: return@post
+                val cc = mgr.getCameraCharacteristics(params.id)
+                val availableFpsRanges = cc.get(CameraCharacteristics.CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES)
+                val fpsRange = chooseOptimalFpsRange(availableFpsRanges)
+                val request = buildCaptureRequest(
+                    camera,
+                    previewSurface,
+                    if (params.codecStarted) params.captureSurface else null,
+                    fpsRange
+                )
+                // No CaptureCallback needed here: the codec-start hook in
+                // createCameraSession only fires on frameNumber==0 (i.e. the
+                // very first frame after session creation), which never
+                // applies to a plain repeating-request update.
+                session.setRepeatingRequest(request, null, handler)
+            } catch (e: Exception) {
+                Log.w(TAG, "setZoomRatio: failed to update repeating request", e)
+            }
+        }
+        return clamped
     }
 
 
@@ -747,13 +841,32 @@ class CameraService internal constructor(c: Context) {
 
             val sessionCallback = object : CameraCaptureSession.StateCallback() {
                 override fun onConfigured(session: CameraCaptureSession) {
+                    // A newer createCaptureSession on the same CameraDevice implicitly
+                    // closes any in-flight session. setRepeatingRequest on a closed
+                    // session throws "Session has been closed"; ignore that and do NOT
+                    // close the camera, otherwise any newer/still-valid session would
+                    // also be invalidated.
+                    //
+                    // We snapshot the previous session reference *only* to restore
+                    // `videoParams.cameraSession` if no newer session has been
+                    // installed in the meantime. The previous reference may itself
+                    // refer to a now-closed session (likely, since the framework
+                    // closed it when this new one was configured); but storing it
+                    // back is harmless — it is no worse than leaving the failed
+                    // new session in place, and any subsequent `setRepeatingRequest`
+                    // attempt will simply log and bail in this same catch block.
+                    val previous = videoParams.cameraSession
                     videoParams.cameraSession = session
                     listener.onOpened()
                     try {
                         session.setRepeatingRequest(request, captureCallback, handler)
+                    } catch (e: IllegalStateException) {
+                        Log.w(TAG, "setRepeatingRequest failed (session likely superseded): ${e.message}")
+                        if (videoParams.cameraSession === session) {
+                            videoParams.cameraSession = previous
+                        }
                     } catch (e: Exception) {
                         Log.e(TAG, "Failed to set repeating request", e)
-                        camera.close()
                     }
                 }
 
