@@ -112,6 +112,13 @@ abstract class HardwareService(
     abstract fun startMediaHandler(mediaHandlerId: String?)
     abstract fun stopMediaHandler()
     abstract fun setPendingScreenShareProjection(screenCaptureSession: Any?)
+
+    /** Zoom range [min,max] for the camera currently used as preview source, or null if unavailable. */
+    open fun getCurrentCameraZoomRange(): Pair<Float, Float>? = null
+
+    /** Apply a zoom ratio to the current preview camera. @return the clamped ratio actually applied. */
+    open fun setCurrentCameraZoom(ratio: Float): Float = 1f
+
     fun connectivityChanged(isConnected: Boolean) {
         Log.i(TAG, "connectivityChange() $isConnected")
         connectivityEvents.onNext(isConnected)

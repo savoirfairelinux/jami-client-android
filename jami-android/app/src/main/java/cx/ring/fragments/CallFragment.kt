@@ -130,6 +130,59 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private var previewPosition = PreviewPosition.LEFT
     @Inject
     lateinit var mDeviceRuntimeService: DeviceRuntimeService
+    @Inject
+    lateinit var mHardwareService: HardwareService
+    private var currentCameraZoom: Float = 1f
+    private var cameraProgressiveAnimator: ValueAnimator? = null
+    private fun startCameraProgressiveZoom() {
+        val range = mHardwareService.getCurrentCameraZoomRange() ?: return
+        cameraProgressiveAnimator?.cancel()
+        val start = currentCameraZoom
+        val end = range.second
+        if (end - start < 0.01f) return
+        val total = (range.second - 1f).coerceAtLeast(0.01f)
+        val duration = (3000L * (end - start) / total).toLong().coerceAtLeast(150L)
+        var lastApplied = start
+        cameraProgressiveAnimator = ValueAnimator.ofFloat(start, end).apply {
+            this.duration = duration
+            interpolator = LinearInterpolator()
+            addUpdateListener {
+                val v = (it.animatedValue as Float).coerceIn(range.first, range.second)
+                if (kotlin.math.abs(v - lastApplied) >= 0.05f || v == end) {
+                    lastApplied = v
+                    currentCameraZoom = mHardwareService.setCurrentCameraZoom(v)
+                }
+            }
+            start()
+        }
+    }
+    private fun stopCameraProgressiveZoom() {
+        cameraProgressiveAnimator?.cancel()
+        cameraProgressiveAnimator = null
+    }
+    private val cameraZoomDetector: ScaleGestureDetector by lazy {
+        ScaleGestureDetector(requireContext(), object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+            override fun onScale(detector: ScaleGestureDetector): Boolean {
+                stopCameraProgressiveZoom()
+                val range = mHardwareService.getCurrentCameraZoomRange() ?: return false
+                val target = (currentCameraZoom * detector.scaleFactor).coerceIn(range.first, range.second)
+                currentCameraZoom = mHardwareService.setCurrentCameraZoom(target)
+                return true
+            }
+        }).apply { isQuickScaleEnabled = false }
+    }
+    private val cameraDoubleTapDetector: GestureDetector by lazy {
+        GestureDetector(requireContext(), object : GestureDetector.SimpleOnGestureListener() {
+            override fun onDoubleTap(e: MotionEvent): Boolean {
+                stopCameraProgressiveZoom()
+                currentCameraZoom = mHardwareService.setCurrentCameraZoom(1f)
+                return true
+            }
+            override fun onLongPress(e: MotionEvent) {
+                startCameraProgressiveZoom()
+            }
+        })
+    }
     private val mCompositeDisposable = CompositeDisposable()
     private var bottomSheetParams: BottomSheetBehavior<View>? = null
     private var extensionsAdapter: ExtensionsAdapter? = null
@@ -496,6 +549,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     override fun onDestroyView() {
         super.onDestroyView()
+        stopCameraProgressiveZoom()
+        currentCameraZoom = 1f
         presenter.onCallViewDestroyed()
         mOrientationListener?.disable()
         mOrientationListener = null
@@ -618,6 +673,18 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private val previewTouchListener = object : View.OnTouchListener {
         @SuppressLint("ClickableViewAccessibility")
         override fun onTouch(v: View, event: MotionEvent): Boolean {
+            cameraZoomDetector.onTouchEvent(event)
+            cameraDoubleTapDetector.onTouchEvent(event)
+            when (event.actionMasked) {
+                MotionEvent.ACTION_UP,
+                MotionEvent.ACTION_CANCEL,
+                MotionEvent.ACTION_POINTER_DOWN -> stopCameraProgressiveZoom()
+            }
+            if (cameraZoomDetector.isInProgress || event.pointerCount > 1) {
+                // Pinch in progress: cancel any drag and let the scale detector own the gesture.
+                previewDrag = null
+                return true
+            }
             val action = event.actionMasked
             val parent = v.parent as RelativeLayout
             val params = v.layoutParams as RelativeLayout.LayoutParams
@@ -822,6 +889,13 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     override fun displayLocalVideo(display: Boolean) {
         Log.w(TAG, "displayLocalVideo -> $display")
+        // Reset the camera zoom whenever the local preview is (re)started or
+        // stopped: a new capture session always starts at zoom ratio 1f, and
+        // the system itself may switch cameras (e.g. when a USB camera is
+        // detached). Without this, currentCameraZoom would drift out of sync
+        // with the actual capture session.
+        stopCameraProgressiveZoom()
+        currentCameraZoom = mHardwareService.setCurrentCameraZoom(1f)
         binding?.apply {
             val extensionMode = isChooseExtensionMode
             previewContainer.isVisible = !extensionMode && display
@@ -1267,6 +1341,13 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private fun configureTransform(targetView: TextureView, viewWidth: Int, viewHeight: Int) {
         val activity = activity ?: return
         val binding = binding ?: return
+        if (targetView == binding.previewSurface && !isChooseExtensionMode) {
+            // AutoFitTextureView already sizes itself with the source aspect ratio,
+            // so the default identity transform makes the camera buffer fill the
+            // view exactly without cropping.
+            targetView.setTransform(Matrix())
+            return
+        }
         val rotation = activity.windowManager.defaultDisplay.rotation
         val rot = Surface.ROTATION_90 == rotation || Surface.ROTATION_270 == rotation
         val matrix = Matrix()
@@ -1284,13 +1365,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         } else if (Surface.ROTATION_180 == rotation) {
             matrix.postRotate(180f, centerX, centerY)
         }
-        if (targetView == binding.previewSurface){
-            if (!isChooseExtensionMode) {
-                targetView.setTransform(matrix)
-            }
-        }else{
-            targetView.setTransform(matrix)
-        }
+        targetView.setTransform(matrix)
     }
 
     override fun goToConversation(accountId: String, conversationId: Uri) {
@@ -1446,6 +1521,10 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     fun cameraFlip() {
+        // Reset zoom in both the fragment cache and CameraService so that
+        // switching back to a previously zoomed camera doesn't restore the old zoom.
+        stopCameraProgressiveZoom()
+        currentCameraZoom = mHardwareService.setCurrentCameraZoom(1f)
         presenter.switchVideoInputClick()
     }
 

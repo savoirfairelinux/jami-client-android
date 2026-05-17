@@ -18,6 +18,7 @@ package cx.ring.views
 
 import android.content.Context
 import android.content.res.TypedArray
+import android.graphics.Matrix
 import android.graphics.SurfaceTexture
 import android.util.AttributeSet
 import android.util.Log
@@ -53,6 +54,29 @@ class VideoSinkView @JvmOverloads constructor(context: Context, attrs: Attribute
     private val disposableBag = CompositeDisposable()
 
     val hardwareService: HardwareService? = JamiApplication.instance?.hardwareService
+
+    private var zoomHelper: VideoDisplayZoomHelper? = null
+
+    /**
+     * Enables pinch-to-zoom (and pan-when-zoomed, double-tap-to-reset) on this view.
+     * Only display-side zoom; the incoming buffer is unchanged.
+     *
+     * Safe to call repeatedly with the same value (e.g. from every layout pass): the
+     * method is a no-op when the requested state already matches the current one.
+     * When toggling from enabled→disabled, the current zoom/pan is reset so the
+     * view is re-attached cleanly the next time pinch-to-zoom is re-enabled.
+     */
+    fun setPinchToZoomEnabled(enabled: Boolean) {
+        if (enabled && zoomHelper == null) {
+            zoomHelper = VideoDisplayZoomHelper(context, this).also { it.attach() }
+            configureTransform(ratioWidth, ratioHeight)
+        } else if (!enabled && zoomHelper != null) {
+            zoomHelper?.reset()
+            setOnTouchListener(null)
+            zoomHelper = null
+            configureTransform(ratioWidth, ratioHeight)
+        }
+    }
 
     init {
         val a:TypedArray = context.obtainStyledAttributes(attrs, R.styleable.VideoSinkView, defStyle, defStyleRes)
@@ -143,8 +167,16 @@ class VideoSinkView @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
     private fun configureTransform(textureWidth: Int, textureHeight: Int) {
-        if (!fitToContent) {
-            setTransform(ScaleManager(Size(width, height), Size(textureWidth, textureHeight)).getScaleMatrix(ScalableType.CENTER_CROP))
+        val base: Matrix = if (!fitToContent && textureWidth > 0 && textureHeight > 0 && width > 0 && height > 0) {
+            ScaleManager(Size(width, height), Size(textureWidth, textureHeight)).getScaleMatrix(ScalableType.CENTER_CROP)
+        } else {
+            Matrix()
+        }
+        val helper = zoomHelper
+        if (helper != null) {
+            helper.setBaseTransform(base)
+        } else if (!fitToContent) {
+            setTransform(base)
         } else {
             setTransform(null)
         }
