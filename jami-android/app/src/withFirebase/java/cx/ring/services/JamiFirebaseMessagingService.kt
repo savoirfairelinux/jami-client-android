@@ -16,81 +16,53 @@
  */
 package cx.ring.services
 
-import android.app.ActivityManager
-import android.content.Intent
-import android.os.Handler
-import android.os.Looper
-import android.os.PowerManager
 import android.util.Log
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import cx.ring.application.JamiApplication
 import cx.ring.application.JamiApplicationFirebase
-import cx.ring.service.PushForegroundService
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 class JamiFirebaseMessagingService : FirebaseMessagingService() {
-    private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        try {
-            // Even if wakeLock is deprecated, without this part, some devices are blocking
-            // during the call negotiation. So, re-add this code to avoid to block here.
-            val pm = getSystemService(POWER_SERVICE) as PowerManager
-            val wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "wake:push")
-            wl.setReferenceCounted(false)
-            wl.acquire((10 * 1000).toLong())
-        } catch (e: Exception) {
-            Log.w(TAG, "Can't acquire wake lock", e)
-        }
+        val app = JamiApplication.instance as JamiApplicationFirebase?
 
-        val pushType = remoteMessage.data["pt"] ?: ""
-        val isCallNotification = (pushType.contains("audioCall")
-                || pushType.contains("videoCall"))
-                && remoteMessage.priority == RemoteMessage.PRIORITY_HIGH
+        // Centralised push lifecycle (WakeLock + optional foreground service).
+        // Only high-priority pushes start the foreground service to avoid
+        // draining the battery on every push.
+        val isHigh = remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH
+        app?.onPushReceived(isHighPriority = isHigh)
 
-        if (isCallNotification) {
-            try {
-                val isForeground = isAppInForeground()
-                if (!isForeground) {
-                    Handler(Looper.getMainLooper()).post {
-                        try {
-                            val intent = Intent(this, PushForegroundService::class.java)
-                            startForegroundService(intent)
-                        } catch (e: Exception) {
-                            Log.e(TAG, "Failed to start foreground service on main thread", e)
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                Log.w(TAG, "Failed to start foreground service for push notification", e)
-            }
-        }
-
-        if (remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH && !isAppInForeground()) {
-            val app = JamiApplication.instance as JamiApplicationFirebase?
-            app?.hardwareService?.connectivityChanged(true)
+        if (isHigh && app?.isInForeground == false) {
+            app.hardwareService?.connectivityChanged(true)
         }
 
         serviceScope.launch {
             try {
-                val app = JamiApplication.instance as JamiApplicationFirebase?
-                app?.onMessageReceived(remoteMessage)
+                if (app != null) {
+                    // Ensure daemon is fully started before dispatching push
+                    app.ensureDaemonStarted()
+                    app.onMessageReceived(remoteMessage)
+                }
             } catch (e: Exception) {
                 Log.e(TAG, "Error in processing message", e)
+            } finally {
+                // Do NOT release WakeLock or stop foreground service here:
+                // the native dispatch only schedules work inside the daemon.
+                app?.onPushProcessed()
             }
         }
     }
 
-    private fun isAppInForeground(): Boolean {
-        val am = getSystemService(ACTIVITY_SERVICE) as ActivityManager
-        val procs = am.runningAppProcesses ?: return false
-        val pid = android.os.Process.myPid()
-        return procs.any { p ->
-            p.pid == pid
-                    && (p.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND
-                    || p.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIBLE)
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        serviceScope.cancel()
     }
 
     override fun onNewToken(refreshedToken: String) {

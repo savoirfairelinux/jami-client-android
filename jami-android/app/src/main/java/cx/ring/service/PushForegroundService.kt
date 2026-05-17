@@ -12,7 +12,7 @@ import cx.ring.R
 import cx.ring.services.NotificationServiceImpl.Companion.NOTIF_CHANNEL_PUSH_SYNC
 
 class PushForegroundService : Service() {
-    private val timeoutMs = 5000L
+    private val timeoutMs = 30_000L
     private val handler = Handler(Looper.getMainLooper())
 
     private val stopRunnable = Runnable {
