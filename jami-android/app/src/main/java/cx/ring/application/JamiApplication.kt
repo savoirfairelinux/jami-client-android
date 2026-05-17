@@ -24,7 +24,10 @@ import android.content.*
 import android.media.AudioManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
+import android.os.PowerManager
 import android.system.Os
 import android.telecom.PhoneAccount
 import android.telecom.PhoneAccountHandle
@@ -32,23 +35,30 @@ import android.telecom.TelecomManager
 import android.util.Log
 import android.view.WindowManager
 import androidx.core.content.getSystemService
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
 import com.bumptech.glide.Glide
 import cx.ring.BuildConfig
 import cx.ring.service.ConnectionService
 import cx.ring.R
 import cx.ring.service.DRingService
 import cx.ring.service.JamiJobService
+import cx.ring.service.PushForegroundService
 import cx.ring.linkpreview.LinkPreview
 import cx.ring.services.CallServiceImpl.Companion.CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.views.AvatarFactory
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.daemon.JamiService
 import net.jami.services.*
 import java.io.File
 import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
@@ -107,6 +117,40 @@ abstract class JamiApplication : Application() {
     private val bootstrapLock = Object()
     @Volatile private var bootstrapDone = false
     @Volatile private var bootstrapInProgress = false
+
+    var isInForeground = false
+        private set
+
+    private val idleHandler = Handler(Looper.getMainLooper())
+    private val idleShutdownDelayMs = 90_000L
+
+    private val idleShutdownRunnable = Runnable {
+        if (isInForeground || mPreferencesService.settings.enablePermanentService) return@Runnable
+        if (mCallService.currentConferences().isNotEmpty()) return@Runnable
+        if (activePushCount.get() > 0) return@Runnable
+        Log.i(TAG, "Idle shutdown: deactivating all accounts (including proxy)")
+        mAccountService.setAccountsActive(false, forceAll = true)
+    }
+
+    // Push lifecycle tracking. Push processing is asynchronous inside the daemon
+    // (decryption, proxy reconnect, message fetch, call signaling) so we must
+    // hold a WakeLock + foreground service until either a daemon event signals
+    // completion or a maximum window elapses.
+    // pushStateLock guards all mutable push-hold state (pushWakeLock,
+    // pushEventDisposable) which can be accessed concurrently from coroutine
+    // threads (Firebase/UnifiedPush delivery) and the main-thread handler.
+    private val pushStateLock = Any()
+    private val activePushCount = AtomicInteger(0)
+    private var pushWakeLock: PowerManager.WakeLock? = null
+    private var pushEventDisposable: Disposable? = null
+    private val pushReleaseHandler = Handler(Looper.getMainLooper())
+    private val pushMaxWindowMs = 25_000L
+    private val pushEventBufferMs = 5_000L
+
+    private val pushReleaseRunnable = Runnable {
+        Log.i(TAG, "Push: release window elapsed")
+        releasePushHold()
+    }
 
     open fun activityInit(activityContext: Context) {}
 
@@ -233,6 +277,146 @@ abstract class JamiApplication : Application() {
         return daemon.isStarted
     }
 
+    /**
+     * Schedules account deactivation after [IDLE_SHUTDOWN_DELAY_MS] if the app stays in background
+     * with no active calls. Skipped when permanent service is enabled.
+     */
+    fun scheduleIdleShutdown() {
+        if (mPreferencesService.settings.enablePermanentService) return
+        idleHandler.removeCallbacks(idleShutdownRunnable)
+        idleHandler.postDelayed(idleShutdownRunnable, idleShutdownDelayMs)
+    }
+
+    fun cancelIdleShutdown() {
+        idleHandler.removeCallbacks(idleShutdownRunnable)
+    }
+
+    /**
+     * Called by push handlers as soon as a push payload arrives.
+     *
+     * Performs all the work needed for the daemon to be able to process the push:
+     *  - cancels any pending idle shutdown
+     *  - acquires an app-level WakeLock (covers the full processing window,
+     *    independent of the push service lifetime)
+     *  - starts [PushForegroundService] so Android does not kill the process
+     *  - **synchronously** reactivates accounts (otherwise the daemon would drop
+     *    the push because [setAccountActive] is queued on the daemon executor)
+     *  - subscribes to daemon "interesting events" (incoming call, message,
+     *    swarm message, trust request) so we can release resources shortly
+     *    after the push has actually been consumed, falling back to a
+     *    [pushMaxWindowMs] timeout
+     */
+    fun onPushReceived() = synchronized(pushStateLock) {
+        cancelIdleShutdown()
+        activePushCount.incrementAndGet()
+
+        try {
+            if (pushWakeLock == null) {
+                val pm = getSystemService(POWER_SERVICE) as PowerManager
+                pushWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "jami:push-app").apply {
+                    setReferenceCounted(false)
+                    acquire(pushMaxWindowMs + 10_000L)
+                }
+            }
+        } catch (e: Exception) {
+            Log.w(TAG, "Can't acquire app-level push wakelock", e)
+        }
+
+        if (!isInForeground) {
+            try {
+                startForegroundService(Intent(this, PushForegroundService::class.java))
+            } catch (e: Exception) {
+                Log.w(TAG, "Can't start push foreground service", e)
+            }
+        }
+
+        // Reactivate accounts BEFORE the native push dispatch happens. This must
+        // be synchronous: the dispatch runs on a different thread and would
+        // otherwise race with the daemon executor and the daemon would silently
+        // drop the push because all accounts are still inactive.
+        if (daemon.isStarted) {
+            mAccountService.setAccountsActive(true, forceAll = false, awaitCompletion = true)
+        }
+
+        // (Re)arm the max-window timer.
+        pushReleaseHandler.removeCallbacks(pushReleaseRunnable)
+        pushReleaseHandler.postDelayed(pushReleaseRunnable, pushMaxWindowMs)
+
+        // Subscribe to interesting daemon signals only once per release cycle.
+        if (pushEventDisposable == null || pushEventDisposable?.isDisposed == true) {
+            try {
+                pushEventDisposable = Observable.merge(listOf(
+                    mAccountService.incomingMessages.cast(Any::class.java),
+                    mAccountService.incomingSwarmMessages.cast(Any::class.java),
+                    mAccountService.incomingRequests.cast(Any::class.java),
+                    mCallService.callsUpdates.cast(Any::class.java)
+                )).subscribe({
+                    Log.i(TAG, "Push: daemon event observed, will release in ${pushEventBufferMs}ms")
+                    pushReleaseHandler.removeCallbacks(pushReleaseRunnable)
+                    pushReleaseHandler.postDelayed(pushReleaseRunnable, pushEventBufferMs)
+                }, { e -> Log.e(TAG, "Push event subscription error", e) })
+            } catch (e: Exception) {
+                Log.e(TAG, "Can't subscribe to push events", e)
+            }
+        }
+    }
+
+    /**
+     * Called by push handlers after the synchronous dispatch returned.
+     *
+     * The native [JamiService.pushNotificationReceived] only **schedules**
+     * decryption/fetch inside the daemon, so we must NOT tear anything down
+     * here. Resources are released by [releasePushHold], driven by either a
+     * daemon event or [pushMaxWindowMs].
+     */
+    fun onPushProcessed() {
+        val remaining = activePushCount.updateAndGet { count ->
+            if (count > 0) count - 1 else {
+                Log.w(TAG, "Push: onPushProcessed() called with no matching onPushReceived()")
+                0
+            }
+        }
+        if (remaining == 0) {
+            Log.d(TAG, "Push: no synchronous dispatches in flight")
+        }
+    }
+
+    private fun releasePushHold() = synchronized(pushStateLock) {
+        // Check in-flight count BEFORE disposing the subscription: if we dispose
+        // while a push is still in flight, that push can no longer trigger the
+        // short release path and will fall back to the full timeout.
+        if (activePushCount.get() > 0) {
+            Log.d(TAG, "Push: still ${activePushCount.get()} in flight, deferring release")
+            pushReleaseHandler.postDelayed(pushReleaseRunnable, pushMaxWindowMs)
+            return
+        }
+
+        pushEventDisposable?.dispose()
+        pushEventDisposable = null
+
+        pushWakeLock?.let { wakeLock ->
+            try {
+                if (wakeLock.isHeld) wakeLock.release()
+            } catch (e: RuntimeException) {
+                Log.w(TAG, "Failed to release push wakelock", e)
+            }
+        }
+        pushWakeLock = null
+
+        if (!isInForeground) {
+            scheduleIdleShutdown()
+        }
+        // Use startService (not startForegroundService) to deliver the stop
+        // signal: the service is already running and promoting a new FGS from
+        // the background on Android O+ can be rejected.
+        try {
+            startService(Intent(this, PushForegroundService::class.java)
+                .setAction(PushForegroundService.ACTION_PUSH_DONE))
+        } catch (e: Exception) {
+            Log.w(TAG, "Can't signal push done to foreground service", e)
+        }
+    }
+
     private fun scheduleRefreshJob() {
         Log.w(TAG, "JobScheduler: scheduling job")
         getSystemService(JobScheduler::class.java)
@@ -306,6 +490,27 @@ abstract class JamiApplication : Application() {
 
         bootstrapDaemon()
         mPreferencesService.loadDarkMode()
+
+        // Track app foreground/background state for battery optimization.
+        // When the app goes to background with no active calls (and permanent service
+        // is disabled), we schedule deactivation of all accounts after a grace period
+        // to close network connections and save battery.
+        ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
+            override fun onStart(owner: LifecycleOwner) {
+                isInForeground = true
+                cancelIdleShutdown()
+                if (daemon.isStarted) {
+                    mAccountService.setAccountsActive(true)
+                }
+            }
+            override fun onStop(owner: LifecycleOwner) {
+                isInForeground = false
+                if (mCallService.currentConferences().isEmpty()
+                    && !mPreferencesService.settings.enablePermanentService) {
+                    scheduleIdleShutdown()
+                }
+            }
+        })
         Completable.fromAction {
             val caRootFile = getString(R.string.ca_root_file)
             val dest = File(filesDir, caRootFile)
