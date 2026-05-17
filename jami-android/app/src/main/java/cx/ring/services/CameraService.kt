@@ -18,6 +18,7 @@ package cx.ring.services
 
 import android.content.Context
 import android.graphics.ImageFormat
+import android.graphics.Rect
 import android.hardware.camera2.*
 import android.hardware.camera2.CameraCaptureSession.CaptureCallback
 import android.hardware.camera2.CameraManager.AvailabilityCallback
@@ -265,6 +266,8 @@ class CameraService internal constructor(c: Context) {
         var cameraSession: CameraCaptureSession? = null
         var previewSurface: Surface? = null
         var captureSurface: Surface? = null
+        // User-controlled camera zoom; survives capture-request rebuilds.
+        var zoomRatio: Float = 1f
 
         fun getAndroidCodec() = when (val codec = codec) {
             "H264" -> MediaFormat.MIMETYPE_VIDEO_AVC
@@ -660,7 +663,87 @@ class CameraService internal constructor(c: Context) {
             set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON)
             set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, fpsRange)
             set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_AUTO)
+            applyZoom(this, camera.id)
         }.build()
+    }
+
+    private fun applyZoom(builder: CaptureRequest.Builder, cameraId: String) {
+        val params = mParams[cameraId] ?: return
+        val ratio = params.zoomRatio
+        if (ratio <= 1f) return
+        val manager = manager ?: return
+        try {
+            val cc = manager.getCameraCharacteristics(cameraId)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                val range = cc.get(CameraCharacteristics.CONTROL_ZOOM_RATIO_RANGE)
+                val clamped = if (range != null)
+                    ratio.coerceIn(range.lower, range.upper)
+                else ratio
+                builder.set(CaptureRequest.CONTROL_ZOOM_RATIO, clamped)
+            } else {
+                val active = cc.get(CameraCharacteristics.SENSOR_INFO_ACTIVE_ARRAY_SIZE) ?: return
+                val maxZoom = cc.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM) ?: 1f
+                val clamped = ratio.coerceIn(1f, maxZoom)
+                val w = (active.width() / clamped).toInt()
+                val h = (active.height() / clamped).toInt()
+                val left = (active.width() - w) / 2
+                val top = (active.height() - h) / 2
+                builder.set(CaptureRequest.SCALER_CROP_REGION, Rect(left, top, left + w, top + h))
+            }
+        } catch (e: Exception) {
+            Log.w(TAG, "applyZoom failed", e)
+        }
+    }
+
+    /** Returns the available zoom ratio range [min,max] for the given camera. */
+    fun getZoomRange(cameraId: String): Pair<Float, Float> {
+        val manager = manager ?: return 1f to 1f
+        return try {
+            val cc = manager.getCameraCharacteristics(cameraId)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                val r = cc.get(CameraCharacteristics.CONTROL_ZOOM_RATIO_RANGE)
+                if (r != null) r.lower to r.upper else 1f to 1f
+            } else {
+                val maxZoom = cc.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM) ?: 1f
+                1f to maxZoom
+            }
+        } catch (e: Exception) {
+            Log.w(TAG, "getZoomRange failed", e)
+            1f to 1f
+        }
+    }
+
+    /**
+     * Set the zoom ratio for [cameraId]. Updates the active capture session if any.
+     * @return the actually applied (clamped) ratio.
+     */
+    fun setZoomRatio(cameraId: String, ratio: Float): Float {
+        val params = mParams[cameraId] ?: return 1f
+        val (minZ, maxZ) = getZoomRange(cameraId)
+        val clamped = ratio.coerceIn(minZ, maxZ)
+        params.zoomRatio = clamped
+        val session = params.cameraSession
+        val camera = params.camera
+        val previewSurface = params.previewSurface
+        if (session != null && camera != null && previewSurface != null) {
+            handler.post {
+                try {
+                    val cc = manager!!.getCameraCharacteristics(params.id)
+                    val availableFpsRanges = cc.get(CameraCharacteristics.CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES)
+                    val fpsRange = chooseOptimalFpsRange(availableFpsRanges)
+                    val request = buildCaptureRequest(
+                        camera,
+                        previewSurface,
+                        if (params.codecStarted) params.captureSurface else null,
+                        fpsRange
+                    )
+                    session.setRepeatingRequest(request, null, handler)
+                } catch (e: Exception) {
+                    Log.w(TAG, "setZoomRatio: failed to update repeating request", e)
+                }
+            }
+        }
+        return clamped
     }
 
 

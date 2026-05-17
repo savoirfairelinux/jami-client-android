@@ -75,6 +75,7 @@ import cx.ring.utils.DeviceUtils.isTablet
 import cx.ring.utils.DeviceUtils.isTv
 import cx.ring.utils.MediaButtonsHelper.MediaButtonsHelperCallback
 import cx.ring.views.AvatarDrawable
+import cx.ring.services.HardwareServiceImpl
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.call.CallPresenter
@@ -130,6 +131,62 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private var previewPosition = PreviewPosition.LEFT
     @Inject
     lateinit var mDeviceRuntimeService: DeviceRuntimeService
+    @Inject
+    lateinit var mHardwareService: HardwareService
+    private var currentCameraZoom: Float = 1f
+    private var cameraProgressiveAnimator: ValueAnimator? = null
+    private fun startCameraProgressiveZoom() {
+        val hw = mHardwareService as? HardwareServiceImpl ?: return
+        val range = hw.getCurrentCameraZoomRange() ?: return
+        cameraProgressiveAnimator?.cancel()
+        val start = currentCameraZoom
+        val end = range.second
+        if (end - start < 0.01f) return
+        val total = (range.second - 1f).coerceAtLeast(0.01f)
+        val duration = (3000L * (end - start) / total).toLong().coerceAtLeast(150L)
+        var lastApplied = start
+        cameraProgressiveAnimator = ValueAnimator.ofFloat(start, end).apply {
+            this.duration = duration
+            interpolator = LinearInterpolator()
+            addUpdateListener {
+                val v = (it.animatedValue as Float).coerceIn(range.first, range.second)
+                if (kotlin.math.abs(v - lastApplied) >= 0.05f || v == end) {
+                    lastApplied = v
+                    currentCameraZoom = hw.setCurrentCameraZoom(v)
+                }
+            }
+            start()
+        }
+    }
+    private fun stopCameraProgressiveZoom() {
+        cameraProgressiveAnimator?.cancel()
+        cameraProgressiveAnimator = null
+    }
+    private val cameraZoomDetector: ScaleGestureDetector by lazy {
+        ScaleGestureDetector(requireContext(), object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+            override fun onScale(detector: ScaleGestureDetector): Boolean {
+                stopCameraProgressiveZoom()
+                val hw = mHardwareService as? HardwareServiceImpl ?: return false
+                val range = hw.getCurrentCameraZoomRange() ?: return false
+                val target = (currentCameraZoom * detector.scaleFactor).coerceIn(range.first, range.second)
+                currentCameraZoom = hw.setCurrentCameraZoom(target)
+                return true
+            }
+        }).apply { isQuickScaleEnabled = false }
+    }
+    private val cameraDoubleTapDetector: GestureDetector by lazy {
+        GestureDetector(requireContext(), object : GestureDetector.SimpleOnGestureListener() {
+            override fun onDoubleTap(e: MotionEvent): Boolean {
+                stopCameraProgressiveZoom()
+                val hw = mHardwareService as? HardwareServiceImpl ?: return false
+                currentCameraZoom = hw.setCurrentCameraZoom(1f)
+                return true
+            }
+            override fun onLongPress(e: MotionEvent) {
+                startCameraProgressiveZoom()
+            }
+        })
+    }
     private val mCompositeDisposable = CompositeDisposable()
     private var bottomSheetParams: BottomSheetBehavior<View>? = null
     private var extensionsAdapter: ExtensionsAdapter? = null
@@ -469,6 +526,16 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
             binding.previewSurface.surfaceTextureListener = listener
             binding.previewContainer.setOnTouchListener(previewTouchListener)
+            binding.fullscreenCameraPreview.setOnTouchListener { _, ev ->
+                cameraZoomDetector.onTouchEvent(ev)
+                cameraDoubleTapDetector.onTouchEvent(ev)
+                when (ev.actionMasked) {
+                    MotionEvent.ACTION_UP,
+                    MotionEvent.ACTION_CANCEL,
+                    MotionEvent.ACTION_POINTER_DOWN -> stopCameraProgressiveZoom()
+                }
+                true
+            }
 
             binding.dialpadEditText.addTextChangedListener(object : TextWatcher {
                   override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -618,6 +685,18 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private val previewTouchListener = object : View.OnTouchListener {
         @SuppressLint("ClickableViewAccessibility")
         override fun onTouch(v: View, event: MotionEvent): Boolean {
+            cameraZoomDetector.onTouchEvent(event)
+            cameraDoubleTapDetector.onTouchEvent(event)
+            when (event.actionMasked) {
+                MotionEvent.ACTION_UP,
+                MotionEvent.ACTION_CANCEL,
+                MotionEvent.ACTION_POINTER_DOWN -> stopCameraProgressiveZoom()
+            }
+            if (cameraZoomDetector.isInProgress || event.pointerCount > 1) {
+                // Pinch in progress: cancel any drag and let the scale detector own the gesture.
+                previewDrag = null
+                return true
+            }
             val action = event.actionMasked
             val parent = v.parent as RelativeLayout
             val params = v.layoutParams as RelativeLayout.LayoutParams
@@ -1446,6 +1525,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     fun cameraFlip() {
+        currentCameraZoom = 1f
         presenter.switchVideoInputClick()
     }
 
