@@ -101,6 +101,24 @@
       "message": "[good] Line 328: 🟢 Good practice: clear, user-friendly rationale messages that explain *why* the permission is needed and *what happens* without it.",
       "revId": "be9897afc7dbb0a2f2495061cae160ca53e0bfd3",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ef7fbad_9cbe2449",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2026-05-18T22:02:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e49fc9a_24fed99d",
+      "revId": "be9897afc7dbb0a2f2495061cae160ca53e0bfd3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
