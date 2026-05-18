@@ -74,6 +74,7 @@ import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils.isTablet
 import cx.ring.utils.DeviceUtils.isTv
 import cx.ring.utils.MediaButtonsHelper.MediaButtonsHelperCallback
+import cx.ring.views.AutoFitTextureView
 import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -1267,19 +1268,28 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private fun configureTransform(targetView: TextureView, viewWidth: Int, viewHeight: Int) {
         val activity = activity ?: return
         val binding = binding ?: return
+        if (viewWidth == 0 || viewHeight == 0) return
         val rotation = activity.windowManager.defaultDisplay.rotation
-        val rot = Surface.ROTATION_90 == rotation || Surface.ROTATION_270 == rotation
+        // Use the actual SurfaceTexture buffer size when available (set by CameraService for
+        // AutoFitTextureView previews). Non-preview targets (extensionPreviewSurface,
+        // fullscreenCameraPreview) intentionally fall back to mPreviewWidth/Height.
+        val view = targetView as? AutoFitTextureView
+        val bufW = view?.bufferWidth?.takeIf { it > 0 } ?: mPreviewWidth
+        val bufH = view?.bufferHeight?.takeIf { it > 0 } ?: mPreviewHeight
+        if (bufW == 0 || bufH == 0) {
+            targetView.setTransform(Matrix())
+            return
+        }
         val matrix = Matrix()
         val viewRect = RectF(0f, 0f, viewWidth.toFloat(), viewHeight.toFloat())
         val centerX = viewRect.centerX()
         val centerY = viewRect.centerY()
-
-        val bufferRect = RectF(0f, 0f, mPreviewHeight.toFloat(), mPreviewWidth.toFloat())
-        bufferRect.offset(centerX - bufferRect.centerX(), centerY - bufferRect.centerY())
-        matrix.setRectToRect(viewRect, bufferRect, Matrix.ScaleToFit.FILL)
-        val scale = max(viewHeight.toFloat() / mPreviewHeight, viewWidth.toFloat() / mPreviewWidth)
-        matrix.postScale(scale, scale, centerX, centerY)
-        if (rot) {
+        if (Surface.ROTATION_90 == rotation || Surface.ROTATION_270 == rotation) {
+            val bufferRect = RectF(0f, 0f, bufH.toFloat(), bufW.toFloat())
+            bufferRect.offset(centerX - bufferRect.centerX(), centerY - bufferRect.centerY())
+            matrix.setRectToRect(viewRect, bufferRect, Matrix.ScaleToFit.FILL)
+            val scale = max(viewHeight.toFloat() / bufH, viewWidth.toFloat() / bufW)
+            matrix.postScale(scale, scale, centerX, centerY)
             matrix.postRotate((90 * (rotation - 2)).toFloat(), centerX, centerY)
         } else if (Surface.ROTATION_180 == rotation) {
             matrix.postRotate(180f, centerX, centerY)

@@ -38,6 +38,23 @@ class AutoFitTextureView @JvmOverloads constructor(context: Context, attrs: Attr
     private val mSize: Int = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150f, context.resources.displayMetrics).roundToInt()
     private val mBounds = listOf(Rect())
 
+    /** Camera buffer dimensions (SurfaceTexture default buffer size), set by the camera service. */
+    var bufferWidth: Int = 0
+        private set
+    var bufferHeight: Int = 0
+        private set
+
+    fun setBufferSize(width: Int, height: Int) {
+        bufferWidth = width
+        bufferHeight = height
+    }
+
+    /** Clear cached camera buffer dimensions, e.g. on camera close. */
+    fun clearBufferSize() {
+        bufferWidth = 0
+        bufferHeight = 0
+    }
+
     init {
         if (attrs != null) {
             val a = context.obtainStyledAttributes(attrs, R.styleable.AutoFitTextureView)
@@ -65,6 +82,10 @@ class AutoFitTextureView @JvmOverloads constructor(context: Context, attrs: Attr
         if (mRatioWidth != width || mRatioHeight != height) {
             mRatioWidth = width
             mRatioHeight = height
+            // Aspect changed: cached buffer dimensions are stale until the camera service
+            // calls setBufferSize() again for the new capture session.
+            bufferWidth = 0
+            bufferHeight = 0
             requestLayout()
         }
     }
