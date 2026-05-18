@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9673f84_efaface5",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-18T12:48:50Z",
+      "side": 1,
+      "message": "Line 139: 🟡 `notifPermissionPromptShown` is not persisted across configuration changes (e.g., screen rotation). Since `onCreate` is called again after a config change and `savedInstanceState` is not used to restore this flag, the permission check will re-run after rotation. Consider saving/restoring this in `onSaveInstanceState`/`onCreate` via the bundle, or moving the check into a ViewModel.",
+      "revId": "be9897afc7dbb0a2f2495061cae160ca53e0bfd3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7eafde0_1592c758",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-18T12:48:50Z",
+      "side": 1,
+      "message": "[good] Line 232: 🟢 Good practice: early return on API level \u003c TIRAMISU avoids unnecessary work on older devices, and the `when` block clearly separates the three permission states.",
+      "revId": "be9897afc7dbb0a2f2495061cae160ca53e0bfd3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfd040e4_f0f7e338",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-18T12:48:50Z",
+      "side": 1,
+      "message": "Line 248: 🟡 In the first branch (`!askedOnce \u0026\u0026 !showRationale`), you persist `PREF_NOTIF_PERM_ASKED \u003d true` *before* the user responds. If the user denies the system prompt, the next launch will fall into the `else` branch (permanently blocked path) instead of the `showRationale` branch, because `askedOnce` will be true and `showRationale` may still be true. The logic coupling between `askedOnce` and `showRationale` is fragile. Consider setting the pref only *after* the result is received (in `onRequestPermissionsResult`) to keep state consistent.",
+      "revId": "be9897afc7dbb0a2f2495061cae160ca53e0bfd3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac40ddfe_5330ba15",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-18T12:48:50Z",
+      "side": 1,
+      "message": "Line 281: 🟡 `Intent.FLAG_ACTIVITY_NEW_TASK` is unnecessary when launching from an Activity context. It can cause the settings screen to open in a separate task stack, making the back-button experience confusing. Consider removing this flag.\n\n```suggestion\n                        startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)\n                                .setData(AndroidUri.fromParts(\"package\", packageName, null)))\n```",
+      "revId": "be9897afc7dbb0a2f2495061cae160ca53e0bfd3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41525882_5651500e",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-18T12:48:50Z",
+      "side": 1,
+      "message": "Line 295: 🟡 The deprecated `onRequestPermissionsResult` callback is used here. Since the project already uses AndroidX, consider migrating to the `ActivityResultContracts.RequestPermission()` launcher, which is the recommended modern API and avoids the deprecation warning.",
+      "revId": "be9897afc7dbb0a2f2495061cae160ca53e0bfd3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e49fc9a_24fed99d",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-18T12:48:50Z",
+      "side": 1,
+      "message": "[good] Line 328: 🟢 Good practice: clear, user-friendly rationale messages that explain *why* the permission is needed and *what happens* without it.",
+      "revId": "be9897afc7dbb0a2f2495061cae160ca53e0bfd3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
