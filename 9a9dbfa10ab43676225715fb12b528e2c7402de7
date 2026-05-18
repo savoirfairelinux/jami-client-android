@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45885eb0_8dde1aae",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-18T17:53:51Z",
+      "side": 1,
+      "message": "[low] Line 1340: 🟡 `defaultDisplay` is deprecated since API 30. Consider using `context.display` or `activity.display` (API 30+) with a fallback, or `WindowManager.getCurrentWindowMetrics()` for modern APIs. Not a blocker since the project likely still targets older APIs, but worth noting for future cleanup.",
+      "revId": "9a9dbfa10ab43676225715fb12b528e2c7402de7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39be3be9_09c08b5e",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1343,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-18T17:53:51Z",
+      "side": 1,
+      "message": "[low] Line 1343: 🟡 The cast `targetView as? AutoFitTextureView` introduces a subtle coupling: if a non-preview TextureView is passed, `view` will be null and the code falls back to `mPreviewWidth`/`mPreviewHeight`. This is correct behavior, but a brief comment clarifying that non-preview targets intentionally use `mPreviewWidth/Height` would aid future readers.",
+      "revId": "9a9dbfa10ab43676225715fb12b528e2c7402de7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65d2a84b_03d1b1c7",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1349,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-18T17:53:51Z",
+      "side": 1,
+      "message": "[critical] Line 1349: 🟡 When `isPreview` is false and `mPreviewWidth`/`mPreviewHeight` are both 0, the code proceeds into the transform logic with `bufW\u003d0`/`bufH\u003d0`, which will produce division-by-zero or degenerate scale values in the `max(viewHeight/0, viewWidth/0)` expression on line 1357. Consider adding an early return for the non-preview case as well when dimensions are zero.\n\n```suggestion\n        if (bufW \u003d\u003d 0 || bufH \u003d\u003d 0) {\n            targetView.setTransform(Matrix())\n            return\n        }\n```",
+      "revId": "9a9dbfa10ab43676225715fb12b528e2c7402de7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "779c488f_718e62d8",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1352,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-18T17:53:51Z",
+      "side": 1,
+      "message": "[info] Line 1352: 🟢 Good improvement: limiting the rotation-dependent transform logic to only execute when the device is actually in landscape avoids unnecessary scaling in portrait mode, which was the root cause of the preview distortion.",
+      "revId": "9a9dbfa10ab43676225715fb12b528e2c7402de7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49799d03_afb120ed",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-18T17:53:51Z",
+      "side": 1,
+      "message": "[info] Line 899: 🟢 Good that `setBufferSize` is called immediately before `texture.setDefaultBufferSize`, keeping the view\u0027s cached dimensions in sync with the actual SurfaceTexture buffer.",
+      "revId": "9a9dbfa10ab43676225715fb12b528e2c7402de7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "839834ff_2cc38d5f",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/AutoFitTextureView.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-18T17:53:51Z",
+      "side": 1,
+      "message": "[low] Line 39: 🟡 `bufferWidth` and `bufferHeight` are not reset when the camera is released or switched. If the camera stops and a new session starts with different dimensions, stale values could briefly be used. Consider resetting them in `setAspectRatio` or adding a `clearBufferSize()` method called on camera close.",
+      "revId": "9a9dbfa10ab43676225715fb12b528e2c7402de7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
