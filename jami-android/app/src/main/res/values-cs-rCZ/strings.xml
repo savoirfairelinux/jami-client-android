@@ -354,6 +354,9 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Zvuky</string>
   <string name="bottomSheet_raiseHand_btn">Zvednout ruku</string>
+  <string name="camera_flip_btn_description">Otočit kameru</string>
+  <string name="add_participant_btn_description">Přidat účastníka</string>
+  <string name="screen_share_btn_description">Sdílet obrazovku</string>
   <string name="uninstall">Odinstalovat</string>
   <string name="reset">Resetovat</string>
   <!--Swarm Details-->

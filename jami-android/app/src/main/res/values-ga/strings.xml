@@ -149,6 +149,8 @@
   <string name="bottomSheet_change_camera_btn">Athrú</string>
   <string name="bottomSheet_hangup_btn">Críochnaigh an glao</string>
   <string name="bottomSheet_raiseHand_btn">Cuir lámh suas</string>
+  <string name="add_participant_btn_description">Cuid a chur le rannpháirtí</string>
+  <string name="screen_share_btn_description">Comhroinn scáileán</string>
   <string name="uninstall">De-isintú</string>
   <string name="reset">Athsheasamh</string>
   <!--Swarm Details-->

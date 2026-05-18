@@ -290,6 +290,9 @@
   <string name="bottomSheet_mute_microphone_btn">మైక్రో</string>
   <string name="bottomSheet_sound_output_btn">శబ్దాలు</string>
   <string name="bottomSheet_raiseHand_btn">చేతి పైకి</string>
+  <string name="camera_flip_btn_description">ఫ్లిప్ కెమెరా</string>
+  <string name="add_participant_btn_description">పాల్గొనేవారిని జోడించండి</string>
+  <string name="screen_share_btn_description">స్క్రీన్‌ని భాగస్వామ్యం చేయండి</string>
   <string name="uninstall">అన్ఇన్స్టాల్ చేయండి</string>
   <string name="reset">రీసెట్</string>
   <!--Swarm Details-->

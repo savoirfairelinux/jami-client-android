@@ -415,6 +415,9 @@
   <string name="bottomSheet_mute_microphone_btn">麦克风</string>
   <string name="bottomSheet_sound_output_btn">声音</string>
   <string name="bottomSheet_raiseHand_btn">举手</string>
+  <string name="camera_flip_btn_description">翻转相机</string>
+  <string name="add_participant_btn_description">添加参与者</string>
+  <string name="screen_share_btn_description">共享屏幕</string>
   <string name="open_account_extension_settings">打开帐户扩展设置</string>
   <string name="open_general_extension_settings">打开常规扩展设置</string>
   <string name="uninstall">卸载</string>

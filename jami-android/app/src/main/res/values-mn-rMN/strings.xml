@@ -291,6 +291,9 @@
   <string name="bottomSheet_mute_microphone_btn">Микро</string>
   <string name="bottomSheet_sound_output_btn">- Үнэндээ</string>
   <string name="bottomSheet_raiseHand_btn">Та гар нь дээшлүүлж</string>
+  <string name="camera_flip_btn_description">Хэлтийн камер</string>
+  <string name="add_participant_btn_description">Үүнд оролцогч нэмнэ</string>
+  <string name="screen_share_btn_description">Дэлгэц хуваалцах</string>
   <string name="uninstall">Уулгаж өгөөч</string>
   <string name="reset">Урьдчилгааг сэргээх</string>
   <!--Swarm Details-->

@@ -334,6 +334,9 @@
   <string name="bottomSheet_mute_microphone_btn">Микро</string>
   <string name="bottomSheet_sound_output_btn">Звуци</string>
   <string name="bottomSheet_raiseHand_btn">Подигни руку</string>
+  <string name="camera_flip_btn_description">Обрни камеру</string>
+  <string name="add_participant_btn_description">Додајте учесника</string>
+  <string name="screen_share_btn_description">Dijeljenje zaslona</string>
   <string name="open_account_extension_settings">Otvorite podešavanja proširenja naloga</string>
   <string name="uninstall">Деинсталирај</string>
   <string name="reset">Ресетуј</string>

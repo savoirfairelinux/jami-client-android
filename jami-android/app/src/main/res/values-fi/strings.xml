@@ -416,6 +416,9 @@
   <string name="bottomSheet_mute_microphone_btn">Pieni</string>
   <string name="bottomSheet_sound_output_btn">Äänet</string>
   <string name="bottomSheet_raiseHand_btn">Nosta käsi</string>
+  <string name="camera_flip_btn_description">Käännä kamera</string>
+  <string name="add_participant_btn_description">Lisää osannottaja</string>
+  <string name="screen_share_btn_description">Jaa näyttö</string>
   <string name="open_account_extension_settings">Avaa tililaajennuksen asetukset</string>
   <string name="open_general_extension_settings">Avaa yleiset laajennuksen asetukset</string>
   <string name="uninstall">Poista asennus</string>

@@ -410,6 +410,9 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Lyder</string>
   <string name="bottomSheet_raiseHand_btn">Løft hånden.</string>
+  <string name="camera_flip_btn_description">Vend kamera</string>
+  <string name="add_participant_btn_description">Tilføj deltager</string>
+  <string name="screen_share_btn_description">Del skærm</string>
   <string name="uninstall">Afinstallere</string>
   <string name="reset">Omstilling</string>
   <!--Swarm Details-->

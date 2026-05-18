@@ -291,6 +291,9 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Suara</string>
   <string name="bottomSheet_raiseHand_btn">Angkat</string>
+  <string name="camera_flip_btn_description">Tukar kamera</string>
+  <string name="add_participant_btn_description">Tambah partisipan</string>
+  <string name="screen_share_btn_description">Bagikan layar</string>
   <string name="uninstall">Copot pemasangan</string>
   <string name="reset">Reset</string>
   <!--Swarm Details-->

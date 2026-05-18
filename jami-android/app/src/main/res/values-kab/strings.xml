@@ -405,6 +405,7 @@
   <string name="bottomSheet_mute_microphone_btn">Amikṛu</string>
   <string name="bottomSheet_sound_output_btn">Imeslan</string>
   <string name="bottomSheet_raiseHand_btn">Rfed afus-ik-im</string>
+  <string name="camera_flip_btn_description">Zzi takamirat</string>
   <string name="open_account_extension_settings">Ldi iɣewwaṛen n usiɣzef n umiḍan</string>
   <string name="open_general_extension_settings">Ldi iɣewwaṛen n usiɣzef amatu</string>
   <string name="uninstall">Kkes</string>

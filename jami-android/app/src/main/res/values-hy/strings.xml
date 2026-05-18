@@ -291,6 +291,9 @@
   <string name="bottomSheet_mute_microphone_btn">Միկրո</string>
   <string name="bottomSheet_sound_output_btn">Անչում է</string>
   <string name="bottomSheet_raiseHand_btn">Բարձրացրեք ձեռքը</string>
+  <string name="camera_flip_btn_description">Կապակային տեսախցիկ</string>
+  <string name="add_participant_btn_description">Մասնակիցը ավելացնել</string>
+  <string name="screen_share_btn_description">Համագործակցեք էկրանը</string>
   <string name="uninstall">Անբեռահասել</string>
   <string name="reset">Վերադարձ</string>
   <!--Swarm Details-->

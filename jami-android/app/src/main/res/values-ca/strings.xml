@@ -315,6 +315,8 @@
   <string name="bottomSheet_mute_microphone_btn">Micròfon</string>
   <string name="bottomSheet_sound_output_btn">Sons</string>
   <string name="bottomSheet_raiseHand_btn">Aixeca la mà</string>
+  <string name="camera_flip_btn_description">Canvia la càmera</string>
+  <string name="add_participant_btn_description">Afegir participant</string>
   <string name="uninstall">Desinstala</string>
   <string name="reset">Reconfigura</string>
   <!--Swarm Details-->

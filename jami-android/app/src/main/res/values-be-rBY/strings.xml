@@ -150,6 +150,7 @@
   <string name="bottomSheet_change_camera_btn">Змена</string>
   <string name="bottomSheet_hangup_btn">Скончыць выклік</string>
   <string name="bottomSheet_raiseHand_btn">Падыміце руку</string>
+  <string name="add_participant_btn_description">Дадаць удзельніка</string>
   <string name="uninstall">Адмяніць ўстаноўку</string>
   <string name="reset">Падстаўка</string>
   <!--Swarm Details-->

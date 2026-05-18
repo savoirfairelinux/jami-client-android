@@ -295,6 +295,9 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Ljud</string>
   <string name="bottomSheet_raiseHand_btn">Räck upp handen</string>
+  <string name="camera_flip_btn_description">Vänd kameran</string>
+  <string name="add_participant_btn_description">Lägg till deltagare</string>
+  <string name="screen_share_btn_description">Dela skärmen</string>
   <string name="uninstall">Avinstallera</string>
   <string name="reset">Återställ</string>
   <!--Swarm Details-->

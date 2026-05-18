@@ -407,6 +407,9 @@
   <string name="bottomSheet_mute_microphone_btn">Микрофон</string>
   <string name="bottomSheet_sound_output_btn">Звуки</string>
   <string name="bottomSheet_raiseHand_btn">Поднять руку</string>
+  <string name="camera_flip_btn_description">Перевернуть камеру</string>
+  <string name="add_participant_btn_description">Добавить участника</string>
+  <string name="screen_share_btn_description">Демонстрация экрана</string>
   <string name="open_account_extension_settings">Открыть настройки расширения аккаунта</string>
   <string name="open_general_extension_settings">Открыть общие настройки расширения</string>
   <string name="uninstall">Деинсталлировать</string>

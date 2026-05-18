@@ -347,6 +347,9 @@
   <string name="bottomSheet_mute_microphone_btn">Mikrofonas</string>
   <string name="bottomSheet_sound_output_btn">Garsai</string>
   <string name="bottomSheet_raiseHand_btn">Pakelti ranką</string>
+  <string name="camera_flip_btn_description">Apversti kamerą</string>
+  <string name="add_participant_btn_description">Pridėti dalyvį</string>
+  <string name="screen_share_btn_description">Bendrinti ekraną</string>
   <string name="uninstall">Pašalinti</string>
   <string name="reset">Atstatyti</string>
   <!--Swarm Details-->

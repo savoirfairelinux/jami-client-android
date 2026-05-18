@@ -416,6 +416,9 @@
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Helid</string>
   <string name="bottomSheet_raiseHand_btn">Anna käega märku</string>
+  <string name="camera_flip_btn_description">Pööra kaamerat</string>
+  <string name="add_participant_btn_description">Lisa osaleja</string>
+  <string name="screen_share_btn_description">Jaga ekraani</string>
   <string name="open_account_extension_settings">Ava kasutajakonto lisamoodulite seadistused</string>
   <string name="open_general_extension_settings">Ava üldised lisamoodulite seadistused</string>
   <string name="uninstall">Eemalda</string>

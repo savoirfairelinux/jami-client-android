@@ -290,6 +290,9 @@
   <string name="bottomSheet_mute_microphone_btn">Микро</string>
   <string name="bottomSheet_sound_output_btn">Дыбыс</string>
   <string name="bottomSheet_raiseHand_btn">Қолын көтеру</string>
+  <string name="camera_flip_btn_description">Қалған камера</string>
+  <string name="add_participant_btn_description">Қатысушыны қосу</string>
+  <string name="screen_share_btn_description">Экранды бөлісу</string>
   <string name="uninstall">Құрылғыны алып тастау</string>
   <string name="reset">Қайта орнату</string>
   <!--Swarm Details-->

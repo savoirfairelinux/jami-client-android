@@ -149,6 +149,8 @@
   <string name="bottomSheet_change_camera_btn">Mgbanwe</string>
   <string name="bottomSheet_hangup_btn">Kwụsị oku</string>
   <string name="bottomSheet_raiseHand_btn">Welie aka gị</string>
+  <string name="add_participant_btn_description">Tinye onye so</string>
+  <string name="screen_share_btn_description">Kekọrịta ihuenyo</string>
   <string name="uninstall">Wepụ ihe nrụnye</string>
   <string name="reset">Tọgharia</string>
   <!--Swarm Details-->

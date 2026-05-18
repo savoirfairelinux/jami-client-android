@@ -415,6 +415,9 @@
   <string name="bottomSheet_mute_microphone_btn">微</string>
   <string name="bottomSheet_sound_output_btn">聲音</string>
   <string name="bottomSheet_raiseHand_btn">舉手</string>
+  <string name="camera_flip_btn_description">翻轉攝影機</string>
+  <string name="add_participant_btn_description">新增參與者</string>
+  <string name="screen_share_btn_description">分享畫面</string>
   <string name="open_account_extension_settings">打開帳戶擴展設定</string>
   <string name="open_general_extension_settings">打開常規擴展設定</string>
   <string name="uninstall">解除安裝</string>

@@ -164,6 +164,9 @@
   <string name="bottomSheet_change_camera_btn">Promjena</string>
   <string name="bottomSheet_hangup_btn">Završi poziv</string>
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
+  <string name="camera_flip_btn_description">Okreni kameru</string>
+  <string name="add_participant_btn_description">Dodaj sugovornika</string>
+  <string name="screen_share_btn_description">Dijeli zaslon</string>
   <string name="uninstall">Neinstalacija</string>
   <string name="reset">Nastavljanje</string>
   <!--Swarm Details-->

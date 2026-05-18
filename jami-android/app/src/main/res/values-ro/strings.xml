@@ -417,6 +417,9 @@
   <string name="bottomSheet_mute_microphone_btn">Microfon</string>
   <string name="bottomSheet_sound_output_btn">Sunet</string>
   <string name="bottomSheet_raiseHand_btn">Mîna sus</string>
+  <string name="camera_flip_btn_description">Schimbă camera</string>
+  <string name="add_participant_btn_description">Adaugă un participant</string>
+  <string name="screen_share_btn_description">Distribuie ecranul</string>
   <string name="open_account_extension_settings">Deschide reglările extensiei contului</string>
   <string name="open_general_extension_settings">Deschide reglările generale ale extensiei</string>
   <string name="uninstall">Dezinstalează</string>

@@ -295,6 +295,9 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Lyder</string>
   <string name="bottomSheet_raiseHand_btn">Rekk opp hånden</string>
+  <string name="camera_flip_btn_description">Snu kamera</string>
+  <string name="add_participant_btn_description">Legg til deltager</string>
+  <string name="screen_share_btn_description">Del skjerm</string>
   <string name="uninstall">Avinstaller</string>
   <string name="reset">Nullstill</string>
   <!--Swarm Details-->

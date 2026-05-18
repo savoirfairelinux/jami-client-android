@@ -401,6 +401,9 @@
   <string name="bottomSheet_mute_microphone_btn">Микро</string>
   <string name="bottomSheet_sound_output_btn">Звуки</string>
   <string name="bottomSheet_raiseHand_btn">Підняти руку</string>
+  <string name="camera_flip_btn_description">Змінити камеру</string>
+  <string name="add_participant_btn_description">Додати учасників</string>
+  <string name="screen_share_btn_description">Спільний перегляд екрана</string>
   <string name="open_account_extension_settings">Відкрити налаштування розширень облікового запису</string>
   <string name="open_general_extension_settings">Відкрити загальні налаштування розширень</string>
   <string name="uninstall">Видалити</string>

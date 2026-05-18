@@ -326,6 +326,9 @@ contact@jami.net.</string>
   <string name="bottomSheet_mute_microphone_btn">میکروفون</string>
   <string name="bottomSheet_sound_output_btn">صداها</string>
   <string name="bottomSheet_raiseHand_btn">بالا بردن دست </string>
+  <string name="camera_flip_btn_description">چرخاندن دوربین</string>
+  <string name="add_participant_btn_description">افزودن شرکت کننده</string>
+  <string name="screen_share_btn_description">اشتراک گذاری صفحه نمایش</string>
   <string name="uninstall">حذف نصب</string>
   <string name="reset">بازنشانی </string>
   <!--Swarm Details-->

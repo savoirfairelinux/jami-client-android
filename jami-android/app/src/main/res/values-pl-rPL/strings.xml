@@ -415,6 +415,9 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Dźwięki</string>
   <string name="bottomSheet_raiseHand_btn">Podnieś rękę</string>
+  <string name="camera_flip_btn_description">Zamień kamerę</string>
+  <string name="add_participant_btn_description">Dodaj uczestnika</string>
+  <string name="screen_share_btn_description">Udostępnij ekran</string>
   <string name="open_account_extension_settings">Otwórz ustawienia rozszerzeń konta</string>
   <string name="open_general_extension_settings">Otwórz generalne ustawienia rozszerzeń</string>
   <string name="uninstall">Odinstaluj</string>

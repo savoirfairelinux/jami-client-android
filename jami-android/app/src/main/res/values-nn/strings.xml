@@ -315,6 +315,9 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Det høyrast</string>
   <string name="bottomSheet_raiseHand_btn">Rekk opp handa</string>
+  <string name="camera_flip_btn_description">Flip-kamera</string>
+  <string name="add_participant_btn_description">Legg til deltakar</string>
+  <string name="screen_share_btn_description">Del skjerm</string>
   <string name="uninstall">Uninstallere</string>
   <string name="reset">Omsetning</string>
   <!--Swarm Details-->

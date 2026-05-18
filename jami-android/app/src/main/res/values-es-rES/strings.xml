@@ -48,6 +48,9 @@
   <!--TV-->
   <!--Wizard-->
   <!--Bottom sheet-->
+  <string name="camera_flip_btn_description">Girar cámara</string>
+  <string name="add_participant_btn_description">Agregar participante</string>
+  <string name="screen_share_btn_description">Compartir pantalla</string>
   <!--Swarm Details-->
   <!--JamiId-->
   <!--WelcomeJami-->

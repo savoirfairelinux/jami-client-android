@@ -293,6 +293,9 @@
   <string name="bottomSheet_mute_microphone_btn">Μικρο</string>
   <string name="bottomSheet_sound_output_btn">Ήχοι</string>
   <string name="bottomSheet_raiseHand_btn">Σηκώστε το χέρι σας</string>
+  <string name="camera_flip_btn_description">Εναλλαγή κάμερας</string>
+  <string name="add_participant_btn_description">Προσθήκη συμμετέχοντος</string>
+  <string name="screen_share_btn_description">Κοινή χρήση οθόνης</string>
   <string name="uninstall">Απεγκατάσταση</string>
   <string name="reset">Ανακατάσταση</string>
   <!--Swarm Details-->

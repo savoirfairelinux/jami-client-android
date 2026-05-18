@@ -291,6 +291,9 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro-ak</string>
   <string name="bottomSheet_sound_output_btn">Soinuak</string>
   <string name="bottomSheet_raiseHand_btn">Altxa eskua.</string>
+  <string name="camera_flip_btn_description">Itzulbiratu kamera</string>
+  <string name="add_participant_btn_description">Partaide gehitu</string>
+  <string name="screen_share_btn_description">Partekatu pantaila</string>
   <string name="uninstall">Desinstalatu</string>
   <string name="reset">Berriz jartzea</string>
   <!--Swarm Details-->

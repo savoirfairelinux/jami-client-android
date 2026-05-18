@@ -296,6 +296,9 @@
   <string name="bottomSheet_mute_microphone_btn">マイク</string>
   <string name="bottomSheet_sound_output_btn">スピーカー</string>
   <string name="bottomSheet_raiseHand_btn">手を挙げる</string>
+  <string name="camera_flip_btn_description">カメラを押す</string>
+  <string name="add_participant_btn_description">参加者を追加</string>
+  <string name="screen_share_btn_description">画面を共有</string>
   <string name="uninstall">解除する</string>
   <string name="reset">リセット</string>
   <!--Swarm Details-->

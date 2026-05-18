@@ -296,6 +296,9 @@
   <string name="bottomSheet_mute_microphone_btn">Micro</string>
   <string name="bottomSheet_sound_output_btn">Sons</string>
   <string name="bottomSheet_raiseHand_btn">Ergue a man</string>
+  <string name="camera_flip_btn_description">Cambiar de cámara</string>
+  <string name="add_participant_btn_description">Engadir participante</string>
+  <string name="screen_share_btn_description">Compartir pantalla</string>
   <string name="uninstall">Desinstalar</string>
   <string name="reset">Restablecer</string>
   <!--Swarm Details-->

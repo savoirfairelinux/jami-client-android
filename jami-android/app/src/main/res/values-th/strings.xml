@@ -290,6 +290,9 @@
   <string name="bottomSheet_mute_microphone_btn">ไมโคร</string>
   <string name="bottomSheet_sound_output_btn">เสียง</string>
   <string name="bottomSheet_raiseHand_btn">ยกมือ</string>
+  <string name="camera_flip_btn_description">พลิกกล้อง</string>
+  <string name="add_participant_btn_description">เพิ่มผู้เข้าร่วม</string>
+  <string name="screen_share_btn_description">แชร์หน้าจอ</string>
   <string name="uninstall">ถอนการติดตั้ง</string>
   <string name="reset">รีเซ็ต</string>
   <!--Swarm Details-->

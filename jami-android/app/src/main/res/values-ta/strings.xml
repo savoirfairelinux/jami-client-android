@@ -312,6 +312,9 @@
   <string name="bottomSheet_mute_microphone_btn">மைக்ரோ</string>
   <string name="bottomSheet_sound_output_btn">ஒலிகள்</string>
   <string name="bottomSheet_raiseHand_btn">கை உயர்த்தி</string>
+  <string name="camera_flip_btn_description">ஃபில்ப் கேமரா</string>
+  <string name="add_participant_btn_description">பங்கேற்பாளரை சேர்க்கவும்</string>
+  <string name="screen_share_btn_description">திரையைப் பகிர்</string>
   <string name="uninstall">நிறுவல் நீக்கு</string>
   <string name="reset">மீட்டமை</string>
   <!--Swarm Details-->

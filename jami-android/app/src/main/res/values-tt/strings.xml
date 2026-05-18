@@ -148,6 +148,8 @@
   <string name="bottomSheet_change_camera_btn">Үзгәрешләр</string>
   <string name="bottomSheet_hangup_btn">Шалтыратуны тәмамлау</string>
   <string name="bottomSheet_raiseHand_btn">Кулыңны күтәр!</string>
+  <string name="add_participant_btn_description">Катнашучыны өстәү</string>
+  <string name="screen_share_btn_description">Экранны бүлешү</string>
   <string name="uninstall">Кушымтаны урнаштыру</string>
   <string name="reset">Кайта кую</string>
   <!--Swarm Details-->

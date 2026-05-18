@@ -36,6 +36,9 @@
   <!--TV-->
   <!--Wizard-->
   <!--Bottom sheet-->
+  <string name="camera_flip_btn_description">Snu kamera</string>
+  <string name="add_participant_btn_description">Legg til deltager</string>
+  <string name="screen_share_btn_description">Del skjerm</string>
   <!--Swarm Details-->
   <!--JamiId-->
   <!--WelcomeJami-->

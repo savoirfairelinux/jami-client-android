@@ -233,6 +233,8 @@
   <string name="bottomSheet_hangup_btn">Kết thúc cuộc gọi</string>
   <string name="bottomSheet_mute_microphone_btn">Micrô</string>
   <string name="bottomSheet_raiseHand_btn">Giơ tay</string>
+  <string name="add_participant_btn_description">Thêm người tham gia</string>
+  <string name="screen_share_btn_description">Chia sẻ màn hình</string>
   <string name="uninstall">Gỡ cài đặt</string>
   <string name="reset">Đặt lại</string>
   <!--Swarm Details-->

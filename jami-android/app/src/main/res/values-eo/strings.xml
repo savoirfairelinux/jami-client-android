@@ -291,6 +291,9 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Sonas</string>
   <string name="bottomSheet_raiseHand_btn">Levu la manon</string>
+  <string name="camera_flip_btn_description">Renversi kameraon</string>
+  <string name="add_participant_btn_description">Aldoni partoprenanton</string>
+  <string name="screen_share_btn_description">Kunhavigi ekranon</string>
   <string name="uninstall">Malinstaligi</string>
   <string name="reset">Re-sekvi</string>
   <!--Swarm Details-->

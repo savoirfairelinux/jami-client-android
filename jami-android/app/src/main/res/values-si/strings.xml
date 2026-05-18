@@ -40,6 +40,7 @@
   <!--Wizard-->
   <!--Bottom sheet-->
   <string name="bottomSheet_hangup_btn">ඇමතුම අවසන් කරන්න</string>
+  <string name="screen_share_btn_description">තිරය බෙදා ගන්න</string>
   <!--Swarm Details-->
   <string name="tab_settings">සැකසුම්</string>
   <!--JamiId-->

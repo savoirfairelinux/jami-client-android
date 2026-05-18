@@ -414,6 +414,9 @@
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Tinguj</string>
   <string name="bottomSheet_raiseHand_btn">Ngrini dorën</string>
+  <string name="camera_flip_btn_description">Rrotulloni kamerën</string>
+  <string name="add_participant_btn_description">Shtoni pjesëmarrës</string>
+  <string name="screen_share_btn_description">Bashkëndaj ekranin</string>
   <string name="open_account_extension_settings">Hap Rregullime Zgjerimesh Llogarish</string>
   <string name="open_general_extension_settings">Hap Rregullime të Përgjithshme Zgjerimesh</string>
   <string name="uninstall">Çinstaloje</string>

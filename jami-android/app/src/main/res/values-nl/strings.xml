@@ -344,6 +344,9 @@
   <string name="bottomSheet_mute_microphone_btn">Micro</string>
   <string name="bottomSheet_sound_output_btn">Klinkt goed.</string>
   <string name="bottomSheet_raiseHand_btn">Hand opsteken</string>
+  <string name="camera_flip_btn_description">Camera draaien</string>
+  <string name="add_participant_btn_description">Deelnemer toevoegen</string>
+  <string name="screen_share_btn_description">Scherm delen</string>
   <string name="uninstall">Oninstalleren</string>
   <string name="reset">Herstellen</string>
   <!--Swarm Details-->

@@ -253,6 +253,8 @@
   <string name="bottomSheet_change_camera_btn">ਬਦਲੋ</string>
   <string name="bottomSheet_hangup_btn">ਕਾਲ ਸਮਾਪਤ ਕਰੋ</string>
   <string name="bottomSheet_sound_output_btn">ਸਪੀਕਰ</string>
+  <string name="camera_flip_btn_description">ਕੈਮਰਾ ਪਲਟਾਓ</string>
+  <string name="screen_share_btn_description">ਸਕਰੀਨ ਸਾਂਝੀ ਕਰੋ</string>
   <!--Swarm Details-->
   <string name="tab_members">ਸਾਥੀ</string>
   <string name="tab_settings">ਸੈਟਿੰਗਾਂ</string>

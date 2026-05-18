@@ -389,6 +389,9 @@
   <string name="bottomSheet_mute_microphone_btn">미세</string>
   <string name="bottomSheet_sound_output_btn">음향이</string>
   <string name="bottomSheet_raiseHand_btn">손 들기</string>
+  <string name="camera_flip_btn_description"> 카메라</string>
+  <string name="add_participant_btn_description">참가자를 추가</string>
+  <string name="screen_share_btn_description">화면 공유</string>
   <string name="open_account_extension_settings">계정 확장 설정 열기</string>
   <string name="open_general_extension_settings">일반 확장 설정 열기</string>
   <string name="uninstall">설치 해제</string>
@@ -428,6 +431,7 @@
   <string name="show_qr_code">QR 코드 표시</string>
   <string name="mute_conversation">침묵의 대화</string>
   <!--Donation-->
+  <string name="donation_card_description">Jami를 잘 사용 중이고 우리의 사명을 응원한다면 후원해 주시겠습니까?</string>
   <string name="donation_card_not_now">나중에</string>
   <string name="donation_donate">후원</string>
   <!--Extension-->
@@ -442,6 +446,7 @@
   <string name="export_side_step2_ip_only">새 기기 IP 주소: %1$s</string>
   <string name="export_side_step2_cancel">취소</string>
   <string name="export_side_step2_confirm">확인</string>
+  <string name="export_side_step3_body_done">계정이 성공적으로 새 기기에 불러와졌습니다.</string>
   <string name="export_side_step3_exit">완료</string>
   <string name="import_side_step1_share">공유</string>
   <string name="import_side_step1_preparing_device">기기 준비 중...</string>

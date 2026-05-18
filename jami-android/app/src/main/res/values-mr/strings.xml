@@ -290,6 +290,9 @@
   <string name="bottomSheet_mute_microphone_btn">मायक्रो</string>
   <string name="bottomSheet_sound_output_btn">ध्वनी</string>
   <string name="bottomSheet_raiseHand_btn">हात उंचावा</string>
+  <string name="camera_flip_btn_description">फ्लिप कॅमेरा</string>
+  <string name="add_participant_btn_description">सहभागी जोडा</string>
+  <string name="screen_share_btn_description">स्क्रीन सामायिक करा</string>
   <string name="uninstall">अनइंस्टॉल करा</string>
   <string name="reset">रीसेट</string>
   <!--Swarm Details-->

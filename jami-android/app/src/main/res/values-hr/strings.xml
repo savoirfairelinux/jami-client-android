@@ -294,6 +294,9 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Zvukovi</string>
   <string name="bottomSheet_raiseHand_btn">Podignite ruku</string>
+  <string name="camera_flip_btn_description">Okreni kameru</string>
+  <string name="add_participant_btn_description">Dodaj sugovornika</string>
+  <string name="screen_share_btn_description">Dijeli zaslon</string>
   <string name="uninstall">Neinstalacija</string>
   <string name="reset">Nastavljanje</string>
   <!--Swarm Details-->

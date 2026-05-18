@@ -416,6 +416,9 @@
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Hangok</string>
   <string name="bottomSheet_raiseHand_btn">Kéz felemelése</string>
+  <string name="camera_flip_btn_description">Fényképezőgép tükrözése</string>
+  <string name="add_participant_btn_description">Résztvevő hozzáadása</string>
+  <string name="screen_share_btn_description">Képernyőmegosztás</string>
   <string name="open_account_extension_settings">Fiókbővítmény beállítások megnyitása</string>
   <string name="open_general_extension_settings">Általános bővítménybeállítások megnyitása</string>
   <string name="uninstall">Eltávolítás</string>

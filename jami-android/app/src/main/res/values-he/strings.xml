@@ -163,6 +163,8 @@
   <string name="bottomSheet_change_camera_btn">שינוי</string>
   <string name="bottomSheet_hangup_btn">סיום השיחה</string>
   <string name="bottomSheet_raiseHand_btn">תרים את היד.</string>
+  <string name="add_participant_btn_description">הוסף משתתף</string>
+  <string name="screen_share_btn_description">שתף מסך</string>
   <string name="uninstall">תורידו את ההתקנה</string>
   <string name="reset">-הקמת מחדש</string>
   <!--Swarm Details-->

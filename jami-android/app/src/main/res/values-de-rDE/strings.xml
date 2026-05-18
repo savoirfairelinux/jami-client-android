@@ -276,6 +276,9 @@
   <string name="bottomSheet_dialpad_btn">Wähltastatur</string>
   <string name="bottomSheet_extensions_btn">Erweiterungen</string>
   <string name="bottomSheet_hangup_btn">Anruf beenden</string>
+  <string name="camera_flip_btn_description">Kamera wechseln</string>
+  <string name="add_participant_btn_description">Teilnehmer hinzufügen</string>
+  <string name="screen_share_btn_description">Bildschirm freigeben</string>
   <string name="open_account_extension_settings">Kontoerweiterungseinstellungen öffnen</string>
   <string name="open_general_extension_settings">Allgemeine Erweiterungseinstellungen öffnen</string>
   <!--Swarm Details-->

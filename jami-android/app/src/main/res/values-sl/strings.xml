@@ -418,6 +418,9 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Zvoki</string>
   <string name="bottomSheet_raiseHand_btn">Dvigni roko</string>
+  <string name="camera_flip_btn_description">Zrcali kamero</string>
+  <string name="add_participant_btn_description">Dodaj sodelujočega</string>
+  <string name="screen_share_btn_description">Deli zaslon</string>
   <string name="open_account_extension_settings">Odpri nastavitve razširitev računa</string>
   <string name="open_general_extension_settings">Odpri splošne nastavitve razširitev</string>
   <string name="uninstall">Odnamesti</string>
