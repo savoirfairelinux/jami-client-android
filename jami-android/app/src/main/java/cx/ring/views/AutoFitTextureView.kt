@@ -38,6 +38,17 @@ class AutoFitTextureView @JvmOverloads constructor(context: Context, attrs: Attr
     private val mSize: Int = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150f, context.resources.displayMetrics).roundToInt()
     private val mBounds = listOf(Rect())
 
+    /** Camera buffer dimensions (SurfaceTexture default buffer size), set by the camera service. */
+    var bufferWidth: Int = 0
+        private set
+    var bufferHeight: Int = 0
+        private set
+
+    fun setBufferSize(width: Int, height: Int) {
+        bufferWidth = width
+        bufferHeight = height
+    }
+
     init {
         if (attrs != null) {
             val a = context.obtainStyledAttributes(attrs, R.styleable.AutoFitTextureView)
