@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0bd948e_ea366ea4",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:34Z",
+      "side": 1,
+      "message": "[critical] Line 307: 🔴 Thread safety: `pushWakeLock` and `pushEventDisposable` are accessed from multiple threads (push handler threads call `onPushReceived()`, main looper runs `releasePushHold()`) without synchronization. The null-check-then-assign on `pushWakeLock` is a classic race condition that can lead to double-acquire or a leaked WakeLock.\n\nAdditionally, when a second push arrives while the WakeLock is already held, it is not re-acquired with a fresh timeout. If the first WakeLock\u0027s 35s timeout expires before the re-armed `pushMaxWindowMs` (25s from the second push) fires, the device may sleep during active processing.\n\n```suggestion\n        synchronized(this) {\n            val wl \u003d pushWakeLock\n            if (wl \u003d\u003d null) {\n                val pm \u003d getSystemService(POWER_SERVICE) as PowerManager\n                pushWakeLock \u003d pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, \"jami:push-app\").apply {\n                    setReferenceCounted(false)\n                    acquire(pushMaxWindowMs + 10_000L)\n                }\n            } else {\n                // Extend timeout for overlapping pushes\n                wl.acquire(pushMaxWindowMs + 10_000L)\n            }\n        }\n```",
+      "revId": "23473aaa47b369e00f49887ab852367c183dd180",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c9f244b_f352eaa8",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:34Z",
+      "side": 1,
+      "message": "Line 339: 🟡 Thread safety: `pushEventDisposable` is read/written from push handler threads (in `onPushReceived`) and the main looper (in `releasePushHold`). The condition `pushEventDisposable \u003d\u003d null || pushEventDisposable?.isDisposed \u003d\u003d true` is a non-atomic check-then-act. Consider protecting access with a lock or ensuring `onPushReceived` always runs on the main thread (e.g., post to `pushReleaseHandler`).",
+      "revId": "23473aaa47b369e00f49887ab852367c183dd180",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75db4935_6e2477d0",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:34Z",
+      "side": 1,
+      "message": "Line 346: 🟡 The Observable subscription callback calls `pushReleaseHandler.removeCallbacks` and `postDelayed` — these are main-thread operations but the subscription may deliver events on arbitrary schedulers depending on the upstream Observables. Add `.observeOn(AndroidSchedulers.mainThread())` before `.subscribe()` to guarantee callback thread safety with the handler.",
+      "revId": "23473aaa47b369e00f49887ab852367c183dd180",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42d98b3f_acaf2f8a",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:34Z",
+      "side": 1,
+      "message": "[critical] Line 370: 🔴 Logic bug: `releasePushHold()` unconditionally disposes `pushEventDisposable` before checking `activePushCount`. When count \u003e 0 and the method defers by re-posting the runnable, the event subscription is already gone. This means for the deferred window, daemon events will NOT trigger early release — the system always falls back to the full `pushMaxWindowMs` timeout, defeating the purpose of event-driven release.\n\nMove the dispose after the count check:\n```suggestion\n    private fun releasePushHold() {\n        // If a new push came in while we were waiting, defer release.\n        if (activePushCount.get() \u003e 0) {\n            Log.d(TAG, \"Push: still ${activePushCount.get()} in flight, deferring release\")\n            pushReleaseHandler.postDelayed(pushReleaseRunnable, pushMaxWindowMs)\n            return\n        }\n\n        pushEventDisposable?.dispose()\n        pushEventDisposable \u003d null\n\n        try { pushWakeLock?.release() } catch (_: Exception) {}\n        pushWakeLock \u003d null\n```",
+      "revId": "23473aaa47b369e00f49887ab852367c183dd180",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07ee406f_1fe5e5ef",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:34Z",
+      "side": 1,
+      "message": "Line 387: 🟡 `releasePushHold()` calls `startForegroundService()` to deliver `ACTION_PUSH_DONE`. On Android 14+, starting a foreground service from the background requires specific exemptions. If the app is not in the foreground and the WakeLock-based exemption has expired, this call will throw `ForegroundServiceStartNotAllowedException`. Consider using `stopService()` or a bound service pattern instead, or at minimum handle this specific exception type with a more informative log.",
+      "revId": "23473aaa47b369e00f49887ab852367c183dd180",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "491b8943_89ac5465",
+        "filename": "jami-android/app/src/main/java/cx/ring/service/PushForegroundService.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:34Z",
+      "side": 1,
+      "message": "[info] Line 25: 🟢 Good fix: always calling `startForeground()` before checking `ACTION_PUSH_DONE` correctly addresses the `ForegroundServiceDidNotStartInTimeException` race. The comment explaining the rationale is clear and helpful.",
+      "revId": "23473aaa47b369e00f49887ab852367c183dd180",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d61efce1_1eedafe9",
+        "filename": "jami-android/app/src/main/java/cx/ring/service/PushForegroundService.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:34Z",
+      "side": 1,
+      "message": "Line 59: 🟡 Catching all exceptions from `startForeground()` silently and continuing means if the foreground promotion truly fails, Android may still kill the process. At minimum, log the exception so developers can diagnose field issues:\n```suggestion\n        } catch (e: Exception) {\n            Log.w(\"PushForegroundService\", \"startForeground failed\", e)\n        }\n```",
+      "revId": "23473aaa47b369e00f49887ab852367c183dd180",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "898b88c7_d23d8dbd",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:34Z",
+      "side": 1,
+      "message": "[info] Line 45: 🟢 Good practice: removing per-service WakeLock and foreground service management in favor of centralized handling in `JamiApplication` eliminates duplication and race conditions between the service-level and app-level lifecycle. The comment explaining why resources are NOT released here is valuable.",
+      "revId": "23473aaa47b369e00f49887ab852367c183dd180",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32e1033f_4fe71a3a",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:34Z",
+      "side": 1,
+      "message": "Line 586: 🟡 Deadlock risk: if `awaitCompletion \u003d true` is ever called from the daemon executor thread (e.g., transitively from a callback), the 5-second latch will always time out. The documentation warns against this but there\u0027s no runtime guard. Consider adding a defensive check:\n```suggestion\n    fun setAccountsActive(active: Boolean, forceAll: Boolean \u003d false, awaitCompletion: Boolean \u003d false) {\n        if (awaitCompletion \u0026\u0026 Thread.currentThread() \u003d\u003d mExecutorThread) {\n            Log.e(TAG, \"setAccountsActive: awaitCompletion called from executor thread!\", IllegalStateException())\n            // Fall through without blocking\n        }\n        val latch \u003d if (awaitCompletion \u0026\u0026 Thread.currentThread() !\u003d mExecutorThread) java.util.concurrent.CountDownLatch(1) else null\n```",
+      "revId": "23473aaa47b369e00f49887ab852367c183dd180",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
