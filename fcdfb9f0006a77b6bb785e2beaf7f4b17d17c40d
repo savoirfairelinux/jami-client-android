@@ -88,6 +88,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "093250ba_bbafc10b",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-05-19T20:47:42Z",
+      "side": 1,
+      "message": "This drains the battery since we launch foreground service for all high priority notifications in android.",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 17
+      },
+      "revId": "fcdfb9f0006a77b6bb785e2beaf7f4b17d17c40d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "17058224_79781350",
         "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
         "patchSetId": 5
