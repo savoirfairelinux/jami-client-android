@@ -16,6 +16,91 @@
       "message": "If this patch is related to the issue, will it also resolve this problem https://git.jami.net/savoirfairelinux/jami-client-android/-/work_items/1217?",
       "revId": "f3f4b04fdd9cc65d5b25402d7460ce856625bcfb",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb9ccfb5_142a9fc4",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:04:03Z",
+      "side": 1,
+      "message": "Line 1338: 🟡 `windowManager.defaultDisplay` is deprecated since API 30. Consider using `activity.display` (API 30+) or `WindowMetrics` via `WindowManager.getCurrentWindowMetrics()` for the display rotation. This is a pre-existing issue also present elsewhere in the file, so not blocking, but worth noting for future cleanup.",
+      "revId": "f3f4b04fdd9cc65d5b25402d7460ce856625bcfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b285205_497029bf",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 1353,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:04:03Z",
+      "side": 1,
+      "message": "[praise] Line 1353: 🟢 Good: The landscape rotation branch now correctly uses the actual buffer dimensions instead of the (possibly stale) mPreviewWidth/Height. This properly fixes the transform computation when the view size and buffer size differ.",
+      "revId": "f3f4b04fdd9cc65d5b25402d7460ce856625bcfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "590a9935_1c542942",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/AutoFitTextureView.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:04:03Z",
+      "side": 1,
+      "message": "Line 42: 🟡 Minor thread-safety note: `bufferWidth` and `bufferHeight` are read from the UI thread in `configureTransform` but written from the camera thread in `setBufferSize`. Since both are plain `Int` fields (not volatile or atomic), there\u0027s a theoretical visibility issue. In practice this is likely fine on Android (UI thread will see the update on next layout pass), but marking them `@Volatile` or using an `AtomicInteger` would be more correct.",
+      "revId": "f3f4b04fdd9cc65d5b25402d7460ce856625bcfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f26e4028_be39aace",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/AutoFitTextureView.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:04:03Z",
+      "side": 1,
+      "message": "Line 47: 🟡 `clearBufferSize()` is defined but never called anywhere in the codebase. If it\u0027s intended to be called when the camera closes, it should actually be wired up — otherwise it\u0027s dead code. Consider either removing it or adding the call site (e.g., in CameraService when the camera session is closed).",
+      "revId": "f3f4b04fdd9cc65d5b25402d7460ce856625bcfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a80931bc_20c47377",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/AutoFitTextureView.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:04:03Z",
+      "side": 1,
+      "message": "[praise] Line 85: 🟢 Good defensive practice: clearing the buffer dimensions when the aspect ratio changes ensures stale values aren\u0027t used before the camera service sets the new buffer size.",
+      "revId": "f3f4b04fdd9cc65d5b25402d7460ce856625bcfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
