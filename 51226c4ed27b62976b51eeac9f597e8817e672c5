@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c882bdfd_dffa9c81",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T23:52:13Z",
+      "side": 1,
+      "message": "[🔴 Critical Issues] Line 181: onDaemonExecutor is set to true for the executor thread but is never reset. Because executor threads are reused, any later task running on that thread will permanently trip ensureDaemonStarted()\u0027s check, even if it is not part of bootstrap. Reset it in a finally block around the executor work.\n```suggestion\nmExecutor.execute {\n    onDaemonExecutor.set(true)\n    try {\n        ...\n    } catch (e: Exception) {\n        ...\n    } finally {\n        onDaemonExecutor.set(false)\n    }\n}\n```",
+      "revId": "51226c4ed27b62976b51eeac9f597e8817e672c5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df9243b0_d5b2e5af",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T23:52:13Z",
+      "side": 1,
+      "message": "[🔴 Critical Issues] Line 49: The result of ensureDaemonStarted() is ignored, so push dispatch continues even when daemon startup timed out or failed. That can still lose the wake-up this change is meant to make reliable. Gate dispatch on success and log/return on failure.\n```suggestion\nif (!app.ensureDaemonStarted()) {\n    Log.e(TAG, \"onMessageReceived: daemon failed to start within timeout, push may be lost\")\n    return@launch\n}\napp.onMessageReceived(remoteMessage)\n```",
+      "revId": "51226c4ed27b62976b51eeac9f597e8817e672c5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59378bc6_0b88574d",
+        "filename": "jami-android/app/src/withUnifiedPush/java/cx/ring/application/JamiApplicationUnifiedPush.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T23:52:13Z",
+      "side": 1,
+      "message": "[🔴 Critical Issues] Line 72: Same issue as Firebase: after ensureDaemonStarted() returns false, the code still calls pushNotificationReceived() and processPush(). If the daemon is unavailable, this is unreliable and may fail silently. Return early when startup fails.\n```suggestion\nif (!ensureDaemonStarted()) {\n    Log.e(TAG, \"onMessage: daemon failed to start within timeout, push may be lost\")\n    return\n}\n```",
+      "revId": "51226c4ed27b62976b51eeac9f597e8817e672c5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a75a750_5001334c",
+        "filename": "jami-android/app/src/withUnifiedPush/java/cx/ring/services/JamPushService.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T23:52:13Z",
+      "side": 1,
+      "message": "[🟡 Suggestions] Line 20: Unused imports were added for Intent and PowerManager. They are not functional bugs, but they add noise and may fail stricter lint configurations. Remove them.",
+      "revId": "51226c4ed27b62976b51eeac9f597e8817e672c5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
