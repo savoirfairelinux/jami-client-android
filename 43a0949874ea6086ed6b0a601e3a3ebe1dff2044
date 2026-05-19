@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "374c0cec_7470b532",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:40:43Z",
+      "side": 1,
+      "message": "[minor] Line 135: 🟡 `currentCameraZoom` is a fragment-level field that isn\u0027t reset when the camera is switched by the system (e.g., when the front camera is toggled externally or when the call is put on hold and resumed). It\u0027s only reset on `cameraFlip()` and `onDestroyView()`. If the underlying camera changes without going through `cameraFlip()`, the local zoom state will be stale. Consider listening to camera-change events from `HardwareService` to reset this.",
+      "revId": "43a0949874ea6086ed6b0a601e3a3ebe1dff2044",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01b85dae_0fae6ccd",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:40:43Z",
+      "side": 1,
+      "message": "[minor] Line 153: 🟡 The `setCurrentCameraZoom` call is made from the UI thread inside a `ValueAnimator` update listener, but `setZoomRatio` in `CameraService` posts work to a camera handler thread and returns the clamped value synchronously based on stored state. This is fine for correctness, but the throttling logic (`abs(v - lastApplied) \u003e\u003d 0.05f`) uses float equality check `v \u003d\u003d end` which may never be exactly true due to floating-point rounding in the animator. Consider using `\u003e\u003d end - epsilon` instead:\n```suggestion\n                if (kotlin.math.abs(v - lastApplied) \u003e\u003d 0.05f || v \u003e\u003d end - 0.001f) {\n```",
+      "revId": "43a0949874ea6086ed6b0a601e3a3ebe1dff2044",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97992485_432eaca5",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:40:43Z",
+      "side": 1,
+      "message": "[minor] Line 683: 🟡 On pre-R devices without `CONTROL_ZOOM_RATIO_RANGE`, the fallback sets `CONTROL_ZOOM_RATIO` unconditionally with the raw ratio value. If the device doesn\u0027t support `CONTROL_ZOOM_RATIO` at all (API \u003c 30), this key will be ignored silently. The `else` branch (crop-region path) handles this correctly, but the code only enters the crop-region branch when `Build.VERSION.SDK_INT \u003c R`. The logic is correct as structured, but adding a comment clarifying that the `CONTROL_ZOOM_RATIO` branch is only entered on R+ would improve readability.",
+      "revId": "43a0949874ea6086ed6b0a601e3a3ebe1dff2044",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76fc7bed_9830f7ac",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:40:43Z",
+      "side": 1,
+      "message": "[critical] Line 734: 🔴 Thread-safety issue: `setZoomRatio` is called from the UI thread (gesture detectors in CallFragment). It reads `params.cameraSession`, `params.camera`, and `params.previewSurface` on the calling thread, then posts work to `handler`. However, these fields can be nulled out concurrently on the camera handler thread (e.g., in `closeCamera`). Between reading `session !\u003d null` and using `session` inside the posted lambda, the session could be closed. While the posted lambda catches exceptions, the race on the outer null-check is still risky. Consider either reading all params inside the posted block, or adding `@Volatile`/synchronization on the mutable session/camera fields.",
+      "revId": "43a0949874ea6086ed6b0a601e3a3ebe1dff2044",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1d9915f_30f88024",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:40:43Z",
+      "side": 1,
+      "message": "[major] Line 746: 🟡 The repeating request is submitted with `null` as the CaptureCallback, but the original session setup uses a `captureCallback` that handles codec start and key frame insertion. Replacing the repeating request with one that has a null callback means codec-start logic (e.g., `startMediaCodecIfNeeded`) won\u0027t fire if a zoom change happens before the codec is started. Consider storing and reusing the original `CaptureCallback`.",
+      "revId": "43a0949874ea6086ed6b0a601e3a3ebe1dff2044",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "257ca317_8542ba10",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:40:43Z",
+      "side": 1,
+      "message": "[major] Line 844: 🟡 Storing `previous` and conditionally restoring it when `IllegalStateException` is caught is a reasonable defensive measure. However, between `videoParams.cameraSession \u003d session` (line 845) and the exception at line 848, `listener.onOpened()` (line 846) is already called, which may trigger dependent logic that assumes the session is valid. Consider moving `listener.onOpened()` after the successful `setRepeatingRequest` call.",
+      "revId": "43a0949874ea6086ed6b0a601e3a3ebe1dff2044",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee6ddc08_34d643d6",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/VideoDisplayZoomHelper.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:40:43Z",
+      "side": 1,
+      "message": "[minor] Line 105: 🟡 `startProgressiveZoom` captures `focusX` and `focusY` at the time of the long press and uses them for the entire animation duration. If the user moves their finger after the long press begins, the zoom focus point remains fixed at the original position, which may feel unnatural. Consider updating the focus coordinates if a move event occurs during the progressive zoom.",
+      "revId": "43a0949874ea6086ed6b0a601e3a3ebe1dff2044",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1a557be_3ea0ab6e",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/VideoSinkView.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:40:43Z",
+      "side": 1,
+      "message": "[minor] Line 64: 🟡 `setPinchToZoomEnabled` can be called from `ParticipantsContainerView` during layout updates. When toggling from enabled→disabled, the zoom helper\u0027s internal state (scale/translate) is lost but the view\u0027s transform is reset via `configureTransform`. However, when re-enabling later, a new `VideoDisplayZoomHelper` is created without resetting the `TextureView` transform first. If `configureTransform` is called with ratioWidth/ratioHeight \u003d\u003d 0 (before first frame), the identity matrix is set, which could flash an incorrectly-scaled frame. Consider guarding with `if (ratioWidth \u003e 0 \u0026\u0026 ratioHeight \u003e 0)`.",
+      "revId": "43a0949874ea6086ed6b0a601e3a3ebe1dff2044",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
