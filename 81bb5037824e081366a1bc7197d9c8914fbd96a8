@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "664a9317_8e77cee2",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:29:20Z",
+      "side": 1,
+      "message": "[info] Line 191: 🟢 Good practice: The bootstrap lock/notify pattern is correctly implemented with the lock held during state transitions and `notifyAll()` called in both success and error paths, preventing waiters from hanging indefinitely.",
+      "revId": "81bb5037824e081366a1bc7197d9c8914fbd96a8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e03aa6e_2dd64abd",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:29:20Z",
+      "side": 1,
+      "message": "[warning] Line 213: 🟡 Suggestion: `ensureDaemonStarted()` will deadlock if accidentally called on the `mExecutor` thread (since `bootstrapDaemon` posts to the same single-threaded executor). The doc comment warns about this, but a runtime assertion would be more robust.\n\n```suggestion\n    fun ensureDaemonStarted(): Boolean {\n        check(Thread.currentThread().name !\u003d mExecutor.toString()) {\n            \"ensureDaemonStarted must not be called from the DaemonExecutor thread\"\n        }\n        if (daemon.isStarted) return true\n```",
+      "revId": "81bb5037824e081366a1bc7197d9c8914fbd96a8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a00dbde_8475812a",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:29:20Z",
+      "side": 1,
+      "message": "[warning] Line 223: 🟡 Suggestion: The `wait()` call uses `remaining / 1_000_000` which truncates nanoseconds to milliseconds, potentially passing 0ms to `wait()` which means infinite wait. When `remaining` is between 1 and 999_999 nanoseconds, this becomes `wait(0)`. Consider adding a minimum of 1ms:\n\n```suggestion\n                    (bootstrapLock as java.lang.Object).wait(maxOf(1, remaining / 1_000_000), (remaining % 1_000_000).toInt())\n```",
+      "revId": "81bb5037824e081366a1bc7197d9c8914fbd96a8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6e5649a_b5cfcf55",
+        "filename": "jami-android/app/src/main/java/cx/ring/service/DRingService.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:29:20Z",
+      "side": 1,
+      "message": "[info] Line 204: 🟢 Good practice: The `onTimeout` now logs whether active calls are present before stopping foreground — helpful for debugging timeout-related issues in the field.",
+      "revId": "81bb5037824e081366a1bc7197d9c8914fbd96a8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8942d8cf_4cb5dd6a",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:29:20Z",
+      "side": 1,
+      "message": "[info] Line 38: 🟢 Good practice: Guarding `setPushNotificationConfig` with `daemon.isStarted` prevents NPEs and wasted IPC when the daemon isn\u0027t ready. The token is correctly applied during bootstrap at line 183 of JamiApplication.kt.",
+      "revId": "81bb5037824e081366a1bc7197d9c8914fbd96a8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "213899a5_78aa46a1",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:29:20Z",
+      "side": 1,
+      "message": "[warning] Line 33: 🟡 Suggestion: The `serviceScope` uses `SupervisorJob()` but is never cancelled (no `onDestroy` override calls `serviceScope.cancel()`). If the service is destroyed while a coroutine is blocked in `ensureDaemonStarted()`, the coroutine and wake lock will leak until the 30s timeout. Consider cancelling the scope in `onDestroy()`.",
+      "revId": "81bb5037824e081366a1bc7197d9c8914fbd96a8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4849fa73_0a31a62f",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:29:20Z",
+      "side": 1,
+      "message": "[warning] Line 47: 🟡 Suggestion: The foreground service start is posted to the main looper asynchronously, but the coroutine on `Dispatchers.Default` may complete (and release the wake lock) before the main looper executes. On a heavily loaded device, there\u0027s a brief window where neither the wake lock nor the foreground service protects the process. Consider starting the foreground service synchronously before launching the coroutine, or acquiring the wake lock inside the coroutine as well.",
+      "revId": "81bb5037824e081366a1bc7197d9c8914fbd96a8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16052f1e_7f00ed83",
+        "filename": "jami-android/app/src/withUnifiedPush/java/cx/ring/services/JamPushService.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:29:20Z",
+      "side": 1,
+      "message": "[warning] Line 61: 🟡 Suggestion: Using a raw `Thread` is inconsistent with the Firebase implementation which uses `CoroutineScope`. A raw thread has no structured concurrency, no cancellation support, and adds overhead from thread creation per push. Consider using a coroutine scope like the Firebase variant does:\n\n```suggestion\n        serviceScope.launch {\n```\n\nWith a `serviceScope` defined similarly to `JamiFirebaseMessagingService`.",
+      "revId": "81bb5037824e081366a1bc7197d9c8914fbd96a8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ff0b31e_088e09df",
+        "filename": "jami-android/app/src/withUnifiedPush/java/cx/ring/services/JamPushService.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:29:20Z",
+      "side": 1,
+      "message": "[critical] Line 64: 🔴 Critical: Logging the full push message content (`msgStr`) at WARN level may expose sensitive data (message previews, caller info) in production logs. Either remove or reduce to DEBUG level with content truncation.\n\n```suggestion\n                Log.d(TAG, \"onMessage instance\u003d$instance\")\n```",
+      "revId": "81bb5037824e081366a1bc7197d9c8914fbd96a8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
