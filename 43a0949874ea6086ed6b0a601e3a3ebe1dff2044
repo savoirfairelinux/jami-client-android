@@ -37,6 +37,57 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0e5bcb94_335f5dfd",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:41:33Z",
+      "side": 1,
+      "message": "[minor] Line 153: 🟡 The `setCurrentCameraZoom` call happens on the UI thread inside the animator update listener, but internally it posts work to the camera handler thread. During rapid pinch gestures or the progressive animation (which fires frequently), this could queue many redundant repeating-request rebuilds. The 0.05f threshold helps but consider debouncing the camera update (e.g., only apply the last value within a 16ms window) rather than relying on a magnitude threshold, which may miss the final value if it doesn\u0027t exactly equal `end`.",
+      "revId": "43a0949874ea6086ed6b0a601e3a3ebe1dff2044",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "749d452f_d8bbdc68",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 1337,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:41:33Z",
+      "side": 1,
+      "message": "[info] Line 1337: 🟢 Good decision to early-return with an identity matrix for the preview surface. This avoids the previous convoluted conditional and simplifies the logic since `AutoFitTextureView` handles sizing. Clean refactoring.",
+      "revId": "43a0949874ea6086ed6b0a601e3a3ebe1dff2044",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c539fb6a_abe084c5",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:41:33Z",
+      "side": 1,
+      "message": "[minor] Line 678: 🟡 On API \u003c R, if `CONTROL_ZOOM_RATIO_RANGE` is not available but the device doesn\u0027t support `SCALER_AVAILABLE_MAX_DIGITAL_ZOOM` either (returns null → defaults to 1f), the code will set `CONTROL_ZOOM_RATIO` with the unclamped `ratio` value. This could crash or be ignored depending on the HAL. Consider falling through to the crop-region path when range is null on R+ devices, or at minimum clamping to 1f..maxDigitalZoom.",
+      "revId": "43a0949874ea6086ed6b0a601e3a3ebe1dff2044",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "97992485_432eaca5",
         "filename": "jami-android/app/src/main/java/cx/ring/services/CameraService.kt",
         "patchSetId": 7
@@ -48,6 +99,23 @@
       "writtenOn": "2026-05-19T18:40:43Z",
       "side": 1,
       "message": "[minor] Line 683: 🟡 On pre-R devices without `CONTROL_ZOOM_RATIO_RANGE`, the fallback sets `CONTROL_ZOOM_RATIO` unconditionally with the raw ratio value. If the device doesn\u0027t support `CONTROL_ZOOM_RATIO` at all (API \u003c 30), this key will be ignored silently. The `else` branch (crop-region path) handles this correctly, but the code only enters the crop-region branch when `Build.VERSION.SDK_INT \u003c R`. The logic is correct as structured, but adding a comment clarifying that the `CONTROL_ZOOM_RATIO` branch is only entered on R+ would improve readability.",
+      "revId": "43a0949874ea6086ed6b0a601e3a3ebe1dff2044",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b8faead_e4676e26",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:41:33Z",
+      "side": 1,
+      "message": "[critical] Line 725: 🔴 Thread-safety issue: `setZoomRatio` reads `params.cameraSession`, `params.camera`, and `params.previewSurface` on the calling thread (UI thread) and then posts work using those same references on the camera handler thread. Between the null-check and the `handler.post` execution, the session could be closed by `closeCamera()` running on another thread, leading to `IllegalStateException`. You should move the entire session/camera validity check inside the `handler.post` block:\n```suggestion\n        handler.post {\n            val session \u003d params.cameraSession\n            val camera \u003d params.camera\n            val previewSurface \u003d params.previewSurface\n            if (session !\u003d null \u0026\u0026 camera !\u003d null \u0026\u0026 previewSurface !\u003d null) {\n                try {\n                    val mgr \u003d manager ?: return@post\n                    val cc \u003d mgr.getCameraCharacteristics(params.id)\n                    val availableFpsRanges \u003d cc.get(CameraCharacteristics.CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES)\n                    val fpsRange \u003d chooseOptimalFpsRange(availableFpsRanges)\n                    val request \u003d buildCaptureRequest(camera, previewSurface, if (params.codecStarted) params.captureSurface else null, fpsRange)\n                    session.setRepeatingRequest(request, null, handler)\n                } catch (e: Exception) {\n                    Log.w(TAG, \"setZoomRatio: failed to update repeating request\", e)\n                }\n            }\n        }\n```",
       "revId": "43a0949874ea6086ed6b0a601e3a3ebe1dff2044",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
@@ -105,6 +173,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2c1179c9_ed478da9",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:41:33Z",
+      "side": 1,
+      "message": "[minor] Line 844: 🟡 The `previous` session reference is restored on `IllegalStateException`, but if the previous session was also closed (which is likely since a new session implicitly closes the old one), the stored `cameraSession` will reference a dead session. Subsequent `setZoomRatio` calls would try to use it and also fail. Consider setting `cameraSession \u003d null` instead of `previous` on failure, or better yet, not storing the session until `setRepeatingRequest` succeeds.",
+      "revId": "43a0949874ea6086ed6b0a601e3a3ebe1dff2044",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ee6ddc08_34d643d6",
         "filename": "jami-android/app/src/main/java/cx/ring/views/VideoDisplayZoomHelper.kt",
         "patchSetId": 7
@@ -122,6 +207,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3d83db72_e0123f0a",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/VideoDisplayZoomHelper.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:41:33Z",
+      "side": 1,
+      "message": "[minor] Line 142: 🟡 Both `attach()` and `onTouchEvent()` provide duplicate touch-handling logic. The `attach()` method sets a touch listener internally, while the class doc says the host should forward via `onTouchEvent`. Having both paths is confusing and `onTouchEvent` appears unused (VideoSinkView calls `attach()`). Consider removing the public `onTouchEvent` method or the `attach()` method to avoid confusion and ensure a single entry point.",
+      "revId": "43a0949874ea6086ed6b0a601e3a3ebe1dff2044",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b1a557be_3ea0ab6e",
         "filename": "jami-android/app/src/main/java/cx/ring/views/VideoSinkView.kt",
         "patchSetId": 7
@@ -133,6 +235,40 @@
       "writtenOn": "2026-05-19T18:40:43Z",
       "side": 1,
       "message": "[minor] Line 64: 🟡 `setPinchToZoomEnabled` can be called from `ParticipantsContainerView` during layout updates. When toggling from enabled→disabled, the zoom helper\u0027s internal state (scale/translate) is lost but the view\u0027s transform is reset via `configureTransform`. However, when re-enabling later, a new `VideoDisplayZoomHelper` is created without resetting the `TextureView` transform first. If `configureTransform` is called with ratioWidth/ratioHeight \u003d\u003d 0 (before first frame), the identity matrix is set, which could flash an incorrectly-scaled frame. Consider guarding with `if (ratioWidth \u003e 0 \u0026\u0026 ratioHeight \u003e 0)`.",
+      "revId": "43a0949874ea6086ed6b0a601e3a3ebe1dff2044",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f862d07_e016fd5c",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/VideoSinkView.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:41:33Z",
+      "side": 1,
+      "message": "[minor] Line 64: 🟡 `setPinchToZoomEnabled` can be called repeatedly from `ParticipantsContainerView` on every layout pass (via `updateParticipantInfoOverlay`). While the early-return guards (`if (enabled \u0026\u0026 zoomHelper \u003d\u003d null)`) prevent redundant object creation, calling `configureTransform` every time is wasteful. Consider tracking the current enabled state in a boolean and short-circuiting if unchanged:\n```suggestion\n    fun setPinchToZoomEnabled(enabled: Boolean) {\n        val currentlyEnabled \u003d zoomHelper !\u003d null\n        if (enabled \u003d\u003d currentlyEnabled) return\n        if (enabled) {\n            zoomHelper \u003d VideoDisplayZoomHelper(context, this).also { it.attach() }\n            configureTransform(ratioWidth, ratioHeight)\n        } else {\n            setOnTouchListener(null)\n            zoomHelper \u003d null\n            configureTransform(ratioWidth, ratioHeight)\n        }\n    }\n```",
+      "revId": "43a0949874ea6086ed6b0a601e3a3ebe1dff2044",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e3a0cb2_da6e9b00",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/HardwareService.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:41:33Z",
+      "side": 1,
+      "message": "[trivial] Line 120: 🟡 Missing blank line between `setCurrentCameraZoom` and `connectivityChanged`. This is a minor formatting issue but it\u0027s inconsistent with the rest of the file where functions are separated by blank lines.",
       "revId": "43a0949874ea6086ed6b0a601e3a3ebe1dff2044",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
