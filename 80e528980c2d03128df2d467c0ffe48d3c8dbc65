@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08441811_43210ac8",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:30Z",
+      "side": 1,
+      "message": "[minor] Line 121: 🟡 `idleShutdownDelayMs` is a private val but not a compile-time constant. Consider making it a `companion object` constant for clarity and to match the naming convention referenced in docs (`IDLE_SHUTDOWN_DELAY_MS`).\n```suggestion\n    companion object {\n        ...\n        private const val IDLE_SHUTDOWN_DELAY_MS \u003d 90_000L\n    }\n```",
+      "revId": "80e528980c2d03128df2d467c0ffe48d3c8dbc65",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8272f47e_cd155c65",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:30Z",
+      "side": 1,
+      "message": "[minor] Line 253: The KDoc references `[IDLE_SHUTDOWN_DELAY_MS]` but the actual field is named `idleShutdownDelayMs`. This will produce a broken documentation link.\n```suggestion\n     * Schedules account deactivation after [idleShutdownDelayMs] if the app stays in background\n```",
+      "revId": "80e528980c2d03128df2d467c0ffe48d3c8dbc65",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edb5047e_c0131b2d",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:30Z",
+      "side": 1,
+      "message": "[minor] Line 270: 🟡 `onPushReceived()` calls `mAccountService.setAccountsActive(true)` which posts to `mExecutor`. If the daemon hasn\u0027t finished starting (e.g., `ensureDaemonStarted()` hasn\u0027t completed yet in the Firebase coroutine), this could race with daemon initialization. The Firebase handler calls `onPushReceived()` before `ensureDaemonStarted()`. The `daemon.isStarted` check provides some guard, but if the daemon is mid-start, it may be `true` while accounts aren\u0027t fully loaded yet. Consider moving the reactivation call to after `ensureDaemonStarted()` in the push handlers for safety.",
+      "revId": "80e528980c2d03128df2d467c0ffe48d3c8dbc65",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a4f5b63_8abc6af3",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:30Z",
+      "side": 1,
+      "message": "[minor] Line 283: 🟡 `scheduleIdleShutdown()` posts to the main-thread Handler, but it\u0027s being called from `mExecutor` (a background executor thread). `Handler.postDelayed` is thread-safe so it won\u0027t crash, but calling `scheduleIdleShutdown()` does an `enablePermanentService` check on the executor thread followed by a post to the main looper. This is fine functionally, but consider documenting thread-safety expectations for these public methods, or always dispatching to the main thread first for consistency.",
+      "revId": "80e528980c2d03128df2d467c0ffe48d3c8dbc65",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "afd691f1_12fd8658",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:30Z",
+      "side": 1,
+      "message": "[critical] Line 288: 🔴 On Android 12+ (API 31), calling `startService()` from the background can throw `ForegroundServiceStartNotAllowedException` (subclass of `IllegalStateException`). Catching generic `Exception` does handle this, but the intent here is to stop the service — if the service isn\u0027t running, this call is unnecessary and will fail. Consider guarding with a check or using `stopService()` instead of starting with an action, which is more semantically correct and avoids background-start restrictions.\n```suggestion\n            try {\n                stopService(Intent(this, PushForegroundService::class.java))\n            } catch (e: Exception) {\n                Log.w(TAG, \"Can\u0027t stop foreground service\", e)\n            }\n```\nAlternatively, if the ACTION_PUSH_DONE approach is intentional (to allow the service to clean up gracefully), use `startForegroundService()` instead of `startService()` to avoid the background start restriction, but that introduces its own requirement to call `startForeground()` within 5 seconds.",
+      "revId": "80e528980c2d03128df2d467c0ffe48d3c8dbc65",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b2143de_f90aeca8",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:30Z",
+      "side": 1,
+      "message": "[minor] Line 378: 🟡 The `ProcessLifecycleOwner` observer\u0027s `onStart` calls `mAccountService.setAccountsActive(true)` unconditionally (when daemon is started). If accounts were never deactivated (e.g., app was only briefly backgrounded and the idle timer hadn\u0027t fired), this results in unnecessary JNI calls to re-activate already-active accounts. Consider tracking whether accounts were actually deactivated to avoid redundant work.",
+      "revId": "80e528980c2d03128df2d467c0ffe48d3c8dbc65",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b6b14f2_354985a1",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:30Z",
+      "side": 1,
+      "message": "[minor] Line 76: 🟡 If `app` is null (the cast at line 36 returned null), `onPushProcessed()` is never called and the `PushForegroundService` will only stop via its 30-second timeout. This is an existing condition made slightly worse — previously the foreground service timeout was the only cleanup path. Consider adding a fallback to stop the service even when `app` is null:\n```suggestion\n            } finally {\n                try { wl?.release() } catch (_: Exception) {}\n                app?.onPushProcessed() ?: try {\n                    stopService(Intent(this, PushForegroundService::class.java))\n                } catch (_: Exception) {}\n            }\n```",
+      "revId": "80e528980c2d03128df2d467c0ffe48d3c8dbc65",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6dda7737_5d59fd11",
+        "filename": "jami-android/app/src/withUnifiedPush/java/cx/ring/services/JamPushService.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:30Z",
+      "side": 1,
+      "message": "[minor] Line 64: 🟡 The UnifiedPush handler uses a raw `Thread` for background processing while the Firebase handler uses a `CoroutineScope`. This inconsistency means the UnifiedPush path has no structured concurrency and no easy way to cancel in-flight work. Not a blocker for this change, but worth noting for future alignment.",
+      "revId": "80e528980c2d03128df2d467c0ffe48d3c8dbc65",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
