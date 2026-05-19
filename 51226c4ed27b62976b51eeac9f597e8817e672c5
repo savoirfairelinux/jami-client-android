@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "50cbc9cf_1f8ffef3",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 28
+      },
+      "writtenOn": "2026-05-19T23:52:52Z",
+      "side": 1,
+      "message": "Patchset 6: foreground service is now gated on PRIORITY_HIGH only — only critical pushes (calls, messages, requests) start a FGS. Low-priority pushes use just the WakeLock. WakeLock + FGS lifecycle centralised in JamiApplication.onPushReceived(isHighPriority).",
+      "parentUuid": "093250ba_bbafc10b",
+      "revId": "51226c4ed27b62976b51eeac9f597e8817e672c5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "df9243b0_d5b2e5af",
