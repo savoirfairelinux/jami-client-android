@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e7fe6ce_499a691e",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:50Z",
+      "side": 1,
+      "message": "[warning] Line 148: 🟡 Suggestion: Race condition — if `bootstrapDaemon()` is called concurrently, one thread could see `daemon.isStarted \u003d\u003d false` at line 141, then at line 149 find `bootstrapInProgress \u003d\u003d true` and return without signaling. Meanwhile, a caller of `ensureDaemonStarted()` is waiting on `bootstrapDone`. This is generally fine because the in-progress bootstrap will eventually signal, but if the first call to `bootstrapDaemon()` already completed between line 141 and 148 (daemon started by another path), `bootstrapDone` may never be set. Consider checking `daemon.isStarted` again inside the synchronized block before returning.",
+      "revId": "fcdfb9f0006a77b6bb785e2beaf7f4b17d17c40d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1db2100f_40ca1d09",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:50Z",
+      "side": 1,
+      "message": "[warning] Line 214: 🟡 Suggestion: The thread-name check `Thread.currentThread().name !\u003d mExecutor.toString()` is fragile. `ScheduledExecutorService.toString()` does not typically return the thread name of its worker thread — it returns something like `java.util.concurrent.ScheduledThreadPoolExecutor@...`. This check will likely never trigger, making it a false safety net. Consider naming the executor thread via a ThreadFactory and comparing against that known name, or use a `ThreadLocal\u003cBoolean\u003e` flag set inside executor tasks.",
+      "revId": "fcdfb9f0006a77b6bb785e2beaf7f4b17d17c40d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74843381_09c21e4c",
+        "filename": "jami-android/app/src/main/java/cx/ring/service/PushForegroundService.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:50Z",
+      "side": 1,
+      "message": "[warning] Line 13: 🟡 Suggestion: Increasing `timeoutMs` from 5s to 30s is consistent with the new 30s WakeLock and 25s daemon wait, but on Android 14+ (API 34) short-service foreground services have a system-imposed timeout (typically ~25s for `dataSync` type). If this service uses a short-service FGS type, 30s may exceed the system limit and trigger `onTimeout`. Verify the foreground service type is compatible with this duration.",
+      "revId": "fcdfb9f0006a77b6bb785e2beaf7f4b17d17c40d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b65f1d6_00576fc9",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:50Z",
+      "side": 1,
+      "message": "[info] Line 38: 🟢 Good practice: Guarding `setPushNotificationConfig` behind `daemon.isStarted` prevents crashes when a token arrives before the daemon is ready. The bootstrap code already applies the token during startup, so this is a correct deferred-application pattern.",
+      "revId": "fcdfb9f0006a77b6bb785e2beaf7f4b17d17c40d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6063224_8d870ad8",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:50Z",
+      "side": 1,
+      "message": "[warning] Line 41: 🟡 Suggestion: The WakeLock timeout (30s) and the daemon startup timeout (25s) are close but not identical. If `ensureDaemonStarted` takes the full 25s, and then `onMessageReceived` takes additional time, the WakeLock may expire before message processing completes. Consider adding a small buffer (e.g., 35s) or releasing the lock explicitly rather than relying on timeout.",
+      "revId": "fcdfb9f0006a77b6bb785e2beaf7f4b17d17c40d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17058224_79781350",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:50Z",
+      "side": 1,
+      "message": "[warning] Line 63: 🟡 Suggestion: The WakeLock is acquired on the calling thread but released in the coroutine\u0027s `finally` block. If `serviceScope` is cancelled (e.g., via `onDestroy`) before the coroutine starts, the WakeLock will never be released. Consider also releasing the WakeLock in a catch block at the outer level, or using `invokeOnCompletion` on the launched job to ensure release.",
+      "revId": "fcdfb9f0006a77b6bb785e2beaf7f4b17d17c40d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b07ce26_d48e204d",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:50Z",
+      "side": 1,
+      "message": "[info] Line 90: 🟢 Good practice: Adding `onDestroy()` to cancel the `serviceScope` prevents coroutine leaks when the service is destroyed.",
+      "revId": "fcdfb9f0006a77b6bb785e2beaf7f4b17d17c40d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4344aa05_90023ce6",
+        "filename": "jami-android/app/src/withUnifiedPush/java/cx/ring/application/JamiApplicationUnifiedPush.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:50Z",
+      "side": 1,
+      "message": "[warning] Line 73: 🟡 Suggestion: `ensureDaemonStarted()` blocks the calling thread for up to 25 seconds. In `JamPushService.onMessage()`, this is called from a coroutine on `Dispatchers.Default`. However, in `JamiApplicationUnifiedPush.onMessage()` (line 73), it appears to be called directly. The caller context from `JamPushService` is a coroutine, which is fine, but blocking a `Dispatchers.Default` thread for 25s is heavy — consider using `Dispatchers.IO` for the coroutine in `JamPushService`.",
+      "revId": "fcdfb9f0006a77b6bb785e2beaf7f4b17d17c40d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7e02d5f_e1ac3043",
+        "filename": "jami-android/app/src/withUnifiedPush/java/cx/ring/services/JamPushService.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-19T18:44:50Z",
+      "side": 1,
+      "message": "[critical] Line 60: 🔴 Critical: `onPushReceived()` and `onPushProcessed()` are called on `JamiApplicationUnifiedPush` but these methods do not exist in that class or in the parent `JamiApplication`. This will cause a compilation error. Either these methods need to be added to `JamiApplicationUnifiedPush` (handling WakeLock and foreground service as the comment suggests), or this call should be replaced with the same pattern used in the Firebase variant (explicit WakeLock + foreground service start).",
+      "revId": "fcdfb9f0006a77b6bb785e2beaf7f4b17d17c40d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
