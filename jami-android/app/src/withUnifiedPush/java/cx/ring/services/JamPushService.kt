@@ -47,8 +47,21 @@ class JamiPushService : PushService() {
         instance: String
     ) {
         val app = JamiApplication.instance as JamiApplicationUnifiedPush?
-        // UnifiedPush has no priority field — treat every push as high priority.
-        app?.onPushReceived(isHighPriority = true)
+
+        // Parse the JSON payload to extract the priority field added by the
+        // OpenDHT proxy. The HTTP Urgency header is not exposed by the
+        // UnifiedPush connector, so the proxy includes it in the body.
+        val msgStr = String(message.content)
+        val isHigh = try {
+            val obj = JSONObject(msgStr)
+            obj.optString("priority", "high").equals("high", ignoreCase = true)
+        } catch (e: Exception) {
+            true // default to high if parsing fails
+        }
+
+        if (app?.onPushReceived(isHigh) == false) {
+            return
+        }
 
         serviceScope.launch {
             try {
@@ -57,7 +70,6 @@ class JamiPushService : PushService() {
                     Log.w(TAG, "Daemon not started, dropping push")
                     return@launch
                 }
-                val msgStr = String(message.content)
                 Log.w(TAG, "onMessage $msgStr $instance")
                 val obj = JSONObject(msgStr)
                 val msg = HashMap<String, String>()
@@ -66,8 +78,6 @@ class JamiPushService : PushService() {
             } catch (e: Exception) {
                 Log.e(TAG, "onMessage", e)
             } finally {
-                // Do NOT release WakeLock or stop foreground service here:
-                // the native dispatch only schedules work inside the daemon.
                 app?.onPushProcessed()
             }
         }
