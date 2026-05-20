@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3aafc880_82c7437f",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T01:47:17Z",
+      "side": 1,
+      "message": "[Critical] Line 255: 🔴 Critical Issues - The previous protection against calling `ensureDaemonStarted()` from the daemon executor was removed, but the method still schedules bootstrap work on `mExecutor` and then waits for it. If any daemon-executor callback calls this method while the daemon is not started, it self-deadlocks until timeout or indefinitely because of the wait bug above. Restore an explicit executor-thread guard using a reliable marker rather than relying on callers.\n```suggestion\ncheck(!onDaemonExecutor.get()) {\n    \"ensureDaemonStarted must not be called from the DaemonExecutor thread\"\n}\n```",
+      "revId": "93fce1658d404ad613276e47385e978554ff804a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f9628cb_5916c500",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T01:47:17Z",
+      "side": 1,
+      "message": "[Critical] Line 266: 🔴 Critical Issues - The timeout wait can become an indefinite wait when `remaining / 1_000_000` rounds down to `0`, so `ensureDaemonStarted()` may block forever instead of returning `false` after 25s. This can strand push handling and keep lifecycle resources inconsistent. Use the `(millis, nanos)` overload or clamp the millisecond value to at least 1.\n```suggestion\nval remainingMs \u003d TimeUnit.NANOSECONDS.toMillis(remaining)\nval remainingNs \u003d (remaining - TimeUnit.MILLISECONDS.toNanos(remainingMs)).toInt()\n@Suppress(\"PLATFORM_CLASS_MAPPED_TO_KOTLIN\")\n(bootstrapLock as java.lang.Object).wait(remainingMs, remainingNs)\n```",
+      "revId": "93fce1658d404ad613276e47385e978554ff804a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be176293_6af95a20",
+        "filename": "jami-android/app/src/withUnifiedPush/java/cx/ring/services/JamPushService.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T01:47:17Z",
+      "side": 1,
+      "message": "[Critical] Line 62: 🔴 Critical Issues - The push payload is logged in full with `Log.w(TAG, \"onMessage $msgStr $instance\")`. Push data may contain message metadata, account identifiers, tokens, or other private content, and warning logs are commonly collected in bug reports. Avoid logging the raw payload; log only non-sensitive metadata such as size or instance.\n```suggestion\nLog.d(TAG, \"onMessage instance\u003d$instance size\u003d${message.content.size}\")\n```",
+      "revId": "93fce1658d404ad613276e47385e978554ff804a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
