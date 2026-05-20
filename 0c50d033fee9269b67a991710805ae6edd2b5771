@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6a7f4dc_ec873d42",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T17:41:18Z",
+      "side": 1,
+      "message": "[🟡 Suggestions] Line 299: `onPushReceived()` increments `activePushCount` before doing operations that can throw, including the synchronous `setAccountsActive(..., awaitCompletion \u003d true)` call. If that call throws, the caller\u0027s `finally` still calls `onPushProcessed()`, but no native push was dispatched and the release timer/subscription setup below may not have been armed. Wrap the setup so the count is decremented on setup failure or move the increment after the non-recoverable setup has completed. For example:\n```suggestion\nfun onPushReceived() \u003d synchronized(pushStateLock) {\n    cancelIdleShutdown()\n    var counted \u003d false\n    try {\n        activePushCount.incrementAndGet()\n        counted \u003d true\n        ...\n        if (daemon.isStarted) {\n            mAccountService.setAccountsActive(true, forceAll \u003d false, awaitCompletion \u003d true)\n        }\n        ...\n    } catch (e: Exception) {\n        if (counted) activePushCount.decrementAndGet()\n        throw e\n    }\n}\n```",
+      "revId": "0c50d033fee9269b67a991710805ae6edd2b5771",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5160ab9_68bbe096",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T17:41:18Z",
+      "side": 1,
+      "message": "[🔴 Critical Issues] Line 353: The push hold can be kept alive indefinitely if `onPushProcessed()` is never reached after `onPushReceived()` increments `activePushCount` (for example if `onMessageReceived()` blocks, the coroutine is cancelled, or another future caller fails between the two calls). In that state `releasePushHold()` always defers, `idleShutdownRunnable` always returns because `activePushCount \u003e 0`, and account/network shutdown is disabled for the rest of the process lifetime. Make the max-window timeout authoritative: after the maximum window expires, release the wake/FGS hold and reset or expire stale in-flight push state instead of re-posting forever. For example:\n```suggestion\nprivate fun releasePushHold(force: Boolean \u003d false) \u003d synchronized(pushStateLock) {\n    if (!force \u0026\u0026 activePushCount.get() \u003e 0) {\n        Log.d(TAG, \"Push: still ${activePushCount.get()} in flight, deferring release\")\n        pushReleaseHandler.postDelayed({ releasePushHold(force \u003d true) }, pushMaxWindowMs)\n        return\n    }\n    if (force \u0026\u0026 activePushCount.get() \u003e 0) {\n        Log.w(TAG, \"Push: forcing release with ${activePushCount.get()} stale dispatch(es)\")\n        activePushCount.set(0)\n    }\n    ...\n}\n```\nAlternatively track per-push deadlines/tokens so only stale pushes are expired.",
+      "revId": "0c50d033fee9269b67a991710805ae6edd2b5771",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "693fdf0e_4d1dc872",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T17:41:18Z",
+      "side": 1,
+      "message": "[🟡 Suggestions] Line 585: The deadlock guard is unreliable because `mExecutorThread` is only captured inside `setAccountsActive()` tasks. If the first `awaitCompletion\u003dtrue` call is made from another task already running on `mExecutor`, `mExecutorThread` is still null, the guard passes, and the executor waits on itself until the 5-second timeout. Capture the executor thread through a dedicated executor wrapper/ThreadFactory, or avoid blocking entirely by exposing a suspend/Completable API scheduled on `scheduler`. At minimum, initialize `mExecutorThread` for every executor task entry point, not only this method.",
+      "revId": "0c50d033fee9269b67a991710805ae6edd2b5771",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2d7f486_86961269",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T17:41:18Z",
+      "side": 1,
+      "message": "[🔴 Critical Issues] Line 609: When `awaitCompletion` times out, the method logs a warning and returns as if activation completed. The push path relies on this for correctness: dispatching before accounts are active can cause the daemon to drop the push. Return a success/failure value or throw on timeout so callers can avoid dispatching or can retry explicitly. For example:\n```suggestion\nif (!latch.await(5, TimeUnit.SECONDS)) {\n    throw TimeoutException(\"Timed out waiting for daemon executor to update account activity\")\n}\n```",
+      "revId": "0c50d033fee9269b67a991710805ae6edd2b5771",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
