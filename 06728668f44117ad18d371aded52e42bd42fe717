@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbc8b9b3_72a87e54",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 12
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T15:34:45Z",
+      "side": 1,
+      "message": "[Critical] Line 337: 🔴 Critical Issues - `activePushCount` is decremented unconditionally in `onPushProcessed()`. If a push handler calls `onPushProcessed()` after an earlier failure, duplicate callback, cancellation path, or without a matching successful `onPushReceived()`, the counter can become negative. A negative value makes `releasePushHold()` think no push is in flight and can release the wakelock/foreground service while another push is still being processed. Clamp the counter and log the imbalance.\n\n```suggestion\nfun onPushProcessed() {\n    val remaining \u003d activePushCount.updateAndGet { count -\u003e\n        if (count \u003e 0) count - 1 else 0\n    }\n    if (remaining \u003d\u003d 0) {\n        Log.d(TAG, \"Push: no synchronous dispatches in flight\")\n    }\n}\n```",
+      "revId": "06728668f44117ad18d371aded52e42bd42fe717",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e32ef8e_7326fa7c",
+        "filename": "jami-android/app/src/main/java/cx/ring/service/PushForegroundService.kt",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T15:34:45Z",
+      "side": 1,
+      "message": "[Critical] Line 55: 🔴 Critical Issues - Swallowing every `startForeground()` exception can hide a real foreground-service permission/type/configuration failure. On Android, if `startForegroundService()` was used and promotion fails, continuing as if the service is protected is unsafe and may still lead to process termination while push work is active. Handle `ACTION_PUSH_DONE` before promotion only when the service was not newly started, or at least log and stop the service on failure instead of silently continuing.\n\n```suggestion\n        } catch (e: Exception) {\n            Log.e(TAG, \"Failed to promote push service to foreground\", e)\n            stopSelf()\n            return START_NOT_STICKY\n        }\n```",
+      "revId": "06728668f44117ad18d371aded52e42bd42fe717",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfa50aec_adf8047f",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T15:34:45Z",
+      "side": 1,
+      "message": "[Critical] Line 31: 🔴 Critical Issues - `onPushReceived()` reactivates accounts only when `daemon.isStarted`, but this call now happens before `ensureDaemonStarted()`. After an idle shutdown or cold push wake-up, the daemon may still be stopped here, so account reactivation is skipped and the subsequent native push dispatch can still race/drop the push. Move daemon startup before the push hold/reactivation step, or make `onPushReceived()` ensure startup before calling `setAccountsActive(... awaitCompletion \u003d true)`.\n\n```suggestion\nserviceScope.launch {\n    val app \u003d JamiApplication.instance as JamiApplicationFirebase?\n    try {\n        if (app !\u003d null) {\n            app.ensureDaemonStarted()\n            app.onPushReceived()\n            app.onMessageReceived(remoteMessage)\n        }\n    } catch (e: Exception) {\n        Log.e(TAG, \"Error in processing message\", e)\n    } finally {\n        app?.onPushProcessed()\n    }\n}\n```",
+      "revId": "06728668f44117ad18d371aded52e42bd42fe717",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
