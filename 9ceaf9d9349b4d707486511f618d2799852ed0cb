@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf8477ec_eeb05f5b",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T23:02:29Z",
+      "side": 1,
+      "message": "[Critical] Line 34: This uses `originalPriority` to decide whether the app should perform full wake-up processing, but FCM can downgrade high-priority messages; `originalPriority` still reports the sender\u0027s requested priority, while `priority` reflects the delivered priority. A downgraded message would still acquire the WakeLock/start daemon work, defeating the purpose of skipping normal-priority deliveries. Use the effective priority instead.\n```suggestion\n        val isHigh \u003d remoteMessage.priority \u003d\u003d RemoteMessage.PRIORITY_HIGH\n```",
+      "revId": "9ceaf9d9349b4d707486511f618d2799852ed0cb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
