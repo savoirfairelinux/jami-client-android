@@ -307,10 +307,23 @@ abstract class JamiApplication : Application() {
      *  and synchronous account reactivation still run unconditionally so the
      *  daemon can complete decryption.
      */
+    /**
+     * @return true if the push requires full processing (daemon startup, etc.),
+     *         false if it was handled as a lightweight no-op (normal priority in background).
+     */
     @JvmOverloads
-    fun onPushReceived(isHighPriority: Boolean = true) {
+    fun onPushReceived(isHighPriority: Boolean = true): Boolean {
         cancelIdleShutdown()
         activePushCount.incrementAndGet()
+
+        // For normal-priority pushes (presence, CRL, etc.) while in background:
+        // skip WakeLock, foreground service, and account reactivation.
+        // These are informational and will be processed on next natural wake.
+        if (!isHighPriority && !isInForeground) {
+            Log.d(TAG, "Push: normal priority in background, lightweight handling")
+            activePushCount.decrementAndGet()
+            return false
+        }
 
         synchronized(pushLock) {
             try {
@@ -376,6 +389,7 @@ abstract class JamiApplication : Application() {
                 }
             }
         }
+        return true
     }
 
     /**
