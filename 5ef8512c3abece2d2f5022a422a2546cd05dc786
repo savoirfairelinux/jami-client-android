@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a8b4b39_7d864e3f",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T22:58:42Z",
+      "side": 1,
+      "message": "[🟡 Suggestions] Line 34: Using `originalPriority` can still fully wake the app for messages that FCM delivered as normal priority after deprioritization. This undermines the change\u0027s goal because `originalPriority` is the sender-requested priority, not necessarily the priority Android actually used for delivery. Gate wake-up behavior on the delivered priority instead.\n```suggestion\n        val isHigh \u003d remoteMessage.priority \u003d\u003d RemoteMessage.PRIORITY_HIGH\n```",
+      "revId": "5ef8512c3abece2d2f5022a422a2546cd05dc786",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7f6b88d_b316d135",
+        "filename": "jami-android/app/src/withUnifiedPush/java/cx/ring/services/JamPushService.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T22:58:42Z",
+      "side": 1,
+      "message": "[🟡 Suggestions] Line 55: The priority comparison is case-sensitive and treats any spelling other than exactly `high` as normal priority. If the proxy ever forwards values with different casing, the app may skip daemon wake-up for an actually high-priority push while in background. Normalize the value before comparing.\n```suggestion\n            obj.optString(\"priority\", \"high\").equals(\"high\", ignoreCase \u003d true)\n```",
+      "revId": "5ef8512c3abece2d2f5022a422a2546cd05dc786",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
