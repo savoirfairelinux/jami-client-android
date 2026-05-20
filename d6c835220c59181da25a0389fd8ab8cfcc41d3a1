@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8be9153_0155a33c",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T22:51:34Z",
+      "side": 1,
+      "message": "[Major] Line 313: The lightweight normal-priority path still calls cancelIdleShutdown() before returning, but it does not start full push processing or call onPushHandled() to schedule/release the normal idle shutdown path. A normal-priority background push can therefore cancel a pending shutdown and leave the daemon/resources alive longer than intended, which undermines the battery-saving goal. Move the lightweight return before cancelIdleShutdown() and activePushCount.incrementAndGet().\n```suggestion\n    fun onPushReceived(isHighPriority: Boolean \u003d true): Boolean {\n        // For normal-priority pushes (presence, CRL, etc.) while in background:\n        // skip WakeLock, foreground service, and account reactivation.\n        // These are informational and will be processed on next natural wake.\n        if (!isHighPriority \u0026\u0026 !isInForeground) {\n            Log.d(TAG, \"Push: normal priority in background, lightweight handling\")\n            return false\n        }\n\n        cancelIdleShutdown()\n        activePushCount.incrementAndGet()\n```\n",
+      "revId": "d6c835220c59181da25a0389fd8ab8cfcc41d3a1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
