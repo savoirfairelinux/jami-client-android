@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06342dca_6273488a",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T22:46:02Z",
+      "side": 1,
+      "message": "[Major] Line 695: The pre-Android R crop region assumes SENSOR_INFO_ACTIVE_ARRAY_SIZE starts at (0,0). Some devices report an active array with non-zero left/top offsets, so this crop can be shifted and produce incorrect zoom framing. Build the crop rectangle relative to the active array origin.\n\n```suggestion\n                val left \u003d active.left + (active.width() - w) / 2\n                val top \u003d active.top + (active.height() - h) / 2\n                builder.set(CaptureRequest.SCALER_CROP_REGION, Rect(left, top, left + w, top + h))\n```",
+      "revId": "852834ea835625634c190d840743707a093599ba",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "082edc3d_9a784a56",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/VideoDisplayZoomHelper.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T22:46:02Z",
+      "side": 1,
+      "message": "[Major] Line 135: The reset path does not cancel an active long-press progressive zoom animator. If pinch-to-zoom is disabled while the animator is running, the helper is dropped but the animator still holds the TextureView reference and continues calling setTransform(), re-applying zoom after reset and potentially leaking the view. Cancel the animator before resetting state.\n\n```suggestion\n    fun reset() {\n        stopProgressiveZoom()\n        scale \u003d 1f\n        translateX \u003d 0f\n        translateY \u003d 0f\n        apply()\n    }\n```",
+      "revId": "852834ea835625634c190d840743707a093599ba",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
