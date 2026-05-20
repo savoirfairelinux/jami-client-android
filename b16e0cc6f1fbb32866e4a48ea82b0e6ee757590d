@@ -1,6 +1,24 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2705c96_cbd69fd3",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 28
+      },
+      "writtenOn": "2026-05-20T00:11:30Z",
+      "side": 1,
+      "message": "Done in PS7: onDaemonExecutor is now reset to false in a finally block around the executor task, so reused threads cannot trip the check on later unrelated work.",
+      "parentUuid": "c882bdfd_dffa9c81",
+      "revId": "b16e0cc6f1fbb32866e4a48ea82b0e6ee757590d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "87b70684_9f8345d0",
@@ -48,6 +66,60 @@
       "writtenOn": "2026-05-20T00:10:49Z",
       "side": 1,
       "message": "[Critical] Line 40: The push handling coroutine is owned by the FirebaseMessagingService instance and is cancelled in onDestroy(). Android is free to destroy this service shortly after onMessageReceived() returns, so the 25s daemon bootstrap/dispatch can be cancelled before the push is delivered, defeating the reliability fix. Move this work to an application-owned scope or another component whose lifetime is explicitly kept alive by the foreground service, and only cancel it when the application shuts down. For example:\n```suggestion\n// In JamiApplication\nval pushScope \u003d CoroutineScope(SupervisorJob() + Dispatchers.IO)\n\n// In JamiFirebaseMessagingService.onMessageReceived\napp?.pushScope?.launch {\n    try {\n        if (!app.ensureDaemonStarted()) {\n            Log.e(TAG, \"onMessageReceived: daemon failed to start within timeout, push may be lost\")\n            return@launch\n        }\n        app.onMessageReceived(remoteMessage)\n    } finally {\n        app.onPushProcessed()\n    }\n}\n```\nDo not cancel this work from FirebaseMessagingService.onDestroy().",
+      "revId": "b16e0cc6f1fbb32866e4a48ea82b0e6ee757590d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "247d74c4_62ac24d5",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 28
+      },
+      "writtenOn": "2026-05-20T00:11:30Z",
+      "side": 1,
+      "message": "Done in PS7: ensureDaemonStarted() result is now gated; we return@launch (after logging) when the daemon fails to bootstrap, avoiding a silent push drop.",
+      "parentUuid": "df9243b0_d5b2e5af",
+      "revId": "b16e0cc6f1fbb32866e4a48ea82b0e6ee757590d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9934c5e1_1bc21c6b",
+        "filename": "jami-android/app/src/withUnifiedPush/java/cx/ring/application/JamiApplicationUnifiedPush.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 28
+      },
+      "writtenOn": "2026-05-20T00:11:30Z",
+      "side": 1,
+      "message": "Done in PS7: onMessage() now returns early when ensureDaemonStarted() fails, mirroring the Firebase handler.",
+      "parentUuid": "59378bc6_0b88574d",
+      "revId": "b16e0cc6f1fbb32866e4a48ea82b0e6ee757590d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38f567c4_4fe42cb5",
+        "filename": "jami-android/app/src/withUnifiedPush/java/cx/ring/services/JamPushService.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 28
+      },
+      "writtenOn": "2026-05-20T00:11:30Z",
+      "side": 1,
+      "message": "Done in PS7: removed the unused Intent and PowerManager imports.",
+      "parentUuid": "4a75a750_5001334c",
       "revId": "b16e0cc6f1fbb32866e4a48ea82b0e6ee757590d",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
