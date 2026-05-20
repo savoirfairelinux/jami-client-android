@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12a4a939_02f5bdfd",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T23:00:52Z",
+      "side": 1,
+      "message": "[🔴 Critical Issues] Line 30: Using `remoteMessage.priority` bases the decision on the priority as delivered by FCM, which may be downgraded from the sender-requested priority. That can make an urgent push that was sent as high priority take the lightweight path and skip daemon startup/wake handling while the app is backgrounded. Use `originalPriority` for the semantic decision about whether the push was intended to require full processing.\n\n```suggestion\n        val isHigh \u003d remoteMessage.originalPriority \u003d\u003d RemoteMessage.PRIORITY_HIGH\n```",
+      "revId": "b1d944f2cb6b55ed119661e1d3105809ea44df46",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
