@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cb421ea_2ed6c0a8",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T00:21:01Z",
+      "side": 1,
+      "message": "[🔴 Critical Issues] Line 267: The timeout wait can block forever when less than 1 ms remains because wait(0) means an indefinite wait. This can hang push handling instead of returning false on bootstrap timeout. Preserve the previous minimum millisecond wait or pass nanoseconds too.\n```suggestion\n@Suppress(\"PLATFORM_CLASS_MAPPED_TO_KOTLIN\")\n(bootstrapLock as java.lang.Object).wait(\n    maxOf(1, remaining / 1_000_000),\n    (remaining % 1_000_000).toInt()\n)\n```",
+      "revId": "a5a19097e65fe07ee5221c4e3f3c3fef37a53bb6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f8e8c72_370ae292",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T00:21:01Z",
+      "side": 1,
+      "message": "[🔴 Critical Issues] Line 331: Account reactivation only runs when daemon.isStarted is already true. For the cold-start/idle-shutdown path this method skips reactivation, then the push service starts the daemon and immediately dispatches the push while accounts may still be inactive, which contradicts the stated goal and can drop wake-up pushes. Reactivate synchronously after a successful daemon start, not only before it.\n```suggestion\nfun ensureDaemonStartedForPush(): Boolean {\n    if (!ensureDaemonStarted()) return false\n    mAccountService.setAccountsActive(true, forceAll \u003d false, awaitCompletion \u003d true)\n    return true\n}\n```\nThen call this helper from the Firebase and UnifiedPush coroutine before dispatching the push.",
+      "revId": "a5a19097e65fe07ee5221c4e3f3c3fef37a53bb6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "096aba20_b172c137",
+        "filename": "jami-android/app/src/main/java/cx/ring/service/PushForegroundService.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T00:21:01Z",
+      "side": 1,
+      "message": "[🟡 Suggestions] Line 55: Catching startForeground() and continuing leaves a service that was started via startForegroundService() without promotion; Android can still kill the process shortly afterwards. If promotion fails, stop the service immediately after logging so it does not remain in an invalid lifecycle state.\n```suggestion\n} catch (e: Exception) {\n    android.util.Log.w(\"PushForegroundService\", \"startForeground failed\", e)\n    stopSelf(startId)\n    return START_NOT_STICKY\n}\n```",
+      "revId": "a5a19097e65fe07ee5221c4e3f3c3fef37a53bb6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18e7a0fe_04a678d1",
+        "filename": "jami-android/app/src/withUnifiedPush/java/cx/ring/services/JamPushService.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T00:21:01Z",
+      "side": 1,
+      "message": "[🔴 Critical Issues] Line 59: The full UnifiedPush payload is now logged with Log.w. Push payloads can contain message metadata or other private data, and warning logs are more likely to be collected in bug reports. Avoid logging the raw payload; keep only non-sensitive context.\n```suggestion\nLog.d(TAG, \"onMessage instance\u003d$instance\")\n```",
+      "revId": "a5a19097e65fe07ee5221c4e3f3c3fef37a53bb6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
