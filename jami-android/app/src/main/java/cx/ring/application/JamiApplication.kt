@@ -312,6 +312,14 @@ abstract class JamiApplication : Application() {
         cancelIdleShutdown()
         activePushCount.incrementAndGet()
 
+        // For normal-priority pushes (presence, CRL, etc.) while in background:
+        // skip WakeLock, foreground service, and account reactivation.
+        // These are informational and will be processed on next natural wake.
+        if (!isHighPriority && !isInForeground) {
+            Log.d(TAG, "Push: normal priority in background, lightweight handling")
+            return
+        }
+
         synchronized(pushLock) {
             try {
                 // If a previous push is still in flight, refresh the WakeLock

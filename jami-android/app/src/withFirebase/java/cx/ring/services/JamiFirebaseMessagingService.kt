@@ -35,6 +35,14 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
         // synchronous account reactivation and event-driven release.
         app?.onPushReceived(isHigh)
 
+        // For normal-priority pushes when app is in background, skip daemon
+        // startup and native dispatch entirely — these are informational
+        // (presence, CRL) and will be synced on next natural wake.
+        if (!isHigh && app?.isInForeground == false) {
+            app.onPushProcessed()
+            return
+        }
+
         // NOTE: do NOT call hardwareService.connectivityChanged() here.
         // The network has not actually changed when a push arrives, but
         // libjami::connectivityChanged() unconditionally tears down all
