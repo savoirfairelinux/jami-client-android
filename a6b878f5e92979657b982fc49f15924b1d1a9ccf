@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c23002ea_f5af0f9c",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T22:45:22Z",
+      "side": 1,
+      "message": "[Major] Line 316: The normal-priority early return happens after activePushCount.incrementAndGet(), but JamiApplication does not balance that increment itself. This makes correctness depend on every caller knowing it must call onPushProcessed() after a lightweight push; any future or existing non-Firebase caller using onPushReceived(false) will leak activePushCount and may keep shutdown state incorrect. Prefer keeping the accounting balanced inside this method, or return a status that forces callers to handle it explicitly. For example:\n```suggestion\n        if (!isHighPriority \u0026\u0026 !isInForeground) {\n            Log.d(TAG, \"Push: normal priority in background, lightweight handling\")\n            activePushCount.decrementAndGet()\n            return\n        }\n```",
+      "revId": "a6b878f5e92979657b982fc49f15924b1d1a9ccf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d656f02_fa449d2a",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T22:45:22Z",
+      "side": 1,
+      "message": "[Major] Line 39: The skip decision is evaluated separately from app.onPushReceived(isHigh). If foreground state changes between those calls, a normal-priority push can take the lightweight path in onPushReceived() but miss the matching onPushProcessed(), or vice versa. Capture the foreground state once and use the same value for both decisions, or move the lightweight decision/accounting entirely into JamiApplication so the state check and counter handling are atomic and centralized.",
+      "revId": "a6b878f5e92979657b982fc49f15924b1d1a9ccf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
