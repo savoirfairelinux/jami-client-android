@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87b70684_9f8345d0",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T00:10:49Z",
+      "side": 1,
+      "message": "[Critical] Line 241: ensureDaemonStarted() can throw IllegalStateException when called from the daemon executor thread. That makes the push path crash instead of logging and safely dropping/retrying the push. Since push handling already treats startup failure as a recoverable condition, this should not use check(); return false and log the programming error, or guarantee at the call sites that this cannot happen.\n```suggestion\nif (onDaemonExecutor.get()) {\n    Log.e(TAG, \"ensureDaemonStarted must not be called from the DaemonExecutor thread\")\n    return false\n}\n```",
+      "revId": "b16e0cc6f1fbb32866e4a48ea82b0e6ee757590d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "155bed6d_f0ee10b0",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T00:10:49Z",
+      "side": 1,
+      "message": "Line 324: onPushProcessed() decrements activePushCount but the counter is never used to control either the wakelock or the foreground-service lifetime. It can also become negative if calls ever get unbalanced. This is misleading state in a reliability-sensitive path. Either remove the counter or use it to release/stop when the last active push completes, with a floor guard.\n```suggestion\nval remaining \u003d activePushCount.updateAndGet { count -\u003e maxOf(0, count - 1) }\nLog.d(TAG, \"onPushProcessed: remaining\u003d$remaining\")\n```",
+      "revId": "b16e0cc6f1fbb32866e4a48ea82b0e6ee757590d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7553f7fd_0bd274ef",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T00:10:49Z",
+      "side": 1,
+      "message": "[Critical] Line 40: The push handling coroutine is owned by the FirebaseMessagingService instance and is cancelled in onDestroy(). Android is free to destroy this service shortly after onMessageReceived() returns, so the 25s daemon bootstrap/dispatch can be cancelled before the push is delivered, defeating the reliability fix. Move this work to an application-owned scope or another component whose lifetime is explicitly kept alive by the foreground service, and only cancel it when the application shuts down. For example:\n```suggestion\n// In JamiApplication\nval pushScope \u003d CoroutineScope(SupervisorJob() + Dispatchers.IO)\n\n// In JamiFirebaseMessagingService.onMessageReceived\napp?.pushScope?.launch {\n    try {\n        if (!app.ensureDaemonStarted()) {\n            Log.e(TAG, \"onMessageReceived: daemon failed to start within timeout, push may be lost\")\n            return@launch\n        }\n        app.onMessageReceived(remoteMessage)\n    } finally {\n        app.onPushProcessed()\n    }\n}\n```\nDo not cancel this work from FirebaseMessagingService.onDestroy().",
+      "revId": "b16e0cc6f1fbb32866e4a48ea82b0e6ee757590d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "466105fa_e6164069",
+        "filename": "jami-android/app/src/withUnifiedPush/java/cx/ring/services/JamPushService.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T00:10:49Z",
+      "side": 1,
+      "message": "[Critical] Line 54: The same lifecycle bug exists for UnifiedPush: processing is launched in a PushService-owned scope and cancelled in onDestroy(), so Android can cancel JSON parsing/bootstrap/dispatch while the foreground service and wakelock are still active. Use an application-owned push processing scope or hand the work to PushForegroundService/WorkManager instead of cancelling it with the transient service instance.\n```suggestion\napp?.pushScope?.launch {\n    try {\n        val msgStr \u003d String(message.content, Charsets.UTF_8)\n        val obj \u003d JSONObject(msgStr)\n        val msg \u003d HashMap\u003cString, String\u003e()\n        obj.keys().forEach { msg[it] \u003d obj.getString(it) }\n        app.onMessage(msg)\n    } catch (e: Exception) {\n        Log.e(TAG, \"onMessage\", e)\n    } finally {\n        app.onPushProcessed()\n    }\n}\n```",
+      "revId": "b16e0cc6f1fbb32866e4a48ea82b0e6ee757590d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
