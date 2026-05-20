@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c9b6915_aecdd71f",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 13
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T16:04:34Z",
+      "side": 1,
+      "message": "[Critical] Line 307: onPushReceived() mutates pushWakeLock and pushEventDisposable from push service coroutine threads without synchronization. Concurrent Firebase/UnifiedPush deliveries can race, create duplicate subscriptions, overwrite a wakelock reference, or release a wakelock while another thread is acquiring it. Run all push-hold state transitions on the main thread or protect them with a single lock.\n```suggestion\nprivate val pushStateLock \u003d Any()\n\nfun onPushReceived() \u003d synchronized(pushStateLock) {\n    cancelIdleShutdown()\n    activePushCount.incrementAndGet()\n    ...\n}\n\nprivate fun releasePushHold() \u003d synchronized(pushStateLock) {\n    ...\n}\n```",
+      "revId": "10208750994bb5e3d1c7ab7f6d7c9ddcf0878027",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87d245e7_ea0e2984",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 13
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T16:04:34Z",
+      "side": 1,
+      "message": "[Major] Line 386: releasePushHold() disposes pushEventDisposable before checking activePushCount. If the timeout fires while a push dispatch is still in flight, the method defers release but has already unsubscribed from daemon events, so that push can no longer trigger the short release path and future handling relies only on the timeout. Move disposal until after the in-flight check.\n```suggestion\nprivate fun releasePushHold() {\n    if (activePushCount.get() \u003e 0) {\n        Log.d(TAG, \"Push: still ${activePushCount.get()} in flight, deferring release\")\n        pushReleaseHandler.postDelayed(pushReleaseRunnable, pushMaxWindowMs)\n        return\n    }\n\n    pushEventDisposable?.dispose()\n    pushEventDisposable \u003d null\n    ...\n}\n```",
+      "revId": "10208750994bb5e3d1c7ab7f6d7c9ddcf0878027",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6265529f_e29d1821",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 13
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T16:04:34Z",
+      "side": 1,
+      "message": "[Major] Line 393: The wakelock release swallows all exceptions, including the common case where the wakelock has already timed out and is no longer held. This hides lifecycle bugs and makes push wake failures hard to diagnose. Check isHeld before release and log unexpected failures.\n```suggestion\npushWakeLock?.let { wakeLock -\u003e\n    try {\n        if (wakeLock.isHeld) wakeLock.release()\n    } catch (e: RuntimeException) {\n        Log.w(TAG, \"Failed to release push wakelock\", e)\n    }\n}\npushWakeLock \u003d null\n```",
+      "revId": "10208750994bb5e3d1c7ab7f6d7c9ddcf0878027",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb45a449_6a180427",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 13
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T16:04:34Z",
+      "side": 1,
+      "message": "[Major] Line 401: releasePushHold() calls startForegroundService() only to deliver ACTION_PUSH_DONE. On Android O+, starting a new foreground service from the background can be restricted; if the original service already timed out or failed to start, this completion signal may throw and leave cleanup dependent on logs. Prefer stopping an already-running service via a normal startService/bind-safe path, or make PushForegroundService self-stop from the same start lifecycle without requiring a new background FGS launch.\n```suggestion\ntry {\n    startService(Intent(this, PushForegroundService::class.java)\n        .setAction(PushForegroundService.ACTION_PUSH_DONE))\n} catch (e: Exception) {\n    Log.w(TAG, \"Can\u0027t signal push done to foreground service\", e)\n}\n```",
+      "revId": "10208750994bb5e3d1c7ab7f6d7c9ddcf0878027",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a317a1a_b5251622",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 13
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T16:04:34Z",
+      "side": 1,
+      "message": "[Major] Line 588: setAccountsActive(awaitCompletion \u003d true) can deadlock or block for 5 seconds if it is ever called from the same daemon executor thread, despite the comment warning against it. This is now part of push wake-up, so a future caller mistake would delay push handling and still continue after timeout with uncertain account state. Add an executor-thread guard or expose a non-blocking completion primitive instead of relying on callers to obey a comment.",
+      "revId": "10208750994bb5e3d1c7ab7f6d7c9ddcf0878027",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
