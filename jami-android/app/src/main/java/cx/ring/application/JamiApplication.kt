@@ -302,15 +302,27 @@ abstract class JamiApplication : Application() {
      *    [pushMaxWindowMs] timeout
      *
      * @param isHighPriority when false (e.g. FCM PRIORITY_NORMAL data push and
-     *  the app is already in background), skip starting the foreground service
-     *  to avoid the battery / Doze impact flagged in code review. The WakeLock
-     *  and synchronous account reactivation still run unconditionally so the
-     *  daemon can complete decryption.
+     *  the app is already in background), skip starting the foreground service,
+     *  WakeLock acquisition, and synchronous account reactivation to avoid
+     *  unnecessary battery / Doze impact. High-priority pushes still perform
+     *  full processing so the daemon can complete decryption.
+     *
+     * @return true if the push requires full processing (daemon startup, etc.),
+     *         false if it was handled as a lightweight no-op (normal priority in background).
      */
     @JvmOverloads
-    fun onPushReceived(isHighPriority: Boolean = true) {
+    fun onPushReceived(isHighPriority: Boolean = true): Boolean {
         cancelIdleShutdown()
         activePushCount.incrementAndGet()
+
+        // For normal-priority pushes (presence, CRL, etc.) while in background:
+        // skip WakeLock, foreground service, and account reactivation.
+        // These are informational and will be processed on next natural wake.
+        if (!isHighPriority && !isInForeground) {
+            Log.d(TAG, "Push: normal priority in background, lightweight handling")
+            activePushCount.decrementAndGet()
+            return false
+        }
 
         synchronized(pushLock) {
             try {
@@ -376,6 +388,7 @@ abstract class JamiApplication : Application() {
                 }
             }
         }
+        return true
     }
 
     /**
