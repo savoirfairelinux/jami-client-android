@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52e743ed_08ca266c",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T00:28:20Z",
+      "side": 1,
+      "message": "[Critical] Line 887: Resetting only `currentCameraZoom` leaves `CameraService.VideoParams.zoomRatio` unchanged, and `buildCaptureRequest()` reapplies that stored zoom on the next preview/session rebuild. This contradicts the comment and can restart the local preview still zoomed while the UI state thinks it is at 1x. Apply the reset to the hardware service as well when the preview is restarted/stopped, e.g.:\n```suggestion\nstopCameraProgressiveZoom()\ncurrentCameraZoom \u003d mHardwareService.setCurrentCameraZoom(1f)\n```",
+      "revId": "a9c3ae8eae54bdb6e0ef53fcb48d01be11fd7fb9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2a2f0d4_24b0c77b",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 1519,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T00:28:20Z",
+      "side": 1,
+      "message": "[Critical] Line 1519: `cameraFlip()` resets only the fragment\u0027s cached zoom. Because `CameraService` stores zoom per camera id and reapplies it in `applyZoom()`, switching back to a previously zoomed camera can unexpectedly restore the old zoom while `currentCameraZoom` is 1f. Reset the active camera zoom through the hardware service before/after switching, or clear zoom state in `CameraService.switchInput()` for the newly selected camera.",
+      "revId": "a9c3ae8eae54bdb6e0ef53fcb48d01be11fd7fb9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5cd9c76_2bba90c2",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T00:28:20Z",
+      "side": 1,
+      "message": "[Critical] Line 690: The pre-Android R crop region ignores `SENSOR_INFO_ACTIVE_ARRAY_SIZE.left/top`. Active arrays are not guaranteed to start at `(0, 0)`, so this can produce an invalid or shifted crop on some devices. Offset the crop by the active rect origin:\n```suggestion\nval left \u003d active.left + (active.width() - w) / 2\nval top \u003d active.top + (active.height() - h) / 2\nbuilder.set(CaptureRequest.SCALER_CROP_REGION, Rect(left, top, left + w, top + h))\n```",
+      "revId": "a9c3ae8eae54bdb6e0ef53fcb48d01be11fd7fb9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
