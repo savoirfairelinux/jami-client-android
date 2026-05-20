@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b88f034a_ec07e37a",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/VideoDisplayZoomHelper.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T16:05:43Z",
+      "side": 1,
+      "message": "[🟡 Suggestion] Line 128: reset() does not cancel the active progressive zoom animator. When pinch-to-zoom is disabled or the view is reconfigured while a long-press zoom is running, the animator can continue applying transforms to the TextureView after reset/detach, causing unexpected zoom state and retaining the view longer than needed. Stop the animator before clearing state.\n```suggestion\nfun reset() {\n    stopProgressiveZoom()\n    scale \u003d 1f\n    translateX \u003d 0f\n    translateY \u003d 0f\n    apply()\n}\n```",
+      "revId": "65c39bdf4998480a8e233c89b11d175467540e8a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "805714f9_b4cbd2d6",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/VideoDisplayZoomHelper.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T16:05:43Z",
+      "side": 1,
+      "message": "[🟡 Suggestion] Line 139: The attached touch listener always returns true, even for a simple single-finger tap/drag when the view is not zoomed. Since ParticipantsContainerView enables this on active participant sinks, this can consume touch events that previously reached parent views or click handlers. Return true only when the helper actually handles a zoom/pan gesture, and let normal taps propagate otherwise.\n```suggestion\nval handled \u003d scaleDetector.isInProgress || ev.pointerCount \u003e 1 || scale \u003e minScale\nwhen (ev.actionMasked) {\n    MotionEvent.ACTION_UP -\u003e {\n        stopProgressiveZoom()\n        if (!handled) v.performClick()\n    }\n    MotionEvent.ACTION_CANCEL,\n    MotionEvent.ACTION_POINTER_DOWN -\u003e stopProgressiveZoom()\n}\nhandled\n```",
+      "revId": "65c39bdf4998480a8e233c89b11d175467540e8a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
