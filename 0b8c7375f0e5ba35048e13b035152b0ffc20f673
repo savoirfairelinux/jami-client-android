@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b938cd4_a45a0206",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-20T22:49:01Z",
+      "side": 1,
+      "message": "[Minor] Line 306: The method documentation is now stale: it still says the WakeLock and synchronous account reactivation run unconditionally, but the new normal-priority background path skips both. This can mislead future changes around push handling. Update the comment to describe the new behavior explicitly.\n\n```suggestion\n     *  For normal-priority pushes received while the app is already in background,\n     *  skip starting the foreground service, WakeLock acquisition, and synchronous\n     *  account reactivation to avoid unnecessary battery / Doze impact. High-priority\n     *  pushes still perform full processing so the daemon can complete decryption.\n```",
+      "revId": "0b8c7375f0e5ba35048e13b035152b0ffc20f673",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
