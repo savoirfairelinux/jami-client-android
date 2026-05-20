@@ -33,7 +33,12 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
         // onPushReceived() handles WakeLock acquisition, foreground service
         // start (only when isHighPriority and the app is in background),
         // synchronous account reactivation and event-driven release.
-        app?.onPushReceived(isHigh)
+        // It also handles the lightweight early-return for normal-priority
+        // background pushes (returns false), so callers don't need to
+        // duplicate the foreground-state check.
+        if (app?.onPushReceived(isHigh) == false) {
+            return
+        }
 
         // NOTE: do NOT call hardwareService.connectivityChanged() here.
         // The network has not actually changed when a push arrives, but
