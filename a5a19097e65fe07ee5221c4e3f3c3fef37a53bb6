@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb71c654_42aa04e3",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 28
+      },
+      "writtenOn": "2026-05-20T00:21:08Z",
+      "side": 1,
+      "message": "Done in PS10: introduced `pushLock` Object; WakeLock acquisition + `pushEventDisposable` r/w wrapped in `synchronized(pushLock)`. Overlapping pushes release the previous WakeLock before re-acquiring.",
+      "parentUuid": "c0bd948e_ea366ea4",
+      "revId": "a5a19097e65fe07ee5221c4e3f3c3fef37a53bb6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3f8e8c72_370ae292",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-05-20T00:21:01Z",
       "side": 1,
       "message": "[🔴 Critical Issues] Line 331: Account reactivation only runs when daemon.isStarted is already true. For the cold-start/idle-shutdown path this method skips reactivation, then the push service starts the daemon and immediately dispatches the push while accounts may still be inactive, which contradicts the stated goal and can drop wake-up pushes. Reactivate synchronously after a successful daemon start, not only before it.\n```suggestion\nfun ensureDaemonStartedForPush(): Boolean {\n    if (!ensureDaemonStarted()) return false\n    mAccountService.setAccountsActive(true, forceAll \u003d false, awaitCompletion \u003d true)\n    return true\n}\n```\nThen call this helper from the Firebase and UnifiedPush coroutine before dispatching the push.",
+      "revId": "a5a19097e65fe07ee5221c4e3f3c3fef37a53bb6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ce87b9c_b1cc3532",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 28
+      },
+      "writtenOn": "2026-05-20T00:21:08Z",
+      "side": 1,
+      "message": "Done in PS10: count check moved before dispose; if `activePushCount \u003e 0` we reschedule and keep both the subscription and the WakeLock.",
+      "parentUuid": "42d98b3f_acaf2f8a",
       "revId": "a5a19097e65fe07ee5221c4e3f3c3fef37a53bb6",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
