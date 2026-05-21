@@ -30,7 +30,7 @@ class JamiPushService : PushService() {
         endpoint: PushEndpoint,
         instance: String
     ) {
-        Log.w("JamiPushReceiver", "onNewEndpoint $endpoint $instance")
+        Log.w(TAG, "onNewEndpoint $endpoint $instance")
         val app = JamiApplication.instance as JamiApplicationUnifiedPush?
         val topicKey = endpoint.pubKeySet?.let { "${it.pubKey}|${it.auth}" } ?: ""
         app?.pushToken = Pair(endpoint.url, topicKey)
@@ -42,14 +42,23 @@ class JamiPushService : PushService() {
     ) {
         try {
             val msgStr = String(message.content)
-            Log.w("JamiPushReceiver", "onMessage $msgStr $instance")
             val obj = JSONObject(msgStr)
+
+            // Check priority field added by the OpenDHT proxy.
+            // For normal-priority pushes (presence, CRL), skip daemon wake-up.
+            val priority = obj.optString("priority", "high")
+            if (priority.equals("normal", ignoreCase = true)) {
+                Log.d(TAG, "Push: normal priority, skipping")
+                return
+            }
+
+            Log.w(TAG, "onMessage $msgStr $instance")
             val msg = HashMap<String, String>()
             obj.keys().forEach { msg[it] = obj.getString(it) }
             val app = JamiApplication.instance as JamiApplicationUnifiedPush?
             app?.onMessage(msg)
         } catch(e: Exception) {
-            Log.e("JamiPushReceiver", "onMessage", e)
+            Log.e(TAG, "onMessage", e)
         }
     }
 
@@ -57,11 +66,14 @@ class JamiPushService : PushService() {
         reason: FailedReason,
         instance: String
     ) {
-        Log.w("JamiPushReceiver", "onRegistrationFailed $instance")
+        Log.w(TAG, "onRegistrationFailed $instance")
     }
 
     override fun onUnregistered(instance: String) {
-        Log.w("JamiPushReceiver", "onUnregistered $instance")
+        Log.w(TAG, "onUnregistered $instance")
     }
 
+    companion object {
+        private const val TAG = "JamiPushService"
+    }
 }

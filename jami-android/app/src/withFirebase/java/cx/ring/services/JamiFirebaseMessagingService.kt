@@ -33,6 +33,15 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        // For normal-priority pushes (presence announcements, CRLs) while the
+        // app is in background: skip WakeLock, ForegroundService, daemon startup.
+        // These are informational and will be synced on next natural wake-up.
+        val isHigh = remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH
+        if (!isHigh && !isAppInForeground()) {
+            Log.d(TAG, "Push: normal priority in background, skipping")
+            return
+        }
+
         try {
             // Even if wakeLock is deprecated, without this part, some devices are blocking
             // during the call negotiation. So, re-add this code to avoid to block here.
@@ -67,7 +76,7 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
             }
         }
 
-        if (remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH && !isAppInForeground()) {
+        if (isHigh && !isAppInForeground()) {
             val app = JamiApplication.instance as JamiApplicationFirebase?
             app?.hardwareService?.connectivityChanged(true)
         }
