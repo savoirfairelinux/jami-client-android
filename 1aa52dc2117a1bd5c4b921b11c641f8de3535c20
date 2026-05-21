@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2033226_73b9046c",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-21T03:26:28Z",
+      "side": 1,
+      "message": "[🔴 Critical Issues] Line 38: This treats PRIORITY_UNKNOWN the same as normal priority and drops the push while the app is backgrounded. That is a risky behavior change: if FCM does not expose the original priority for any message, including a time-sensitive call/setup push, the app will skip wake lock, service startup, daemon processing, and message handling entirely. Only explicitly normal-priority pushes should be skipped; unknown should preserve the previous safe behavior. Suggested fix:\n```suggestion\n        val priority \u003d remoteMessage.originalPriority\n        val isNormal \u003d priority \u003d\u003d RemoteMessage.PRIORITY_NORMAL\n        val appInForeground \u003d isAppInForeground()\n        if (isNormal \u0026\u0026 !appInForeground) {\n            Log.d(TAG, \"Push: normal priority in background, skipping\")\n            return\n        }\n```\nThen reuse `appInForeground` below instead of calling `isAppInForeground()` again.",
+      "revId": "1aa52dc2117a1bd5c4b921b11c641f8de3535c20",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
