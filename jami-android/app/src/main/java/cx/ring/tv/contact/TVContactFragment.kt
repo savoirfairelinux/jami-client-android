@@ -33,12 +33,18 @@ import cx.ring.tv.main.HomeActivity
 import cx.ring.utils.ConversationPath
 import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 import net.jami.model.Account
 import net.jami.model.Conversation
 import net.jami.model.Uri
 import net.jami.services.NotificationService
+import net.jami.services.PeerServicesService
+import net.jami.services.PeerServicesStatus
 import net.jami.smartlist.ConversationItemViewModel
+import javax.inject.Inject
+import javax.inject.Named
 
 @AndroidEntryPoint
 class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactView {
@@ -46,6 +52,11 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
     private var mAdapter: ArrayObjectAdapter? = null
     private var iconSize = -1
     private lateinit var mConversationPath: ConversationPath
+    private var mCurrentModel: ConversationItemViewModel? = null
+    private var mServicesCheckDisposable: Disposable? = null
+
+    @Inject lateinit var peerServicesService: PeerServicesService
+    @field:Named("UiScheduler") @Inject lateinit var uiScheduler: Scheduler
 
     private val moreContactLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -93,6 +104,7 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
                 ACTION_ACCEPT -> presenter.acceptTrustRequest()
                 ACTION_REFUSE -> presenter.refuseTrustRequest()
                 ACTION_BLOCK -> presenter.blockTrustRequest()
+                ACTION_PEER_SERVICES -> showPeerServicesBottomSheet()
                 ACTION_MORE -> moreContactLauncher.launch(
                     Intent(
                         requireActivity(),
@@ -117,6 +129,8 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
 
     override fun showContact(account: Account, model: ConversationItemViewModel) {
         val context = requireContext()
+        mCurrentModel = model
+
         val row = DetailsOverviewRow(model)
         val avatar = AvatarDrawable.Builder()
             .withViewModel(model) //.withPresence(false)
@@ -146,6 +160,9 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
                     context.getDrawable(R.drawable.baseline_more_vert_24)
                 )
             )
+            if (!model.isGroup()) {
+                checkAndAddServicesAction(model, row, adapter)
+            }
         } else {
             if (model.request == null) {
                 adapter.add(Action(ACTION_ADD_CONTACT, resources.getString(R.string.ab_action_contact_add)))
@@ -158,6 +175,45 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
         row.actionsAdapter = adapter
         if (mAdapter?.size() == 0) mAdapter?.add(row)
         else mAdapter?.replace(0, row)
+    }
+
+    private fun checkAndAddServicesAction(
+        model: ConversationItemViewModel,
+        row: DetailsOverviewRow,
+        actionsAdapter: ArrayObjectAdapter,
+    ) {
+        val peerContact = model.contacts.firstOrNull { !it.contact.isUser } ?: return
+        val peerUri = peerContact.contact.uri.uri
+
+        mServicesCheckDisposable?.dispose()
+        val requestId = peerServicesService.queryPeerServices(mConversationPath.accountId, peerUri)
+        mServicesCheckDisposable = peerServicesService.peerServicesReceived
+            .filter { it.requestId == requestId && it.accountId == mConversationPath.accountId && it.peerId == peerUri }
+            .firstElement()
+            .observeOn(uiScheduler)
+            .subscribe { result ->
+                if (result.status == PeerServicesStatus.OK && result.services.isNotEmpty()) {
+                    actionsAdapter.add(
+                        Action(
+                            ACTION_PEER_SERVICES,
+                            resources.getString(R.string.peer_services_title),
+                            null,
+                            requireContext().getDrawable(R.drawable.ic_peer_services_24)
+                        )
+                    )
+                    mAdapter?.replace(0, row)
+                }
+            }
+    }
+
+    private fun showPeerServicesBottomSheet() {
+        val model = mCurrentModel ?: return
+        if (model.isGroup()) return
+        val peerContact = model.contacts.firstOrNull { !it.contact.isUser } ?: return
+        val peerUri = peerContact.contact.uri.uri
+        TVPeerServicesFragment
+            .newInstance(mConversationPath.accountId, peerUri)
+            .show(childFragmentManager, TVPeerServicesFragment.TAG)
     }
 
     override fun callContact(accountId: String, conversationUri: Uri, uri: Uri) {
@@ -186,6 +242,7 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
     }
 
     override fun onDestroy() {
+        mServicesCheckDisposable?.dispose()
         super.onDestroy()
         mDisposableBag.dispose()
     }
@@ -198,5 +255,6 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
         private const val ACTION_BLOCK = 3L
         private const val ACTION_ADD_CONTACT = 4L
         private const val ACTION_MORE = 5L
+        private const val ACTION_PEER_SERVICES = 6L
     }
 }
