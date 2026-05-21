@@ -69,6 +69,7 @@ import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
@@ -82,12 +83,16 @@ import net.jami.model.interaction.DataTransfer
 import net.jami.model.interaction.Interaction
 import net.jami.model.interaction.TextMessage
 import net.jami.services.NotificationService
+import net.jami.services.PeerServicesService
+import net.jami.services.PeerServicesStatus
 import net.jami.smartlist.ConversationItemViewModel
 import java.io.File
 import java.util.*
 import androidx.core.content.edit
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.client.HomeActivity
+import javax.inject.Inject
+import javax.inject.Named
 
 @AndroidEntryPoint
 class ConversationFragment : BaseSupportFragment<ConversationPresenter, ConversationView>(),
@@ -112,6 +117,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private var loading = true
     private var animating = 0
     private var lastInsets: WindowInsetsCompat? = null
+    private var mConversationItem: ConversationItemViewModel? = null
+    private var mPeerServicesCheckDisposable: Disposable? = null
+
+    @Inject lateinit var peerServicesService: PeerServicesService
+    @field:Named("UiScheduler") @Inject lateinit var uiScheduler: Scheduler
 
     private fun isImeAnimation(a: WindowInsetsAnimationCompat): Boolean {
         return (a.typeMask and WindowInsetsCompat.Type.ime()) != 0
@@ -784,6 +794,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun onDestroy() {
+        mPeerServicesCheckDisposable?.dispose()
         mCompositeDisposable.dispose()
         super.onDestroy()
     }
@@ -817,6 +828,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 R.id.conv_action_audiocall -> presenter.goToCall(false)
                 R.id.conv_action_videocall -> presenter.goToCall(true)
                 R.id.conv_contact_details -> presenter.openContact()
+                R.id.conv_action_peer_services -> showPeerServicesBottomSheet()
                 else -> return false
             }
             return true
@@ -918,9 +930,32 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun displayContact(conversation: ConversationItemViewModel) {
+        mConversationItem = conversation
         val avatar = AvatarFactory.getAvatar(requireContext(), conversation).blockingGet()
         mParticipantAvatars[conversation.uri.rawRingId] = AvatarDrawable(avatar)
         setupActionbar(conversation, avatar)
+
+        mPeerServicesCheckDisposable?.dispose()
+        mPeerServicesCheckDisposable = null
+
+        val peerServicesItem = binding?.toolbar?.menu?.findItem(R.id.conv_action_peer_services)
+            ?: return
+        peerServicesItem.isVisible = false
+
+        if (conversation.isGroup()) return
+
+        val peerContact = conversation.contacts.firstOrNull { !it.contact.isUser } ?: return
+        val peerUri = peerContact.contact.uri.uri
+        val path = ConversationPath.fromBundle(arguments) ?: return
+
+        mPeerServicesCheckDisposable = peerServicesService.queryPeerServices(path.accountId, peerUri)
+            .firstElement()
+            .observeOn(uiScheduler)
+            .subscribe { result ->
+                if (result.status == PeerServicesStatus.OK && result.services.isNotEmpty()) {
+                    binding?.toolbar?.menu?.findItem(R.id.conv_action_peer_services)?.isVisible = true
+                }
+            }
     }
 
     override fun displayOngoingCallPane(display: Boolean, hasVideo: Boolean) {
@@ -989,6 +1024,17 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         val intent = Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, uri))
             .setClass(requireContext().applicationContext, ConversationDetailsActivity::class.java)
         conversationDetailsActivityLauncher.launch(intent, options)
+    }
+
+    private fun showPeerServicesBottomSheet() {
+        val path = ConversationPath.fromBundle(arguments) ?: return
+        val conversation = mConversationItem ?: return
+        if (conversation.isGroup()) return
+        val peerContact = conversation.contacts.firstOrNull { !it.contact.isUser } ?: return
+        val peerUri = peerContact.contact.uri.uri
+        PeerServicesBottomSheet
+            .newInstance(path.accountId, peerUri)
+            .show(childFragmentManager, PeerServicesBottomSheet.TAG)
     }
 
     override fun goToCallActivity(conferenceId: String, withCamera: Boolean) {
@@ -1069,6 +1115,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             toolbar.menu.findItem(R.id.conv_search).isVisible = false
             toolbar.menu.findItem(R.id.conv_action_videocall).isVisible = false
             toolbar.menu.findItem(R.id.conv_action_audiocall).isVisible = false
+            toolbar.menu.findItem(R.id.conv_action_peer_services).isVisible = false
             cvMessageInput.visibility = View.GONE
             unknownContactPrompt.visibility = View.VISIBLE
             trustRequestPrompt.visibility = View.GONE
@@ -1083,6 +1130,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             toolbar.menu.findItem(R.id.conv_search).isVisible = false
             toolbar.menu.findItem(R.id.conv_action_videocall).isVisible = false
             toolbar.menu.findItem(R.id.conv_action_audiocall).isVisible = false
+            toolbar.menu.findItem(R.id.conv_action_peer_services).isVisible = false
             cvMessageInput.visibility = View.GONE
             unknownContactPrompt.visibility = View.GONE
             trustRequestPrompt.visibility = View.VISIBLE
@@ -1116,6 +1164,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             toolbar.menu.findItem(R.id.conv_search).setVisible(false)
             toolbar.menu.findItem(R.id.conv_action_videocall).setVisible(false)
             toolbar.menu.findItem(R.id.conv_action_audiocall).setVisible(false)
+            toolbar.menu.findItem(R.id.conv_action_peer_services).setVisible(false)
             cvMessageInput.visibility = View.GONE
             unknownContactPrompt.visibility = View.GONE
             trustRequestPrompt.visibility = View.GONE
@@ -1130,6 +1179,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             toolbar.menu.findItem(R.id.conv_search).setVisible(false)
             toolbar.menu.findItem(R.id.conv_action_videocall).setVisible(false)
             toolbar.menu.findItem(R.id.conv_action_audiocall).setVisible(false)
+            toolbar.menu.findItem(R.id.conv_action_peer_services).setVisible(false)
             cvMessageInput.visibility = View.GONE
             unknownContactPrompt.visibility = View.GONE
             trustRequestPrompt.visibility = View.GONE
@@ -1143,6 +1193,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             toolbar.menu.findItem(R.id.conv_search).isVisible = false
             toolbar.menu.findItem(R.id.conv_action_videocall).isVisible = false
             toolbar.menu.findItem(R.id.conv_action_audiocall).isVisible = false
+            toolbar.menu.findItem(R.id.conv_action_peer_services).isVisible = false
             cvMessageInput.visibility = View.GONE
             unknownContactPrompt.visibility = View.GONE
             trustRequestPrompt.visibility = View.GONE
