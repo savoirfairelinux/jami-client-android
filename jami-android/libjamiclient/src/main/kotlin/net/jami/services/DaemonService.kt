@@ -27,7 +27,8 @@ class DaemonService(
     @param:Named("DaemonExecutor") private val mExecutor: ScheduledExecutorService,
     private val mCallService: CallService,
     private val mHardwareService: HardwareService,
-    private val mAccountService: AccountService
+    private val mAccountService: AccountService,
+    private val mPeerServicesService: PeerServicesService,
 ) {
     // references must be kept to avoid garbage collection while pointers are stored in the daemon.
     private var mHardwareCallback: DaemonVideoCallback? = null
@@ -36,6 +37,7 @@ class DaemonService(
     private var mConfigurationCallback: DaemonConfigurationCallback? = null
     private var mDataCallback: DaemonDataTransferCallback? = null
     private var mConversationCallback: ConversationCallback? = null
+    private var mNetworkServiceCallback: DaemonNetworkServiceCallback? = null
     var isStarted = false
         private set
 
@@ -56,13 +58,15 @@ class DaemonService(
             mConfigurationCallback = DaemonConfigurationCallback()
             mDataCallback = DaemonDataTransferCallback()
             mConversationCallback = ConversationCallbackImpl()
+            mNetworkServiceCallback = DaemonNetworkServiceCallback()
             JamiService.init(
                 mConfigurationCallback,
                 mCallAndConferenceCallback,
                 mPresenceCallback,
                 mDataCallback,
                 mHardwareCallback,
-                mConversationCallback
+                mConversationCallback,
+                mNetworkServiceCallback
             )
             Log.i(TAG, "DaemonService started")
         }
@@ -210,6 +214,20 @@ class DaemonService(
         ) {
             val detailsMap: Map<String, String> = details.toNativeFromUtf8()
             mAccountService.addDeviceStateChanged(accountId, operationId, state, detailsMap)
+        }
+    }
+
+    internal inner class DaemonNetworkServiceCallback : NetworkServiceCallback() {
+        override fun peerServicesReceived(requestId: Long, accountId: String, peerId: String, status: Int, servicesJson: String) {
+            mPeerServicesService.onPeerServicesReceived(requestId, accountId, peerId, status, servicesJson)
+        }
+
+        override fun serviceTunnelOpened(accountId: String, tunnelId: String, localPort: Int) {
+            mPeerServicesService.onTunnelOpened(accountId, tunnelId, localPort)
+        }
+
+        override fun serviceTunnelClosed(accountId: String, tunnelId: String, reason: String) {
+            mPeerServicesService.onTunnelClosed(accountId, tunnelId, reason)
         }
     }
 
