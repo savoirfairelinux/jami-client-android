@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/conv_action_peer_services"
+        android:icon="@drawable/ic_peer_services_24"
+        android:title="@string/peer_services_title"
+        android:visible="false"
+        app:showAsAction="always" />
+
     <item
         android:id="@+id/conv_action_audiocall"
         android:icon="@drawable/outline_call_24"

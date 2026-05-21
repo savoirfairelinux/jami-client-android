@@ -732,4 +732,13 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="step_title_create_profile">Create profile</string>
     <string name="step_format">Step %1$d of %2$d: %3$s</string>
 
+
+    <!-- Peer services -->
+    <string name="peer_services_title">Shared Services</string>
+    <string name="peer_services_refresh">Refresh services</string>
+    <string name="peer_services_connect">Connect</string>
+    <string name="peer_services_disconnect">Disconnect</string>
+    <string name="peer_services_empty">No shared services available</string>
+    <string name="peer_services_link_copied">Link copied to clipboard</string>
+
 </resources>

@@ -79,12 +79,26 @@ object ServiceInjectionModule {
 
     @Provides
     @Singleton
+    fun providePeerServicesService(): PeerServicesService {
+        return PeerServicesService()
+    }
+
+    @Provides
+    @Singleton
     fun provideDaemonService(deviceRuntimeService: DeviceRuntimeService,
                              @Named("DaemonExecutor") executor: ScheduledExecutorService,
                              callService: CallService,
                              hardwareService: HardwareService,
-                             accountService: AccountService): DaemonService {
-        return DaemonService(deviceRuntimeService, executor, callService, hardwareService, accountService)
+                             accountService: AccountService,
+                             peerServicesService: PeerServicesService): DaemonService {
+        return DaemonService(
+            deviceRuntimeService,
+            executor,
+            callService,
+            hardwareService,
+            accountService,
+            peerServicesService
+        )
     }
 
     @Provides
