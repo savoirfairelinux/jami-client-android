@@ -31,6 +31,7 @@ import android.telecom.PhoneAccountHandle
 import android.telecom.TelecomManager
 import android.util.Log
 import android.view.WindowManager
+import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import com.bumptech.glide.Glide
 import cx.ring.BuildConfig
@@ -38,17 +39,21 @@ import cx.ring.service.ConnectionService
 import cx.ring.R
 import cx.ring.service.DRingService
 import cx.ring.service.JamiJobService
+import cx.ring.service.PeerTunnelForegroundService
 import cx.ring.linkpreview.LinkPreview
 import cx.ring.services.CallServiceImpl.Companion.CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.views.AvatarFactory
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
 import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import net.jami.daemon.JamiService
 import net.jami.services.*
 import java.io.File
 import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -92,6 +97,9 @@ abstract class JamiApplication : Application() {
 
     @Inject lateinit
     var mConversationFacade: ConversationFacade
+
+    @Inject lateinit
+    var peerServicesService: PeerServicesService
 
     private val ringerModeListener: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -303,6 +311,9 @@ abstract class JamiApplication : Application() {
     }
 
     private fun setupActivityListener() {
+        var startedActivityCount = 0
+        val appInForeground = BehaviorSubject.createDefault(true)
+
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
                 if (mPreferencesService.settings.isRecordingBlocked) {
@@ -310,12 +321,43 @@ abstract class JamiApplication : Application() {
                 }
             }
 
-            override fun onActivityStarted(activity: Activity) {}
+            override fun onActivityStarted(activity: Activity) {
+                startedActivityCount++
+                if (startedActivityCount == 1) appInForeground.onNext(true)
+            }
+
+            override fun onActivityStopped(activity: Activity) {
+                startedActivityCount = maxOf(0, startedActivityCount - 1)
+                if (startedActivityCount == 0) appInForeground.onNext(false)
+            }
+
             override fun onActivityResumed(activity: Activity) {}
             override fun onActivityPaused(activity: Activity) {}
-            override fun onActivityStopped(activity: Activity) {}
             override fun onActivitySaveInstanceState(activity: Activity, bundle: Bundle) {}
             override fun onActivityDestroyed(activity: Activity) {}
         })
+
+        Observable.combineLatest(
+            appInForeground,
+            peerServicesService.observeAnyActiveTunnel(),
+        ) { inForeground, hasTunnels -> !inForeground && hasTunnels }
+            .distinctUntilChanged()
+            .switchMap { shouldRun ->
+                if (shouldRun) Observable.just(true).delay(300, TimeUnit.MILLISECONDS)
+                else Observable.just(false)
+            }
+            .subscribe { shouldRun ->
+                if (shouldRun) {
+                    try {
+                        ContextCompat.startForegroundService(
+                            this, Intent(this, PeerTunnelForegroundService::class.java)
+                        )
+                    } catch (e: Exception) {
+                        Log.w(TAG, "Cannot start tunnel foreground service: ${e.message}")
+                    }
+                } else {
+                    stopService(Intent(this, PeerTunnelForegroundService::class.java))
+                }
+            }
     }
 }

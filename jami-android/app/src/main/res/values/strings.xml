@@ -762,5 +762,9 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="peer_services_error_unreachable">Contact is unreachable</string>
     <string name="peer_services_error_timeout">Request timed out</string>
     <string name="peer_services_error_unknown">Could not retrieve services</string>
+    <string name="notif_channel_peer_tunnel">Shared services</string>
+    <string name="notif_channel_peer_tunnel_descr">Shown while peer service tunnels are active in the background.</string>
+    <string name="notif_peer_tunnel_title">Shared services active</string>
+    <string name="notif_peer_tunnel_text">Jami is keeping your service connections alive in the background</string>
 
 </resources>
