@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfe32875_2d402596",
+        "filename": "jami-android/app/src/main/java/cx/ring/viewmodel/PeerServicesViewModel.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-05-22T18:12:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "928f505a_07c6c539",
+      "range": {
+        "startLine": 127,
+        "startChar": 1,
+        "endLine": 172,
+        "endChar": 17
+      },
+      "revId": "7954c039c11cdfc7e166e88015409cdd59c9444b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b440d578_bd43e4fd",
@@ -47,6 +71,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f06641ea_8a7f5995",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/PeerServicesService.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-05-22T18:12:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b440d578_bd43e4fd",
+      "range": {
+        "startLine": 106,
+        "startChar": 47,
+        "endLine": 106,
+        "endChar": 58
+      },
+      "revId": "7954c039c11cdfc7e166e88015409cdd59c9444b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cd468dfc_ec630226",
@@ -60,6 +108,30 @@
       "writtenOn": "2026-05-22T16:59:14Z",
       "side": 1,
       "message": "nope, do proper json parsing",
+      "range": {
+        "startLine": 117,
+        "startChar": 4,
+        "endLine": 158,
+        "endChar": 5
+      },
+      "revId": "7954c039c11cdfc7e166e88015409cdd59c9444b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6536504f_8417f105",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/PeerServicesService.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-05-22T18:12:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd468dfc_ec630226",
       "range": {
         "startLine": 117,
         "startChar": 4,
