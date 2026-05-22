@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "928f505a_07c6c539",
+        "filename": "jami-android/app/src/main/java/cx/ring/viewmodel/PeerServicesViewModel.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2026-05-22T16:59:14Z",
+      "side": 1,
+      "message": "business logic is not view-dependent -\u003e should not be in the ViewModel.\n\nManaging list of opened tunnels and async tunnel opening logic should be in the PeerServicesService",
+      "range": {
+        "startLine": 127,
+        "startChar": 1,
+        "endLine": 172,
+        "endChar": 17
+      },
+      "revId": "7954c039c11cdfc7e166e88015409cdd59c9444b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b440d578_bd43e4fd",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/PeerServicesService.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2026-05-22T16:59:14Z",
+      "side": 1,
+      "message": "toNative should not be needed, since the object is immediately converted to TunnelInfo",
+      "range": {
+        "startLine": 106,
+        "startChar": 47,
+        "endLine": 106,
+        "endChar": 58
+      },
+      "revId": "7954c039c11cdfc7e166e88015409cdd59c9444b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd468dfc_ec630226",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/PeerServicesService.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2026-05-22T16:59:14Z",
+      "side": 1,
+      "message": "nope, do proper json parsing",
+      "range": {
+        "startLine": 117,
+        "startChar": 4,
+        "endLine": 158,
+        "endChar": 5
+      },
+      "revId": "7954c039c11cdfc7e166e88015409cdd59c9444b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
