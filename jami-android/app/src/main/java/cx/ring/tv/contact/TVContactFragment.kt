@@ -186,9 +186,7 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
         val peerUri = peerContact.contact.uri.uri
 
         mServicesCheckDisposable?.dispose()
-        val requestId = peerServicesService.queryPeerServices(mConversationPath.accountId, peerUri)
-        mServicesCheckDisposable = peerServicesService.peerServicesReceived
-            .filter { it.requestId == requestId && it.accountId == mConversationPath.accountId && it.peerId == peerUri }
+        mServicesCheckDisposable = peerServicesService.queryPeerServices(mConversationPath.accountId, peerUri)
             .firstElement()
             .observeOn(uiScheduler)
             .subscribe { result ->
