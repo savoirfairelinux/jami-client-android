@@ -23,6 +23,7 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import net.jami.daemon.JamiService
 import net.jami.utils.Log
+import java.util.Collections
 import java.util.concurrent.ConcurrentHashMap
 
 enum class PeerServicesStatus(val code: Int) {
@@ -75,6 +76,12 @@ class PeerServicesService {
     private val tunnelStates = ConcurrentHashMap<String, BehaviorSubject<PeerTunnelState>>()
     private val tunnelOpenedSubject: Subject<TunnelInfo> = PublishSubject.create()
 
+    private val activeTunnelIds: MutableSet<String> = Collections.newSetFromMap(ConcurrentHashMap())
+    private val anyActiveTunnelSubject: Subject<Boolean> = BehaviorSubject.createDefault(false).toSerialized()
+
+    // Emits true when at least one tunnel is active across any account/peer
+    fun observeAnyActiveTunnel(): Observable<Boolean> = anyActiveTunnelSubject.distinctUntilChanged()
+
     // Pending-open queue for matching synchronous TunnelOpened callbacks to the service that was
     // requested. openTunnel() enqueues an entry BEFORE calling into the daemon because the daemon
     // fires TunnelOpened synchronously on the caller's thread.
@@ -121,6 +128,8 @@ class PeerServicesService {
                 )
             }
             .toMap()
+        active.values.forEach { activeTunnelIds.add(it.tunnelId) }
+        if (activeTunnelIds.isNotEmpty()) anyActiveTunnelSubject.onNext(true)
         return PeerTunnelState(activeTunnels = active)
     }
 
@@ -173,10 +182,14 @@ class PeerServicesService {
             activeTunnels   = current.activeTunnels + (pending.serviceId to info),
             pendingServices = current.pendingServices - pending.serviceId,
         ))
+        activeTunnelIds.add(tunnelId)
+        anyActiveTunnelSubject.onNext(true)
         tunnelOpenedSubject.onNext(info)
     }
 
     fun onTunnelClosed(accountId: String, tunnelId: String, @Suppress("UNUSED_PARAMETER") reason: String) {
+        activeTunnelIds.remove(tunnelId)
+        anyActiveTunnelSubject.onNext(activeTunnelIds.isNotEmpty())
         for (subject in tunnelStates.values) {
             val current = subject.value ?: continue
             val serviceId = current.activeTunnels.entries

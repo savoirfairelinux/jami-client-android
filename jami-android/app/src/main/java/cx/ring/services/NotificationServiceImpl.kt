@@ -1135,6 +1135,7 @@ class NotificationServiceImpl(
         const val NOTIF_CHANNEL_PUSH_SYNC = "sync_channel"
         const val NOTIF_CHANNEL_SYNC = "sync"
         private const val NOTIF_CHANNEL_SERVICE = "service"
+        const val NOTIF_CHANNEL_PEER_TUNNEL = "peer_tunnel"
         private const val NOTIF_CALL_GROUP = "calls"
         private const val NOTIF_GROUP_SYNC = "sync"
 
@@ -1257,6 +1258,20 @@ class NotificationServiceImpl(
             ).apply {
                 group = NOTIF_GROUP_SYNC
                 lockscreenVisibility = Notification.VISIBILITY_SECRET
+                enableLights(false)
+                enableVibration(false)
+                setShowBadge(false)
+                setSound(null, null)
+            })
+
+            notificationManager.createNotificationChannel(NotificationChannel(
+                NOTIF_CHANNEL_PEER_TUNNEL,
+                context.getString(R.string.notif_channel_peer_tunnel),
+                NotificationManager.IMPORTANCE_LOW
+            ).apply {
+                group = NOTIF_GROUP_SYNC
+                description = context.getString(R.string.notif_channel_peer_tunnel_descr)
+                lockscreenVisibility = Notification.VISIBILITY_PRIVATE
                 enableLights(false)
                 enableVibration(false)
                 setShowBadge(false)
