@@ -134,7 +134,7 @@ class DaemonService(
 
         override fun accountMessageStatusChanged(accountId: String, conversationId: String, peer: String, messageId: String, status: Int) {
             mExecutor.submit {
-                mAccountService.accountMessageStatusChanged(accountId, conversationId, messageId, peer, status)
+                mAccountService.accountMessageStatusChanged(accountId, conversationId, peer, messageId, status)
             }
         }
 
