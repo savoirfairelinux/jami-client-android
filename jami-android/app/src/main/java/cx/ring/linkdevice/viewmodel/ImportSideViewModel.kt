@@ -170,8 +170,8 @@ class ImportSideViewModel @Inject constructor(
     private fun updateDeviceAuthState(result: AuthResult) {
         Log.d(TAG, "Processing signal: ${result.accountId}:${result.operationId}:${result.state} ${result.details}")
         if (!checkNewStateValidity(result.state)) {
-            Log.e(TAG, "Invalid state transition: ${_uiState.value}->${result.state}")
-            throw IllegalStateException("Invalid state transition")
+            Log.e(TAG, "Invalid state transition: ${_uiState.value}->${result.state}, ignoring")
+            return
         }
         val details = result.details
         when (result.state) {

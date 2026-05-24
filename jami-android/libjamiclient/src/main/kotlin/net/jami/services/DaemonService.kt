@@ -203,7 +203,7 @@ class DaemonService(
          */
         override fun deviceAuthStateChanged(accountId: String, state: Int, details: StringMap) {
             val detailsMap: Map<String, String> = details.toNativeFromUtf8()
-            mAccountService.deviceAuthStateChanged(accountId, state, detailsMap)
+            mExecutor.submit { mAccountService.deviceAuthStateChanged(accountId, state, detailsMap) }
         }
 
         /**
@@ -213,7 +213,7 @@ class DaemonService(
             accountId: String, operationId: Long, state: Int, details: StringMap
         ) {
             val detailsMap: Map<String, String> = details.toNativeFromUtf8()
-            mAccountService.addDeviceStateChanged(accountId, operationId, state, detailsMap)
+            mExecutor.submit { mAccountService.addDeviceStateChanged(accountId, operationId, state, detailsMap) }
         }
     }
 
