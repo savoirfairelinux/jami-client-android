@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79b9f6b6_6e4875fb",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-25T15:55:01Z",
+      "side": 1,
+      "message": "[🟡 Suggestions] Line 557: The fragment reads raw preference keys directly even though `SharedPreferencesServiceImpl` now exposes `getAudioMessageMaxSize()` and `getVideoMessageMaxSize()`. This duplicates defaults and key names in two places, making future preference changes easy to desynchronize. Inject/use the shared preferences service or move the helper into a shared API used by both the fragment and service.",
+      "revId": "8ff88931b0479febfb091aa591656f911fa3e167",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a96be9a8_664bd3b0",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-25T15:55:01Z",
+      "side": 1,
+      "message": "[🟡 Suggestions] Line 570: `OnInfoListener` calls `stopAudioRecording()` and updates the dialog from the recorder callback. MediaRecorder callbacks are not guaranteed to be delivered on the main thread on all platform implementations, so touching dialog UI here can crash with `CalledFromWrongThreadException`. Marshal the UI update and recorder state transition to the main thread.\n```suggestion\nsetOnInfoListener { _, what, _ -\u003e\n    if (what \u003d\u003d android.media.MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED ||\n        what \u003d\u003d android.media.MediaRecorder.MEDIA_RECORDER_INFO_MAX_FILESIZE_REACHED) {\n        view?.post {\n            stopAudioRecording()\n            audioRecordDialog?.setMessage(getString(R.string.audio_recording_limit_reached))\n        }\n    }\n}\n```",
+      "revId": "8ff88931b0479febfb091aa591656f911fa3e167",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc6bbe1c_38d3af1a",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-25T15:55:01Z",
+      "side": 1,
+      "message": "[🟡 Suggestions] Line 580: The new audio recording path creates and sends an app-owned recording, but it never checks the final file size before sending. `MediaRecorder.setMaxFileSize()` is best-effort and may be ignored or overshoot on some devices, while the existing preference is presented as a hard message size limit. Validate `file.length()` against `getAudioMaxSize()` before `sendFile(f)`, delete the file, and show a clear error if it exceeds the configured limit.\n```suggestion\nif (file.exists() \u0026\u0026 file.length() \u003e 0L) {\n    val maxSize \u003d getAudioMaxSize()\n    if (maxSize !\u003d Long.MAX_VALUE \u0026\u0026 file.length() \u003e maxSize) {\n        file.delete()\n        Toast.makeText(activity, R.string.audio_recording_limit_reached, Toast.LENGTH_SHORT).show()\n        return\n    }\n    startFileSend(Single.just(file).flatMapCompletable { f -\u003e sendFile(f) })\n} else {\n```",
+      "revId": "8ff88931b0479febfb091aa591656f911fa3e167",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
