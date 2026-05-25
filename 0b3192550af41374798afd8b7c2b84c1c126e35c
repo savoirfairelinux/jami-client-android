@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "313a4311_b92679a5",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-25T08:22:27Z",
+      "side": 1,
+      "message": "[Critical] Line 628: 🔴 Critical Issues - `MediaRecorder.stop()` can throw when the recording is too short or otherwise invalid, but the current code logs the failure and still sends the file if it has any bytes. That can send corrupt/invalid audio messages. Treat stop failure as a failed recording, release/delete the file, and notify the user instead of sending it.\n```suggestion\n        try {\n            recorder.stop()\n        } catch (e: Exception) {\n            Log.w(TAG, \"stopAndSendAudioRecording: stop failed\", e)\n            recorder.release()\n            file.delete()\n            Toast.makeText(activity, R.string.audio_recorder_error, Toast.LENGTH_SHORT).show()\n            return\n        }\n        recorder.release()\n        if (file.exists() \u0026\u0026 file.length() \u003e 0L) {\n            startFileSend(Single.just(file).flatMapCompletable { f -\u003e sendFile(f) })\n        } else {\n            file.delete()\n            Toast.makeText(activity, R.string.audio_recorder_error, Toast.LENGTH_SHORT).show()\n        }\n```",
+      "revId": "0b3192550af41374798afd8b7c2b84c1c126e35c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "284d2785_ac2b0630",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-25T08:22:27Z",
+      "side": 1,
+      "message": "Line 648: 🟡 Suggestions - `cancelAudioRecording()` silently swallows all stop failures. While cancelling does not need to surface an error to the user, silently ignoring framework failures makes lifecycle/recorder state issues hard to diagnose. Log at debug/warn level consistent with the rest of this class.\n```suggestion\n        try {\n            recorder.stop()\n        } catch (e: Exception) {\n            Log.w(TAG, \"cancelAudioRecording: stop failed\", e)\n        }\n```",
+      "revId": "0b3192550af41374798afd8b7c2b84c1c126e35c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
