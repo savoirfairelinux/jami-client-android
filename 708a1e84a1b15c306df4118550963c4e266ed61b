@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f90f368d_d1cc398e",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-25T14:51:02Z",
+      "side": 1,
+      "message": "[🔴 Critical] Line 608: The inline recorder has no duration or file-size limit, so a user can leave the dialog open indefinitely while the app keeps the microphone active and writes to storage. That is a privacy/resource risk and can fill app storage. Add bounded recording before prepare(), using limits consistent with message UX, for example:\n```suggestion\nsetMaxDuration(MAX_AUDIO_MESSAGE_DURATION_MS)\nsetMaxFileSize(MAX_AUDIO_MESSAGE_SIZE_BYTES)\nsetOnInfoListener { _, what, _ -\u003e\n    if (what \u003d\u003d MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED ||\n        what \u003d\u003d MediaRecorder.MEDIA_RECORDER_INFO_MAX_FILESIZE_REACHED) {\n        stopAndSendAudioRecording()\n    }\n}\n```",
+      "revId": "708a1e84a1b15c306df4118550963c4e266ed61b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbd37576_72765ec9",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-25T14:51:02Z",
+      "side": 1,
+      "message": "[🟡 Suggestion] Line 645: stopAndSendAudioRecording() returns early when either audioRecorder or audioRecordFile is null, but it does not release/delete whichever resource still exists. This can leak the recorder or leave a stale temp file if state becomes partially inconsistent during lifecycle/dialog callbacks. Snapshot both values, clear state, and always release/delete the available resource on invalid state.\n```suggestion\nval recorder \u003d audioRecorder\nval file \u003d audioRecordFile\naudioRecorder \u003d null\naudioRecordFile \u003d null\nif (recorder \u003d\u003d null || file \u003d\u003d null) {\n    recorder?.release()\n    file?.delete()\n    Toast.makeText(activity, R.string.audio_recorder_error, Toast.LENGTH_SHORT).show()\n    return\n}\n```",
+      "revId": "708a1e84a1b15c306df4118550963c4e266ed61b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9aa2f746_0570dfa0",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-25T14:51:02Z",
+      "side": 1,
+      "message": "[🟡 Suggestion] Line 677: cancelAudioRecording() also returns immediately when audioRecorder is null, leaving audioRecordFile untouched. Keep cleanup idempotent so lifecycle/dialog races do not leave temporary files behind.\n```suggestion\nval recorder \u003d audioRecorder\nval file \u003d audioRecordFile\naudioRecorder \u003d null\naudioRecordFile \u003d null\nif (recorder !\u003d null) {\n    try {\n        recorder.stop()\n    } catch (e: Exception) {\n        Log.w(TAG, \"cancelAudioRecording: stop failed\", e)\n    }\n    recorder.release()\n}\nfile?.delete()\n```",
+      "revId": "708a1e84a1b15c306df4118550963c4e266ed61b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
