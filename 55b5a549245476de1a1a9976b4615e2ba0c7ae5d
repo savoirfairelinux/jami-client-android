@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14020db3_824fd434",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-25T15:13:14Z",
+      "side": 1,
+      "message": "Line 407: 🟡 Suggestions - Recording is only cancelled in onDestroyView(), so pressing Home or otherwise backgrounding the app can leave the microphone recording while the conversation UI is no longer visible. For an inline recorder, stop/cancel from onStop() or onPause() and dismiss the dialog to avoid privacy/resource issues.\n```suggestion\noverride fun onStop() {\n    cancelAudioRecording()\n    audioRecordDialog?.dismiss()\n    audioRecordDialog \u003d null\n    super.onStop()\n}\n```",
+      "revId": "55b5a549245476de1a1a9976b4615e2ba0c7ae5d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e28a1b09_6dd73554",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-25T15:13:14Z",
+      "side": 1,
+      "message": "[Critical] Line 600: 🔴 Critical Issues - Reaching the max duration/file size sends the recording automatically, without the user pressing Send. This can expose private audio unexpectedly; the limit should stop recording and let the user confirm or cancel. Suggested approach: split stopping from sending and only call send from the positive button.\n```suggestion\nstopAudioRecording(send \u003d false)\naudioRecordDialog?.setMessage(R.string.audio_recording_limit_reached)\n```",
+      "revId": "55b5a549245476de1a1a9976b4615e2ba0c7ae5d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
