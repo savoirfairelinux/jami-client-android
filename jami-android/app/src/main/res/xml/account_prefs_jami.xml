@@ -64,6 +64,30 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             app:updatesContinuously="true"
             tools:summary="@string/account_accept_files_never" />
 
+        <androidx.preference.SeekBarPreference
+            android:icon="@drawable/baseline_mic_24"
+            android:key="audioMessageMaxSize"
+            android:max="50"
+            android:persistent="true"
+            android:title="@string/account_audio_message_max_size"
+            app:defaultValue="10"
+            app:min="0"
+            app:seekBarIncrement="1"
+            app:updatesContinuously="true"
+            tools:summary="10 MB" />
+
+        <androidx.preference.SeekBarPreference
+            android:icon="@drawable/baseline_videocam_24"
+            android:key="videoMessageMaxSize"
+            android:max="500"
+            android:persistent="true"
+            android:title="@string/account_video_message_max_size"
+            app:defaultValue="100"
+            app:min="0"
+            app:seekBarIncrement="10"
+            app:updatesContinuously="true"
+            tools:summary="100 MB" />
+
     </androidx.preference.PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>
