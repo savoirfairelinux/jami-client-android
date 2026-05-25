@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a912b2da_a9ba6961",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-25T14:46:24Z",
+      "side": 1,
+      "message": "[🔴 Critical] Line 586: startAudioRecording() does not guard against an existing active recorder. If the action is triggered again while recording is already active, the previous MediaRecorder and file references are overwritten, leaving the old recorder running and unreleasable. Add an early guard or cancel/stop the existing recording before creating a new recorder.\n```suggestion\nif (audioRecorder !\u003d null) {\n    Log.w(TAG, \"startAudioRecording: recording already in progress\")\n    return\n}\n```",
+      "revId": "9cb290c5d10549ebc89a540233908c0332efa081",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc9bdc6b_d13c794d",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-25T14:46:24Z",
+      "side": 1,
+      "message": "[🟡 Suggestion] Line 665: The no-recorder path creates a video file and assigns mCurrentPhoto before checking resolveActivity(). If no video capture activity is available, the method returns with an orphan temp file and stale mCurrentPhoto. Check activity availability before creating the output file, or delete/reset on failure.\n```suggestion\nval intent \u003d Intent(MediaStore.ACTION_VIDEO_CAPTURE)\nif (intent.resolveActivity(context.packageManager) \u003d\u003d null) {\n    Toast.makeText(activity, R.string.video_recorder_error, Toast.LENGTH_SHORT).show()\n    return\n}\nintent.apply {\n    putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0)\n    putExtra(MediaStore.EXTRA_OUTPUT, ContentUri.getUriForFile(context, AndroidFileUtils.createVideoFile(context).apply {\n        mCurrentPhoto \u003d this\n    }))\n}\n```",
+      "revId": "9cb290c5d10549ebc89a540233908c0332efa081",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
