@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adfacef5_1abdc746",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-25T15:28:46Z",
+      "side": 1,
+      "message": "[Critical] Line 585: The MediaRecorder info callback calls stopAudioRecording(), which releases the recorder, but the dialog remains actionable. If the user then taps Send, stopAndSendAudioRecording() sends whatever file exists without knowing whether stopAudioRecording() succeeded or whether the recorder produced a finalized, valid file. This can send a truncated/corrupt audio file after max duration/filesize. Prefer routing the limit case through a single finalized state and disabling further recorder stop attempts. For example:\n```suggestion\nsetOnInfoListener { _, what, _ -\u003e\n    if (what \u003d\u003d android.media.MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED ||\n        what \u003d\u003d android.media.MediaRecorder.MEDIA_RECORDER_INFO_MAX_FILESIZE_REACHED) {\n        if (finishAudioRecording()) {\n            audioRecordDialog?.setMessage(getString(R.string.audio_recording_limit_reached))\n        } else {\n            cancelAudioRecording()\n            audioRecordDialog?.dismiss()\n            Toast.makeText(activity, R.string.audio_recorder_error, Toast.LENGTH_SHORT).show()\n        }\n    }\n}\n```\nwhere finishAudioRecording() stops/releases once and records whether the file is valid before allowing Send.",
+      "revId": "f5f2a790af84f79ba9ca31cdb93aa60e6bf660cc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3435bea1_793e4e41",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-25T15:28:46Z",
+      "side": 1,
+      "message": "Line 627: stopAndSendAudioRecording() returns silently when file is null. This can happen after lifecycle cancellation or unexpected recorder state, leaving the user with no feedback even though they tapped Send. Surface the failure consistently and avoid silent no-op behavior.\n```suggestion\nif (file \u003d\u003d null) {\n    Toast.makeText(activity, R.string.audio_recorder_error, Toast.LENGTH_SHORT).show()\n    return\n}\n```",
+      "revId": "f5f2a790af84f79ba9ca31cdb93aa60e6bf660cc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63070141_9510bd37",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-25T15:28:46Z",
+      "side": 1,
+      "message": "[Critical] Line 696: The video capture intent grants the camera app a content Uri via EXTRA_OUTPUT, but no explicit URI permission flags are added. Some camera apps require these grants and may fail to write to the destination, especially with FileProvider-style URIs. Add read/write grant flags when passing the output Uri.\n```suggestion\nval outputUri \u003d ContentUri.getUriForFile(context, videoFile)\nintent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)\nintent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri)\n```",
+      "revId": "f5f2a790af84f79ba9ca31cdb93aa60e6bf660cc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
