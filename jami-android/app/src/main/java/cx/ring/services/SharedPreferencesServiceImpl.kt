@@ -182,6 +182,18 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
             .getInt(PREF_ACCEPT_IN_MAX_SIZE, 30) * 1024 * 1024
     }
 
+    fun getAudioMessageMaxSize(accountId: String): Long {
+        val mb = context.getSharedPreferences(PREFS_ACCOUNT + accountId, Context.MODE_PRIVATE)
+            .getInt(PREF_AUDIO_MSG_MAX_SIZE, 10)
+        return if (mb == 0) Long.MAX_VALUE else mb * 1_000_000L
+    }
+
+    fun getVideoMessageMaxSize(accountId: String): Long {
+        val mb = context.getSharedPreferences(PREFS_ACCOUNT + accountId, Context.MODE_PRIVATE)
+            .getInt(PREF_VIDEO_MSG_MAX_SIZE, 100)
+        return if (mb == 0) Long.MAX_VALUE else mb * 1_000_000L
+    }
+
     private fun applyDarkMode(enabled: Boolean) {
         AppCompatDelegate.setDefaultNightMode(
             if (enabled) AppCompatDelegate.MODE_NIGHT_YES else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM else AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
@@ -217,6 +229,8 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
         private const val PREF_ON_STARTUP = "on_startup"
         const val PREF_DARK_MODE = "darkMode"
         private const val PREF_ACCEPT_IN_MAX_SIZE = "acceptIncomingFilesMaxSize"
+        private const val PREF_AUDIO_MSG_MAX_SIZE = "audioMessageMaxSize"
+        private const val PREF_VIDEO_MSG_MAX_SIZE = "videoMessageMaxSize"
         const val PREF_EXTENSIONS = "extensions"
         private const val PREF_LOG_IS_ACTIVE = "log_is_active"
 

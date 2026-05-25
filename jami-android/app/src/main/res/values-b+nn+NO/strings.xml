@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="view_switch_camera">Byta kamera</string>
+  <!--About dialog-->
+  <!--RingActivity-->
+  <!--AB menus-->
+  <!--Sections-->
+  <!--Dialing Fragment-->
+  <!--History Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <!--Call Fragment-->
+  <string name="action_call_hangup">Avslutt samtale</string>
+  <string name="switch_to_video">Legg videoen til</string>
+  <!--Text messages-->
+  <!--MediaPreferenceFragment-->
+  <!--Ringtone activity-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--Post notifications permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <!--Conversation-->
+  <string name="remove_conversation">Ta vekk samtal</string>
+  <!--Contacts-->
+  <!--Account summary-->
+  <!--Share fragment-->
+  <!--Pending invitations-->
+  <!--Blacklist-->
+  <!--Smartlist-->
+  <!--File Transfer-->
+  <!--Bottom Navigation-->
+  <!--TV-->
+  <!--Wizard-->
+  <!--Bottom sheet-->
+  <string name="camera_flip_btn_description">Flip-kamera</string>
+  <string name="add_participant_btn_description">Legg til deltakar</string>
+  <string name="screen_share_btn_description">Del skjerm</string>
+  <!--Swarm Details-->
+  <!--JamiId-->
+  <!--WelcomeJami-->
+  <!--Conversation details-->
+  <!--Donation-->
+  <!--Extension-->
+  <!--Accessibility-->
+  <!--Peer services-->
+</resources>
