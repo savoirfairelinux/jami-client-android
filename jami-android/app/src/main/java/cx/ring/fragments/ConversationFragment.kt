@@ -120,6 +120,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private var mConversationItem: ConversationItemViewModel? = null
     private var mPeerServicesCheckDisposable: Disposable? = null
 
+    private var inlineAudioRecorder: InlineAudioRecorder? = null
+
     @Inject lateinit var peerServicesService: PeerServicesService
     @Named("UiScheduler") @Inject lateinit var uiScheduler: Scheduler
 
@@ -340,6 +342,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
             ongoingCallPane.setOnClickListener { presenter.clickOnGoingPane() }
             msgSend.setOnClickListener { sendMessageText() }
+            setupInlineAudioRecorder(this)
             emojiSend.setOnClickListener { sendEmoji() }
             btnMenu.setOnClickListener { expandMenu(it) }
             btnTakePicture.setOnClickListener { takePicture() }
@@ -406,6 +409,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         animation.removeAllUpdateListeners()
         binding?.histList?.adapter = null
         mCompositeDisposable.clear()
+        inlineAudioRecorder?.release()
+        inlineAudioRecorder = null
         locationServiceConnection?.let {
             try {
                 requireContext().unbindService(it)
@@ -443,7 +448,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         popup.inflate(R.menu.conversation_share_actions)
         popup.setOnMenuItemClickListener { item: MenuItem ->
             when (item.itemId) {
-                R.id.conv_send_audio -> sendAudioMessage()
+                //R.id.conv_send_audio -> sendAudioMessage()
                 R.id.conv_send_video -> sendVideoMessage()
                 R.id.conv_send_file -> openFilePicker()
                 R.id.conv_select_media -> openGallery()
@@ -556,16 +561,43 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         if (!presenter.deviceRuntimeService.hasAudioPermission()) {
             requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), REQUEST_CODE_CAPTURE_AUDIO)
         } else {
-            try {
-                val ctx = requireContext()
-                val intent = Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION)
-                mCurrentPhoto = AndroidFileUtils.createAudioFile(ctx)
-                startActivityForResult(intent, REQUEST_CODE_CAPTURE_AUDIO)
-            } catch (ex: Exception) {
-                Log.e(TAG, "sendAudioMessage: error", ex)
-                Toast.makeText(activity, getString(R.string.audio_recorder_error), Toast.LENGTH_SHORT).show()
-            }
+            showAudioRecorder()
         }
+    }
+
+    private fun setupInlineAudioRecorder(binding: FragConversationBinding) {
+        val recorder = InlineAudioRecorder(
+            context = requireContext(),
+            overlay = binding.audioRecordOverlay,
+            maxDurationMs = MAX_AUDIO_DURATION_MS.toLong(),
+            maxFileSize = DEFAULT_AUDIO_MAX_SIZE,
+            callbacks = object : InlineAudioRecorder.Callbacks {
+                override fun hasAudioPermission() = presenter.deviceRuntimeService.hasAudioPermission()
+
+                override fun onSimpleTap() = sendAudioMessage()
+
+                override fun onSend(file: File) {
+                    startFileSend(Single.just(file).flatMapCompletable { f -> sendFile(f) })
+                }
+
+                override fun onReview(file: File, amplitudes: FloatArray) =
+                    showAudioRecorder(file, amplitudes)
+            }
+        )
+        recorder.attach(binding.btnAudioRecord)
+        inlineAudioRecorder = recorder
+    }
+
+    private fun showAudioRecorder(initialSegment: File? = null, initialAmplitudes: FloatArray? = null) {
+        if (childFragmentManager.findFragmentByTag(AUDIO_RECORDER_TAG) != null) return
+        AudioMessageRecorderFragment(
+            maxDurationMs = MAX_AUDIO_DURATION_MS.toLong(),
+            maxFileSize = DEFAULT_AUDIO_MAX_SIZE,
+            initialSegment = initialSegment,
+            initialAmplitudes = initialAmplitudes,
+        ) { file ->
+            startFileSend(Single.just(file).flatMapCompletable { f -> sendFile(f) })
+        }.show(childFragmentManager, AUDIO_RECORDER_TAG)
     }
 
     private fun sendVideoMessage() {
@@ -579,10 +611,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     putExtra("android.intent.extras.LENS_FACING_FRONT", 1)
                     putExtra("android.intent.extra.USE_FRONT_CAMERA", true)
                     putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0)
-                    putExtra(MediaStore.EXTRA_OUTPUT, ContentUri.getUriForFile(context, AndroidFileUtils.createVideoFile(context).apply {
-                        mCurrentPhoto = this
-                    }))
                 }
+                val videoFile = AndroidFileUtils.createVideoFile(context)
+                mCurrentPhoto = videoFile
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, ContentUri.getUriForFile(context, videoFile))
                 startActivityForResult(intent, REQUEST_CODE_CAPTURE_VIDEO)
             } catch (ex: Exception) {
                 Log.e(TAG, "sendVideoMessage: error", ex)
@@ -660,7 +692,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     }
                 }
             }
-        } else if (requestCode == REQUEST_CODE_TAKE_PICTURE || requestCode == REQUEST_CODE_CAPTURE_AUDIO || requestCode == REQUEST_CODE_CAPTURE_VIDEO) {
+        } else if (requestCode == REQUEST_CODE_TAKE_PICTURE || requestCode == REQUEST_CODE_CAPTURE_VIDEO) {
             if (resultCode != Activity.RESULT_OK) {
                 mCurrentPhoto = null
                 return
@@ -792,6 +824,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun onStop() {
         super.onStop()
+        inlineAudioRecorder?.release()
         presenter.pause()
     }
 
@@ -1368,6 +1401,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         private const val REQUEST_CODE_CAPTURE_AUDIO = 1004
         private const val REQUEST_CODE_CAPTURE_VIDEO = 1005
         const val REQUEST_CODE_EDIT_MESSAGE = 1006
+        private const val MAX_AUDIO_DURATION_MS = 300_000 // 5 minutes
+        private const val AUDIO_RECORDER_TAG = "audio_recorder"
+        private const val DEFAULT_AUDIO_MAX_SIZE = 10L // 10 MB default
+        private const val DEFAULT_VIDEO_MAX_SIZE = 100L // 100 MB default
         private fun getIndex(spinner: Spinner, myString: net.jami.model.Uri): Int {
             var i = 0
             val n = spinner.count
