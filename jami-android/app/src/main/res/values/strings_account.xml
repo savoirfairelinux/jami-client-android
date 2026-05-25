@@ -130,6 +130,9 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="account_accept_files_max_size">Maximum file size to accept automatically</string>
     <string name="account_accept_files_never">Never accept automatically</string>
     <string name="account_accept_files_always">Always accept automatically</string>
+    <string name="account_audio_message_max_size">Audio message size limit</string>
+    <string name="account_video_message_max_size">Video message size limit</string>
+    <string name="account_message_size_unlimited">Unlimited</string>
     <string name="size_mb">%1$d MB</string>
 
     <string name="account_turn_enable_label">Use TURN</string>
