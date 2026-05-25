@@ -405,8 +405,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="conversation_contact_unblocked">%1$s was unblocked from the conversation.</string>
     <string name="conversation_search_hint">Search conversation</string>
 
-    <string name="audio_recorder_error">Audio recorder app was not found.</string>
-    <string name="video_recorder_error">Video recorder app was not found.</string>
+    <string name="audio_recorder_error">Unable to start audio recorder.</string>
+    <string name="audio_recording_in_progress">Recording…</string>
+    <string name="audio_recording_send">Send</string>
+    <string name="video_recorder_error">No video recorder available.</string>
     <string name="taking_picture_error">An error occurred while taking the picture.</string>
     <string name="find_picture_error">An error occurred while finding the picture.</string>
     <string name="open_camera_error">An error occurred while opening the camera.</string>

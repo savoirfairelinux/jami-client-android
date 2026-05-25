@@ -120,6 +120,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private var mConversationItem: ConversationItemViewModel? = null
     private var mPeerServicesCheckDisposable: Disposable? = null
 
+    // Inline audio recorder
+    private var audioRecorder: android.media.MediaRecorder? = null
+    private var audioRecordFile: File? = null
+    private var audioRecordDialog: androidx.appcompat.app.AlertDialog? = null
+
     @Inject lateinit var peerServicesService: PeerServicesService
     @field:Named("UiScheduler") @Inject lateinit var uiScheduler: Scheduler
 
@@ -404,6 +409,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         animation.removeAllUpdateListeners()
         binding?.histList?.adapter = null
         mCompositeDisposable.clear()
+        cancelAudioRecording()
+        audioRecordDialog?.dismiss()
+        audioRecordDialog = null
         locationServiceConnection?.let {
             try {
                 requireContext().unbindService(it)
@@ -554,16 +562,113 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         if (!presenter.deviceRuntimeService.hasAudioPermission()) {
             requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), REQUEST_CODE_CAPTURE_AUDIO)
         } else {
-            try {
-                val ctx = requireContext()
-                val intent = Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION)
-                mCurrentPhoto = AndroidFileUtils.createAudioFile(ctx)
-                startActivityForResult(intent, REQUEST_CODE_CAPTURE_AUDIO)
-            } catch (ex: Exception) {
-                Log.e(TAG, "sendAudioMessage: error", ex)
-                Toast.makeText(activity, getString(R.string.audio_recorder_error), Toast.LENGTH_SHORT).show()
-            }
+            startAudioRecording()
         }
+    }
+
+    private fun startAudioRecording() {
+        if (audioRecorder != null) {
+            cancelAudioRecording()
+        }
+        val ctx = requireContext()
+        val file = try {
+            AndroidFileUtils.createAudioFile(ctx)
+        } catch (e: Exception) {
+            Log.e(TAG, "startAudioRecording: cannot create file", e)
+            Toast.makeText(activity, R.string.audio_recorder_error, Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val recorder = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S)
+            android.media.MediaRecorder(ctx) else android.media.MediaRecorder()
+
+        val started = try {
+            recorder.apply {
+                setAudioSource(android.media.MediaRecorder.AudioSource.MIC)
+                setOutputFormat(android.media.MediaRecorder.OutputFormat.MPEG_4)
+                setAudioEncoder(android.media.MediaRecorder.AudioEncoder.AAC)
+                setAudioEncodingBitRate(96000)
+                setAudioSamplingRate(44100)
+                setMaxDuration(MAX_AUDIO_DURATION_MS)
+                setMaxFileSize(MAX_AUDIO_FILE_SIZE)
+                setOutputFile(file.absolutePath)
+                setOnInfoListener { _, what, _ ->
+                    if (what == android.media.MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED ||
+                        what == android.media.MediaRecorder.MEDIA_RECORDER_INFO_MAX_FILESIZE_REACHED) {
+                        stopAndSendAudioRecording()
+                        audioRecordDialog?.dismiss()
+                    }
+                }
+                prepare()
+                start()
+            }
+            true
+        } catch (e: Exception) {
+            Log.e(TAG, "startAudioRecording: recorder start failed", e)
+            recorder.release()
+            file.delete()
+            false
+        }
+
+        if (!started) {
+            Toast.makeText(activity, R.string.audio_recorder_error, Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        audioRecorder = recorder
+        audioRecordFile = file
+
+        audioRecordDialog = MaterialAlertDialogBuilder(ctx)
+            .setTitle(R.string.conversation_send_audio)
+            .setMessage(R.string.audio_recording_in_progress)
+            .setPositiveButton(R.string.audio_recording_send) { _, _ -> stopAndSendAudioRecording() }
+            .setNegativeButton(android.R.string.cancel) { _, _ -> cancelAudioRecording() }
+            .setOnCancelListener { cancelAudioRecording() }
+            .show()
+    }
+
+    private fun stopAndSendAudioRecording() {
+        val recorder = audioRecorder
+        val file = audioRecordFile
+        audioRecorder = null
+        audioRecordFile = null
+        if (recorder == null || file == null) {
+            recorder?.release()
+            file?.delete()
+            return
+        }
+        try {
+            recorder.stop()
+        } catch (e: Exception) {
+            Log.w(TAG, "stopAndSendAudioRecording: stop failed", e)
+            recorder.release()
+            file.delete()
+            Toast.makeText(activity, R.string.audio_recorder_error, Toast.LENGTH_SHORT).show()
+            return
+        }
+        recorder.release()
+        if (file.exists() && file.length() > 0L) {
+            startFileSend(Single.just(file).flatMapCompletable { f -> sendFile(f) })
+        } else {
+            file.delete()
+            Toast.makeText(activity, R.string.audio_recorder_error, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun cancelAudioRecording() {
+        val recorder = audioRecorder
+        val file = audioRecordFile
+        audioRecorder = null
+        audioRecordFile = null
+        if (recorder != null) {
+            try {
+                recorder.stop()
+            } catch (e: Exception) {
+                Log.w(TAG, "cancelAudioRecording: stop failed", e)
+            }
+            recorder.release()
+        }
+        file?.delete()
     }
 
     private fun sendVideoMessage() {
@@ -577,10 +682,14 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     putExtra("android.intent.extras.LENS_FACING_FRONT", 1)
                     putExtra("android.intent.extra.USE_FRONT_CAMERA", true)
                     putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0)
-                    putExtra(MediaStore.EXTRA_OUTPUT, ContentUri.getUriForFile(context, AndroidFileUtils.createVideoFile(context).apply {
-                        mCurrentPhoto = this
-                    }))
                 }
+                if (intent.resolveActivity(context.packageManager) == null) {
+                    Toast.makeText(activity, R.string.video_recorder_error, Toast.LENGTH_SHORT).show()
+                    return
+                }
+                val videoFile = AndroidFileUtils.createVideoFile(context)
+                mCurrentPhoto = videoFile
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, ContentUri.getUriForFile(context, videoFile))
                 startActivityForResult(intent, REQUEST_CODE_CAPTURE_VIDEO)
             } catch (ex: Exception) {
                 Log.e(TAG, "sendVideoMessage: error", ex)
@@ -658,7 +767,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     }
                 }
             }
-        } else if (requestCode == REQUEST_CODE_TAKE_PICTURE || requestCode == REQUEST_CODE_CAPTURE_AUDIO || requestCode == REQUEST_CODE_CAPTURE_VIDEO) {
+        } else if (requestCode == REQUEST_CODE_TAKE_PICTURE || requestCode == REQUEST_CODE_CAPTURE_VIDEO) {
             if (resultCode != Activity.RESULT_OK) {
                 mCurrentPhoto = null
                 return
@@ -1365,6 +1474,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         private const val REQUEST_CODE_CAPTURE_AUDIO = 1004
         private const val REQUEST_CODE_CAPTURE_VIDEO = 1005
         const val REQUEST_CODE_EDIT_MESSAGE = 1006
+        private const val MAX_AUDIO_DURATION_MS = 300_000 // 5 minutes
+        private const val MAX_AUDIO_FILE_SIZE = 10_000_000L // 10 MB
         private fun getIndex(spinner: Spinner, myString: net.jami.model.Uri): Int {
             var i = 0
             val n = spinner.count
