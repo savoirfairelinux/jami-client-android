@@ -95,6 +95,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:name="android.hardware.type.pc"
         android:required="false" />
 
+    <queries>
+        <intent>
+            <action android:name="android.media.action.VIDEO_CAPTURE" />
+        </intent>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+    </queries>
+
     <application
         android:appCategory="social"
         android:icon="@mipmap/ic_launcher"
