@@ -111,6 +111,23 @@ class GeneralAccountFragment : BasePreferenceFragment<GeneralAccountPresenter>()
         }
     }
 
+    private fun setupMediaSizePref(key: String) {
+        val pref = findPreference<SeekBarPreference>(key) ?: return
+        pref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { p: Preference, v: Any ->
+            p.summary = getMediaSizeSummary(v as Int, (p as SeekBarPreference).max)
+            true
+        }
+        pref.summary = getMediaSizeSummary(pref.value, pref.max)
+    }
+
+    private fun getMediaSizeSummary(size: Int, maxSize: Int): CharSequence {
+        return if (size == 0) {
+            getText(R.string.account_message_size_unlimited)
+        } else {
+            Formatter.formatFileSize(requireContext(), size * 1000L * 1000L)
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (parentFragment as? AppBarStateListener)?.onAppBarScrollTargetViewChanged(listView)
@@ -129,6 +146,8 @@ class GeneralAccountFragment : BasePreferenceFragment<GeneralAccountPresenter>()
             }
             filePref.summary = getFileSizeSummary(filePref.value, filePref.max)
         }
+        setupMediaSizePref("audioMessageMaxSize")
+        setupMediaSizePref("videoMessageMaxSize")
         val deletePref = findPreference<Preference>("Account.delete")
         if (deletePref != null) {
             deletePref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
