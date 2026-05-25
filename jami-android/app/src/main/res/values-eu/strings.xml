@@ -122,6 +122,7 @@
   <string name="ringtone_custom_label">Pertsonala</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Eskaneatu gehitu nahi duzun kontuaren QR kodea.</string>
   <string name="title_activity_qrcode">partekatu nire kontua</string>
@@ -327,4 +328,5 @@
   <string name="import_side_step2_password_import">Inportazioa</string>
   <!--Accessibility-->
   <string name="step_title_set_password">Ezarri pasahitza</string>
+  <!--Peer services-->
 </resources>

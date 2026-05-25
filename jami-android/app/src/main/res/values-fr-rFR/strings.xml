@@ -167,6 +167,7 @@
   <string name="permission_dialog_read_contacts_message">Jami nécessite d\'avoir la permission \"Lire les contacts\" pour activer cette fonctionnalité. Veuillez la lui accorder.</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami doit avoir la permission \"Écrire un journal d\'appels\" pour activer cette fonctionnalité. Veuillez la lui accorder.</string>
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Merci de scanner le Code QR du compte que vous souhaitez ajouter.</string>
   <string name="title_activity_qrcode">Partager mon compte</string>
@@ -539,4 +540,5 @@ Veuillez patienter.</string>
   <string name="step_title_set_password">Définir un mot de passe</string>
   <string name="step_title_create_profile">Créer un profile</string>
   <string name="step_format">Étape %1$d de %2$d: %3$s</string>
+  <!--Peer services-->
 </resources>

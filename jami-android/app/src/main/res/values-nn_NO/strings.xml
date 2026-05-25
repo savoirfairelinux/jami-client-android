@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="view_switch_camera">Byta kamera</string>
   <!--About dialog-->
   <!--RingActivity-->
   <!--AB menus-->
@@ -14,8 +15,7 @@
   <!--Notifications-->
   <!--Call Fragment-->
   <string name="action_call_hangup">Avslutt samtale</string>
-  <string name="action_call_resume">Gjenopta</string>
-  <string name="switch_to_video">Aktiver video</string>
+  <string name="switch_to_video">Legg videoen til</string>
   <!--Text messages-->
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
@@ -25,7 +25,7 @@
   <!--QRCode Scan-->
   <!--Settings-->
   <!--Conversation-->
-  <string name="remove_conversation">Slett samtale</string>
+  <string name="remove_conversation">Ta vekk samtal</string>
   <!--Contacts-->
   <!--Account summary-->
   <!--Share fragment-->
@@ -37,8 +37,8 @@
   <!--TV-->
   <!--Wizard-->
   <!--Bottom sheet-->
-  <string name="camera_flip_btn_description">Snu kamera</string>
-  <string name="add_participant_btn_description">Legg til deltager</string>
+  <string name="camera_flip_btn_description">Flip-kamera</string>
+  <string name="add_participant_btn_description">Legg til deltakar</string>
   <string name="screen_share_btn_description">Del skjerm</string>
   <!--Swarm Details-->
   <!--JamiId-->
@@ -47,6 +47,5 @@
   <!--Donation-->
   <!--Extension-->
   <!--Accessibility-->
-  <string name="step_title_set_password">Lagre passord</string>
   <!--Peer services-->
 </resources>

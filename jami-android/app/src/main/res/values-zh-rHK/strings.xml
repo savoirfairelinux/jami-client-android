@@ -162,6 +162,7 @@
   <string name="permission_dialog_read_contacts_message">Jami需要“读取联系人”权限才能启用此功能。请批准。</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami需要“写入通话记录”权限才能启用此功能。请批准。</string>
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">扫描您想添加账户的二维码。</string>
   <string name="title_activity_qrcode">分享我的帳號</string>
@@ -412,6 +413,7 @@
   <string name="bottomSheet_mute_microphone_btn">麦克风</string>
   <string name="bottomSheet_sound_output_btn">声音</string>
   <string name="bottomSheet_raiseHand_btn">举手</string>
+  <string name="camera_toggle_btn_description">切换摄像头</string>
   <string name="camera_flip_btn_description">翻轉攝影機</string>
   <string name="add_participant_btn_description">添加参与者</string>
   <string name="screen_share_btn_description">分享畫面</string>
@@ -522,4 +524,5 @@
   <string name="step_title_set_password">设置密码</string>
   <string name="step_title_create_profile">创建个人资料</string>
   <string name="step_format">第%1$d步（共%2$d步）：%3$s</string>
+  <!--Peer services-->
 </resources>

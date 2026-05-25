@@ -166,6 +166,7 @@
   <string name="permission_dialog_read_contacts_message">Jami vajab  „Loe kontakte“ luba. Selle funktsionaalsuse kasutamiseks anna nutiseadme seadistustest vastavad õigused.</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami vajab „Salvesta kõnelogi“ luba. Selle funktsionaalsuse kasutamiseks anna nutiseadme seadistustest vastavad õigused.</string>
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skaneeri lisatava konto QR-kood.</string>
   <string name="title_activity_qrcode">Jaga minu kontot</string>
@@ -416,6 +417,7 @@
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Helid</string>
   <string name="bottomSheet_raiseHand_btn">Anna käega märku</string>
+  <string name="camera_toggle_btn_description">Lülita kaamera sisse/välja</string>
   <string name="camera_flip_btn_description">Pööra kaamerat</string>
   <string name="add_participant_btn_description">Lisa osaleja</string>
   <string name="screen_share_btn_description">Jaga ekraani</string>
@@ -528,4 +530,5 @@ Kui klõpsid „Kinnita“, siis jätkame kasutajakonto eksportimisega.</string>
   <string name="step_title_set_password">Sisesta salasõna</string>
   <string name="step_title_create_profile">Loo profiil</string>
   <string name="step_format">Samm %1$d / %2$d: %3$s</string>
+  <!--Peer services-->
 </resources>

@@ -161,6 +161,7 @@
   <string name="permission_dialog_read_contacts_message">Jami необходимо получить доступ к \"Чтению контактов\". Включите его в настройках устройства, чтобы использовать эту функцию.</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami необходимо разрешение «Запись в журнал звонков». Включите его в настройках устройства, чтобы использовать эту функцию.</string>
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Сканировать QR код аккаунта, который хотите добавить</string>
   <string name="title_activity_qrcode">Поделиться своей контактной информацией</string>
@@ -498,4 +499,5 @@
   <string name="link_device_error_bad_password">Проверьте учетные данные и повторите попытку.</string>
   <!--Accessibility-->
   <string name="step_title_set_password">Задать пароль</string>
+  <!--Peer services-->
 </resources>

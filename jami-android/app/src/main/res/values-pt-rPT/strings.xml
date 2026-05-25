@@ -159,6 +159,7 @@
   <string name="permission_dialog_read_contacts_message">O Jami requer a permissão “Ler contactos”. Ative-a nas configurações do dispositivo para poder utilizar esta funcionalidade.</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">O Jami requer a permissão “Escrever registo de chamadas”. Ative-a nas configurações do dispositivo para poder utilizar esta funcionalidade.</string>
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Digitalize o código QR da conta que quer adicionar.</string>
   <string name="title_activity_qrcode">Partilhar a minha conta</string>
@@ -489,4 +490,5 @@
   <string name="link_device_error_bad_password">Por favor verifique as credenciais e tente novamente.</string>
   <!--Accessibility-->
   <string name="step_title_set_password">Definir palavra-chave</string>
+  <!--Peer services-->
 </resources>

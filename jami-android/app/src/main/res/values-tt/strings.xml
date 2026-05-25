@@ -70,6 +70,7 @@
   <string name="ringtone_error_title">Хата</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="title_activity_qrcode">Минем хисабымны уртаклашыгыз</string>
   <!--Settings-->
@@ -178,4 +179,5 @@
   <string name="import_side_step1_share">Бүләкләү</string>
   <string name="import_side_step2_password_import">Импорт</string>
   <!--Accessibility-->
+  <!--Peer services-->
 </resources>

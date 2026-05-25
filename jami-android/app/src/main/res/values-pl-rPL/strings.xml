@@ -165,6 +165,7 @@
   <string name="permission_dialog_read_contacts_message">Jami wymaga dostęp do kontaktów. Włącz dostęp do kontaktów w ustawieniach urządzenia, aby użyć tej funkcji.</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami wymaga dostęp do rejestrów połączeń. Włącz dostęp do rejestrów połączeń w ustawieniach urządzenia, aby użyć tej funkcji.</string>
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Zeskanuj kod QR konta, które chcesz dodać.</string>
   <string name="title_activity_qrcode">Udostępnij moje konto</string>
@@ -525,4 +526,5 @@
   <string name="step_title_set_password">Ustaw hasło</string>
   <string name="step_title_create_profile">Utwórz profil</string>
   <string name="step_format">Krok %1$d z %2$d: %3$s</string>
+  <!--Peer services-->
 </resources>

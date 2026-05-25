@@ -24,6 +24,7 @@
   <!--Ringtone activity-->
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <!--Settings-->
   <!--Conversation-->
@@ -51,4 +52,5 @@
   <!--Extension-->
   <string name="export_side_step2_cancel">අවලංගු කරන්න</string>
   <!--Accessibility-->
+  <!--Peer services-->
 </resources>

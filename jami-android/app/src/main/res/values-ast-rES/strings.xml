@@ -121,6 +121,7 @@
   <string name="ringtone_custom_label">La personalidá</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Escanear el Códice QR de la cuenta que quier añadir.</string>
   <string name="title_activity_qrcode">Compartir la mio cuenta</string>
@@ -290,6 +291,9 @@
   <string name="bottomSheet_mute_microphone_btn">Micro</string>
   <string name="bottomSheet_sound_output_btn">Son los sos soníos.</string>
   <string name="bottomSheet_raiseHand_btn">Ellí ye la mano.</string>
+  <string name="camera_flip_btn_description">La cámara de vuelta</string>
+  <string name="add_participant_btn_description">Aúna de les partes</string>
+  <string name="screen_share_btn_description">La pantalla compartida</string>
   <string name="uninstall">Desinstalar</string>
   <string name="reset">Reimpartir</string>
   <!--Swarm Details-->
@@ -320,4 +324,5 @@
   <string name="import_side_step1_share">Compartir</string>
   <string name="import_side_step2_password_import">Importación</string>
   <!--Accessibility-->
+  <!--Peer services-->
 </resources>

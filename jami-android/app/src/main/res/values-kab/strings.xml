@@ -156,6 +156,7 @@
   <string name="permission_dialog_read_contacts_message">Jami yesra asireg “ ɣer inermisen ”. Rmed-it deg yiɣewwaren n yibenk akken ad tesqedceḍ tamahilt-a. </string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami yesra asiregt \"Aru aɣmis n usiwel\". Rmed-it deg yiɣewwaren n yibenk akken ad tesqedceḍ tamahilt-a. </string>
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Ḍumm tangalt QR n umiḍan i tebɣiḍ ad ternuḍ.</string>
   <string name="title_activity_qrcode">Bḍu amiḍan-iw</string>
@@ -508,4 +509,5 @@
   <string name="link_device_error_unknown">Teḍra-d tuccḍa. </string>
   <string name="link_device_error_bad_password">Ma ulac aɣilif, senqed isefka n usnekwu sakin ɛreḍ tikelt nniḍen.</string>
   <!--Accessibility-->
+  <!--Peer services-->
 </resources>

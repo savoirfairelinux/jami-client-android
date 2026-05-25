@@ -166,6 +166,7 @@
   <string name="permission_dialog_read_contacts_message">Jami vaatii toimiakseen oikeuden “Lukea yhteystietoja”. Ota käyttöön laitteen asetuksissa, jotta voit käyttää ominaisuutta.</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami vaatii toimiakseen oikeudet “Kirjoittaa puhelulokia”. Ota käyttöön laitteen asetuksissa, jotta voit käyttää ominaisuutta.</string>
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skannaa lisättävän tilin QR-koodi.</string>
   <string name="title_activity_qrcode">Jaa minun tili</string>
@@ -416,6 +417,7 @@
   <string name="bottomSheet_mute_microphone_btn">Pieni</string>
   <string name="bottomSheet_sound_output_btn">Äänet</string>
   <string name="bottomSheet_raiseHand_btn">Nosta käsi</string>
+  <string name="camera_toggle_btn_description">Kamera</string>
   <string name="camera_flip_btn_description">Käännä kamera</string>
   <string name="add_participant_btn_description">Lisää osannottaja</string>
   <string name="screen_share_btn_description">Jaa näyttö</string>
@@ -526,4 +528,5 @@
   <string name="step_title_set_password">Aseta salasana</string>
   <string name="step_title_create_profile">Luo profiili</string>
   <string name="step_format">Vaihe %1$d / %2$d: %3$s</string>
+  <!--Peer services-->
 </resources>

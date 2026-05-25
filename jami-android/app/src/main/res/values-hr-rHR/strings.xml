@@ -52,6 +52,7 @@
   <!--Ringtone activity-->
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <!--Settings-->
   <string name="clear_history_dialog_message">Ova akcija se ne može poništiti.</string>
@@ -199,4 +200,5 @@
   <string name="import_side_step1_share">Podijeli</string>
   <string name="import_side_step2_password_import">Uvezi</string>
   <!--Accessibility-->
+  <!--Peer services-->
 </resources>

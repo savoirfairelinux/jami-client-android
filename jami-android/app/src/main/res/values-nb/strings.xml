@@ -124,6 +124,7 @@
   <string name="ringtone_custom_label">Tilpasset</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skann QR-koden tilhørende kontoen du ønsker å legge til.</string>
   <string name="title_activity_qrcode">Del min konto</string>
@@ -332,4 +333,5 @@
   <string name="import_side_step2_password_import">Importer</string>
   <!--Accessibility-->
   <string name="step_title_set_password">Lagre passord</string>
+  <!--Peer services-->
 </resources>

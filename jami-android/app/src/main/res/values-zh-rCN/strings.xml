@@ -165,6 +165,7 @@
   <string name="permission_dialog_read_contacts_message">Jami 需要「读取联系人」权限。在设备设置中启用它以使用此功能。</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami 需要「写入通话记录」权限。在设备设置中启用它以使用此功能。</string>
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">扫描您想添加账户的二维码。</string>
   <string name="title_activity_qrcode">分享我的账户</string>
@@ -415,6 +416,7 @@
   <string name="bottomSheet_mute_microphone_btn">麦克风</string>
   <string name="bottomSheet_sound_output_btn">声音</string>
   <string name="bottomSheet_raiseHand_btn">举手</string>
+  <string name="camera_toggle_btn_description">切换摄像头</string>
   <string name="camera_flip_btn_description">翻转摄像头</string>
   <string name="add_participant_btn_description">添加与会者</string>
   <string name="screen_share_btn_description">共享屏幕</string>
@@ -462,7 +464,7 @@
   <string name="secure_p2p_connection">安全的对等连接</string>
   <string name="swarm_type">对话类型</string>
   <string name="Private">私人</string>
-  <string name="swarm_id">群ID</string>
+  <string name="swarm_id">会话ID</string>
   <string name="show_qr_code">显示二维码</string>
   <string name="show_certificate">显示证书</string>
   <string name="mute_conversation">静音对话</string>
@@ -525,4 +527,5 @@
   <string name="step_title_set_password">设置密码</string>
   <string name="step_title_create_profile">创建个人资料</string>
   <string name="step_format">%2$d的步骤%1$d：%3$s</string>
+  <!--Peer services-->
 </resources>

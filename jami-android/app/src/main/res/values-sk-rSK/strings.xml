@@ -132,6 +132,7 @@
   <string name="ringtone_custom_label">Vlastný</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Nasnímajte QR kód účtu, ktorý chcete pridať.</string>
   <string name="title_activity_qrcode">Zdieľať môj účet</string>
@@ -343,4 +344,5 @@
   <string name="import_side_step2_password_import">Dovoz</string>
   <!--Accessibility-->
   <string name="step_title_set_password">Nastaviť heslo</string>
+  <!--Peer services-->
 </resources>

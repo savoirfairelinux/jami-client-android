@@ -138,6 +138,7 @@
   <string name="ringtone_jami_tones">Jami skambučio melodijos</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Nuskenuokite paskyros, kurią norite pridėti, QR kodą.</string>
   <string name="title_activity_qrcode">Bendrinti mano paskyrą</string>
@@ -429,4 +430,5 @@
   <string name="step_title_set_password">Nustatyti slaptažodį</string>
   <string name="step_title_create_profile">Susikurkite profilį</string>
   <string name="step_format">Žingsnis %1$d iš %2$d: %3$s</string>
+  <!--Peer services-->
 </resources>

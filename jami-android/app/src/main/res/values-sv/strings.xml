@@ -124,6 +124,7 @@
   <string name="ringtone_custom_label">Anpassad</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scanna in QR-koden för det konto du vill lägga till.</string>
   <string name="title_activity_qrcode">Dela mitt konto</string>
@@ -332,4 +333,5 @@
   <string name="import_side_step2_password_import">Importera</string>
   <!--Accessibility-->
   <string name="step_title_set_password">Ange lösenord</string>
+  <!--Peer services-->
 </resources>

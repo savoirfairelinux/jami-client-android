@@ -30,6 +30,7 @@
   <!--Ringtone activity-->
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <!--Settings-->
   <!--Conversation-->
@@ -48,6 +49,7 @@
   <!--TV-->
   <!--Wizard-->
   <!--Bottom sheet-->
+  <string name="camera_toggle_btn_description">Alternar cámara</string>
   <string name="camera_flip_btn_description">Girar cámara</string>
   <string name="add_participant_btn_description">Agregar participante</string>
   <string name="screen_share_btn_description">Compartir pantalla</string>
@@ -63,4 +65,5 @@
   <string name="step_title_set_password">Establecer contraseña</string>
   <string name="step_title_create_profile">Crear perfil</string>
   <string name="step_format">Paso %1$d de %2$d: %3$s</string>
+  <!--Peer services-->
 </resources>

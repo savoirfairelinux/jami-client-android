@@ -166,6 +166,7 @@
   <string name="permission_dialog_read_contacts_message">A „Névjegyek olvasása” használati engedélye szükséges a Jaminak. A funkció használatát engedélyezze az eszköz beállításaiban.</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">A „Hívásnapló írása” használati engedélye szükséges a Jaminak. A funkció használatát engedélyezze az eszköz beállításaiban.</string>
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Olvassa be a hozzáadandó fiók QR-kódját.</string>
   <string name="title_activity_qrcode">Fiók megosztása</string>
@@ -528,4 +529,5 @@ A fiókexportálási művelet folytatásához kattintson a Megerősítés gombra
   <string name="step_title_set_password">Jelszó beállítása</string>
   <string name="step_title_create_profile">Profil létrehozása</string>
   <string name="step_format">%1$d. lépés, összesen: %2$d: %3$s</string>
+  <!--Peer services-->
 </resources>

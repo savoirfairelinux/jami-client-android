@@ -161,6 +161,7 @@
   <string name="ringtone_jami_tones">Jami beltonen</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scan de QR-code van het toe te voegen account.</string>
   <string name="title_activity_qrcode">Mijn account delen</string>
@@ -391,4 +392,5 @@
   <string name="import_side_step2_password_import">Importeren</string>
   <!--Accessibility-->
   <string name="step_title_set_password">Wachtwoord instellen</string>
+  <!--Peer services-->
 </resources>

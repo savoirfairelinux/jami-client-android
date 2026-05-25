@@ -121,6 +121,7 @@
   <string name="ringtone_custom_label">آدامی</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">قوشماق ایسته ییبسن حسابین QR کدینی سکن ائدیرسن.</string>
   <string name="title_activity_qrcode">حسابيمي بؤلوشدور</string>
@@ -292,6 +293,7 @@
   <string name="bottomSheet_raiseHand_btn">ال قالديريب</string>
   <string name="camera_flip_btn_description">فلپ کاميرا</string>
   <string name="add_participant_btn_description">شرکتچی قوش</string>
+  <string name="screen_share_btn_description">بؤلوم صفحه سی</string>
   <string name="uninstall">نصب ائتمک</string>
   <string name="reset">قاییتماق</string>
   <!--Swarm Details-->
@@ -322,4 +324,5 @@
   <string name="import_side_step1_share">بؤلوم</string>
   <string name="import_side_step2_password_import">واردات</string>
   <!--Accessibility-->
+  <!--Peer services-->
 </resources>

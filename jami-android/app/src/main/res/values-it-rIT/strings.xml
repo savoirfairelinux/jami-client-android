@@ -167,6 +167,7 @@
   <string name="permission_dialog_read_contacts_message">Jami ha bisogno del permesso di leggere i contatti. Per utilizzare questa funzione, abilitarla nelle impostazioni del dispositivo.</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami ha bisogno dell\'autorizzazione di accedere al registro chiamate. Per utilizzare questa funzione, abilitarla nelle impostazioni del dispositivo.</string>
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scansiona il codice QR dell\'account che vuoi aggiungere.</string>
   <string name="title_activity_qrcode">Condividi il mio account</string>
@@ -417,6 +418,7 @@
   <string name="bottomSheet_mute_microphone_btn">Micro</string>
   <string name="bottomSheet_sound_output_btn">Suono</string>
   <string name="bottomSheet_raiseHand_btn">Alza mano</string>
+  <string name="camera_toggle_btn_description">Attiva/Disattiva fotocamera</string>
   <string name="camera_flip_btn_description">Cambia fotocamera</string>
   <string name="add_participant_btn_description">Aggiungi partecipante</string>
   <string name="screen_share_btn_description">Condividi schermo</string>
@@ -527,4 +529,5 @@
   <string name="step_title_set_password">Imposta password</string>
   <string name="step_title_create_profile">Crea profilo</string>
   <string name="step_format">Passo %1$d di %2$d: %3$s</string>
+  <!--Peer services-->
 </resources>

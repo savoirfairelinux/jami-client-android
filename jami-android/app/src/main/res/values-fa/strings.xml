@@ -150,6 +150,7 @@ contact@jami.net.</string>
   <string name="ringtone_jami_tones">Jami ringtones</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">کد QR حسابی را که می‌خواهید بیفزایید، اسکن کنید.</string>
   <string name="title_activity_qrcode">به اشتراک گذاری حساب من</string>
@@ -365,4 +366,5 @@ contact@jami.net.</string>
   <string name="import_side_step2_password_import">واردات</string>
   <!--Accessibility-->
   <string name="step_title_set_password">تعیین گذرواژه</string>
+  <!--Peer services-->
 </resources>

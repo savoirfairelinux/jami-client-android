@@ -158,6 +158,7 @@
   <string name="permission_dialog_read_contacts_message">Jami потребує дозволу на \"Читання контактів\". Увімкніть його в налаштуваннях пристрою, щоб користуватися цією функцією.</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami потребує дозволу на \"Запис журналу дзвінків\". Увімкніть його в налаштуваннях пристрою, щоб користуватися цією функцією.</string>
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Проскануйте QR-код облікового запису, який ви хочете додати.</string>
   <string name="title_activity_qrcode">Поділитися моїм обліковим записом</string>
@@ -493,4 +494,5 @@
   <string name="link_device_error_bad_password">Будь ласка, перевірте облікові дані та спробуйте знову.</string>
   <!--Accessibility-->
   <string name="step_title_set_password">Задати пароль</string>
+  <!--Peer services-->
 </resources>

@@ -24,6 +24,7 @@
   <!--Ringtone activity-->
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <!--Settings-->
   <!--Conversation-->
@@ -55,4 +56,5 @@
   <string name="donation_card_not_now">ବର୍ତ୍ତମାନ ନୁହେଁ</string>
   <!--Extension-->
   <!--Accessibility-->
+  <!--Peer services-->
 </resources>

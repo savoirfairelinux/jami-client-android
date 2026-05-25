@@ -122,6 +122,7 @@
   <string name="ringtone_custom_label">Kustom</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Pindai QR Code dari akun yang ingin Anda tambahkan.</string>
   <string name="title_activity_qrcode">Bagikan akun saya</string>
@@ -327,4 +328,5 @@
   <string name="import_side_step2_password_import">Impor</string>
   <!--Accessibility-->
   <string name="step_title_set_password">Atur kata sandi</string>
+  <!--Peer services-->
 </resources>

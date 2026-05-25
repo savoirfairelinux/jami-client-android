@@ -122,6 +122,7 @@
   <string name="ringtone_custom_label">কাস্টম</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">আপনি যে অ্যাকাউন্টটি যুক্ত করতে চান তার QR কোড স্ক্যান করুন।</string>
   <string name="title_activity_qrcode">আমার অ্যাকাউন্ট শেয়ার করুন</string>
@@ -293,6 +294,7 @@
   <string name="bottomSheet_raiseHand_btn">হাত বাড়াও</string>
   <string name="camera_flip_btn_description">ফ্লিপ ক্যামেরা</string>
   <string name="add_participant_btn_description">অংশগ্রহণকারী যোগ করুন</string>
+  <string name="screen_share_btn_description">ভাগ পর্দা</string>
   <string name="uninstall">আনইনস্টল করুন</string>
   <string name="reset">রিসেট</string>
   <!--Swarm Details-->
@@ -325,4 +327,5 @@
   <string name="import_side_step1_share">ভাগ করে নেওয়ার</string>
   <string name="import_side_step2_password_import">আমদানি</string>
   <!--Accessibility-->
+  <!--Peer services-->
 </resources>

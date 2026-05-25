@@ -128,6 +128,7 @@
   <string name="ringtone_custom_label">تخصيص</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">مسح رمز الاستجابة السريعة للحساب الذي تريد إضافته.</string>
   <string name="title_activity_qrcode">مشاركة حسابي</string>
@@ -298,6 +299,9 @@
   <string name="bottomSheet_mute_microphone_btn">الميكرفون</string>
   <string name="bottomSheet_sound_output_btn">الأصوات</string>
   <string name="bottomSheet_raiseHand_btn">رفع اليد</string>
+  <string name="camera_flip_btn_description">قلب كاميرا</string>
+  <string name="add_participant_btn_description">أضف مشارك</string>
+  <string name="screen_share_btn_description">مشاركة الشاشة</string>
   <string name="uninstall">إزالة التثبيت</string>
   <string name="reset">إعادة تعيين</string>
   <!--Swarm Details-->
@@ -331,4 +335,5 @@
   <string name="import_side_step2_password_import">استيراد</string>
   <!--Accessibility-->
   <string name="step_title_set_password">تعيين كلمة المرور</string>
+  <!--Peer services-->
 </resources>

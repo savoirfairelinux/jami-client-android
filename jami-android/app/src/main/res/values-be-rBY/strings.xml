@@ -71,6 +71,7 @@
   <string name="ringtone_error_title">Памылка</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="title_activity_qrcode">Падзяліцца маім рахункам</string>
   <!--Settings-->
@@ -151,6 +152,7 @@
   <string name="bottomSheet_hangup_btn">Скончыць выклік</string>
   <string name="bottomSheet_raiseHand_btn">Падыміце руку</string>
   <string name="add_participant_btn_description">Дадаць удзельніка</string>
+  <string name="screen_share_btn_description">Дэманстраваць экран</string>
   <string name="uninstall">Адмяніць ўстаноўку</string>
   <string name="reset">Падстаўка</string>
   <!--Swarm Details-->
@@ -179,4 +181,5 @@
   <string name="import_side_step1_share">Падзяліцца</string>
   <string name="import_side_step2_password_import">Імпарт</string>
   <!--Accessibility-->
+  <!--Peer services-->
 </resources>

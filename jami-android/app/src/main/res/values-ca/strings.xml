@@ -142,6 +142,7 @@
   <string name="ringtone_custom_label">Personalitzat</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Escanegeu el codi QR del compte que vulgueu afegir.</string>
   <string name="title_activity_qrcode">Comparteix el meu compte</string>
@@ -317,6 +318,7 @@
   <string name="bottomSheet_raiseHand_btn">Aixeca la mà</string>
   <string name="camera_flip_btn_description">Canvia la càmera</string>
   <string name="add_participant_btn_description">Afegir participant</string>
+  <string name="screen_share_btn_description">Comparteix la pantalla</string>
   <string name="uninstall">Desinstala</string>
   <string name="reset">Reconfigura</string>
   <!--Swarm Details-->
@@ -358,4 +360,5 @@
   <string name="import_side_step2_password_import">Importa</string>
   <!--Accessibility-->
   <string name="step_title_set_password">Estableix contrasenya</string>
+  <!--Peer services-->
 </resources>

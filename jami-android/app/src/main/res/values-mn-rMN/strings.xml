@@ -122,6 +122,7 @@
   <string name="ringtone_custom_label">Хувьцааны</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Та нэмж байгаа дансны QR кодыг сканируарай.</string>
   <string name="title_activity_qrcode">Миний хуудас хуваалцаарай</string>
@@ -325,4 +326,5 @@
   <string name="import_side_step1_share">Хөдөлмөр</string>
   <string name="import_side_step2_password_import">Импортын</string>
   <!--Accessibility-->
+  <!--Peer services-->
 </resources>

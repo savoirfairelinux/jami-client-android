@@ -143,6 +143,7 @@
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jamiக்கு \"தொடர்புகளைப் படிக்க\" அனுமதி தேவை. இந்த அம்சத்தைப் பயன்படுத்த, சாதன அமைப்புகளில் அதை இயக்கவும்.</string>
   <!--Write call log permission-->
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">நீங்கள் சேர்க்க விரும்பும் கணக்கின் QR குறியீட்டை ஸ்கேன் செய்யவும்.</string>
   <string name="title_activity_qrcode">எனது கணக்கை பகிர்ந்து கொள்ளுங்கள்</string>
@@ -346,4 +347,5 @@
   <string name="import_side_step1_share">பகிர்வு</string>
   <string name="import_side_step2_password_import">இறக்குமதி</string>
   <!--Accessibility-->
+  <!--Peer services-->
 </resources>

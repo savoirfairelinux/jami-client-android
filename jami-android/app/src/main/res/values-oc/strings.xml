@@ -122,6 +122,7 @@
   <string name="ringtone_custom_label">Personalitat</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scanar lo còde QR del compte que volètz ajustar.</string>
   <string name="title_activity_qrcode">Comparta mon compte</string>
@@ -326,4 +327,5 @@
   <string name="import_side_step1_share">Compartilhar</string>
   <string name="import_side_step2_password_import">Importacion</string>
   <!--Accessibility-->
+  <!--Peer services-->
 </resources>

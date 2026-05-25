@@ -128,6 +128,7 @@
   <string name="ringtone_custom_label">कस्टम</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">आपके द्वारा जोड़ा जाने वाले खाते का QR कोड स्कैन करें।</string>
   <string name="title_activity_qrcode">मेरा खाता साझा करें</string>
@@ -363,4 +364,5 @@
   <string name="import_side_step1_share">बाटें </string>
   <string name="import_side_step2_password_import">आयात</string>
   <!--Accessibility-->
+  <!--Peer services-->
 </resources>

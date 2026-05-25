@@ -70,6 +70,7 @@
   <string name="ringtone_error_title">Njehie</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="title_activity_qrcode">Kesaa akaụntụ m</string>
   <!--Settings-->
@@ -179,4 +180,5 @@
   <string name="import_side_step1_share">Ịkekọrịta</string>
   <string name="import_side_step2_password_import">Ịba n\'ime</string>
   <!--Accessibility-->
+  <!--Peer services-->
 </resources>

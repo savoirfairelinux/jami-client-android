@@ -121,6 +121,7 @@
   <string name="ringtone_custom_label">కస్టమ్</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">మీరు జోడించాలనుకుంటున్న ఖాతా యొక్క QR కోడ్ను స్కాన్ చేయండి.</string>
   <string name="title_activity_qrcode">నా ఖాతాను పంచుకోండి</string>
@@ -324,4 +325,5 @@
   <string name="import_side_step1_share">భాగస్వామ్యం</string>
   <string name="import_side_step2_password_import">దిగుమతి</string>
   <!--Accessibility-->
+  <!--Peer services-->
 </resources>

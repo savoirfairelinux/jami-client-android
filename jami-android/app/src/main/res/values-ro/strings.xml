@@ -167,6 +167,7 @@
   <string name="permission_dialog_read_contacts_message">Jami are nevoie de permisiunea de a citi contactele. Permisiunea trebuie dată din reglările sistemului.</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami are nevoie de permisiunea de a scrie în jurnalul de apeluri. Permisiunea trebuie dată din reglările sistemului.</string>
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scanează Codul QR al contului pe care vrei să-l adaugi.</string>
   <string name="title_activity_qrcode">Distribuie contul meu</string>
@@ -417,6 +418,7 @@
   <string name="bottomSheet_mute_microphone_btn">Microfon</string>
   <string name="bottomSheet_sound_output_btn">Sunet</string>
   <string name="bottomSheet_raiseHand_btn">Mîna sus</string>
+  <string name="camera_toggle_btn_description">Act/Dez camera</string>
   <string name="camera_flip_btn_description">Schimbă camera</string>
   <string name="add_participant_btn_description">Adaugă un participant</string>
   <string name="screen_share_btn_description">Distribuie ecranul</string>
@@ -527,4 +529,5 @@
   <string name="step_title_set_password">Alege parola</string>
   <string name="step_title_create_profile">Creează profilul</string>
   <string name="step_format">Pasul %1$d din %2$d: %3$s</string>
+  <!--Peer services-->
 </resources>

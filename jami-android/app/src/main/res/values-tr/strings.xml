@@ -165,6 +165,7 @@
   <string name="permission_dialog_read_contacts_message">Jami\'nin \"Kişileri oku\" iznine ihtiyacı var. Bu özelliği kullanabilmek için cihaz ayarlarından etkinleştirilmeli.</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami\'nin \"Çağrı kaydına yazma\" iznine ihtiyacı var. Bu özelliği kullanabilmek için cihaz ayarlarından etkinleştirilmeli.</string>
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Eklemek istediğin hesabın QR kodunu tara.</string>
   <string name="title_activity_qrcode">Hesabımı paylaş</string>
@@ -525,4 +526,5 @@
   <string name="step_title_set_password">Parola ayarla</string>
   <string name="step_title_create_profile">Profil oluştur</string>
   <string name="step_format">Adım %1$d/%2$d: %3$s</string>
+  <!--Peer services-->
 </resources>

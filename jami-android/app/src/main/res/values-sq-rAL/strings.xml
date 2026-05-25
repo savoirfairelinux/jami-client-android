@@ -165,6 +165,7 @@
   <string name="permission_dialog_read_contacts_message">Jami-t i duhet leja “Të lexojë kontakte”. Që të mund të përdorni këtë veçori, aktivizojeni te rregullimet e pajisjes.</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami lyp lejen “Të shkruajë regjistër thirrjesh”. Që të mund të përdorni këtë veçori, aktivizojeni te rregullimet e pajisjes.</string>
+  <!--Post notifications permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skanoni kodin QR të llogarisë që doni të shtoni.</string>
   <string name="title_activity_qrcode">Ndaje llogarinë time</string>
@@ -523,4 +524,5 @@
   <string name="step_title_set_password">Caktoni fjalëkalimin</string>
   <string name="step_title_create_profile">Krijoni profil</string>
   <string name="step_format">Hapi %1$d nga %2$d: %3$s</string>
+  <!--Peer services-->
 </resources>
