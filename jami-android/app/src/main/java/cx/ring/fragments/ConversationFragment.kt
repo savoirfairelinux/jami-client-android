@@ -556,16 +556,18 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         if (!presenter.deviceRuntimeService.hasAudioPermission()) {
             requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), REQUEST_CODE_CAPTURE_AUDIO)
         } else {
-            try {
-                val ctx = requireContext()
-                val intent = Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION)
-                mCurrentPhoto = AndroidFileUtils.createAudioFile(ctx)
-                startActivityForResult(intent, REQUEST_CODE_CAPTURE_AUDIO)
-            } catch (ex: Exception) {
-                Log.e(TAG, "sendAudioMessage: error", ex)
-                Toast.makeText(activity, getString(R.string.audio_recorder_error), Toast.LENGTH_SHORT).show()
-            }
+            showAudioRecorder()
         }
+    }
+
+    private fun showAudioRecorder() {
+        if (childFragmentManager.findFragmentByTag(AUDIO_RECORDER_TAG) != null) return
+        AudioMessageRecorderFragment(
+            maxDurationMs = MAX_AUDIO_DURATION_MS.toLong(),
+            maxFileSize = getAudioMaxSize(),
+        ) { file ->
+            startFileSend(Single.just(file).flatMapCompletable { f -> sendFile(f) })
+        }.show(childFragmentManager, AUDIO_RECORDER_TAG)
     }
 
     private fun sendVideoMessage() {
@@ -660,7 +662,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     }
                 }
             }
-        } else if (requestCode == REQUEST_CODE_TAKE_PICTURE || requestCode == REQUEST_CODE_CAPTURE_AUDIO || requestCode == REQUEST_CODE_CAPTURE_VIDEO) {
+        } else if (requestCode == REQUEST_CODE_TAKE_PICTURE || requestCode == REQUEST_CODE_CAPTURE_VIDEO) {
             if (resultCode != Activity.RESULT_OK) {
                 mCurrentPhoto = null
                 return
