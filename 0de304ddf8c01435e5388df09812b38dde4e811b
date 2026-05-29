@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ca822c6_c5d8f6ef",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-29T19:33:57Z",
+      "side": 1,
+      "message": "[🟡 Suggestions] Line 80: The new condition drops the HIGH-priority gate, so any message classified as a call notification can trigger a full reconnect even if FCM delivered it as normal priority. That weakens the stated behavior and may reintroduce unnecessary wakeups for stale, malformed, or downgraded call-shaped pushes. Keep the priority check while adding the call filter.\n```suggestion\n        if (remoteMessage.originalPriority \u003d\u003d RemoteMessage.PRIORITY_HIGH \u0026\u0026 isCallNotification \u0026\u0026 !isAppInForeground()) {\n```",
+      "revId": "0de304ddf8c01435e5388df09812b38dde4e811b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
