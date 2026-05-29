@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "46459832812",
+    "firebase_url": "https://gnu-ring.firebaseio.com",
+    "project_id": "gnu-ring",
+    "storage_bucket": "gnu-ring.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:46459832812:android:e3ff7f02d31c42d7",
+        "android_client_info": {
+          "package_name": "cx.ring"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "46459832812-4958esipsin6i8bnq3hn4g768p68f72p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cx.ring",
+            "certificate_hash": "6825ca65338700dc79f82f00adc6f4c5391b0ab7"
+          }
+        },
+        {
+          "client_id": "46459832812-d4g16hno95kq40h8b4g8kflqpbr0hq3u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1yIHNA5jNd6RkGQngEwzDSh91lUQJSR0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "46459832812-d4g16hno95kq40h8b4g8kflqpbr0hq3u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "46459832812-sq5gij5g3mkfpil7jo4lp02mj4h8g7rj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.savoirfairelinux.ring",
+                "app_store_id": "1306951055"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
