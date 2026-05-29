@@ -45,6 +45,7 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
         }
 
         val pushType = remoteMessage.data["pt"] ?: ""
+        // A call notification requires both a call-type push and HIGH priority.
         val isCallNotification = (pushType.contains("audioCall")
                 || pushType.contains("videoCall"))
                 && remoteMessage.priority == RemoteMessage.PRIORITY_HIGH
@@ -67,7 +68,16 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
             }
         }
 
-        if (remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH && !isAppInForeground()) {
+        // Only trigger a full network reconnection for incoming calls.
+        // Calls require a peer-to-peer ICE/TLS connection that may need
+        // re-establishment after the device has been sleeping.
+        // Regular DHT push notifications (messages, value updates, expirations)
+        // are handled directly by pushNotificationReceived() which fetches
+        // values via HTTP from the proxy server — no reconnection needed.
+        // Previously, connectivityChanged() was called for ALL high-priority
+        // pushes, causing excessive wakeups (~23/min) and battery drain,
+        // especially with JAMS accounts that have many DHT listeners.
+        if (remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH && isCallNotification && !isAppInForeground()) {
             val app = JamiApplication.instance as JamiApplicationFirebase?
             app?.hardwareService?.connectivityChanged(true)
         }
