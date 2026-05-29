@@ -33,26 +33,30 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        try {
-            // Even if wakeLock is deprecated, without this part, some devices are blocking
-            // during the call negotiation. So, re-add this code to avoid to block here.
-            val pm = getSystemService(POWER_SERVICE) as PowerManager
-            val wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "wake:push")
-            wl.setReferenceCounted(false)
-            wl.acquire((10 * 1000).toLong())
-        } catch (e: Exception) {
-            Log.w(TAG, "Can't acquire wake lock", e)
-        }
-
         val pushType = remoteMessage.data["pt"] ?: ""
+        // A call notification requires both a call-type push and HIGH original priority.
+        // We use originalPriority (not the delivered priority) so that FCM-downgraded
+        // call pushes — sent as HIGH but delivered as NORMAL — still trigger the wakelock
+        // and network reconnection needed for ICE negotiation.
         val isCallNotification = (pushType.contains("audioCall")
                 || pushType.contains("videoCall"))
-                && remoteMessage.priority == RemoteMessage.PRIORITY_HIGH
+                && remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH
 
         if (isCallNotification) {
+            // Only hold the CPU awake for call pushes — these need time for ICE/TLS
+            // negotiation. Regular DHT pushes (messages, values) are processed quickly
+            // by pushNotificationReceived() and don't need a wakelock.
             try {
-                val isForeground = isAppInForeground()
-                if (!isForeground) {
+                val pm = getSystemService(POWER_SERVICE) as PowerManager
+                val wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "wake:push")
+                wl.setReferenceCounted(false)
+                wl.acquire((5 * 1000).toLong())
+            } catch (e: Exception) {
+                Log.w(TAG, "Can't acquire wake lock", e)
+            }
+
+            try {
+                if (!isAppInForeground()) {
                     Handler(Looper.getMainLooper()).post {
                         try {
                             val intent = Intent(this, PushForegroundService::class.java)
@@ -67,7 +71,16 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
             }
         }
 
-        if (remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH && !isAppInForeground()) {
+        // Only trigger a full network reconnection for incoming calls.
+        // Calls require a peer-to-peer ICE/TLS connection that may need
+        // re-establishment after the device has been sleeping.
+        // Regular DHT push notifications (messages, value updates, expirations)
+        // are handled directly by pushNotificationReceived() which fetches
+        // values via HTTP from the proxy server — no reconnection needed.
+        // Previously, connectivityChanged() was called for ALL high-priority
+        // pushes, causing excessive wakeups (~23/min) and battery drain,
+        // especially with JAMS accounts that have many DHT listeners.
+        if (isCallNotification && !isAppInForeground()) {
             val app = JamiApplication.instance as JamiApplicationFirebase?
             app?.hardwareService?.connectivityChanged(true)
         }
