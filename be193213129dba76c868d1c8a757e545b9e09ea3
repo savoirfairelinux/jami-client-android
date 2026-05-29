@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17b1199e_da7fe2c9",
+        "filename": "google-services.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-29T19:39:11Z",
+      "side": 1,
+      "message": "[Critical] Line 1: This patch adds a root-level google-services.json unrelated to the connectivityChanged() logic. If this file is required, it should be placed in the Gradle module location that consumes it; otherwise this looks accidental and risks changing Firebase configuration for builds outside the intended scope. Remove it from this change unless it is explicitly needed and documented.",
+      "revId": "be193213129dba76c868d1c8a757e545b9e09ea3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e5b027a_736e49d4",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-29T19:39:11Z",
+      "side": 1,
+      "message": "[Critical] Line 74: The change only gates connectivityChanged(), but the preceding high-priority push handling still appears to start the foreground/wakelock path for every high-priority FCM. That leaves a major part of the stated battery-drain fix in place for regular DHT pushes. Gate the foreground wake path with the same incoming-call predicate if it is only required for call reconnection, or update the commit rationale if DHT pushes intentionally still need the wakelock.\n```suggestion\nif (remoteMessage.originalPriority \u003d\u003d RemoteMessage.PRIORITY_HIGH \u0026\u0026 isCallNotification \u0026\u0026 !isAppInForeground()) {\n    // start foreground call wake path and reconnect\n}\n```",
+      "revId": "be193213129dba76c868d1c8a757e545b9e09ea3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
