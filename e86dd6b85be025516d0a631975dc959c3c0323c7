@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f113248_991098a0",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-30T20:36:32Z",
+      "side": 1,
+      "message": "Line 315: 🟡 Suggestion: `startedActivities` is decremented blindly in `onActivityStopped`, so an unexpected lifecycle imbalance could make the counter negative and prevent future foreground detection. Clamp the counter and only record background time on a real transition to zero. Suggested fix:\n```suggestion\nstartedActivities \u003d (startedActivities - 1).coerceAtLeast(0)\nif (startedActivities \u003d\u003d 0) {\n    backgroundTimestamp \u003d android.os.SystemClock.elapsedRealtime()\n}\n```",
+      "revId": "e86dd6b85be025516d0a631975dc959c3c0323c7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "924de7c1_4ae15a63",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-30T20:36:32Z",
+      "side": 1,
+      "message": "Line 316: 🟡 Suggestion: after triggering the foreground connectivity refresh, `backgroundTimestamp` remains set. Resetting it after a successful foreground transition makes the state machine clearer and avoids accidental re-use if additional lifecycle callbacks are delivered unexpectedly. Suggested fix:\n```suggestion\nif (startedActivities \u003d\u003d 1 \u0026\u0026 backgroundTimestamp \u003e 0) {\n    val elapsed \u003d android.os.SystemClock.elapsedRealtime() - backgroundTimestamp\n    backgroundTimestamp \u003d 0L\n    if (elapsed \u003e TimeUnit.MINUTES.toMillis(2) \u0026\u0026 daemon.isStarted) {\n        Log.i(TAG, \"App resumed after ${elapsed / 1000}s in background, refreshing connectivity\")\n        hardwareService.connectivityChanged(mPreferencesService.hasNetworkConnected())\n    }\n}\n```",
+      "revId": "e86dd6b85be025516d0a631975dc959c3c0323c7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
