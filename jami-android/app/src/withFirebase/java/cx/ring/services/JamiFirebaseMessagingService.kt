@@ -45,12 +45,12 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
         }
 
         val pushType = remoteMessage.data["pt"] ?: ""
-        // A call notification requires both a call-type push and HIGH priority.
-        // Only these warrant a full connectivityChanged() to ensure ICE/TLS are
-        // ready before the incoming call times out.
+        // A call notification requires both a call-type push and HIGH original priority.
+        // Use originalPriority (not priority) because FCM may downgrade the delivered
+        // priority while the sender's intent remains HIGH.
         val isCallNotification = (pushType.contains("audioCall")
                 || pushType.contains("videoCall"))
-                && remoteMessage.priority == RemoteMessage.PRIORITY_HIGH
+                && remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH
 
         if (isCallNotification) {
             try {
@@ -79,7 +79,7 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
         // Previously, connectivityChanged() was called for ALL high-priority
         // pushes, causing excessive wakeups (~23/min) and battery drain,
         // especially with JAMS accounts that have many DHT listeners.
-        if (remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH && isCallNotification && !isAppInForeground()) {
+        if (isCallNotification && !isAppInForeground()) {
             val app = JamiApplication.instance as JamiApplicationFirebase?
             app?.hardwareService?.connectivityChanged(true)
         }
