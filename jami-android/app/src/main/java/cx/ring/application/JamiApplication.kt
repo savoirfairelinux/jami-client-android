@@ -49,6 +49,7 @@ import net.jami.daemon.JamiService
 import net.jami.services.*
 import java.io.File
 import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -303,6 +304,9 @@ abstract class JamiApplication : Application() {
     }
 
     private fun setupActivityListener() {
+        var startedActivities = 0
+        var backgroundTimestamp = 0L
+
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
                 if (mPreferencesService.settings.isRecordingBlocked) {
@@ -310,10 +314,27 @@ abstract class JamiApplication : Application() {
                 }
             }
 
-            override fun onActivityStarted(activity: Activity) {}
+            override fun onActivityStarted(activity: Activity) {
+                startedActivities++
+                if (startedActivities == 1 && backgroundTimestamp > 0) {
+                    val elapsed = android.os.SystemClock.elapsedRealtime() - backgroundTimestamp
+                    if (elapsed > TimeUnit.MINUTES.toMillis(2) && daemon.isStarted) {
+                        Log.i(TAG, "App resumed after ${elapsed / 1000}s in background, refreshing connectivity")
+                        hardwareService.connectivityChanged(mPreferencesService.hasNetworkConnected())
+                    }
+                }
+            }
+
             override fun onActivityResumed(activity: Activity) {}
             override fun onActivityPaused(activity: Activity) {}
-            override fun onActivityStopped(activity: Activity) {}
+
+            override fun onActivityStopped(activity: Activity) {
+                startedActivities--
+                if (startedActivities == 0) {
+                    backgroundTimestamp = android.os.SystemClock.elapsedRealtime()
+                }
+            }
+
             override fun onActivitySaveInstanceState(activity: Activity, bundle: Bundle) {}
             override fun onActivityDestroyed(activity: Activity) {}
         })
