@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb1465bf_f701f7b4",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-31T19:23:17Z",
+      "side": 1,
+      "message": "[🟡 Suggestions] Line 321: Triggering `hardwareService.connectivityChanged(...)` directly from `onActivityStarted` runs the connectivity refresh on the main thread during foreground restoration. If this path touches daemon/network state synchronously, app startup/resume can be delayed or ANR-prone. Dispatch the refresh on an existing background executor/scheduler and keep the lifecycle callback lightweight.\n```suggestion\nscheduledExecutor.execute {\n    hardwareService.connectivityChanged(mPreferencesService.hasNetworkConnected())\n}\n```",
+      "revId": "99fad5041e8404b4a218d3a21f389ab051993074",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "355c7506_54a29714",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-31T19:23:17Z",
+      "side": 1,
+      "message": "[🟡 Suggestions] Line 329: `startedActivities--` is not guarded. Lifecycle callbacks are expected to be balanced, but defensive clamping avoids a negative foreground count if callbacks arrive unexpectedly during activity recreation or framework edge cases; a negative count would prevent future background detection from working correctly. Consider decrementing only when positive and logging an inconsistent state if it is not.\n```suggestion\nif (startedActivities \u003e 0) {\n    startedActivities--\n} else {\n    Log.w(TAG, \"Activity stopped while no activities were marked as started\")\n}\nif (startedActivities \u003d\u003d 0) {\n    backgroundTimestamp \u003d android.os.SystemClock.elapsedRealtime()\n}\n```",
+      "revId": "99fad5041e8404b4a218d3a21f389ab051993074",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
