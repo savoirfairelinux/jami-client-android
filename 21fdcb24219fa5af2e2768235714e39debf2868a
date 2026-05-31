@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "daae3c3c_44b1878c",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-31T08:18:58Z",
+      "side": 1,
+      "message": "[🔴 Critical Issues] Line 76: Call reconnection is now gated on both originalPriority and priority because isCallNotification already requires remoteMessage.priority \u003d\u003d PRIORITY_HIGH. FCM can downgrade delivered priority while originalPriority remains HIGH, so an incoming call push originally sent as high priority may skip connectivityChanged() and risk timing out after sleep. Split call-type detection from priority gating and use originalPriority consistently for this decision.\n```suggestion\n        val isCallPush \u003d pushType.contains(\"audioCall\") || pushType.contains(\"videoCall\")\n        val isCallNotification \u003d isCallPush \u0026\u0026 remoteMessage.originalPriority \u003d\u003d RemoteMessage.PRIORITY_HIGH\n```\nThen keep the later condition as `if (isCallNotification \u0026\u0026 !isAppInForeground())`.",
+      "revId": "21fdcb24219fa5af2e2768235714e39debf2868a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
