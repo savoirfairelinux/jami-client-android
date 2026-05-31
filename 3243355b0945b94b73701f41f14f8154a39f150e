@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70f8e0f9_25851336",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-31T08:21:07Z",
+      "side": 1,
+      "message": "[🟡 Suggestion] Line 314: The foreground/background counter can become negative if lifecycle callbacks are unbalanced, for example with unusual activity launch flows, multi-window behavior, or an Activity stopped after state restoration edge cases. A negative value prevents the next foreground transition from satisfying `startedActivities \u003d\u003d 1`, so the connectivity refresh may stop firing until process restart. Clamp the counter when stopping. Suggested fix:\n```suggestion\nstartedActivities \u003d (startedActivities - 1).coerceAtLeast(0)\nif (startedActivities \u003d\u003d 0) {\n    backgroundTimestamp \u003d android.os.SystemClock.elapsedRealtime()\n}\n```",
+      "revId": "3243355b0945b94b73701f41f14f8154a39f150e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "531d8183_0ebb9002",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-31T08:21:07Z",
+      "side": 1,
+      "message": "[🟡 Suggestion] Line 51: Changing the call-push gate from delivered `priority` to `originalPriority` means pushes that FCM downgraded to normal priority will still trigger the expensive connectivity refresh path. That weakens the battery-drain mitigation described below and may reintroduce excessive wakeups when FCM deprioritizes traffic. If the intent is to refresh only for pushes actually delivered as high priority, keep the delivered priority check; if original priority is intentionally required, update the battery-drain rationale and consider adding an additional throttle. Suggested fix:\n```suggestion\n                \u0026\u0026 remoteMessage.priority \u003d\u003d RemoteMessage.PRIORITY_HIGH\n```",
+      "revId": "3243355b0945b94b73701f41f14f8154a39f150e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
