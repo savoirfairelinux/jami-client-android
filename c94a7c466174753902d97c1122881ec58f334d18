@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99065e93_9dd4d89f",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-31T08:39:30Z",
+      "side": 1,
+      "message": "Line 315: The foreground refresh is gated behind a hard-coded 2 minute delay, so short background/foreground transitions will not trigger connectivityChanged even though the change subject says it should happen on foreground return. If the intent is to always resync daemon connectivity when returning to foreground, remove the elapsed threshold or make the stale interval a named constant with a comment explaining why shorter returns are intentionally skipped.\n\n```suggestion\nif (daemon.isStarted) {\n    Log.i(TAG, \"App resumed after ${elapsed / 1000}s in background, refreshing connectivity\")\n    hardwareService.connectivityChanged(mPreferencesService.hasNetworkConnected())\n}\n```",
+      "revId": "c94a7c466174753902d97c1122881ec58f334d18",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5806f7ad_32beb8d7",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-31T08:39:30Z",
+      "side": 1,
+      "message": "Line 315: The new foreground-return behavior is not covered by a test or an injectable clock/threshold, making regressions in activity counting and stale-background detection easy to miss. Consider extracting the foreground/background state transition logic behind a small helper with an injectable clock so tests can cover: first foreground launch does not refresh, background longer than the threshold refreshes once, and configuration/activity switches do not refresh spuriously.",
+      "revId": "c94a7c466174753902d97c1122881ec58f334d18",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
