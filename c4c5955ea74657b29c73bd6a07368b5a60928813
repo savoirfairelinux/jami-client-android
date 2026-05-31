@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adf3080a_ef81e659",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-31T08:22:18Z",
+      "side": 1,
+      "message": "[🟡 Suggestion] Line 49: Using originalPriority to decide whether to start foreground-service call handling can treat an FCM message that was delivered as normal priority as high priority. On Android versions with background foreground-service restrictions, a downgraded message may no longer have the high-priority FCM exemption, so this can still fail or create inconsistent behavior despite the exception handler. Keep originalPriority for the daemon connectivity wake-up if that is the intended signal, but use delivered priority for foreground-service eligibility, for example:\\n```suggestion\\n        val isCallPush \u003d pushType.contains(\\\"audioCall\\\") || pushType.contains(\\\"videoCall\\\")\\n        val canStartCallForegroundService \u003d isCallPush \u0026\u0026 remoteMessage.priority \u003d\u003d RemoteMessage.PRIORITY_HIGH\\n        val shouldReconnectForCall \u003d isCallPush \u0026\u0026 remoteMessage.originalPriority \u003d\u003d RemoteMessage.PRIORITY_HIGH\\n```",
+      "revId": "c4c5955ea74657b29c73bd6a07368b5a60928813",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
