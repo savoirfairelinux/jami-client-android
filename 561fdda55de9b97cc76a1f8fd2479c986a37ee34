@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "357a704a_b601aec8",
+        "filename": "jami-android/app/src/main/res/values-nn_NO/strings.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-31T18:49:19Z",
+      "side": 1,
+      "message": "[Critical] Line 1: 🔴 Critical Issues - Must fix before merge: This patch deletes the entire Norwegian Nynorsk resource file, which is unrelated to limiting Firebase connectivity handling and removes existing localized strings. Please restore this file unless there is a separate tracked migration/removal reason.\n```suggestion\nRestore jami-android/app/src/main/res/values-nn_NO/strings.xml\n```",
+      "revId": "561fdda55de9b97cc76a1f8fd2479c986a37ee34",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f4785c0_d81a89a8",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-05-31T18:49:19Z",
+      "side": 1,
+      "message": "[Medium] Line 52: 🟡 Suggestions - Improvements to consider: Switching the call-notification gate from delivered `priority` to `originalPriority` means downgraded FCM messages are still treated as high-priority calls. On Android, foreground-service start exemptions depend on the delivered priority; if FCM downgraded the message, this can trigger avoidable `ForegroundServiceStartNotAllowedException` paths and still run call wake/reconnect logic for a message the OS no longer considers high priority. Keep the foreground-service decision based on delivered priority, and use a separate call-type predicate for the connectivity restriction if needed.\n```suggestion\nval isCallPush \u003d pushType.contains(\"audioCall\") || pushType.contains(\"videoCall\")\nval isHighPriorityCallNotification \u003d isCallPush \u0026\u0026 remoteMessage.priority \u003d\u003d RemoteMessage.PRIORITY_HIGH\n\nif (isHighPriorityCallNotification) {\n```\nThen gate `connectivityChanged()` with the intended priority semantics explicitly.",
+      "revId": "561fdda55de9b97cc76a1f8fd2479c986a37ee34",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
