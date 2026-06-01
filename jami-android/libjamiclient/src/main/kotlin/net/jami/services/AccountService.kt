@@ -1306,6 +1306,7 @@ class AccountService(
                 try {
                     val fileName = message["displayName"]!!
                     val fileId = message["fileId"]
+                    val isOutgoing = contact.isUser
                     val paths = arrayOfNulls<String>(1)
                     val progressA = LongArray(1)
                     val totalA = LongArray(1)
@@ -1314,8 +1315,19 @@ class AccountService(
                         totalA[0] = message["totalSize"]!!.toLong()
                     }
                     val path = File(paths[0]!!)
-                    val isComplete = path.exists() && progressA[0] == totalA[0]
-                    DataTransfer(fileId, account.accountId, author, fileName, contact.isUser, timestamp, totalA[0], progressA[0]).apply {
+                    var isComplete = path.exists() && progressA[0] == totalA[0]
+                    // Fallback: for outgoing files, check the client's own storage path.
+                    // The file may exist there even when the daemon's symlink/info is
+                    // stale (e.g., after app restart or broken symlink).
+                    if (!isComplete && isOutgoing && !fileId.isNullOrEmpty()) {
+                        val clientPath = mDeviceRuntimeService.getConversationPath(
+                            account.accountId, conversation.uri.rawRingId, fileName)
+                        if (clientPath.exists() && clientPath.length() == totalA[0]) {
+                            progressA[0] = totalA[0]
+                            isComplete = true
+                        }
+                    }
+                    DataTransfer(fileId, account.accountId, author, fileName, isOutgoing, timestamp, totalA[0], progressA[0]).apply {
                         daemonPath = path
                         transferStatus = if (isComplete)
                             TransferStatus.TRANSFER_FINISHED
