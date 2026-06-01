@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a747277_188cf2c6",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 13
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-01T14:56:58Z",
+      "side": 1,
+      "message": "[Major] Line 75: This now gates connectivityChanged() on isCallNotification, but isCallNotification uses remoteMessage.priority rather than originalPriority. That changes the previous high-priority check from original FCM priority to delivered priority, so incoming call pushes that were sent as high priority but delivered/downgraded as normal will no longer trigger network reconnection. The nearby comment also says \u0027HIGH original priority\u0027, which makes the intended behavior ambiguous. Keep the call-type filtering but preserve the original-priority condition.\n```suggestion\n        val isCallNotification \u003d (pushType.contains(\"audioCall\")\n                || pushType.contains(\"videoCall\"))\n                \u0026\u0026 remoteMessage.originalPriority \u003d\u003d RemoteMessage.PRIORITY_HIGH\n```\nIf the foreground-service start intentionally depends on delivered priority, use two separate booleans so connectivityChanged() continues to use originalPriority.",
+      "revId": "7555f6de922ec9d537d0c89eb6834673a25a9f0e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
