@@ -123,6 +123,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Нээлттэй тохируулалт</string>
+  <string name="permission_dialog_later">Дараа нь</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Та нэмж байгаа дансны QR кодыг сканируарай.</string>
   <string name="title_activity_qrcode">Миний хуудас хуваалцаарай</string>
@@ -327,4 +329,5 @@
   <string name="import_side_step2_password_import">Импортын</string>
   <!--Accessibility-->
   <!--Peer services-->
+  <string name="peer_services_connect">Харилцаа холбоо</string>
 </resources>

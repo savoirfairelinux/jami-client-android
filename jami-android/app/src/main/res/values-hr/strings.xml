@@ -124,6 +124,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Otvori postavke</string>
+  <string name="permission_dialog_later">Kasnije</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skenirajte QR kod korisnika kojeg želite dodati.</string>
   <string name="title_activity_qrcode">Dijeli moj račun</string>
@@ -331,4 +333,5 @@
   <string name="import_side_step2_password_import">Uvezi</string>
   <!--Accessibility-->
   <!--Peer services-->
+  <string name="peer_services_connect">Povezivanje</string>
 </resources>

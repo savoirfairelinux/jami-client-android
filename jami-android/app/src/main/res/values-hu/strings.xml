@@ -167,6 +167,8 @@
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">A „Hívásnapló írása” használati engedélye szükséges a Jaminak. A funkció használatát engedélyezze az eszköz beállításaiban.</string>
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Beállítások megnyitása</string>
+  <string name="permission_dialog_later">Később</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Olvassa be a hozzáadandó fiók QR-kódját.</string>
   <string name="title_activity_qrcode">Fiók megosztása</string>
@@ -530,4 +532,5 @@ A fiókexportálási művelet folytatásához kattintson a Megerősítés gombra
   <string name="step_title_create_profile">Profil létrehozása</string>
   <string name="step_format">%1$d. lépés, összesen: %2$d: %3$s</string>
   <!--Peer services-->
+  <string name="peer_services_connect">Kapcsolódás</string>
 </resources>

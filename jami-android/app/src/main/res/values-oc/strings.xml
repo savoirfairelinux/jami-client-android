@@ -123,6 +123,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Configuracions dobèrtas</string>
+  <string name="permission_dialog_later">Mai tard</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scanar lo còde QR del compte que volètz ajustar.</string>
   <string name="title_activity_qrcode">Comparta mon compte</string>
@@ -328,4 +330,5 @@
   <string name="import_side_step2_password_import">Importacion</string>
   <!--Accessibility-->
   <!--Peer services-->
+  <string name="peer_services_connect">Se connectar</string>
 </resources>

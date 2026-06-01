@@ -169,6 +169,8 @@
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami potrebuje dovoljenje za »pisanje zapisnika klicev«, da bi uporabili to funkcijo. Potrdite ga v nastavitvah naprave..</string>
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Odpri nastavitve</string>
+  <string name="permission_dialog_later">Kasneje</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Preberite QR-kodo stika, ki ga želite dodati.</string>
   <string name="title_activity_qrcode">Deli moj račun</string>
@@ -531,4 +533,5 @@
   <string name="step_title_create_profile">Ustvari profil</string>
   <string name="step_format">Korak %1$d od %2$d: %3$s</string>
   <!--Peer services-->
+  <string name="peer_services_connect">Poveži</string>
 </resources>

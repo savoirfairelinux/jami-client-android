@@ -122,6 +122,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">เปิดการตั้งค่า</string>
+  <string name="permission_dialog_later">ต่อมา</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">สแกนรหัส QR ของบัญชีที่คุณต้องการเพิ่ม</string>
   <string name="title_activity_qrcode">แบ่งปันบัญชีของฉัน</string>
@@ -326,4 +328,5 @@
   <string name="import_side_step2_password_import">การนําเข้า</string>
   <!--Accessibility-->
   <!--Peer services-->
+  <string name="peer_services_connect">เชื่อมต่อ</string>
 </resources>

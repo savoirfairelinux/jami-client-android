@@ -22,6 +22,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Åpne innstillingar</string>
+  <string name="permission_dialog_later">Seinare</string>
   <!--QRCode Scan-->
   <!--Settings-->
   <!--Conversation-->
@@ -48,4 +50,5 @@
   <!--Extension-->
   <!--Accessibility-->
   <!--Peer services-->
+  <string name="peer_services_connect">Kopla til</string>
 </resources>

@@ -158,6 +158,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">설정 열기</string>
+  <string name="permission_dialog_later">나중에</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">추가하려는 계정의 QR 코드를 스캔하세요.</string>
   <string name="title_activity_qrcode">내 계정 공유</string>
@@ -464,4 +466,5 @@
   <string name="step_title_set_password">암호 설정</string>
   <string name="step_title_create_profile">프로필 생성</string>
   <!--Peer services-->
+  <string name="peer_services_connect">연결</string>
 </resources>

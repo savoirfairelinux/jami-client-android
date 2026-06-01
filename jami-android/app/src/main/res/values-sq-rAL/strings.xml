@@ -6,6 +6,7 @@
   <string name="section_license">Licencë</string>
   <string name="switch_conversation">Ndërroni bisedë</string>
   <string name="delete_conversation_confirmation">Jeni i sigurt se doni të fshihet kjo bisedë?</string>
+  <string name="acc_profile_photo_capture">Bëj foto</string>
   <string name="view_switch_camera">Ndërro kamerën</string>
   <string name="sponsor_section">Jami është software i lirë i zhvilluar dhe i mbuluar nga</string>
   <string name="copyright_section">Të drejta kopjimi</string>
@@ -166,6 +167,11 @@
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami lyp lejen “Të shkruajë regjistër thirrjesh”. Që të mund të përdorni këtë veçori, aktivizojeni te rregullimet e pajisjes.</string>
   <!--Post notifications permission-->
+  <string name="permission_dialog_post_notifications_title">Lejo njoftime</string>
+  <string name="permission_dialog_post_notifications_message">Jami lyp leje njoftimesh, që t’ju sinjalizojë për thirrje dhe mesazhe ardhës, edhe kur aplikacioni gjenden në prapaskenë. Pa të, mund të humbni thirrje.</string>
+  <string name="permission_dialog_post_notifications_blocked_message">Njoftimet janë çaktivizuar për Jami-n. Pa to, do të humbni thirrje dhe mesazhe ardhës. Ju lutemi, aktivizoni njoftime për Jami-n, që nga rregullimet e pajisjes.</string>
+  <string name="permission_dialog_open_settings">Hap rregullimet</string>
+  <string name="permission_dialog_later">Më vonë</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skanoni kodin QR të llogarisë që doni të shtoni.</string>
   <string name="title_activity_qrcode">Ndaje llogarinë time</string>
@@ -525,4 +531,14 @@
   <string name="step_title_create_profile">Krijoni profil</string>
   <string name="step_format">Hapi %1$d nga %2$d: %3$s</string>
   <!--Peer services-->
+  <string name="peer_services_title">Shërbime të Përbashkëta</string>
+  <string name="peer_services_refresh">Rifreskoji shërbimet</string>
+  <string name="peer_services_connect">Lidhu</string>
+  <string name="peer_services_disconnect">Shkëpute</string>
+  <string name="peer_services_empty">S’ka shërbime të përbashkët</string>
+  <string name="peer_services_link_copied">Lidhja u kopjua në të papastër</string>
+  <string name="peer_services_error_offline">Kontakti s’është në linjë</string>
+  <string name="peer_services_error_unreachable">Kontakti s’kapet dot</string>
+  <string name="peer_services_error_timeout">Kërkesës i mbaroi koha</string>
+  <string name="peer_services_error_unknown">S’u morën dot shërbime</string>
 </resources>

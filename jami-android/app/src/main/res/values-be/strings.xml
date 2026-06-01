@@ -72,6 +72,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Адкрытыя налады</string>
+  <string name="permission_dialog_later">Пазней</string>
   <!--QRCode Scan-->
   <string name="title_activity_qrcode">Падзяліцца маім рахункам</string>
   <!--Settings-->
@@ -182,4 +184,5 @@
   <string name="import_side_step2_password_import">Імпарт</string>
   <!--Accessibility-->
   <!--Peer services-->
+  <string name="peer_services_connect">Злучэнне</string>
 </resources>

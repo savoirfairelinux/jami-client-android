@@ -125,6 +125,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Åpne innstillinger</string>
+  <string name="permission_dialog_later">Senere</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skann QR-koden tilhørende kontoen du ønsker å legge til.</string>
   <string name="title_activity_qrcode">Del min konto</string>
@@ -334,4 +336,5 @@
   <!--Accessibility-->
   <string name="step_title_set_password">Lagre passord</string>
   <!--Peer services-->
+  <string name="peer_services_connect">Koble til</string>
 </resources>

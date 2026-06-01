@@ -167,6 +167,8 @@
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami vaatii toimiakseen oikeudet “Kirjoittaa puhelulokia”. Ota käyttöön laitteen asetuksissa, jotta voit käyttää ominaisuutta.</string>
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Avaa asetukset</string>
+  <string name="permission_dialog_later">Myöhemmin</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skannaa lisättävän tilin QR-koodi.</string>
   <string name="title_activity_qrcode">Jaa minun tili</string>
@@ -529,4 +531,5 @@
   <string name="step_title_create_profile">Luo profiili</string>
   <string name="step_format">Vaihe %1$d / %2$d: %3$s</string>
   <!--Peer services-->
+  <string name="peer_services_connect">Yhdistä</string>
 </resources>

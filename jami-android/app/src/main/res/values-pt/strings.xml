@@ -160,6 +160,8 @@
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">O Jami requer a permissão “Escrever registo de chamadas”. Ative-a nas configurações do dispositivo para poder utilizar esta funcionalidade.</string>
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Abrir configurações</string>
+  <string name="permission_dialog_later">Mais tarde</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Digitalize o código QR da conta que quer adicionar.</string>
   <string name="title_activity_qrcode">Partilhar a minha conta</string>
@@ -491,4 +493,5 @@
   <!--Accessibility-->
   <string name="step_title_set_password">Definir palavra-chave</string>
   <!--Peer services-->
+  <string name="peer_services_connect">Conectar</string>
 </resources>

@@ -149,6 +149,8 @@ contact@jami.net</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">باز‌کردن تنظیمات</string>
+  <string name="permission_dialog_later">بعدش</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">کد QR حسابی را که می‌خواهید بیفزایید، اسکن کنید.</string>
   <string name="title_activity_qrcode">هم‌رسانی حساب من</string>
@@ -365,4 +367,5 @@ contact@jami.net</string>
   <!--Accessibility-->
   <string name="step_title_set_password">تعیین گذرواژه</string>
   <!--Peer services-->
+  <string name="peer_services_connect">اتصال</string>
 </resources>

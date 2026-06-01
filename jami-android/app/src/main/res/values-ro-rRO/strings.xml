@@ -168,6 +168,8 @@
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami are nevoie de permisiunea de a scrie în jurnalul de apeluri. Permisiunea trebuie dată din reglările sistemului.</string>
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Deschide reglările</string>
+  <string name="permission_dialog_later">Mai târziu</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scanează Codul QR al contului pe care vrei să-l adaugi.</string>
   <string name="title_activity_qrcode">Distribuie contul meu</string>
@@ -530,4 +532,5 @@
   <string name="step_title_create_profile">Creează profilul</string>
   <string name="step_format">Pasul %1$d din %2$d: %3$s</string>
   <!--Peer services-->
+  <string name="peer_services_connect">Conectează</string>
 </resources>

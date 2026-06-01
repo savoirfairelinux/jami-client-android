@@ -122,6 +122,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Malfermu la agordojn</string>
+  <string name="permission_dialog_later">Poste</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skanu la QR Kodon de la konto, kiun vi volas aldoni.</string>
   <string name="title_activity_qrcode">Dividi mian konton</string>
@@ -326,4 +328,5 @@
   <string name="import_side_step2_password_import">Enporti</string>
   <!--Accessibility-->
   <!--Peer services-->
+  <string name="peer_services_connect">Konekti</string>
 </resources>

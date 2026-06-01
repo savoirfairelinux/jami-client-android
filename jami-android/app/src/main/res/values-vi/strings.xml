@@ -104,6 +104,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Mở cài đặt</string>
+  <string name="permission_dialog_later">Sau đó</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Quét mã QR của tài khoản mà bạn muốn thêm.</string>
   <string name="title_activity_qrcode">Chia sẻ tài khoản của tôi</string>
@@ -287,4 +289,5 @@
   <string name="link_device_error_unknown">Đã xảy ra lỗi.</string>
   <!--Accessibility-->
   <!--Peer services-->
+  <string name="peer_services_connect">Kết nối</string>
 </resources>

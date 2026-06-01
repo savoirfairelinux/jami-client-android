@@ -167,6 +167,11 @@
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami vajab „Salvesta kõnelogi“ luba. Selle funktsionaalsuse kasutamiseks anna nutiseadme seadistustest vastavad õigused.</string>
   <!--Post notifications permission-->
+  <string name="permission_dialog_post_notifications_title">Luba teavitused</string>
+  <string name="permission_dialog_post_notifications_message">Jami vajab õigust saata teavitusi saabuvate kõnede ja sõnumite kohta ka siis, kui rakendus ise töötab taustal. Ilma selleta võib erinev suhtus jääda sul märkamata.</string>
+  <string name="permission_dialog_post_notifications_blocked_message">Teavitused on Jami puhul keelatud. Ilma nendeta jäävad sul kõned ja sõnumid märkamata. Palun luba nutiseadme seadistustes Jamil saata teavitusi.</string>
+  <string name="permission_dialog_open_settings">Ava seadistused</string>
+  <string name="permission_dialog_later">Hiljem</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skaneeri lisatava konto QR-kood.</string>
   <string name="title_activity_qrcode">Jaga minu kontot</string>
@@ -531,4 +536,14 @@ Kui klõpsid „Kinnita“, siis jätkame kasutajakonto eksportimisega.</string>
   <string name="step_title_create_profile">Loo profiil</string>
   <string name="step_format">Samm %1$d / %2$d: %3$s</string>
   <!--Peer services-->
+  <string name="peer_services_title">Jagatud teenused</string>
+  <string name="peer_services_refresh">Laadi teenused uuesti</string>
+  <string name="peer_services_connect">Ühenda</string>
+  <string name="peer_services_disconnect">Katkesta ühendus</string>
+  <string name="peer_services_empty">Jagatud teenuseid pole saadaval</string>
+  <string name="peer_services_link_copied">Link on kopeeritud lõikelauale</string>
+  <string name="peer_services_error_offline">Kontakt pole võrgus</string>
+  <string name="peer_services_error_unreachable">Kontakt pole leitav</string>
+  <string name="peer_services_error_timeout">Päring aegus</string>
+  <string name="peer_services_error_unknown">Teenuste laadimine ei õnnestunud</string>
 </resources>

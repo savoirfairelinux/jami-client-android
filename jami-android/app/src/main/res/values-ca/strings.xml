@@ -143,6 +143,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Configuracions obertes</string>
+  <string name="permission_dialog_later">Més tard</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Escanegeu el codi QR del compte que vulgueu afegir.</string>
   <string name="title_activity_qrcode">Comparteix el meu compte</string>
@@ -361,4 +363,5 @@
   <!--Accessibility-->
   <string name="step_title_set_password">Estableix contrasenya</string>
   <!--Peer services-->
+  <string name="peer_services_connect">Connectar</string>
 </resources>

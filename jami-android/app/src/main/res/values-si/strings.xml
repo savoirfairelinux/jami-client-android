@@ -25,6 +25,7 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">පසුතල විවෘත කරන්න</string>
   <!--QRCode Scan-->
   <!--Settings-->
   <!--Conversation-->

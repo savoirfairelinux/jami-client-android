@@ -510,4 +510,5 @@
   <string name="link_device_error_bad_password">Ma ulac aɣilif, senqed isefka n usnekwu sakin ɛreḍ tikelt nniḍen.</string>
   <!--Accessibility-->
   <!--Peer services-->
+  <string name="peer_services_connect">Qqen</string>
 </resources>

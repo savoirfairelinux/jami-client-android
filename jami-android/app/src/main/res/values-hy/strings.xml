@@ -123,6 +123,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Բաց կարգավորումներ</string>
+  <string name="permission_dialog_later">Ավելի ուշ</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Սկանիր հաշիվի QR կոդը, որը ցանկանում ես ավելացնել:</string>
   <string name="title_activity_qrcode">Կիսվեք իմ հաշիվով</string>
@@ -327,4 +329,5 @@
   <string name="import_side_step2_password_import">Արտահանման համար</string>
   <!--Accessibility-->
   <!--Peer services-->
+  <string name="peer_services_connect">Կապակցել</string>
 </resources>

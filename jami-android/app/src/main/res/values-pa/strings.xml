@@ -273,4 +273,5 @@
   <!--Accessibility-->
   <string name="step_title_set_password">ਪਾਸਵਰਡ ਸੈੱਟ ਕਰੋ</string>
   <!--Peer services-->
+  <string name="peer_services_connect">ਜੋੜੋ</string>
 </resources>

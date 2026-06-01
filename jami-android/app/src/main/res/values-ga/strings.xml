@@ -71,6 +71,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Cinntí oscailte</string>
+  <string name="permission_dialog_later">Tar éis an lae</string>
   <!--QRCode Scan-->
   <string name="title_activity_qrcode">Comhroinn mo chuntas</string>
   <!--Settings-->
@@ -181,4 +183,5 @@
   <string name="import_side_step2_password_import">Éireodh</string>
   <!--Accessibility-->
   <!--Peer services-->
+  <string name="peer_services_connect">Déan nasc</string>
 </resources>

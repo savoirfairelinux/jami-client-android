@@ -123,6 +123,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">খোলা সেটিংস</string>
+  <string name="permission_dialog_later">পরে</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">আপনি যে অ্যাকাউন্টটি যুক্ত করতে চান তার QR কোড স্ক্যান করুন।</string>
   <string name="title_activity_qrcode">আমার অ্যাকাউন্ট শেয়ার করুন</string>
@@ -328,4 +330,5 @@
   <string name="import_side_step2_password_import">আমদানি</string>
   <!--Accessibility-->
   <!--Peer services-->
+  <string name="peer_services_connect">সংযুক্ত করুন</string>
 </resources>

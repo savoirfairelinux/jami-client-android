@@ -123,6 +123,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Buka pengaturan</string>
+  <string name="permission_dialog_later">Nanti</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Pindai QR Code dari akun yang ingin Anda tambahkan.</string>
   <string name="title_activity_qrcode">Bagikan akun saya</string>
@@ -329,4 +331,5 @@
   <!--Accessibility-->
   <string name="step_title_set_password">Atur kata sandi</string>
   <!--Peer services-->
+  <string name="peer_services_connect">Hubungkan</string>
 </resources>

@@ -127,6 +127,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Otvoriť nastavenia</string>
+  <string name="permission_dialog_later">Neskôr</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Nasnímajte QR kód účtu, ktorý chcete pridať.</string>
   <string name="title_activity_qrcode">Zdieľať môj účet</string>
@@ -339,4 +341,5 @@
   <!--Accessibility-->
   <string name="step_title_set_password">Nastaviť heslo</string>
   <!--Peer services-->
+  <string name="peer_services_connect">Pripojiť</string>
 </resources>

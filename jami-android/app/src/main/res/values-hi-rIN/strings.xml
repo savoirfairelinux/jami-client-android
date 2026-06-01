@@ -129,6 +129,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">खुली सेटिंग्स</string>
+  <string name="permission_dialog_later">बाद में</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">आपके द्वारा जोड़ा जाने वाले खाते का QR कोड स्कैन करें।</string>
   <string name="title_activity_qrcode">मेरा खाता साझा करें</string>
@@ -365,4 +367,5 @@
   <string name="import_side_step2_password_import">आयात</string>
   <!--Accessibility-->
   <!--Peer services-->
+  <string name="peer_services_connect">कनेक्ट करें</string>
 </resources>
