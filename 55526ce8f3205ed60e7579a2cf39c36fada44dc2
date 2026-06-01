@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f8681fc4_0a56204f",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-06-01T19:38:55Z",
+      "side": 1,
+      "message": "From the initial observation, Its better to fallback to MediaStore.Audio.Media.RECORD_SOUND_ACTION got API \u003c 31. There might be some issues with old media recorder API since I saw some issues on mediaplayer when we try to play the file(not 100 percent reproducible) on API 27.",
+      "range": {
+        "startLine": 597,
+        "startChar": 8,
+        "endLine": 598,
+        "endChar": 79
+      },
+      "revId": "55526ce8f3205ed60e7579a2cf39c36fada44dc2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d6462412_fda33566",
         "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
         "patchSetId": 9
