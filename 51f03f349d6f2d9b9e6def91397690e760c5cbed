@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c1ffeed_8c3a96e1",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1323,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-01T14:17:32Z",
+      "side": 1,
+      "message": "[Major] Line 1323: The fallback is applied to every transfer, but it is intended for sent/outgoing files. For incoming transfers, a local file with the same display name and size in the conversation directory could incorrectly mark the transfer as finished, hiding the download button even though this specific fileId was never downloaded. Gate the fallback on isOutgoing so it only fixes the stale daemon-info case for sent files.\n\n```suggestion\n                    if (!isComplete \u0026\u0026 isOutgoing \u0026\u0026 !fileId.isNullOrEmpty()) {\n```",
+      "revId": "51f03f349d6f2d9b9e6def91397690e760c5cbed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31bf0774_8a80b110",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1327,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-01T14:17:32Z",
+      "side": 1,
+      "message": "[Medium] Line 1327: When the fallback marks the transfer complete, DataTransfer is still created with the daemon-reported progressA[0], which may be stale or zero. This creates an inconsistent state: TRANSFER_FINISHED with incomplete progress. Update progress to total when the fallback succeeds.\n\n```suggestion\n                            progressA[0] \u003d totalA[0]\n                            isComplete \u003d true\n```",
+      "revId": "51f03f349d6f2d9b9e6def91397690e760c5cbed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
