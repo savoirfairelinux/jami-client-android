@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6edb737c_e031790b",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 15
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-01T16:19:00Z",
+      "side": 1,
+      "message": "[🔴 Critical Issues - Must fix before merge] Line 317: The app-level WakeLock timeout is only set when `pushWakeLock \u003d\u003d null`. If a second push arrives while the first hold is still active, the release handler is extended but the WakeLock timeout is not, so the WakeLock can auto-release before the newer push\u0027s daemon work completes. Re-acquire or extend the existing WakeLock on every push receipt so the power hold matches the renewed processing window.\n```suggestion\nval wakeLock \u003d pushWakeLock ?: pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, \"jami:push-app\").apply {\n    setReferenceCounted(false)\n    pushWakeLock \u003d this\n}\nwakeLock.acquire(pushMaxWindowMs + 10_000L)\n```",
+      "revId": "c1f4a8bcffdb6e7e2223d89da07de597bce0c0ae",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53909174_8e2dde28",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 15
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-01T16:19:00Z",
+      "side": 1,
+      "message": "[🟡 Suggestions - Improvements to consider] Line 358: The merged push-event subscription is unbounded and releases the push hold after any later message/call/request event, regardless of whether it belongs to the push currently being processed. If an unrelated daemon event occurs shortly after `onPushProcessed()` decrements the counter, the foreground service and WakeLock can be released before the pushed work has completed. Correlate the release condition to the pushed account/conversation/call where possible, or keep the full timeout unless a daemon event can be confidently tied to the push payload.",
+      "revId": "c1f4a8bcffdb6e7e2223d89da07de597bce0c0ae",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de3474a2_ab863a20",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 15
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-01T16:19:00Z",
+      "side": 1,
+      "message": "[🟡 Suggestions - Improvements to consider] Line 596: `setAccountsActive(awaitCompletion\u003dtrue)` can still fail to detect executor-thread calls during service construction or before the initialization task has run, because `mExecutorThread` may be null. In that case, a first await call from the executor thread will enqueue behind itself and block for 5 seconds. Prefer detecting the executor thread inside a wrapper used for all executor tasks, or fail closed while the executor thread is unknown before allowing a blocking await.",
+      "revId": "c1f4a8bcffdb6e7e2223d89da07de597bce0c0ae",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
