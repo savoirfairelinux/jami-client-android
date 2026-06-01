@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a74874b4_1fe1d3a2",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-01T16:26:19Z",
+      "side": 1,
+      "message": "[🟡 Suggestions] Line 573: The newly added size-limit preference is read directly from SharedPreferences in the Fragment, while SharedPreferencesServiceImpl now defines getAudioMessageMaxSize/getVideoMessageMaxSize for the same purpose. This duplicates preference keys/defaults and makes future changes easy to desynchronize. Inject/use the shared preferences service or move the helper there and call it from the Fragment.\n\n```suggestion\nval audioMax \u003d sharedPreferencesService.getAudioMessageMaxSize(path.accountId)\n```",
+      "revId": "55526ce8f3205ed60e7579a2cf39c36fada44dc2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6462412_fda33566",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-01T16:26:19Z",
+      "side": 1,
+      "message": "[🔴 Critical Issues] Line 612: The MediaRecorder info callback stops and releases the recorder immediately when the size/duration limit is reached, but the dialog still shows a Send button wired to stopAndSendAudioRecording(). Because audioRecorder is already null at that point, the send path skips recorder.stop() and sends whatever file exists. That can race with finalization and may send a partially finalized/corrupt MP4/AAC file. Prefer using the same stop-and-send path, or disable recording and only enable Send after recorder.stop() has completed on the UI thread.\n\n```suggestion\nsetOnInfoListener { _, what, _ -\u003e\n    if (what \u003d\u003d android.media.MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED ||\n        what \u003d\u003d android.media.MediaRecorder.MEDIA_RECORDER_INFO_MAX_FILESIZE_REACHED) {\n        requireActivity().runOnUiThread {\n            stopAndSendAudioRecording()\n            audioRecordDialog?.dismiss()\n        }\n    }\n}\n```",
+      "revId": "55526ce8f3205ed60e7579a2cf39c36fada44dc2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5cb325f3_25510c84",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-01T16:26:19Z",
+      "side": 1,
+      "message": "[🟡 Suggestions] Line 614: The MediaRecorder listener updates the AlertDialog directly from the recorder callback. Callback threading is not guaranteed to be safe for UI operations across API/device implementations. Route dialog updates through the main thread before touching UI state.\n\n```suggestion\nrequireActivity().runOnUiThread {\n    audioRecordDialog?.setMessage(getString(R.string.audio_recording_limit_reached))\n}\n```",
+      "revId": "55526ce8f3205ed60e7579a2cf39c36fada44dc2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab5d9edb_4225eb85",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/GeneralAccountFragment.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-01T16:26:19Z",
+      "side": 1,
+      "message": "[🟡 Suggestions] Line 112: getMediaSizeSummary accepts maxSize but never uses it. This makes the API misleading and duplicates getFileSizeSummary almost exactly. Either remove the unused parameter or consolidate the two summary helpers with explicit labels for zero/unlimited behavior.\n\n```suggestion\nprivate fun getMediaSizeSummary(size: Int): CharSequence {\n    return if (size \u003d\u003d 0) {\n        getText(R.string.account_message_size_unlimited)\n    } else {\n        Formatter.formatFileSize(requireContext(), size * 1_000_000L)\n    }\n}\n```",
+      "revId": "55526ce8f3205ed60e7579a2cf39c36fada44dc2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
