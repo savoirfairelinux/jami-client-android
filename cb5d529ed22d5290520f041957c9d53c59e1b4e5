@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2929ba0_7d80cbcf",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1318,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-01T14:57:19Z",
+      "side": 1,
+      "message": "[Medium] Line 1318: 🟡 Suggestion: The fallback trusts `displayName` plus file size to decide an outgoing transfer is complete. File names are not unique identifiers, and size collisions are plausible, so this can mark the wrong local file as finished after reload. Prefer resolving the exact transfer path using a stable identifier, or at least require the daemon-reported path/symlink target to match the expected client path before overriding progress. Suggested shape:\n```suggestion\nif (!isComplete \u0026\u0026 isOutgoing \u0026\u0026 !fileId.isNullOrEmpty()) {\n    val clientPath \u003d mDeviceRuntimeService.getConversationPath(\n        account.accountId, conversation.uri.rawRingId, fileName)\n    if (path.absolutePath \u003d\u003d clientPath.absolutePath \u0026\u0026 clientPath.exists() \u0026\u0026 clientPath.length() \u003d\u003d totalA[0]) {\n        progressA[0] \u003d totalA[0]\n        isComplete \u003d true\n    }\n}\n```",
+      "revId": "cb5d529ed22d5290520f041957c9d53c59e1b4e5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
