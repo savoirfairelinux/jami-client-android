@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdd8c1c7_c56e0bc6",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-01T06:12:37Z",
+      "side": 1,
+      "message": "Line 42: 🟡 Suggestion: `isCallNotification` now uses `originalPriority`, so call pushes that FCM actually delivered as normal priority will still acquire a wakelock, attempt to start a foreground service, and trigger `connectivityChanged(true)`. That bypasses the previous delivered-priority guard and can reintroduce background wakeups for messages FCM intentionally downgraded. Prefer keeping `remoteMessage.priority \u003d\u003d RemoteMessage.PRIORITY_HIGH` for runtime behavior, or split the checks so only the call-type filtering changes the connectivity path. Suggested fix:\\n```suggestion\\nval isCallNotification \u003d (pushType.contains(\"audioCall\")\\n        || pushType.contains(\"videoCall\"))\\n        \u0026\u0026 remoteMessage.priority \u003d\u003d RemoteMessage.PRIORITY_HIGH\\n```",
+      "revId": "69bc043a78a9f701879d00bd94a2e9f26f6a0a74",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
