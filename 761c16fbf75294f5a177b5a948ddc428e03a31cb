@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "884e247d_ab316f3d",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-01T16:13:57Z",
+      "side": 1,
+      "message": "[Critical] Line 824: 🔴 Critical Issues - The UI zoom state is reset, but the actual CameraService zoomRatio is not. Because CameraService intentionally preserves zoomRatio across capture-request rebuilds, stopping/restarting local video or destroying the view can leave the camera physically zoomed while currentCameraZoom is back at 1f, making subsequent pinch gestures jump from a stale value. Reset the hardware zoom whenever resetting currentCameraZoom.\n\n```suggestion\nstopCameraProgressiveZoom()\ncurrentCameraZoom \u003d mHardwareService.setCurrentCameraZoom(1f)\n```\nApply the same pattern in onDestroyView() and cameraFlip().",
+      "revId": "761c16fbf75294f5a177b5a948ddc428e03a31cb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a297abc_170238dc",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-01T16:13:57Z",
+      "side": 1,
+      "message": "[Medium] Line 703: 🟡 Suggestions - setZoomRatio posts every pinch update to the camera handler without coalescing. A pinch gesture can generate many UI events faster than Camera2 can apply repeating requests, causing a backlog of stale zoom requests and visible latency. Coalesce updates by keeping only the latest requested ratio, or remove pending zoom-update runnables before posting a new one.\n\n```suggestion\n// Store latestZoomRatio on VideoParams and post at most one pending update;\n// when the runnable executes, read the latest value and apply a single repeating request.\n```",
+      "revId": "761c16fbf75294f5a177b5a948ddc428e03a31cb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e63aea3_31bf7499",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/VideoDisplayZoomHelper.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-01T16:13:57Z",
+      "side": 1,
+      "message": "[Medium] Line 135: 🟡 Suggestions - attach() installs a listener that returns true for every touch, even when scale \u003d\u003d 1f and the gesture is just a normal tap/scroll. Since ParticipantsContainerView enables this on active call tiles, the video surface can swallow touches that parent views may rely on for participant focus, controls, or accessibility behavior. Only consume events when a zoom gesture is in progress or the view is zoomed/pannable; otherwise let the event bubble.\n\n```suggestion\nval consumed \u003d scaleDetector.isInProgress || scale \u003e minScale || ev.pointerCount \u003e 1\nif (ev.actionMasked \u003d\u003d MotionEvent.ACTION_UP \u0026\u0026 consumed) {\n    v.performClick()\n}\nconsumed\n```",
+      "revId": "761c16fbf75294f5a177b5a948ddc428e03a31cb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
