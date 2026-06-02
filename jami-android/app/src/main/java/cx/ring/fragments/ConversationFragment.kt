@@ -121,14 +121,16 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private var mPeerServicesCheckDisposable: Disposable? = null
 
     @Inject lateinit var peerServicesService: PeerServicesService
-    @field:Named("UiScheduler") @Inject lateinit var uiScheduler: Scheduler
+    @Named("UiScheduler") @Inject lateinit var uiScheduler: Scheduler
 
     private fun isImeAnimation(a: WindowInsetsAnimationCompat): Boolean {
         return (a.typeMask and WindowInsetsCompat.Type.ime()) != 0
     }
 
-    private fun updatePaddings(windowInsets: WindowInsetsCompat) {
-        val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime())
+    private fun updatePaddings(windowInsets: WindowInsetsCompat? = null) {
+        val root = view ?: return
+        val actualInsets = windowInsets ?: ViewCompat.getRootWindowInsets(root) ?: lastInsets ?: return
+        val insets = actualInsets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime())
         binding?.apply {
             if (errorMsgPane.isVisible) {
                 errorMsgPane.updatePadding(top = insets.top)
@@ -1123,6 +1125,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             trustRequestMessage.visibility = View.VISIBLE
             currentBottomView = unknownContactPrompt
         }
+        updatePaddings()
     }
 
     override fun switchToIncomingTrustRequestView(name: String, requestMode: Conversation.Mode) {
@@ -1139,6 +1142,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             trustRequestMessage.visibility = View.VISIBLE
             currentBottomView = trustRequestPrompt
         }
+        updatePaddings()
     }
 
     override fun switchToConversationView() {
@@ -1157,6 +1161,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 }
             }
         }
+        updatePaddings()
     }
 
     override fun switchToSyncingView() {
@@ -1172,6 +1177,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             trustRequestMessage.text = getText(R.string.conversation_syncing)
         }
         currentBottomView = null
+        updatePaddings()
     }
 
     override fun switchToBlockedView() {
@@ -1186,6 +1192,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             trustRequestMessage.visibility = View.VISIBLE
             trustRequestMessage.text = getText(R.string.conversation_blocked)
         }
+        updatePaddings()
     }
 
     override fun switchToEndedView(canSwitch: Boolean) {
@@ -1220,6 +1227,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 binding?.histList?.updatePadding(bottom = it + marginPxTotal)
             }
         }
+        updatePaddings()
     }
 
 
