@@ -81,7 +81,7 @@ Jami Android doesn't use the system's `pkg-config`; it builds its own version wi
 
 ```sh
 cd jami-client-android/daemon/extras/tools
-./bootstrap && make
+./bootstrap && make .pkg-config
 ```
 
 ## Update translations
