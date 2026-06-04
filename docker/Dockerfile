@@ -57,8 +57,8 @@ RUN wget -O /tmp/swig.tar.gz https://github.com/swig/swig/archive/v4.2.1.tar.gz 
 # Install Fastlane
 RUN gem install fastlane -NV
 
-ARG API_LEVEL="36"
-ARG BUILD_TOOLS="36.1.0"
+ARG API_LEVEL="37.0"
+ARG BUILD_TOOLS="37.0.0"
 
 # Install Commandlinetools.
 ENV ANDROID_SDK_ROOT=/opt/android
@@ -94,11 +94,11 @@ RUN wget -O /spoon-runner.jar \
     "https://repo1.maven.org/maven2/com/squareup/spoon/spoon-runner/1.7.1/spoon-runner-1.7.1-jar-with-dependencies.jar"
 
 # Install android SDK libraries for emulation.
-ARG API_LEVEL="36"
+ARG API_LEVEL="37.0"
 ARG TARGET="google_apis_playstore"
 ARG ARCH="x86_64"
 ARG EMULATOR_PACKAGE="system-images;android-${API_LEVEL};${TARGET};${ARCH}"
-ARG BUILD_TOOLS="36.1.0"
+ARG BUILD_TOOLS="37.0.0"
 RUN sdkmanager --update
 RUN yes Y | sdkmanager --licenses
 RUN sdkmanager --channel=1 --no_https "${EMULATOR_PACKAGE}" "emulator" "platform-tools"
