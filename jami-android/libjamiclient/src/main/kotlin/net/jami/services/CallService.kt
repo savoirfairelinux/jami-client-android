@@ -68,9 +68,11 @@ abstract class CallService(
             .map { conf }
             .startWithItem(conf)
 
-    fun getConfUpdates(confId: String): Observable<Conference> =
-        calls[confId]?.let { getConfUpdates(it) }
+    fun getConfUpdates(confId: String): Observable<Conference> {
+        return calls[confId]?.let { getConfUpdates(it) }
+            ?: conferences[confId]?.let { getConfUpdates(it) }
             ?: Observable.error(IllegalArgumentException())
+    }
 
     /*public Observable<Boolean> getConnectionUpdates() {
         return connectionSubject
@@ -761,10 +763,13 @@ abstract class CallService(
                 call.confId = null
             }
             conf.removeParticipants()
-            conf.hostCall?.let {
+            // Null hostCall BEFORE callSubject.onNext so that onCallStateChange (which runs
+            // synchronously on the same thread) sees hostCall==null and triggers removeConference.
+            val hostCall = conf.hostCall
+            conf.hostCall = null
+            hostCall?.let {
                 it.setCallState(CallStatus.OVER)
                 callSubject.onNext(it)
-                conf.hostCall = null
             }
             conf.conversationId?.let { conversationId ->
                 mAccountService.getAccount(accountId)
