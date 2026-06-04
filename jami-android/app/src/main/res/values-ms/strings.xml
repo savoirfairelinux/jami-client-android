@@ -121,6 +121,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">തുറന്ന ക്രമീകരണങ്ങൾ</string>
+  <string name="permission_dialog_later">പിന്നീട്</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Imbas kod QR akaun yang ingin anda tambah.</string>
   <string name="title_activity_qrcode">എന്റെ അക്കൌണ്ട് പങ്കുവെക്കുക</string>
@@ -326,4 +328,5 @@
   <string name="import_side_step2_password_import">ഇറക്കുമതി</string>
   <!--Accessibility-->
   <!--Peer services-->
+  <string name="peer_services_connect">ബന്ധിപ്പിക്കുക</string>
 </resources>

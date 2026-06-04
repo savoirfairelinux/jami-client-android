@@ -82,6 +82,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">הגדרות פתוחות</string>
+  <string name="permission_dialog_later">מאוחר יותר.</string>
   <!--QRCode Scan-->
   <string name="title_activity_qrcode">לחלוק את החשבון שלי</string>
   <!--Settings-->
@@ -195,4 +197,5 @@
   <string name="import_side_step2_password_import">יבוא</string>
   <!--Accessibility-->
   <!--Peer services-->
+  <string name="peer_services_connect">חיבור</string>
 </resources>

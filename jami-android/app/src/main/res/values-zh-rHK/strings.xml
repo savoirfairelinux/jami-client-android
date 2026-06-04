@@ -163,6 +163,11 @@
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami需要“写入通话记录”权限才能启用此功能。请批准。</string>
   <!--Post notifications permission-->
+  <string name="permission_dialog_post_notifications_title">允许通知</string>
+  <string name="permission_dialog_post_notifications_message">Jami需要获取通知权限，以便在有来电和消息时提醒您，即使该应用处于后台。如果没有此权限，您可能会错过电话。</string>
+  <string name="permission_dialog_post_notifications_blocked_message">Jami的通知功能已被禁用。没有通知，您将错过来电和消息。请在设备设置中为Jami启用通知功能。</string>
+  <string name="permission_dialog_open_settings">打开设置</string>
+  <string name="permission_dialog_later">稍后</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">扫描您想添加账户的二维码。</string>
   <string name="title_activity_qrcode">分享我的帳號</string>
@@ -525,4 +530,14 @@
   <string name="step_title_create_profile">创建个人资料</string>
   <string name="step_format">第%1$d步（共%2$d步）：%3$s</string>
   <!--Peer services-->
+  <string name="peer_services_title">共享服务</string>
+  <string name="peer_services_refresh">刷新服务</string>
+  <string name="peer_services_connect">连接</string>
+  <string name="peer_services_disconnect">断开</string>
+  <string name="peer_services_empty">无共享服务可用</string>
+  <string name="peer_services_link_copied">链接已复制到剪贴板</string>
+  <string name="peer_services_error_offline">联系人处于离线状态</string>
+  <string name="peer_services_error_unreachable">无法联系</string>
+  <string name="peer_services_error_timeout">请求超时</string>
+  <string name="peer_services_error_unknown">无法检索服务</string>
 </resources>

@@ -167,6 +167,11 @@
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami vaatii toimiakseen oikeudet “Kirjoittaa puhelulokia”. Ota käyttöön laitteen asetuksissa, jotta voit käyttää ominaisuutta.</string>
   <!--Post notifications permission-->
+  <string name="permission_dialog_post_notifications_title">Salli ilmoitukset</string>
+  <string name="permission_dialog_post_notifications_message">Jami tarvitsee luvan ilmoittaakseen sinulle saapuvista puheluista ja viesteistä, vaikka sovellus olisi taustalla. Ilman sitä puheluista ei tule hälytystä.</string>
+  <string name="permission_dialog_post_notifications_blocked_message">Jamin ilmoitukset on poistettu käytöstä. Ilman niitä et näe saapuvia puheluita ja viestejä. Ota Jamin ilmoitukset käyttöön laitteen asetuksista.</string>
+  <string name="permission_dialog_open_settings">Avaa asetukset</string>
+  <string name="permission_dialog_later">Myöhemmin</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skannaa lisättävän tilin QR-koodi.</string>
   <string name="title_activity_qrcode">Jaa minun tili</string>
@@ -529,4 +534,14 @@
   <string name="step_title_create_profile">Luo profiili</string>
   <string name="step_format">Vaihe %1$d / %2$d: %3$s</string>
   <!--Peer services-->
+  <string name="peer_services_title">Jaetut palvelut</string>
+  <string name="peer_services_refresh">Virkistä palvelut</string>
+  <string name="peer_services_connect">Yhdistä</string>
+  <string name="peer_services_disconnect">Katkaise</string>
+  <string name="peer_services_empty">Ei jaettuja palveluita saatavilla</string>
+  <string name="peer_services_link_copied">Linkki kopioitu leikepöydälle</string>
+  <string name="peer_services_error_offline">Henkilö on offline-tilassa</string>
+  <string name="peer_services_error_unreachable">Henkilöön ei saada yhteyttä</string>
+  <string name="peer_services_error_timeout">Pyyntö aikakatkaistu</string>
+  <string name="peer_services_error_unknown">Palveluiden haku epäonnistui</string>
 </resources>

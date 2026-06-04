@@ -126,6 +126,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">設定を開く</string>
+  <string name="permission_dialog_later">後で</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">追加したいアカウントの QR コードをスキャンしてください。</string>
   <string name="title_activity_qrcode">アカウントの共有</string>
@@ -334,4 +336,5 @@
   <!--Accessibility-->
   <string name="step_title_set_password">パスワードを設定</string>
   <!--Peer services-->
+  <string name="peer_services_connect">接続</string>
 </resources>

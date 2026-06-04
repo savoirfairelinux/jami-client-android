@@ -162,6 +162,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Open instellingen</string>
+  <string name="permission_dialog_later">Later.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scan de QR-code van het toe te voegen account.</string>
   <string name="title_activity_qrcode">Mijn account delen</string>
@@ -393,4 +395,5 @@
   <!--Accessibility-->
   <string name="step_title_set_password">Wachtwoord instellen</string>
   <!--Peer services-->
+  <string name="peer_services_connect">Verbinden</string>
 </resources>

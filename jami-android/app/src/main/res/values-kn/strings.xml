@@ -122,6 +122,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">ತೆರೆದ ಸೆಟ್ಟಿಂಗ್ಗಳು</string>
+  <string name="permission_dialog_later">ನಂತರ</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">ನೀವು ಸೇರಿಸಲು ಬಯಸುವ ಖಾತೆಯ QR ಕೋಡ್ ಅನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ.</string>
   <string name="title_activity_qrcode">ನನ್ನ ಖಾತೆಯನ್ನು ಹಂಚಿಕೊಳ್ಳಿ</string>
@@ -326,4 +328,5 @@
   <string name="import_side_step2_password_import">ಆಮದು</string>
   <!--Accessibility-->
   <!--Peer services-->
+  <string name="peer_services_connect">ಸಂಪರ್ಕ</string>
 </resources>

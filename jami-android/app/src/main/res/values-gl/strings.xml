@@ -127,6 +127,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Abrir os axustes</string>
+  <string name="permission_dialog_later">Máis tarde</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Escanea o código QR da conta que queres engadir.</string>
   <string name="title_activity_qrcode">Compartir a miña conta</string>
@@ -345,4 +347,5 @@
   <!--Accessibility-->
   <string name="step_title_set_password">Escribe contrasinal</string>
   <!--Peer services-->
+  <string name="peer_services_connect">Conectar</string>
 </resources>

@@ -159,6 +159,8 @@
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami потребує дозволу на \"Запис журналу дзвінків\". Увімкніть його в налаштуваннях пристрою, щоб користуватися цією функцією.</string>
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Відкрити налаштування</string>
+  <string name="permission_dialog_later">Пізніше</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Проскануйте QR-код облікового запису, який ви хочете додати.</string>
   <string name="title_activity_qrcode">Поділитися моїм обліковим записом</string>
@@ -495,4 +497,5 @@
   <!--Accessibility-->
   <string name="step_title_set_password">Задати пароль</string>
   <!--Peer services-->
+  <string name="peer_services_connect">З\'єднати</string>
 </resources>

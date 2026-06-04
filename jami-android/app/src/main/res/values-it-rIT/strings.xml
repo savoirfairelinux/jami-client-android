@@ -168,6 +168,8 @@
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami ha bisogno dell\'autorizzazione di accedere al registro chiamate. Per utilizzare questa funzione, abilitarla nelle impostazioni del dispositivo.</string>
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Apri le impostazioni</string>
+  <string name="permission_dialog_later">Più tardi</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scansiona il codice QR dell\'account che vuoi aggiungere.</string>
   <string name="title_activity_qrcode">Condividi il mio account</string>
@@ -530,4 +532,5 @@
   <string name="step_title_create_profile">Crea profilo</string>
   <string name="step_format">Passo %1$d di %2$d: %3$s</string>
   <!--Peer services-->
+  <string name="peer_services_connect">Connetti</string>
 </resources>

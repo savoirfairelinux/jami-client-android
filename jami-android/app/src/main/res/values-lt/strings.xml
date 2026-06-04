@@ -139,6 +139,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Atverti nustatymus</string>
+  <string name="permission_dialog_later">Vėliau</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Nuskenuokite paskyros, kurią norite pridėti, QR kodą.</string>
   <string name="title_activity_qrcode">Bendrinti mano paskyrą</string>
@@ -431,4 +433,5 @@
   <string name="step_title_create_profile">Susikurkite profilį</string>
   <string name="step_format">Žingsnis %1$d iš %2$d: %3$s</string>
   <!--Peer services-->
+  <string name="peer_services_connect">Prisijungti</string>
 </resources>

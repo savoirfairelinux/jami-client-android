@@ -148,6 +148,8 @@
   <string name="permission_dialog_read_contacts_message">Jamiju je potrebna dozvola „Čitanje kontakata“. Omogućite ga u podešavanjima uređaja da biste koristili ovu funkciju.</string>
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Отвори подешавања</string>
+  <string name="permission_dialog_later">Касније</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Скенирајте QR код налога који желите да додате.</string>
   <string name="title_activity_qrcode">Подели мој налог</string>
@@ -402,4 +404,5 @@
   <string name="import_side_step2_password_import">Увоз</string>
   <!--Accessibility-->
   <!--Peer services-->
+  <string name="peer_services_connect">Повежи се</string>
 </resources>

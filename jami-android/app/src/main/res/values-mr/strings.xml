@@ -122,6 +122,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">उघडलेली सेटिंग्ज</string>
+  <string name="permission_dialog_later">नंतर</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">आपण जोडाल त्या खात्याचा QR कोड स्कॅन करा.</string>
   <string name="title_activity_qrcode">माझे खाते सामायिक करा</string>
@@ -326,4 +328,5 @@
   <string name="import_side_step2_password_import">आयात</string>
   <!--Accessibility-->
   <!--Peer services-->
+  <string name="peer_services_connect">कनेक्ट करा</string>
 </resources>

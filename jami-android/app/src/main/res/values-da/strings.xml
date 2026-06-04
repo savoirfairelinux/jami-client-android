@@ -166,6 +166,8 @@
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami kræver tilladelsen ”Skriv opkaldslog”. Aktiver den i enhedens indstillinger for at bruge denne funktion.</string>
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Åbne indstillinger</string>
+  <string name="permission_dialog_later">Senere</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skan QR-koden for kontoen du vil tilføje.</string>
   <string name="title_activity_qrcode">Del min konto</string>
@@ -486,4 +488,5 @@
   <string name="step_title_create_profile">Opret profil</string>
   <string name="step_format">Trin %1$d af %2$d: %3$s</string>
   <!--Peer services-->
+  <string name="peer_services_connect">Køb</string>
 </resources>

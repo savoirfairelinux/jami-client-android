@@ -168,6 +168,11 @@
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami requiere el permiso \"Escribir registro de llamadas\". Habilitarlo en la configuración del dispositivo para usar esta función.</string>
   <!--Post notifications permission-->
+  <string name="permission_dialog_post_notifications_title">Permitir notificaciones</string>
+  <string name="permission_dialog_post_notifications_message">Jami necesita el permiso de notificaciones para avisarle de llamadas y mensajes entrantes, incluso cuando la aplicación está en segundo plano. Sin él, puede perder llamadas.</string>
+  <string name="permission_dialog_post_notifications_blocked_message">Las notificaciones están deshabilitadas para Jami. Sin ellas, perderá llamadas y mensajes entrantes. Habilite las notificaciones de Jami en la configuración del dispositivo.</string>
+  <string name="permission_dialog_open_settings">Abrir configuración</string>
+  <string name="permission_dialog_later">Más tarde</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Escanear el código QR de la cuenta que quieres añadir.</string>
   <string name="title_activity_qrcode">Compartir mi cuenta</string>
@@ -530,4 +535,14 @@
   <string name="step_title_create_profile">Crear perfil</string>
   <string name="step_format">Paso %1$d de %2$d: %3$s</string>
   <!--Peer services-->
+  <string name="peer_services_title">Servicios Compartidos</string>
+  <string name="peer_services_refresh">Servicios de actualización</string>
+  <string name="peer_services_connect">Conectar</string>
+  <string name="peer_services_disconnect">Desconectar</string>
+  <string name="peer_services_empty">No hay servicios compartidos disponibles</string>
+  <string name="peer_services_link_copied">Enlace copiado al portapapeles</string>
+  <string name="peer_services_error_offline">El contacto está desconectado</string>
+  <string name="peer_services_error_unreachable">El contacto es inalcanzable</string>
+  <string name="peer_services_error_timeout">Tiempo de espera agotado</string>
+  <string name="peer_services_error_unknown">No se pudieron recuperar los servicios</string>
 </resources>

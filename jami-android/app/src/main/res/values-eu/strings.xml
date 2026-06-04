@@ -123,6 +123,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">Ireki jarduerak</string>
+  <string name="permission_dialog_later">Geroago.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Eskaneatu gehitu nahi duzun kontuaren QR kodea.</string>
   <string name="title_activity_qrcode">partekatu nire kontua</string>
@@ -329,4 +331,5 @@
   <!--Accessibility-->
   <string name="step_title_set_password">Ezarri pasahitza</string>
   <!--Peer services-->
+  <string name="peer_services_connect">Konektatu</string>
 </resources>

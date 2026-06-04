@@ -121,6 +121,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">افتح الإعدادات</string>
+  <string name="permission_dialog_later">لاحقاً</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">مسح رمز الاستجابة السريعة للحساب الذي تريد إضافته.</string>
   <string name="title_activity_qrcode">مشاركة حسابي</string>
@@ -328,4 +330,5 @@
   <!--Accessibility-->
   <string name="step_title_set_password">تعيين كلمة المرور</string>
   <!--Peer services-->
+  <string name="peer_services_connect">إتصال</string>
 </resources>

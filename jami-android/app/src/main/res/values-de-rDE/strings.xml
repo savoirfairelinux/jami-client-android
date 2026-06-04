@@ -146,6 +146,11 @@
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami benötigt die Berechtigung „Anrufprotokoll schreiben“. Aktivieren Sie diese in den Geräteeinstellungen, um diese Funktion zu nutzen.</string>
   <!--Post notifications permission-->
+  <string name="permission_dialog_post_notifications_title">Benachrichtigungen zulassen</string>
+  <string name="permission_dialog_post_notifications_message">Jami benötigt die Benachrichtigungsberechtigung, um Sie über eingehende Anrufe und Nachrichten zu benachrichtigen, selbst wenn die App im Hintergrund ist. Ohne sie könnten Sie Anrufe verpassen.</string>
+  <string name="permission_dialog_post_notifications_blocked_message">Benachrichtigungen sind für Jami deaktiviert. Ohne sie werden Sie eingehende Anrufe und Nachrichten verpassen. Bitte aktivieren Sie Benachrichtigungen für Jami in den Geräteeinstellungen.</string>
+  <string name="permission_dialog_open_settings">Einstellungen öffnen</string>
+  <string name="permission_dialog_later">Später</string>
   <!--QRCode Scan-->
   <string name="title_activity_qrcode">Mein Konto teilen</string>
   <string name="error_scan_no_camera_permissions">Für den QR-Scanner ist eine Kameraberechtigung erforderlich. Die Kameraberechtigung ist deaktiviert. Aktivieren Sie diese in den Geräteeinstellungen, um diese Funktion zu nutzen.</string>
@@ -292,6 +297,8 @@
   <string name="dialog_title_contact">Anzeigenamen bearbeiten</string>
   <string name="dialogtitle_title">Gruppentitel bearbeiten</string>
   <string name="dialogtitle_description">Gruppenbeschreibung bearbeiten</string>
+  <string name="picker_title">Kontakte wählen</string>
+  <string name="picker_btn">Kontakte wählen</string>
   <string name="no_contact_to_add">Sie haben keinen Kontakt zum Hinzufügen</string>
   <string name="bottomsheet_remove">Mitglied entfernen</string>
   <string name="error_open_no_app_found">Keine Anwendung gefunden, um diese Datei zu öffnen: %1$s</string>
@@ -370,4 +377,14 @@
   <string name="step_title_create_profile">Profil erstellen</string>
   <string name="step_format">Schritt %1$d von %2$d: %3$s </string>
   <!--Peer services-->
+  <string name="peer_services_title">Gemeinsam genutzte Dienste</string>
+  <string name="peer_services_refresh">Dienste aktualisieren</string>
+  <string name="peer_services_connect">Verbinden</string>
+  <string name="peer_services_disconnect">Trennen</string>
+  <string name="peer_services_empty">Keine gemeinsam genutzten Dienste verfügbar</string>
+  <string name="peer_services_link_copied">Link in die Zwischenablage kopiert</string>
+  <string name="peer_services_error_offline">Kontakt ist offline</string>
+  <string name="peer_services_error_unreachable">Kontakt ist nicht erreichbar</string>
+  <string name="peer_services_error_timeout">Zeitüberschreitung der Anfrage</string>
+  <string name="peer_services_error_unknown">Dienste konnten nicht abgerufen werden</string>
 </resources>

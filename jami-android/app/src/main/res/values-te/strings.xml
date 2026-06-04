@@ -122,6 +122,8 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
+  <string name="permission_dialog_open_settings">సెట్టింగ్‌లను తెరువు</string>
+  <string name="permission_dialog_later">తరువాత</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">మీరు జోడించాలనుకుంటున్న ఖాతా యొక్క QR కోడ్ను స్కాన్ చేయండి.</string>
   <string name="title_activity_qrcode">నా ఖాతాను పంచుకోండి</string>
@@ -326,4 +328,5 @@
   <string name="import_side_step2_password_import">దిగుమతి</string>
   <!--Accessibility-->
   <!--Peer services-->
+  <string name="peer_services_connect">కనెక్ట్</string>
 </resources>
