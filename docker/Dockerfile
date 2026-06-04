@@ -49,20 +49,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && locale-gen $LANG $LC_ALL && update-locale $LANG $LC_ALL
 
 # Swig
-RUN wget -O /tmp/swig.tar.gz https://github.com/swig/swig/archive/v4.2.1.tar.gz && \
+RUN wget -O /tmp/swig.tar.gz https://github.com/swig/swig/archive/v4.4.1.tar.gz && \
     tar xzf  /tmp/swig.tar.gz -C /opt && \
-    cd /opt/swig-4.2.1/ && ./autogen.sh && ./configure && make && make install && \
-    cd .. && rm -rf /opt/swig-4.2.1 /tmp/swig.tar.gz
+    cd /opt/swig-4.4.1/ && ./autogen.sh && ./configure && make && make install && \
+    cd .. && rm -rf /opt/swig-4.4.1 /tmp/swig.tar.gz
 
 # Install Fastlane
 RUN gem install fastlane -NV
 
-ARG API_LEVEL="36"
-ARG BUILD_TOOLS="36.1.0"
+ARG API_LEVEL="37.0"
+ARG BUILD_TOOLS="37.0.0"
 
 # Install Commandlinetools.
 ENV ANDROID_SDK_ROOT=/opt/android
-ARG ANDROID_CMD="commandlinetools-linux-11076708_latest.zip"
+ARG ANDROID_CMD="commandlinetools-linux-14742923_latest.zip"
 RUN wget https://dl.google.com/android/repository/${ANDROID_CMD} -P /tmp && \
     unzip -d $ANDROID_SDK_ROOT /tmp/$ANDROID_CMD && \
     mkdir -p $ANDROID_SDK_ROOT/cmdline-tools/tools && cd $ANDROID_SDK_ROOT/cmdline-tools && mv NOTICE.txt source.properties bin lib tools/ && \
@@ -94,11 +94,11 @@ RUN wget -O /spoon-runner.jar \
     "https://repo1.maven.org/maven2/com/squareup/spoon/spoon-runner/1.7.1/spoon-runner-1.7.1-jar-with-dependencies.jar"
 
 # Install android SDK libraries for emulation.
-ARG API_LEVEL="36"
-ARG TARGET="google_apis_playstore"
+ARG API_LEVEL="37.0"
+ARG TARGET="google_apis_ps16k"
 ARG ARCH="x86_64"
 ARG EMULATOR_PACKAGE="system-images;android-${API_LEVEL};${TARGET};${ARCH}"
-ARG BUILD_TOOLS="36.1.0"
+ARG BUILD_TOOLS="37.0.0"
 RUN sdkmanager --update
 RUN yes Y | sdkmanager --licenses
 RUN sdkmanager --channel=1 --no_https "${EMULATOR_PACKAGE}" "emulator" "platform-tools"
