@@ -1063,13 +1063,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     ) {
         // Attempt to find an existing call
         val conf = conversation.currentCall
-
-        // If there is an existing call, go to it
-        if (conf != null
-            && conf.participants.isNotEmpty()
-            && conf.participants[0].callStatus != CallStatus.INACTIVE
-            && conf.participants[0].callStatus != CallStatus.FAILURE
-        ) {
+        // Join existing call (active, even if no participants yet)
+        if (conf != null && conf.isOnGoing) {
             startActivity(
                 Intent(Intent.ACTION_VIEW)
                     .setClass(requireContext(), CallActivity::class.java)

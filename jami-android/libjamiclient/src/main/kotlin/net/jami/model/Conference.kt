@@ -66,7 +66,7 @@ class Conference(val accountId: String, val id: String) {
     var hostCall: Call? = null
         set(value) {
             field = value
-            hostCallSubject.onNext(value)
+            if (value != null) hostCallSubject.onNext(value)
         }
     private val hostCallSubject = BehaviorSubject.create<Call>()
     val hostCallObservable: Observable<Call>
@@ -172,7 +172,11 @@ class Conference(val accountId: String, val id: String) {
     val isIncoming: Boolean
         get() = mParticipants.size == 1 && mParticipants[0].isIncoming
     val isOnGoing: Boolean
-        get() = mParticipants.size == 1 && mParticipants[0].isOnGoing || mParticipants.size > 1
+        get() = when {
+            mParticipants.size > 1 -> true
+            mParticipants.size == 1 -> mParticipants[0].isOnGoing
+            else -> mConfState == CallStatus.CURRENT
+        }
 
     @Deprecated("not working with groups/conferences")
     fun getMediaList(): List<Media> {
