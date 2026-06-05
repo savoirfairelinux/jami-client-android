@@ -86,51 +86,50 @@
         app:layout_constraintStart_toEndOf="@id/photo"
         app:layout_constraintTop_toBottomOf="@id/peer_name">
 
-        <ImageButton
+        <Button
             android:id="@+id/play"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            style="?attr/materialIconButtonFilledStyle"
+            app:materialSizeOverlay="@style/SizeOverlay.Material3Expressive.Button.IconButton.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="6dp"
-            android:background="?selectableItemBackgroundBorderless"
             android:contentDescription="@string/control_play"
-            app:srcCompat="@drawable/baseline_play_arrow_24" />
+            app:icon="@drawable/play_arrow_24px" />
 
-        <ImageButton
-            android:id="@+id/replay"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+        <cx.ring.views.WaveformView
+            android:id="@+id/audio_waveform"
+            android:layout_width="120dp"
+            android:layout_height="36dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="15dp"
-            android:background="?selectableItemBackgroundBorderless"
-            android:contentDescription="@string/control_replay"
-            app:srcCompat="@drawable/baseline_replay_24" />
+            android:layout_marginStart="2dp" />
 
         <TextView
             android:id="@+id/msg_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="6dp"
-            android:ellipsize="middle"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="12dp"
             android:gravity="center_horizontal"
-            android:scrollHorizontally="true"
             android:singleLine="true"
             android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/conversation_text_size_small"
-            tools:text="2:03 / 2:45" />
-
-        <TextView
-            android:id="@+id/file_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/file_time_text_in"
-            android:textSize="@dimen/conversation_timestamp_textsize"
-            tools:text="11:36am" />
+            tools:text="0:45" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/file_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/textColorSecondary"
+        android:textSize="@dimen/conversation_timestamp_textsize"
+        app:layout_constraintBottom_toBottomOf="@id/audioInfoLayout"
+        app:layout_constraintStart_toEndOf="@id/audioInfoLayout"
+        tools:text="11:36am" />
+
 
     <TextView
         android:id="@+id/reaction_chip"

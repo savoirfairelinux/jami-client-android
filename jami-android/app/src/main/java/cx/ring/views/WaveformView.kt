@@ -77,6 +77,16 @@ class WaveformView @JvmOverloads constructor(
         color = (resolveThemeColor(com.google.android.material.R.attr.colorOnSurface, 0xFF000000.toInt()) and 0x00FFFFFF) or 0x40000000
     }
 
+    /**
+     * Overrides the bar colors so the waveform can match its surrounding bubble.
+     * [active] colors the already-played portion, [inactive] the rest.
+     */
+    fun setColors(active: Int, inactive: Int) {
+        activePaint.color = active
+        inactivePaint.color = inactive
+        invalidate()
+    }
+
     /** Replace the whole amplitude set (used when entering review mode). */
     fun setAmplitudes(values: List<Float>) {
         amplitudes.clear()
@@ -107,12 +117,17 @@ class WaveformView @JvmOverloads constructor(
         val maxHalf = (h / 2f) - dp(1f)
 
         if (fitMode) {
-            val count = amplitudes.size
+            // Aggregate the amplitudes into at most one bar per drawable slot so the waveform
+            // shows clean, evenly spaced bars instead of one (often sub-pixel) bar per sample.
+            val slot = barWidth + barGap
+            val maxBars = max(1, (w / slot).toInt())
+            val bars = resample(amplitudes, min(maxBars, amplitudes.size))
+            val count = bars.size
             val step = w / count
             val progressX = w * progress
             for (i in 0 until count) {
                 val cx = i * step + step / 2f
-                val half = max(minBarHeight, amplitudes[i] * maxHalf)
+                val half = max(minBarHeight, bars[i] * maxHalf)
                 val paint = if (cx <= progressX) activePaint else inactivePaint
                 canvas.drawRoundRect(
                     cx - barWidth / 2f, centerY - half,
@@ -155,6 +170,20 @@ class WaveformView @JvmOverloads constructor(
 
     private fun dp(value: Float): Float =
         TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, resources.displayMetrics)
+
+    /** Aggregates [src] into [target] buckets (averaging) so dense waveforms render as clean bars. */
+    private fun resample(src: List<Float>, target: Int): List<Float> {
+        if (target <= 0 || target >= src.size) return src
+        val out = ArrayList<Float>(target)
+        for (i in 0 until target) {
+            val start = i * src.size / target
+            val end = max(start + 1, (i + 1) * src.size / target)
+            var sum = 0f
+            for (j in start until end) sum += src[j]
+            out.add(sum / (end - start))
+        }
+        return out
+    }
 
     private fun resolveThemeColor(attr: Int, fallback: Int): Int {
         val typedValue = TypedValue()

@@ -51,7 +51,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/audio_recording_stop"
-            app:icon="@drawable/baseline_pause_24"/>
+            app:icon="@drawable/pause_24px"
+            app:iconSize="32dp"/>
 
         <cx.ring.views.WaveformView
             android:id="@+id/waveform"

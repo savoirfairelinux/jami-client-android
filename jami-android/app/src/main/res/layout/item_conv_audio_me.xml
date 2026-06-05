@@ -62,54 +62,50 @@
         app:layout_constraintStart_toEndOf="@id/left_guideline"
         app:layout_constraintTop_toBottomOf="@id/msg_details_txt_perm">
 
-        <ImageButton
+        <Button
             android:id="@+id/play"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            style="?attr/materialIconButtonFilledStyle"
+            app:materialSizeOverlay="@style/SizeOverlay.Material3Expressive.Button.IconButton.Xsmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="6dp"
-            android:background="?selectableItemBackgroundBorderless"
             android:contentDescription="@string/control_play"
-            android:padding="7dp"
-            app:srcCompat="@drawable/baseline_play_arrow_24"
-            app:tint="@color/white" />
+            app:icon="@drawable/play_arrow_24px" />
 
-        <ImageButton
-            android:id="@+id/replay"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+        <cx.ring.views.WaveformView
+            android:id="@+id/audio_waveform"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="15dp"
-            android:background="?selectableItemBackgroundBorderless"
-            android:contentDescription="@string/control_replay"
-            app:srcCompat="@drawable/baseline_replay_24"
-            app:tint="@color/white" />
+            android:layout_marginStart="2dp" />
 
         <TextView
             android:id="@+id/msg_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="6dp"
-            android:ellipsize="middle"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="12dp"
             android:gravity="center_horizontal"
-            android:scrollHorizontally="true"
             android:singleLine="true"
             android:textColor="@color/white"
             android:textSize="@dimen/conversation_text_size_small"
-            tools:text="2:03 / 2:45" />
-
-        <TextView
-            android:id="@+id/file_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/file_time_text_out"
-            android:textSize="@dimen/conversation_timestamp_textsize"
-            tools:text="11:36am" />
+            tools:text="0:45" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/file_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/textColorSecondary"
+        android:textSize="@dimen/conversation_timestamp_textsize"
+        app:layout_constraintBottom_toBottomOf="@id/audioInfoLayout"
+        app:layout_constraintEnd_toStartOf="@id/audioInfoLayout"
+        tools:text="11:36am" />
+
 
     <cx.ring.views.MessageStatusView
         android:id="@+id/status_icon"
