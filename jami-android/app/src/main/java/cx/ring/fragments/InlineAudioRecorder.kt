@@ -47,8 +47,8 @@ import kotlin.math.sqrt
  *  - Pressing and holding starts an inline recording with a live waveform overlay.
  *  - Releasing in place sends the clip immediately ([Callbacks.onSend]).
  *  - Sliding left into the trash target and releasing discards the clip.
- *  - Sliding up or right into the review target and releasing stops recording and opens the
- *    full recorder dialog pre-loaded with the clip ([Callbacks.onReview]).
+ *  - Sliding up or right into the review target and releasing opens the full recorder dialog
+ *    pre-loaded with the clip and keeps recording so the user can carry on ([Callbacks.onReview]).
  *
  * All the recording, overlay and gesture handling lives here to keep `ConversationFragment` lean.
  */
@@ -65,8 +65,12 @@ class InlineAudioRecorder(
         fun onSimpleTap()
         /** Release in place: send the recorded clip directly. */
         fun onSend(file: File)
-        /** Release on the review target: open the full recorder with this clip loaded. */
-        fun onReview(file: File, amplitudes: FloatArray)
+        /**
+         * Release on the review target: open the full recorder with this clip loaded.
+         * When [continueRecording] is true the dialog should keep recording from this clip
+         * (the user slid to the review target manually rather than hitting a limit).
+         */
+        fun onReview(file: File, amplitudes: FloatArray, continueRecording: Boolean)
     }
 
     private enum class Zone { SEND, CANCEL, REVIEW }
@@ -83,6 +87,8 @@ class InlineAudioRecorder(
     private var recordFile: File? = null
     private val amplitudes = ArrayList<Float>()
     private var zone = Zone.SEND
+    /** True when recording stopped on its own (duration/size limit), not from a user gesture. */
+    private var autoStopped = false
 
     private val cancelThresholdPx = dp(32f)
     private val reviewUpThresholdPx = dp(64f)
@@ -100,6 +106,7 @@ class InlineAudioRecorder(
             overlay.timer.text = formatTime(amplitudes.size.toLong() * POLL_INTERVAL_MS)
             if (amplitudes.size.toLong() * POLL_INTERVAL_MS >= maxDurationMs) {
                 // Auto-stop on limit and let the user review the result.
+                autoStopped = true
                 zone = Zone.REVIEW
                 finishGesture()
             } else {
@@ -204,6 +211,7 @@ class InlineAudioRecorder(
                 setOutputFile(file.absolutePath)
                 setOnInfoListener { _, what, _ ->
                     if (what == MediaRecorder.MEDIA_RECORDER_INFO_MAX_FILESIZE_REACHED) {
+                        autoStopped = true
                         zone = Zone.REVIEW
                         finishGesture()
                     }
@@ -221,6 +229,7 @@ class InlineAudioRecorder(
         recorder = rec
         recordFile = file
         recording = true
+        autoStopped = false
         amplitudes.clear()
         showOverlay()
         micButton?.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
@@ -253,10 +262,12 @@ class InlineAudioRecorder(
 
         if (file == null) return
         val valid = ok && file.exists() && file.length() > 0L
+        val wasAutoStopped = autoStopped
+        autoStopped = false
         when (currentZone) {
             Zone.CANCEL -> file.delete()
             Zone.REVIEW -> if (valid) {
-                callbacks.onReview(file, amplitudes.toFloatArray())
+                callbacks.onReview(file, amplitudes.toFloatArray(), continueRecording = !wasAutoStopped)
             } else file.delete()
             Zone.SEND -> {
                 if (valid && durationMs >= MIN_RECORD_MS) {
