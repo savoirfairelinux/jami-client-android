@@ -62,6 +62,7 @@ class AudioMessageRecorderFragment(
     private val maxFileSize: Long = Long.MAX_VALUE,
     private val initialSegment: File? = null,
     private val initialAmplitudes: FloatArray? = null,
+    private val continueRecording: Boolean = false,
     private val onAudioReady: ((File) -> Unit)? = null,
 ) : BottomSheetDialogFragment() {
 
@@ -132,10 +133,17 @@ class AudioMessageRecorderFragment(
         val initial = initialSegment
         if (initial != null && initial.exists() && initial.length() > 0L) {
             // Opened with an already-recorded clip (e.g. from the inline recorder):
-            // adopt it as the first segment and go straight to review.
+            // adopt it as the first segment.
             segments.add(initial)
             initialAmplitudes?.let { amplitudes.addAll(it.toList()) }
-            enterReview()
+            invalidateCombined()
+            if (continueRecording) {
+                // The user slid to the review target while holding: keep recording seamlessly.
+                binding.waveform.setAmplitudes(amplitudes)
+                startSegment()
+            } else {
+                enterReview()
+            }
         } else {
             startSegment()
         }
@@ -440,22 +448,19 @@ class AudioMessageRecorderFragment(
         val context = binding.root.context
         when (state) {
             State.RECORDING -> {
-                //binding.primaryButton.setImageResource(R.drawable.stop_circle_24px)
-                binding.primaryButton.icon = context.getDrawable(R.drawable.baseline_pause_24)
+                binding.primaryButton.icon = context.getDrawable(R.drawable.pause_24px)
                 binding.primaryButton.contentDescription = getString(R.string.audio_recording_stop)
                 binding.extendButton.visibility = View.GONE
                 binding.sendButton.isEnabled = true
             }
             State.REVIEW -> {
-                //binding.primaryButton.setImageResource(R.drawable.baseline_play_arrow_24)
-                binding.primaryButton.icon = context.getDrawable(R.drawable.baseline_play_arrow_24)
+                binding.primaryButton.icon = context.getDrawable(R.drawable.play_arrow_24px)
                 binding.primaryButton.contentDescription = getString(R.string.audio_recording_play)
                 binding.extendButton.visibility = if (limitReached) View.GONE else View.VISIBLE
                 binding.sendButton.isEnabled = true
             }
             State.PLAYING -> {
-                //binding.primaryButton.setImageResource(R.drawable.baseline_pause_24)
-                binding.primaryButton.icon = context.getDrawable(R.drawable.baseline_pause_24)
+                binding.primaryButton.icon = context.getDrawable(R.drawable.pause_24px)
                 binding.primaryButton.contentDescription = getString(R.string.audio_recording_pause)
                 binding.extendButton.visibility = if (limitReached) View.GONE else View.VISIBLE
                 binding.sendButton.isEnabled = true

@@ -580,21 +580,26 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     startFileSend(Single.just(file).flatMapCompletable { f -> sendFile(f) })
                 }
 
-                override fun onReview(file: File, amplitudes: FloatArray) =
-                    showAudioRecorder(file, amplitudes)
+                override fun onReview(file: File, amplitudes: FloatArray, continueRecording: Boolean) =
+                    showAudioRecorder(file, amplitudes, continueRecording)
             }
         )
         recorder.attach(binding.btnAudioRecord)
         inlineAudioRecorder = recorder
     }
 
-    private fun showAudioRecorder(initialSegment: File? = null, initialAmplitudes: FloatArray? = null) {
+    private fun showAudioRecorder(
+        initialSegment: File? = null,
+        initialAmplitudes: FloatArray? = null,
+        continueRecording: Boolean = false,
+    ) {
         if (childFragmentManager.findFragmentByTag(AUDIO_RECORDER_TAG) != null) return
         AudioMessageRecorderFragment(
             maxDurationMs = MAX_AUDIO_DURATION_MS.toLong(),
             maxFileSize = getAudioMaxSize(),
             initialSegment = initialSegment,
             initialAmplitudes = initialAmplitudes,
+            continueRecording = continueRecording,
         ) { file ->
             startFileSend(Single.just(file).flatMapCompletable { f -> sendFile(f) })
         }.show(childFragmentManager, AUDIO_RECORDER_TAG)
