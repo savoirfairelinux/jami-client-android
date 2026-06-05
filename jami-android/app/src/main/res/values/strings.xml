@@ -417,6 +417,13 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="audio_recording_restart">Record again</string>
     <string name="audio_recording_delete">Discard</string>
     <string name="audio_recording_limit_reached">Recording limit reached. Send or cancel.</string>
+    <string name="audio_recording_gesture_hint">Release to send · slide ◀ to cancel · ▲ to review</string>
+    <string name="audio_recording_release_cancel">Release to cancel</string>
+    <string name="audio_recording_release_review">Release to open the editor</string>
+    <string name="audio_recording_slide_cancel">Cancel recording</string>
+    <string name="audio_recording_slide_review">Open editor</string>
+    <string name="audio_recording_review_short">Review</string>
+    <string name="audio_recording_too_short">Hold to record a voice message</string>
     <string name="video_recorder_error">No video recorder available.</string>
     <string name="taking_picture_error">An error occurred while taking the picture.</string>
     <string name="find_picture_error">An error occurred while finding the picture.</string>

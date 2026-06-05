@@ -334,7 +334,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             android:layout_centerHorizontal="true"
             android:layout_margin="8dp"
             android:visibility="gone"
-            tools:visibility="visible"
+            tools:visibility="gone"
             style="?attr/floatingToolbarStyle">
 
             <LinearLayout
@@ -461,6 +461,15 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                             android:padding="8dp"
                             app:srcCompat="@drawable/baseline_photo_camera_24" />
 
+                        <ImageButton
+                            android:id="@+id/btn_audio_record"
+                            android:layout_width="34dp"
+                            android:layout_height="match_parent"
+                            android:background="?selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/take_a_photo"
+                            android:padding="8dp"
+                            app:srcCompat="@drawable/baseline_mic_24" />
+
                         <ProgressBar
                             android:id="@+id/pb_data_transfer"
                             android:layout_width="30dp"
@@ -507,7 +516,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                             android:paddingHorizontal="12dp"
                             android:paddingVertical="8dp"
                             android:visibility="gone"
-                            app:srcCompat="@drawable/baseline_send_24"
+                            app:srcCompat="@drawable/send_24px"
                             tools:visibility="visible" />
 
                     </LinearLayout>
@@ -515,6 +524,13 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
             </androidx.cardview.widget.CardView>
         </LinearLayout>
+
+        <include
+            android:id="@+id/audio_record_overlay"
+            layout="@layout/view_audio_record_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
 
     </RelativeLayout>
 
