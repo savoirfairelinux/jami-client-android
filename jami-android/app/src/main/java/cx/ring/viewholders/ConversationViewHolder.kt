@@ -37,6 +37,7 @@ import cx.ring.views.MessageBubble
 import cx.ring.adapters.MessageType
 import cx.ring.views.AvatarView
 import cx.ring.views.MessageStatusView
+import cx.ring.views.WaveformView
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView.ViewHolder(v) {
@@ -146,6 +147,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     var mFileDownloadButton: ImageButton? = null
     var mAudioInfoLayout: LinearLayout? = null
     var mAudioLayout: ViewGroup? = null
+    var mAudioWaveform: WaveformView? = null
 
     val mLayoutStatusIconId: View? = when (type) {
         MessageType.OUTGOING_CALL_INFORMATION, MessageType.INCOMING_CALL_INFORMATION ->
@@ -232,10 +234,10 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
             MessageType.INCOMING_AUDIO,
             MessageType.OUTGOING_AUDIO -> {
                 btnAccept = v.findViewById(R.id.play)
-                btnRefuse = v.findViewById(R.id.replay)
                 mMsgTxt = v.findViewById(R.id.msg_txt)
                 mAudioLayout = v.findViewById(R.id.file_layout)
                 mAudioInfoLayout = v.findViewById(R.id.audioInfoLayout)
+                mAudioWaveform = v.findViewById(R.id.audio_waveform)
                 mMsgDetailTxt = v.findViewById(R.id.file_details_txt)
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
                 primaryClickableView = mAudioInfoLayout
