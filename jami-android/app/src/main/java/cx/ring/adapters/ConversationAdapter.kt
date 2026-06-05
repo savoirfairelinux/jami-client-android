@@ -78,6 +78,7 @@ import io.noties.markwon.linkify.LinkifyPlugin
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.conversation.ConversationPresenter
 import net.jami.model.*
@@ -96,6 +97,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
 import androidx.core.net.toUri
+import com.google.android.material.button.MaterialButton
 
 class ConversationAdapter(
     private val conversationFragment: ConversationFragment,
@@ -120,6 +122,9 @@ class ConversationAdapter(
     private var convColorTint = 0
 
     private val formatter = Formatter(StringBuilder(64), Locale.getDefault())
+
+    /** Caches decoded audio waveforms by file path to avoid re-extracting on view recycle. */
+    private val audioAmplitudeCache = HashMap<String, FloatArray>()
 
     private val callPadding = Padding(
         res.getDimensionPixelSize(R.dimen.text_message_padding),
@@ -714,55 +719,117 @@ class ConversationAdapter(
         }
     }
 
-    private fun configureAudio(viewHolder: ConversationViewHolder, path: File) {
+    private fun configureAudio(viewHolder: ConversationViewHolder, path: File, isOutgoing: Boolean) {
         val context = viewHolder.itemView.context
         try {
-            val acceptBtn = viewHolder.btnAccept as ImageView
-            val refuseBtn = viewHolder.btnRefuse!!
-            acceptBtn.setImageResource(R.drawable.baseline_play_arrow_24)
+            val playBtn = viewHolder.btnAccept as MaterialButton
+            val waveform = viewHolder.mAudioWaveform
+            playBtn.icon = ContextCompat.getDrawable(context, R.drawable.play_arrow_24px)
             val player = MediaPlayer.create(context, getUriForFile(context, path))
             viewHolder.player = player
-            if (player != null) {
-                player.setOnCompletionListener { mp: MediaPlayer ->
-                    mp.seekTo(0)
-                    acceptBtn.setImageResource(R.drawable.baseline_play_arrow_24)
+            if (player == null) {
+                playBtn.setOnClickListener(null)
+                return
+            }
+
+            waveform?.apply {
+                fitMode = true
+                progress = 0f
+                clear()
+                // Pick colors that stand out against the message bubble: on outgoing (tinted)
+                // bubbles use white, on incoming (neutral) bubbles use the on-surface color.
+                if (isOutgoing) {
+                    setColors(
+                        active = Color.WHITE,
+                        inactive = (Color.WHITE and 0x00FFFFFF) or 0x59000000
+                    )
+                } else {
+                    val onSurface = context.getColor(R.color.colorOnSurface)
+                    setColors(
+                        active = onSurface,
+                        inactive = (onSurface and 0x00FFFFFF) or 0x40000000
+                    )
                 }
-                acceptBtn.setOnClickListener {
-                    if (player.isPlaying) {
-                        player.pause()
-                        acceptBtn.setImageResource(R.drawable.baseline_play_arrow_24)
-                    } else {
-                        player.start()
-                        acceptBtn.setImageResource(R.drawable.baseline_pause_24)
+                onSeek = { fraction ->
+                    val d = player.duration
+                    if (d > 0) {
+                        player.seekTo((fraction * d).toInt())
+                        updateAudioTime(viewHolder, player)
                     }
                 }
-                refuseBtn.setOnClickListener {
-                    if (player.isPlaying) player.pause()
-                    player.seekTo(0)
-                    acceptBtn.setImageResource(R.drawable.baseline_play_arrow_24)
-                }
+            }
+
+            // Load the waveform from cache or extract it off the main thread.
+            val key = path.absolutePath
+            val cached = audioAmplitudeCache[key]
+            if (cached != null) {
+                waveform?.setAmplitudes(cached.toList())
+            } else if (waveform != null) {
                 viewHolder.compositeDisposable.add(
-                    Observable.interval(1L, TimeUnit.SECONDS, DeviceUtils.uiScheduler)
-                        .startWithItem(0L)
-                        .subscribe {
-                            val pS = player.currentPosition / 1000
-                            val dS = player.duration / 1000
-                            viewHolder.mMsgTxt?.text = String.format(
-                                Locale.getDefault(),
-                                "%02d:%02d / %02d:%02d",
-                                pS / 60,
-                                pS % 60,
-                                dS / 60,
-                                dS % 60
-                            )
-                        })
-            } else {
-                acceptBtn.setOnClickListener(null)
-                refuseBtn.setOnClickListener(null)
+                    AudioWaveformExtractor.extract(path)
+                        .observeOn(DeviceUtils.uiScheduler)
+                        .subscribe({ amps ->
+                            if (amps.isNotEmpty()) {
+                                audioAmplitudeCache[key] = amps
+                                waveform.setAmplitudes(amps.toList())
+                            }
+                        }, { e -> Log.w(TAG, "Waveform extraction failed", e) })
+                )
+            }
+
+            // Idle: show the total duration.
+            updateAudioTime(viewHolder, player)
+
+            var ticker: Disposable? = null
+            fun stopTicker() {
+                ticker?.dispose()
+                ticker = null
+            }
+            fun startTicker() {
+                stopTicker()
+                val t = Observable.interval(60L, TimeUnit.MILLISECONDS, DeviceUtils.uiScheduler)
+                    .subscribe {
+                        val d = player.duration
+                        if (d > 0) waveform?.progress = player.currentPosition.toFloat() / d
+                        updateAudioTime(viewHolder, player)
+                    }
+                ticker = t
+                viewHolder.compositeDisposable.add(t)
+            }
+
+            player.setOnCompletionListener { mp: MediaPlayer ->
+                stopTicker()
+                mp.seekTo(0)
+                waveform?.progress = 0f
+                //playBtn.setImageResource(R.drawable.baseline_play_arrow_24)
+                playBtn.icon = ContextCompat.getDrawable(context, R.drawable.play_arrow_24px)
+                updateAudioTime(viewHolder, mp)
+            }
+            playBtn.setOnClickListener {
+                if (player.isPlaying) {
+                    player.pause()
+                    stopTicker()
+                    //playBtn.setImageResource(R.drawable.baseline_play_arrow_24)
+                    playBtn.icon = ContextCompat.getDrawable(context, R.drawable.play_arrow_24px)
+                    updateAudioTime(viewHolder, player)
+                } else {
+                    player.start()
+                    //playBtn.setImageResource(R.drawable.baseline_pause_24)
+                    playBtn.icon = ContextCompat.getDrawable(context, R.drawable.pause_24px)
+                    startTicker()
+                }
             }
         } catch (e: Exception) {
             Log.e(TAG, "Error initializing player", e)
         }
+    }
+
+    /** Shows the current position while playing, otherwise the total duration. */
+    private fun updateAudioTime(viewHolder: ConversationViewHolder, player: MediaPlayer) {
+        val ms = if (player.isPlaying) player.currentPosition else player.duration
+        val totalSeconds = ms / 1000
+        viewHolder.mMsgTxt?.text =
+            String.format(Locale.getDefault(), "%d:%02d", totalSeconds / 60, totalSeconds % 60)
     }
 
     private fun configureVideo(viewHolder: ConversationViewHolder, path: File, displayName: String?) {
@@ -1146,7 +1213,7 @@ class ConversationAdapter(
                         context.getColor(R.color.conversation_secondary_background)
                     )
                 }
-                configureAudio(viewHolder, path)
+                configureAudio(viewHolder, path, file.isOutgoing)
             }
 
             MessageType.TransferType.FILE -> {
