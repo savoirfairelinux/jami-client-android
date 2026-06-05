@@ -120,6 +120,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private var mConversationItem: ConversationItemViewModel? = null
     private var mPeerServicesCheckDisposable: Disposable? = null
 
+    private var inlineAudioRecorder: InlineAudioRecorder? = null
+
     @Inject lateinit var peerServicesService: PeerServicesService
     @Named("UiScheduler") @Inject lateinit var uiScheduler: Scheduler
 
@@ -340,6 +342,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
             ongoingCallPane.setOnClickListener { presenter.clickOnGoingPane() }
             msgSend.setOnClickListener { sendMessageText() }
+            setupInlineAudioRecorder(this)
             emojiSend.setOnClickListener { sendEmoji() }
             btnMenu.setOnClickListener { expandMenu(it) }
             btnTakePicture.setOnClickListener { takePicture() }
@@ -406,6 +409,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         animation.removeAllUpdateListeners()
         binding?.histList?.adapter = null
         mCompositeDisposable.clear()
+        inlineAudioRecorder?.release()
+        inlineAudioRecorder = null
         locationServiceConnection?.let {
             try {
                 requireContext().unbindService(it)
@@ -443,7 +448,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         popup.inflate(R.menu.conversation_share_actions)
         popup.setOnMenuItemClickListener { item: MenuItem ->
             when (item.itemId) {
-                R.id.conv_send_audio -> sendAudioMessage()
+                //R.id.conv_send_audio -> sendAudioMessage()
                 R.id.conv_send_video -> sendVideoMessage()
                 R.id.conv_send_file -> openFilePicker()
                 R.id.conv_select_media -> openGallery()
@@ -560,11 +565,36 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     }
 
-    private fun showAudioRecorder() {
+    private fun setupInlineAudioRecorder(binding: FragConversationBinding) {
+        val recorder = InlineAudioRecorder(
+            context = requireContext(),
+            overlay = binding.audioRecordOverlay,
+            maxDurationMs = MAX_AUDIO_DURATION_MS.toLong(),
+            maxFileSize = getAudioMaxSize(),
+            callbacks = object : InlineAudioRecorder.Callbacks {
+                override fun hasAudioPermission() = presenter.deviceRuntimeService.hasAudioPermission()
+
+                override fun onSimpleTap() = sendAudioMessage()
+
+                override fun onSend(file: File) {
+                    startFileSend(Single.just(file).flatMapCompletable { f -> sendFile(f) })
+                }
+
+                override fun onReview(file: File, amplitudes: FloatArray) =
+                    showAudioRecorder(file, amplitudes)
+            }
+        )
+        recorder.attach(binding.btnAudioRecord)
+        inlineAudioRecorder = recorder
+    }
+
+    private fun showAudioRecorder(initialSegment: File? = null, initialAmplitudes: FloatArray? = null) {
         if (childFragmentManager.findFragmentByTag(AUDIO_RECORDER_TAG) != null) return
         AudioMessageRecorderFragment(
             maxDurationMs = MAX_AUDIO_DURATION_MS.toLong(),
             maxFileSize = getAudioMaxSize(),
+            initialSegment = initialSegment,
+            initialAmplitudes = initialAmplitudes,
         ) { file ->
             startFileSend(Single.just(file).flatMapCompletable { f -> sendFile(f) })
         }.show(childFragmentManager, AUDIO_RECORDER_TAG)
@@ -794,6 +824,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun onStop() {
         super.onStop()
+        inlineAudioRecorder?.release()
         presenter.pause()
     }
 

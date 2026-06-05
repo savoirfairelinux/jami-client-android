@@ -11,12 +11,6 @@
         tools:ignore="AlwaysShowAction" />
 
     <item
-        android:id="@+id/conv_send_audio"
-        android:icon="@drawable/baseline_mic_24"
-        android:title="@string/conversation_send_audio"
-        app:showAsAction="always" />
-
-    <item
         android:id="@+id/conv_send_video"
         android:icon="@drawable/baseline_videocam_24"
         android:title="@string/conversation_send_video"

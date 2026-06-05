@@ -60,6 +60,8 @@ import kotlin.math.sqrt
 class AudioMessageRecorderFragment(
     private val maxDurationMs: Long = DEFAULT_MAX_DURATION_MS,
     private val maxFileSize: Long = Long.MAX_VALUE,
+    private val initialSegment: File? = null,
+    private val initialAmplitudes: FloatArray? = null,
     private val onAudioReady: ((File) -> Unit)? = null,
 ) : BottomSheetDialogFragment() {
 
@@ -127,7 +129,16 @@ class AudioMessageRecorderFragment(
         binding.extendButton.setOnClickListener { extend() }
         binding.sendButton.setOnClickListener { confirmAndSend() }
 
-        startSegment()
+        val initial = initialSegment
+        if (initial != null && initial.exists() && initial.length() > 0L) {
+            // Opened with an already-recorded clip (e.g. from the inline recorder):
+            // adopt it as the first segment and go straight to review.
+            segments.add(initial)
+            initialAmplitudes?.let { amplitudes.addAll(it.toList()) }
+            enterReview()
+        } else {
+            startSegment()
+        }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
