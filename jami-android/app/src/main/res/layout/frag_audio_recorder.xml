@@ -39,6 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:paddingHorizontal="8dp"
         android:baselineAligned="false"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -50,8 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/audio_recording_stop"
-            app:icon="@drawable/baseline_pause_24"
-            android:layout_marginStart="8dp"/>
+            app:icon="@drawable/baseline_pause_24"/>
 
         <cx.ring.views.WaveformView
             android:id="@+id/waveform"
