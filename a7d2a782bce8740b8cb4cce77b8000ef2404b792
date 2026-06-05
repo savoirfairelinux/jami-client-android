@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6aa79dcc_481f027d",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-06-05T20:35:36Z",
+      "side": 1,
+      "message": "MAX_AUDIO_DURATION_MS, AUDIO_RECORDER_TAG, getAudioMaxSize undefined",
+      "range": {
+        "startLine": 563,
+        "startChar": 4,
+        "endLine": 570,
+        "endChar": 56
+      },
+      "revId": "a7d2a782bce8740b8cb4cce77b8000ef2404b792",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
