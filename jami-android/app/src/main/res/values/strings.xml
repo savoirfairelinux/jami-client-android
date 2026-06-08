@@ -416,6 +416,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="audio_recording_extend">Continue recording</string>
     <string name="audio_recording_restart">Record again</string>
     <string name="audio_recording_delete">Discard</string>
+    <string name="audio_recording_discard_title">Discard recording?</string>
+    <string name="audio_recording_discard_message">Your recording will be lost.</string>
+    <string name="audio_recording_discard_keep">Keep editing</string>
+    <string name="audio_recording_discard_confirm">Discard</string>
     <string name="audio_recording_limit_reached">Recording limit reached. Send or cancel.</string>
     <string name="audio_recording_gesture_hint">Release to send · slide ◀ to cancel · ▲ to review</string>
     <string name="audio_recording_release_cancel">Release to cancel</string>

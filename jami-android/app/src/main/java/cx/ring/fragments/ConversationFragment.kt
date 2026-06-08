@@ -360,6 +360,17 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Listen for the audio recorder's result here so it survives the dialog being recreated
+        // (e.g. on a theme or orientation change).
+        childFragmentManager.setFragmentResultListener(
+            AudioMessageRecorderFragment.REQUEST_KEY, viewLifecycleOwner
+        ) { _, result ->
+            val path = result.getString(AudioMessageRecorderFragment.RESULT_FILE_PATH) ?: return@setFragmentResultListener
+            val file = File(path)
+            if (file.exists() && file.length() > 0L) {
+                startFileSend(Single.just(file).flatMapCompletable { f -> sendFile(f) })
+            }
+        }
         binding?.apply {
             mPreferences?.let { preferences ->
                 val pendingMessage = preferences.getString(KEY_PREFERENCE_PENDING_MESSAGE, null)
@@ -610,15 +621,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         continueRecording: Boolean = false,
     ) {
         if (childFragmentManager.findFragmentByTag(AUDIO_RECORDER_TAG) != null) return
-        AudioMessageRecorderFragment(
+        AudioMessageRecorderFragment.newInstance(
             maxDurationMs = MAX_AUDIO_DURATION_MS.toLong(),
             maxFileSize = DEFAULT_AUDIO_MAX_SIZE,
             initialSegment = initialSegment,
             initialAmplitudes = initialAmplitudes,
             continueRecording = continueRecording,
-        ) { file ->
-            startFileSend(Single.just(file).flatMapCompletable { f -> sendFile(f) })
-        }.show(childFragmentManager, AUDIO_RECORDER_TAG)
+        ).show(childFragmentManager, AUDIO_RECORDER_TAG)
     }
 
     private fun sendVideoMessage() {

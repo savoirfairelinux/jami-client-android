@@ -371,7 +371,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             android:layout_alignParentBottom="true"
             android:background="@drawable/textmsg_bg_input"
             android:orientation="vertical"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvMessageInput"
@@ -454,7 +454,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
                         <ImageButton
                             android:id="@+id/btn_take_picture"
-                            android:layout_width="34dp"
+                            android:layout_width="36dp"
                             android:layout_height="match_parent"
                             android:background="?selectableItemBackgroundBorderless"
                             android:contentDescription="@string/take_a_photo"
@@ -463,7 +463,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
                         <ImageButton
                             android:id="@+id/btn_audio_record"
-                            android:layout_width="34dp"
+                            android:layout_width="36dp"
                             android:layout_height="match_parent"
                             android:background="?selectableItemBackgroundBorderless"
                             android:contentDescription="@string/take_a_photo"
@@ -530,7 +530,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             layout="@layout/view_audio_record_overlay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true" />
+            android:layout_alignParentBottom="true"
+            tools:visibility="gone"/>
 
     </RelativeLayout>
 

@@ -31,7 +31,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <dimen name="conversation_message_input_margin">16dp</dimen>
     <dimen name="conversation_avatar_size">32dp</dimen>
     <dimen name="conversation_avatar_size_small">16dp</dimen>
-    <dimen name="conversation_message_radius">16dp</dimen>
+    <dimen name="conversation_message_radius">32dp</dimen>
     <dimen name="conversation_message_minor_radius">3dp</dimen>
     <dimen name="conversation_timestamp_textsize">12sp</dimen>
     <dimen name="conversation_status_icon_size">14dp</dimen>
