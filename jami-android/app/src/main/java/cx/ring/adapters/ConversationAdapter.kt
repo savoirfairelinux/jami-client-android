@@ -19,11 +19,13 @@ package cx.ring.adapters
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
 import android.media.MediaPlayer
+import android.media.MediaMetadataRetriever
 import android.media.ThumbnailUtils
 import android.net.Uri
 import android.provider.MediaStore
@@ -723,17 +725,30 @@ class ConversationAdapter(
         }
     }
 
-    private fun configureAudio(viewHolder: ConversationViewHolder, path: File, isOutgoing: Boolean) {
+    private fun configureAudio(viewHolder: ConversationViewHolder, path: File, isOutgoing: Boolean, cacheKey: String?) {
         val context = viewHolder.itemView.context
         try {
             val playBtn = viewHolder.btnAccept as MaterialButton
             val waveform = viewHolder.mAudioWaveform
             playBtn.icon = ContextCompat.getDrawable(context, R.drawable.play_arrow_24px)
+            // Match the player to the conversation tint color.
+            if (convColorTint != 0) {
+                val colors = MaterialColors.getColorRoles(context, convColor)
+                playBtn.backgroundTintList = ColorStateList.valueOf(colors.accent)
+                playBtn.iconTint = ColorStateList.valueOf(Color.WHITE)
+            }
             val player = MediaPlayer.create(context, getUriForFile(context, path))
             viewHolder.player = player
             if (player == null) {
                 playBtn.setOnClickListener(null)
                 return
+            }
+            // Capture the total duration once: querying it again after completion can return 0.
+            // Recorded clips sometimes report 0 from MediaPlayer until played, so fall back to the
+            // container metadata to get a reliable value up front.
+            var totalDurationMs = player.duration.coerceAtLeast(0)
+            if (totalDurationMs <= 0) {
+                totalDurationMs = readDurationMs(context, path)
             }
 
             waveform?.apply {
@@ -755,34 +770,41 @@ class ConversationAdapter(
                     )
                 }
                 onSeek = { fraction ->
-                    val d = player.duration
-                    if (d > 0) {
-                        player.seekTo((fraction * d).toInt())
-                        updateAudioTime(viewHolder, player)
+                    if (totalDurationMs > 0) {
+                        val positionMs = (fraction * totalDurationMs).toInt()
+                        player.seekTo(positionMs)
+                        // Show the dragged position live, even while paused.
+                        updateAudioTime(viewHolder, player, totalDurationMs, positionMs)
                     }
                 }
             }
 
-            // Load the waveform from cache or extract it off the main thread.
+            // Load the waveform from the in-memory cache, then the on-disk cache (keyed by the
+            // message file hash), and only decode from scratch as a last resort. All off the main
+            // thread.
             val key = path.absolutePath
             val cached = audioAmplitudeCache[key]
             if (cached != null) {
-                waveform?.setAmplitudes(cached.toList())
+                waveform?.setAmplitudes(cached)
             } else if (waveform != null) {
-                viewHolder.compositeDisposable.add(
+                val extraction = if (cacheKey != null)
+                    AudioWaveformExtractor.extractCached(path, context.cacheDir, cacheKey)
+                else
                     AudioWaveformExtractor.extract(path)
+                viewHolder.compositeDisposable.add(
+                    extraction
                         .observeOn(DeviceUtils.uiScheduler)
                         .subscribe({ amps ->
                             if (amps.isNotEmpty()) {
                                 audioAmplitudeCache[key] = amps
-                                waveform.setAmplitudes(amps.toList())
+                                waveform.setAmplitudes(amps)
                             }
                         }, { e -> Log.w(TAG, "Waveform extraction failed", e) })
                 )
             }
 
             // Idle: show the total duration.
-            updateAudioTime(viewHolder, player)
+            updateAudioTime(viewHolder, player, totalDurationMs)
 
             var ticker: Disposable? = null
             fun stopTicker() {
@@ -793,9 +815,11 @@ class ConversationAdapter(
                 stopTicker()
                 val t = Observable.interval(60L, TimeUnit.MILLISECONDS, DeviceUtils.uiScheduler)
                     .subscribe {
+                        // Once playing, the player reports a reliable duration; keep the largest.
                         val d = player.duration
-                        if (d > 0) waveform?.progress = player.currentPosition.toFloat() / d
-                        updateAudioTime(viewHolder, player)
+                        if (d > totalDurationMs) totalDurationMs = d
+                        if (totalDurationMs > 0) waveform?.progress = player.currentPosition.toFloat() / totalDurationMs
+                        updateAudioTime(viewHolder, player, totalDurationMs)
                     }
                 ticker = t
                 viewHolder.compositeDisposable.add(t)
@@ -805,20 +829,18 @@ class ConversationAdapter(
                 stopTicker()
                 mp.seekTo(0)
                 waveform?.progress = 0f
-                //playBtn.setImageResource(R.drawable.baseline_play_arrow_24)
                 playBtn.icon = ContextCompat.getDrawable(context, R.drawable.play_arrow_24px)
-                updateAudioTime(viewHolder, mp)
+                // Back to idle: always show the full duration.
+                updateAudioTime(viewHolder, mp, totalDurationMs)
             }
             playBtn.setOnClickListener {
                 if (player.isPlaying) {
                     player.pause()
                     stopTicker()
-                    //playBtn.setImageResource(R.drawable.baseline_play_arrow_24)
                     playBtn.icon = ContextCompat.getDrawable(context, R.drawable.play_arrow_24px)
-                    updateAudioTime(viewHolder, player)
+                    updateAudioTime(viewHolder, player, totalDurationMs)
                 } else {
                     player.start()
-                    //playBtn.setImageResource(R.drawable.baseline_pause_24)
                     playBtn.icon = ContextCompat.getDrawable(context, R.drawable.pause_24px)
                     startTicker()
                 }
@@ -828,12 +850,33 @@ class ConversationAdapter(
         }
     }
 
-    /** Shows the current position while playing, otherwise the total duration. */
-    private fun updateAudioTime(viewHolder: ConversationViewHolder, player: MediaPlayer) {
-        val ms = if (player.isPlaying) player.currentPosition else player.duration
+    /**
+     * Shows [overrideMs] when provided (e.g. the live position while seeking), otherwise the
+     * current position while playing, or the full [totalDurationMs] when idle.
+     */
+    private fun updateAudioTime(
+        viewHolder: ConversationViewHolder,
+        player: MediaPlayer,
+        totalDurationMs: Int,
+        overrideMs: Int? = null
+    ) {
+        val ms = overrideMs ?: if (player.isPlaying) player.currentPosition else totalDurationMs
         val totalSeconds = ms / 1000
         viewHolder.mMsgTxt?.text =
             String.format(Locale.getDefault(), "%d:%02d", totalSeconds / 60, totalSeconds % 60)
+    }
+
+    /** Reads a clip's duration (ms) from its container metadata; 0 if unavailable. */
+    private fun readDurationMs(context: Context, path: File): Int {
+        val retriever = MediaMetadataRetriever()
+        return try {
+            retriever.setDataSource(context, getUriForFile(context, path))
+            retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toIntOrNull() ?: 0
+        } catch (e: Exception) {
+            0
+        } finally {
+            try { retriever.release() } catch (_: Exception) {}
+        }
     }
 
     private fun configureVideo(viewHolder: ConversationViewHolder, path: File, displayName: String?) {
@@ -1217,7 +1260,7 @@ class ConversationAdapter(
                         context.getColor(R.color.conversation_secondary_background)
                     )
                 }
-                configureAudio(viewHolder, path, file.isOutgoing)
+                configureAudio(viewHolder, path, file.isOutgoing, file.fileId)
             }
 
             MessageType.TransferType.FILE -> {
