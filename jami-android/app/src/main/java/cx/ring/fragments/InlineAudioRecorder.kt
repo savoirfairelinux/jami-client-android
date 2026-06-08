@@ -18,6 +18,8 @@ package cx.ring.fragments
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.RenderEffect
+import android.graphics.Shader
 import android.media.MediaRecorder
 import android.os.Build
 import android.os.Handler
@@ -28,8 +30,12 @@ import android.view.HapticFeedbackConstants
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import cx.ring.R
+import cx.ring.R.color.red_300
 import cx.ring.databinding.ViewAudioRecordOverlayBinding
 import cx.ring.utils.AndroidFileUtils
 import java.io.File
@@ -61,10 +67,13 @@ class InlineAudioRecorder(
 ) {
     interface Callbacks {
         fun hasAudioPermission(): Boolean
+
         /** A short tap: open the full recorder dialog. */
         fun onSimpleTap()
+
         /** Release in place: send the recorded clip directly. */
         fun onSend(file: File)
+
         /**
          * Release on the review target: open the full recorder with this clip loaded.
          * When [continueRecording] is true the dialog should keep recording from this clip
@@ -87,6 +96,7 @@ class InlineAudioRecorder(
     private var recordFile: File? = null
     private val amplitudes = ArrayList<Float>()
     private var zone = Zone.SEND
+
     /** True when recording stopped on its own (duration/size limit), not from a user gesture. */
     private var autoStopped = false
 
@@ -99,7 +109,11 @@ class InlineAudioRecorder(
     private val pollRunnable = object : Runnable {
         override fun run() {
             val rec = recorder ?: return
-            val amp = try { rec.maxAmplitude } catch (e: Exception) { 0 }
+            val amp = try {
+                rec.maxAmplitude
+            } catch (e: Exception) {
+                0
+            }
             val normalized = min(1f, sqrt(amp / 32767f))
             amplitudes.add(normalized)
             overlay.waveform.addAmplitude(normalized)
@@ -122,8 +136,14 @@ class InlineAudioRecorder(
             when (event.actionMasked) {
                 MotionEvent.ACTION_DOWN -> onDown(v, event)
                 MotionEvent.ACTION_MOVE -> onMove(event)
-                MotionEvent.ACTION_UP -> { onUp(v); true }
-                MotionEvent.ACTION_CANCEL -> { onCancel(); true }
+                MotionEvent.ACTION_UP -> {
+                    onUp(v); true
+                }
+
+                MotionEvent.ACTION_CANCEL -> {
+                    onCancel(); true
+                }
+
                 else -> false
             }
         }
@@ -197,7 +217,10 @@ class InlineAudioRecorder(
     }
 
     private fun startRecording() {
-        val file = File(AndroidFileUtils.getTempShareDir(context), "audio_${dateFormat.format(Date())}.m4a")
+        val file = File(
+            AndroidFileUtils.getTempShareDir(context),
+            "audio_${dateFormat.format(Date())}.m4a"
+        )
         val rec = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) MediaRecorder(context)
         else @Suppress("DEPRECATION") MediaRecorder()
         try {
@@ -267,14 +290,23 @@ class InlineAudioRecorder(
         when (currentZone) {
             Zone.CANCEL -> file.delete()
             Zone.REVIEW -> if (valid) {
-                callbacks.onReview(file, amplitudes.toFloatArray(), continueRecording = !wasAutoStopped)
+                callbacks.onReview(
+                    file,
+                    amplitudes.toFloatArray(),
+                    continueRecording = !wasAutoStopped
+                )
             } else file.delete()
+
             Zone.SEND -> {
                 if (valid && durationMs >= MIN_RECORD_MS) {
                     callbacks.onSend(file)
                 } else {
                     file.delete()
-                    if (valid) Toast.makeText(context, R.string.audio_recording_too_short, Toast.LENGTH_SHORT).show()
+                    if (valid) Toast.makeText(
+                        context,
+                        R.string.audio_recording_too_short,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -285,6 +317,7 @@ class InlineAudioRecorder(
     private fun showOverlay() {
         overlay.waveform.fitMode = false
         overlay.waveform.clear()
+        overlay.waveform.setSampleInterval(POLL_INTERVAL_MS.toFloat())
         overlay.timer.text = formatTime(0)
         zone = Zone.SEND
         applyZoneFeedback()
@@ -317,17 +350,17 @@ class InlineAudioRecorder(
 
         overlay.cancelTarget.backgroundTintList =
             android.content.res.ColorStateList.valueOf(if (cancelOn) cancelActive else neutral)
-        overlay.cancelTarget.scaleX = if (cancelOn) 1.25f else 1f
-        overlay.cancelTarget.scaleY = if (cancelOn) 1.25f else 1f
-        overlay.cancelIcon.setColorFilter(
-            if (cancelOn) ContextCompat.getColor(context, android.R.color.white)
-            else ContextCompat.getColor(context, R.color.red_300)
-        )
+        overlay.cancelTarget.scaleX = if (cancelOn) 1.2f else 1f
+        overlay.cancelTarget.scaleY = if (cancelOn) 1.2f else 1f
+        overlay.cancelTarget.setIconTintResource(if (cancelOn) android.R.color.white else red_300)
 
-        overlay.expandTarget.scaleX = if (reviewOn) 1.2f else 1f
-        overlay.expandTarget.scaleY = if (reviewOn) 1.2f else 1f
+        overlay.expandCircle.scaleX = if (reviewOn) 1.2f else 1f
+        overlay.expandCircle.scaleY = if (reviewOn) 1.2f else 1f
         overlay.expandCircle.backgroundTintList =
             android.content.res.ColorStateList.valueOf(if (reviewOn) highlight else neutral)
+        overlay.expandCircle.iconTint = android.content.res.ColorStateList.valueOf(
+            if (reviewOn) neutral else highlight
+        )
 
         overlay.hintText.setText(
             when (zone) {
@@ -350,7 +383,8 @@ class InlineAudioRecorder(
                 override fun run() {
                     if (!recording) return
                     val target = if (overlay.recDot.alpha < 0.6f) 1f else 0.2f
-                    overlay.recDot.animate().alpha(target).setDuration(550).withEndAction(this).start()
+                    overlay.recDot.animate().alpha(target).setDuration(550).withEndAction(this)
+                        .start()
                 }
             })
             .start()
@@ -364,9 +398,14 @@ class InlineAudioRecorder(
     // endregion
 
     private fun dp(value: Float): Float =
-        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, context.resources.displayMetrics)
+        TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            value,
+            context.resources.displayMetrics
+        )
 
-    private fun resolveColor(attr: Int): Int {
+    @ColorInt
+    private fun resolveColor(@AttrRes attr: Int): Int {
         val tv = TypedValue()
         return if (context.theme.resolveAttribute(attr, tv, true)) {
             if (tv.resourceId != 0) ContextCompat.getColor(context, tv.resourceId) else tv.data
