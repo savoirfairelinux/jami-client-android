@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~  Copyright (C) 2004-2025 Savoir-faire Linux Inc.
   ~
   ~  This program is free software: you can redistribute it and/or modify
@@ -26,52 +25,31 @@
     tools:visibility="visible">
 
     <!-- Floating "review" target, sits above the bar (slide up / right to reach it). -->
-    <LinearLayout
-        android:id="@+id/expand_target"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/expand_circle"
+        style="?attr/materialIconButtonFilledTonalStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="4dp"
         android:layout_marginTop="8dp"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <FrameLayout
-            android:id="@+id/expand_circle"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="@drawable/bg_audio_zone_circle"
-            android:backgroundTint="?attr/colorSurfaceContainerHighest"
-            android:elevation="4dp">
-
-            <ImageView
-                android:id="@+id/expand_icon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center"
-                android:contentDescription="@string/audio_recording_slide_review"
-                android:src="@drawable/baseline_open_in_full_24"
-                app:tint="?attr/colorOnSurface" />
-        </FrameLayout>
-
-        <TextView
-            android:id="@+id/expand_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:text="@string/audio_recording_review_short"
-            android:textColor="?android:attr/textColorSecondary"
-            android:textSize="11sp" />
-    </LinearLayout>
+        android:layout_marginEnd="24dp"
+        android:contentDescription="@string/audio_recording_slide_review"
+        app:icon="@drawable/baseline_open_in_full_24" />
 
     <!-- Guidance line. -->
     <TextView
         android:id="@+id/hint_text"
-        android:layout_width="match_parent"
+        style="@style/TextAppearance.Material3.LabelMedium"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="8dp"
+        android:background="@drawable/background_audio_hint_bubble"
+        android:backgroundTint="@color/transparent_light"
         android:gravity="center"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="4dp"
         android:text="@string/audio_recording_gesture_hint"
         android:textColor="?android:attr/textColorSecondary"
         android:textSize="12sp" />
@@ -80,8 +58,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/background_rounded_24"
         android:backgroundTint="?attr/colorSurfaceContainer"
@@ -90,13 +67,21 @@
         android:minHeight="48dp"
         android:orientation="horizontal"
         android:paddingStart="8dp"
-        android:paddingEnd="8dp"
         android:paddingTop="6dp"
+        android:paddingEnd="8dp"
         android:paddingBottom="6dp">
 
         <!-- Cancel target (slide left to reach it). -->
-        <FrameLayout
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/cancel_target"
+            style="?attr/materialIconButtonFilledTonalStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="?attr/colorSurfaceContainerHighest"
+            app:icon="@drawable/delete_24px"
+            app:iconTint="@color/red_300" />
+
+        <!--<FrameLayout
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@drawable/bg_audio_zone_circle"
@@ -110,7 +95,7 @@
                 android:contentDescription="@string/audio_recording_slide_cancel"
                 android:src="@drawable/baseline_delete_24"
                 app:tint="@color/red_300" />
-        </FrameLayout>
+        </FrameLayout>-->
 
         <ImageView
             android:id="@+id/rec_dot"
@@ -142,10 +127,10 @@
 
         <ImageView
             android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_height="18dp"
             android:layout_marginEnd="4dp"
             android:contentDescription="@null"
-            android:src="@drawable/baseline_mic_24"
+            android:src="@drawable/mic_24px"
             app:tint="@color/red_500" />
     </LinearLayout>
 
