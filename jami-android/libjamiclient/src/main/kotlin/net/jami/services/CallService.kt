@@ -166,6 +166,8 @@ abstract class CallService(
             Log.w(TAG, "getConferenceHost ${call.conversationUri} confId:${conference.id}")
             call.confId = conference.id
             conference.hostCall = call
+            // Sync to current conf state so CallConnection gets CAPABILITY_HOLD immediately
+            call.setCallState(conference.hostConfState)
             callSubject.onNext(call)
             conference
         }
@@ -262,7 +264,7 @@ abstract class CallService(
             val callId = JamiService.placeCallWithMedia(account, numberUri.uri, mediaMap)
 
             if (callId.isEmpty()) {
-                if (numberUri.isSwarm && conversationUri?.isSwarm == true) {
+                if ((numberUri.isSwarm || numberUri.isRendezvous) && conversationUri?.isSwarm == true) {
                     return@fromCallable Call(account, null, numberUri, false, conversationUri)
                         .apply { setMediaList(mediaList) }
                 } else {
@@ -334,11 +336,16 @@ abstract class CallService(
         else
             holdConference(conf.accountId, conf.id)
     }
+
     fun resumeCallOrConference(conf: Conference) {
-        if (conf.isSimpleCall)
+        if (conf.isSimpleCall) {
             resume(conf.accountId, conf.id)
-        else
+        } else {
+            if (conf.state == CallStatus.CURRENT) {
+                return
+            }
             resumeConference(conf.accountId, conf.id)
+        }
     }
 
     fun hold(call: Call) {
@@ -360,6 +367,9 @@ abstract class CallService(
         if (call.id != null) {
             resume(call.account, call.id)
         } else if (call.confId != null) {
+            if (call.callStatus == CallStatus.CURRENT) {
+                return
+            }
             resumeConference(call.account, call.confId!!)
         }
     }
@@ -753,6 +763,10 @@ abstract class CallService(
                 //call.conversation = conversation
                 conversation?.addConference(conf)
             }
+        conf.hostCall?.let {
+            it.setCallState(conf.hostConfState)
+            callSubject.onNext(it)
+        }
         conferenceSubject.onNext(conf)
     }
 
