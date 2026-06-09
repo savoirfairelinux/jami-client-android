@@ -79,6 +79,8 @@ class Uri : Serializable {
         get() = HEX_ID_PATTERN.matcher(host).find() || username != null && HEX_ID_PATTERN.matcher(username).find()
     val isSwarm: Boolean
         get() = SWARM_SCHEME == scheme
+    val isRendezvous: Boolean
+        get() = RENDEZVOUS_SCHEME == scheme || (scheme == null && host.startsWith(RENDEZVOUS_SCHEME))
     val isJami: Boolean
         get() = JAMI_URI_SCHEME == scheme || RING_URI_SCHEME == scheme || (scheme.isNullOrEmpty() && isHexId)
 
@@ -108,6 +110,7 @@ class Uri : Serializable {
         const val SIP_URI_SCHEME = "sip:"
         const val DEFAULT_CONTACT_SCHEME = JAMI_URI_SCHEME
         const val SWARM_SCHEME = "swarm:"
+        const val RENDEZVOUS_SCHEME = "rdv:"
         private const val ipv4Pattern = "(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])"
         private const val ipv6Pattern = "([0-9a-f]{1,4}:){7}([0-9a-f]){1,4}"
         private val VALID_IPV4_PATTERN = Pattern.compile(ipv4Pattern, Pattern.CASE_INSENSITIVE)

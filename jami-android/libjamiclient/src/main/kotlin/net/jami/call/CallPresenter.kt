@@ -423,10 +423,6 @@ class CallPresenter @Inject constructor(
         val isHold = call.state == CallStatus.HOLD
         val status = call.state
         view?.displayHoldOverlay(isHold)
-        if (status === CallStatus.HOLD) {
-            if (!call.isSimpleCall)
-                JamiService.addMainParticipant(call.accountId, call.id)
-        }
 
         val hasVideo = call.hasVideo()
         val hasActiveCameraVideo = call.hasActiveNonScreenShareVideo()
@@ -483,7 +479,7 @@ class CallPresenter @Inject constructor(
         val conf = mConference ?: return
 
         try {
-            mCallService.resume(conf.accountId, conf.id)
+            mCallService.resumeCallOrConference(conf)
         } catch (t: Throwable) {
             Log.e(TAG, "resumeCallFromHold() failed", t)
         }

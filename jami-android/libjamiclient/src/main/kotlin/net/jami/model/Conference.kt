@@ -111,7 +111,7 @@ class Conference(val accountId: String, val id: String) {
         } else mConfState
 
     val hostConfState: CallStatus
-        get() = mConfState!!
+        get() = mConfState ?: CallStatus.INACTIVE
 
     val isSimpleCall: Boolean
         get() = mParticipants.size == 1 && id == mParticipants[0].id
@@ -120,6 +120,7 @@ class Conference(val accountId: String, val id: String) {
     var conversationId: String? = null
 
     fun setState(state: String) {
+        val prev = mConfState
         mConfState = CallStatus.fromConferenceString(state)
     }
 
@@ -175,7 +176,7 @@ class Conference(val accountId: String, val id: String) {
         get() = when {
             mParticipants.size > 1 -> true
             mParticipants.size == 1 -> mParticipants[0].isOnGoing
-            else -> mConfState == CallStatus.CURRENT
+            else -> mConfState == CallStatus.CURRENT || mConfState == CallStatus.HOLD
         }
 
     @Deprecated("not working with groups/conferences")
