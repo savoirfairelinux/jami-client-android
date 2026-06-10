@@ -17,6 +17,57 @@
       "parentUuid": "a4915ec5_87b3e902",
       "revId": "352a703ebdb33225000f19531013f9ce191e8ab9",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb780906_3290d0af",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 25
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T13:31:13Z",
+      "side": 1,
+      "message": "[🟡 Suggestions] Line 146: The pushToken setter restores background-deactivated accounts whenever token is null or push is disabled, regardless of app visibility. During normal startup/token refresh failure this can reactivate proxy accounts while the app is backgrounded and push is unavailable, reverting to always-connected behavior without scheduling any later deactivation. Gate this immediate restore to the background-deactivated case and keep ordering with preference changes, or delegate token/push-state transitions to a single AccountService operation that restores only when required.",
+      "revId": "352a703ebdb33225000f19531013f9ce191e8ab9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c63cd8d_44e2c437",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 25
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T13:31:13Z",
+      "side": 1,
+      "message": "[🟡 Suggestions] Line 79: This directly reads app.mPreferencesService.settings and app.pushToken from the FCM service thread. The new background deactivation logic otherwise carefully serializes lifecycle/push state through the main looper, but this check can race with preference/token updates and skip account restoration for a valid push. Move the push-availability decision into JamiApplicationFirebase.onBackgroundPushReceived() on the main thread, or provide a thread-safe snapshot method there.",
+      "revId": "352a703ebdb33225000f19531013f9ce191e8ab9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0726d85_fb8cca29",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/PreferencesService.kt",
+        "patchSetId": 25
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T13:31:13Z",
+      "side": 1,
+      "message": "[🔴 Critical Issues] Line 51: When push notifications are disabled while the app is backgrounded, this queues restoreProxyAccountsAfterBackground() before setPushNotificationConfig()/setProxyEnabled(false), but JamiApplicationFirebase.pushToken is also likely set/cleared through mDeviceService and its setter immediately calls restoreProxyAccountsAfterBackground() again without the same FIFO guarantee relative to setProxyEnabled(false). If that restore runs after proxy has been disabled, AccountService.restoreProxyAccountsAfterBackground() treats the ids as terminal and drops them while still inactive, leaving accounts unreachable. Make push-disable restoration a single ordered operation on AccountService\u0027s executor, or expose an AccountService method that restores then disables proxy in one executor task.\n```suggestion\nmAccountService.disablePushAndRestoreBackgroundAccounts(\n    token?.first ?: \"\",\n    token?.second ?: \"\",\n    mDeviceService.pushPlatform\n)\n```",
+      "revId": "352a703ebdb33225000f19531013f9ce191e8ab9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
