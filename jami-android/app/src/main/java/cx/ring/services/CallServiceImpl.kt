@@ -112,6 +112,9 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
                 // Build contact' Android URI
                 val callUri = android.net.Uri.parse(contactUri.rawUriString)
                 val key = "$accountId/$callUri"
+
+                pendingCallRequests[key]?.let { return it }
+
                 val subject = SingleSubject.create<SystemCall>()
 
                 // Place call request
