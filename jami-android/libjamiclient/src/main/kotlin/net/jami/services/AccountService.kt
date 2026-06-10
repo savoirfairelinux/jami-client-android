@@ -575,17 +575,32 @@ class AccountService(
     }
 
     /**
-     * Sets the activation state of all the accounts in the Daemon
+     * Sets the activation state of all the accounts in the Daemon.
+     * This preserves the original contract: proxy-enabled accounts are kept active
+     * regardless of the requested state, as they rely on the proxy for connectivity.
+     * Use setAccountsActiveForBackground() for battery-saving background optimization.
      */
     fun setAccountsActive(active: Boolean) {
         mExecutor.execute {
             Log.i(TAG, "setAccountsActive() running… $active")
             for (a in mAccountList) {
-                // If the proxy is enabled we can considered the account
-                // as always active
+                JamiService.setAccountActive(a.accountId, active || a.isDhtProxyEnabled)
+            }
+        }
+    }
+
+    /**
+     * Sets account activation for background battery optimization.
+     * Only proxy-enabled accounts are touched: they are the ones deactivated when the
+     * app goes to background (the proxy/FCM handles wakeup) and reactivated on push
+     * receipt or foreground return. Non-proxy accounts are never modified by this path,
+     * preserving any deliberate user-set inactive state.
+     */
+    fun setAccountsActiveForBackground(active: Boolean) {
+        mExecutor.execute {
+            Log.i(TAG, "setAccountsActiveForBackground() running… $active")
+            for (a in mAccountList) {
                 if (a.isDhtProxyEnabled) {
-                    JamiService.setAccountActive(a.accountId, true)
-                } else {
                     JamiService.setAccountActive(a.accountId, active)
                 }
             }

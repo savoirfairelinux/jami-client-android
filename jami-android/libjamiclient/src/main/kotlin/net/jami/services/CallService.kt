@@ -58,6 +58,13 @@ abstract class CallService(
             conferences.values.filter { it.state == CallStatus.CURRENT }
         }
 
+    /** Returns true if any call or conference is active or pending (not yet terminated). */
+    fun hasActiveCalls(): Boolean =
+        synchronized(calls) {
+            calls.values.any { !it.callStatus.isOver } ||
+                conferences.values.any { it.state?.isOver == false }
+        }
+
     private fun getConfCallUpdates(conf: Conference): Observable<Conference> =
         conferenceSubject
             .filter { c -> c == conf }

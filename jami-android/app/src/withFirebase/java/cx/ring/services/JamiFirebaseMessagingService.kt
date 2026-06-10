@@ -67,17 +67,39 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
             }
         }
 
-        if (remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH && !isAppInForeground()) {
-            val app = JamiApplication.instance as JamiApplicationFirebase?
-            app?.hardwareService?.connectivityChanged(true)
+        val appInForeground = isAppInForeground()
+        val app = JamiApplication.instance as JamiApplicationFirebase?
+
+        if (!appInForeground) {
+            // Open the deactivation grace window before reactivating accounts, so the
+            // daemon has time to reconnect through the proxy and receive the incoming
+            // call (which only becomes visible to hasActiveCalls() once negotiated).
+            // High-priority pushes are call wakeups even if "pt" is absent (DHT proxy
+            // pushes carry minimal data).
+            val isCallPush = isCallNotification
+                    || remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH
+            app?.notePushReceived(isCallPush)
+            // Reactivate accounts for any push type: accounts may have been deactivated
+            // while the app was in background. Receiving an FCM push implies the network
+            // is available, so don't gate this on possibly-stale connectivity state.
+            app?.mAccountService?.setAccountsActiveForBackground(true)
+            // connectivityChanged triggers a full DHT/SIP reconnect — only needed for calls.
+            if (remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH) {
+                app?.hardwareService?.connectivityChanged(true)
+            }
         }
 
         serviceScope.launch {
             try {
-                val app = JamiApplication.instance as JamiApplicationFirebase?
                 app?.onMessageReceived(remoteMessage)
             } catch (e: Exception) {
                 Log.e(TAG, "Error in processing message", e)
+            } finally {
+                // If the app is still in background after handling the push, schedule
+                // deactivation so accounts reactivated above are not left active indefinitely.
+                if (!appInForeground) {
+                    app?.scheduleBackgroundDeactivation()
+                }
             }
         }
     }
