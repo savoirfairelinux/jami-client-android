@@ -1,0 +1,40 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1a6a0bb_062e6ab6",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 18
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-10T12:49:07Z",
+      "side": 1,
+      "message": "Restore is the only reachable-correct option here, and this is deliberate: with push disabled or token cleared there is no FCM wakeup path at all, so deactivating (as suggested) would leave the user unreachable for calls and messages indefinitely — precisely the merge-blocking issue raised on PS15 in this same branch, which PS16 fixed by restoring. Permanently-active accounts in background is the historical, pre-patch behavior for every non-push configuration: when the user disables push they opt into persistent connections; the battery optimization only applies when FCM can replace them. The restore also clears the recorded set, so no stale optimization state lingers (re-entering the optimization requires a future background transition with push available, which re-records correctly).",
+      "parentUuid": "8a3736fb_b52e9314",
+      "revId": "fcef5e054d3d7f58fc67112b11fca888cf4d8a07",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c60a8ac_73c81120",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 18
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-10T12:49:07Z",
+      "side": 1,
+      "message": "Done in PS18: replaced the counter with ProcessLifecycleOwner (DefaultLifecycleObserver onStart/onStop, lifecycle-process dependency added) and the runnable now reads the process lifecycle state on the main thread. Configuration changes and activity-to-activity transitions are handled natively by the delayed onStop dispatch.",
+      "parentUuid": "03aaf1d3_bbc73e0f",
+      "revId": "fcef5e054d3d7f58fc67112b11fca888cf4d8a07",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
