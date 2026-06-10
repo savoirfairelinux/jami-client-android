@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a6e5c16_38aa482f",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T01:30:47Z",
+      "side": 1,
+      "message": "[🟡 Suggestion] Line 103: Accounts are reactivated on every foreground transition even when push notifications are disabled or no push token exists. That changes behavior outside the battery-saving case and can undo a deliberate inactive state for accounts when the user simply opens the app. Gate this with the same push-availability condition used for background deactivation.\n```suggestion\nif (startedActivityCount++ \u003d\u003d 0\n    \u0026\u0026 mPreferencesService.settings.enablePushNotifications\n    \u0026\u0026 pushToken !\u003d null\n    \u0026\u0026 mPreferencesService.hasNetworkConnected()\n) {\n    Log.d(TAG, \"App came to foreground — reactivating accounts\")\n    mAccountService.setAccountsActive(true)\n}\n```",
+      "revId": "68aa8411c58a907923824ef45d36cf0a15159594",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6f7429c_c57b3dd2",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T01:30:47Z",
+      "side": 1,
+      "message": "[🔴 Critical Issue] Line 586: Changing the generic setAccountsActive(false) semantics so non-proxy accounts always remain active may affect existing callers that expect this method to actually deactivate all accounts, for example during shutdown, network state changes, or explicit account lifecycle operations. The new behavior is specific to background push optimization, so it should not be hidden behind this broad API. Add a dedicated method or parameter for background deactivation and keep setAccountsActive preserving its previous contract.\n```suggestion\nfun setAccountsActive(active: Boolean) {\n    mExecutor.execute {\n        Log.i(TAG, \"setAccountsActive() running… $active\")\n        for (a in mAccountList) {\n            JamiService.setAccountActive(a.accountId, active || a.isDhtProxyEnabled)\n        }\n    }\n}\n\nfun setAccountsActiveForBackground(active: Boolean) {\n    mExecutor.execute {\n        Log.i(TAG, \"setAccountsActiveForBackground() running… $active\")\n        for (a in mAccountList) {\n            JamiService.setAccountActive(a.accountId, active || !a.isDhtProxyEnabled)\n        }\n    }\n}\n```",
+      "revId": "68aa8411c58a907923824ef45d36cf0a15159594",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
