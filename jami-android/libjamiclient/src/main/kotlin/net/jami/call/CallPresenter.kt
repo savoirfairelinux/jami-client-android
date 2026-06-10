@@ -168,19 +168,22 @@ class CallPresenter @Inject constructor(
      * @param conference: conference whose value have been updated
      */
     private fun showConference(conference: Observable<Conference>){
-        val distinctConference = conference.distinctUntilChanged()
-        Observable.combineLatest( // Update the audio button state
-            distinctConference.switchMap { it.hasActiveNonScreenShareVideo },
-            distinctConference.switchMap { mHardwareService.getAudioState(it) }
-        ) { hasVideo: Boolean, audioState: AudioState ->
-            hasVideo to audioState
-        }.observeOn(mUiScheduler)
+        // Use a single switchMap to avoid creating two separate subscriptions.
+        // If the source errors, combineLatest may receive the same error twice,
+        // causing the second one to be reported as an UndeliverableException.
+        mCompositeDisposable.add(conference.distinctUntilChanged()
+            .switchMap { conf ->
+                Observable.combineLatest(
+                    conf.hasActiveNonScreenShareVideo,
+                    mHardwareService.getAudioState(conf)
+                ) { hasVideo: Boolean, audioState: AudioState -> hasVideo to audioState }
+            }
+            .observeOn(mUiScheduler)
             .subscribe({ (hasVideo, audioState) ->
                 view?.updateAudioState(audioState, hasVideo)
             }, { error ->
                 Log.e(TAG, "Error updating audio state", error)
-            })
-            .apply { mCompositeDisposable.add(this) }
+            }))
         mCompositeDisposable.add(conference
             .switchMap { obj: Conference ->
                 Observable.combineLatest(obj.participantInfo, obj.pendingCalls,
@@ -439,7 +442,7 @@ class CallPresenter @Inject constructor(
                 view.displayLocalVideo(hasActiveCameraVideo && mDeviceRuntimeService.hasVideoPermission())
                 if (permissionChanged) {
                     val camId = mHardwareService.changeCamera(true)
-                    mCallService.replaceVideoMedia(call, "camera://$camId", true)
+                    mCallService.replaceVideoMedia(call, "camera://$camId", false)
                     permissionChanged = false
                 }
             }
