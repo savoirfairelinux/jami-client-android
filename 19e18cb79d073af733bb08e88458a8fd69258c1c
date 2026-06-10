@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28b0e2ea_2916750d",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/CallService.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T01:39:27Z",
+      "side": 1,
+      "message": "[🔴 Critical Issues] Line 61: hasActiveCalls() only checks conferences, so a regular one-to-one call stored in calls can be missed. That allows JamiApplicationFirebase to deactivate accounts while an active or ringing non-conference call is in progress, which can break call setup or media. Check both collections before allowing background deactivation.\n\n```suggestion\n    fun hasActiveCalls(): Boolean \u003d\n        synchronized(calls) {\n            calls.values.any { it.state?.isOver \u003d\u003d false } ||\n                conferences.values.any { it.state?.isOver \u003d\u003d false }\n        }\n```",
+      "revId": "19e18cb79d073af733bb08e88458a8fd69258c1c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
