@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b228e3f_3035e8af",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T08:47:23Z",
+      "side": 1,
+      "message": "[🟡 Suggestions] Line 53: `lastPushTime` and `lastCallPushTime` are updated from the Firebase service thread while deactivation scheduling/removal happens on the main handler. The volatile fields make individual reads visible, but the pair can still be observed inconsistently around `maxOf(...)`. Posting `notePushReceived` onto `backgroundHandler` would keep all lifecycle/deactivation state on one thread and simplify reasoning. Suggested direction:\n```suggestion\n    fun notePushReceived(isCallPush: Boolean) {\n        backgroundHandler.post {\n            val now \u003d SystemClock.elapsedRealtime()\n            lastPushTime \u003d now\n            if (isCallPush) lastCallPushTime \u003d now\n        }\n    }\n```",
+      "revId": "af28e0e44e223d2d2b75be64dd956912acee7929",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fe0b10e_d64e37da",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T08:47:23Z",
+      "side": 1,
+      "message": "[🔴 Critical Issues] Line 145: Foreground reactivation is gated on `hasNetworkConnected()`, which can leave proxy-enabled accounts deactivated after the user opens the app while Android reports no connectivity or before connectivity state has refreshed. Since this method changes the account active flag, it should restore the foreground state regardless of current network availability so the daemon can reconnect when the network comes back. Suggested fix:\n```suggestion\n                if (startedActivityCount++ \u003d\u003d 0\n                    \u0026\u0026 mPreferencesService.settings.enablePushNotifications\n                    \u0026\u0026 pushToken !\u003d null\n                ) {\n                    Log.d(TAG, \"App came to foreground — reactivating accounts\")\n                    mAccountService.setAccountsActiveForBackground(true)\n                }\n```",
+      "revId": "af28e0e44e223d2d2b75be64dd956912acee7929",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb3d4c57_1627be1a",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T08:47:23Z",
+      "side": 1,
+      "message": "[🟡 Suggestions] Line 83: Every high-priority FCM is treated as a call push. FCM priority is transport metadata and may also be used for non-call urgent messages, so this can unnecessarily keep accounts active for the longer 60s call grace window and trigger `connectivityChanged(true)`. Prefer classifying call pushes from explicit payload fields when available, and only fall back to priority for the known minimal DHT-proxy call payload shape. Suggested direction:\n```suggestion\n            val isCallPush \u003d isCallNotification || isDhtProxyCallWakeup(remoteMessage)\n```",
+      "revId": "af28e0e44e223d2d2b75be64dd956912acee7929",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
