@@ -571,23 +571,80 @@ class AccountService(
      * Sets the activation state of the account in the Daemon
      */
     fun setAccountActive(accountId: String, active: Boolean) {
-        mExecutor.execute { JamiService.setAccountActive(accountId, active) }
+        mExecutor.execute {
+            // An explicit deactivation clears any pending background-restore intent,
+            // otherwise a later foreground/push restore would undo the deliberate
+            // inactive state requested here.
+            if (!active) backgroundDeactivatedAccounts.remove(accountId)
+            JamiService.setAccountActive(accountId, active)
+        }
     }
 
     /**
-     * Sets the activation state of all the accounts in the Daemon
+     * Sets the activation state of all the accounts in the Daemon.
+     * This preserves the original contract: proxy-enabled accounts are kept active
+     * regardless of the requested state, as they rely on the proxy for connectivity.
+     * Use deactivateProxyAccountsForBackground()/restoreProxyAccountsAfterBackground()
+     * for battery-saving background optimization.
      */
     fun setAccountsActive(active: Boolean) {
         mExecutor.execute {
             Log.i(TAG, "setAccountsActive() running… $active")
             for (a in mAccountList) {
-                // If the proxy is enabled we can considered the account
-                // as always active
-                if (a.isDhtProxyEnabled) {
-                    JamiService.setAccountActive(a.accountId, true)
-                } else {
-                    JamiService.setAccountActive(a.accountId, active)
+                JamiService.setAccountActive(a.accountId, active || a.isDhtProxyEnabled)
+            }
+        }
+    }
+
+    // Account ids deactivated by the background battery optimization, to be restored on
+    // foreground return or push receipt. Only accessed on the daemon executor thread.
+    private val backgroundDeactivatedAccounts = HashSet<String>()
+
+    /**
+     * Deactivates proxy-enabled accounts for background battery optimization.
+     * Only accounts currently active are deactivated and recorded for restoration:
+     * the proxy/FCM handles wakeup while they are offline. Accounts deliberately set
+     * inactive (or disabled) by the user are not touched, and will not be reactivated
+     * by restoreProxyAccountsAfterBackground().
+     */
+    fun deactivateProxyAccountsForBackground() {
+        mExecutor.execute {
+            Log.i(TAG, "deactivateProxyAccountsForBackground() running…")
+            for (a in mAccountList) {
+                if (a.isDhtProxyEnabled && a.isEnabled && a.isActive) {
+                    backgroundDeactivatedAccounts.add(a.accountId)
+                    JamiService.setAccountActive(a.accountId, false)
                 }
+            }
+        }
+    }
+
+    /**
+     * Restores the accounts deactivated by deactivateProxyAccountsForBackground(),
+     * on push receipt or foreground return. Only that recorded set is reactivated,
+     * preserving any deliberate user-set inactive state on other accounts. Each
+     * account is re-validated against the current list first, so accounts removed,
+     * disabled, or whose proxy was turned off while backgrounded are not touched —
+     * their ids stay recorded for a later attempt, since that state can be transient
+     * (startup, account reload). Ids are dropped on successful restore, or terminally
+     * by removeAccount().
+     */
+    fun restoreProxyAccountsAfterBackground() {
+        mExecutor.execute {
+            Log.i(TAG, "restoreProxyAccountsAfterBackground() running… (${backgroundDeactivatedAccounts.size} accounts)")
+            // Iterate over a snapshot and remove only the processed ids, so entries
+            // recorded by a concurrently queued deactivation are never skipped or
+            // dropped, even if the executor threading model changes.
+            val accountsToRestore = backgroundDeactivatedAccounts.toList()
+            for (id in accountsToRestore) {
+                val account = mAccountList.firstOrNull { it.accountId == id }
+                if (account?.isEnabled == true && account.isDhtProxyEnabled) {
+                    JamiService.setAccountActive(id, true)
+                    backgroundDeactivatedAccounts.remove(id)
+                }
+                // else: keep the id — dropping it on a possibly-transient missing/
+                // disabled/proxy-off state would lose the restore intent and leave
+                // the account inactive indefinitely.
             }
         }
     }
@@ -621,7 +678,11 @@ class AccountService(
      */
     fun removeAccount(accountId: String) {
         Log.i(TAG, "removeAccount() $accountId")
-        mExecutor.execute { JamiService.removeAccount(accountId) }
+        mExecutor.execute {
+            // Terminal case: drop any pending background-restore intent for this account.
+            backgroundDeactivatedAccounts.remove(accountId)
+            JamiService.removeAccount(accountId)
+        }
         mHistoryService.clearHistory(accountId).subscribe()
     }
 
