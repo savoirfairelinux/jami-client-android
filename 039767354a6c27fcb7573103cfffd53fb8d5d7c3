@@ -1,0 +1,58 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "469f1014_18893b6c",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 24
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-10T13:24:55Z",
+      "side": 1,
+      "message": "Done in PS24: registration guarded by a lifecycleObserverRegistered boolean.",
+      "parentUuid": "816e6718_08673470",
+      "revId": "039767354a6c27fcb7573103cfffd53fb8d5d7c3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef25dca3_4df9e386",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 24
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-10T13:24:55Z",
+      "side": 1,
+      "message": "Done in PS24: fallback removed, isCallPush \u003d isCallNotification || isDhtProxyCallWakeup(remoteMessage). Agreed — the daemon guarantees pt for call wakeups (jamiaccount.cpp labels every call connection request audioCall/videoCall), so the defensive branch only added the DHT-message misclassification it was meant to avoid.",
+      "parentUuid": "599a464f_a877e14e",
+      "revId": "039767354a6c27fcb7573103cfffd53fb8d5d7c3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3277ed25_a9855ef9",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/PreferencesService.kt",
+        "patchSetId": 24
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-10T13:24:55Z",
+      "side": 1,
+      "message": "The restored-active state is the correct contract here, not a leak. When push is disabled there is no FCM wakeup path: deactivating accounts (or leaving them inactive) would make the user unreachable for incoming calls/messages — exactly the merge-blocking issue raised on PS20 (comment on JamiApplicationFirebase:132) that PS22 fixed by restoring on this very transition. Persistent background connections with push off is the pre-patch, user-opted behavior for every non-push configuration; the battery optimization only applies while FCM can substitute for those connections. Note also the restored set is almost always empty on this path: settings changes happen in the foreground, where onStart already restored and cleared it — the non-empty case is precisely the race this ordering protects (restore queued FIFO before setProxyEnabled(false) so it still sees the proxy enabled and does not drop the ids as terminal).",
+      "parentUuid": "7d7b4d2c_4cbd6e6e",
+      "revId": "039767354a6c27fcb7573103cfffd53fb8d5d7c3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
