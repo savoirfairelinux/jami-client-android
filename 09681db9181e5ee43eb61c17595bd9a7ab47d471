@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "86a7985d_d9cac152",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 20
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T12:57:56Z",
+      "side": 1,
+      "message": "[🔴 Critical Issues] Line 132: When `pushToken` is cleared or push notifications are disabled after accounts have already been deactivated, there may be no pending `deactivateRunnable` left to execute the new restore path. That can leave proxy accounts inactive until the next foreground transition, which breaks reachability in the exact fallback case this code tries to protect. Restore the background-deactivated accounts immediately when push becomes unavailable.\n```suggestion\n            } else {\n                mAccountService.setPushNotificationToken(\"\")\n                mAccountService.restoreProxyAccountsAfterBackground()\n            }\n```",
+      "revId": "09681db9181e5ee43eb61c17595bd9a7ab47d471",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "36d0696c_02bd770f",
@@ -15,6 +32,40 @@
       "side": 1,
       "message": "Done in PS20: safe cast (as?) here and in onNewToken(), with a comment on the crash rationale.",
       "parentUuid": "1108e56c_0bc74618",
+      "revId": "09681db9181e5ee43eb61c17595bd9a7ab47d471",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d78e13d8_d5d8ffbb",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 20
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T12:57:56Z",
+      "side": 1,
+      "message": "[🔴 Critical Issues] Line 77: `isCallNotification` only checks the notification title, and `isDhtProxyCallWakeup()` relies on `pt`. A data-only call push without a notification title and without/with malformed `pt` will be treated as a normal push, so `connectivityChanged(true)` is not called. The comment says 30s should be enough, but the code path explicitly requires full reconnect for low-latency call wakeups; misclassification can cause missed or delayed incoming calls. Use a positive call signal from the payload fields that are guaranteed by the proxy/client protocol, or avoid making reconnect conditional when the app is backgrounded and the push is high priority.\n```suggestion\n            val isCallPush \u003d isCallNotification || isDhtProxyCallWakeup(remoteMessage)\n            val shouldReconnect \u003d isCallPush || remoteMessage.originalPriority \u003d\u003d RemoteMessage.PRIORITY_HIGH\n            app.onBackgroundPushReceived(\n                isCallPush \u003d isCallPush,\n                triggerReconnect \u003d shouldReconnect\n            )\n```",
+      "revId": "09681db9181e5ee43eb61c17595bd9a7ab47d471",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "168fba4f_d8e44d08",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 20
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T12:57:56Z",
+      "side": 1,
+      "message": "[🟡 Suggestions] Line 609: `deactivateProxyAccountsForBackground()` records the account before calling `JamiService.setAccountActive(..., false)` and never checks whether the daemon call succeeded. If the daemon rejects/fails the deactivation, the later restore path will still treat the account as background-deactivated and may reactivate an account whose state no longer matches the recorded intent. Record the id only after a successful daemon state change, or remove it again when the daemon call fails/throws.\n```suggestion\n                    JamiService.setAccountActive(a.accountId, false)\n                    backgroundDeactivatedAccounts.add(a.accountId)\n```",
       "revId": "09681db9181e5ee43eb61c17595bd9a7ab47d471",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
