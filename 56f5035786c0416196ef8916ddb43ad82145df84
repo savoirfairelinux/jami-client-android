@@ -1,0 +1,58 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f72ae489_79af5a14",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 19
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-10T12:54:44Z",
+      "side": 1,
+      "message": "Done in PS19: the observer is a val property; Lifecycle.addObserver() with an already-registered instance is a documented no-op, so repeated onCreate() paths cannot register duplicates.",
+      "parentUuid": "f1927544_1b729a5d",
+      "revId": "56f5035786c0416196ef8916ddb43ad82145df84",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d81c4f9_9436c267",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 19
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-10T12:54:44Z",
+      "side": 1,
+      "message": "Done in PS19: replaced the note+restore+reconnect call sequence with app.onBackgroundPushReceived(isCallPush, triggerReconnect) which serializes the whole sequence on the main thread — timestamps set, restore queued, reconnect requested, then the deactivation timer armed last. The runnable can therefore never fire with the restore still unqueued; once queued, FIFO ordering on the daemon executor guarantees restore-before-deactivate.",
+      "parentUuid": "c6dbcc3a_08c498b7",
+      "revId": "56f5035786c0416196ef8916ddb43ad82145df84",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e813730d_b10cc858",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 19
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-10T12:54:44Z",
+      "side": 1,
+      "message": "Done in PS19: the set is now ConcurrentHashMap.newKeySet() and setAccountActive(id, false) clears the restore intent synchronously, before queuing the daemon call. A restore already queued ahead may still briefly reactivate, but the explicit deactivation queued after it always wins the final state, and the cleared intent prevents any later restore from undoing it.",
+      "parentUuid": "85570fde_05f7407e",
+      "revId": "56f5035786c0416196ef8916ddb43ad82145df84",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
