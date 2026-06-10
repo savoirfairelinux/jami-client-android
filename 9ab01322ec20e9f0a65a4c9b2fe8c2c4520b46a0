@@ -50,6 +50,24 @@
       "message": "Line 1: This newly added locale file is unrelated to the audio/video-message Android 11 fix and appears to contain only a small, partially translated subset of app strings. Adding an unrelated partial locale in this change increases review risk and can accidentally affect resource selection for Nynorsk users. Please remove it from this patch unless it is intentionally part of a separate translation update.",
       "revId": "9ab01322ec20e9f0a65a4c9b2fe8c2c4520b46a0",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc0f4b05_0bc22e68",
+        "filename": "jami-android/app/src/main/res/values-b+nn+NO/strings.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2026-06-10T22:24:09Z",
+      "side": 1,
+      "message": "Was this file recently removed in another patch? Would a **rebase** remove this file being added? Thank you",
+      "parentUuid": "a2f85bcd_221f8b4b",
+      "revId": "9ab01322ec20e9f0a65a4c9b2fe8c2c4520b46a0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
