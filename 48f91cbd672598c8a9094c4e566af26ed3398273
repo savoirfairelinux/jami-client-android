@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b78a8810_3680ff0c",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 15
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T12:34:46Z",
+      "side": 1,
+      "message": "[🔴 Critical Issues - Must fix before merge] Line 70: The deactivation runnable aborts whenever push is disabled or the token is null, even if accounts were already deactivated by this background optimization. If the user disables push, the FCM token is cleared, or settings are changed while the app is backgrounded, the recorded accounts can remain inactive until a foreground lifecycle event happens; for long-running background-only use this creates a missed-call/message window. The settings/token gate should be applied before deciding to deactivate, but restoration should still be allowed when the gate becomes false. For example:\n```suggestion\nif (startedActivityCount !\u003d 0) return@Runnable\nif (!mPreferencesService.settings.enablePushNotifications || pushToken \u003d\u003d null) {\n    Log.d(TAG, \"Push unavailable while backgrounded — restoring accounts\")\n    mAccountService.restoreProxyAccountsAfterBackground()\n    return@Runnable\n}\n```",
+      "revId": "48f91cbd672598c8a9094c4e566af26ed3398273",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bae31d34_432b232b",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 15
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T12:34:46Z",
+      "side": 1,
+      "message": "[🟡 Suggestions - Improvements to consider] Line 126: isDhtProxyCallWakeup() only recognizes lowercase exact values. If the proxy ever sends the documented type with different casing, or adds another call-like value, the wake-up is treated as a normal push and skips the reconnect path. Since this gates incoming-call reliability, normalize the field before matching and preferably centralize these payload constants with the producer. Example:\n```suggestion\nreturn pushType.splitToSequence(\u0027,\u0027)\n    .map { it.trim().lowercase(Locale.ROOT) }\n    .any { it \u003d\u003d \"audiocall\" || it \u003d\u003d \"videocall\" }\n```",
+      "revId": "48f91cbd672598c8a9094c4e566af26ed3398273",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e9254ef_ca3b43fc",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 15
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T12:34:46Z",
+      "side": 1,
+      "message": "[🔴 Critical Issues - Must fix before merge] Line 615: restoreProxyAccountsAfterBackground() keeps ids forever when the account is disabled or proxy is turned off, but the comment treats those states as possibly transient. For user-driven configuration changes, this preserves a stale restore intent that can reactivate the account later if the user re-enables it or toggles proxy, even though that future state was not background-deactivated. Drop the restore intent for terminal/user configuration changes and only retain ids when the account is temporarily absent during reload if that is a real state here. Suggested direction:\n```suggestion\nval account \u003d mAccountList.firstOrNull { it.accountId \u003d\u003d id }\nwhen {\n    account \u003d\u003d null -\u003e Unit // keep only if account reload can make it reappear\n    account.isEnabled \u0026\u0026 account.isDhtProxyEnabled -\u003e {\n        JamiService.setAccountActive(id, true)\n        backgroundDeactivatedAccounts.remove(id)\n    }\n    else -\u003e backgroundDeactivatedAccounts.remove(id)\n}\n```",
+      "revId": "48f91cbd672598c8a9094c4e566af26ed3398273",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
