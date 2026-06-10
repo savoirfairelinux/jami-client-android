@@ -19,6 +19,23 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "1108e56c_0bc74618",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 19
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T12:54:58Z",
+      "side": 1,
+      "message": "[🔴 Critical] Line 72: This cast can crash the FCM service if `JamiApplication.instance` is null or is not the Firebase application class. The nullable target type only handles null after a successful cast; it does not make `as` safe. Use a safe cast so a push delivery cannot terminate the process before the message is handled.\n```suggestion\n        val app \u003d JamiApplication.instance as? JamiApplicationFirebase\n```",
+      "revId": "56f5035786c0416196ef8916ddb43ad82145df84",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "0d81c4f9_9436c267",
