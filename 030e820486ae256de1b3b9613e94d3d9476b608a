@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bb5a6df_c9272dbd",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T12:04:13Z",
+      "side": 1,
+      "message": "Line 80: scheduleBackgroundDeactivation() is public and is called from FirebaseMessagingService\u0027s coroutine, but it mutates Handler callback state directly instead of marshalling to the main looper like notePushReceived() does. Handler operations are generally thread-safe, but this makes ordering with lifecycle callbacks and notePushReceived() dependent on cross-thread enqueue timing; a stale service finally block can cancel a more specific grace delay posted from the main thread. Make this method always execute its remove/post sequence on the main handler thread.\n```suggestion\nfun scheduleBackgroundDeactivation(delayMs: Long \u003d BACKGROUND_DEACTIVATION_DELAY_MS) {\n    backgroundHandler.post {\n        backgroundHandler.removeCallbacks(deactivateRunnable)\n        backgroundHandler.postDelayed(deactivateRunnable, delayMs)\n    }\n}\n```",
+      "revId": "030e820486ae256de1b3b9613e94d3d9476b608a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b96bea1_14b0b2cb",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 12
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T12:04:13Z",
+      "side": 1,
+      "message": "[Critical] Line 83: Background pushes now call restoreProxyAccountsAfterBackground() regardless of whether push notifications are currently enabled or a valid push token exists. If the user disables push notifications while the app is backgrounded, a later/stale FCM delivery can reactivate accounts that were intentionally deactivated for background battery saving, and the follow-up deactivation runnable will no-op because enablePushNotifications is false. Gate the restore/reconnect path with the same push-availability condition used by the deactivation runnable.\n```suggestion\nif (!appInForeground \u0026\u0026 app?.mPreferencesService?.settings?.enablePushNotifications \u003d\u003d true \u0026\u0026 app.pushToken !\u003d null) {\n    val isCallPush \u003d isCallNotification || isDhtProxyCallWakeup(remoteMessage)\n    app.notePushReceived(isCallPush)\n    app.mAccountService.restoreProxyAccountsAfterBackground()\n    if (isCallPush \u0026\u0026 remoteMessage.originalPriority \u003d\u003d RemoteMessage.PRIORITY_HIGH) {\n        app.hardwareService.connectivityChanged(true)\n    }\n}\n```",
+      "revId": "030e820486ae256de1b3b9613e94d3d9476b608a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
