@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2772135_879d51af",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T11:43:49Z",
+      "side": 1,
+      "message": "[🔴 Critical Issues] Line 85: Race condition: notePushReceived() posts the grace timestamp update to the main handler but does not cancel an already-due deactivateRunnable. If a background push arrives around the 5s deactivation deadline, the old runnable can run before this posted update, enqueue account deactivation after the FCM path has restored accounts, and interrupt push/call handling. Move the timestamp update and rescheduling into one main-thread operation, or cancel the pending runnable before posting. For example:\n```suggestion\nfun notePushReceived(isCallPush: Boolean) {\n    val now \u003d SystemClock.elapsedRealtime()\n    backgroundHandler.post {\n        backgroundHandler.removeCallbacks(deactivateRunnable)\n        lastPushTime \u003d now\n        if (isCallPush) lastCallPushTime \u003d now\n        scheduleBackgroundDeactivation()\n    }\n}\n```",
+      "revId": "a709ecdb62db6d51558370965cfb7611c23ad79b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b453bb1_654b188a",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T11:43:49Z",
+      "side": 1,
+      "message": "[🟡 Suggestions] Line 624: Iterating backgroundDeactivatedAccounts while other executor tasks may add to it can throw ConcurrentModificationException if deactivateProxyAccountsForBackground() is queued again before or during restore processing, or can skip/clear newly recorded accounts. Take a snapshot and remove only restored ids from the set. For example:\n```suggestion\nval accountsToRestore \u003d backgroundDeactivatedAccounts.toList()\nfor (id in accountsToRestore) {\n    val account \u003d mAccountList.firstOrNull { it.accountId \u003d\u003d id }\n    if (account?.isEnabled \u003d\u003d true \u0026\u0026 account.isDhtProxyEnabled) {\n        JamiService.setAccountActive(id, true)\n    }\n    backgroundDeactivatedAccounts.remove(id)\n}\n```",
+      "revId": "a709ecdb62db6d51558370965cfb7611c23ad79b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
