@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6046663c_8475ef1d",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 23
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-10T13:20:19Z",
+      "side": 1,
+      "message": "Done in PS23 via the explicit-disable marker (your second alternative). The executor-ordering variant was rejected on purpose: it restores the PS18 race in the opposite direction (queued restore undoing the explicit deactivation), and even ordered correctly it cannot close the stale-isActive window since volatile details update asynchronously. The marker is authoritative regardless of queue order: checked before deactivate-and-record, re-checked in the restore loop, cleared on explicit reactivation and removeAccount().",
+      "parentUuid": "5be018d6_ec23e61d",
+      "revId": "bdc3c413803208b0cc50093e0125d7a03a243a8c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
