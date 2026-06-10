@@ -67,19 +67,53 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
             }
         }
 
-        if (remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH && !isAppInForeground()) {
-            val app = JamiApplication.instance as JamiApplicationFirebase?
-            app?.hardwareService?.connectivityChanged(true)
+        val appInForeground = isAppInForeground()
+        val app = JamiApplication.instance as JamiApplicationFirebase?
+
+        if (!appInForeground) {
+            // Open the deactivation grace window before reactivating accounts, so the
+            // daemon has time to reconnect through the proxy and receive the incoming
+            // call (which only becomes visible to hasActiveCalls() once negotiated).
+            val isCallPush = isCallNotification || isDhtProxyCallWakeup(remoteMessage)
+            app?.notePushReceived(isCallPush)
+            // Reactivate accounts for any push type: accounts may have been deactivated
+            // while the app was in background. Receiving an FCM push implies the network
+            // is available, so don't gate this on possibly-stale connectivity state.
+            app?.mAccountService?.setAccountsActiveForBackground(true)
+            // connectivityChanged triggers a full DHT/SIP reconnect — only needed for calls.
+            if (remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH) {
+                app?.hardwareService?.connectivityChanged(true)
+            }
         }
 
         serviceScope.launch {
             try {
-                val app = JamiApplication.instance as JamiApplicationFirebase?
                 app?.onMessageReceived(remoteMessage)
             } catch (e: Exception) {
                 Log.e(TAG, "Error in processing message", e)
+            } finally {
+                // If the app is still in background after handling the push, schedule
+                // deactivation so accounts reactivated above are not left active indefinitely.
+                if (!appInForeground) {
+                    app?.scheduleBackgroundDeactivation()
+                }
             }
         }
+    }
+
+    /**
+     * Classifies a DHT proxy call wakeup. The proxy always copies the connection request
+     * type into the "pt" field ("audioCall"/"videoCall" for calls, "sip"/"git"… for
+     * messaging and sync channels), so classify from it when present: FCM priority alone
+     * is unreliable, as message-channel requests are also sent at high priority and FCM
+     * may downgrade the delivered priority of real call pushes. Only fall back to the
+     * requested priority for minimal payloads that carry no "pt" field.
+     */
+    private fun isDhtProxyCallWakeup(remoteMessage: RemoteMessage): Boolean {
+        val pushType = remoteMessage.data["pt"]
+        return if (pushType.isNullOrEmpty())
+            remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH
+        else pushType.contains("audioCall") || pushType.contains("videoCall")
     }
 
     private fun isAppInForeground(): Boolean {
