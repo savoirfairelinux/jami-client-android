@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a5645e7_bba90ee9",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 21
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T13:02:49Z",
+      "side": 1,
+      "message": "[warning] Line 142: 🟡 Suggestions - If the app backgrounds before the FCM token is available, `deactivateRunnable` restores accounts and returns because `pushToken \u003d\u003d null`, but the `pushToken` setter does not re-arm background deactivation when the token later arrives. That leaves accounts active until the next foreground/background lifecycle transition. When a valid token is set while the app is not visible, schedule the deactivation path again after registering the token.\n\n```suggestion\nif (token !\u003d null \u0026\u0026 mPreferencesService.settings.enablePushNotifications) {\n    mAccountService.setPushNotificationToken(token.second)\n    backgroundHandler.post {\n        if (!isAppVisible()) scheduleBackgroundDeactivation()\n    }\n} else {\n    mAccountService.setPushNotificationToken(\"\")\n}\n```",
+      "revId": "fe4ed517e0ee3ea66a7e9a9112b330acf0369811",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "825af28a_faa04bfd",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 21
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T13:02:49Z",
+      "side": 1,
+      "message": "[Critical] Line 69: 🔴 Critical Issues - `appInForeground` is computed after starting `PushForegroundService`. A foreground service can make the process report `IMPORTANCE_FOREGROUND`, so an incoming call push received while the UI is backgrounded may skip `onBackgroundPushReceived()`, leaving proxy accounts inactive and missing the call. Use process lifecycle/UI visibility, or snapshot visibility before starting the foreground service.\n\n```suggestion\nval app \u003d JamiApplication.instance as JamiApplicationFirebase?\nval appInForeground \u003d app?.isAppVisibleForPushHandling() ?: isAppInForeground()\n\nif (isCallNotification) {\n    try {\n        val intent \u003d Intent(this, PushForegroundService::class.java)\n        startForegroundService(intent)\n    } catch (e: Exception) {\n        Log.w(TAG, \"Failed to start foreground service for push notification\", e)\n    }\n}\n```",
+      "revId": "fe4ed517e0ee3ea66a7e9a9112b330acf0369811",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
