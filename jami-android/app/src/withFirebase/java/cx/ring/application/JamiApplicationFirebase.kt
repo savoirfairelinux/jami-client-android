@@ -16,6 +16,10 @@
  */
 package cx.ring.application
 
+import android.app.Activity
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
@@ -28,6 +32,33 @@ import java.util.Locale
 @HiltAndroidApp
 class JamiApplicationFirebase : JamiApplication() {
     override val pushPlatform: String = PUSH_PLATFORM
+
+    // Tracks how many activities are currently started (visible to user).
+    // When this drops to 0 the app has gone fully to the background.
+    private var startedActivityCount = 0
+    private val backgroundHandler = Handler(Looper.getMainLooper())
+    private val deactivateRunnable = Runnable {
+        // Double-check: still in background, push available, and no active call
+        if (startedActivityCount == 0
+            && mPreferencesService.settings.enablePushNotifications
+            && pushToken != null
+            && mCallService.currentConferences().isEmpty()
+        ) {
+            Log.d(TAG, "App went to background with push enabled — deactivating accounts")
+            mAccountService.setAccountsActive(false)
+        }
+    }
+
+    /**
+     * Schedules a delayed background deactivation of accounts.
+     * Called both by the activity lifecycle observer and by the FCM message handler after
+     * processing a push while the app is in the background, so that accounts reactivated
+     * for push handling are not left permanently active.
+     */
+    fun scheduleBackgroundDeactivation() {
+        backgroundHandler.removeCallbacks(deactivateRunnable)
+        backgroundHandler.postDelayed(deactivateRunnable, BACKGROUND_DEACTIVATION_DELAY_MS)
+    }
 
     override var pushToken: Pair<String, String>? = null
         set(token) {
@@ -60,6 +91,34 @@ class JamiApplicationFirebase : JamiApplication() {
         } catch (e: Exception) {
             Log.e(TAG, "Can't start service", e)
         }
+
+        // When push notifications are available (FCM token set + enabled), the daemon does not
+        // need to maintain its own DHT/SIP connections in the background — the proxy and FCM
+        // handle incoming call/message delivery. Deactivate accounts on background to save
+        // battery, and reactivate when the app comes back to the foreground.
+        registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
+            override fun onActivityStarted(activity: Activity) {
+                // Cancel any pending deactivation — app is back in foreground
+                backgroundHandler.removeCallbacks(deactivateRunnable)
+                if (startedActivityCount++ == 0 && mPreferencesService.hasNetworkConnected()) {
+                    Log.d(TAG, "App came to foreground — reactivating accounts")
+                    mAccountService.setAccountsActive(true)
+                }
+            }
+            override fun onActivityStopped(activity: Activity) {
+                if (--startedActivityCount == 0) {
+                    // Delay before deactivating: avoids false triggers during activity transitions
+                    // and when the screen locks during a call (video pipeline would break).
+                    // The guard in deactivateRunnable also checks for active calls.
+                    scheduleBackgroundDeactivation()
+                }
+            }
+            override fun onActivityCreated(activity: Activity, bundle: Bundle?) {}
+            override fun onActivityResumed(activity: Activity) {}
+            override fun onActivityPaused(activity: Activity) {}
+            override fun onActivitySaveInstanceState(activity: Activity, bundle: Bundle) {}
+            override fun onActivityDestroyed(activity: Activity) {}
+        })
     }
 
     private fun getCurrentTimestamp(withMilliseconds: Boolean = false): String {
@@ -84,6 +143,7 @@ class JamiApplicationFirebase : JamiApplication() {
 
     companion object {
         private const val PUSH_PLATFORM = "android"
+        private const val BACKGROUND_DEACTIVATION_DELAY_MS = 5_000L
         private val TAG = JamiApplicationFirebase::class.simpleName
     }
 }

@@ -67,17 +67,32 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
             }
         }
 
-        if (remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH && !isAppInForeground()) {
-            val app = JamiApplication.instance as JamiApplicationFirebase?
-            app?.hardwareService?.connectivityChanged(true)
+        val appInForeground = isAppInForeground()
+        val app = JamiApplication.instance as JamiApplicationFirebase?
+
+        if (!appInForeground) {
+            // Reactivate accounts for any push type: accounts may have been deactivated while
+            // the app was in background. Text messages need this as much as calls do.
+            if (app?.mPreferencesService?.hasNetworkConnected() == true) {
+                app.mAccountService.setAccountsActive(true)
+            }
+            // connectivityChanged triggers a full DHT/SIP reconnect — only needed for calls.
+            if (remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH) {
+                app?.hardwareService?.connectivityChanged(true)
+            }
         }
 
         serviceScope.launch {
             try {
-                val app = JamiApplication.instance as JamiApplicationFirebase?
                 app?.onMessageReceived(remoteMessage)
             } catch (e: Exception) {
                 Log.e(TAG, "Error in processing message", e)
+            } finally {
+                // If the app is still in background after handling the push, schedule
+                // deactivation so accounts reactivated above are not left active indefinitely.
+                if (!appInForeground) {
+                    app?.scheduleBackgroundDeactivation()
+                }
             }
         }
     }

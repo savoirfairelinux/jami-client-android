@@ -575,19 +575,20 @@ class AccountService(
     }
 
     /**
-     * Sets the activation state of all the accounts in the Daemon
+     * Sets the activation state of all the accounts in the Daemon.
+     * Accounts with a DHT proxy configured can safely go inactive in the background —
+     * the proxy handles incoming notifications and FCM delivers the wakeup. Accounts
+     * without a proxy path must stay active to remain reachable (no push alternative).
      */
     fun setAccountsActive(active: Boolean) {
         mExecutor.execute {
             Log.i(TAG, "setAccountsActive() running… $active")
             for (a in mAccountList) {
-                // If the proxy is enabled we can considered the account
-                // as always active
-                if (a.isDhtProxyEnabled) {
-                    JamiService.setAccountActive(a.accountId, true)
-                } else {
-                    JamiService.setAccountActive(a.accountId, active)
-                }
+                // Only deactivate accounts that have a push/proxy path configured.
+                // Accounts without DHT proxy have no way to be woken up by push and
+                // must remain active to maintain connectivity.
+                val accountActive = active || !a.isDhtProxyEnabled
+                JamiService.setAccountActive(a.accountId, accountActive)
             }
         }
     }
