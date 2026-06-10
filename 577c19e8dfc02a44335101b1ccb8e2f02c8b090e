@@ -37,6 +37,23 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f6de1bf_c4d0c3f6",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T12:41:09Z",
+      "side": 1,
+      "message": "[Critical] Line 605: 🔴 Critical Issues - The restore state is kept only in memory, but the daemon account active state can outlive the Android process. If the app is killed after `deactivateProxyAccountsForBackground()` runs, `backgroundDeactivatedAccounts` is recreated empty on the next launch/push, so foreground restore or push restore has no account ids to reactivate and proxy accounts can remain offline indefinitely. Persist the background-deactivated ids, and clear them only after a successful restore or terminal account configuration change. For example:\n```suggestion\nprivate val backgroundDeactivatedAccounts \u003d loadBackgroundDeactivatedAccounts().toMutableSet()\n\nprivate fun markBackgroundDeactivated(accountId: String) {\n    backgroundDeactivatedAccounts.add(accountId)\n    saveBackgroundDeactivatedAccounts(backgroundDeactivatedAccounts)\n}\n\nprivate fun clearBackgroundDeactivated(accountId: String) {\n    backgroundDeactivatedAccounts.remove(accountId)\n    saveBackgroundDeactivatedAccounts(backgroundDeactivatedAccounts)\n}\n```\nThen use these helpers in deactivate, restore, explicit deactivate, and remove-account paths.",
+      "revId": "577c19e8dfc02a44335101b1ccb8e2f02c8b090e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "e977a0c0_749ca118",
@@ -51,6 +68,23 @@
       "side": 1,
       "message": "Done in PS16: disabled or proxy-off accounts now drop the restore intent (terminal configuration change); only accounts temporarily absent from the list keep their id, since account reload does repopulate the list here and dropping the id during that window would leave the account inactive.",
       "parentUuid": "0e9254ef_ca3b43fc",
+      "revId": "577c19e8dfc02a44335101b1ccb8e2f02c8b090e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe12942e_2cb0fa70",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/CallService.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T12:41:09Z",
+      "side": 1,
+      "message": "[Medium] Line 65: 🟡 Suggestions - `hasActiveCalls()` says it treats any conference that is not terminated as active/pending, but `it.state?.isOver \u003d\u003d false` returns false when `state` is null. If a pending conference can have a null state, background deactivation may run during that conference. Treat null as non-terminal, or document why null means inactive.\n```suggestion\n                conferences.values.any { it.state?.isOver !\u003d true }\n```",
       "revId": "577c19e8dfc02a44335101b1ccb8e2f02c8b090e",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
