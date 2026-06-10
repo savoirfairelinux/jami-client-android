@@ -1,6 +1,40 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "816e6718_08673470",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 23
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T13:20:44Z",
+      "side": 1,
+      "message": "[Minor] Line 183: ProcessLifecycleOwner observer registration is unconditional in onCreate(). The comment says duplicate registration is prevented by reusing the same observer instance, but LifecycleRegistry does not make repeated addObserver calls on the same observer a safe no-op across custom/test initialization paths; duplicate registration can cause duplicate restore/deactivation scheduling. Guard registration with a boolean or move it to an initialization path that is guaranteed to run once.",
+      "revId": "bdc3c413803208b0cc50093e0125d7a03a243a8c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "599a464f_a877e14e",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 23
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T13:20:44Z",
+      "side": 1,
+      "message": "[Major] Line 87: A high-priority background push with no `pt` is treated as a call push and triggers a full reconnect plus the longer call grace window. The comment on isDhtProxyCallWakeup says FCM priority must not be used as a fallback because regular DHT values default to high priority, so this branch reintroduces exactly that misclassification. This can wake the daemon unnecessarily for message/sync pushes and undermine the battery-saving goal. Remove the priority-only fallback or restrict it to a protocol-guaranteed call signal. Suggested change: `val isCallPush \u003d isCallNotification || isDhtProxyCallWakeup(remoteMessage)`.",
+      "revId": "bdc3c413803208b0cc50093e0125d7a03a243a8c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "6046663c_8475ef1d",
@@ -15,6 +49,23 @@
       "side": 1,
       "message": "Done in PS23 via the explicit-disable marker (your second alternative). The executor-ordering variant was rejected on purpose: it restores the PS18 race in the opposite direction (queued restore undoing the explicit deactivation), and even ordered correctly it cannot close the stale-isActive window since volatile details update asynchronously. The marker is authoritative regardless of queue order: checked before deactivate-and-record, re-checked in the restore loop, cleared on explicit reactivation and removeAccount().",
       "parentUuid": "5be018d6_ec23e61d",
+      "revId": "bdc3c413803208b0cc50093e0125d7a03a243a8c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d7b4d2c_4cbd6e6e",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/PreferencesService.kt",
+        "patchSetId": 23
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T13:20:44Z",
+      "side": 1,
+      "message": "[Major] Line 47: Disabling push restores accounts and then immediately calls setProxyEnabled(false). If restoreProxyAccountsAfterBackground() reactivates the recorded proxy accounts, setProxyEnabled(false) can leave those accounts active with proxy disabled, changing the previous contract where proxy-enabled accounts were the only ones forced active. This can keep background connections alive even after the user disables push. Restore should be followed by applying the intended account active policy for non-proxy accounts, or setProxyEnabled(false) should explicitly preserve/restore the user\u0027s desired active state. Suggested fix: after disabling the proxy, explicitly deactivate only accounts that were active solely because of proxy/push, or move this state transition into AccountService so restore and proxy-disable are atomic and respect user intent.",
       "revId": "bdc3c413803208b0cc50093e0125d7a03a243a8c",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
