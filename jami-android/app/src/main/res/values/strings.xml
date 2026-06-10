@@ -763,4 +763,37 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="peer_services_error_timeout">Request timed out</string>
     <string name="peer_services_error_unknown">Could not retrieve services</string>
 
+    <!-- Exposed/Hosted services -->
+    <string name="shared_services_settings_title">Shared Services</string>
+    <string name="shared_services_settings_description">Expose local services to your Jami contacts</string>
+    <string name="shared_services_empty">No services configured</string>
+    <string name="shared_services_add">Add service</string>
+    <string name="shared_services_add_title">Add Shared Service</string>
+    <string name="shared_services_edit_title">Edit Shared Service</string>
+    <string name="shared_services_edit">Edit</string>
+    <string name="shared_services_delete">Delete</string>
+    <string name="shared_services_name_hint">Service name</string>
+    <string name="shared_services_name_required">Service name is required</string>
+    <string name="shared_services_description_hint">Description (optional)</string>
+    <string name="shared_services_port_hint">Local port</string>
+    <string name="shared_services_port_required">Port number is required</string>
+    <string name="shared_services_port_invalid">Port must be between 1 and 65535</string>
+    <string name="shared_services_port">Port: %d</string>
+    <string name="shared_services_no_description">No description</string>
+    <string name="shared_services_type_custom">Custom Server</string>
+    <string name="shared_services_type_website">Add Website</string>
+    <string name="shared_services_add_custom_title">Add Custom Server</string>
+    <string name="shared_services_add_website_title">Add Website</string>
+    <string name="shared_services_host_hint">Local host</string>
+    <string name="shared_services_scheme_hint">URI scheme (e.g. http, ftp)</string>
+    <string name="shared_services_directory_hint">Local directory</string>
+    <string name="shared_services_directory_required">Please choose a directory</string>
+    <string name="shared_services_choose">Choose</string>
+    <string name="shared_services_policy_hint">Accessible by</string>
+    <string name="shared_services_policy_contacts">My contacts</string>
+    <string name="shared_services_policy_public">Public</string>
+    <string name="shared_services_policy_specific">Specific contacts</string>
+    <string name="shared_services_allowed_contacts_hint">Allowed contacts (comma-separated)</string>
+    <string name="shared_services_save">Save</string>
+
 </resources>

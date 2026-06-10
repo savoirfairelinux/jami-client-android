@@ -47,6 +47,7 @@ firebaseMessaging = "25.0.2"
 unifiedPushConnector = "3.3.2"
 unifiedPushUi = "1.1.0"
 protoc = "4.33.2"
+nanohttpd = "2.3.1"
 javaxInject = "1"
 junit4 = "4.13.2"
 gson = "2.14.0"
@@ -110,6 +111,8 @@ unifiedpush-connector-ui = { group = "org.unifiedpush.android", name = "connecto
 javax-inject = { group = "javax.inject", name = "javax.inject", version.ref = "javaxInject" }
 junit = { group = "junit", name = "junit", version.ref = "junit4" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+androidx-documentfile = { group = "androidx.documentfile", name = "documentfile", version = "1.0.1" }
+nanohttpd = { group = "org.nanohttpd", name = "nanohttpd", version.ref = "nanohttpd" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 
 [plugins]
