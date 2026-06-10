@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68d64eec_7e402b0e",
+        "filename": "jami-android/app/src/main/AndroidManifest.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T22:08:48Z",
+      "side": 1,
+      "message": "[Critical] Line 94: The Android 11 package visibility fix only declares image/video capture intents. Audio message recording usually resolves an ACTION_RECORD_SOUND / MediaStore audio capture intent, so audio recording apps can still be invisible on Android 11+, leaving the reported audio-message path unfixed. Add the audio capture query as well, using the same action used by ConversationFragment.\\n```suggestion\\n    \u003cqueries\u003e\\n        \u003cintent\u003e\\n            \u003caction android:name\u003d\\\"android.media.action.VIDEO_CAPTURE\\\" /\u003e\\n        \u003c/intent\u003e\\n        \u003cintent\u003e\\n            \u003caction android:name\u003d\\\"android.media.action.IMAGE_CAPTURE\\\" /\u003e\\n        \u003c/intent\u003e\\n        \u003cintent\u003e\\n            \u003caction android:name\u003d\\\"android.provider.MediaStore.RECORD_SOUND\\\" /\u003e\\n        \u003c/intent\u003e\\n    \u003c/queries\u003e\\n```",
+      "revId": "9ab01322ec20e9f0a65a4c9b2fe8c2c4520b46a0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af5e6d69_2e67eee7",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/GeneralAccountFragment.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T22:08:48Z",
+      "side": 1,
+      "message": "Line 116: The `maxSize` parameter is unused in `getMediaSizeSummary`, unlike `getFileSizeSummary`. This makes the helper misleading and suggests max-value handling may have been intended but omitted. Either remove the parameter or implement max handling if the upper bound should be displayed specially.\\n```suggestion\\n    private fun getMediaSizeSummary(size: Int): CharSequence {\\n        return if (size \u003d\u003d 0) {\\n            getText(R.string.account_message_size_unlimited)\\n        } else {\\n            Formatter.formatFileSize(requireContext(), size * 1000L * 1000L)\\n        }\\n    }\\n```",
+      "revId": "9ab01322ec20e9f0a65a4c9b2fe8c2c4520b46a0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2f85bcd_221f8b4b",
+        "filename": "jami-android/app/src/main/res/values-b+nn+NO/strings.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T22:08:48Z",
+      "side": 1,
+      "message": "Line 1: This newly added locale file is unrelated to the audio/video-message Android 11 fix and appears to contain only a small, partially translated subset of app strings. Adding an unrelated partial locale in this change increases review risk and can accidentally affect resource selection for Nynorsk users. Please remove it from this patch unless it is intentionally part of a separate translation update.",
+      "revId": "9ab01322ec20e9f0a65a4c9b2fe8c2c4520b46a0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
