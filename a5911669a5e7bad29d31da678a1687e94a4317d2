@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8dc9ad73_11444667",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T01:34:43Z",
+      "side": 1,
+      "message": "[Critical] Line 48: The delayed deactivation only checks currentConferences().isEmpty(). For a high-priority incoming-call push, the reconnect/invite setup can still be in progress and no conference may exist yet, so the 5 second timer can deactivate the account before the call is established. Gate deactivation on a stronger call/push-processing signal or cancel/extend the timer while an incoming call notification/session is pending.",
+      "revId": "a5911669a5e7bad29d31da678a1687e94a4317d2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff3553b1_0b280f53",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T01:34:43Z",
+      "side": 1,
+      "message": "Line 99: startedActivityCount is decremented without guarding against imbalance. If lifecycle callbacks are missed/reordered during process recreation or multi-window edge cases, the counter can become negative and background deactivation/foreground reactivation will stop working. Clamp the value and log unexpected imbalance, for example: val newCount \u003d (startedActivityCount - 1).coerceAtLeast(0); startedActivityCount \u003d newCount; if (newCount \u003d\u003d 0) scheduleBackgroundDeactivation().",
+      "revId": "a5911669a5e7bad29d31da678a1687e94a4317d2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f12925e9_c535409f",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T01:34:43Z",
+      "side": 1,
+      "message": "[Critical] Line 593: setAccountsActiveForBackground(true) activates every account unconditionally, including accounts that may have been inactive before the background optimization. This can override user/account state whenever the app foregrounds or receives a push. Store the accounts that were deactivated for background saving and only restore those, or check the persisted enabled/active state before calling JamiService.setAccountActive(..., true).",
+      "revId": "a5911669a5e7bad29d31da678a1687e94a4317d2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
