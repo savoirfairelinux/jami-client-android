@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36d0696c_02bd770f",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 20
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-10T12:57:31Z",
+      "side": 1,
+      "message": "Done in PS20: safe cast (as?) here and in onNewToken(), with a comment on the crash rationale.",
+      "parentUuid": "1108e56c_0bc74618",
+      "revId": "09681db9181e5ee43eb61c17595bd9a7ab47d471",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
