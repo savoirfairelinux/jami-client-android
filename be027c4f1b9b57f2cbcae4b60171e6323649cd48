@@ -1,0 +1,94 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e30a19e1_f753cb70",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 22
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-10T13:10:59Z",
+      "side": 1,
+      "message": "Done in PS22, on both paths: the setter else-branch restores immediately (token cleared), and PreferencesService.settings restores on the push-disable transition before setProxyEnabled(false) is queued — without that ordering the restore would see the proxy already off and drop the accounts as a terminal config change while still inactive.",
+      "parentUuid": "86a7985d_d9cac152",
+      "revId": "be027c4f1b9b57f2cbcae4b60171e6323649cd48",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ca60409_01100678",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 22
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-10T13:10:59Z",
+      "side": 1,
+      "message": "Done in PS22: after setPushNotificationConfig, the setter posts to the main handler and re-arms scheduleBackgroundDeactivation() if the app is not visible, covering the token-arrives-while-backgrounded cold-start case.",
+      "parentUuid": "6a5645e7_bba90ee9",
+      "revId": "be027c4f1b9b57f2cbcae4b60171e6323649cd48",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecb93646_e799d684",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 22
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-10T13:10:59Z",
+      "side": 1,
+      "message": "Done in PS22: isAppInForeground() is called once, before the foreground service is started, and the snapshot is reused for both the FGS decision and the restore path. Kept the ActivityManager-based check over ProcessLifecycleOwner here since Lifecycle.currentState is @MainThread and this runs on the FCM service thread.",
+      "parentUuid": "825af28a_faa04bfd",
+      "revId": "be027c4f1b9b57f2cbcae4b60171e6323649cd48",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14ab3291_4e948995",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 22
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-10T13:10:59Z",
+      "side": 1,
+      "message": "Done in PS22 with a narrower predicate than suggested: pt is protocol-guaranteed for call wakeups (the daemon always labels call connection requests audioCall/videoCall — jamiaccount.cpp), and unconditional reconnect on PRIORITY_HIGH would reintroduce the full DHT/SIP reconnect on every message push that an earlier review round removed (DHT values default to high priority). PS22 treats a high-priority push with pt entirely absent as call-like (defensive against a proxy failing to copy the type), while explicit non-call pt values (sip, git…) keep the message path.",
+      "parentUuid": "d78e13d8_d5d8ffbb",
+      "revId": "be027c4f1b9b57f2cbcae4b60171e6323649cd48",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fcca1fc2_5e65e67f",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 22
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-10T13:10:59Z",
+      "side": 1,
+      "message": "Done in PS22: the id is recorded only after JamiService.setAccountActive(id, false) returns, so a throwing daemon call leaves no stale restore intent.",
+      "parentUuid": "168fba4f_d8e44d08",
+      "revId": "be027c4f1b9b57f2cbcae4b60171e6323649cd48",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
