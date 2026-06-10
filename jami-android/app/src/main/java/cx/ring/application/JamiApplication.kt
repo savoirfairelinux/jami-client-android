@@ -41,6 +41,7 @@ import cx.ring.service.DRingService
 import cx.ring.service.JamiJobService
 import cx.ring.service.PeerTunnelForegroundService
 import cx.ring.linkpreview.LinkPreview
+import cx.ring.services.AndroidExposedServicesService
 import cx.ring.services.CallServiceImpl.Companion.CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.views.AvatarFactory
@@ -100,6 +101,9 @@ abstract class JamiApplication : Application() {
 
     @Inject lateinit
     var peerServicesService: PeerServicesService
+
+    @Inject lateinit
+    var mExposedServicesService: ExposedServicesService
 
     private val ringerModeListener: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -168,6 +172,8 @@ abstract class JamiApplication : Application() {
 
                 // load accounts from Daemon
                 mAccountService.loadAccountsFromDaemon(mPreferencesService.hasNetworkConnected())
+                // Sync embedded HTTP servers
+                (mExposedServicesService as? AndroidExposedServicesService)?.syncAllAccounts()
                 if (mPreferencesService.settings.enablePushNotifications) {
                     pushToken.let { token -> if (token != null) mAccountService.setPushNotificationConfig(token.first, token.second, pushPlatform) }
                 } else {

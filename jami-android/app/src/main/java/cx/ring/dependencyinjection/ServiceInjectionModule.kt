@@ -85,6 +85,12 @@ object ServiceInjectionModule {
 
     @Provides
     @Singleton
+    fun provideExposedServicesService(@ApplicationContext appContext: Context, accountService: AccountService): ExposedServicesService {
+        return AndroidExposedServicesService(accountService, appContext)
+    }
+
+    @Provides
+    @Singleton
     fun provideDaemonService(deviceRuntimeService: DeviceRuntimeService,
                              @Named("DaemonExecutor") executor: ScheduledExecutorService,
                              callService: CallService,

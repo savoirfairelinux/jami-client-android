@@ -153,6 +153,9 @@ class SettingsFragment :
             settingsVideoLayout.setOnClickListener {
                 goToVideoSettings()
             }
+            settingsSharedServicesLayout.setOnClickListener {
+                goToSharedServicesSettings()
+            }
 
             val singleItems = arrayOf(
                 getString(R.string.notification_private),
@@ -353,6 +356,19 @@ class SettingsFragment :
         backPressedCallback.isEnabled = true
     }
 
+    private fun goToSharedServicesSettings(accountId: String? = "") {
+        val binding = binding ?: return
+        val content = ExposedServicesSettingsFragment.newInstance(accountId ?: "")
+        childFragmentManager
+            .beginTransaction()
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .replace(R.id.fragment_container, content, SHARED_SERVICES_SETTINGS_TAG)
+            .addToBackStack(SHARED_SERVICES_SETTINGS_TAG).commit()
+        binding.fragmentContainer.isVisible = true
+        binding.donateButton.isVisible = false
+        backPressedCallback.isEnabled = true
+    }
+
     fun goToExtensionSettings(extensionDetails: ExtensionDetails) {
         val content = ExtensionSettingsFragment.newInstance(extensionDetails)
         val fragmentTransaction = childFragmentManager
@@ -494,6 +510,7 @@ class SettingsFragment :
         const val EXTENSIONS_LIST_SETTINGS_TAG = "ExtensionsListSettings"
         const val EXTENSION_SETTINGS_TAG = "ExtensionSettings"
         const val EXTENSION_PATH_PREFERENCE_TAG = "ExtensionPathPreference"
+        const val SHARED_SERVICES_SETTINGS_TAG = "SharedServicesSettings"
     }
 }
 
