@@ -575,19 +575,16 @@ class AccountService(
     }
 
     /**
-     * Sets the activation state of all the accounts in the Daemon
+     * Sets the activation state of all the accounts in the Daemon.
+     * When push notifications are available (proxy/FCM configured), accounts can safely go
+     * inactive in the background — the proxy handles incoming notifications and reactivation
+     * happens on push receipt. Keeping proxy accounts always active was causing battery drain.
      */
     fun setAccountsActive(active: Boolean) {
         mExecutor.execute {
             Log.i(TAG, "setAccountsActive() running… $active")
             for (a in mAccountList) {
-                // If the proxy is enabled we can considered the account
-                // as always active
-                if (a.isDhtProxyEnabled) {
-                    JamiService.setAccountActive(a.accountId, true)
-                } else {
-                    JamiService.setAccountActive(a.accountId, active)
-                }
+                JamiService.setAccountActive(a.accountId, active)
             }
         }
     }
