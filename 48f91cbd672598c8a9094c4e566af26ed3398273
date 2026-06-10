@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "97bd27c1_9cb619b9",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 15
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-10T12:36:00Z",
+      "side": 1,
+      "message": "Done in PS15: pending callback removed synchronously before the post (Handler.removeCallbacks is thread-safe), timestamps updated and deactivation re-armed inside the main-thread block, with a second removeCallbacks there to cover a lifecycle re-schedule racing between the two.",
+      "parentUuid": "156761b9_d18fecc9",
+      "revId": "48f91cbd672598c8a9094c4e566af26ed3398273",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bae31d34_432b232b",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-06-10T12:34:46Z",
       "side": 1,
       "message": "[🟡 Suggestions - Improvements to consider] Line 126: isDhtProxyCallWakeup() only recognizes lowercase exact values. If the proxy ever sends the documented type with different casing, or adds another call-like value, the wake-up is treated as a normal push and skips the reconnect path. Since this gates incoming-call reliability, normalize the field before matching and preferably centralize these payload constants with the producer. Example:\n```suggestion\nreturn pushType.splitToSequence(\u0027,\u0027)\n    .map { it.trim().lowercase(Locale.ROOT) }\n    .any { it \u003d\u003d \"audiocall\" || it \u003d\u003d \"videocall\" }\n```",
+      "revId": "48f91cbd672598c8a9094c4e566af26ed3398273",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11149184_91fa60ea",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 15
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-10T12:36:00Z",
+      "side": 1,
+      "message": "Done in PS15: setAccountActive(id, false) removes the id from backgroundDeactivatedAccounts inside the executor task, so explicit deactivations are never overridden by restoreProxyAccountsAfterBackground().",
+      "parentUuid": "fa67f335_a57954af",
       "revId": "48f91cbd672598c8a9094c4e566af26ed3398273",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
