@@ -1,0 +1,58 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a706f539_7ec5f7bf",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-10T12:30:56Z",
+      "side": 1,
+      "message": "Done in PS14: the call-active branch reschedules with CALL_ACTIVE_RECHECK_MS \u003d 30s instead of the 5s base delay. The only cost is deactivation landing up to 30s after hangup, which is negligible against the wakeups saved during long calls.",
+      "parentUuid": "fa69bbb0_546cfbaa",
+      "revId": "5ca2c376353b9babddaf6182e5d0298a3e2d9746",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ab1ba5d_ee66459a",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-10T12:30:56Z",
+      "side": 1,
+      "message": "Done in PS14: call pushes (isCallNotification or DHT proxy call wakeup) now always take the restore/reconnect path; only non-call pushes are gated on push availability. Accounts possibly left active by a stale call push are recovered by the final scheduleBackgroundDeactivation() and the unconditional foreground restore.",
+      "parentUuid": "70c96a15_64eea558",
+      "revId": "5ca2c376353b9babddaf6182e5d0298a3e2d9746",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed2fbee6_86566d3d",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-10T12:30:56Z",
+      "side": 1,
+      "message": "Done in PS14: ids are removed from backgroundDeactivatedAccounts only after a successful setAccountActive(id, true); transient missing/disabled/proxy-off states keep the id recorded for a later attempt. removeAccount() now drops the id explicitly as the terminal case.",
+      "parentUuid": "c1c72262_aad654b8",
+      "revId": "5ca2c376353b9babddaf6182e5d0298a3e2d9746",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
