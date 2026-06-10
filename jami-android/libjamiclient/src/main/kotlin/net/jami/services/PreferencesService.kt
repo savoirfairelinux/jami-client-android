@@ -42,6 +42,15 @@ abstract class PreferencesService(
             val allowPush = settings.enablePushNotifications
             val previousSettings = userSettings
             if (previousSettings == null || previousSettings.enablePushNotifications != allowPush) {
+                if (!allowPush) {
+                    // Restore accounts deactivated by the background battery optimization
+                    // before the proxy is disabled below: once isDhtProxyEnabled turns
+                    // false the restore path treats them as a terminal configuration
+                    // change and would drop them while still inactive. FIFO ordering on
+                    // the daemon executor guarantees this restore still sees the proxy
+                    // enabled.
+                    mAccountService.restoreProxyAccountsAfterBackground()
+                }
                 val token = mDeviceService.pushToken
                 mAccountService.setPushNotificationConfig(token?.first ?: "", token?.second ?: "", mDeviceService.pushPlatform)
                 mAccountService.setProxyEnabled(allowPush)
