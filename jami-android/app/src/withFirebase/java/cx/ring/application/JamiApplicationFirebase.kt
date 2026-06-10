@@ -16,7 +16,14 @@
  */
 package cx.ring.application
 
+import android.os.Handler
+import android.os.Looper
+import android.os.SystemClock
 import android.util.Log
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.RemoteMessage
@@ -29,6 +36,112 @@ import java.util.Locale
 class JamiApplicationFirebase : JamiApplication() {
     override val pushPlatform: String = PUSH_PLATFORM
 
+    private val backgroundHandler = Handler(Looper.getMainLooper())
+
+    // Process-level foreground state, from ProcessLifecycleOwner: STARTED or above means
+    // some activity is visible. Must be read on the main thread — all callers here run
+    // on backgroundHandler (main looper).
+    private fun isAppVisible(): Boolean =
+        ProcessLifecycleOwner.get().lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
+
+    // Timestamps (SystemClock.elapsedRealtime) of the last push received in background,
+    // used to keep accounts active long enough for the daemon to fully reconnect through
+    // the DHT proxy and receive the incoming call or sync messages. An incoming call only
+    // becomes visible to hasActiveCalls() once negotiation reaches CallService, which takes
+    // well over the base deactivation delay after a cold proxy reconnection.
+    // Only accessed on the main thread (backgroundHandler) so the pair is always coherent.
+    private var lastPushTime = 0L
+    private var lastCallPushTime = 0L
+
+    private val deactivateRunnable = Runnable {
+        // Still in foreground: nothing to do.
+        if (isAppVisible()) return@Runnable
+        // Push became unavailable while backgrounded (user disabled it, token cleared):
+        // the deactivation model is no longer viable — without FCM wakeups the recorded
+        // accounts would stay unreachable until the next foreground event. Restore them
+        // and fall back to the historical always-connected background behavior.
+        if (!mPreferencesService.settings.enablePushNotifications || pushToken == null) {
+            Log.d(TAG, "Push unavailable while backgrounded — restoring accounts")
+            mAccountService.restoreProxyAccountsAfterBackground()
+            return@Runnable
+        }
+        val now = SystemClock.elapsedRealtime()
+        val graceRemaining = maxOf(
+            lastCallPushTime + CALL_PUSH_GRACE_MS,
+            lastPushTime + PUSH_GRACE_MS
+        ) - now
+        when {
+            // An active or pending call (any non-terminal state: RINGING, CONNECTING,
+            // CURRENT…): keep accounts active and check again later, so they still get
+            // deactivated once the call ends even if no lifecycle event fires. Recheck
+            // at a relaxed interval: waking the main thread every few seconds for the
+            // whole duration of a long call would defeat the battery goal; the only
+            // cost is deactivation landing up to CALL_ACTIVE_RECHECK_MS after hangup.
+            mCallService.hasActiveCalls() -> scheduleBackgroundDeactivation(CALL_ACTIVE_RECHECK_MS)
+            // A push was recently received: the daemon may still be reconnecting and the
+            // incoming call/message may not have reached the client yet. Wait out the
+            // grace window instead of killing the negotiation midway.
+            graceRemaining > 0 -> scheduleBackgroundDeactivation(graceRemaining)
+            else -> {
+                Log.d(TAG, "App went to background with push enabled — deactivating accounts")
+                mAccountService.deactivateProxyAccountsForBackground()
+            }
+        }
+    }
+
+    /**
+     * Handles a push received while in background: opens the deactivation grace window,
+     * queues the account restore and optional reconnect, and re-arms the deactivation
+     * check — all from the main thread, in that order. Serializing the whole sequence
+     * here makes the ordering deterministic: the grace timestamps are set before the
+     * restore is queued, and the deactivation timer is armed only after. Since the
+     * daemon executor is a single FIFO queue, any deactivation the re-armed runnable
+     * later enqueues is guaranteed to execute after the restore queued here.
+     */
+    fun onBackgroundPushReceived(isCallPush: Boolean, triggerReconnect: Boolean) {
+        // Capture the receipt time now, and synchronously remove any pending — possibly
+        // already-due — deactivation before posting: a due runnable sitting in the looper
+        // queue would otherwise run ahead of the posted update, evaluate stale timestamps,
+        // and deactivate the accounts this push is about to restore, killing the incoming
+        // call negotiation.
+        val now = SystemClock.elapsedRealtime()
+        backgroundHandler.removeCallbacks(deactivateRunnable)
+        backgroundHandler.post {
+            lastPushTime = now
+            if (isCallPush) lastCallPushTime = now
+            // Restore accounts deactivated by the background optimization: receiving an
+            // FCM push implies the network is available, so don't gate this on
+            // possibly-stale connectivity state. Accounts deliberately disabled by the
+            // user are not in the restored set and stay inactive.
+            mAccountService.restoreProxyAccountsAfterBackground()
+            // connectivityChanged triggers a full DHT/SIP reconnect — only requested for
+            // call pushes, where low latency matters.
+            if (triggerReconnect) hardwareService.connectivityChanged(true)
+            // Arm the deactivation check only after the restore has been queued, with a
+            // second remove covering a lifecycle re-schedule racing in between.
+            backgroundHandler.removeCallbacks(deactivateRunnable)
+            backgroundHandler.postDelayed(deactivateRunnable, BACKGROUND_DEACTIVATION_DELAY_MS)
+        }
+    }
+
+    /**
+     * Schedules a delayed background deactivation of accounts.
+     * Called by the process lifecycle observer when the app leaves the foreground, and by
+     * the FCM message handler after processing a push in the background, so that accounts
+     * reactivated for push handling are not left permanently active. The runnable
+     * re-schedules itself while a call is active or a push grace window is open.
+     */
+    fun scheduleBackgroundDeactivation(delayMs: Long = BACKGROUND_DEACTIVATION_DELAY_MS) {
+        // Serialize through the main looper: this is called from the FCM service thread
+        // too, and mutating the callback queue directly from there would make ordering
+        // with lifecycle callbacks and onBackgroundPushReceived() dependent on cross-thread
+        // enqueue timing (a stale re-schedule could cancel a more specific grace delay).
+        backgroundHandler.post {
+            backgroundHandler.removeCallbacks(deactivateRunnable)
+            backgroundHandler.postDelayed(deactivateRunnable, delayMs)
+        }
+    }
+
     override var pushToken: Pair<String, String>? = null
         set(token) {
             //Log.d(TAG, "setPushToken: $token");
@@ -39,6 +152,24 @@ class JamiApplicationFirebase : JamiApplication() {
                 mAccountService.setPushNotificationToken("")
             }
         }
+
+    // Held in a property so a repeated onCreate() (tests, custom initialization paths)
+    // cannot register duplicate observers: addObserver() with the same instance is a no-op.
+    private val processLifecycleObserver = object : DefaultLifecycleObserver {
+        override fun onStart(owner: LifecycleOwner) {
+            // Cancel any pending deactivation — app is back in foreground.
+            backgroundHandler.removeCallbacks(deactivateRunnable)
+            // Unconditional restore: it only touches the recorded background-deactivated
+            // set, so it is a no-op when nothing was deactivated. Gating it on network,
+            // push setting or token state could leave accounts inactive indefinitely if
+            // that state changed while the app was in background.
+            Log.d(TAG, "App came to foreground — reactivating accounts")
+            mAccountService.restoreProxyAccountsAfterBackground()
+        }
+        override fun onStop(owner: LifecycleOwner) {
+            scheduleBackgroundDeactivation()
+        }
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -60,6 +191,16 @@ class JamiApplicationFirebase : JamiApplication() {
         } catch (e: Exception) {
             Log.e(TAG, "Can't start service", e)
         }
+
+        // When push notifications are available (FCM token set + enabled), the daemon does not
+        // need to maintain its own DHT/SIP connections in the background — the proxy and FCM
+        // handle incoming call/message delivery. Deactivate accounts on background to save
+        // battery, and reactivate when the app comes back to the foreground.
+        // ProcessLifecycleOwner replaces a manual started-activity counter: it natively
+        // handles configuration changes and activity-to-activity transitions (onStop is
+        // dispatched only after a delay once the last activity stops), so a reordered or
+        // unbalanced stop event cannot deactivate accounts while the app is still visible.
+        ProcessLifecycleOwner.get().lifecycle.addObserver(processLifecycleObserver)
     }
 
     private fun getCurrentTimestamp(withMilliseconds: Boolean = false): String {
@@ -84,6 +225,15 @@ class JamiApplicationFirebase : JamiApplication() {
 
     companion object {
         private const val PUSH_PLATFORM = "android"
+        private const val BACKGROUND_DEACTIVATION_DELAY_MS = 5_000L
+        // Recheck interval while a call is active, deliberately less aggressive than
+        // the base delay to avoid periodic main-thread wakeups during long calls.
+        private const val CALL_ACTIVE_RECHECK_MS = 30_000L
+        // Grace windows after a background push during which accounts are kept active.
+        // Cold reconnection (proxy resolve + resubscribe + ICE + call signaling) routinely
+        // takes tens of seconds; calls get a longer window than plain message pushes.
+        private const val PUSH_GRACE_MS = 30_000L
+        private const val CALL_PUSH_GRACE_MS = 60_000L
         private val TAG = JamiApplicationFirebase::class.simpleName
     }
 }

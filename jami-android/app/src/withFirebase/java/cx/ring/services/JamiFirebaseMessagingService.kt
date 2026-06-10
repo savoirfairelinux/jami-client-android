@@ -28,6 +28,7 @@ import cx.ring.application.JamiApplication
 import cx.ring.application.JamiApplicationFirebase
 import cx.ring.service.PushForegroundService
 import kotlinx.coroutines.*
+import java.util.Locale
 
 class JamiFirebaseMessagingService : FirebaseMessagingService() {
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
@@ -67,19 +68,75 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
             }
         }
 
-        if (remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH && !isAppInForeground()) {
-            val app = JamiApplication.instance as JamiApplicationFirebase?
-            app?.hardwareService?.connectivityChanged(true)
+        val appInForeground = isAppInForeground()
+        // Safe cast: a null or non-Firebase application instance must not crash the FCM
+        // service — a push delivery would otherwise terminate the process before the
+        // accounts are restored or the notification is processed.
+        val app = JamiApplication.instance as? JamiApplicationFirebase
+
+        if (!appInForeground && app != null) {
+            val isCallPush = isCallNotification || isDhtProxyCallWakeup(remoteMessage)
+            // Call pushes always restore/reconnect: FCM deliveries can trail a
+            // settings/token transition, and dropping one here would process the call
+            // wakeup while proxy accounts are still inactive — a missed incoming call.
+            // Non-call pushes keep the push-availability gate of the deactivation
+            // runnable, so a stale delivery after the user disabled push cannot
+            // reactivate accounts that deactivation would then refuse to touch. Any
+            // residue from the call-push path is bounded: the final scheduling below
+            // re-arms deactivation, and the unconditional foreground restore recovers
+            // the recorded set regardless of push state.
+            if (isCallPush
+                || (app.mPreferencesService.settings.enablePushNotifications && app.pushToken != null)
+            ) {
+                // Single serialized entry point: grace window, account restore, optional
+                // reconnect and deactivation re-arm are ordered deterministically on the
+                // main thread (see onBackgroundPushReceived), so the deactivation timer
+                // cannot fire before the restore is queued on the daemon executor.
+                // connectivityChanged (full DHT/SIP reconnect) is only requested for call
+                // pushes, where low latency matters. Message/sync pushes are also delivered
+                // with high priority (DHT values default to high), so priority alone must
+                // not trigger it: the account restore is enough for them to sync.
+                app.onBackgroundPushReceived(
+                    isCallPush = isCallPush,
+                    triggerReconnect = isCallPush
+                            && remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH
+                )
+            }
         }
 
         serviceScope.launch {
             try {
-                val app = JamiApplication.instance as JamiApplicationFirebase?
                 app?.onMessageReceived(remoteMessage)
             } catch (e: Exception) {
                 Log.e(TAG, "Error in processing message", e)
+            } finally {
+                // If the app is still in background after handling the push, schedule
+                // deactivation so accounts reactivated above are not left active indefinitely.
+                if (!appInForeground) {
+                    app?.scheduleBackgroundDeactivation()
+                }
             }
         }
+    }
+
+    /**
+     * Classifies a DHT proxy call wakeup from a positive signal only: the proxy copies
+     * the connection request type into the "pt" field ("audioCall"/"videoCall" for
+     * calls, "sip"/"git"… for messaging and sync channels), as a comma-separated list
+     * of exact values when the push covers several. FCM priority is not used as fallback:
+     * regular DHT values default to high priority too, so payloads without "pt" would
+     * all be misclassified as calls and needlessly get the longer call grace window.
+     * Non-call pushes misclassified as calls keep accounts active for up to 60s;
+     * a call push lacking "pt" still gets the standard 30s grace window, which covers
+     * the measured negotiation time several times over.
+     */
+    private fun isDhtProxyCallWakeup(remoteMessage: RemoteMessage): Boolean {
+        val pushType = remoteMessage.data["pt"] ?: return false
+        // Normalize case: this gates incoming-call reliability, so a producer-side
+        // casing change must not silently downgrade call wakeups to plain pushes.
+        return pushType.splitToSequence(',')
+            .map { it.trim().lowercase(Locale.ROOT) }
+            .any { it == "audiocall" || it == "videocall" }
     }
 
     private fun isAppInForeground(): Boolean {
@@ -95,7 +152,7 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(refreshedToken: String) {
         Log.w(TAG, "onNewToken $refreshedToken")
-        val app = JamiApplication.instance as JamiApplicationFirebase?
+        val app = JamiApplication.instance as? JamiApplicationFirebase
         app?.pushToken = Pair(refreshedToken, "")
     }
 
