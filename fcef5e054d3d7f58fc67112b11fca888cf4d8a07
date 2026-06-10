@@ -35,6 +35,57 @@
       "parentUuid": "03aaf1d3_bbc73e0f",
       "revId": "fcef5e054d3d7f58fc67112b11fca888cf4d8a07",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1927544_1b729a5d",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 18
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T12:49:29Z",
+      "side": 1,
+      "message": "Line 180: The lifecycle observer is added every time `onCreate()` runs, but there is no guard against duplicate registration if the application object is recreated in tests or by custom initialization paths. Duplicate observers would schedule duplicate restore/deactivation work and make timing-dependent behavior harder to reason about. Store the observer in a property or guard registration with a boolean.",
+      "revId": "fcef5e054d3d7f58fc67112b11fca888cf4d8a07",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6dbcc3a_08c498b7",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 18
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T12:49:29Z",
+      "side": 1,
+      "message": "[Critical] Line 86: `notePushReceived()` is called before `restoreProxyAccountsAfterBackground()`, but both enqueue work on different executors/loopers. The deactivation grace timestamp is protected on the main looper, while account restoration is queued on the daemon executor, so under load the 5-second deactivation runnable can fire before restoration/reconnection actually starts. That can immediately deactivate accounts again and still drop the incoming call negotiation. Consider scheduling the grace window after the restore command is queued/completed, or expose a single application-level method that serializes note+restore+deactivation scheduling in a deterministic order.",
+      "revId": "fcef5e054d3d7f58fc67112b11fca888cf4d8a07",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85570fde_05f7407e",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 18
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T12:49:29Z",
+      "side": 1,
+      "message": "[Critical] Line 611: The restore path unconditionally reactivates any recorded proxy-enabled account without checking whether the account was explicitly deactivated while the app was in the background. `setAccountActive(accountId, false)` removes the id from `backgroundDeactivatedAccounts`, but that operation is queued on the same executor; if a foreground/push restore was queued first, the restore can run before the explicit deactivation and briefly/reactively undo the user\u0027s requested inactive state. Check the current active/enabled state or make explicit user deactivation synchronously mark the id before queuing daemon work so a stale restore cannot win the queue ordering.",
+      "revId": "fcef5e054d3d7f58fc67112b11fca888cf4d8a07",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
