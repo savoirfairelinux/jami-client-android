@@ -69,6 +69,11 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
 
         if (remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH && !isAppInForeground()) {
             val app = JamiApplication.instance as JamiApplicationFirebase?
+            // Reactivate daemon connections so the call can be negotiated,
+            // since accounts may have been deactivated while the app was in background.
+            if (app?.mPreferencesService?.hasNetworkConnected() == true) {
+                app.mAccountService.setAccountsActive(true)
+            }
             app?.hardwareService?.connectivityChanged(true)
         }
 

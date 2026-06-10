@@ -16,6 +16,8 @@
  */
 package cx.ring.application
 
+import android.app.Activity
+import android.os.Bundle
 import android.util.Log
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
@@ -28,6 +30,10 @@ import java.util.Locale
 @HiltAndroidApp
 class JamiApplicationFirebase : JamiApplication() {
     override val pushPlatform: String = PUSH_PLATFORM
+
+    // Tracks how many activities are currently started (visible to user).
+    // When this drops to 0 the app has gone fully to the background.
+    private var startedActivityCount = 0
 
     override var pushToken: Pair<String, String>? = null
         set(token) {
@@ -60,6 +66,33 @@ class JamiApplicationFirebase : JamiApplication() {
         } catch (e: Exception) {
             Log.e(TAG, "Can't start service", e)
         }
+
+        // When push notifications are available (FCM token set + enabled), the daemon does not
+        // need to maintain its own DHT/SIP connections in the background — the proxy and FCM
+        // handle incoming call/message delivery. Deactivate accounts on background to save
+        // battery, and reactivate when the app comes back to the foreground.
+        registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
+            override fun onActivityStarted(activity: Activity) {
+                if (startedActivityCount++ == 0 && mPreferencesService.hasNetworkConnected()) {
+                    Log.d(TAG, "App came to foreground — reactivating accounts")
+                    mAccountService.setAccountsActive(true)
+                }
+            }
+            override fun onActivityStopped(activity: Activity) {
+                if (--startedActivityCount == 0
+                    && mPreferencesService.settings.enablePushNotifications
+                    && pushToken != null
+                ) {
+                    Log.d(TAG, "App went to background with push enabled — deactivating accounts")
+                    mAccountService.setAccountsActive(false)
+                }
+            }
+            override fun onActivityCreated(activity: Activity, bundle: Bundle?) {}
+            override fun onActivityResumed(activity: Activity) {}
+            override fun onActivityPaused(activity: Activity) {}
+            override fun onActivitySaveInstanceState(activity: Activity, bundle: Bundle) {}
+            override fun onActivityDestroyed(activity: Activity) {}
+        })
     }
 
     private fun getCurrentTimestamp(withMilliseconds: Boolean = false): String {
