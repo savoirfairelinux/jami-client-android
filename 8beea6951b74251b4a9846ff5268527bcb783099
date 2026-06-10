@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02fe66c8_be1b1490",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T10:39:48Z",
+      "side": 1,
+      "message": "[Critical] Line 150: The background transition deactivates every DHT-proxy-enabled account without checking whether the account was already deliberately disabled by the user. `setAccountsActiveForBackground(true)` later reactivates all proxy-enabled accounts, so an account that was disabled before the app went to background can be unintentionally brought online after foreground return or a push. Preserve each account\u0027s prior daemon/user activation state before background deactivation and restore only those that were active. For example, track the account ids deactivated by this feature and only reactivate that set:\n```suggestion\n// before deactivation, record only proxy accounts that are currently active\nmAccountService.deactivateProxyAccountsForBackground()\n\n// on foreground/push, restore only accounts deactivated by this path\nmAccountService.restoreProxyAccountsAfterBackground()\n```",
+      "revId": "8beea6951b74251b4a9846ff5268527bcb783099",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06dc3e08_a9cfbb27",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T10:39:48Z",
+      "side": 1,
+      "message": "Line 94: `isDhtProxyCallWakeup` treats a missing `pt` field plus high original priority as a call push. The comment notes message-channel requests may also be high priority, so minimal non-call high-priority payloads will get the longer call grace window and keep accounts active for up to 60s unnecessarily. Prefer a positive call signal only, or fall back to high priority only when the payload is known to be from the DHT proxy call wakeup format.\n```suggestion\nreturn pushType?.let { it \u003d\u003d \"audioCall\" || it \u003d\u003d \"videoCall\" } \u003d\u003d true\n```",
+      "revId": "8beea6951b74251b4a9846ff5268527bcb783099",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9311cce9_91463862",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T10:39:48Z",
+      "side": 1,
+      "message": "[Critical] Line 599: `setAccountsActiveForBackground(true)` activates all proxy-enabled accounts unconditionally. This violates the comment\u0027s claim that deliberate user-set inactive state is preserved: inactive proxy accounts are modified by this path and become active. The background optimization needs stateful restore semantics rather than a blanket boolean setter. Store the activation state before deactivation, or restrict reactivation to accounts this code previously deactivated.",
+      "revId": "8beea6951b74251b4a9846ff5268527bcb783099",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
