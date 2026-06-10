@@ -1,6 +1,40 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a3736fb_b52e9314",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 17
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T12:44:24Z",
+      "side": 1,
+      "message": "[🟡 Suggestions] Line 69: Call pushes received after push has been disabled or the token has been cleared can leave proxy accounts permanently active in the background. JamiFirebaseMessagingService restores accounts for call pushes unconditionally, but this runnable exits through the push-unavailable branch by restoring and returning instead of deactivating or clearing the background optimization state. That defeats the battery-saving behavior until the next foreground/lifecycle transition. Make the FCM restore path and deactivation policy consistent: either do not restore when push is unavailable, or have this branch deactivate/clear any accounts restored for the stale push after the grace window.\n```suggestion\nif (!mPreferencesService.settings.enablePushNotifications || pushToken \u003d\u003d null) {\n    Log.d(TAG, \"Push unavailable while backgrounded — deactivating restored proxy accounts\")\n    mAccountService.deactivateProxyAccountsForBackground()\n    return@Runnable\n}\n```",
+      "revId": "2ed6d1f663cef59f3913a4888fe6bd7f8a35c64b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03aaf1d3_bbc73e0f",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 17
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T12:44:24Z",
+      "side": 1,
+      "message": "[🟡 Suggestions] Line 177: The activity counter can undercount during configuration changes because every onActivityStopped decrements, even when another activity has already started. If the counter is accidentally clamped to 0, background deactivation may run while the app is still visible. Android\u0027s recommended process foreground tracking also considers started/resumed ordering and configuration changes. Track activity identities or use ProcessLifecycleOwner so a single reordered stop cannot deactivate active accounts while the user is in the app.\n```suggestion\nProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {\n    override fun onStart(owner: LifecycleOwner) {\n        backgroundHandler.removeCallbacks(deactivateRunnable)\n        Log.d(TAG, \"App came to foreground — reactivating accounts\")\n        mAccountService.restoreProxyAccountsAfterBackground()\n    }\n\n    override fun onStop(owner: LifecycleOwner) {\n        scheduleBackgroundDeactivation()\n    }\n})\n```",
+      "revId": "2ed6d1f663cef59f3913a4888fe6bd7f8a35c64b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "6dd1297f_926d0c4e",
