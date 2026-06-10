@@ -28,18 +28,25 @@ import cx.ring.application.JamiApplication
 import cx.ring.application.JamiApplicationFirebase
 import cx.ring.service.PushForegroundService
 import kotlinx.coroutines.*
+import java.util.Locale
 
 class JamiFirebaseMessagingService : FirebaseMessagingService() {
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        // Even if wakeLock is deprecated, without this part, some devices are blocking
+        // during the call negotiation. So, re-add this code to avoid to block here.
+        // The 10s timeout is only a safety net: the lock is released as soon as the
+        // message is fully processed (typically well under a second). Holding it for
+        // the full 10s on every push — measured at ~20 pushes/min with stale proxy
+        // sessions — kept the device awake over an hour per day for no benefit.
+        var wakeLock: PowerManager.WakeLock? = null
         try {
-            // Even if wakeLock is deprecated, without this part, some devices are blocking
-            // during the call negotiation. So, re-add this code to avoid to block here.
             val pm = getSystemService(POWER_SERVICE) as PowerManager
-            val wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "wake:push")
-            wl.setReferenceCounted(false)
-            wl.acquire((10 * 1000).toLong())
+            wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "wake:push").apply {
+                setReferenceCounted(false)
+                acquire((10 * 1000).toLong())
+            }
         } catch (e: Exception) {
             Log.w(TAG, "Can't acquire wake lock", e)
         }
@@ -49,10 +56,15 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
                 || pushType.contains("videoCall"))
                 && remoteMessage.priority == RemoteMessage.PRIORITY_HIGH
 
+        // Snapshot UI visibility once, before the foreground service below can start:
+        // a started FGS promotes the process to IMPORTANCE_FOREGROUND, so a later
+        // check could report foreground while the UI is actually backgrounded and
+        // skip the account-restore path, missing the incoming call.
+        val appInForeground = isAppInForeground()
+
         if (isCallNotification) {
             try {
-                val isForeground = isAppInForeground()
-                if (!isForeground) {
+                if (!appInForeground) {
                     Handler(Looper.getMainLooper()).post {
                         try {
                             val intent = Intent(this, PushForegroundService::class.java)
@@ -67,19 +79,81 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
             }
         }
 
-        if (remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH && !isAppInForeground()) {
-            val app = JamiApplication.instance as JamiApplicationFirebase?
-            app?.hardwareService?.connectivityChanged(true)
+        // Safe cast: a null or non-Firebase application instance must not crash the FCM
+        // service — a push delivery would otherwise terminate the process before the
+        // accounts are restored or the notification is processed.
+        val app = JamiApplication.instance as? JamiApplicationFirebase
+
+        if (!appInForeground && app != null) {
+            // Positive call signal only, from the protocol-guaranteed pt field: the
+            // daemon always labels call connection requests audioCall/videoCall, so a
+            // priority-based fallback is not needed — and would misclassify regular DHT
+            // message pushes (high priority by default, often without pt) as calls,
+            // triggering a full reconnect on every message and defeating the battery
+            // optimization. A call push lacking pt still gets the standard grace window
+            // and account restore below, which covers negotiation comfortably.
+            val isCallPush = isCallNotification || isDhtProxyCallWakeup(remoteMessage)
+            // Single serialized entry point: the push-availability gate, grace window,
+            // account restore, optional reconnect and deactivation re-arm are all
+            // evaluated on the main thread (see onBackgroundPushReceived) — preference
+            // and token state must not be read from this FCM thread, where they could
+            // race a settings/token transition. connectivityChanged (full DHT/SIP
+            // reconnect) is only requested for call pushes, where low latency matters:
+            // message/sync pushes are also delivered with high priority (DHT values
+            // default to high), so priority alone must not trigger it.
+            app.onBackgroundPushReceived(
+                isCallPush = isCallPush,
+                triggerReconnect = isCallPush
+                        && remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH
+            )
         }
 
         serviceScope.launch {
             try {
-                val app = JamiApplication.instance as JamiApplicationFirebase?
                 app?.onMessageReceived(remoteMessage)
             } catch (e: Exception) {
                 Log.e(TAG, "Error in processing message", e)
+            } finally {
+                // If the app is still in background after handling the push, schedule
+                // deactivation so accounts reactivated above are not left active indefinitely.
+                if (!appInForeground) {
+                    app?.scheduleBackgroundDeactivation()
+                }
+                // Non-call pushes are fully handled here: release immediately rather than
+                // letting the 10s safety timeout burn wakelock time on every push (measured
+                // at ~20 pushes/min: that timeout alone kept the device awake >1h/day).
+                // Call pushes keep the lock until timeout — the historical protection for
+                // devices that block during call negotiation after the CPU drops.
+                val isCallPush = isCallNotification || isDhtProxyCallWakeup(remoteMessage)
+                if (!isCallPush) {
+                    try {
+                        wakeLock?.let { if (it.isHeld) it.release() }
+                    } catch (e: Exception) {
+                        Log.w(TAG, "Can't release wake lock", e)
+                    }
+                }
             }
         }
+    }
+
+    /**
+     * Classifies a DHT proxy call wakeup from a positive signal only: the proxy copies
+     * the connection request type into the "pt" field ("audioCall"/"videoCall" for
+     * calls, "sip"/"git"… for messaging and sync channels), as a comma-separated list
+     * of exact values when the push covers several. FCM priority is not used as fallback:
+     * regular DHT values default to high priority too, so payloads without "pt" would
+     * all be misclassified as calls and needlessly get the longer call grace window.
+     * Non-call pushes misclassified as calls keep accounts active for up to 60s;
+     * a call push lacking "pt" still gets the standard 30s grace window, which covers
+     * the measured negotiation time several times over.
+     */
+    private fun isDhtProxyCallWakeup(remoteMessage: RemoteMessage): Boolean {
+        val pushType = remoteMessage.data["pt"] ?: return false
+        // Normalize case: this gates incoming-call reliability, so a producer-side
+        // casing change must not silently downgrade call wakeups to plain pushes.
+        return pushType.splitToSequence(',')
+            .map { it.trim().lowercase(Locale.ROOT) }
+            .any { it == "audiocall" || it == "videocall" }
     }
 
     private fun isAppInForeground(): Boolean {
@@ -95,7 +169,7 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(refreshedToken: String) {
         Log.w(TAG, "onNewToken $refreshedToken")
-        val app = JamiApplication.instance as JamiApplicationFirebase?
+        val app = JamiApplication.instance as? JamiApplicationFirebase
         app?.pushToken = Pair(refreshedToken, "")
     }
 

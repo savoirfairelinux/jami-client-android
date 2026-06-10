@@ -111,6 +111,7 @@ dependencies {
     implementation(libs.androidx.viewpager2)
     implementation(libs.androidx.emoji2.emojipicker)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.process)
     implementation(libs.androidx.window)
 
     implementation(libs.androidx.camera.core)
