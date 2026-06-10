@@ -19,6 +19,23 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "156761b9_d18fecc9",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T12:32:16Z",
+      "side": 1,
+      "message": "[Critical] Line 96: 🔴 Critical Issues - `notePushReceived()` posts the cancellation behind any already-due `deactivateRunnable`. If the app is backgrounded and the main looper has a due deactivation queued, a background FCM call can enqueue the timestamp update after that stale runnable; the service may restore accounts, then the stale runnable deactivates them again before call negotiation completes, causing missed incoming calls. Remove the pending callback synchronously before posting the state update, then arm the delayed check from the main block. Suggested fix:\n```suggestion\nfun notePushReceived(isCallPush: Boolean) {\n    val now \u003d SystemClock.elapsedRealtime()\n    backgroundHandler.removeCallbacks(deactivateRunnable)\n    backgroundHandler.post {\n        lastPushTime \u003d now\n        if (isCallPush) lastCallPushTime \u003d now\n        backgroundHandler.removeCallbacks(deactivateRunnable)\n        backgroundHandler.postDelayed(deactivateRunnable, BACKGROUND_DEACTIVATION_DELAY_MS)\n    }\n}\n```",
+      "revId": "5ca2c376353b9babddaf6182e5d0298a3e2d9746",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "4ab1ba5d_ee66459a",
@@ -33,6 +50,23 @@
       "side": 1,
       "message": "Done in PS14: call pushes (isCallNotification or DHT proxy call wakeup) now always take the restore/reconnect path; only non-call pushes are gated on push availability. Accounts possibly left active by a stale call push are recovered by the final scheduleBackgroundDeactivation() and the unconditional foreground restore.",
       "parentUuid": "70c96a15_64eea558",
+      "revId": "5ca2c376353b9babddaf6182e5d0298a3e2d9746",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa67f335_a57954af",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T12:32:16Z",
+      "side": 1,
+      "message": "[Major] Line 573: 🟡 Suggestions - The new restore tracking can override an explicit account deactivation made while the app is backgrounded. `deactivateProxyAccountsForBackground()` records an active account, but `setAccountActive(accountId, false)` does not clear that restore intent; a later foreground/push restore will call `setAccountActive(id, true)` and undo the user\u0027s or caller\u0027s deliberate inactive state. Clear the background-restore marker when an explicit deactivation is requested. Suggested fix:\n```suggestion\nfun setAccountActive(accountId: String, active: Boolean) {\n    mExecutor.execute {\n        if (!active) backgroundDeactivatedAccounts.remove(accountId)\n        JamiService.setAccountActive(accountId, active)\n    }\n}\n```",
       "revId": "5ca2c376353b9babddaf6182e5d0298a3e2d9746",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
