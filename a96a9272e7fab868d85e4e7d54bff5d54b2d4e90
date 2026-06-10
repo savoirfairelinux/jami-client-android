@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c850bf52_335474dd",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T11:36:31Z",
+      "side": 1,
+      "message": "[Critical] Line 146: Foreground restoration is gated on the current push setting/token. If accounts were already deactivated in the background and push is disabled or the token is cleared before the app is started again, this skips restoration and can leave those accounts inactive indefinitely. Since restoreProxyAccountsAfterBackground() only restores the recorded background-deactivated set, it is safe to call whenever transitioning from 0 started activities. Suggested fix:\n```suggestion\nif (startedActivityCount++ \u003d\u003d 0) {\n    Log.d(TAG, \"App came to foreground — reactivating accounts\")\n    mAccountService.restoreProxyAccountsAfterBackground()\n}\n```",
+      "revId": "a96a9272e7fab868d85e4e7d54bff5d54b2d4e90",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd8bf5e2_43af8477",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T11:36:31Z",
+      "side": 1,
+      "message": "[Medium] Line 86: The comment says connectivityChanged(true) is only needed for calls, but the code runs it for every high-priority background push. The new classifier explicitly notes that regular DHT values can also be high priority, so message/sync pushes may still force a full DHT/SIP reconnect and undermine the battery-saving goal. Suggested fix:\n```suggestion\nif (isCallPush \u0026\u0026 remoteMessage.originalPriority \u003d\u003d RemoteMessage.PRIORITY_HIGH) {\n    app?.hardwareService?.connectivityChanged(true)\n}\n```",
+      "revId": "a96a9272e7fab868d85e4e7d54bff5d54b2d4e90",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
