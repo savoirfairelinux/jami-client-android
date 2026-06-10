@@ -44,6 +44,8 @@ abstract class PreferencesService(
             if (previousSettings == null || previousSettings.enablePushNotifications != allowPush) {
                 val token = mDeviceService.pushToken
                 mAccountService.setPushNotificationConfig(token?.first ?: "", token?.second ?: "", mDeviceService.pushPlatform)
+                // setProxyEnabled(false) atomically restores any background-deactivated
+                // account before turning the proxy off (see AccountService).
                 mAccountService.setProxyEnabled(allowPush)
             }
             userSettings = settings
