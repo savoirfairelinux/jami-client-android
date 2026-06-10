@@ -443,7 +443,7 @@ class CallPresenter @Inject constructor(
                 view.displayLocalVideo(hasActiveCameraVideo && mDeviceRuntimeService.hasVideoPermission())
                 if (permissionChanged) {
                     val camId = mHardwareService.changeCamera(true)
-                    mCallService.replaceVideoMedia(call, "camera://$camId", true)
+                    mCallService.replaceVideoMedia(call, "camera://$camId", false)
                     permissionChanged = false
                 }
             }
