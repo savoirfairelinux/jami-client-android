@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9e17bda_231e0bab",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T01:27:31Z",
+      "side": 1,
+      "message": "[critical] Line 72: 🔴 Critical Issues - Background pushes reactivate accounts, but there is no corresponding deactivation when the app remains in the background. Because no Activity lifecycle stop event fires for an FCM-only wakeup, a single message can leave all accounts active indefinitely, defeating the battery-drain fix. After push handling completes, schedule the same delayed background deactivation used by the application, guarded by foreground/call state.\n```suggestion\ntry {\n    // existing push handling\n} finally {\n    if (!isAppInForeground()) {\n        app?.scheduleBackgroundAccountDeactivation()\n    }\n}\n```",
+      "revId": "d698984943dfc7f150c6e11aaa4b7f500129a396",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c03d765_8b28124c",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T01:27:31Z",
+      "side": 1,
+      "message": "[critical] Line 582: 🔴 Critical Issues - `setAccountsActive(false)` now deactivates every account, including accounts that do not have DHT proxy/push support. The background path only checks for an app-level FCM token, so a mixed setup can make non-proxy accounts unreachable while the app is backgrounded. Preserve the previous behavior for accounts that cannot be woken by push, or gate the new background deactivation with per-account push/proxy capability.\n```suggestion\nfor (a in mAccountList) {\n    val accountActive \u003d active || !a.isDhtProxyEnabled\n    JamiService.setAccountActive(a.accountId, accountActive)\n}\n```",
+      "revId": "d698984943dfc7f150c6e11aaa4b7f500129a396",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
