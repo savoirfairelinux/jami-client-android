@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa69bbb0_546cfbaa",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 13
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T12:10:41Z",
+      "side": 1,
+      "message": "[🟡 Suggestion] Line 85: The call-active path reschedules background deactivation every 5 seconds while a call is active. During long calls this wakes the main thread repeatedly for no state change, which partially defeats the battery-saving goal of this patch. Prefer rescheduling at a longer interval while calls are active, or trigger deactivation from call-state transitions when the last call ends.\n```suggestion\nmCallService.hasActiveCalls() -\u003e scheduleBackgroundDeactivation(CALL_ACTIVE_RECHECK_MS)\n```\nwith `CALL_ACTIVE_RECHECK_MS` set to a less aggressive interval.",
+      "revId": "c2e06d9c6bee2df2745155d2544cece4b07336fa",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70c96a15_64eea558",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 13
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T12:10:41Z",
+      "side": 1,
+      "message": "[🔴 Critical] Line 83: The reconnect path ignores high-priority call pushes when push notifications are currently disabled or `pushToken` is null. FCM messages can still be delivered after a settings/token transition, and dropping the restore/reconnect path here may cause an incoming call wakeup to be processed while proxy accounts remain inactive. If the intent is only to avoid leaving accounts active forever, keep the restore path for call pushes and rely on the recorded background-deactivated set plus final scheduling to restore/deactivate safely.\n```suggestion\nif (!appInForeground \u0026\u0026 app !\u003d null) {\n    val isCallPush \u003d isCallNotification || isDhtProxyCallWakeup(remoteMessage)\n    if (isCallPush || (app.mPreferencesService.settings.enablePushNotifications \u0026\u0026 app.pushToken !\u003d null)) {\n        app.notePushReceived(isCallPush)\n        app.mAccountService.restoreProxyAccountsAfterBackground()\n        if (isCallPush \u0026\u0026 remoteMessage.originalPriority \u003d\u003d RemoteMessage.PRIORITY_HIGH) {\n            app.hardwareService.connectivityChanged(true)\n        }\n    }\n}\n```",
+      "revId": "c2e06d9c6bee2df2745155d2544cece4b07336fa",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1c72262_aad654b8",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 13
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T12:10:41Z",
+      "side": 1,
+      "message": "[🔴 Critical] Line 617: `restoreProxyAccountsAfterBackground()` removes an account id from `backgroundDeactivatedAccounts` even when the account is currently missing, disabled, or no longer proxy-enabled. If that state is transient during startup/account reload, the restore intent is lost and the account can remain inactive indefinitely. Only remove the id after a successful restore, or explicitly remove it only for terminal cases such as account deletion.\n```suggestion\nif (account?.isEnabled \u003d\u003d true \u0026\u0026 account.isDhtProxyEnabled) {\n    JamiService.setAccountActive(id, true)\n    backgroundDeactivatedAccounts.remove(id)\n}\n```",
+      "revId": "c2e06d9c6bee2df2745155d2544cece4b07336fa",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
