@@ -73,6 +73,23 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "5be018d6_ec23e61d",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 22
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T13:11:15Z",
+      "side": 1,
+      "message": "[Critical] Line 574: An explicit user deactivation can still be undone by a previously queued background deactivation. `setAccountActive(false)` removes the id synchronously before enqueueing the daemon call, but if `deactivateProxyAccountsForBackground()` is already queued it will later call `setAccountActive(false)` and add the id back to `backgroundDeactivatedAccounts`; the next foreground/push restore will reactivate an account the user deliberately disabled. Move the restore-intent removal onto the same executor after any earlier queued background operation, or record an explicit-disable marker checked by background deactivation before adding the id. For example:\n```suggestion\nfun setAccountActive(accountId: String, active: Boolean) {\n    mExecutor.execute {\n        if (!active) backgroundDeactivatedAccounts.remove(accountId)\n        JamiService.setAccountActive(accountId, active)\n    }\n}\n```",
+      "revId": "be027c4f1b9b57f2cbcae4b60171e6323649cd48",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "fcca1fc2_5e65e67f",
