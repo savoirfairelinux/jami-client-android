@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4915ec5_87b3e902",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 24
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T13:26:19Z",
+      "side": 1,
+      "message": "[Critical] Line 122: 🔴 Critical Issues - `removeCallbacks()` only removes queued callbacks; it cannot stop a `deactivateRunnable` that has already started on the main looper. Because `lastPushTime`/`lastCallPushTime` are updated only inside the later posted block, a background push arriving exactly as the runnable starts can still be evaluated with stale timestamps and enqueue account deactivation before the restore/reconnect path, which can drop an incoming call negotiation. Make the grace-window timestamp visible before attempting to cancel the runnable, and read it atomically from the runnable.\n\n```suggestion\nprivate val lastPushTime \u003d AtomicLong(0L)\nprivate val lastCallPushTime \u003d AtomicLong(0L)\n\n// in deactivateRunnable\nval graceRemaining \u003d maxOf(\n    lastCallPushTime.get() + CALL_PUSH_GRACE_MS,\n    lastPushTime.get() + PUSH_GRACE_MS\n) - now\n\n// in onBackgroundPushReceived\nval now \u003d SystemClock.elapsedRealtime()\nlastPushTime.set(now)\nif (isCallPush) lastCallPushTime.set(now)\nbackgroundHandler.removeCallbacks(deactivateRunnable)\nbackgroundHandler.post {\n    mAccountService.restoreProxyAccountsAfterBackground()\n    if (triggerReconnect) hardwareService.connectivityChanged(true)\n    backgroundHandler.removeCallbacks(deactivateRunnable)\n    backgroundHandler.postDelayed(deactivateRunnable, BACKGROUND_DEACTIVATION_DELAY_MS)\n}\n```",
+      "revId": "039767354a6c27fcb7573103cfffd53fb8d5d7c3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "469f1014_18893b6c",
