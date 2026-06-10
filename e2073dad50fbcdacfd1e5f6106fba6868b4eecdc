@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5ac4154_3d0ff442",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T11:02:50Z",
+      "side": 1,
+      "message": "[🟡 Suggestion] Line 98: isDhtProxyCallWakeup() uses substring matching, so values such as \"notAudioCall\" or any future unrelated token containing \"audioCall\"/\"videoCall\" would be treated as call wakeups and keep accounts active for the longer grace period. Since the comment says this field is a comma-separated list of exact values, split and compare exact tokens.\n```suggestion\nprivate fun isDhtProxyCallWakeup(remoteMessage: RemoteMessage): Boolean {\n    val pushType \u003d remoteMessage.data[\"pt\"] ?: return false\n    return pushType.split(\u0027,\u0027)\n        .map { it.trim() }\n        .any { it \u003d\u003d \"audioCall\" || it \u003d\u003d \"videoCall\" }\n}\n```",
+      "revId": "e2073dad50fbcdacfd1e5f6106fba6868b4eecdc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cbcec65_91a80ac4",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T11:02:50Z",
+      "side": 1,
+      "message": "[🟡 Suggestion] Line 616: restoreProxyAccountsAfterBackground() blindly reactivates every recorded account ID without checking whether the account still exists, is still enabled, or still has DHT proxy enabled. If an account is disabled/removed or proxy is turned off while the app is backgrounded, a later push or foreground transition can re-enable it unexpectedly. Re-resolve the account from the current list before restoring and only activate accounts that are still eligible.\n```suggestion\nfor (id in backgroundDeactivatedAccounts) {\n    val account \u003d mAccountList.firstOrNull { it.accountId \u003d\u003d id }\n    if (account?.isEnabled \u003d\u003d true \u0026\u0026 account.isDhtProxyEnabled) {\n        JamiService.setAccountActive(id, true)\n    }\n}\nbackgroundDeactivatedAccounts.clear()\n```",
+      "revId": "e2073dad50fbcdacfd1e5f6106fba6868b4eecdc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
