@@ -1,0 +1,58 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "435f8d79_9e2d810f",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-10T12:39:32Z",
+      "side": 1,
+      "message": "Done in PS16: the gate is split — foreground still aborts, but push unavailability now triggers restoreProxyAccountsAfterBackground() before returning, so accounts deactivated by this optimization are recovered as soon as the pending runnable fires rather than waiting for a foreground event.",
+      "parentUuid": "b78a8810_3680ff0c",
+      "revId": "577c19e8dfc02a44335101b1ccb8e2f02c8b090e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3560c128_7068a654",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-10T12:39:32Z",
+      "side": 1,
+      "message": "Done in PS16: values are trimmed and lowercased with Locale.ROOT before matching audiocall/videocall. Centralizing the payload constants with the proxy producer is daemon-side work, noted for a follow-up.",
+      "parentUuid": "bae31d34_432b232b",
+      "revId": "577c19e8dfc02a44335101b1ccb8e2f02c8b090e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e977a0c0_749ca118",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-10T12:39:32Z",
+      "side": 1,
+      "message": "Done in PS16: disabled or proxy-off accounts now drop the restore intent (terminal configuration change); only accounts temporarily absent from the list keep their id, since account reload does repopulate the list here and dropping the id during that window would leave the account inactive.",
+      "parentUuid": "0e9254ef_ca3b43fc",
+      "revId": "577c19e8dfc02a44335101b1ccb8e2f02c8b090e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
