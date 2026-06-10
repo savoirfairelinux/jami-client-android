@@ -177,6 +177,9 @@ dependencies {
         exclude(group= "com.google.protobuf", module= "protobuf-java")
     }
     "withUnifiedPushImplementation"(libs.unifiedpush.connector.ui)
+
+    implementation(libs.nanohttpd)
+    implementation(libs.androidx.documentfile)
 }
 
 protobuf {
