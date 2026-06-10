@@ -874,6 +874,52 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
+                android:text="@string/shared_services_settings_title"
+                style="@style/SettingsHeader"
+                android:layout_marginStart="8dp" />
+
+            <RelativeLayout
+                android:id="@+id/settings_shared_services_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/CustomRelativeLayout"
+                android:padding="@dimen/padding_large">
+
+                <ImageView
+                    android:id="@+id/shared_services_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    app:srcCompat="@drawable/baseline_share_24"
+                    android:layout_marginEnd="16dp"/>
+
+                <TextView
+                    android:id="@+id/shared_services_title"
+                    style="@style/ListPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="3"
+                    android:singleLine="false"
+                    android:text="@string/shared_services_settings_title"
+                    android:layout_toEndOf="@id/shared_services_image"
+                    android:layout_marginEnd="16dp" />
+
+                <TextView
+                    style="@style/ListSecondary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/shared_services_settings_description"
+                    android:layout_toEndOf="@id/shared_services_image"
+                    android:layout_marginEnd="16dp"
+                    android:layout_below="@id/shared_services_title"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
                 android:text="@string/pref_category_diagnostic"
                 style="@style/SettingsHeader"
                 android:layout_marginStart="8dp" />
