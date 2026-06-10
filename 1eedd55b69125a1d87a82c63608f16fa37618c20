@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b0836e4_ff73c260",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T01:42:08Z",
+      "side": 1,
+      "message": "[🟡 Suggestions - Improvements to consider] Line 111: The counter imbalance warning can never be reached because `newCount` is computed with `(startedActivityCount - 1).coerceAtLeast(0)`, so `newCount \u003e\u003d startedActivityCount` is false for any positive count and equal for zero only after a normal clamp. If the goal is to detect extra `onActivityStopped` callbacks, check the previous value before decrementing.\n\n```suggestion\nif (startedActivityCount \u003d\u003d 0) {\n    Log.w(TAG, \"onActivityStopped: counter imbalance\")\n    return\n}\nstartedActivityCount -\u003d 1\nif (startedActivityCount \u003d\u003d 0) scheduleBackgroundDeactivation()\n```",
+      "revId": "1eedd55b69125a1d87a82c63608f16fa37618c20",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a15f2e26_233030fa",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T01:42:08Z",
+      "side": 1,
+      "message": "[🟢 Good Practices - What\u0027s done well] Line 117: Good use of a delayed deactivation and an active-call guard before disabling accounts. This avoids disconnecting during short activity transitions and reduces the risk of breaking call setup.",
+      "revId": "1eedd55b69125a1d87a82c63608f16fa37618c20",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce49e633_88dcfc04",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T01:42:08Z",
+      "side": 1,
+      "message": "[🟢 Good Practices - What\u0027s done well] Line 81: Good separation between account reactivation for all push types and the heavier `connectivityChanged(true)` path only for high-priority call pushes. That keeps message handling lighter while preserving call behavior.",
+      "revId": "1eedd55b69125a1d87a82c63608f16fa37618c20",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "efee5de5_901e014f",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T01:42:08Z",
+      "side": 1,
+      "message": "[🔴 Critical Issues - Must fix before merge] Line 598: This reactivates every proxy-enabled account when `active \u003d\u003d true`, even if that account was deliberately inactive before the background optimization ran. The method comment says it preserves deliberate inactive state, but the implementation loses that state after a push or foreground return. Persist/track which accounts were deactivated by the background path and only restore those, or check the account\u0027s configured enabled/active state before calling into the daemon.\n\n```suggestion\nif (a.isDhtProxyEnabled \u0026\u0026 shouldRestoreBackgroundDeactivatedAccount(a.accountId, active)) {\n    JamiService.setAccountActive(a.accountId, active)\n}\n```",
+      "revId": "1eedd55b69125a1d87a82c63608f16fa37618c20",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
