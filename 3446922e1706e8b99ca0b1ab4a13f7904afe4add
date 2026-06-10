@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c7fa2d2_970826b4",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T01:10:58Z",
+      "side": 1,
+      "message": "[Critical] Line 84: 🔴 Critical Issues - Accounts are deactivated whenever the last Activity stops, without checking whether there is an active call, pending call negotiation, file transfer, or other daemon work that still requires connectivity. Pressing Home during an active call or moving the app out of view can therefore deactivate the account and risk dropping the session. Gate this on an explicit app/daemon idle state before calling `setAccountsActive(false)`. Example:\\n```suggestion\\nif (--startedActivityCount \u003d\u003d 0\\n    \u0026\u0026 mPreferencesService.settings.enablePushNotifications\\n    \u0026\u0026 pushToken !\u003d null\\n    \u0026\u0026 !mCallService.hasCurrentCalls()\\n) {\\n    Log.d(TAG, \\\"App went to background with push enabled — deactivating accounts\\\")\\n    mAccountService.setAccountsActive(false)\\n}\\n```",
+      "revId": "3446922e1706e8b99ca0b1ab4a13f7904afe4add",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b65d1b9_23e71d46",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T01:10:58Z",
+      "side": 1,
+      "message": "[Critical] Line 72: 🔴 Critical Issues - A high-priority FCM received while the app is already in background reactivates all accounts, but there is no matching deactivation after the push is handled when no Activity lifecycle transition occurs. This means the first background call/message push can leave daemon connections active indefinitely, largely defeating the battery-saving behavior introduced by this change. Reactivate only for the duration needed, or schedule/trigger deactivation again when processing completes and the app is still backgrounded. Example:\\n```suggestion\\nif (app?.mPreferencesService?.hasNetworkConnected() \u003d\u003d true) {\\n    app.mAccountService.setAccountsActive(true)\\n}\\n...\\nif (!isAppInForeground()\\n    \u0026\u0026 app?.mPreferencesService?.settings?.enablePushNotifications \u003d\u003d true\\n    \u0026\u0026 app.pushToken !\u003d null\\n) {\\n    app.mAccountService.setAccountsActive(false)\\n}\\n```\\nThe final condition should also account for active calls or other foreground services so an ongoing negotiation is not interrupted.",
+      "revId": "3446922e1706e8b99ca0b1ab4a13f7904afe4add",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "292d3a71_14eaf77f",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T01:10:58Z",
+      "side": 1,
+      "message": "Line 585: 🟡 Suggestions - This now forces every account inactive, including accounts with no working push/proxy path. The caller currently checks only the application-level FCM token, not whether each account can actually receive proxy push notifications. If any account has `isDhtProxyEnabled \u003d\u003d false` or otherwise lacks push registration, it will become unreachable in background. Preserve active state for accounts that cannot be woken by push, or pass/account-check push capability before deactivation. Example:\\n```suggestion\\nval shouldDeactivate \u003d !active \u0026\u0026 a.isDhtProxyEnabled\\nJamiService.setAccountActive(a.accountId, if (shouldDeactivate) false else true)\\n```",
+      "revId": "3446922e1706e8b99ca0b1ab4a13f7904afe4add",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
