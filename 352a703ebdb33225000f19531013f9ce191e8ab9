@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72ee85de_fd5755a6",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 25
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-10T13:30:47Z",
+      "side": 1,
+      "message": "Done in PS25 as suggested: AtomicLong timestamps, set on the FCM thread before cancelling, read atomically in the runnable (monotonic + maxOf makes a mixed read of the pair benign). Documented why the last few-instruction window is acceptable: FIFO ordering on the daemon executor guarantees the restore lands after any stale deactivation, equivalent to the unavoidable push-right-after-deactivation case.",
+      "parentUuid": "a4915ec5_87b3e902",
+      "revId": "352a703ebdb33225000f19531013f9ce191e8ab9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
