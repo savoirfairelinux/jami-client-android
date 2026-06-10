@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30c33a32_f3051eeb",
+        "filename": "jami-android/app/src/main/AndroidManifest.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T23:34:35Z",
+      "side": 1,
+      "message": "[Critical] Line 94: The package visibility queries only cover image and video capture, but this change is meant to fix audio message sending as well. On Android 11+, resolving or launching the external audio recorder can still fail if the record-sound intent is not declared in \u003cqueries\u003e. Add the audio recording action used by the app, for example:\n```suggestion\n    \u003cqueries\u003e\n        \u003cintent\u003e\n            \u003caction android:name\u003d\"android.media.action.VIDEO_CAPTURE\" /\u003e\n        \u003c/intent\u003e\n        \u003cintent\u003e\n            \u003caction android:name\u003d\"android.media.action.IMAGE_CAPTURE\" /\u003e\n        \u003c/intent\u003e\n        \u003cintent\u003e\n            \u003caction android:name\u003d\"android.provider.MediaStore.RECORD_SOUND\" /\u003e\n        \u003c/intent\u003e\n    \u003c/queries\u003e\n```",
+      "revId": "603488cc5105f52f5599e7ef3619fe024d12ffdf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fb561c6_e2ac8da0",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/GeneralAccountFragment.kt",
+        "patchSetId": 12
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-10T23:34:35Z",
+      "side": 1,
+      "message": "Line 117: getMediaSizeSummary accepts maxSize but never uses it. This adds dead API surface and makes the method look like it mirrors getFileSizeSummary semantics when it does not. Remove the unused parameter and update callers:\n```suggestion\n    private fun getMediaSizeSummary(size: Int): CharSequence {\n        return if (size \u003d\u003d 0) {\n            getText(R.string.account_message_size_unlimited)\n        } else {\n            Formatter.formatFileSize(requireContext(), size * 1000L * 1000L)\n        }\n    }\n```",
+      "revId": "603488cc5105f52f5599e7ef3619fe024d12ffdf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
