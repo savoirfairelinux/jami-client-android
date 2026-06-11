@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2dafec0_0cc980a3",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2026-06-11T22:36:12Z",
+      "side": 1,
+      "message": "If you expose local services to the public, should `your` be removed?",
+      "range": {
+        "startLine": 772,
+        "startChar": 81,
+        "endLine": 772,
+        "endChar": 85
+      },
+      "revId": "44ed6ab0195b58993125d9276b45a5ed0bd40853",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4121f852_e03fa43a",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2026-06-11T22:36:12Z",
+      "side": 1,
+      "message": "If you expose local services to the public, should `your` be removed?",
+      "range": {
+        "startLine": 787,
+        "startChar": 85,
+        "endLine": 787,
+        "endChar": 89
+      },
+      "revId": "44ed6ab0195b58993125d9276b45a5ed0bd40853",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
