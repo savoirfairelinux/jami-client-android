@@ -19,6 +19,40 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "46702db4_087b3be1",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 27
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-11T00:06:18Z",
+      "side": 1,
+      "message": "[🟡 Suggestion] Line 196: The process lifecycle observer is added but never removed. Application instances normally live for the process lifetime, so this is unlikely to leak in production, but the added guard explicitly mentions custom/test initialization paths. In those paths, keeping an observer referencing the old application instance can schedule account activation work against stale services. Consider removing the observer in the matching teardown/test hook, or avoid supporting repeated onCreate() semantics here.",
+      "revId": "3009880d08c7b31598f82f7d20871e7132a9ac52",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89a83063_07603b6d",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 27
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-11T00:06:18Z",
+      "side": 1,
+      "message": "[🟡 Suggestion] Line 46: The wakelock is only released for non-call pushes. For call pushes it is intentionally left held until the 10s timeout, even after message processing completes. This preserves historical behavior but also means every call wakeup burns the full timeout, including failed or quickly handled pushes. Release the wakelock after processing once the foreground service/reconnect path has been started, or document and narrowly gate the timeout-only behavior to devices/scenarios that require it.",
+      "revId": "3009880d08c7b31598f82f7d20871e7132a9ac52",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "4c6d1ebe_01207d10",
@@ -51,6 +85,23 @@
       "side": 1,
       "message": "Done in PS27 as suggested: bulk deactivation marks non-proxy accounts (proxy accounts are forced active by this method\u0027s contract, so they are never deactivated here), bulk reactivation clears all markers — symmetric with the connectivity-change call sites.",
       "parentUuid": "c8b14bfb_28623e70",
+      "revId": "3009880d08c7b31598f82f7d20871e7132a9ac52",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11bd8717_ab92d0ff",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 27
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-11T00:06:18Z",
+      "side": 1,
+      "message": "[🟡 Suggestion] Line 616: The background deactivation/restore state is intentionally in-memory only. That is reasonable if daemon active state is strictly process-local, but this is a critical invariant for account reachability. Please add a regression test or daemon-facing assertion covering process restart after background deactivation so a future daemon persistence change does not leave proxy accounts inactive after restart.",
       "revId": "3009880d08c7b31598f82f7d20871e7132a9ac52",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
