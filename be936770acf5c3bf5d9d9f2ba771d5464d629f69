@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8619847_8a21fd07",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-11T00:02:00Z",
+      "side": 1,
+      "message": "[🔴 Critical] Line 84: Background deactivation runs without checking whether the device is currently in an active call at the daemon/telephony level until CallService has already observed the call. A background incoming call push can restore accounts, trigger reconnect, then be deactivated after the grace window if signaling is still in progress but no CallService call object exists yet. That can drop late call negotiation and cause missed calls on slow networks. The existing grace constants are heuristic and the comment says cold negotiation can take tens of seconds, so this should be tied to an explicit daemon/call-pending signal or extended/rearmed by actual push/call processing completion rather than a fixed timeout. Suggested fix: expose a pending incoming-call/reconnect state from the call/daemon layer and include it in this branch before deactivating.\n```suggestion\nmCallService.hasActiveCalls() || hardwareService.isReconnectInProgressForPush -\u003e\n    scheduleBackgroundDeactivation(CALL_ACTIVE_RECHECK_MS)\n```",
+      "revId": "be936770acf5c3bf5d9d9f2ba771d5464d629f69",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "915accd2_d12baac3",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-11T00:02:00Z",
+      "side": 1,
+      "message": "[🟡 Suggestion] Line 56: Call push classification for starting PushForegroundService uses a case-sensitive substring check, while the later DHT proxy classifier correctly normalizes and matches exact comma-separated values. This inconsistency means a producer-side casing change such as `AudioCall` still restores/reconnects accounts via `isDhtProxyCallWakeup`, but does not start the foreground service/wakelock protection path intended for incoming calls. Reuse the normalized helper for both decisions.\n```suggestion\nval isCallNotification \u003d isDhtProxyCallWakeup(remoteMessage)\n        \u0026\u0026 remoteMessage.priority \u003d\u003d RemoteMessage.PRIORITY_HIGH\n```",
+      "revId": "be936770acf5c3bf5d9d9f2ba771d5464d629f69",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8b14bfb_28623e70",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-11T00:02:00Z",
+      "side": 1,
+      "message": "[🟡 Suggestion] Line 589: `setAccountsActive(false)` can explicitly deactivate non-proxy accounts, but it does not update `explicitlyDeactivatedAccounts`. If an account later has the proxy enabled while still inactive, the background optimization can record and restore it because the explicit marker is missing. Keep the explicit-deactivation tracking consistent for bulk activation changes.\n```suggestion\nif (active) {\n    explicitlyDeactivatedAccounts.clear()\n} else {\n    for (a in mAccountList) {\n        if (!a.isDhtProxyEnabled) explicitlyDeactivatedAccounts.add(a.accountId)\n    }\n}\n```",
+      "revId": "be936770acf5c3bf5d9d9f2ba771d5464d629f69",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
