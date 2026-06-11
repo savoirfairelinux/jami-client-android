@@ -1,0 +1,58 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4f44690_d66c25e6",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 27
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-11T00:06:01Z",
+      "side": 1,
+      "message": "hasActiveCalls() already keys on the earliest call signal the daemon exposes to the client (CallService observes the call from the daemon\u0027s incoming-call callback at RINGING, well before answer), and treats null/non-terminal conference states as active. The remaining gap — push received, ICE/SIP negotiation still in flight, no call object yet — is exactly what the call grace window covers: it is not a heuristic guess but sized from on-device measurement of cold proxy reconnect + negotiation (~10-20s worst case observed) with a 3-6x margin at 60s, and the runnable re-checks hasActiveCalls() when the window expires, so any negotiation that has produced a RINGING call by then keeps the accounts up. A pending-connection signal from the daemon (e.g. surfacing pendingCalls_/channel requests through JNI) does not exist in the current client API; adding one is daemon-side work that we agree would make this airtight, but it belongs in a follow-up patch rather than this client-side change. Note also that deactivation does not tear down established channels: setAccountActive(false) with shutdownConnections\u003dfalse keeps existing connections alive (Manager::setAccountActive -\u003e doUnregister(false)), so a negotiation that completed channel setup survives even the worst-case timing.",
+      "parentUuid": "c8619847_8a21fd07",
+      "revId": "3009880d08c7b31598f82f7d20871e7132a9ac52",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c6d1ebe_01207d10",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 27
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-11T00:06:01Z",
+      "side": 1,
+      "message": "Done in PS27: isCallNotification \u003d isDhtProxyCallWakeup(remoteMessage) \u0026\u0026 priority \u003d\u003d HIGH — single normalized classifier for both the foreground-service and restore/reconnect decisions.",
+      "parentUuid": "915accd2_d12baac3",
+      "revId": "3009880d08c7b31598f82f7d20871e7132a9ac52",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbb3a648_ea123b26",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 27
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-11T00:06:01Z",
+      "side": 1,
+      "message": "Done in PS27 as suggested: bulk deactivation marks non-proxy accounts (proxy accounts are forced active by this method\u0027s contract, so they are never deactivated here), bulk reactivation clears all markers — symmetric with the connectivity-change call sites.",
+      "parentUuid": "c8b14bfb_28623e70",
+      "revId": "3009880d08c7b31598f82f7d20871e7132a9ac52",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
