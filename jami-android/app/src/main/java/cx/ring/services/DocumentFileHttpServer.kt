@@ -19,12 +19,41 @@ package cx.ring.services
 import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
+import android.os.ParcelFileDescriptor
 import android.webkit.MimeTypeMap
 import androidx.documentfile.provider.DocumentFile
 import fi.iki.elonen.NanoHTTPD
 import net.jami.utils.Log
+import java.io.FileInputStream
+import java.io.FilterInputStream
 import java.io.IOException
 import java.net.ServerSocket
+
+// Parses "Range: bytes=start-end", "bytes=start-", "bytes=-suffix".
+// Returns Pair(start, end) inclusive, or null if absent/invalid.
+private fun parseRangeHeader(header: String?, fileSize: Long): Pair<Long, Long>? {
+    if (header == null || !header.startsWith("bytes=")) return null
+    val spec = header.removePrefix("bytes=").trim()
+    val dash = spec.indexOf('-')
+    if (dash < 0) return null
+    val startStr = spec.substring(0, dash).trim()
+    val endStr = spec.substring(dash + 1).trim()
+    return try {
+        when {
+            startStr.isEmpty() -> {
+                val suffix = endStr.toLong()
+                if (suffix <= 0) return null
+                Pair(maxOf(0L, fileSize - suffix), fileSize - 1)
+            }
+            endStr.isEmpty() -> Pair(startStr.toLong(), fileSize - 1)
+            else -> {
+                val s = startStr.toLong(); val e = endStr.toLong()
+                if (s > e) return null
+                Pair(s, minOf(e, fileSize - 1))
+            }
+        }.takeIf { (s, e) -> s >= 0 && s < fileSize && s <= e }
+    } catch (_: NumberFormatException) { null }
+}
 
 class DocumentFileHttpServer private constructor(
     private val rootDoc: DocumentFile,
@@ -49,7 +78,7 @@ class DocumentFileHttpServer private constructor(
         return when {
             target == null -> newFixedLengthResponse(Response.Status.NOT_FOUND, MIME_PLAINTEXT, "Not Found")
             target.isDirectory -> serveDirectory(target, urlPath)
-            target.isFile -> serveFile(target)
+            target.isFile -> serveFile(target, session.headers["range"])
             else -> newFixedLengthResponse(Response.Status.NOT_FOUND, MIME_PLAINTEXT, "Not Found")
         }
     }
@@ -70,22 +99,48 @@ class DocumentFileHttpServer private constructor(
         return current
     }
 
-    private fun serveFile(file: DocumentFile): Response {
+    private fun serveFile(file: DocumentFile, rangeHeader: String?): Response {
         val ext = file.name?.substringAfterLast('.', "")?.lowercase() ?: ""
         val mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext) ?: file.type ?: "application/octet-stream"
         return try {
-            val stream = contentResolver.openInputStream(file.uri)
-                ?: return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, MIME_PLAINTEXT, "Cannot open file")
-            val length = file.length()
-            // Set Content-Length so browsers can show progress and pipeline requests.
-            // Falls back to chunked if length is unknown (0 means unknown for SAF).
-            val response = if (length > 0) {
-                newFixedLengthResponse(Response.Status.OK, mime, stream, length)
-            } else {
-                newChunkedResponse(Response.Status.OK, mime, stream)
+            val fileSize = file.length()
+            if (fileSize <= 0) {
+                // Size unknown (some SAF providers return 0) — fall back to chunked, no Range support
+                val stream = contentResolver.openInputStream(file.uri)
+                    ?: return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, MIME_PLAINTEXT, "Cannot open file")
+                return newChunkedResponse(Response.Status.OK, mime, stream)
+                    .also { it.addHeader("Cache-Control", "public, max-age=300") }
             }
-            response.addHeader("Cache-Control", "public, max-age=300")
-            response
+
+            val range = parseRangeHeader(rangeHeader, fileSize)
+
+            if (rangeHeader != null && range == null) {
+                // Range header present but unparseable/out-of-bounds → 416
+                return newFixedLengthResponse(
+                    Response.Status.RANGE_NOT_SATISFIABLE, MIME_PLAINTEXT, "Range Not Satisfiable"
+                ).also { it.addHeader("Content-Range", "bytes */$fileSize") }
+            }
+
+            val (start, end) = range ?: Pair(0L, fileSize - 1)
+            val length = end - start + 1
+            val status = if (range != null) Response.Status.PARTIAL_CONTENT else Response.Status.OK
+
+            // Open via ParcelFileDescriptor for efficient lseek on range seeks.
+            // Wrap in FilterInputStream so closing the stream also closes the PFD.
+            val pfd: ParcelFileDescriptor = contentResolver.openFileDescriptor(file.uri, "r")
+                ?: return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, MIME_PLAINTEXT, "Cannot open file")
+            val fis = FileInputStream(pfd.fileDescriptor)
+            if (start > 0) fis.channel.position(start)
+            val stream = object : FilterInputStream(fis) {
+                override fun close() = try { super.close() } finally { pfd.close() }
+            }
+
+            newFixedLengthResponse(status, mime, stream, length).also { r ->
+                r.addHeader("Accept-Ranges", "bytes")
+                r.addHeader("Cache-Control", "public, max-age=300")
+                if (range != null)
+                    r.addHeader("Content-Range", "bytes $start-$end/$fileSize")
+            }
         } catch (e: IOException) {
             Log.e(TAG, "serveFile: error reading '${file.name}'", e)
             newFixedLengthResponse(Response.Status.INTERNAL_ERROR, MIME_PLAINTEXT, "Internal Error")
@@ -95,7 +150,7 @@ class DocumentFileHttpServer private constructor(
     private fun serveDirectory(dir: DocumentFile, urlPath: String): Response {
         // Prefer index.html if present
         val index = dir.findFile("index.html")
-        if (index != null && index.isFile) return serveFile(index)
+        if (index != null && index.isFile) return serveFile(index, null)
 
         val displayPath = "/$urlPath".ifEmpty { "/" }
         val sb = StringBuilder()
