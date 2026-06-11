@@ -16,10 +16,12 @@
  */
 package cx.ring.settings
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -28,8 +30,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.color.MaterialColors
 import cx.ring.R
 import cx.ring.databinding.FragExposedServicesSettingsBinding
 import cx.ring.databinding.ItemExposedServiceBinding
@@ -37,6 +42,7 @@ import cx.ring.viewmodel.ExposedServicesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import net.jami.services.ExposedServiceInfo
+import net.jami.services.ExposedServiceType
 
 @AndroidEntryPoint
 class ExposedServicesSettingsFragment : Fragment() {
@@ -70,9 +76,7 @@ class ExposedServicesSettingsFragment : Fragment() {
         b.recyclerServices.layoutManager = LinearLayoutManager(requireContext())
         b.recyclerServices.adapter = adapter
 
-        b.fabAddService.setOnClickListener {
-            openAddDialog()
-        }
+        b.fabAddService.setOnClickListener { openAddDialog() }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -80,7 +84,7 @@ class ExposedServicesSettingsFragment : Fragment() {
                     b.progressLoading.isVisible = state.isLoading
                     when {
                         state.isLoading -> {
-                            b.textEmpty.isVisible = false
+                            b.layoutEmpty.isVisible = false
                             b.recyclerServices.isVisible = false
                         }
                         state.errorMessage != null -> {
@@ -88,12 +92,11 @@ class ExposedServicesSettingsFragment : Fragment() {
                             viewModel.clearError()
                         }
                         state.services.isEmpty() -> {
-                            b.textEmpty.setText(R.string.shared_services_empty)
-                            b.textEmpty.isVisible = true
+                            b.layoutEmpty.isVisible = true
                             b.recyclerServices.isVisible = false
                         }
                         else -> {
-                            b.textEmpty.isVisible = false
+                            b.layoutEmpty.isVisible = false
                             b.recyclerServices.isVisible = true
                             adapter.submitList(state.services)
                         }
@@ -111,17 +114,15 @@ class ExposedServicesSettingsFragment : Fragment() {
     }
 
     private fun openAddDialog() {
-        val dialog = AddEditExposedServiceDialog.newInstance(null) { service ->
+        AddEditExposedServiceDialog.newInstance(null) { service ->
             viewModel.addService(accountId, service)
-        }
-        dialog.show(childFragmentManager, "add_service_dialog")
+        }.show(childFragmentManager, "add_service_dialog")
     }
 
     private fun openEditDialog(service: ExposedServiceInfo) {
-        val dialog = AddEditExposedServiceDialog.newInstance(service) { updated ->
+        AddEditExposedServiceDialog.newInstance(service) { updated ->
             viewModel.updateService(accountId, updated)
-        }
-        dialog.show(childFragmentManager, "edit_service_dialog")
+        }.show(childFragmentManager, "edit_service_dialog")
     }
 
     private fun deleteService(service: ExposedServiceInfo) {
@@ -135,39 +136,33 @@ class ExposedServicesSettingsFragment : Fragment() {
     companion object {
         private const val ACCOUNT_ID_KEY = "account_id"
 
-        fun newInstance(accountId: String): ExposedServicesSettingsFragment {
-            return ExposedServicesSettingsFragment().apply {
-                arguments = bundleOf(ACCOUNT_ID_KEY to accountId)
-            }
+        fun newInstance(accountId: String) = ExposedServicesSettingsFragment().apply {
+            arguments = bundleOf(ACCOUNT_ID_KEY to accountId)
         }
     }
+}
+
+private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ExposedServiceInfo>() {
+    override fun areItemsTheSame(oldItem: ExposedServiceInfo, newItem: ExposedServiceInfo) =
+        oldItem.id == newItem.id
+    override fun areContentsTheSame(oldItem: ExposedServiceInfo, newItem: ExposedServiceInfo) =
+        oldItem == newItem
 }
 
 class ExposedServiceAdapter(
     private val onEdit: (ExposedServiceInfo) -> Unit,
     private val onDelete: (ExposedServiceInfo) -> Unit,
     private val onToggle: (ExposedServiceInfo) -> Unit,
-) : RecyclerView.Adapter<ExposedServiceViewHolder>() {
+) : ListAdapter<ExposedServiceInfo, ExposedServiceViewHolder>(DIFF_CALLBACK) {
 
-    private val items = mutableListOf<ExposedServiceInfo>()
-
-    fun submitList(newItems: List<ExposedServiceInfo>) {
-        items.clear()
-        items.addAll(newItems)
-        notifyDataSetChanged()
-    }
-
-    override fun getItemCount() = items.size
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExposedServiceViewHolder {
-        return ExposedServiceViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        ExposedServiceViewHolder(
             ItemExposedServiceBinding.inflate(LayoutInflater.from(parent.context), parent, false),
             onEdit, onDelete, onToggle
         )
-    }
 
     override fun onBindViewHolder(holder: ExposedServiceViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(getItem(position))
     }
 }
 
@@ -179,23 +174,83 @@ class ExposedServiceViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(service: ExposedServiceInfo) {
-        binding.serviceName.text = service.name
-        binding.serviceDescription.text = if (service.description.isNotEmpty()) {
-            service.description
-        } else {
-            itemView.context.getString(R.string.shared_services_no_description)
-        }
-        binding.servicePort.text = itemView.context.getString(R.string.shared_services_port, service.localPort)
+        val ctx = itemView.context
+        val isWebsite = service.type == ExposedServiceType.EMBEDDED
 
-        // Clear listener before setting checked state to avoid spurious toggle
-        // during RecyclerView layout (recycled views fire the old listener)
+        if (isWebsite) {
+            binding.serviceTypeIcon.setImageResource(R.drawable.baseline_language_18)
+            val containerColor = MaterialColors.getColor(itemView, com.google.android.material.R.attr.colorPrimaryContainer)
+            val iconColor = MaterialColors.getColor(itemView, com.google.android.material.R.attr.colorOnPrimaryContainer)
+            binding.iconContainer.backgroundTintList = ColorStateList.valueOf(containerColor)
+            binding.serviceTypeIcon.imageTintList = ColorStateList.valueOf(iconColor)
+            binding.serviceTypeLabel.text = ctx.getString(R.string.shared_services_type_website_label)
+            binding.serviceTypeLabel.backgroundTintList = ColorStateList.valueOf(containerColor)
+            binding.serviceTypeLabel.setTextColor(iconColor)
+        } else {
+            binding.serviceTypeIcon.setImageResource(R.drawable.baseline_dns_24)
+            val containerColor = MaterialColors.getColor(itemView, com.google.android.material.R.attr.colorSecondaryContainer)
+            val iconColor = MaterialColors.getColor(itemView, com.google.android.material.R.attr.colorOnSecondaryContainer)
+            binding.iconContainer.backgroundTintList = ColorStateList.valueOf(containerColor)
+            binding.serviceTypeIcon.imageTintList = ColorStateList.valueOf(iconColor)
+            binding.serviceTypeLabel.text = ctx.getString(R.string.shared_services_type_custom_label)
+            binding.serviceTypeLabel.backgroundTintList = ColorStateList.valueOf(containerColor)
+            binding.serviceTypeLabel.setTextColor(iconColor)
+        }
+
+        binding.serviceName.text = service.name
+
+        binding.servicePolicy.text = when (service.policy) {
+            "contacts" -> ctx.getString(R.string.shared_services_policy_contacts)
+            "public"   -> ctx.getString(R.string.shared_services_policy_public)
+            "specific" -> ctx.getString(R.string.shared_services_policy_specific)
+            else       -> ""
+        }
+
+        val desc = service.description.trim()
+        binding.serviceDescription.isVisible = desc.isNotEmpty()
+        binding.serviceDescription.text = desc
+
+        val address = when {
+            isWebsite && service.localPort > 0 ->
+                ctx.getString(R.string.shared_services_local_port, service.localPort)
+            !isWebsite && service.localPort > 0 ->
+                ctx.getString(R.string.shared_services_local_address, service.localHost, service.localPort)
+            else -> ""
+        }
+        binding.serviceAddress.isVisible = address.isNotEmpty()
+        binding.serviceAddress.text = address
+
         binding.toggleEnabled.setOnCheckedChangeListener(null)
         binding.toggleEnabled.isChecked = service.enabled
-        binding.toggleEnabled.setOnCheckedChangeListener { _, _ ->
-            onToggle(service)
+        binding.toggleEnabled.setOnCheckedChangeListener { _, _ -> onToggle(service) }
+
+        // Open-in-browser button: visible only when a local port is assigned
+        val port = service.localPort
+        val hasServer = port > 0
+        binding.btnOpen.isVisible = hasServer
+        if (hasServer) {
+            val scheme = if (isWebsite) "http" else (service.scheme.ifBlank { "http" })
+            val host = service.localHost.ifBlank { "localhost" }
+            val url = "$scheme://$host:$port"
+            binding.btnOpen.setOnClickListener {
+                it.context.startActivity(
+                    android.content.Intent(android.content.Intent.ACTION_VIEW,
+                        android.net.Uri.parse(url))
+                )
+            }
         }
 
-        binding.btnEdit.setOnClickListener { onEdit(service) }
-        binding.btnDelete.setOnClickListener { onDelete(service) }
+        binding.btnMore.setOnClickListener { anchor ->
+            val popup = PopupMenu(anchor.context, anchor)
+            popup.menuInflater.inflate(R.menu.menu_service_item, popup.menu)
+            popup.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.action_edit   -> { onEdit(service); true }
+                    R.id.action_delete -> { onDelete(service); true }
+                    else               -> false
+                }
+            }
+            popup.show()
+        }
     }
 }
