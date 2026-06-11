@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5302cca8_b0d2ba8f",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-11T00:02:06Z",
+      "side": 1,
+      "message": "Done in PS26: restoreProxyAccountsAfterBackground() now returns immediately (no executor hop, no daemon calls) when the recorded set is empty and no deactivation is in flight — the startup and token-refresh-failure cases operate on a fresh process where the set is necessarily empty, so this path can no longer reactivate anything nor leave accounts active: there is nothing recorded to act on. When something IS recorded (push lost while backgrounded after a real deactivation), restoring is deliberate: with no FCM wakeup path, deactivated accounts would be unreachable — the PS15/PS16 fallback contract.",
+      "parentUuid": "eb780906_3290d0af",
+      "revId": "be936770acf5c3bf5d9d9f2ba771d5464d629f69",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "915accd2_d12baac3",
@@ -35,6 +53,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "041c12f3_a1214749",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-11T00:02:06Z",
+      "side": 1,
+      "message": "Done in PS26: the gate (isCallPush || push available) is evaluated inside onBackgroundPushReceived()\u0027s main-thread block; the service thread no longer touches mPreferencesService or pushToken.",
+      "parentUuid": "3c63cd8d_44e2c437",
+      "revId": "be936770acf5c3bf5d9d9f2ba771d5464d629f69",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c8b14bfb_28623e70",
@@ -48,6 +84,24 @@
       "writtenOn": "2026-06-11T00:02:00Z",
       "side": 1,
       "message": "[🟡 Suggestion] Line 589: `setAccountsActive(false)` can explicitly deactivate non-proxy accounts, but it does not update `explicitlyDeactivatedAccounts`. If an account later has the proxy enabled while still inactive, the background optimization can record and restore it because the explicit marker is missing. Keep the explicit-deactivation tracking consistent for bulk activation changes.\n```suggestion\nif (active) {\n    explicitlyDeactivatedAccounts.clear()\n} else {\n    for (a in mAccountList) {\n        if (!a.isDhtProxyEnabled) explicitlyDeactivatedAccounts.add(a.accountId)\n    }\n}\n```",
+      "revId": "be936770acf5c3bf5d9d9f2ba771d5464d629f69",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "410423ea_ff3931b5",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/PreferencesService.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-11T00:02:06Z",
+      "side": 1,
+      "message": "Done in PS26: the restore-before-disable is now inside setProxyEnabled(false) itself, in the same executor task (restoreProxyAccountsOnExecutor() inline before the proxy toggle). Atomicity on the executor removes the FIFO dependency entirely: any restore queued by other paths (pushToken setter included) lands before or after this task as a whole, and after it the recorded set is already empty — a benign no-op.",
+      "parentUuid": "d0726d85_fb8cca29",
       "revId": "be936770acf5c3bf5d9d9f2ba771d5464d629f69",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
