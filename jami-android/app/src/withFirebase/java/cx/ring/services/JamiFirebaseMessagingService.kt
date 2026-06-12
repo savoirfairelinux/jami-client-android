@@ -51,11 +51,30 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
             Log.w(TAG, "Can't acquire wake lock", e)
         }
 
+        // Expired-value notification from the DHT proxy ("exp" field): the value has
+        // left the DHT. An incoming call is a value *addition*; its later expiration
+        // (proxy server sets "exp" only on expired events) arrives with the original
+        // pt copied — including audioCall/videoCall for stale call values. Classify
+        // expirations first, unconditionally: treating an expired call value as an
+        // incoming call restores accounts, reconnects and starts a foreground service
+        // for a call whose caller gave up minutes ago (observed: a videoCall value
+        // pushed at 12:39 re-triggered the full call path on its expiration at 12:49).
+        val isExpiration = remoteMessage.data.containsKey("exp")
+
         // Same normalized classifier as the restore path below: a case-sensitive
         // substring check here would let a producer-side casing change restore
         // accounts via isDhtProxyCallWakeup but skip the foreground-service/wakelock
         // protection intended for incoming calls.
-        val isCallNotification = isDhtProxyCallWakeup(remoteMessage)
+        // Only *new* call value ids count: when the proxy server creates a fresh
+        // push listener (every re-subscription after the server dropped or never had
+        // one), its new internal DHT listen immediately re-delivers all values still
+        // stored on the key — including call requests from hours ago, with their
+        // original pt. Re-running the call path for those re-deliveries made every
+        // resubscribe dump look like an incoming call, feeding a restore/deactivate
+        // churn that ends with FCM dropping genuine call pushes (oversized catch-up
+        // messages and per-device quota, both observed server-side).
+        val isCallWakeup = !isExpiration && hasNewCallValue(remoteMessage)
+        val isCallNotification = isCallWakeup
                 && remoteMessage.priority == RemoteMessage.PRIORITY_HIGH
 
         // Snapshot UI visibility once, before the foreground service below can start:
@@ -94,12 +113,8 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
             // triggering a full reconnect on every message and defeating the battery
             // optimization. A call push lacking pt still gets the standard grace window
             // and account restore below, which covers negotiation comfortably.
-            val isCallPush = isCallNotification || isDhtProxyCallWakeup(remoteMessage)
-            // Expired-value notification from the DHT proxy ("exp" field): the value is
-            // gone from the DHT, there is nothing left to fetch or answer — measured at
-            // ~24% of all pushes during peer retry storms. Never classify a call push as
-            // expiration: a mislabeled call must keep the full restore path.
-            val isExpirationOnly = !isCallPush && remoteMessage.data.containsKey("exp")
+            // Expirations and re-delivered call ids are excluded (see isCallWakeup):
+            // they get the standard push handling, never the call path.
             // Single serialized entry point: the push-availability gate, grace window,
             // account restore, optional reconnect and deactivation re-arm are all
             // evaluated on the main thread (see onBackgroundPushReceived) — preference
@@ -109,10 +124,10 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
             // message/sync pushes are also delivered with high priority (DHT values
             // default to high), so priority alone must not trigger it.
             app.onBackgroundPushReceived(
-                isCallPush = isCallPush,
-                triggerReconnect = isCallPush
+                isCallPush = isCallWakeup,
+                triggerReconnect = isCallWakeup
                         && remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH,
-                isExpiration = isExpirationOnly
+                isExpiration = isExpiration
             )
         }
 
@@ -132,8 +147,7 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
                 // at ~20 pushes/min: that timeout alone kept the device awake >1h/day).
                 // Call pushes keep the lock until timeout — the historical protection for
                 // devices that block during call negotiation after the CPU drops.
-                val isCallPush = isCallNotification || isDhtProxyCallWakeup(remoteMessage)
-                if (!isCallPush) {
+                if (!isCallWakeup) {
                     try {
                         wakeLock?.let { if (it.isHeld) it.release() }
                     } catch (e: Exception) {
@@ -148,20 +162,41 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
      * Classifies a DHT proxy call wakeup from a positive signal only: the proxy copies
      * the connection request type into the "pt" field ("audioCall"/"videoCall" for
      * calls, "sip"/"git"… for messaging and sync channels), as a comma-separated list
-     * of exact values when the push covers several. FCM priority is not used as fallback:
+     * of exact values when the push covers several, positionally aligned with the
+     * "ids" list of DHT value ids. FCM priority is not used as fallback:
      * regular DHT values default to high priority too, so payloads without "pt" would
      * all be misclassified as calls and needlessly get the longer call grace window.
      * Non-call pushes misclassified as calls keep accounts active for up to 60s;
      * a call push lacking "pt" still gets the standard 30s grace window, which covers
      * the measured negotiation time several times over.
+     *
+     * Only call ids never seen by this process count as a call wakeup, and ids seen
+     * here are recorded: the proxy re-delivers all values still stored on a key every
+     * time it creates a fresh internal listener for it (catch-up dump on
+     * re-subscription), so a call value keeps reappearing — with its original pt —
+     * for as long as it stays in the DHT (~10 min for ICE requests), long after the
+     * caller hung up. A genuine incoming call is always a value id this process has
+     * never handled. The cache is in-memory and bounded: after a process restart a
+     * stale call id can be re-classified as a call at most once.
      */
-    private fun isDhtProxyCallWakeup(remoteMessage: RemoteMessage): Boolean {
-        val pushType = remoteMessage.data["pt"] ?: return false
-        // Normalize case: this gates incoming-call reliability, so a producer-side
-        // casing change must not silently downgrade call wakeups to plain pushes.
-        return pushType.splitToSequence(',')
-            .map { it.trim().lowercase(Locale.ROOT) }
-            .any { it == "audiocall" || it == "videocall" }
+    private fun hasNewCallValue(remoteMessage: RemoteMessage): Boolean {
+        val pushTypes = remoteMessage.data["pt"] ?: return false
+        val ids = remoteMessage.data["ids"]?.split(',') ?: emptyList()
+        var hasNew = false
+        pushTypes.splitToSequence(',').forEachIndexed { i, rawType ->
+            val type = rawType.trim().lowercase(Locale.ROOT)
+            if (type != "audiocall" && type != "videocall") return@forEachIndexed
+            val id = ids.getOrNull(i)?.trim()
+            if (id.isNullOrEmpty()) {
+                // No id to deduplicate on (single-value push without ids, or
+                // misaligned lists): fail open, a missed call is worse than a
+                // redundant restore.
+                hasNew = true
+            } else synchronized(seenCallIds) {
+                if (seenCallIds.put(id, Unit) == null) hasNew = true
+            }
+        }
+        return hasNew
     }
 
     private fun isAppInForeground(): Boolean {
@@ -183,5 +218,16 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
 
     companion object {
         private const val TAG = "JamiFirebaseMessaging"
+
+        // Call value ids already handled by this process, to drop re-deliveries
+        // (catch-up dumps re-push stored call values on every fresh server listener).
+        // Bounded LRU; 256 entries outlive by far the ~10 min DHT retention of the
+        // call request values being deduplicated. Companion-level: the FCM service
+        // instance can be recreated between pushes within the same process.
+        private const val SEEN_CALL_IDS_MAX = 256
+        private val seenCallIds = object : LinkedHashMap<String, Unit>(64, 0.75f, true) {
+            override fun removeEldestEntry(eldest: MutableMap.MutableEntry<String, Unit>) =
+                size > SEEN_CALL_IDS_MAX
+        }
     }
 }

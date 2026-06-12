@@ -131,10 +131,12 @@ class JamiApplicationFirebase : JamiApplication() {
         // nothing to fetch, answer or negotiate — restoring accounts or extending the
         // grace window for it would only burn energy (measured at ~24% of all pushes
         // during peer retry storms, these alone could keep the window open forever).
+        // This includes expirations of stale call values (their pt still says
+        // audioCall/videoCall): an incoming call is a value addition, never an
+        // expiration (see JamiFirebaseMessagingService).
         // The payload was still handed to the daemon by the caller for bookkeeping,
         // and the deactivation check re-armed there covers the cold-start-in-background
-        // edge where accounts load active with no episode running. Call pushes are
-        // never classified as expirations (see JamiFirebaseMessagingService).
+        // edge where accounts load active with no episode running.
         if (isExpiration) return
         // Publish the new grace window BEFORE cancelling: removeCallbacks() cannot stop
         // a deactivateRunnable that already started on the main looper, but that runnable
