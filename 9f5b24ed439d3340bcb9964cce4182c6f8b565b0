@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "feab2fb2_e2a8795e",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-12T18:14:07Z",
+      "side": 1,
+      "message": "[Critical] Line 129: Expired pushes return before arming a deactivation check. If the app is cold-started in the background and accounts are active, an expiration-only push will not create or conclude a background episode, so the accounts may remain active until another lifecycle/push event. The comment says the caller re-arms the check, but this method is the serialized scheduling entry point. Schedule a background deactivation for expiration-only pushes without extending grace/restoring accounts.",
+      "revId": "9f5b24ed439d3340bcb9964cce4182c6f8b565b0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8dcb2aca_ca321f21",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-12T18:14:07Z",
+      "side": 1,
+      "message": "[Critical] Line 163: The episode cap also overrides CALL_PUSH_GRACE_MS. If a call push arrives after MAX_BACKGROUND_ACTIVE_MS has elapsed and the call has not yet reached an active/pending state, the next deactivation run can immediately deactivate accounts during the call negotiation path. That contradicts the stated goal of protecting call pushes. Track whether the current grace window is call-related and exempt that window from the cap, or reset/conclude the episode before restoring for a call push so it receives the full call grace period.",
+      "revId": "9f5b24ed439d3340bcb9964cce4182c6f8b565b0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
