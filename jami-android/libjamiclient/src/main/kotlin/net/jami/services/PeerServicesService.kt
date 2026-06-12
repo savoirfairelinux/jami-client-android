@@ -166,6 +166,8 @@ class PeerServicesService {
     }
 
     fun onTunnelOpened(accountId: String, tunnelId: String, localPort: Int) {
+        activeTunnelIds.add(tunnelId)
+        anyActiveTunnelSubject.onNext(true)
         val pending = pendingOpens.removeFirstOrNull() ?: return
         val subject = tunnelStates[stateKey(pending.accountId, pending.peerUri)] ?: return
         val current = subject.value!!
@@ -182,9 +184,65 @@ class PeerServicesService {
             activeTunnels   = current.activeTunnels + (pending.serviceId to info),
             pendingServices = current.pendingServices - pending.serviceId,
         ))
-        activeTunnelIds.add(tunnelId)
-        anyActiveTunnelSubject.onNext(true)
         tunnelOpenedSubject.onNext(info)
+    }
+
+    fun refreshActiveTunnels() {
+        try {
+            val accounts = JamiService.getAccountList()
+            for (i in 0 until accounts.size) {
+                val account = accounts[i]
+                if (account.isEmpty()) continue
+                JamiService.getActiveTunnels(account).forEach { map ->
+                    map["id"]?.takeIf { it.isNotEmpty() }?.let { activeTunnelIds.add(it) }
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "refreshActiveTunnels failed", e)
+        }
+        anyActiveTunnelSubject.onNext(activeTunnelIds.isNotEmpty())
+    }
+
+    fun getAllActiveTunnels(): List<TunnelInfo> {
+        val result = mutableListOf<TunnelInfo>()
+        try {
+            val accounts = JamiService.getAccountList()
+            for (i in 0 until accounts.size) {
+                val account = accounts[i]
+                if (account.isEmpty()) continue
+                JamiService.getActiveTunnels(account).forEach { map ->
+                    val tunnelId = map["id"]?.takeIf { it.isNotEmpty() } ?: return@forEach
+                    result.add(TunnelInfo(
+                        tunnelId    = tunnelId,
+                        accountId   = account,
+                        peerUri     = map["peerUri"] ?: "",
+                        serviceId   = map["serviceId"] ?: "",
+                        serviceName = map["serviceName"] ?: "",
+                        scheme      = map["scheme"] ?: "",
+                        localPort   = map["localPort"]?.toIntOrNull() ?: 0,
+                    ))
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "getAllActiveTunnels failed", e)
+        }
+        return result
+    }
+
+    fun closeAllTunnels() {
+        try {
+            val accounts = JamiService.getAccountList()
+            for (i in 0 until accounts.size) {
+                val account = accounts[i]
+                if (account.isEmpty()) continue
+                JamiService.getActiveTunnels(account).forEach { map ->
+                    val tunnelId = map["id"]?.takeIf { it.isNotEmpty() } ?: return@forEach
+                    JamiService.closeServiceTunnel(account, tunnelId)
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "closeAllTunnels failed", e)
+        }
     }
 
     fun onTunnelClosed(accountId: String, tunnelId: String, @Suppress("UNUSED_PARAMETER") reason: String) {

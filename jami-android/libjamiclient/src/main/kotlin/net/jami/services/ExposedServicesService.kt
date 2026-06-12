@@ -16,6 +16,7 @@
  */
 package net.jami.services
 
+import io.reactivex.rxjava3.core.Observable
 import net.jami.daemon.JamiService
 import net.jami.daemon.StringMap
 import net.jami.utils.Log
@@ -97,6 +98,15 @@ open class ExposedServicesService {
     fun setServiceEnabled(accountId: String, service: ExposedServiceInfo, enabled: Boolean): Boolean {
         return updateExposedService(accountId, service.copy(enabled = enabled))
     }
+
+    /** Emits true while at least one embedded server is being hosted on this device. */
+    open fun observeHostingActive(): Observable<Boolean> = Observable.just(false)
+
+    /** Returns the currently running hosted services as (accountId, service) pairs. */
+    open fun getRunningHostedServices(): List<Pair<String, ExposedServiceInfo>> = emptyList()
+
+    /** Disables every enabled embedded service across all accounts (persisted). */
+    open fun disableAllHostedServices() {}
 
     private fun buildServiceMap(service: ExposedServiceInfo): StringMap {
         val map = StringMap()

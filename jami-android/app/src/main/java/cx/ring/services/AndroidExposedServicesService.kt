@@ -18,6 +18,8 @@ package cx.ring.services
 
 import android.content.Context
 import fi.iki.elonen.NanoHTTPD
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import net.jami.daemon.JamiService
 import net.jami.services.AccountService
 import net.jami.services.ExposedServiceInfo
@@ -33,6 +35,15 @@ class AndroidExposedServicesService(
 ) : ExposedServicesService() {
     /** key = "$accountId/$serviceId" */
     private val runningServers = mutableMapOf<String, NanoHTTPD>()
+
+    private val hostingActiveSubject = BehaviorSubject.createDefault(false).toSerialized()
+
+    override fun observeHostingActive(): Observable<Boolean> =
+        hostingActiveSubject.distinctUntilChanged()
+
+    private fun emitHostingState() {
+        hostingActiveSubject.onNext(runningServers.isNotEmpty())
+    }
 
     private fun resolveAccountId(accountId: String): String {
         if (accountId.isNotEmpty()) return accountId
@@ -81,6 +92,7 @@ class AndroidExposedServicesService(
             server.start()
             Log.i(TAG, "startServer: port=${server.listeningPort} dir='$directory'")
             runningServers[serverKey(accountId, serviceId)] = server
+            emitHostingState()
             server
         } catch (e: IOException) {
             Log.e(TAG, "startServer: failed", e)
@@ -92,6 +104,7 @@ class AndroidExposedServicesService(
         runningServers.remove(serverKey(accountId, serviceId))?.let { s ->
             s.stop()
             Log.i(TAG, "stopServer: stopped '$accountId/$serviceId'")
+            emitHostingState()
         }
     }
 
@@ -100,6 +113,7 @@ class AndroidExposedServicesService(
         runningServers.keys.filter { it.startsWith(prefix) }.forEach { key ->
             runningServers.remove(key)?.stop()
         }
+        emitHostingState()
         Log.i(TAG, "stopAllServersForAccount: cleared all servers for '$accountId'")
     }
 
@@ -143,6 +157,7 @@ class AndroidExposedServicesService(
             runningServers.remove(key)?.stop()
             Log.i(TAG, "syncEmbeddedServers: pruned stale server '$key'")
         }
+        emitHostingState()
     }
 
     override fun addExposedService(accountId: String, service: ExposedServiceInfo): String {
@@ -236,6 +251,37 @@ class AndroidExposedServicesService(
             val accountId = accounts[i]
             if (accountId.isNotEmpty()) syncEmbeddedServers(accountId)
         }
+        emitHostingState()
+    }
+
+    override fun getRunningHostedServices(): List<Pair<String, ExposedServiceInfo>> {
+        val result = mutableListOf<Pair<String, ExposedServiceInfo>>()
+        val runningKeys = runningServers.keys.toSet()
+        val accounts = JamiService.getAccountList()
+        for (i in 0 until accounts.size) {
+            val accountId = accounts[i]
+            if (accountId.isEmpty()) continue
+            super.getExposedServices(accountId)
+                .filter { it.type == ExposedServiceType.EMBEDDED
+                    && serverKey(accountId, it.id) in runningKeys }
+                .forEach { result.add(accountId to it) }
+        }
+        return result
+    }
+
+    override fun disableAllHostedServices() {
+        val accounts = JamiService.getAccountList()
+        for (i in 0 until accounts.size) {
+            val accountId = accounts[i]
+            if (accountId.isEmpty()) continue
+            super.getExposedServices(accountId)
+                .filter { it.type == ExposedServiceType.EMBEDDED && it.enabled && it.id.isNotEmpty() }
+                .forEach { service ->
+                    Log.i(TAG, "disableAllHostedServices: disabling '${service.id}' on '$accountId'")
+                    updateExposedService(accountId, service.copy(enabled = false))
+                }
+        }
+        emitHostingState()
     }
 
     companion object {

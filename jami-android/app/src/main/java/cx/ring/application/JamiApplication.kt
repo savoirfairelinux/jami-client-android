@@ -174,6 +174,8 @@ abstract class JamiApplication : Application() {
                 mAccountService.loadAccountsFromDaemon(mPreferencesService.hasNetworkConnected())
                 // Sync embedded HTTP servers
                 (mExposedServicesService as? AndroidExposedServicesService)?.syncAllAccounts()
+                // Recover tunnels the daemon kept alive across a process restart
+                peerServicesService.refreshActiveTunnels()
                 if (mPreferencesService.settings.enablePushNotifications) {
                     pushToken.let { token -> if (token != null) mAccountService.setPushNotificationConfig(token.first, token.second, pushPlatform) }
                 } else {
@@ -346,7 +348,8 @@ abstract class JamiApplication : Application() {
         Observable.combineLatest(
             appInForeground,
             peerServicesService.observeAnyActiveTunnel(),
-        ) { inForeground, hasTunnels -> !inForeground && hasTunnels }
+            mExposedServicesService.observeHostingActive(),
+        ) { inForeground, hasTunnels, hasHosting -> !inForeground && (hasTunnels || hasHosting) }
             .distinctUntilChanged()
             .switchMap { shouldRun ->
                 if (shouldRun) Observable.just(true).delay(300, TimeUnit.MILLISECONDS)

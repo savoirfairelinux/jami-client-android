@@ -73,6 +73,7 @@ class SettingsFragment :
     private var mIsRefreshingViewFromPresenter = true
     private var mNotificationVisibility = NOTIFICATION_PRIVATE
     private var mConnectivityMode: ConnectivityType = ConnectivityType.CUSTOM
+    private var pendingOpenSharedServices = false
     private lateinit var connectivityOptions: List<ConnectivityOption>
     @Inject
     lateinit var mPreferencesService: PreferencesService
@@ -369,6 +370,17 @@ class SettingsFragment :
         backPressedCallback.isEnabled = true
     }
 
+    /** Opens the Shared Services screen. If the view is not ready yet (e.g. when triggered from
+     *  a notification deep-link before onViewCreated), the request is queued. */
+    fun openSharedServices() {
+        if (childFragmentManager.findFragmentByTag(SHARED_SERVICES_SETTINGS_TAG) != null) return
+        if (binding == null) {
+            pendingOpenSharedServices = true
+            return
+        }
+        goToSharedServicesSettings()
+    }
+
     fun goToExtensionSettings(extensionDetails: ExtensionDetails) {
         val content = ExtensionSettingsFragment.newInstance(extensionDetails)
         val fragmentTransaction = childFragmentManager
@@ -418,6 +430,12 @@ class SettingsFragment :
         super.onViewCreated(view, savedInstanceState)
         // loading preferences
         presenter.loadSettings()
+
+        if (savedInstanceState == null &&
+            (pendingOpenSharedServices || arguments?.getBoolean(ARG_OPEN_SHARED_SERVICES) == true)) {
+            pendingOpenSharedServices = false
+            view.post { goToSharedServicesSettings() }
+        }
     }
 
     private fun saveDonationSettings(binding: FragSettingsBinding) {
@@ -511,6 +529,7 @@ class SettingsFragment :
         const val EXTENSION_SETTINGS_TAG = "ExtensionSettings"
         const val EXTENSION_PATH_PREFERENCE_TAG = "ExtensionPathPreference"
         const val SHARED_SERVICES_SETTINGS_TAG = "SharedServicesSettings"
+        const val ARG_OPEN_SHARED_SERVICES = "open_shared_services"
     }
 }
 

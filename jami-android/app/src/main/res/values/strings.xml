@@ -770,6 +770,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="notif_channel_peer_tunnel_descr">Shown while peer service tunnels are active in the background.</string>
     <string name="notif_peer_tunnel_title">Shared services active</string>
     <string name="notif_peer_tunnel_text">Jami is keeping your service connections alive in the background</string>
+    <string name="notif_peer_tunnel_stop_all">Stop all</string>
 
     <!-- Exposed/Hosted services -->
     <string name="shared_services_settings_title">Shared Services</string>
@@ -791,6 +792,13 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="shared_services_empty_subtitle">Share local files or services with Jami users</string>
     <string name="shared_services_more_options">More options</string>
     <string name="shared_services_open_in_browser">Open in browser</string>
+    <string name="shared_services_disconnect_all">Disconnect all</string>
+    <string name="shared_services_disconnect_all_title">Disconnect everything?</string>
+    <string name="shared_services_disconnect_all_message">The following will be disconnected:\n\n%1$s\n\nHosted services will be turned off and connections to other devices will be closed.</string>
+    <string name="shared_services_disconnect_all_confirm">Disconnect</string>
+    <string name="shared_services_nothing_active">Nothing is currently active</string>
+    <string name="shared_services_hosting_item">Hosting: %1$s (%2$s)</string>
+    <string name="shared_services_tunnel_item">%1$s (from %2$s)</string>
     <string name="shared_services_type_website_label">Website</string>
     <string name="shared_services_type_custom_label">Custom</string>
     <string name="shared_services_local_port">Local port %d</string>

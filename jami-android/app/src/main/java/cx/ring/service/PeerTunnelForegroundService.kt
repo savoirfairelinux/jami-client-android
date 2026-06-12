@@ -21,20 +21,63 @@ import android.app.Service
 import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.os.Build
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import androidx.core.app.NotificationCompat
 import cx.ring.R
 import cx.ring.client.HomeActivity
 import cx.ring.services.NotificationServiceImpl.Companion.NOTIF_CHANNEL_PEER_TUNNEL
+import dagger.hilt.android.AndroidEntryPoint
+import net.jami.services.ExposedServicesService
+import net.jami.services.PeerServicesService
+import java.util.concurrent.Executors
+import javax.inject.Inject
+
+@AndroidEntryPoint
 class PeerTunnelForegroundService : Service() {
+
+    @Inject
+    lateinit var peerServicesService: PeerServicesService
+    @Inject
+    lateinit var exposedServicesService: ExposedServicesService
+    private val worker = Executors.newSingleThreadExecutor()
+    private val mainHandler = Handler(Looper.getMainLooper())
 
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        startForegroundWithNotification()
+
+        if (intent?.action == ACTION_STOP_ALL) {
+            // Close every connected tunnel off the main thread, then disable the hosted
+            // servers on the main thread (where runningServers is otherwise mutated).
+            worker.execute {
+                peerServicesService.closeAllTunnels()
+                mainHandler.post {
+                    exposedServicesService.disableAllHostedServices()
+                    stopForeground(STOP_FOREGROUND_REMOVE)
+                    stopSelfResult(startId)
+                }
+            }
+        }
+        return START_NOT_STICKY
+    }
+
+    private fun startForegroundWithNotification() {
         val tapIntent = PendingIntent.getActivity(
             this, 0,
             Intent(this, HomeActivity::class.java).apply {
+                action = HomeActivity.ACTION_SHOW_SHARED_SERVICES
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            },
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+        )
+
+        val stopAllIntent = PendingIntent.getService(
+            this, 1,
+            Intent(this, PeerTunnelForegroundService::class.java).apply {
+                action = ACTION_STOP_ALL
             },
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
@@ -44,6 +87,7 @@ class PeerTunnelForegroundService : Service() {
             .setContentText(getString(R.string.notif_peer_tunnel_text))
             .setSmallIcon(R.drawable.ic_ring_logo_white)
             .setContentIntent(tapIntent)
+            .addAction(0, getString(R.string.notif_peer_tunnel_stop_all), stopAllIntent)
             .setOngoing(true)
             .setOnlyAlertOnce(true)
             .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
@@ -55,10 +99,15 @@ class PeerTunnelForegroundService : Service() {
         } else {
             startForeground(NOTIFICATION_ID, notification)
         }
-        return START_NOT_STICKY
+    }
+
+    override fun onDestroy() {
+        worker.shutdown()
+        super.onDestroy()
     }
 
     companion object {
         const val NOTIFICATION_ID = 2002
+        const val ACTION_STOP_ALL = "cx.ring.action.STOP_ALL_SHARED_SERVICES"
     }
 }

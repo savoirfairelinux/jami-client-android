@@ -394,6 +394,10 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             Intent.ACTION_SEARCH -> {
                 mHomeFragment!!.handleIntent(intent)
             }
+
+            ACTION_SHOW_SHARED_SERVICES -> {
+                goToAdvancedSettings(openSharedServices = true)
+            }
         }
     }
 
@@ -554,10 +558,18 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
     }
 
     fun goToAdvancedSettings() {
-        if (frameContent is SettingsFragment) {
+        goToAdvancedSettings(false)
+    }
+
+    fun goToAdvancedSettings(openSharedServices: Boolean) {
+        (frameContent as? SettingsFragment)?.let {
+            if (openSharedServices) it.openSharedServices()
             return
         }
-        val fragment = SettingsFragment()
+        val fragment = SettingsFragment().apply {
+            if (openSharedServices)
+                arguments = Bundle().apply { putBoolean(SettingsFragment.ARG_OPEN_SHARED_SERVICES, true) }
+        }
         frameContent = fragment
         supportFragmentManager
             .beginTransaction()
@@ -694,6 +706,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         const val REQUEST_CODE_CONVERSATION = 4
         const val REQUEST_PERMISSION_CAMERA = 113
         const val REQUEST_PERMISSION_READ_STORAGE = 114
+        const val ACTION_SHOW_SHARED_SERVICES = "cx.ring.action.SHOW_SHARED_SERVICES"
         private const val PREFS_NOTIF_PERM = "notif_permission"
         private const val PREF_NOTIF_PERM_ASKED = "asked_once"
         private const val STATE_NOTIF_PROMPT_SHOWN = "notif_permission_prompt_shown"

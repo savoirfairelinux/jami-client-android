@@ -22,14 +22,19 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import net.jami.services.AccountService
 import net.jami.services.ExposedServiceInfo
 import net.jami.services.ExposedServicesService
+import net.jami.services.PeerServicesService
+import net.jami.services.TunnelInfo
 import net.jami.utils.Log
 import javax.inject.Inject
 
 @HiltViewModel
 class ExposedServicesViewModel @Inject constructor(
     private val exposedServicesService: ExposedServicesService,
+    private val peerServicesService: PeerServicesService,
+    private val accountService: AccountService,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ExposedServicesUiState())
@@ -109,6 +114,30 @@ class ExposedServicesViewModel @Inject constructor(
         _uiState.update { it.copy(errorMessage = null) }
     }
 
+    fun getActiveConnections(): Pair<List<HostedServiceItem>, List<TunnelInfo>> {
+        val hosted = exposedServicesService.getRunningHostedServices().map { (accId, service) ->
+            HostedServiceItem(service.name, accountLabel(accId))
+        }
+        val tunnels = peerServicesService.getAllActiveTunnels()
+        return hosted to tunnels
+    }
+
+    private fun accountLabel(accountId: String): String {
+        val account = accountService.getAccount(accountId) ?: return accountId
+        return account.displayname.ifEmpty { account.displayUsername ?: accountId }
+    }
+
+    fun disconnectAll(accountId: String) {
+        try {
+            peerServicesService.closeAllTunnels()
+            exposedServicesService.disableAllHostedServices()
+            loadServices(accountId)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error disconnecting all", e)
+            _uiState.update { it.copy(errorMessage = e.message) }
+        }
+    }
+
     companion object {
         private const val TAG = "ExposedServicesViewModel"
     }
@@ -118,4 +147,9 @@ data class ExposedServicesUiState(
     val isLoading: Boolean = false,
     val services: List<ExposedServiceInfo> = emptyList(),
     val errorMessage: String? = null,
+)
+
+data class HostedServiceItem(
+    val serviceName: String,
+    val accountLabel: String,
 )
