@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98609f0c_148214c9",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-12T18:31:06Z",
+      "side": 1,
+      "message": "[🟡 Suggestions] Line 136: Returning immediately for expiration-only pushes skips both the restore path and the deactivation re-arm in onBackgroundPushReceived(). If the process is woken/cold-started in background by a sequence of expiration pushes while accounts are active, there may be no pending deactivateRunnable, so the new background-active cap cannot conclude the episode. Keep the no-restore behavior, but still post a deactivation check on the main handler for expiration pushes.\n```suggestion\n        if (isExpiration) {\n            backgroundHandler.post { scheduleBackgroundDeactivation() }\n            return\n        }\n```",
+      "revId": "dd384044d0af564bb8d177d8228eafecf49c05db",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
