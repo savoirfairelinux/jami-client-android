@@ -658,7 +658,13 @@ class AccountService(
                     ) {
                         // Record only after the daemon call: if it throws, no stale restore
                         // intent is left behind for an account that was never deactivated.
-                        JamiService.setAccountActive(a.accountId, false)
+                        // shutdownConnections=true: close the P2P connections with a proper
+                        // TLS termination now, while the process still runs. Aggressive OEM
+                        // freezers (e.g. Samsung Freecess) freeze the process shortly after
+                        // it leaves the foreground and reset its open sockets; every peer
+                        // then hits an abrupt "Broken pipe" on its next write and immediately
+                        // retries, feeding the push storm that wakes this device again.
+                        JamiService.setAccountActive(a.accountId, false, true)
                         backgroundDeactivatedAccounts.add(a.accountId)
                     }
                 }
