@@ -58,6 +58,18 @@ class JamiApplicationFirebase : JamiApplication() {
     private val lastPushTime = AtomicLong(0L)
     private val lastCallPushTime = AtomicLong(0L)
 
+    // Start (SystemClock.elapsedRealtime) of the current continuous background-active
+    // episode, 0 when none: set when the app leaves the foreground or when a background
+    // push restores the accounts, cleared on foreground return and when a background
+    // deactivation executes. Used to bound how long sustained pushes can keep accounts
+    // active: every push slides the grace window, so under a peer retry storm (measured
+    // at 27-44 pushes/min, i.e. one per ~2s) the deactivation branch would otherwise
+    // never run — the OS freezer (e.g. Samsung Freecess) then freezes the process with
+    // all P2P sockets open and resets them, and every peer hits "Broken pipe" and
+    // retries, feeding the very storm that keeps the window open. Same atomicity
+    // rationale as the timestamps above.
+    private val backgroundActiveSince = AtomicLong(0L)
+
     private val deactivateRunnable = Runnable {
         // Still in foreground: nothing to do.
         if (isAppVisible()) return@Runnable
@@ -67,6 +79,9 @@ class JamiApplicationFirebase : JamiApplication() {
         // and fall back to the historical always-connected background behavior.
         if (!mPreferencesService.settings.enablePushNotifications || pushToken == null) {
             Log.d(TAG, "Push unavailable while backgrounded — restoring accounts")
+            // No episode to bound anymore: the cap must never deactivate accounts that
+            // have no push wakeup path, that would leave the device unreachable.
+            backgroundActiveSince.set(0L)
             mAccountService.restoreProxyAccountsAfterBackground()
             return@Runnable
         }
@@ -75,6 +90,8 @@ class JamiApplicationFirebase : JamiApplication() {
             lastCallPushTime.get() + CALL_PUSH_GRACE_MS,
             lastPushTime.get() + PUSH_GRACE_MS
         ) - now
+        val episodeStart = backgroundActiveSince.get()
+        val capReached = episodeStart != 0L && now - episodeStart >= MAX_BACKGROUND_ACTIVE_MS
         when {
             // An active or pending call (any non-terminal state: RINGING, CONNECTING,
             // CURRENT…): keep accounts active and check again later, so they still get
@@ -82,13 +99,20 @@ class JamiApplicationFirebase : JamiApplication() {
             // at a relaxed interval: waking the main thread every few seconds for the
             // whole duration of a long call would defeat the battery goal; the only
             // cost is deactivation landing up to CALL_ACTIVE_RECHECK_MS after hangup.
+            // Calls are exempt from the episode cap, unconditionally.
             mCallService.hasActiveCalls() -> scheduleBackgroundDeactivation(CALL_ACTIVE_RECHECK_MS)
             // A push was recently received: the daemon may still be reconnecting and the
             // incoming call/message may not have reached the client yet. Wait out the
-            // grace window instead of killing the negotiation midway.
-            graceRemaining > 0 -> scheduleBackgroundDeactivation(graceRemaining)
+            // grace window instead of killing the negotiation midway — unless the episode
+            // cap is reached: sustained noise pushes must not keep accounts (and their
+            // P2P sockets) active forever. Reaching the cap drops no push: every push
+            // restores the accounts again below, it only forces the episode to conclude
+            // with a clean deactivation (proper TLS closes) instead of an OS freeze.
+            graceRemaining > 0 && !capReached -> scheduleBackgroundDeactivation(graceRemaining)
             else -> {
-                Log.d(TAG, "App went to background with push enabled — deactivating accounts")
+                Log.d(TAG, "App went to background with push enabled — deactivating accounts"
+                        + if (capReached) " (background-active cap reached)" else "")
+                backgroundActiveSince.set(0L)
                 mAccountService.deactivateProxyAccountsForBackground()
             }
         }
@@ -102,7 +126,16 @@ class JamiApplicationFirebase : JamiApplication() {
      * Since the daemon executor is a single FIFO queue, any deactivation the re-armed
      * runnable later enqueues is guaranteed to execute after the restore queued here.
      */
-    fun onBackgroundPushReceived(isCallPush: Boolean, triggerReconnect: Boolean) {
+    fun onBackgroundPushReceived(isCallPush: Boolean, triggerReconnect: Boolean, isExpiration: Boolean = false) {
+        // Expired-value notification: the value has already left the DHT, there is
+        // nothing to fetch, answer or negotiate — restoring accounts or extending the
+        // grace window for it would only burn energy (measured at ~24% of all pushes
+        // during peer retry storms, these alone could keep the window open forever).
+        // The payload was still handed to the daemon by the caller for bookkeeping,
+        // and the deactivation check re-armed there covers the cold-start-in-background
+        // edge where accounts load active with no episode running. Call pushes are
+        // never classified as expirations (see JamiFirebaseMessagingService).
+        if (isExpiration) return
         // Publish the new grace window BEFORE cancelling: removeCallbacks() cannot stop
         // a deactivateRunnable that already started on the main looper, but that runnable
         // reads these atomics — publishing first shrinks the stale-read window to the
@@ -115,6 +148,10 @@ class JamiApplicationFirebase : JamiApplication() {
         val now = SystemClock.elapsedRealtime()
         lastPushTime.set(now)
         if (isCallPush) lastCallPushTime.set(now)
+        // A push restoring accounts in background opens (or continues) an active
+        // episode; only the first event records the start, so sliding grace windows
+        // cannot push the cap away.
+        backgroundActiveSince.compareAndSet(0L, now)
         backgroundHandler.removeCallbacks(deactivateRunnable)
         backgroundHandler.post {
             // Push-availability decision on the main thread, where preference and token
@@ -197,6 +234,8 @@ class JamiApplicationFirebase : JamiApplication() {
         override fun onStart(owner: LifecycleOwner) {
             // Cancel any pending deactivation — app is back in foreground.
             backgroundHandler.removeCallbacks(deactivateRunnable)
+            // Foreground use is user-driven: no background episode to bound.
+            backgroundActiveSince.set(0L)
             // Unconditional restore: it only touches the recorded background-deactivated
             // set, so it is a no-op when nothing was deactivated. Gating it on network,
             // push setting or token state could leave accounts inactive indefinitely if
@@ -205,6 +244,10 @@ class JamiApplicationFirebase : JamiApplication() {
             mAccountService.restoreProxyAccountsAfterBackground()
         }
         override fun onStop(owner: LifecycleOwner) {
+            // Accounts are active when leaving the foreground: this starts a
+            // background-active episode (kept at its original start if a push
+            // already opened one).
+            backgroundActiveSince.compareAndSet(0L, SystemClock.elapsedRealtime())
             scheduleBackgroundDeactivation()
         }
     }
@@ -275,6 +318,11 @@ class JamiApplicationFirebase : JamiApplication() {
         // takes tens of seconds; calls get a longer window than plain message pushes.
         private const val PUSH_GRACE_MS = 30_000L
         private const val CALL_PUSH_GRACE_MS = 60_000L
+        // Upper bound for one continuous background-active episode under sustained
+        // pushes. Long enough for any sync/transfer burst to complete, short enough
+        // that a peer retry storm cannot keep the P2P sockets open until the OS
+        // freezer resets them. Active calls are exempt (checked before the cap).
+        private const val MAX_BACKGROUND_ACTIVE_MS = 10 * 60_000L
         private val TAG = JamiApplicationFirebase::class.simpleName
     }
 }
