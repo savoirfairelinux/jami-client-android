@@ -70,6 +70,16 @@ class JamiApplicationFirebase : JamiApplication() {
     // rationale as the timestamps above.
     private val backgroundActiveSince = AtomicLong(0L)
 
+    // Timestamp (SystemClock.elapsedRealtime) of the last background deactivation,
+    // 0 when none happened yet in this process. Gates how soon a non-call push may
+    // restore the accounts again: under a sustained noise flow (catch-up dumps,
+    // expiration echoes and stale-session deliveries measured at 30-50 pushes/min on
+    // a single device key), every restore re-opens connections whose teardown at the
+    // next deactivation triggers more peer retries — a feedback loop that kept the
+    // restore/deactivate cycle at ~90 s all day and burned the FCM per-device quota
+    // until genuine call pushes were dropped. Same atomicity rationale as above.
+    private val lastBackgroundDeactivation = AtomicLong(0L)
+
     private val deactivateRunnable = Runnable {
         // Still in foreground: nothing to do.
         if (isAppVisible()) return@Runnable
@@ -121,6 +131,18 @@ class JamiApplicationFirebase : JamiApplication() {
             else -> {
                 Log.d(TAG, "App went to background with push enabled — deactivating accounts"
                         + if (capReached) " (background-active cap reached)" else "")
+                // Open the post-deactivation cooldown for non-call pushes (see
+                // onBackgroundPushReceived) — but only when a background-active
+                // episode actually concludes. The deactivation check is re-armed
+                // after every push, including pushes gated by the cooldown itself
+                // (which open no episode); those redundant passes reach this branch
+                // with no episode and must not slide the cooldown forward, or
+                // sustained noise would extend it indefinitely and unbounded
+                // message latency would follow. Published before the deactivation
+                // is queued, same rationale as the grace timestamps.
+                if (episodeStart != 0L) {
+                    lastBackgroundDeactivation.set(SystemClock.elapsedRealtime())
+                }
                 backgroundActiveSince.set(0L)
                 mAccountService.deactivateProxyAccountsForBackground()
             }
@@ -147,6 +169,28 @@ class JamiApplicationFirebase : JamiApplication() {
         // and the deactivation check re-armed there covers the cold-start-in-background
         // edge where accounts load active with no episode running.
         if (isExpiration) return
+        // Post-deactivation cooldown for non-call pushes: a background episode just
+        // concluded with a clean teardown; reacting to the next noise push seconds
+        // later (catch-up dump, expiration echo, stale-session delivery, peer retry)
+        // re-opens every connection and re-feeds the loop. During the cooldown,
+        // non-call pushes neither restore accounts nor extend the grace window —
+        // their values stay in the DHT/swarm and are fetched on the next genuine
+        // wakeup (call push, foreground return, or first non-call push past the
+        // cooldown). The trade-off is bounded notification latency for messages
+        // (up to NONCALL_RESTORE_COOLDOWN_MS) against restored reachability:
+        // without it the churn burned the FCM per-device quota and genuine call
+        // pushes were dropped. Call pushes are exempt, unconditionally — the
+        // dedupe in JamiFirebaseMessagingService guarantees they are genuinely
+        // new calls. 0 means no deactivation happened yet in this process: never
+        // gate (cold start in background must keep its restore path).
+        if (!isCallPush) {
+            val lastDeactivation = lastBackgroundDeactivation.get()
+            if (lastDeactivation != 0L
+                && SystemClock.elapsedRealtime() - lastDeactivation < NONCALL_RESTORE_COOLDOWN_MS
+            ) {
+                return
+            }
+        }
         // Publish the new grace window BEFORE cancelling: removeCallbacks() cannot stop
         // a deactivateRunnable that already started on the main looper, but that runnable
         // reads these atomics — publishing first shrinks the stale-read window to the
@@ -334,6 +378,12 @@ class JamiApplicationFirebase : JamiApplication() {
         // that a peer retry storm cannot keep the P2P sockets open until the OS
         // freezer resets them. Active calls are exempt (checked before the cap).
         private const val MAX_BACKGROUND_ACTIVE_MS = 10 * 60_000L
+        // Minimum dwell time in the deactivated state before a non-call push may
+        // restore accounts again. Short enough that message notification latency
+        // stays acceptable, long enough to break the ~90 s restore/deactivate cycle
+        // observed under sustained push noise (the cycle's own reconnections feed
+        // the noise). Call pushes bypass this entirely.
+        private const val NONCALL_RESTORE_COOLDOWN_MS = 3 * 60_000L
         private val TAG = JamiApplicationFirebase::class.simpleName
     }
 }
