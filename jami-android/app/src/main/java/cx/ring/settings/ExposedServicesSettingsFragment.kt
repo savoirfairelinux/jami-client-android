@@ -35,22 +35,35 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.color.MaterialColors
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.databinding.FragExposedServicesSettingsBinding
 import cx.ring.databinding.ItemExposedServiceBinding
 import cx.ring.interfaces.AppBarStateListener
 import cx.ring.viewmodel.ExposedServicesViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.launch
 import net.jami.services.ExposedServiceInfo
 import net.jami.services.ExposedServiceType
+import net.jami.services.ExposedServicesService
+import net.jami.services.PeerServicesService
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ExposedServicesSettingsFragment : Fragment() {
 
+    @Inject
+    lateinit var peerServicesService: PeerServicesService
+    @Inject
+    lateinit var exposedServicesService: ExposedServicesService
     private val viewModel: ExposedServicesViewModel by viewModels()
     private var binding: FragExposedServicesSettingsBinding? = null
     private var accountId: String = ""
+    private val disposables = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +93,19 @@ class ExposedServicesSettingsFragment : Fragment() {
         b.recyclerServices.adapter = adapter
 
         b.fabAddService.setOnClickListener { openAddDialog() }
+
+        b.btnDisconnectAll.setOnClickListener { confirmDisconnectAll() }
+
+        disposables.add(
+            Observable.combineLatest(
+                peerServicesService.observeAnyActiveTunnel(),
+                exposedServicesService.observeHostingActive(),
+            ) { hasTunnels, hasHosting -> hasTunnels || hasHosting }
+                .distinctUntilChanged()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { active -> binding?.btnDisconnectAll?.isVisible = active }
+        )
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -112,8 +138,33 @@ class ExposedServicesSettingsFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        disposables.clear()
         binding = null
         super.onDestroyView()
+    }
+
+    private fun confirmDisconnectAll() {
+        val (hosted, tunnels) = viewModel.getActiveConnections()
+        if (hosted.isEmpty() && tunnels.isEmpty()) {
+            Toast.makeText(requireContext(), R.string.shared_services_nothing_active, Toast.LENGTH_SHORT).show()
+            return
+        }
+        val items = buildList {
+            hosted.forEach { add("• " + getString(R.string.shared_services_hosting_item, it.serviceName, it.accountLabel)) }
+            tunnels.forEach {
+                val label = it.serviceName.ifBlank { it.peerUri }
+                add("• " + getString(R.string.shared_services_tunnel_item, label, it.peerUri))
+            }
+        }.joinToString("\n")
+
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.shared_services_disconnect_all_title)
+            .setMessage(getString(R.string.shared_services_disconnect_all_message, items))
+            .setPositiveButton(R.string.shared_services_disconnect_all_confirm) { _, _ ->
+                viewModel.disconnectAll(accountId)
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 
     private fun openAddDialog() {

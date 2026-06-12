@@ -75,4 +75,17 @@
         android:text="@string/shared_services_add"
         app:icon="@drawable/baseline_add_24" />
 
+    <!-- Disconnect all button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_disconnect_all"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="16dp"
+        android:text="@string/shared_services_disconnect_all"
+        android:visibility="gone"
+        app:icon="@drawable/stop_circle_24px"
+        tools:visibility="visible" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
