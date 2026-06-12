@@ -95,6 +95,11 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
             // optimization. A call push lacking pt still gets the standard grace window
             // and account restore below, which covers negotiation comfortably.
             val isCallPush = isCallNotification || isDhtProxyCallWakeup(remoteMessage)
+            // Expired-value notification from the DHT proxy ("exp" field): the value is
+            // gone from the DHT, there is nothing left to fetch or answer — measured at
+            // ~24% of all pushes during peer retry storms. Never classify a call push as
+            // expiration: a mislabeled call must keep the full restore path.
+            val isExpirationOnly = !isCallPush && remoteMessage.data.containsKey("exp")
             // Single serialized entry point: the push-availability gate, grace window,
             // account restore, optional reconnect and deactivation re-arm are all
             // evaluated on the main thread (see onBackgroundPushReceived) — preference
@@ -106,7 +111,8 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
             app.onBackgroundPushReceived(
                 isCallPush = isCallPush,
                 triggerReconnect = isCallPush
-                        && remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH
+                        && remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH,
+                isExpiration = isExpirationOnly
             )
         }
 
