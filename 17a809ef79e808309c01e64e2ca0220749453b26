@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2cbcb3ae_16e613df",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-12T18:14:04Z",
+      "side": 1,
+      "message": "[🟡 Suggestions] Line 169: The dedupe cache key uses only the raw DHT value id. If two different accounts or DHT keys can receive the same value id, a call value already seen for one account can suppress a genuine call for another account in the same process. Scope the cache key with the account/key identifier from the push payload when available, e.g. `val dedupeKey \u003d \"${remoteMessage.data[\"account\"] ?: \"\"}:$id\"`, or otherwise document why ids are globally unique across all accounts/devices.",
+      "revId": "17a809ef79e808309c01e64e2ca0220749453b26",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
