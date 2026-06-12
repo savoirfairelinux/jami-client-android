@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60c87e5f_027e3a0d",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-12T18:31:07Z",
+      "side": 1,
+      "message": "[🟡 Suggestion] Line 177: The dedupe key is built by concatenating unescaped payload fields with \u0027:\u0027. Because both \u0027to\u0027 and \u0027key\u0027 come from the remote payload and may contain the delimiter, different tuples can collapse to the same string and incorrectly suppress a genuine incoming call. Use a structured key instead of string concatenation.\n\n```suggestion\n        val scope \u003d CallValueScope(\n            remoteMessage.data[\"to\"].orEmpty(),\n            remoteMessage.data[\"key\"].orEmpty()\n        )\n```\nThen store a data-class key, for example `private data class SeenCallId(val to: String, val key: String, val id: String)`, and call `seenCallIds.put(SeenCallId(scope.to, scope.key, id), Unit)`.",
+      "revId": "a56f9724e61c75be4479577c6fae9f66e0e3c5d5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
