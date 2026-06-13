@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "688ff00f_d2dfa030",
+        "filename": "daemon",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-13T15:28:58Z",
+      "side": 1,
+      "message": "Line 1: 🟡 Suggestion: This submodule pointer update is not explained by the Android-only FCM logging change and makes the patch harder to review because it may pull in unrelated daemon changes. If the daemon bump is not required for logging delivered/original push priorities, remove it from this change. If it is required, mention why in the commit message and ensure the daemon change is reviewable in the linked submodule revision.",
+      "revId": "6ce84ba44de25289070fc806e4cdaf82152dca9f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
