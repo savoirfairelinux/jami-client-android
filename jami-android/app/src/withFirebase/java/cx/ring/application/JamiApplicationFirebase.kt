@@ -359,7 +359,12 @@ class JamiApplicationFirebase : JamiApplication() {
         }
         val messageData = remoteMessage.data.toString()
         val currentTimestamp = getCurrentTimestamp(withMilliseconds = true)
-        hardwareService.pushLogMessage("[$currentTimestamp] Received message from: ${remoteMessage.from}, data: $messageData")
+        // Delivered/original priority (e.g. "2/2", "1/2" when FCM downgraded a
+        // high-priority message): downgrades are the observable symptom of the
+        // FCM adaptive quota penalizing the app, which is what gets genuine
+        // call pushes dropped — keep it measurable in the push log.
+        val prio = "${remoteMessage.priority}/${remoteMessage.originalPriority}"
+        hardwareService.pushLogMessage("[$currentTimestamp] [prio $prio] Received message from: ${remoteMessage.from}, data: $messageData")
     }
 
     companion object {
