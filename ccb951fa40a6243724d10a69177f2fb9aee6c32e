@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a53d1f0_b08e9fc9",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-13T10:32:08Z",
+      "side": 1,
+      "message": "[Critical] Line 144: Expired pushes return before re-arming background deactivation, which can leave accounts active indefinitely in the cold-start/background case described by the comment. The new early return skips backgroundActiveSince setup, removeCallbacks, and scheduleBackgroundDeactivation(), so if an expiration push wakes the process while accounts are active, no cap/deactivation timer is installed. Keep the energy-saving behavior by skipping restore/reconnect/grace extension, but still post a deactivation check.\n```suggestion\n        if (isExpiration) {\n            backgroundHandler.post { scheduleBackgroundDeactivation() }\n            return\n        }\n```",
+      "revId": "ccb951fa40a6243724d10a69177f2fb9aee6c32e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
