@@ -102,7 +102,7 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
                     } else {
                         binding.convLastItem.visibility = View.GONE
                     }
-                    if (!lastEvent.isRead) {
+                    if (!lastEvent.isRead && lastEvent.isIncoming) {
                         binding.convParticipant.setTypeface(null, Typeface.BOLD)
                         binding.convLastTime.setTypeface(null, Typeface.BOLD)
                         binding.convLastItem.setTypeface(null, Typeface.BOLD)
