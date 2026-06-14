@@ -73,7 +73,10 @@ class Account(
     private val conversationsWithLastEventSubject: Observable<Array<Any>> = getLatest(conversationMapSubject)
     private val conversationsSubject: Observable<List<Conversation>> = conversationsWithLastEventSubject.map(::getSorted).replayingShare()
     val unreadConversations: Observable<Int> = conversationsWithLastEventSubject.map { conversations ->
-        conversations.count { !(it as Pair<Conversation, Interaction>).second.isRead }
+        conversations.count {
+            val ev = (it as Pair<Conversation, Interaction>).second
+            !ev.isRead && ev.isIncoming   // a conversation is unread only if its last event is an unread *incoming* message
+        }
     }
 
     private val pendingSubject: Observable<List<Conversation>> = getLatest(pendingMapSubject).map(::getSorted).replayingShare()
