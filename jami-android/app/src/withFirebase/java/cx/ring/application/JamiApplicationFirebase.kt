@@ -157,7 +157,7 @@ class JamiApplicationFirebase : JamiApplication() {
      * Since the daemon executor is a single FIFO queue, any deactivation the re-armed
      * runnable later enqueues is guaranteed to execute after the restore queued here.
      */
-    fun onBackgroundPushReceived(isCallPush: Boolean, triggerReconnect: Boolean, isExpiration: Boolean = false) {
+    fun onBackgroundPushReceived(isCallPush: Boolean, isMessagePush: Boolean, isExpiration: Boolean = false) {
         // Expired-value notification: the value has already left the DHT, there is
         // nothing to fetch, answer or negotiate — restoring accounts or extending the
         // grace window for it would only burn energy (measured at ~24% of all pushes
@@ -169,21 +169,23 @@ class JamiApplicationFirebase : JamiApplication() {
         // and the deactivation check re-armed there covers the cold-start-in-background
         // edge where accounts load active with no episode running.
         if (isExpiration) return
-        // Post-deactivation cooldown for non-call pushes: a background episode just
+        // Post-deactivation cooldown for background-noise pushes: a background episode just
         // concluded with a clean teardown; reacting to the next noise push seconds
         // later (catch-up dump, expiration echo, stale-session delivery, peer retry)
         // re-opens every connection and re-feeds the loop. During the cooldown,
-        // non-call pushes neither restore accounts nor extend the grace window —
+        // noise pushes neither restore accounts nor extend the grace window —
         // their values stay in the DHT/swarm and are fetched on the next genuine
-        // wakeup (call push, foreground return, or first non-call push past the
-        // cooldown). The trade-off is bounded notification latency for messages
-        // (up to NONCALL_RESTORE_COOLDOWN_MS) against restored reachability:
-        // without it the churn burned the FCM per-device quota and genuine call
-        // pushes were dropped. Call pushes are exempt, unconditionally — the
-        // dedupe in JamiFirebaseMessagingService guarantees they are genuinely
-        // new calls. 0 means no deactivation happened yet in this process: never
+        // wakeup (call/message push, foreground return, or first noise push past the
+        // cooldown). The trade-off is bounded latency for the rare noise-only case
+        // against restored reachability: without it the churn burned the FCM
+        // per-device quota and genuine call pushes were dropped. Call and message
+        // pushes are exempt, unconditionally — the pt classification and dedupe in
+        // JamiFirebaseMessagingService guarantee they are genuinely new calls or
+        // messages. 0 means no deactivation happened yet in this process: never
         // gate (cold start in background must keep its restore path).
-        if (!isCallPush) {
+        // Only background noise (neither call nor message — including the residual
+        // high-priority empty-pt connection/presence churn) is gated here.
+        if (!isCallPush && !isMessagePush) {
             val lastDeactivation = lastBackgroundDeactivation.get()
             if (lastDeactivation != 0L
                 && SystemClock.elapsedRealtime() - lastDeactivation < NONCALL_RESTORE_COOLDOWN_MS
@@ -226,9 +228,12 @@ class JamiApplicationFirebase : JamiApplication() {
                 // possibly-stale connectivity state. Accounts deliberately disabled by
                 // the user are not in the restored set and stay inactive.
                 mAccountService.restoreProxyAccountsAfterBackground()
-                // connectivityChanged triggers a full DHT/SIP reconnect — only requested
-                // for call pushes, where low latency matters.
-                if (triggerReconnect) hardwareService.connectivityChanged(true)
+                // connectivityChanged triggers a full DHT/SIP reconnect, requested for
+                // both wakeup kinds: calls and message/invite pushes. The proxy account
+                // restore alone does not rebuild the P2P/proxy sockets torn down in deep
+                // doze, so without it the awaited message is never fetched and no
+                // notification is shown.
+                if (isCallPush || isMessagePush) hardwareService.connectivityChanged(true)
             }
             // Arm the deactivation check only after the restore has been queued, with a
             // second remove covering a lifecycle re-schedule racing in between.
