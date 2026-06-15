@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9560e7b4_8ddaaa77",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-15T12:42:23Z",
+      "side": 1,
+      "message": "[🟡 Suggestion] Line 194: The message classification prefixes are broad enough to match unrelated future protocol types such as `application/invite-*` or `application/im-gitmessage-identity`, which would bypass the cooldown and force reconnects. Prefer matching the documented exact type plus explicit suffix separators.\n```suggestion\nval isMessage \u003d type \u003d\u003d \"application/im-gitmessage-id\"\n        || type.startsWith(\"application/im-gitmessage-id/\")\n        || type \u003d\u003d \"application/invite\"\n        || type.startsWith(\"application/invite+\")\n```",
+      "revId": "bc3219060f3d4992cddd3dbf7f1fba85d3940650",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "257f031d_5dd3f187",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-15T12:42:23Z",
+      "side": 1,
+      "message": "[🔴 Critical] Line 202: The new shared `seenWakeupIds` cache deduplicates calls and message/invite wakeups using only `to:key:id`. This means a previously seen message/invite value can suppress a later call wakeup if the same scoped DHT id is reused or collides. Previously, non-call values could not poison call dedupe. Since the consequence is missing a call wakeup, keep call and message dedupe domains separate by including the wakeup kind in the key or by using separate caches.\n```suggestion\nval dedupeKind \u003d if (isCall) \"call\" else \"message\"\nseenWakeupIds.put(\"$scope:$dedupeKind:$id\", Unit) \u003d\u003d null\n```",
+      "revId": "bc3219060f3d4992cddd3dbf7f1fba85d3940650",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
