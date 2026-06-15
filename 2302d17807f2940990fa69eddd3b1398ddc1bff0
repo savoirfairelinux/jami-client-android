@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9872e70_50cb802e",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-15T12:49:15Z",
+      "side": 1,
+      "message": "[🟢 Good Practices] Line 68: No definite blocking issue found in the provided patch. The wakeup classification remains based on explicit protocol `pt` values rather than FCM priority, keeps call and message dedupe caches separate, and preserves the expiration short-circuit.",
+      "revId": "2302d17807f2940990fa69eddd3b1398ddc1bff0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "e2d44e69_17e9ed76",
