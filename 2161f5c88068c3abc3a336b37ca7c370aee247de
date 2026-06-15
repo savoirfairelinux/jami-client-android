@@ -35,6 +35,23 @@
       "parentUuid": "257f031d_5dd3f187",
       "revId": "2161f5c88068c3abc3a336b37ca7c370aee247de",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7353a211_bc863846",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-15T12:46:46Z",
+      "side": 1,
+      "message": "[🟡 Suggestion] Line 260: The existing 256-entry LRU was sized for rare call request ids, but this patch now stores message and invitation ids in the same cache. Message commits can be far more frequent than calls, so a busy conversation can evict recent call ids within the DHT retention window; a re-delivered stale call value would then be treated as a new call wakeup again, reintroducing the reconnect/restore churn this cache is meant to prevent. Keep separate bounded caches for call and message ids, or increase/TTL-size the message cache independently so message traffic cannot evict call dedupe state.\n```suggestion\nprivate const val SEEN_CALL_IDS_MAX \u003d 256\nprivate const val SEEN_MESSAGE_IDS_MAX \u003d 2048\nprivate val seenCallIds \u003d object : LinkedHashMap\u003cString, Unit\u003e(64, 0.75f, true) {\n    override fun removeEldestEntry(eldest: MutableMap.MutableEntry\u003cString, Unit\u003e) \u003d\n        size \u003e SEEN_CALL_IDS_MAX\n}\nprivate val seenMessageIds \u003d object : LinkedHashMap\u003cString, Unit\u003e(256, 0.75f, true) {\n    override fun removeEldestEntry(eldest: MutableMap.MutableEntry\u003cString, Unit\u003e) \u003d\n        size \u003e SEEN_MESSAGE_IDS_MAX\n}\n```",
+      "revId": "2161f5c88068c3abc3a336b37ca7c370aee247de",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
