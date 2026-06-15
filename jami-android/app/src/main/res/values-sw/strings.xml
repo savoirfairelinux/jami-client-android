@@ -172,6 +172,11 @@
   <string name="conversation_type_contact">Wasiliana na Jami</string>
   <string name="conversation_type_private">Private</string>
   <string name="conversation_search_hint">Tafuta mazungumzo</string>
+  <string name="audio_recording_in_progress">Kurekodi...</string>
+  <string name="audio_recording_send">Tuma</string>
+  <string name="audio_recording_play">Kucheza</string>
+  <string name="audio_recording_pause">Kupumzika</string>
+  <string name="audio_recording_stop">Acha kurekodi</string>
   <string name="today">Leo</string>
   <string name="yesterday">Jana</string>
   <!--Contacts-->
@@ -328,4 +333,7 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">Unganisha</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_more_options">Chaguzi zaidi</string>
+  <string name="shared_services_save">Kuokoa</string>
 </resources>

@@ -236,8 +236,11 @@
   <string name="conversation_contact_blocked">%1$s został zablokowany z tej rozmowy.</string>
   <string name="conversation_contact_unblocked">%1$s został odblokowany w tej rozmowie.</string>
   <string name="conversation_search_hint">Przeszukaj konwersację</string>
-  <string name="audio_recorder_error">Nie znaleziono aplikacji rejestratora dźwięku.</string>
-  <string name="video_recorder_error">Nie znaleziono aplikacji do nagrywania wideo.</string>
+  <string name="audio_recording_in_progress">Nagrywanie...</string>
+  <string name="audio_recording_send">Wyślij</string>
+  <string name="audio_recording_play">Graj</string>
+  <string name="audio_recording_pause">Pauza</string>
+  <string name="audio_recording_stop">Wyłącz nagrywanie</string>
   <string name="taking_picture_error">Wystąpił błąd podczas robienia zdjęcia.</string>
   <string name="find_picture_error">Wystąpił błąd podczas wyszukiwania zdjęcia.</string>
   <string name="open_camera_error">Wystąpił błąd podczas otwierania kamery.</string>
@@ -530,4 +533,10 @@
   <string name="step_format">Krok %1$d z %2$d: %3$s</string>
   <!--Peer services-->
   <string name="peer_services_connect">Połącz</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_no_description">Brak opisu</string>
+  <string name="shared_services_more_options">Więcej opcji</string>
+  <string name="shared_services_type_website_label">Strona internetowa</string>
+  <string name="shared_services_choose">Wybierz</string>
+  <string name="shared_services_save">Zapisz</string>
 </resources>

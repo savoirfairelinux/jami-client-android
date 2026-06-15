@@ -135,6 +135,9 @@
   <string name="conversation_blocked">Liên hệ này đã bị chặn.</string>
   <string name="conversation_preference_color">Màu hội thoại</string>
   <string name="conversation_type_private">Riêng tư</string>
+  <string name="audio_recording_send">Gửi</string>
+  <string name="audio_recording_play">Phát</string>
+  <string name="audio_recording_stop">Ngừng ghi lại</string>
   <string name="taking_picture_error">Xảy ra lỗi khi chụp ảnh.</string>
   <string name="find_picture_error">Xảy ra lỗi khi tìm ảnh.</string>
   <string name="open_camera_error">Xảy ra lỗi khi mở máy ảnh.</string>
@@ -290,4 +293,8 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">Kết nối</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">Đổi chỉnh</string>
+  <string name="shared_services_more_options">Nhiều lựa chọn hơn</string>
+  <string name="shared_services_save">- Cứu</string>
 </resources>

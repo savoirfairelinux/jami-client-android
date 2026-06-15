@@ -239,8 +239,13 @@
   <string name="conversation_contact_blocked">%1$s je blokiran/a v pogovoru.</string>
   <string name="conversation_contact_unblocked">%1$s je odblokiran/a v pogovoru.</string>
   <string name="conversation_search_hint">Poišči pogovor</string>
-  <string name="audio_recorder_error">Programa za snemanje zvoka ni možno najti.</string>
-  <string name="video_recorder_error">Programa za snemanje videa ni možno najti.</string>
+  <string name="audio_recording_in_progress">Snemanje ...</string>
+  <string name="audio_recording_send">Pošlji</string>
+  <string name="audio_recording_play">Predvajaj</string>
+  <string name="audio_recording_pause">Premor</string>
+  <string name="audio_recording_stop">Ustavi snemanje</string>
+  <string name="audio_recording_delete">Opusti</string>
+  <string name="audio_recording_discard_confirm">Opusti</string>
   <string name="taking_picture_error">Pri zajemu slike je prišlo do napake.</string>
   <string name="find_picture_error">Pri iskanju slike je prišlo do napake.</string>
   <string name="open_camera_error">Pri odpiranju kamere je prišlo do napake.</string>
@@ -534,4 +539,7 @@
   <string name="step_format">Korak %1$d od %2$d: %3$s</string>
   <!--Peer services-->
   <string name="peer_services_connect">Poveži</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_more_options">Več možnosti</string>
+  <string name="shared_services_save">Shrani</string>
 </resources>

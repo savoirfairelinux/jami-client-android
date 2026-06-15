@@ -172,6 +172,11 @@
   <string name="conversation_type_contact">El contautu Jami</string>
   <string name="conversation_type_private">Privada</string>
   <string name="conversation_search_hint">La conversación de busca</string>
+  <string name="audio_recording_in_progress">Grabar...</string>
+  <string name="audio_recording_send">Enviar</string>
+  <string name="audio_recording_play">Xugar</string>
+  <string name="audio_recording_pause">Pausa</string>
+  <string name="audio_recording_stop">Pa parar de grabar</string>
   <string name="today">El so nome ye \"El pueblu de Dios\".</string>
   <string name="yesterday">En xineru de 2011</string>
   <!--Contacts-->
@@ -328,4 +333,5 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">Conectar</string>
+  <!--Exposed/Hosted services-->
 </resources>

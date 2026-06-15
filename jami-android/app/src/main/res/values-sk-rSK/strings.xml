@@ -184,6 +184,11 @@
   <string name="conversation_type_private">Privátny</string>
   <string name="conversation_type_group">Skupina</string>
   <string name="conversation_search_hint">Vyhľadávacie rozhovor</string>
+  <string name="audio_recording_in_progress">Nahrávanie...</string>
+  <string name="audio_recording_send">Poslať</string>
+  <string name="audio_recording_play">Spustiť</string>
+  <string name="audio_recording_pause">Pozastaviť</string>
+  <string name="audio_recording_stop">Ukončiť zaznamenávanie</string>
   <string name="today">Dnes</string>
   <string name="yesterday">Včera</string>
   <!--Contacts-->
@@ -348,4 +353,8 @@
   <string name="step_title_set_password">Nastaviť heslo</string>
   <!--Peer services-->
   <string name="peer_services_connect">Pripojiť</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">Upraviť</string>
+  <string name="shared_services_more_options">Viac možností</string>
+  <string name="shared_services_save">Uložiť</string>
 </resources>

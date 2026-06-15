@@ -194,6 +194,11 @@
   <string name="conversation_type_contact">Contacte de Jami</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_search_hint">Conversació de cerca</string>
+  <string name="audio_recording_in_progress">Enregistrant…</string>
+  <string name="audio_recording_send">Envia</string>
+  <string name="audio_recording_play">Reproduir</string>
+  <string name="audio_recording_pause">Pausar</string>
+  <string name="audio_recording_stop">Para d\'enregistrar.</string>
   <string name="starting_camera_error">Ha succeït un error iniciant la càmera</string>
   <string name="today">Avui</string>
   <string name="yesterday">Ahir</string>
@@ -364,4 +369,5 @@
   <string name="step_title_set_password">Estableix contrasenya</string>
   <!--Peer services-->
   <string name="peer_services_connect">Connectar</string>
+  <!--Exposed/Hosted services-->
 </resources>

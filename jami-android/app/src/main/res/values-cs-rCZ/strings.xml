@@ -216,6 +216,12 @@
   <string name="conversation_type_private">Soukromý</string>
   <string name="conversation_type_group">Skupina</string>
   <string name="conversation_search_hint">Najít konverzaci</string>
+  <string name="audio_recording_in_progress">Nahrávám…</string>
+  <string name="audio_recording_send">Odeslat</string>
+  <string name="audio_recording_play">Přehrát</string>
+  <string name="audio_recording_pause">Pozastavit</string>
+  <string name="audio_recording_stop">Zastavit nahrávání</string>
+  <string name="audio_recording_delete">Zahodit</string>
   <string name="starting_camera_error">Při spouštění fotoaparátu došlo k chybě.</string>
   <string name="today">Dnes</string>
   <string name="yesterday">Včera</string>
@@ -401,4 +407,5 @@
   <string name="step_title_set_password">Nastavit heslo</string>
   <!--Peer services-->
   <string name="peer_services_connect">Připojit</string>
+  <!--Exposed/Hosted services-->
 </resources>

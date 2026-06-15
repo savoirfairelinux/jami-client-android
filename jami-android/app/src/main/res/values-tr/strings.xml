@@ -236,8 +236,13 @@
   <string name="conversation_contact_blocked">%1$s görüşmeye katılması engellendi.</string>
   <string name="conversation_contact_unblocked">%1$s görüşme engeli kaldırıldı.</string>
   <string name="conversation_search_hint">Görüşmede ara</string>
-  <string name="audio_recorder_error">Ses kayıt uygulaması bulunamadı.</string>
-  <string name="video_recorder_error">Video kayıt uygulaması bulunamadı.</string>
+  <string name="audio_recording_in_progress">Kaydediliyor…</string>
+  <string name="audio_recording_send">Gönder</string>
+  <string name="audio_recording_play">Oynat</string>
+  <string name="audio_recording_pause">Duraklat</string>
+  <string name="audio_recording_stop">Kaydı durdur</string>
+  <string name="audio_recording_delete">Vazgeç</string>
+  <string name="audio_recording_discard_confirm">Vazgeç</string>
   <string name="taking_picture_error">Fotoğraf çekilirken bir hata oluştu.</string>
   <string name="find_picture_error">Fotoğraf bulunurken bir hata oluştu.</string>
   <string name="open_camera_error">Kamera açılırken bir hata oluştu.</string>
@@ -530,4 +535,10 @@
   <string name="step_format">Adım %1$d/%2$d: %3$s</string>
   <!--Peer services-->
   <string name="peer_services_connect">Bağlan</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">Düzenle</string>
+  <string name="shared_services_more_options">Daha fazla seçenek</string>
+  <string name="shared_services_type_website_label">Web site</string>
+  <string name="shared_services_choose">Seç</string>
+  <string name="shared_services_save">Kaydet</string>
 </resources>

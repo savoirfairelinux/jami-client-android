@@ -172,6 +172,11 @@
   <string name="conversation_type_contact">Jami байланысы</string>
   <string name="conversation_type_private">Жеке</string>
   <string name="conversation_search_hint">Іздеу әңгімесі</string>
+  <string name="audio_recording_in_progress">Жазбаларды түсіру...</string>
+  <string name="audio_recording_send">Жіберіңіз</string>
+  <string name="audio_recording_play">Ойын</string>
+  <string name="audio_recording_pause">Тынығу</string>
+  <string name="audio_recording_stop">Жазуды тоқтату</string>
   <string name="today">Бүгінде</string>
   <string name="yesterday">Келесі күні</string>
   <!--Contacts-->
@@ -329,4 +334,5 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">Қосылыңыз</string>
+  <!--Exposed/Hosted services-->
 </resources>

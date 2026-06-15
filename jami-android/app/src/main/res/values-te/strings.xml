@@ -172,6 +172,11 @@
   <string name="conversation_type_contact">జామి పరిచయం</string>
   <string name="conversation_type_private">ప్రైవేటు</string>
   <string name="conversation_search_hint">శోధన సంభాషణ</string>
+  <string name="audio_recording_in_progress">రికార్డింగ్.</string>
+  <string name="audio_recording_send">పంపండి</string>
+  <string name="audio_recording_play">ఆడటం</string>
+  <string name="audio_recording_pause">విరామం</string>
+  <string name="audio_recording_stop">రికార్డింగ్ ఆపండి</string>
   <string name="today">నేడు</string>
   <string name="yesterday">నిన్న</string>
   <!--Contacts-->
@@ -329,4 +334,7 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">కనెక్ట్</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_more_options">మరిన్ని ఎంపికలు</string>
+  <string name="shared_services_save">సేవ్</string>
 </resources>

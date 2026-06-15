@@ -225,8 +225,10 @@
   <string name="conversation_contact_blocked">%1$s yettusewḥel seg udiwenni.</string>
   <string name="conversation_contact_unblocked">%1$s yettwaserreḥ seg udiwenni.</string>
   <string name="conversation_search_hint">Nadi adiwenni</string>
-  <string name="audio_recorder_error">Ulac asnas n usekles n umeslaw.</string>
-  <string name="video_recorder_error">Ulac asnas n usekles n tvidyut.</string>
+  <string name="audio_recording_in_progress">Asekles...</string>
+  <string name="audio_recording_send">Azen</string>
+  <string name="audio_recording_play">Urar</string>
+  <string name="audio_recording_pause">Sgunfu</string>
   <string name="taking_picture_error">Teḍra-d tuccḍa deg tuṭṭfa n tugna.</string>
   <string name="find_picture_error">Teḍra-d tuccḍa deg tifin n tugna. </string>
   <string name="open_camera_error">Teḍra-d tuccḍa deg ulday n tkamiṛat.</string>
@@ -511,4 +513,5 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">Qqen</string>
+  <!--Exposed/Hosted services-->
 </resources>

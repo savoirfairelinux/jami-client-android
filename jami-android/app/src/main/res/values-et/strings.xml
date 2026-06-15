@@ -240,8 +240,26 @@
   <string name="conversation_contact_blocked">%1$s osalemine siin vestluses on blokeeritud.</string>
   <string name="conversation_contact_unblocked">%1$s blokeerimine on eemaldatud.</string>
   <string name="conversation_search_hint">Otsi vestlust</string>
-  <string name="audio_recorder_error">Helisalvestuse rakendust ei leidu.</string>
-  <string name="video_recorder_error">Videosalvestuse rakendust ei leidu.</string>
+  <string name="audio_recorder_error">Helisalvestaja käivitamine ei õnnestu.</string>
+  <string name="audio_recording_in_progress">Salvestame...</string>
+  <string name="audio_recording_ready">Esitamiseks klõpsa kerimiseks logista sõrme mööda signaali visuaalset eritust</string>
+  <string name="audio_recording_playing">Esitamisel…</string>
+  <string name="audio_recording_send">Saada</string>
+  <string name="audio_recording_play">Esita</string>
+  <string name="audio_recording_pause">Peata</string>
+  <string name="audio_recording_stop">Lõpeta salvestamine</string>
+  <string name="audio_recording_extend">Jätka salvestamist</string>
+  <string name="audio_recording_restart">Salvesta uuesti</string>
+  <string name="audio_recording_delete">Loobu</string>
+  <string name="audio_recording_limit_reached">Salvestuse mahu ülempiir on käes. Palun saada ära või katkesta.</string>
+  <string name="audio_recording_gesture_hint">Saatmiseks lase nupp lahti · katkestamiseks viipa ◀  · ▲ kuulamiseks</string>
+  <string name="audio_recording_release_cancel">Katkestamiseks lase vabaks</string>
+  <string name="audio_recording_release_review">Muutmisvaate avamiseks lase vabaks</string>
+  <string name="audio_recording_slide_cancel">Katkesta salvestamine</string>
+  <string name="audio_recording_slide_review">Ava muutmisvaade</string>
+  <string name="audio_recording_review_short">Kuula üle</string>
+  <string name="audio_recording_too_short">Häälsõnumi salvestamiseks hoia all</string>
+  <string name="video_recorder_error">Videosalvestajat pole saadaval.</string>
   <string name="taking_picture_error">Pildistamisel tekkis viga.</string>
   <string name="find_picture_error">Pildi leidmisel tekkis viga.</string>
   <string name="open_camera_error">Kaamera avamisel tekkis viga.</string>
@@ -546,4 +564,8 @@ Kui klõpsid „Kinnita“, siis jätkame kasutajakonto eksportimisega.</string>
   <string name="peer_services_error_unreachable">Kontakt pole leitav</string>
   <string name="peer_services_error_timeout">Päring aegus</string>
   <string name="peer_services_error_unknown">Teenuste laadimine ei õnnestunud</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_settings_title">Jagatud teenused</string>
+  <string name="shared_services_no_description">Kirjeldust pole</string>
+  <string name="shared_services_disconnect_all_confirm">Katkesta ühendus</string>
 </resources>

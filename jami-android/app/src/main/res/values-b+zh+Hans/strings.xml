@@ -167,8 +167,28 @@
   <string name="conversation_contact_blocked">%1$s被阻止参与对话。</string>
   <string name="conversation_contact_unblocked">%1$s被移出黑名单。</string>
   <string name="conversation_search_hint">搜索对话记录</string>
-  <string name="audio_recorder_error">找不到录音应用</string>
-  <string name="video_recorder_error">找不到相机</string>
+  <string name="audio_recorder_error">无法启动录音机。 
+</string>
+  <string name="audio_recording_in_progress">录制中…</string>
+  <string name="audio_recording_ready">点击播放，拖动波形以定位</string>
+  <string name="audio_recording_playing">正在播放…</string>
+  <string name="audio_recording_send">发送</string>
+  <string name="audio_recording_play">播放</string>
+  <string name="audio_recording_pause">暂停</string>
+  <string name="audio_recording_stop">停止錄製</string>
+  <string name="audio_recording_extend">继续录制</string>
+  <string name="audio_recording_restart">再次录制</string>
+  <string name="audio_recording_delete">丟棄</string>
+  <string name="audio_recording_discard_confirm">丟棄</string>
+  <string name="audio_recording_limit_reached">已达到录制限制。请发送或取消。</string>
+  <string name="audio_recording_gesture_hint">释放以发送 · 滑动 ◀ 以取消 · ▲ 以查看</string>
+  <string name="audio_recording_release_cancel">释放以取消</string>
+  <string name="audio_recording_release_review">释放以打开编辑器</string>
+  <string name="audio_recording_slide_cancel">取消录制</string>
+  <string name="audio_recording_slide_review">打开编辑器</string>
+  <string name="audio_recording_review_short">审查</string>
+  <string name="audio_recording_too_short">按住以录制语音信息</string>
+  <string name="video_recorder_error">没有可用的录像机。</string>
   <string name="taking_picture_error">拍照时出错</string>
   <string name="find_picture_error">查找图片时出错</string>
   <string name="open_camera_error">打开相机时出错</string>
@@ -395,4 +415,12 @@
   <string name="peer_services_error_unreachable">无法联系</string>
   <string name="peer_services_error_timeout">请求超时</string>
   <string name="peer_services_error_unknown">无法检索服务</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_settings_title">共享服务</string>
+  <string name="shared_services_edit">編輯</string>
+  <string name="shared_services_no_description">无描述</string>
+  <string name="shared_services_more_options">更多选项</string>
+  <string name="shared_services_disconnect_all_confirm">断开</string>
+  <string name="shared_services_choose">選擇</string>
+  <string name="shared_services_save">保存</string>
 </resources>

@@ -175,6 +175,11 @@
   <string name="conversation_type_private">Privredni</string>
   <string name="conversation_type_group">Grupa</string>
   <string name="conversation_search_hint">Razgovor za pretragu</string>
+  <string name="audio_recording_in_progress">-Pregledavanje...</string>
+  <string name="audio_recording_send">Pošalji</string>
+  <string name="audio_recording_play">izvodi</string>
+  <string name="audio_recording_pause">Pauza</string>
+  <string name="audio_recording_stop">Prestani snimati</string>
   <string name="today">Danas</string>
   <string name="yesterday">Jučer</string>
   <!--Contacts-->
@@ -334,4 +339,6 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">Povezivanje</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_choose">Izaberi</string>
 </resources>

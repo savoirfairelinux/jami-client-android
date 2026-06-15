@@ -173,6 +173,11 @@
   <string name="conversation_type_contact">Ջամիի շփումը</string>
   <string name="conversation_type_private">Անձնական</string>
   <string name="conversation_search_hint">Հետազոտական զրույց</string>
+  <string name="audio_recording_in_progress">Գրանցում...</string>
+  <string name="audio_recording_send">Գտիր</string>
+  <string name="audio_recording_play">Խաղալ</string>
+  <string name="audio_recording_pause">Պահանջ</string>
+  <string name="audio_recording_stop">Դադարեցրեք ձայնագրումը</string>
   <string name="today">Այսօր</string>
   <string name="yesterday">Երեկ</string>
   <!--Contacts-->
@@ -330,4 +335,5 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">Կապակցել</string>
+  <!--Exposed/Hosted services-->
 </resources>

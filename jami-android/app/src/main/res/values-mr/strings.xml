@@ -172,6 +172,11 @@
   <string name="conversation_type_contact">जमी संपर्क</string>
   <string name="conversation_type_private">खासगी</string>
   <string name="conversation_search_hint">शोध संभाषण</string>
+  <string name="audio_recording_in_progress">रेकॉर्डिंग.</string>
+  <string name="audio_recording_send">पाठवा</string>
+  <string name="audio_recording_play">प्ले करा</string>
+  <string name="audio_recording_pause">विराम</string>
+  <string name="audio_recording_stop">रेकॉर्डिंग बंद करा</string>
   <string name="today">आज</string>
   <string name="yesterday">काल</string>
   <!--Contacts-->
@@ -329,4 +334,7 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">कनेक्ट करा</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_more_options">अधिक पर्याय</string>
+  <string name="shared_services_save">जतन करा</string>
 </resources>

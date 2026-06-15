@@ -177,6 +177,11 @@
   <string name="conversation_type_private">プライベート</string>
   <string name="conversation_type_group">グループ</string>
   <string name="conversation_search_hint">会話を検索</string>
+  <string name="audio_recording_in_progress">録画中…</string>
+  <string name="audio_recording_send">送信</string>
+  <string name="audio_recording_play">再生</string>
+  <string name="audio_recording_pause">一時停止</string>
+  <string name="audio_recording_stop">録音を停止</string>
   <string name="today">今日</string>
   <string name="yesterday">昨日</string>
   <!--Contacts-->
@@ -337,4 +342,5 @@
   <string name="step_title_set_password">パスワードを設定</string>
   <!--Peer services-->
   <string name="peer_services_connect">接続</string>
+  <!--Exposed/Hosted services-->
 </resources>

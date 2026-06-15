@@ -175,6 +175,11 @@
   <string name="conversation_type_private">Ιδιωτικό</string>
   <string name="conversation_type_group">Ομάδα</string>
   <string name="conversation_search_hint">Ψάξτε για συζήτηση</string>
+  <string name="audio_recording_in_progress">Ηχογράφηση..</string>
+  <string name="audio_recording_send">Αποστολή</string>
+  <string name="audio_recording_play">Αναπαραγωγή</string>
+  <string name="audio_recording_pause">Παύση</string>
+  <string name="audio_recording_stop">Σταματήστε την ηχογράφηση</string>
   <string name="today">Σήμερα</string>
   <string name="yesterday">Χθες</string>
   <!--Contacts-->
@@ -334,4 +339,5 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">Σύνδεση</string>
+  <!--Exposed/Hosted services-->
 </resources>

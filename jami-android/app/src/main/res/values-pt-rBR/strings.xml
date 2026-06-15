@@ -228,8 +228,13 @@
   <string name="conversation_contact_blocked">%1$s foi bloqueado da conversa.</string>
   <string name="conversation_contact_unblocked">%1$s foi desbloqueado da conversa.</string>
   <string name="conversation_search_hint">Buscar conversas</string>
-  <string name="audio_recorder_error">A aplicação do gravador de áudio não foi encontrada.</string>
-  <string name="video_recorder_error">A aplicação do gravador de vídeo não foi encontrada.</string>
+  <string name="audio_recording_in_progress">Gravando…</string>
+  <string name="audio_recording_send">Enviar</string>
+  <string name="audio_recording_play">Reproduzir</string>
+  <string name="audio_recording_pause">Pausar</string>
+  <string name="audio_recording_stop">Pare de gravar</string>
+  <string name="audio_recording_delete">Descartar</string>
+  <string name="audio_recording_discard_confirm">Descartar</string>
   <string name="taking_picture_error">Ocorreu um erro ao tirar a fotografia.</string>
   <string name="find_picture_error">Ocorreu um erro ao encontrar a fotografia.</string>
   <string name="open_camera_error">Ocorreu um erro ao abrir a câmara.</string>
@@ -494,4 +499,9 @@
   <string name="step_title_set_password">Definir senha</string>
   <!--Peer services-->
   <string name="peer_services_connect">Conectar</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_more_options">Mais opções</string>
+  <string name="shared_services_type_website_label">Site</string>
+  <string name="shared_services_choose">Escolha</string>
+  <string name="shared_services_save">Salvar</string>
 </resources>

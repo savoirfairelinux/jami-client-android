@@ -240,8 +240,23 @@
   <string name="conversation_contact_blocked">%1$s u bllokua prej bisede.</string>
   <string name="conversation_contact_unblocked">%1$s u zhbllokua prej bisede.</string>
   <string name="conversation_search_hint">Kërkoni bisedë</string>
-  <string name="audio_recorder_error">S’u gjet aplikacion incizimi audio.</string>
-  <string name="video_recorder_error">S’u gjet aplikacion regjistrimi video.</string>
+  <string name="audio_recorder_error">S’arrihet të niset incizues audio.</string>
+  <string name="audio_recording_in_progress">Po regjistrohet…</string>
+  <string name="audio_recording_playing">Po luhet…</string>
+  <string name="audio_recording_send">Dërgoje</string>
+  <string name="audio_recording_play">Luaje</string>
+  <string name="audio_recording_pause">Pushim</string>
+  <string name="audio_recording_stop">Ndale incizimin</string>
+  <string name="audio_recording_extend">Vazhdo incizimin</string>
+  <string name="audio_recording_restart">Riincizoje</string>
+  <string name="audio_recording_delete">Hidhe tej</string>
+  <string name="audio_recording_discard_confirm">Hidhe tej</string>
+  <string name="audio_recording_limit_reached">U mbërrit në kufi incizimi. Dërgojeni, ose anulojeni.</string>
+  <string name="audio_recording_slide_cancel">Anulojeni incizimin</string>
+  <string name="audio_recording_slide_review">Hap përpunuesin</string>
+  <string name="audio_recording_review_short">Shqyrtojeni</string>
+  <string name="audio_recording_too_short">Që të incizohet një mesazh zanor, mbajeni të shtypur</string>
+  <string name="video_recorder_error">S’ka regjistrues video</string>
   <string name="taking_picture_error">Ndodhi një gabim teksa bëhej fotoja.</string>
   <string name="find_picture_error">Ndodhi një gabim teksa bëhej gjetja e fotos.</string>
   <string name="open_camera_error">Ndodhi një gabim teksa hapej kamera.</string>
@@ -541,4 +556,10 @@
   <string name="peer_services_error_unreachable">Kontakti s’kapet dot</string>
   <string name="peer_services_error_timeout">Kërkesës i mbaroi koha</string>
   <string name="peer_services_error_unknown">S’u morën dot shërbime</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_settings_title">Shërbime të Përbashkëta</string>
+  <string name="shared_services_no_description">S’ka përshkrim</string>
+  <string name="shared_services_more_options">Më tepër mundësi</string>
+  <string name="shared_services_disconnect_all_confirm">Shkëpute</string>
+  <string name="shared_services_save">Ruaje</string>
 </resources>

@@ -180,6 +180,11 @@
   <string name="conversation_type_private">خاص</string>
   <string name="conversation_type_group">مجموعة</string>
   <string name="conversation_search_hint">بحث عن المحادثة</string>
+  <string name="audio_recording_in_progress">تسجيل...</string>
+  <string name="audio_recording_send">إرسال</string>
+  <string name="audio_recording_play">تشغيل</string>
+  <string name="audio_recording_pause">إيقاف مؤقت</string>
+  <string name="audio_recording_stop">إيقاف التسجيل</string>
   <string name="today">اليوم</string>
   <string name="yesterday">البارحة</string>
   <!--Contacts-->
@@ -339,4 +344,5 @@
   <string name="step_title_set_password">تعيين كلمة المرور</string>
   <!--Peer services-->
   <string name="peer_services_connect">إتصال</string>
+  <!--Exposed/Hosted services-->
 </resources>

@@ -173,6 +173,11 @@
   <string name="conversation_type_contact">জামি যোগাযোগ</string>
   <string name="conversation_type_private">ব্যক্তিগত</string>
   <string name="conversation_search_hint">অনুসন্ধান কথোপকথন</string>
+  <string name="audio_recording_in_progress">রেকর্ডিং...</string>
+  <string name="audio_recording_send">পাঠান</string>
+  <string name="audio_recording_play">খেলুন</string>
+  <string name="audio_recording_pause">বিরতি</string>
+  <string name="audio_recording_stop">রেকর্ডিং বন্ধ করুন</string>
   <string name="today">আজ</string>
   <string name="yesterday">গতকাল</string>
   <!--Contacts-->
@@ -331,4 +336,5 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">সংযুক্ত করুন</string>
+  <!--Exposed/Hosted services-->
 </resources>

@@ -28,6 +28,13 @@
   <!--Settings-->
   <!--Conversation-->
   <string name="remove_conversation">Slett samtale</string>
+  <string name="audio_recording_in_progress">Opptak pågår...</string>
+  <string name="audio_recording_send">Send</string>
+  <string name="audio_recording_play">Spill av</string>
+  <string name="audio_recording_pause">Pause</string>
+  <string name="audio_recording_stop">Stopp opptak</string>
+  <string name="audio_recording_delete">Avslå</string>
+  <string name="audio_recording_discard_confirm">Avslå</string>
   <!--Contacts-->
   <!--Account summary-->
   <!--Share fragment-->
@@ -52,4 +59,7 @@
   <string name="step_title_set_password">Lagre passord</string>
   <!--Peer services-->
   <string name="peer_services_connect">Koble til</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_more_options">Flere alternativer</string>
+  <string name="shared_services_save">Lagre</string>
 </resources>

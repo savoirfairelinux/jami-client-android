@@ -172,6 +172,11 @@
   <string name="conversation_type_contact">جمی تماس</string>
   <string name="conversation_type_private">خصوصی</string>
   <string name="conversation_search_hint">بحث آختارماق</string>
+  <string name="audio_recording_in_progress">ضبط کردن...</string>
+  <string name="audio_recording_send">گؤنده ر</string>
+  <string name="audio_recording_play">اوینایین</string>
+  <string name="audio_recording_pause">توقف</string>
+  <string name="audio_recording_stop">ضبط ائتمه یه داوام ائتدیر</string>
   <string name="today">بو گون</string>
   <string name="yesterday">دونن</string>
   <!--Contacts-->
@@ -328,4 +333,5 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">باغلا</string>
+  <!--Exposed/Hosted services-->
 </resources>

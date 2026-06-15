@@ -173,6 +173,11 @@
   <string name="conversation_type_contact">Жэми-ийн холбоо</string>
   <string name="conversation_type_private">Хувь хүн</string>
   <string name="conversation_search_hint">Танд ярилцлага хайх</string>
+  <string name="audio_recording_in_progress">-Хүхнэ...</string>
+  <string name="audio_recording_send">Хэвлэл</string>
+  <string name="audio_recording_play">Уурхай тогло</string>
+  <string name="audio_recording_pause">Хаашаа</string>
+  <string name="audio_recording_stop">Зүрхлэх зогсоо</string>
   <string name="today">Өнөөдөр</string>
   <string name="yesterday">Өчигдөр</string>
   <!--Contacts-->
@@ -330,4 +335,7 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">Харилцаа холбоо</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_more_options">Үүнээс илүү сонголт</string>
+  <string name="shared_services_save">Хөрөөж</string>
 </resources>

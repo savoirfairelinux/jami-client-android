@@ -237,8 +237,12 @@
   <string name="conversation_contact_blocked">%1$s le lett tiltva a beszélgetésből.</string>
   <string name="conversation_contact_unblocked">%1$s beszélgetés letiltása fel lett oldva.</string>
   <string name="conversation_search_hint">Beszélgetés keresése</string>
-  <string name="audio_recorder_error">A hangfelvevő alkalmazás nem található.</string>
-  <string name="video_recorder_error">A videófelvevő alkalmazás nem található.</string>
+  <string name="audio_recording_in_progress">Felvétel…</string>
+  <string name="audio_recording_send">Küldés</string>
+  <string name="audio_recording_play">Lejátszás</string>
+  <string name="audio_recording_pause">Megállítás</string>
+  <string name="audio_recording_stop">Felvétel leállítása</string>
+  <string name="audio_recording_delete">Elveti</string>
   <string name="taking_picture_error">Hiba történt a kép készítése közben.</string>
   <string name="find_picture_error">Hiba történt a kép keresése közben.</string>
   <string name="open_camera_error">Hiba történt a fényképezőgép kinyitásakor.</string>
@@ -533,4 +537,6 @@ A fiókexportálási művelet folytatásához kattintson a Megerősítés gombra
   <string name="step_format">%1$d. lépés, összesen: %2$d: %3$s</string>
   <!--Peer services-->
   <string name="peer_services_connect">Kapcsolódás</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_no_description">Nincs leírás</string>
 </resources>

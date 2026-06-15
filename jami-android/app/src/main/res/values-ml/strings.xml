@@ -227,8 +227,11 @@
   <string name="conversation_contact_blocked">%1$s സംഭാഷണത്തിൽ നിന്നും തടയപ്പെട്ടു.</string>
   <string name="conversation_contact_unblocked">%1$s-ന്/ക്ക് സംഭാഷണത്തിൽ നിന്നുമുള്ള തടസം മാറ്റിയിരിക്കുന്നു.</string>
   <string name="conversation_search_hint">തിരയൽ സംഭാഷണം</string>
-  <string name="audio_recorder_error">ഓഡിയോ റെക്കോർഡർ ആപ്പ് കാണുന്നില്ല.</string>
-  <string name="video_recorder_error">വീഡിയോ റെക്കോർഡർ ആപ്പ് കാണുന്നില്ല.</string>
+  <string name="audio_recording_in_progress">റെക്കോർഡിംഗ്.</string>
+  <string name="audio_recording_send">അയയ്ക്കുക</string>
+  <string name="audio_recording_play">കളി</string>
+  <string name="audio_recording_pause">ഇടവേള</string>
+  <string name="audio_recording_stop">റെക്കോർഡിംഗ് നിർത്തുക</string>
   <string name="taking_picture_error">ചിത്രം എടുക്കുമ്പോൾ ഒരു പ്രശ്നം വന്നിരിക്കുന്നു.</string>
   <string name="find_picture_error">ചിത്രം തിരയുമ്പോൾ ഒരു പ്രശ്നം വന്നിരിക്കുന്നു.</string>
   <string name="open_camera_error">ക്യാമറ തുറക്കുമ്പോൾ ഒരു പ്രശ്നം വന്നിരിക്കുന്നു.</string>
@@ -456,4 +459,7 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">ബന്ധിപ്പിക്കുക</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_more_options">കൂടുതൽ ഓപ്ഷനുകൾ</string>
+  <string name="shared_services_save">സംരക്ഷിക്കുക</string>
 </resources>

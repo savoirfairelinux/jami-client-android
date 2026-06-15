@@ -238,8 +238,11 @@
   <string name="conversation_contact_blocked">%1$s è stato bloccato dalla conversazione.</string>
   <string name="conversation_contact_unblocked">%1$s è stato sbloccato dalla conversazione.</string>
   <string name="conversation_search_hint">Cerca conversazione</string>
-  <string name="audio_recorder_error">Impossibile trovare l\'app per la registrazione audio.</string>
-  <string name="video_recorder_error">Impossibile trovare l\'app per la registrazione video.</string>
+  <string name="audio_recording_in_progress">Registrazione…</string>
+  <string name="audio_recording_send">Invia</string>
+  <string name="audio_recording_play">Riproduci</string>
+  <string name="audio_recording_pause">Pausa</string>
+  <string name="audio_recording_stop">Ferma la registrazione</string>
   <string name="taking_picture_error">Si è verificato un errore durante lo scatto della foto.</string>
   <string name="find_picture_error">Si è verificato un errore durante la ricerca della foto.</string>
   <string name="open_camera_error">Si è verificato un errore durante l\'apertura della fotocamera.</string>
@@ -533,4 +536,6 @@
   <string name="step_format">Passo %1$d di %2$d: %3$s</string>
   <!--Peer services-->
   <string name="peer_services_connect">Connetti</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_no_description">Nessuna descrizione</string>
 </resources>

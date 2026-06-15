@@ -173,6 +173,11 @@
   <string name="conversation_type_contact">Jami kontaktua</string>
   <string name="conversation_type_private">Pribatua</string>
   <string name="conversation_search_hint">Bilaketa elkarrizketa</string>
+  <string name="audio_recording_in_progress">Grabatzen...</string>
+  <string name="audio_recording_send">Bidali</string>
+  <string name="audio_recording_play">Jo</string>
+  <string name="audio_recording_pause">Pausatu</string>
+  <string name="audio_recording_stop">Utzi grabaketa.</string>
   <string name="today">Gaur egun</string>
   <string name="yesterday">Atzo</string>
   <!--Contacts-->
@@ -332,4 +337,5 @@
   <string name="step_title_set_password">Ezarri pasahitza</string>
   <!--Peer services-->
   <string name="peer_services_connect">Konektatu</string>
+  <!--Exposed/Hosted services-->
 </resources>

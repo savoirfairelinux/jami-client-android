@@ -149,6 +149,10 @@
   <string name="conversation_preference_color">ਗੱਲਬਾਤ ਦਾ ਰੰਗ</string>
   <string name="conversation_preference_emoji">ਗੱਲਬਾਤ ਲਈ ਇਮੋਜੀ</string>
   <string name="conversation_type_group">ਸਮੂਹ</string>
+  <string name="audio_recording_in_progress">ਰਿਕਾਰਡ ਹੋ ਰਹੀ ਹੈ…</string>
+  <string name="audio_recording_send">ਭੇਜੋ</string>
+  <string name="audio_recording_play">ਚਲਾਓ</string>
+  <string name="audio_recording_pause">ਰੋਕੋ</string>
   <string name="today">ਅੱਜ</string>
   <string name="yesterday">ਕੱਲ੍ਹ</string>
   <!--Contacts-->
@@ -274,4 +278,6 @@
   <string name="step_title_set_password">ਪਾਸਵਰਡ ਸੈੱਟ ਕਰੋ</string>
   <!--Peer services-->
   <string name="peer_services_connect">ਜੋੜੋ</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_type_website_label">ਵੈੱਬਸਾਈਟ</string>
 </resources>

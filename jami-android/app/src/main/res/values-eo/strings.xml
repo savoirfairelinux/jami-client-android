@@ -173,6 +173,11 @@
   <string name="conversation_type_private">Privata</string>
   <string name="conversation_type_group">Grupo</string>
   <string name="conversation_search_hint">Serĉu konversacion</string>
+  <string name="audio_recording_in_progress">Rekordo...</string>
+  <string name="audio_recording_send">Sendi</string>
+  <string name="audio_recording_play">Ludi</string>
+  <string name="audio_recording_pause">Paŭzi</string>
+  <string name="audio_recording_stop">Ĉesu registri</string>
   <string name="today">Hodiaŭ</string>
   <string name="yesterday">Hieraŭ</string>
   <!--Contacts-->
@@ -329,4 +334,5 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">Konekti</string>
+  <!--Exposed/Hosted services-->
 </resources>

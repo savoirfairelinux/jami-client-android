@@ -172,6 +172,11 @@
   <string name="conversation_type_contact">๋ติดต่อ Jami</string>
   <string name="conversation_type_private">เอกชน</string>
   <string name="conversation_search_hint">ค้นหาบทสนทนา</string>
+  <string name="audio_recording_in_progress">กำลังบันทึก…</string>
+  <string name="audio_recording_send">ส่ง</string>
+  <string name="audio_recording_play">เล่น</string>
+  <string name="audio_recording_pause">หยุด</string>
+  <string name="audio_recording_stop">หยุดบันทึก</string>
   <string name="today">วัน นี้</string>
   <string name="yesterday">เมื่อวาน</string>
   <!--Contacts-->
@@ -329,4 +334,8 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">เชื่อมต่อ</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">ปรับแต่ง</string>
+  <string name="shared_services_more_options">ช่องทางเพิ่มเติม</string>
+  <string name="shared_services_save">เก็บ</string>
 </resources>

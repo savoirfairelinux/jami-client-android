@@ -202,6 +202,11 @@ contact@jami.net</string>
   <string name="conversation_type_private">خصوصی</string>
   <string name="conversation_type_group">گروه</string>
   <string name="conversation_search_hint">جستجو گفتگو‌ها</string>
+  <string name="audio_recording_in_progress">در حال ضبط...</string>
+  <string name="audio_recording_send">ارسال</string>
+  <string name="audio_recording_play">پخش</string>
+  <string name="audio_recording_pause">مکث</string>
+  <string name="audio_recording_stop">توقف ضبط</string>
   <string name="starting_camera_error">خطایی هنگام راه‌اندازی دوربین رخ داد</string>
   <string name="today">امروز</string>
   <string name="yesterday">دیروز</string>
@@ -368,4 +373,5 @@ contact@jami.net</string>
   <string name="step_title_set_password">تعیین گذرواژه</string>
   <!--Peer services-->
   <string name="peer_services_connect">اتصال</string>
+  <!--Exposed/Hosted services-->
 </resources>

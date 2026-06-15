@@ -223,8 +223,11 @@
   <string name="conversation_contact_blocked">%1$s님이 대화에서 차단되었습니다.</string>
   <string name="conversation_contact_unblocked">%1$s님이 대화에서 차단 해제되었습니다.</string>
   <string name="conversation_search_hint">대화 검색</string>
-  <string name="audio_recorder_error">녹음 앱을 찾지 못했습니다.</string>
-  <string name="video_recorder_error">녹화 앱을 찾지 못했습니다.</string>
+  <string name="audio_recording_in_progress">기록 중...</string>
+  <string name="audio_recording_send">보내기</string>
+  <string name="audio_recording_play">재생</string>
+  <string name="audio_recording_pause">정지</string>
+  <string name="audio_recording_stop">녹음을 중단</string>
   <string name="taking_picture_error">사진을 찍는 중 오류가 발생했습니다.</string>
   <string name="find_picture_error">사진을 찾는 중 오류가 발생했습니다.</string>
   <string name="open_camera_error">카메라를 열던 중 오류가 발생했습니다.</string>
@@ -467,4 +470,7 @@
   <string name="step_title_create_profile">프로필 생성</string>
   <!--Peer services-->
   <string name="peer_services_connect">연결</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_more_options">더 많은 선택 사항</string>
+  <string name="shared_services_save">저장</string>
 </resources>

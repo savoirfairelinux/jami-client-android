@@ -230,8 +230,13 @@
   <string name="conversation_contact_blocked">%1$sбыл(а) заблокирован(а) для участия в беседе.</string>
   <string name="conversation_contact_unblocked">%1$sбыл(а) разблокирован(а) для участия в беседе.</string>
   <string name="conversation_search_hint">Найти беседу</string>
-  <string name="audio_recorder_error">Приложение для аудиозаписи не найдено.</string>
-  <string name="video_recorder_error">Приложение для записи видео не найдено.</string>
+  <string name="audio_recording_in_progress">Запись...</string>
+  <string name="audio_recording_send">Отправть</string>
+  <string name="audio_recording_play">Воспроизвести</string>
+  <string name="audio_recording_pause">Пауза</string>
+  <string name="audio_recording_stop">Остановить запись</string>
+  <string name="audio_recording_delete">Отклонить</string>
+  <string name="audio_recording_discard_confirm">Отклонить</string>
   <string name="taking_picture_error">При съемке фотографии возникла ошибка.</string>
   <string name="find_picture_error">При поиске изображения возникла ошибка.</string>
   <string name="open_camera_error">При открытии камеры возникла ошибка.</string>
@@ -503,4 +508,9 @@
   <string name="step_title_set_password">Задать пароль</string>
   <!--Peer services-->
   <string name="peer_services_connect">Соединение...</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_more_options">Дополнительные опции</string>
+  <string name="shared_services_type_website_label">Сайт</string>
+  <string name="shared_services_choose">Выбор</string>
+  <string name="shared_services_save">Сохранить</string>
 </resources>

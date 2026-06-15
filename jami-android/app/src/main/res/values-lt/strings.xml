@@ -204,6 +204,11 @@
   <string name="conversation_contact_added">%1$s prisijungė prie pokalbio.</string>
   <string name="conversation_contact_left">%1$s išėjo iš pokalbio.</string>
   <string name="conversation_search_hint">Ieškoti pokalbyje</string>
+  <string name="audio_recording_send">Siųsti</string>
+  <string name="audio_recording_play">Atkurti</string>
+  <string name="audio_recording_pause">Pristabdyti</string>
+  <string name="audio_recording_stop">Nustokite įrašyti</string>
+  <string name="audio_recording_delete">Atmesti</string>
   <string name="taking_picture_error">Fotografuojant įvyko klaida.</string>
   <string name="open_camera_error">Atveriant kamerą įvyko klaida.</string>
   <string name="starting_camera_error">Paleidžiant kamerą įvyko klaida.</string>
@@ -434,4 +439,8 @@
   <string name="step_format">Žingsnis %1$d iš %2$d: %3$s</string>
   <!--Peer services-->
   <string name="peer_services_connect">Prisijungti</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_more_options">Daugiau parinkčių</string>
+  <string name="shared_services_choose">Choose</string>
+  <string name="shared_services_save">Įrašyti</string>
 </resources>

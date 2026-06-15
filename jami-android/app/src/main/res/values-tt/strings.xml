@@ -87,6 +87,8 @@
   <string name="conversation_action_incoming_call">Килүче чакыру</string>
   <string name="conversation_members">Депутатлар</string>
   <string name="conversation_type_private">Шәхси</string>
+  <string name="audio_recording_send">Җибәр</string>
+  <string name="audio_recording_stop">Язуны туктату</string>
   <string name="today">Бүген</string>
   <string name="yesterday">Кичә</string>
   <!--Contacts-->
@@ -183,4 +185,8 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">Бәйләнешкә кертү</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">Редакция</string>
+  <string name="shared_services_more_options">Күпрәк мөмкинлекләр</string>
+  <string name="shared_services_save">Каплагыз</string>
 </resources>

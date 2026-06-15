@@ -88,6 +88,8 @@
   <string name="conversation_action_incoming_call">Паступны званок</string>
   <string name="conversation_members">Члены</string>
   <string name="conversation_type_private">Прыватныя</string>
+  <string name="audio_recording_send">Пашляць</string>
+  <string name="audio_recording_stop">Спыніць запіс</string>
   <string name="today">Сёння</string>
   <string name="yesterday">Учора</string>
   <!--Contacts-->
@@ -185,4 +187,5 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">Злучэнне</string>
+  <!--Exposed/Hosted services-->
 </resources>

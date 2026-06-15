@@ -236,8 +236,12 @@
   <string name="conversation_contact_blocked">%1$s blev blokeret fra samtalen.</string>
   <string name="conversation_contact_unblocked">%1$s er ikke længere blokeret fra samtalen.</string>
   <string name="conversation_search_hint">Søg samtale</string>
-  <string name="audio_recorder_error">Ingen app til lydoptagelse.</string>
-  <string name="video_recorder_error">Ingen app til videooptagelse.</string>
+  <string name="audio_recording_in_progress">Optager...</string>
+  <string name="audio_recording_send">Send</string>
+  <string name="audio_recording_play">Afspil</string>
+  <string name="audio_recording_pause">Pause</string>
+  <string name="audio_recording_stop">Stop optagelse</string>
+  <string name="audio_recording_delete">Fjern</string>
   <string name="taking_picture_error">Der skete en fejl. Billedet blev ikke taget.</string>
   <string name="find_picture_error">Der skete en fejl. Billedet blev ikke fundet.</string>
   <string name="open_camera_error">Der skete en fejl. Kameraet kunne ikke åbnes.</string>
@@ -489,4 +493,5 @@
   <string name="step_format">Trin %1$d af %2$d: %3$s</string>
   <!--Peer services-->
   <string name="peer_services_connect">Køb</string>
+  <!--Exposed/Hosted services-->
 </resources>

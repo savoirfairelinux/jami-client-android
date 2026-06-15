@@ -173,6 +173,11 @@
   <string name="conversation_type_contact">Contacte Jami</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_search_hint">Conversacion de cercaire</string>
+  <string name="audio_recording_in_progress">Recèrca...</string>
+  <string name="audio_recording_send">Enviar</string>
+  <string name="audio_recording_play">Joguèri</string>
+  <string name="audio_recording_pause">Pausa</string>
+  <string name="audio_recording_stop">Arrestar d’enregistrar</string>
   <string name="today">Uèi</string>
   <string name="yesterday">Ièr</string>
   <!--Contacts-->
@@ -331,4 +336,7 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">Se connectar</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_more_options">Mai d’opcions</string>
+  <string name="shared_services_save">Salvar</string>
 </resources>

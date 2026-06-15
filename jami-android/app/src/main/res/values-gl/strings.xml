@@ -177,6 +177,11 @@
   <string name="conversation_type_contact">Contacto Jami</string>
   <string name="conversation_type_private">Privado</string>
   <string name="conversation_search_hint">Buscar conversa</string>
+  <string name="audio_recording_in_progress">Gravando...</string>
+  <string name="audio_recording_send">Enviar</string>
+  <string name="audio_recording_play">Reproducir</string>
+  <string name="audio_recording_pause">Deter</string>
+  <string name="audio_recording_stop">Deixar de gravar</string>
   <string name="today">Hoxe</string>
   <string name="yesterday">Onte</string>
   <!--Contacts-->
@@ -348,4 +353,5 @@
   <string name="step_title_set_password">Escribe contrasinal</string>
   <!--Peer services-->
   <string name="peer_services_connect">Conectar</string>
+  <!--Exposed/Hosted services-->
 </resources>

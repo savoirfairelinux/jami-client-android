@@ -173,6 +173,11 @@
   <string name="conversation_type_contact">Kontak jami</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_search_hint">Cari percakapan</string>
+  <string name="audio_recording_in_progress">Merekam...</string>
+  <string name="audio_recording_send">Kirim</string>
+  <string name="audio_recording_play">Mainkan</string>
+  <string name="audio_recording_pause">Jeda</string>
+  <string name="audio_recording_stop">Berhenti merekam</string>
   <string name="today">Hari ini</string>
   <string name="yesterday">Kemarin</string>
   <!--Contacts-->
@@ -332,4 +337,5 @@
   <string name="step_title_set_password">Atur kata sandi</string>
   <!--Peer services-->
   <string name="peer_services_connect">Hubungkan</string>
+  <!--Exposed/Hosted services-->
 </resources>

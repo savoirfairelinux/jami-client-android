@@ -203,6 +203,11 @@
   <string name="conversation_type_contact">Jami kontakt</string>
   <string name="conversation_type_private">Privatno</string>
   <string name="conversation_search_hint">Pretraži konverzaciju</string>
+  <string name="audio_recording_in_progress">Snimanje...</string>
+  <string name="audio_recording_send">Pošalji</string>
+  <string name="audio_recording_play">Pusti</string>
+  <string name="audio_recording_pause">Pauziraj</string>
+  <string name="audio_recording_stop">Престани са снимањем</string>
   <string name="today">Danas</string>
   <string name="yesterday">Juče</string>
   <!--Contacts-->
@@ -405,4 +410,7 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">Poveži</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_more_options">Више опција</string>
+  <string name="shared_services_save">Sačuvaj</string>
 </resources>

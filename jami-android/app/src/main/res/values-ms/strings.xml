@@ -172,6 +172,11 @@
   <string name="conversation_type_private">സ്വകാര്യ</string>
   <string name="conversation_type_group">Kumpulan</string>
   <string name="conversation_search_hint">തിരയൽ സംഭാഷണം</string>
+  <string name="audio_recording_in_progress">റെക്കോർഡിംഗ്.</string>
+  <string name="audio_recording_send">അയയ്ക്കുക</string>
+  <string name="audio_recording_play">Main</string>
+  <string name="audio_recording_pause">ഇടവേള</string>
+  <string name="audio_recording_stop">റെക്കോർഡിംഗ് നിർത്തുക</string>
   <string name="today">Hari ini</string>
   <string name="yesterday">Semalam</string>
   <!--Contacts-->
@@ -329,4 +334,7 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">ബന്ധിപ്പിക്കുക</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_more_options">കൂടുതൽ ഓപ്ഷനുകൾ</string>
+  <string name="shared_services_save">സംരക്ഷിക്കുക</string>
 </resources>

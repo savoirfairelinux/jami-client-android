@@ -219,6 +219,13 @@
   <string name="conversation_type_private">Privé</string>
   <string name="conversation_type_group">Groep</string>
   <string name="conversation_search_hint">Zoek gesprek</string>
+  <string name="audio_recording_in_progress">Aan het opnemen...</string>
+  <string name="audio_recording_send">Versturen</string>
+  <string name="audio_recording_play">Afspelen</string>
+  <string name="audio_recording_pause">Pauze</string>
+  <string name="audio_recording_stop">Opname beëindigen</string>
+  <string name="audio_recording_delete">Verwerpen</string>
+  <string name="audio_recording_discard_confirm">Verwerpen</string>
   <string name="starting_camera_error">Er is een fout opgetreden bij het opstarten van de camera.</string>
   <string name="today">Vandaag</string>
   <string name="yesterday">Gisteren</string>
@@ -396,4 +403,8 @@
   <string name="step_title_set_password">Wachtwoord instellen</string>
   <!--Peer services-->
   <string name="peer_services_connect">Verbinden</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_more_options">Meer opties</string>
+  <string name="shared_services_choose">Kiezen</string>
+  <string name="shared_services_save">Opslaan</string>
 </resources>

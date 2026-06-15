@@ -194,6 +194,11 @@
   <string name="conversation_type_contact">Jami kontakt</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_search_hint">Søk samtale</string>
+  <string name="audio_recording_in_progress">Filmane blir opptekna.</string>
+  <string name="audio_recording_send">Send inn</string>
+  <string name="audio_recording_play">Spel av</string>
+  <string name="audio_recording_pause">Pause</string>
+  <string name="audio_recording_stop">Sluta å opptre</string>
   <string name="today">I dag</string>
   <string name="yesterday">I går</string>
   <!--Contacts-->
@@ -360,4 +365,7 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">Kopla til</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_more_options">Meir alternativ</string>
+  <string name="shared_services_save">Ta vare på</string>
 </resources>

@@ -226,8 +226,11 @@
   <string name="conversation_contact_blocked">%1$s був(-ла) заблокований(-а) в розмові.</string>
   <string name="conversation_contact_unblocked">%1$s був(-ла) розблокований(-а) в розмові.</string>
   <string name="conversation_search_hint">Пошук розмов</string>
-  <string name="audio_recorder_error">Програма для запису аудіо не знайдена.</string>
-  <string name="video_recorder_error">Програма для запису відео не знайдена.</string>
+  <string name="audio_recording_in_progress">Запис...</string>
+  <string name="audio_recording_send">Відправити</string>
+  <string name="audio_recording_play">Програти</string>
+  <string name="audio_recording_pause">Пауза</string>
+  <string name="audio_recording_stop">Зупинити запис</string>
   <string name="taking_picture_error">Сталася помилка під час додавання зображення.</string>
   <string name="find_picture_error">Сталася помилка під час пошуку зображення.</string>
   <string name="open_camera_error">Сталася помилка під час відкриття камери.</string>
@@ -498,4 +501,10 @@
   <string name="step_title_set_password">Задати пароль</string>
   <!--Peer services-->
   <string name="peer_services_connect">З\'єднати</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">Редагувати</string>
+  <string name="shared_services_more_options">Більше параметрів</string>
+  <string name="shared_services_type_website_label">Веб-сайт</string>
+  <string name="shared_services_choose">Виберіть</string>
+  <string name="shared_services_save">Зберігти</string>
 </resources>

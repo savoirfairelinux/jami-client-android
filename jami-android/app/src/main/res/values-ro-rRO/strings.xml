@@ -238,8 +238,11 @@
   <string name="conversation_contact_blocked">%1$s a fost blocat din conversație.</string>
   <string name="conversation_contact_unblocked">%1$s a fost deblocat din conversație.</string>
   <string name="conversation_search_hint">Caută conversația</string>
-  <string name="audio_recorder_error">Aplicația de înregistrare audio nu a fost găsită.</string>
-  <string name="video_recorder_error">Aplicația de înregistrare video nu a fost găsită.</string>
+  <string name="audio_recording_in_progress">Se înregistrează...</string>
+  <string name="audio_recording_send">Trimite</string>
+  <string name="audio_recording_play">Start</string>
+  <string name="audio_recording_pause">Pauză</string>
+  <string name="audio_recording_stop">Oprește înregistrarea</string>
   <string name="taking_picture_error">A apărut o eroare în timpul fotografierii.</string>
   <string name="find_picture_error">A apărut o eroare în timpul căutării imaginii.</string>
   <string name="open_camera_error">A apărut o eroare la deschiderea camerei.</string>
@@ -533,4 +536,8 @@
   <string name="step_format">Pasul %1$d din %2$d: %3$s</string>
   <!--Peer services-->
   <string name="peer_services_connect">Conectează</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_no_description">Nicio descriere</string>
+  <string name="shared_services_more_options">Alte opțiuni</string>
+  <string name="shared_services_save">Salvează</string>
 </resources>

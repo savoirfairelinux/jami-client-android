@@ -86,6 +86,8 @@
   <string name="conversation_action_incoming_call">ڤڠاجين يڠ دڤرچايا?? ي</string>
   <string name="conversation_members">ڤڠڬونا</string>
   <string name="conversation_type_private">ڤريڤوت</string>
+  <string name="audio_recording_send">مڠهادڤ</string>
+  <string name="audio_recording_stop">توقف ضبط</string>
   <string name="today">هاري اين</string>
   <string name="yesterday">ديري</string>
   <!--Contacts-->
@@ -181,4 +183,5 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">وصلكن</string>
+  <!--Exposed/Hosted services-->
 </resources>

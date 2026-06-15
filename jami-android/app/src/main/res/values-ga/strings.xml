@@ -87,6 +87,8 @@
   <string name="conversation_action_incoming_call">Glacadh isteach</string>
   <string name="conversation_members">Comhaltaí</string>
   <string name="conversation_type_private">Priontáil</string>
+  <string name="audio_recording_send">Cuir isteach</string>
+  <string name="audio_recording_stop">Stop ag taifeadadh</string>
   <string name="today">Sa lá atá inniu ann</string>
   <string name="yesterday">An-dè</string>
   <!--Contacts-->
@@ -184,4 +186,5 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">Déan nasc</string>
+  <!--Exposed/Hosted services-->
 </resources>

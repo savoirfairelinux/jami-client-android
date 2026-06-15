@@ -140,8 +140,26 @@
   <string name="conversation_contact_blocked">%1$s fue bloqueado de la conversación.</string>
   <string name="conversation_contact_unblocked">%1$s fue desbloqueado de la conversación.</string>
   <string name="conversation_search_hint">Buscar conversación</string>
-  <string name="audio_recorder_error">No se encontró la aplicación Grabadora de audio.</string>
-  <string name="video_recorder_error">No se encontró la aplicación Grabadora de vídeo.</string>
+  <string name="audio_recorder_error">No se pudo iniciar la grabadora de audio.</string>
+  <string name="audio_recording_in_progress">Grabando...</string>
+  <string name="audio_recording_ready">Tocar para reproducir, arrastrar la forma de onda para buscar</string>
+  <string name="audio_recording_playing">Funcionando...</string>
+  <string name="audio_recording_send">Envíar</string>
+  <string name="audio_recording_play">Reproducir</string>
+  <string name="audio_recording_pause">Pausa</string>
+  <string name="audio_recording_stop">Parar grabación</string>
+  <string name="audio_recording_extend">Continuar grabando</string>
+  <string name="audio_recording_restart">Grabar de nuevo</string>
+  <string name="audio_recording_delete">Descartar</string>
+  <string name="audio_recording_limit_reached">Se ha llegado al límite de grabación. Enviar o cancelar.</string>
+  <string name="audio_recording_gesture_hint">Soltar para enviar · deslizar ◀ para cancelar · ▲ para revisar</string>
+  <string name="audio_recording_release_cancel">Soltar para cancelar</string>
+  <string name="audio_recording_release_review">Soltar para abrir el editor</string>
+  <string name="audio_recording_slide_cancel">Cancelar grabación</string>
+  <string name="audio_recording_slide_review">Abrir el editor</string>
+  <string name="audio_recording_review_short">Revisar</string>
+  <string name="audio_recording_too_short">Mantener presionado para grabar un mensaje de voz</string>
+  <string name="video_recorder_error">No hay grabadora de video disponible.</string>
   <string name="taking_picture_error">Se produjo un error al tomar la fotografía.</string>
   <string name="find_picture_error">Se produjo un error mientras buscaba la imagen.</string>
   <string name="open_camera_error">Se produjo un error al abrir la cámara.</string>
@@ -367,4 +385,7 @@
   <string name="peer_services_error_unreachable">El contacto es inalcanzable</string>
   <string name="peer_services_error_timeout">Tiempo de espera agotado</string>
   <string name="peer_services_error_unknown">No se pudieron recuperar los servicios</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_no_description">Sin descripción</string>
+  <string name="shared_services_disconnect_all_confirm">Desconectar</string>
 </resources>

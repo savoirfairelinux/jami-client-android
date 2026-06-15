@@ -172,6 +172,11 @@
   <string name="conversation_type_contact">ಜಾಮಿ ಸಂಪರ್ಕ</string>
   <string name="conversation_type_private">ಖಾಸಗಿ</string>
   <string name="conversation_search_hint">ಹುಡುಕಾಟ ಸಂಭಾಷಣೆ</string>
+  <string name="audio_recording_in_progress">ರೆಕಾರ್ಡಿಂಗ್.</string>
+  <string name="audio_recording_send">ಕಳುಹಿಸು</string>
+  <string name="audio_recording_play">ಆಟವಾಡಿ</string>
+  <string name="audio_recording_pause">ವಿರಾಮ</string>
+  <string name="audio_recording_stop">ರೆಕಾರ್ಡಿಂಗ್ ನಿಲ್ಲಿಸಿ</string>
   <string name="today">ಇಂದು</string>
   <string name="yesterday">ನಿನ್ನೆ</string>
   <!--Contacts-->
@@ -329,4 +334,5 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">ಸಂಪರ್ಕ</string>
+  <!--Exposed/Hosted services-->
 </resources>

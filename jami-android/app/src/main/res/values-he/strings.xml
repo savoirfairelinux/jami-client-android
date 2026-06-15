@@ -100,6 +100,8 @@
   <string name="conversation_members">חברי</string>
   <string name="conversation_type_private">פרטי</string>
   <string name="conversation_type_group">קבוצה</string>
+  <string name="audio_recording_send">שליחה</string>
+  <string name="audio_recording_stop">תפסיק להקליט</string>
   <string name="today">היום</string>
   <string name="yesterday">אתמול</string>
   <!--Contacts-->
@@ -198,4 +200,5 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">חיבור</string>
+  <!--Exposed/Hosted services-->
 </resources>

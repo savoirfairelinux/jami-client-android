@@ -188,8 +188,26 @@
   <string name="conversation_contact_left">%1$shat die Unterhaltung verlassen.</string>
   <string name="conversation_contact_blocked">%1$s wurde von der Unterhaltung ausgeschlossen.</string>
   <string name="conversation_contact_unblocked">%1$swurde in der Unterhaltung entblockt.</string>
-  <string name="audio_recorder_error">Es wurde keine Audioaufzeichnungs-App gefunden.</string>
-  <string name="video_recorder_error">Videoaufnahme-App wurde nicht gefunden.</string>
+  <string name="audio_recorder_error">Audioaufnahme konnte nicht gestartet werden.</string>
+  <string name="audio_recording_in_progress">Aufnahme läuft…</string>
+  <string name="audio_recording_ready">Zum Abspielen tippen, zum Suchen an der Wellenform ziehen</string>
+  <string name="audio_recording_playing">Wird abgespielt…</string>
+  <string name="audio_recording_send">Senden</string>
+  <string name="audio_recording_play">Wiedergeben</string>
+  <string name="audio_recording_pause">Pause</string>
+  <string name="audio_recording_stop">Aufnahme beenden</string>
+  <string name="audio_recording_extend">Aufnahme fortsetzen</string>
+  <string name="audio_recording_restart">Erneut aufnehmen</string>
+  <string name="audio_recording_delete">Verwerfen</string>
+  <string name="audio_recording_limit_reached">Aufnahmelimit erreicht. Senden oder abbrechen.</string>
+  <string name="audio_recording_gesture_hint">Zum Senden loslassen · Wischen auf ◀ zum Abbrechen · ▲ zum Überprüfen</string>
+  <string name="audio_recording_release_cancel">Zum Abbrechen loslassen</string>
+  <string name="audio_recording_release_review">Zum Öffnen des Editors loslassen</string>
+  <string name="audio_recording_slide_cancel">Aufnahme abbrechen</string>
+  <string name="audio_recording_slide_review">Editor öffnen</string>
+  <string name="audio_recording_review_short">Überprüfen</string>
+  <string name="audio_recording_too_short">Gedrückt halten, um eine Audionachricht aufzunehmen</string>
+  <string name="video_recorder_error">Keine Videoaufnahme verfügbar.</string>
   <string name="taking_picture_error">Beim Aufnehmen des Bildes ist ein Fehler aufgetreten.</string>
   <string name="find_picture_error">Beim Suchen des Bildes ist ein Fehler aufgetreten.</string>
   <string name="browser_error">Kein Dateibrowser auf diesem Gerät verfügbar.</string>
@@ -387,4 +405,7 @@
   <string name="peer_services_error_unreachable">Kontakt ist nicht erreichbar</string>
   <string name="peer_services_error_timeout">Zeitüberschreitung der Anfrage</string>
   <string name="peer_services_error_unknown">Dienste konnten nicht abgerufen werden</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_no_description">Keine Beschreibung</string>
+  <string name="shared_services_disconnect_all_confirm">Trennen</string>
 </resources>

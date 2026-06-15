@@ -87,6 +87,8 @@
   <string name="conversation_action_incoming_call">N\'ọhịa</string>
   <string name="conversation_members">Ndị otu</string>
   <string name="conversation_type_private">Ndị mmadụ n\'onwe ha</string>
+  <string name="audio_recording_send">Zie</string>
+  <string name="audio_recording_stop">Kwụsị ndekọ</string>
   <string name="today">Taa</string>
   <string name="yesterday">N\'ụbọchị gara aga</string>
   <!--Contacts-->
@@ -184,4 +186,5 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">Jikọọ</string>
+  <!--Exposed/Hosted services-->
 </resources>

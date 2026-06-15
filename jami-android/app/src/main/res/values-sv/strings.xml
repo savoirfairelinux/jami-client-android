@@ -176,6 +176,13 @@
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_type_group">Grupp</string>
   <string name="conversation_search_hint">Söksamtal</string>
+  <string name="audio_recording_in_progress">Spelar in...</string>
+  <string name="audio_recording_send">Skicka</string>
+  <string name="audio_recording_play">Spela</string>
+  <string name="audio_recording_pause">Paus</string>
+  <string name="audio_recording_stop">Sluta spela in</string>
+  <string name="audio_recording_delete">Ta bort</string>
+  <string name="audio_recording_discard_confirm">Ta bort</string>
   <string name="today">I dag</string>
   <string name="yesterday">I går</string>
   <!--Contacts-->
@@ -337,4 +344,9 @@
   <string name="step_title_set_password">Ange lösenord</string>
   <!--Peer services-->
   <string name="peer_services_connect">Anslut</string>
+  <!--Exposed/Hosted services-->
+  <string name="shared_services_more_options">Fler alternativ</string>
+  <string name="shared_services_type_website_label">Webbsida</string>
+  <string name="shared_services_choose">Välj</string>
+  <string name="shared_services_save">Spara</string>
 </resources>

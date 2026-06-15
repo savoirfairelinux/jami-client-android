@@ -181,8 +181,11 @@
   <string name="conversation_type_contact">जमी संपर्क</string>
   <string name="conversation_type_private">निजी</string>
   <string name="conversation_search_hint">खोज वार्तालाप</string>
-  <string name="audio_recorder_error">ऑडियो रिकॉर्डर ऐप नहीं मिला.</string>
-  <string name="video_recorder_error">वीडियो रिकॉर्डर ऐप नहीं मिला.</string>
+  <string name="audio_recording_in_progress">रिकॉर्डिंग...</string>
+  <string name="audio_recording_send">भेजें</string>
+  <string name="audio_recording_play"> चलाएँ</string>
+  <string name="audio_recording_pause">विराम</string>
+  <string name="audio_recording_stop">रिकॉर्डिंग बंद करें</string>
   <string name="open_camera_error">कैमरा खोलते समय एक त्रुटि हुई.</string>
   <string name="starting_recorder_error">रिकॉर्डर प्रारंभ करते समय एक त्रुटि हुई.</string>
   <string name="starting_camera_error">कैमरा शुरू करते समय एक त्रुटि हुई</string>
@@ -368,4 +371,5 @@
   <!--Accessibility-->
   <!--Peer services-->
   <string name="peer_services_connect">कनेक्ट करें</string>
+  <!--Exposed/Hosted services-->
 </resources>
