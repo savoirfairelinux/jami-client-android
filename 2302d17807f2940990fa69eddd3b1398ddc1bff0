@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2d44e69_17e9ed76",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-15T12:48:54Z",
+      "side": 1,
+      "message": "Done in PS3. Split into two independent bounded LRUs: seenCallIds (256) and seenMessageIds (2048), selected by kind. Message bursts can no longer evict call dedupe state, so a re-delivered stale call value cannot be misread as a new call. This also supersedes the kind-in-key from PS2 (separate caches give strictly stronger domain separation). Resolving.",
+      "parentUuid": "7353a211_bc863846",
+      "revId": "2302d17807f2940990fa69eddd3b1398ddc1bff0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
