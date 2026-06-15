@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "dcb7541d_d0ca1e97",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-15T12:50:45Z",
+      "side": 1,
+      "message": "Thanks for the review.",
+      "parentUuid": "b9872e70_50cb802e",
+      "revId": "2302d17807f2940990fa69eddd3b1398ddc1bff0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "e2d44e69_17e9ed76",
         "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
         "patchSetId": 3
