@@ -1,0 +1,40 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a3e11c0_6c8e28fd",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-15T12:46:45Z",
+      "side": 1,
+      "message": "Done in PS2. Tightened to exact type or explicit separator only: application/im-gitmessage-id (bare, id-less commit) or .../im-gitmessage-id/\u003cconv\u003e, and application/invite or application/invite+ . This still matches every type the daemon actually emits while rejecting unrelated future types (application/invite-*, application/im-gitmessage-identity). Resolving.",
+      "parentUuid": "9560e7b4_8ddaaa77",
+      "revId": "2161f5c88068c3abc3a336b37ca7c370aee247de",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2012a9b7_b1bbbee0",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-06-15T12:46:45Z",
+      "side": 1,
+      "message": "Done in PS2. The dedupe key now includes the wakeup kind ($scope:$kind:$id, kind in {call, message}), so the call and message dedupe domains are disjoint: a seen message id can no longer suppress a later call wakeup on an id collision. Resolving.",
+      "parentUuid": "257f031d_5dd3f187",
+      "revId": "2161f5c88068c3abc3a336b37ca7c370aee247de",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
