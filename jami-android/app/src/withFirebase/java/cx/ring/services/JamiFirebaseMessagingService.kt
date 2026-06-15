@@ -73,7 +73,9 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
         // resubscribe dump look like an incoming call, feeding a restore/deactivate
         // churn that ends with FCM dropping genuine call pushes (oversized catch-up
         // messages and per-device quota, both observed server-side).
-        val isCallWakeup = !isExpiration && hasNewCallValue(remoteMessage)
+        val wakeup = if (isExpiration) PushWakeup(false, false) else classifyWakeup(remoteMessage)
+        val isCallWakeup = wakeup.isCall
+        val isMessageWakeup = wakeup.isMessage
         val isCallNotification = isCallWakeup
                 && remoteMessage.priority == RemoteMessage.PRIORITY_HIGH
 
@@ -106,27 +108,25 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
         val app = JamiApplication.instance as? JamiApplicationFirebase
 
         if (!appInForeground && app != null) {
-            // Positive call signal only, from the protocol-guaranteed pt field: the
-            // daemon always labels call connection requests audioCall/videoCall, so a
-            // priority-based fallback is not needed — and would misclassify regular DHT
-            // message pushes (high priority by default, often without pt) as calls,
-            // triggering a full reconnect on every message and defeating the battery
-            // optimization. A call push lacking pt still gets the standard grace window
-            // and account restore below, which covers negotiation comfortably.
-            // Expirations and re-delivered call ids are excluded (see isCallWakeup):
-            // they get the standard push handling, never the call path.
+            // Positive, protocol-defined signal from the pt field, never priority: the
+            // daemon labels calls audioCall/videoCall and human-awaited swarm traffic
+            // application/im-gitmessage-id (new commits) or application/invite
+            // (conversation invitations), and sends exactly these at high push priority
+            // (background sync/git-fetch uses other types at normal priority).
+            // Classifying message wakeups by priority instead would let the residual
+            // high-priority empty-pt noise (presence/connection churn still delivered
+            // high) restore accounts on every push, re-opening the restore/deactivate
+            // churn the cooldown exists to break. Expirations and re-delivered ids are
+            // excluded (see classifyWakeup), so only genuinely new calls/messages reach
+            // the wakeup paths.
             // Single serialized entry point: the push-availability gate, grace window,
-            // account restore, optional reconnect and deactivation re-arm are all
-            // evaluated on the main thread (see onBackgroundPushReceived) — preference
-            // and token state must not be read from this FCM thread, where they could
-            // race a settings/token transition. connectivityChanged (full DHT/SIP
-            // reconnect) is only requested for call pushes, where low latency matters:
-            // message/sync pushes are also delivered with high priority (DHT values
-            // default to high), so priority alone must not trigger it.
+            // account restore, reconnect and deactivation re-arm are all evaluated on
+            // the main thread (see onBackgroundPushReceived) — preference and token
+            // state must not be read from this FCM thread, where they could race a
+            // settings/token transition.
             app.onBackgroundPushReceived(
                 isCallPush = isCallWakeup,
-                triggerReconnect = isCallWakeup
-                        && remoteMessage.originalPriority == RemoteMessage.PRIORITY_HIGH,
+                isMessagePush = isMessageWakeup,
                 isExpiration = isExpiration
             )
         }
@@ -159,52 +159,64 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     /**
-     * Classifies a DHT proxy call wakeup from a positive signal only: the proxy copies
-     * the connection request type into the "pt" field ("audioCall"/"videoCall" for
-     * calls, "sip"/"git"… for messaging and sync channels), as a comma-separated list
-     * of exact values when the push covers several, positionally aligned with the
-     * "ids" list of DHT value ids. FCM priority is not used as fallback:
-     * regular DHT values default to high priority too, so payloads without "pt" would
-     * all be misclassified as calls and needlessly get the longer call grace window.
-     * Non-call pushes misclassified as calls keep accounts active for up to 60s;
-     * a call push lacking "pt" still gets the standard 30s grace window, which covers
-     * the measured negotiation time several times over.
+     * Classifies a DHT proxy wakeup from a positive signal only: the proxy copies the
+     * connection request type into the "pt" field — "audioCall"/"videoCall" for calls,
+     * "application/im-gitmessage-id/<conv>" for new swarm commits, "application/invite"
+     * for conversation invitations, "sip"/"git"… for background sync — as a
+     * comma-separated list of exact values when the push covers several, positionally
+     * aligned with the "ids" list of DHT value ids. FCM priority is never used to
+     * classify: regular DHT values default to high priority too, so empty- or
+     * other-typed high-priority pushes (presence/connection churn) would all be
+     * misclassified as calls or messages and needlessly restore accounts, re-opening
+     * the restore/deactivate churn the cooldown breaks.
      *
-     * Only call ids never seen by this process count as a call wakeup, and ids seen
-     * here are recorded: the proxy re-delivers all values still stored on a key every
-     * time it creates a fresh internal listener for it (catch-up dump on
-     * re-subscription), so a call value keeps reappearing — with its original pt —
-     * for as long as it stays in the DHT (~10 min for ICE requests), long after the
-     * caller hung up. A genuine incoming call is always a value id this process has
-     * never handled. The cache is in-memory and bounded: after a process restart a
-     * stale call id can be re-classified as a call at most once.
+     * Only ids never seen by this process count: the proxy re-delivers all values still
+     * stored on a key every time it creates a fresh internal listener (catch-up dump on
+     * re-subscription), so a value keeps reappearing — with its original pt — for as
+     * long as it stays in the DHT, long after the call ended or the commit was fetched.
+     * The cache is in-memory and bounded: after a process restart a stale id can be
+     * re-classified at most once.
      */
-    private fun hasNewCallValue(remoteMessage: RemoteMessage): Boolean {
-        val pushTypes = remoteMessage.data["pt"] ?: return false
+    private fun classifyWakeup(remoteMessage: RemoteMessage): PushWakeup {
+        val pushTypes = remoteMessage.data["pt"] ?: return PushWakeup(false, false)
         val ids = remoteMessage.data["ids"]?.split(',') ?: emptyList()
         // Scope the dedupe key by destination: DHT value ids are random 64-bit values
         // chosen by each producer, unique in practice but not guaranteed unique across
         // keys. The proxy sets "to" to the subscribing client id (one per account) and
         // "key" to the listened DHT key; scoping by both confines any collision to the
         // same account and key, where a same-id re-delivery is by definition the same
-        // value. Missing fields degrade to coarser scoping, never to dropping a call.
+        // value. Missing fields degrade to coarser scoping, never to dropping a wakeup.
         val scope = "${remoteMessage.data["to"] ?: ""}:${remoteMessage.data["key"] ?: ""}"
-        var hasNew = false
+        var newCall = false
+        var newMessage = false
         pushTypes.splitToSequence(',').forEachIndexed { i, rawType ->
             val type = rawType.trim().lowercase(Locale.ROOT)
-            if (type != "audiocall" && type != "videocall") return@forEachIndexed
+            val isCall = type == "audiocall" || type == "videocall"
+            // Prefix match: the message pt carries the conversation id ("…/<conv>") and
+            // the invite pt may carry a suffix ("application/invite+json"); the daemon
+            // uses the same prefixes to assign high push priority (connection manager:
+            // set push priority from connection type).
+            val isMessage = type.startsWith("application/im-gitmessage-id")
+                    || type.startsWith("application/invite")
+            if (!isCall && !isMessage) return@forEachIndexed
             val id = ids.getOrNull(i)?.trim()
-            if (id.isNullOrEmpty()) {
-                // No id to deduplicate on (single-value push without ids, or
-                // misaligned lists): fail open, a missed call is worse than a
-                // redundant restore.
-                hasNew = true
-            } else synchronized(seenCallIds) {
-                if (seenCallIds.put("$scope:$id", Unit) == null) hasNew = true
+            val isNew = if (id.isNullOrEmpty()) {
+                // No id to deduplicate on (single-value push without ids, or misaligned
+                // lists): fail open, a missed call/message is worse than a redundant
+                // restore.
+                true
+            } else synchronized(seenWakeupIds) {
+                seenWakeupIds.put("$scope:$id", Unit) == null
+            }
+            if (isNew) {
+                if (isCall) newCall = true
+                if (isMessage) newMessage = true
             }
         }
-        return hasNew
+        return PushWakeup(newCall, newMessage)
     }
+
+    private data class PushWakeup(val isCall: Boolean, val isMessage: Boolean)
 
     private fun isAppInForeground(): Boolean {
         val am = getSystemService(ACTIVITY_SERVICE) as ActivityManager
@@ -226,15 +238,15 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
     companion object {
         private const val TAG = "JamiFirebaseMessaging"
 
-        // Call value ids already handled by this process, to drop re-deliveries
-        // (catch-up dumps re-push stored call values on every fresh server listener).
+        // Call/message value ids already handled by this process, to drop re-deliveries
+        // (catch-up dumps re-push stored values on every fresh server listener).
         // Bounded LRU; 256 entries outlive by far the ~10 min DHT retention of the
-        // call request values being deduplicated. Companion-level: the FCM service
+        // request values being deduplicated. Companion-level: the FCM service
         // instance can be recreated between pushes within the same process.
-        private const val SEEN_CALL_IDS_MAX = 256
-        private val seenCallIds = object : LinkedHashMap<String, Unit>(64, 0.75f, true) {
+        private const val SEEN_WAKEUP_IDS_MAX = 256
+        private val seenWakeupIds = object : LinkedHashMap<String, Unit>(64, 0.75f, true) {
             override fun removeEldestEntry(eldest: MutableMap.MutableEntry<String, Unit>) =
-                size > SEEN_CALL_IDS_MAX
+                size > SEEN_WAKEUP_IDS_MAX
         }
     }
 }
