@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2d382666_cf9be6e3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-06-16T16:45:56Z",
+      "side": 1,
+      "message": "Observed the following error while attempting to switch the call audio endpoint to Bluetooth (AirPods Pro):\n\n```\nCallConnection E setWantedAudioState endpoint failed:\n[CallEndpoint Name: Pavan Koushik’s AirPods Pro - Find My,\n Type: BLUETOOTH,\n Identifier: 10593a02-323c-4214-8366-249c7a7b37eb]\n\nandroid.telecom.CallEndpointException:\nThe operation was not completed on time (code: 2)\n```\n\nThe failure indicates that `setWantedAudioState()` timed out while routing audio to the selected Bluetooth endpoint.",
+      "revId": "0732e9fa60ba6c510c8546a6eb69a4abde9549b6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "af59cdd8_871ba29f",
         "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
         "patchSetId": 1
