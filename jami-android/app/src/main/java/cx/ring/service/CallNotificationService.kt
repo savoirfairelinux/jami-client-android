@@ -110,6 +110,16 @@ class CallNotificationService : Service() {
 
     override fun onBind(intent: Intent): IBinder? = null
 
+    override fun onCreate() {
+        super.onCreate()
+        ActiveServiceMonitor.onServiceStarted()
+    }
+
+    override fun onDestroy() {
+        ActiveServiceMonitor.onServiceStopped()
+        super.onDestroy()
+    }
+
     companion object {
         private const val TAG = "CallNotificationService"
         const val ACTION_START = "START"
