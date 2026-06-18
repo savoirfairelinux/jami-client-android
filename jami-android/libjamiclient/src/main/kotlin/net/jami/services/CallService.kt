@@ -34,6 +34,7 @@ import net.jami.model.Media
 import net.jami.model.Uri
 import net.jami.utils.Log
 import java.util.*
+import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ScheduledExecutorService
 
 abstract class CallService(
@@ -43,7 +44,9 @@ abstract class CallService(
     val mDeviceRuntimeService: DeviceRuntimeService
 ) {
     private val calls: MutableMap<String, Call> = HashMap()
-    private val conferences: MutableMap<String, Conference> = HashMap()
+    // ConcurrentHashMap: mutated by daemon callbacks while hasActiveCalls()/currentConferences()
+    // iterate it from another thread, so its iterator must not throw on concurrent edits.
+    private val conferences: MutableMap<String, Conference> = ConcurrentHashMap()
     private val callSubject = PublishSubject.create<Call>()
     private val conferenceSubject = PublishSubject.create<Conference>()
 
@@ -56,6 +59,14 @@ abstract class CallService(
     fun currentConferences(): List<Conference> =
         synchronized(calls) {
             conferences.values.filter { it.state == CallStatus.CURRENT }
+        }
+
+    /** Returns true if any call or conference is active or pending (not yet terminated). */
+    fun hasActiveCalls(): Boolean =
+        synchronized(calls) {
+            // A null conference state means it is still being set up: treat as non-terminal.
+            calls.values.any { !it.callStatus.isOver } ||
+                conferences.values.any { it.state?.isOver != true }
         }
 
     private fun getConfCallUpdates(conf: Conference): Observable<Conference> =
