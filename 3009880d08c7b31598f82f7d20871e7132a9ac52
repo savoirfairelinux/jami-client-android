@@ -71,6 +71,29 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "32090efb_75c5d653",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.kt",
+        "patchSetId": 27
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-06-18T14:45:33Z",
+      "side": 1,
+      "message": "i think we can switch to original priority instead of priority.",
+      "range": {
+        "startLine": 59,
+        "startChar": 18,
+        "endLine": 59,
+        "endChar": 72
+      },
+      "revId": "3009880d08c7b31598f82f7d20871e7132a9ac52",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "fbb3a648_ea123b26",
