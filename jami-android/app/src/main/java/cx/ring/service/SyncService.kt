@@ -118,6 +118,16 @@ class SyncService : Service() {
 
     override fun onBind(intent: Intent): IBinder? = null
 
+    override fun onCreate() {
+        super.onCreate()
+        ActiveServiceMonitor.onServiceStarted()
+    }
+
+    override fun onDestroy() {
+        ActiveServiceMonitor.onServiceStopped()
+        super.onDestroy()
+    }
+
     companion object {
         const val TAG = "SyncService"
         const val NOTIF_SYNC_SERVICE_ID = 1004

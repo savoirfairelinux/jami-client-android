@@ -27,6 +27,7 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.RemoteMessage
+import cx.ring.service.ActiveServiceMonitor
 import dagger.hilt.android.HiltAndroidApp
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -77,9 +78,10 @@ class JamiApplicationFirebase : JamiApplication() {
         val episodeStart = backgroundActiveSince.get()
         val capReached = episodeStart != 0L && now - episodeStart >= MAX_BACKGROUND_ACTIVE_MS
         when {
-            // Active/pending call: keep accounts active and recheck so they deactivate once
-            // the call ends. Exempt from the episode cap.
-            mCallService.hasActiveCalls() -> scheduleBackgroundDeactivation(CALL_ACTIVE_RECHECK_MS)
+            // Active/pending call or any running foreground service (file transfer, peer/hosted
+            // tunnel, location sharing): keep accounts active and recheck until all sessions finish.
+            mCallService.hasActiveCalls() || ActiveServiceMonitor.hasActiveServices() ->
+                scheduleBackgroundDeactivation(CALL_ACTIVE_RECHECK_MS)
             // Call push still negotiating (not yet visible to hasActiveCalls): wait out its
             // grace window, also exempt from the cap.
             callGraceRemaining > 0 -> scheduleBackgroundDeactivation(callGraceRemaining)

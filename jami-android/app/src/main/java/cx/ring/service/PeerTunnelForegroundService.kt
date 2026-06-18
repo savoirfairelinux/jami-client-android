@@ -46,6 +46,11 @@ class PeerTunnelForegroundService : Service() {
 
     override fun onBind(intent: Intent?): IBinder? = null
 
+    override fun onCreate() {
+        super.onCreate()
+        ActiveServiceMonitor.onServiceStarted()
+    }
+
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         startForegroundWithNotification()
 
@@ -102,6 +107,7 @@ class PeerTunnelForegroundService : Service() {
     }
 
     override fun onDestroy() {
+        ActiveServiceMonitor.onServiceStopped()
         worker.shutdown()
         super.onDestroy()
     }
