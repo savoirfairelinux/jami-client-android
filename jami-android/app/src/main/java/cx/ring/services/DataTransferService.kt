@@ -18,6 +18,7 @@ package cx.ring.services
 
 import android.app.Notification
 import android.app.Service
+import cx.ring.service.ActiveServiceMonitor
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import net.jami.services.NotificationService
@@ -106,6 +107,7 @@ class DataTransferService : Service() {
     override fun onCreate() {
         Log.d(TAG, "OnCreate(), DataTransferService has been initialized")
         notificationManager = NotificationManagerCompat.from(this)
+        ActiveServiceMonitor.onServiceStarted()
         super.onCreate()
     }
 
@@ -119,6 +121,7 @@ class DataTransferService : Service() {
 
     override fun onDestroy() {
         Log.d(TAG, "OnDestroy(), DataTransferService has been destroyed")
+        ActiveServiceMonitor.onServiceStopped()
         super.onDestroy()
     }
 

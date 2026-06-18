@@ -101,6 +101,7 @@ class LocationSharingService : Service(), LocationListener {
 
     override fun onCreate() {
         super.onCreate()
+        ActiveServiceMonitor.onServiceStarted()
         mLocationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
         mNotificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         mHandler = Handler(mainLooper)
@@ -216,6 +217,7 @@ class LocationSharingService : Service(), LocationListener {
 
     override fun onDestroy() {
         Log.w(TAG, "onDestroy")
+        ActiveServiceMonitor.onServiceStopped()
         mLocationManager?.removeUpdates(this)
         mMyLocationSubject.onComplete()
         mContactSharingSubject.onComplete()
