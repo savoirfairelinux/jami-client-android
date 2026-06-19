@@ -112,10 +112,11 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
     /**
      * Classifies a DHT proxy wakeup from the "pt" field (the connection request type the
      * proxy copies in): audioCall/videoCall for calls, application/im-gitmessage-id or
-     * application/invite for swarm messages and invitations. FCM priority is never used,
-     * as regular DHT values are also high priority. Only value ids never seen by this
-     * process count, dropping the catch-up re-deliveries the proxy emits on every fresh
-     * listener; the dedupe caches are in-memory, so after a restart a stale id classifies once.
+     * application/invite for swarm messages and invitations, and sync for multi-device
+     * account sync. FCM priority is never used, as regular DHT values are also high
+     * priority. Only value ids never seen by this process count, dropping the catch-up
+     * re-deliveries the proxy emits on every fresh listener; the dedupe caches are
+     * in-memory, so after a restart a stale id classifies once.
      */
     private fun classifyWakeup(remoteMessage: RemoteMessage): PushWakeup {
         val pushTypes = remoteMessage.data["pt"] ?: return PushWakeup(false, false)
@@ -134,6 +135,7 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
                     || type.startsWith("application/im-gitmessage-id/")
                     || type == "application/invite"
                     || type.startsWith("application/invite+")
+                    || type == "sync"
             if (!isCall && !isMessage) return@forEachIndexed
             val id = ids.getOrNull(i)?.trim()
             val isNew = if (id.isNullOrEmpty()) {
