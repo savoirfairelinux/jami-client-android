@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e2e3ae8_77882c43",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-06-19T20:06:46Z",
+      "side": 1,
+      "message": "latest android studio supports till 9.2. \nhttps://developer.android.com/studio/releases?utm_source\u003dandroid-studio-app\u0026utm_medium\u003dapp#android_gradle_plugin_and_android_studio_compatibility",
+      "revId": "fc51e03f5dfe56fc8c1e2cd7b88ef81631b4126f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
