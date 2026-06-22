@@ -1,9 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">Hurtigsamtale</string>
+  <string name="contact_picture_description">Kontaktbilete</string>
   <string name="dial_numeric_pad">Numerisk dialpad</string>
   <string name="contact_unblock">Avbløka</string>
+  <string name="video_extensions">Videoutvidingar</string>
   <string name="file_download_button">Ta ned</string>
   <string name="control_play">Spelar</string>
+  <string name="control_replay">Spel av igjen</string>
   <string name="control_pause">Pause</string>
+  <string name="searchbar_navigation_account">Vel konto</string>
+  <string name="add_conversation_member">Legg til samtalemedlem</string>
+  <string name="qrcode_to_scan">QR-kode å skanna</string>
 </resources>

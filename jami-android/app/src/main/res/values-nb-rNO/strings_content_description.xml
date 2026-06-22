@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">Hurtigsamtale</string>
+  <string name="contact_picture_description">Kontaktbilde</string>
+  <string name="contact_unblock">Fjern blokkering</string>
+  <string name="video_extensions">Videoutvidelser</string>
+  <string name="control_replay">Spill av igjen</string>
+  <string name="searchbar_navigation_account">Velg konto</string>
+  <string name="add_conversation_member">Legg til samtalemedlem</string>
+  <string name="qrcode_to_scan">QR-kode å skanne</string>
+</resources>

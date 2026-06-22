@@ -8,6 +8,7 @@
   <string name="pref_category_diagnostic">การวินิจฉัย</string>
   <string name="pref_category_appearance">หน้าตา</string>
   <string name="pref_category_connectivity">การเชื่อมต่อ</string>
+  <string name="pref_category_extensions">ส่วนขยาย</string>
   <string name="pref_category_video_settings">การตั้งค่าวิดีโอขั้นสูง</string>
   <string name="pref_mobileData_title">ข้อมูลมือถือ</string>
   <string name="pref_mobileData_summary">อนุญาต Jami บนเครือข่าย 3G/LTE เพิ่มเติมกับ Wi-Fi</string>
@@ -41,6 +42,7 @@
   <string name="pref_logs_summary">เปิดการตั้งค่าบันทึกการวินิจฉัย</string>
   <string name="pref_logs_start">เริ่มการบันทึก</string>
   <string name="pref_logs_stop">หยุดการบันทึก</string>
+  <string name="connection_monitor_channels">ช่อง</string>
   <string name="pref_typing_title">ตัวชี้วัดการเติม</string>
   <string name="pref_block_record_title">บล็อกภาพหน้าจอและการบันทึก</string>
   <string name="pref_block_record_summary">บล็อกการจับภาพหน้าจอหรือบันทึกวิดีโอ</string>

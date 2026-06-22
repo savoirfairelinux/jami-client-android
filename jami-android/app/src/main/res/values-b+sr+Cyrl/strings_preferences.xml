@@ -35,6 +35,7 @@
   <string name="pref_notification_title">Видљивост обавештења</string>
   <string name="pref_notification_summary">Подеси видљивост обавештења апликација на закључаном екрану.</string>
   <string name="pref_connectivity_title">Режим повезивања</string>
+  <string name="pref_connectivity_summary">Изаберите како да повежете Јами са дистрибуираним системом за пријем позива и порука.</string>
   <string name="pref_blackList_title">Блок листа</string>
   <string name="pref_blackList_summary">Провери своју листу блокираних.</string>
   <string name="pref_delete_account_title">Обрисати налог</string>
@@ -49,10 +50,12 @@
   <string name="pref_logs_stop">Заустави логовање</string>
   <string name="pref_connection_monitor">Монитор везе</string>
   <string name="pref_connection_monitor_summary">Пратите пеер то пеер везе</string>
+  <string name="connection_monitor_channels">Канали</string>
   <string name="pref_push_notifications_logs_title">Дневници Push обавештења</string>
   <string name="pref_push_notifications_logs_summary">Прегледајте евиденције снимљене из push
 обавештења.</string>
   <string name="pref_typing_title">Индикатор за типовање</string>
+  <string name="pref_typing_summary">Означи када се куцају поруке.</string>
   <string name="pref_block_record_title">Блокирај снимак екрана и снимање</string>
   <string name="pref_block_record_summary">Блокирај снимање екрана или видео снимка.</string>
   <string name="pref_link_preview_title">Прегледи веб-веза</string>
@@ -62,17 +65,26 @@
   <string name="notification_private">Приватно\n(прикажите обавештења, али сакријте њихов садржај на закључаном екрану)\n</string>
   <string name="notification_secret">Тајно\n(не приказуј обавештења на закључаном екрану)</string>
   <string name="connectivity_google_services_title">Google сервиси</string>
+  <string name="connectivity_google_services_description">Користите Google Firebase и DHT прокси за пријем push обавештења.</string>
   <string name="connectivity_local_node_title">Локални DHT чвор</string>
+  <string name="connectivity_local_node_description">Користите локални DHT чвор за повезивање са другим Јами уређајима и контактима.</string>
+  <string name="connectivity_unified_push_description">Користите прилагођени UnifiedPush сервер за пријем push обавештења.</string>
   <string name="connectivity_custom_title">Прилагођено</string>
+  <string name="connectivity_custom_description">Тренутно се не користи ниједна од доступних унапред подешених конфигурација.</string>
   <!--Extension-->
   <string name="pref_enable_extensions_title">Омогући додатке</string>
+  <string name="pref_enable_extensions_summary">Омогући проширења и постави њихове параметре</string>
   <string name="pref_available_extensions_title">Доступни додаци</string>
+  <string name="pref_available_extensions_summary">Инсталирана проширења и додавање нових проширења</string>
   <string name="fab_extensions_add">Додајте нови додатак</string>
   <string name="extension_uninstall_title">Деинсталирати додатак?</string>
   <string name="extension_reset_preferences">Ресетујте подешавања додатака</string>
   <string name="extension_reset_preferences_summary">Додатак је враћен на подразумевана подешавања</string>
   <string name="extension_reset_preferences_ask">Да ли желите да ресетујете општа подешавања додатка?</string>
   <string name="extension_reset_account_preferences_ask">Да ли желите да ресетујете подешавања додатака налога?</string>
+  <string name="account_advanced_reset">Ресетуј напредна подешавања</string>
+  <string name="account_advanced_reset_summary">Врати подразумевана напредна подешавања</string>
+  <string name="account_advanced_reset_confirm">Ресетовати сва напредна подешавања на подразумевана?</string>
   <string name="extension_successfully_installed">Додатак <b>%1$s</b> је инсталиран успешно.</string>
   <string name="extension_install_failure">Дошло је до грешке приликом инсталирања следећег додатка: <b>%1$s</b></string>
   <string name="extension_recent_version_exception">Новија верзија <b>%1$s</b> је инсталирана.</string>

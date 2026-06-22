@@ -1,11 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">Greitasis skambutis</string>
+  <string name="contact_picture_description">Kontakto paveikslėlis</string>
   <string name="dial_numeric_pad">Skaitmeninė klaviatūra</string>
   <string name="contact_unblock">Atblokuoti</string>
+  <string name="video_extensions">Vaizdo plėtiniai</string>
   <string name="file_download_button">Atsisiųsti</string>
   <string name="control_play">Atkurti</string>
   <string name="control_replay">Atkurti iš naujo</string>
   <string name="control_pause">Pristabdyti</string>
   <string name="searchbar_navigation_account">Pasirinkite paskyrą</string>
+  <string name="add_conversation_member">Pridėti pokalbio narį</string>
+  <string name="qrcode_to_scan">QR kodas nuskaitymui</string>
 </resources>

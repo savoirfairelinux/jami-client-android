@@ -24,6 +24,8 @@
   <string name="account_type_ip2ip">حساب IP</string>
   <string name="help_ring">حساب جمی به شما اجازه می‌دهد از درون یک شبکه کاملا توزیع‌شده، به صورت امن با افراد در تماس باشید.</string>
   <string name="help_sip_title">افزودن حساب SIP</string>
+  <string name="help_sip">پیکربندی حساب SIP موجود</string>
+  <string name="create_sip_account">پیکربندی حساب SIP</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">این کار قابل بازگشت نیست.</string>
   <!--AccountManagementFragment-->
@@ -33,6 +35,7 @@
   <string name="account_device_revoke">باطل کردن دستگاه</string>
   <string name="account_device_revocation_success_title">موفق</string>
   <string name="account_device_revocation_success">دستگاه باطل شد!</string>
+  <string name="account_device_revocation_wrong_password">گذرواژه نادرست است.</string>
   <string name="account_device_revocation_unknown_device">دستگاه ناشناس.</string>
   <string name="account_device_revocation_error_unknown">خطای ناشناخته.</string>
   <string name="account_password_change">تغییر گذرواژه</string>
@@ -42,6 +45,7 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">عمومی</string>
   <string name="account_basic_category">تنظیمات پایه</string>
+  <string name="account_alias_label">نام نمایشی</string>
   <string name="account_hostname_label">نام میزبان</string>
   <string name="account_bootstrap_label">خود‌راه‌انداز(Bootstrap)</string>
   <string name="account_name_server_label">نام سرور</string>
@@ -55,6 +59,7 @@
   <string name="account_upnp_label">فعال‌کردن UPnP</string>
   <string name="account_proxy_field">پراکسی</string>
   <!--Extension Details-->
+  <string name="account_preferences_extension_tab">افزونه‌ها</string>
   <!--Audio Details-->
   <string name="account_audio_label">صدا</string>
   <string name="account_preferences_media_tab">رسانه</string>
@@ -69,6 +74,8 @@
   <string name="account_video_enable">فعال کردن ویدیو</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">پیشرفته</string>
+  <string name="account_read_receipts_label">رسیدهای خواندن</string>
+  <string name="account_read_receipts_summary">ارسال و درخواست رسیدهای تحویل و خواندن برای ارسال هنگام تحویل یا خوانده شدن پیام‌ها.</string>
   <string name="account_call_settings_title">تنظیمات تماس</string>
   <string name="account_dht_public_in_calls_label">اجازه تماس ورودی به مخاطبان ناشناخته</string>
   <string name="account_registration_exp_label">ثبت‌نام منقضی شد</string>
@@ -154,6 +161,7 @@
   <string name="account_export_title">پیوند حساب کاربری با دستگاه دیگر</string>
   <string name="account_connect_server_button">اتصال یه سرور مدیریت</string>
   <string name="account_connect_button">اتصال</string>
+  <string name="prompt_server">نشانی سرور مدیریت</string>
   <string name="help_credentials_enter">اعتبار‌نامه سازمانی خود را وارد کنید</string>
   <string name="help_connect_password_enter">گذرواژه سازمانی خود را وارد کنید</string>
   <string name="account_connect_prompt_username">نام کاربری</string>
@@ -190,6 +198,7 @@
   <string name="account_rename_device_hint">انتخاب نام دستگاه جدید</string>
   <string name="account_device_this_indicator">این دستگاه</string>
   <string name="account_disabled_indicator">غیرفعال</string>
+  <string name="account_device_id">شناسه دستگاه</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">این قالب پشتیبانی نمی‌شود.</string>
   <string name="account_link_device_title">پیوند یک دستگاه جدید</string>

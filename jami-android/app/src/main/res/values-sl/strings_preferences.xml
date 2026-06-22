@@ -82,6 +82,9 @@
   <string name="extension_reset_preferences_summary">Razširitev je obnovljena na privzete nastavitve</string>
   <string name="extension_reset_preferences_ask">Ali želite ponastaviti splošne nastavitve razširitve?</string>
   <string name="extension_reset_account_preferences_ask">Ali želite ponastaviti nastavitve razširitve računa?</string>
+  <string name="account_advanced_reset">Ponastavi napredne nastavitve</string>
+  <string name="account_advanced_reset_summary">Obnovi privzete napredne nastavitve</string>
+  <string name="account_advanced_reset_confirm">Ponastavim vse napredne nastavitve na privzeto?</string>
   <string name="extension_successfully_installed">Razširitev <b>%1$s</b> uspešno nameščena.</string>
   <string name="extension_install_failure">Pri namestitvi naslednje razširitve je prišlo do napake: <b>%1$s</b></string>
   <string name="extension_recent_version_exception">Nameščena je novejša različica <b>%1$s</b>.</string>

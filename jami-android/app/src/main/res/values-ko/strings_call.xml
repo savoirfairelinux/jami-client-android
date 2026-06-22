@@ -16,8 +16,12 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 -->
 
 <resources>
+    <!-- Call error -->
+    <string name="call_error">\"통화를 시작하는 중 오류가 발생했습니다.\"</string>
     <string name="call_error_no_microphone">통화 취소됨. 감지된 마이크가 없습니다.</string>
     <string name="call_error_no_camera_no_microphone">통화 취소됨. 카메라나 마이크가 감지되지 않았습니다.</string>
+    <string name="screen_sharing_error">화면 공유를 시작하는 중 오류가 발생했습니다.</string>
+
     <!-- SipCalls -->
     <string name="call_human_state_searching">검색</string>
     <string name="call_human_state_incoming">들어오는</string>

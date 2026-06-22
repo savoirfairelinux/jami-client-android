@@ -337,6 +337,10 @@
   <!--Peer services-->
   <string name="peer_services_connect">Se connectar</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">Modificar</string>
+  <string name="shared_services_delete">Suprimir</string>
+  <string name="shared_services_port_hint">Pòrt local</string>
   <string name="shared_services_more_options">Mai d’opcions</string>
+  <string name="shared_services_type_custom_label">Personalitat</string>
   <string name="shared_services_save">Salvar</string>
 </resources>

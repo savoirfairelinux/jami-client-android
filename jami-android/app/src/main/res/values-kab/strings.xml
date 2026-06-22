@@ -4,6 +4,10 @@
   <string name="submit_issue_title">Azen ugur</string>
   <string name="submit_issue_action_description"><u>Rnu ugur amaynut</u></string>
   <string name="section_license">Turagt</string>
+  <string name="switch_conversation">Beddel adiwenni</string>
+  <string name="delete_conversation_confirmation">Tetḥeqqeḍ tebɣiḍ ad tekkseḍ adiwenni-a ?</string>
+  <string name="acc_profile_photo_capture">Ṭṭef tawlaft</string>
+  <string name="view_switch_camera">Beddel takamiṛat</string>
   <string name="sponsor_section">Jami d aseɣẓan ilelli yettwasneflin yerna yettusefrak sɣur</string>
   <string name="copyright_section">Izerfan n umeskar</string>
   <string name="contribute_section"> Ttekki </string>
@@ -49,6 +53,7 @@
     <item quantity="other">%d Idiwenniyen</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Nadi neɣ rnu</string>
   <string name="choose_number">Fren uṭṭun</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -82,6 +87,8 @@
   <string name="notif_incoming_picture">Tugna seg %1$s</string>
   <string name="notif_sync_title">Amtawi n yisefka...</string>
   <string name="notif_location_title">Bḍu adig akked %1$s</string>
+  <string name="notif_channel_reconnect">Amtawi deg ugilal</string>
+  <string name="notif_reconnect_title">Jami yettmtawi…</string>
   <string name="location_share_contact">%1$s yebḍa yid-k-m adeg</string>
   <string name="notif_location_multi_title">Bḍu adig akked %1$d n yinermisen</string>
   <string name="notif_location_remaining">%1$d n tesdatin i d-yeqqimen</string>
@@ -92,6 +99,7 @@
   <!--Call Fragment-->
   <string name="you_txt_prefix">Kečč-Kemm:</string>
   <string name="action_call_hangup">Fak tiɣri</string>
+  <string name="action_call_resume">Kemmel</string>
   <string name="action_call_maximize">Semɣer</string>
   <string name="action_call_minimize">Senqes</string>
   <string name="action_call_mute"> Sgugem</string>
@@ -100,11 +108,13 @@
   <string name="hist_in_call">Tiɣri i d-ikecmen n %1$s</string>
   <string name="hist_out_call">Tiɣri yeffɣen n %1$s</string>
   <string name="call_duration">Yeqqim %s</string>
+  <string name="call_on_hold">Asiwel yeḥbes</string>
   <string name="start_error_title">Ur izmir ara ad isker jami</string>
   <string name="action_call_accept">Qbel tiɣri</string>
   <string name="action_call_accept_audio">Qbel s umeslaw</string>
   <string name="action_call_accept_video">Qbel s tvidyut</string>
   <string name="action_call_hold_accept">Qbel tiɣri i d-ikeččmen s ṣṣut kan u sbedd deg laɛḍil tiɣri tamirant</string>
+  <string name="switch_to_audio">Sens tavidyut</string>
   <string name="switch_to_video">Rmed tavidyut</string>
   <string name="action_call_hold_accept_video">Qbel tiɣri i d-ikeččmen s tviduyt kan u sbedd deg laɛḍil tiɣri tamirant</string>
   <string name="action_call_end_accept">Qbel tiɣri i d-ikeččmen u fakk tiɣri n tamirant</string>
@@ -157,6 +167,11 @@
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami yesra asiregt \"Aru aɣmis n usiwel\". Rmed-it deg yiɣewwaren n yibenk akken ad tesqedceḍ tamahilt-a. </string>
   <!--Post notifications permission-->
+  <string name="permission_dialog_post_notifications_title">Sireg ilɣa</string>
+  <string name="permission_dialog_post_notifications_message">Jami yesra tasiregt n yilɣa akken ad k-yexbeṛ ɣef yisawalen d yiznan i d-ikecmen, ula ma yella usnas deg ugilal. War ttat, tzemreḍ ad tweḍṛeḍ isawalen.</string>
+  <string name="permission_dialog_post_notifications_blocked_message">Ilɣa nsan i Jami. War nitni ad tweḍṛeḍ isawalen d yiznan i d-ikecmen. Ttxil-k rmed ilɣa i Jami deg yiɣewwaṛen n yibenk.</string>
+  <string name="permission_dialog_open_settings">Ldi iɣewwaṛen</string>
+  <string name="permission_dialog_later">Ticki</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Ḍumm tangalt QR n umiḍan i tebɣiḍ ad ternuḍ.</string>
   <string name="title_activity_qrcode">Bḍu amiḍan-iw</string>
@@ -225,10 +240,30 @@
   <string name="conversation_contact_blocked">%1$s yettusewḥel seg udiwenni.</string>
   <string name="conversation_contact_unblocked">%1$s yettwaserreḥ seg udiwenni.</string>
   <string name="conversation_search_hint">Nadi adiwenni</string>
+  <string name="audio_recorder_error">Ur izmir ara ad isker amsekles n umeslaw.</string>
   <string name="audio_recording_in_progress">Asekles...</string>
+  <string name="audio_recording_ready">Sit akken ad turareḍ, zuɣer talgit akken ad tnadiḍ</string>
+  <string name="audio_recording_playing">Asɣar…</string>
   <string name="audio_recording_send">Azen</string>
   <string name="audio_recording_play">Urar</string>
   <string name="audio_recording_pause">Sgunfu</string>
+  <string name="audio_recording_stop">Ḥbes asekles</string>
+  <string name="audio_recording_extend">Kemmel asekles</string>
+  <string name="audio_recording_restart">Sekles tikkelt-nniḍen</string>
+  <string name="audio_recording_delete">Sefsex</string>
+  <string name="audio_recording_discard_title">Ad tkkseḍ asekles?</string>
+  <string name="audio_recording_discard_message">Asekles-ik ad iruḥ.</string>
+  <string name="audio_recording_discard_keep">Kemmel aẓrag</string>
+  <string name="audio_recording_discard_confirm">Sefsex</string>
+  <string name="audio_recording_limit_reached">Yewweḍ talast n usekles. Azen neɣ sefsex.</string>
+  <string name="audio_recording_gesture_hint">Serreḥ akken ad tazneḍ · zlu ◀ akken ad tsefsxeḍ · ▲ akken ad tẓerreḍ</string>
+  <string name="audio_recording_release_cancel">Serreḥ akken ad tsefsxeḍ</string>
+  <string name="audio_recording_release_review">Serreḥ akken ad teldiḍ amaẓrag</string>
+  <string name="audio_recording_slide_cancel">Sefsex asekles</string>
+  <string name="audio_recording_slide_review">Ldi amaẓrag</string>
+  <string name="audio_recording_review_short">Ẓer</string>
+  <string name="audio_recording_too_short">Ṭṭef akken ad teskelseḍ izen s taɣect</string>
+  <string name="video_recorder_error">Ulac amsekles n tvidyut yellan.</string>
   <string name="taking_picture_error">Teḍra-d tuccḍa deg tuṭṭfa n tugna.</string>
   <string name="find_picture_error">Teḍra-d tuccḍa deg tifin n tugna. </string>
   <string name="open_camera_error">Teḍra-d tuccḍa deg ulday n tkamiṛat.</string>
@@ -347,6 +382,7 @@
   <string name="menu_message_delete">Kkes izen</string>
   <string name="menu_message_cancel">Sefsex izen</string>
   <string name="menu_message_reply">Err</string>
+  <string name="menu_message_cancel_reply">Sefsex tiririt</string>
   <string name="menu_delete">Kkes</string>
   <string name="pref_darkTheme_title">Asentel aberkan</string>
   <string name="pref_darkTheme_summary">Rmed yal tikelt asentel aberkan deg umḍiq n useqdec n tikli n unagraw</string>
@@ -408,7 +444,10 @@
   <string name="bottomSheet_mute_microphone_btn">Amikṛu</string>
   <string name="bottomSheet_sound_output_btn">Imeslan</string>
   <string name="bottomSheet_raiseHand_btn">Rfed afus-ik-im</string>
+  <string name="camera_toggle_btn_description">Beddel takamiṛat</string>
   <string name="camera_flip_btn_description">Zzi takamirat</string>
+  <string name="add_participant_btn_description">Rnu amttekki</string>
+  <string name="screen_share_btn_description">Bḍu agdil</string>
   <string name="open_account_extension_settings">Ldi iɣewwaṛen n usiɣzef n umiḍan</string>
   <string name="open_general_extension_settings">Ldi iɣewwaṛen n usiɣzef amatu</string>
   <string name="uninstall">Kkes</string>
@@ -510,8 +549,72 @@
   <string name="link_device_error_canceled">Tamhelt-nni isemmet-itt useqdac-nni. </string>
   <string name="link_device_error_unknown">Teḍra-d tuccḍa. </string>
   <string name="link_device_error_bad_password">Ma ulac aɣilif, senqed isefka n usnekwu sakin ɛreḍ tikelt nniḍen.</string>
+  <string name="test_push">Armed n udemmer</string>
   <!--Accessibility-->
+  <string name="step_title_create_username">Snulfu-d isem n useqdac</string>
+  <string name="step_title_set_password">Sbadu awal uffir</string>
+  <string name="step_title_create_profile">Snulfu-d amaɣnu</string>
+  <string name="step_format">Asurif %1$d ɣef %2$d: %3$s</string>
   <!--Peer services-->
+  <string name="peer_services_title">Imeẓla yemẓallan</string>
+  <string name="peer_services_refresh">Smiren imeẓla</string>
   <string name="peer_services_connect">Qqen</string>
+  <string name="peer_services_disconnect">Ffeɣ</string>
+  <string name="peer_services_empty">Ulac imeẓla yemẓallan yellan</string>
+  <string name="peer_services_link_copied">Aseɣwen yettwanɣel ɣer afus</string>
+  <string name="peer_services_error_offline">Anermis beṛṛa n tuqqna</string>
+  <string name="peer_services_error_unreachable">Anermis ur yettwassaweḍ ara</string>
+  <string name="peer_services_error_timeout">Yezri wakud n usuter</string>
+  <string name="peer_services_error_unknown">Ur izmir ara ad d-yawi imeẓla</string>
+  <string name="notif_channel_peer_tunnel">Imeẓla yettwabḍan</string>
+  <string name="notif_channel_peer_tunnel_descr">Ittwaskan mi ara ddan yimeẓla n imeddukal deg ugilal.</string>
+  <string name="notif_peer_tunnel_title">Imeẓla yettwabḍan urmiden</string>
+  <string name="notif_peer_tunnel_text">Jami iṭṭef tuqqniwin n yimeẓla-ik urmiden deg ugilal</string>
+  <string name="notif_peer_tunnel_stop_all">Seḥbes akk</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_settings_title">Imeẓla yemẓallan</string>
+  <string name="shared_services_settings_description">Sken imeẓla idiganen i yiseqdacen n Jami</string>
+  <string name="shared_services_empty">Ulac ameẓlu yettwaswan</string>
+  <string name="shared_services_add">Rnu ameẓlu</string>
+  <string name="shared_services_add_title">Rnu ameẓlu yettwabḍan</string>
+  <string name="shared_services_edit_title">Ẓreg ameẓlu yettwabḍan</string>
+  <string name="shared_services_edit">Ẓreg</string>
+  <string name="shared_services_delete">Kkes</string>
+  <string name="shared_services_name_hint">Isem n umeẓlu</string>
+  <string name="shared_services_name_required">Isem n umeẓlu yelaq</string>
+  <string name="shared_services_description_hint">Aglam (s ufran)</string>
+  <string name="shared_services_port_hint">Tawwurt tadigant</string>
+  <string name="shared_services_port_required">Uṭṭun n tewwurt yelaq</string>
+  <string name="shared_services_port_invalid">Tawwurt ilaq ad tili gar 1 d 65535</string>
+  <string name="shared_services_port">Tawwurt: %d</string>
+  <string name="shared_services_no_description">Ulac aglam</string>
+  <string name="shared_services_empty_subtitle">Bḍu ifuyla neɣ imeẓla idiganen d yiseqdacen n Jami</string>
+  <string name="shared_services_more_options">Ugar n textiṛiyin</string>
+  <string name="shared_services_open_in_browser">Ldi deg iminig</string>
+  <string name="shared_services_disconnect_all">Ffeɣ akk</string>
+  <string name="shared_services_disconnect_all_title">Ad teffɣeḍ akk?</string>
+  <string name="shared_services_disconnect_all_message">Ayen i d-iteddun ad yeffeɣ:\n\n%1$s\n\nImeẓla yettwasnesren ad ttwaseḥbsen, tuqqniwin ɣer yibenkan nniḍen ad ttwamdlent.</string>
+  <string name="shared_services_disconnect_all_confirm">Ffeɣ</string>
+  <string name="shared_services_nothing_active">Ulac kra yurmiden tura</string>
+  <string name="shared_services_hosting_item">Asnesser: %1$s (%2$s)</string>
+  <string name="shared_services_tunnel_item">%1$s (seg %2$s)</string>
+  <string name="shared_services_type_website_label">Asmel web</string>
+  <string name="shared_services_type_custom_label">Tudmawant</string>
+  <string name="shared_services_local_port">Tawwurt tadigant %d</string>
+  <string name="shared_services_local_address">%1$s:%2$d</string>
+  <string name="shared_services_type_custom">Aqeddac udmawan</string>
+  <string name="shared_services_type_website">Rnu asmel web</string>
+  <string name="shared_services_add_custom_title">Rnu aqeddac udmawan</string>
+  <string name="shared_services_add_website_title">Rnu asmel web</string>
+  <string name="shared_services_host_hint">Asneftaɣ adigan</string>
+  <string name="shared_services_scheme_hint">Azenziɣ URI (am. http, ftp)</string>
+  <string name="shared_services_directory_hint">Akaram adigan</string>
+  <string name="shared_services_directory_required">Ttxil-k fren akaram</string>
+  <string name="shared_services_choose">Fren</string>
+  <string name="shared_services_policy_hint">Yettwakcam sɣur</string>
+  <string name="shared_services_policy_contacts">Inermisen-iw</string>
+  <string name="shared_services_policy_public">Azayez</string>
+  <string name="shared_services_policy_specific">Inermisen usliḍen</string>
+  <string name="shared_services_allowed_contacts_hint">Inermisen yettwasiren (mfaṛaqen s tikkest)</string>
+  <string name="shared_services_save">Sekles</string>
 </resources>

@@ -184,4 +184,8 @@
   <!--Peer services-->
   <string name="peer_services_connect">وصلكن</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">ڤڠاجرن</string>
+  <string name="shared_services_delete">مڠمبيل</string>
+  <string name="shared_services_more_options">ڤرليندوڠ لبيه</string>
+  <string name="shared_services_save">ڤڠاجين</string>
 </resources>

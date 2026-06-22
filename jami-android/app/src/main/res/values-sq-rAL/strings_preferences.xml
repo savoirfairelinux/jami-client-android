@@ -82,7 +82,9 @@
   <string name="extension_reset_preferences_summary">Zgjerimet u kthyen te rregullimet parazgjedhje për toi</string>
   <string name="extension_reset_preferences_ask">Doni të kthehen te parazgjedhjet rregullimet e përgjithshme të zgjerimit?</string>
   <string name="extension_reset_account_preferences_ask">Doni të rikthehen te parazgjedhjet rregullimet e zgjerimit për llogari?</string>
+  <string name="account_advanced_reset">Rivendos cilësimet e avancuara</string>
   <string name="account_advanced_reset_summary">Rikthe te parazgjedhje rregullime të mëtejshme</string>
+  <string name="account_advanced_reset_confirm">Të rivendosen të gjitha cilësimet e avancuara në parazgjedhje?</string>
   <string name="extension_successfully_installed">Zgjerimi <b>%1$s</b> u instalua me sukses.</string>
   <string name="extension_install_failure">Ndodhi një gabim teksa instalohej zgjerimi vijues: <b>%1$s</b></string>
   <string name="extension_recent_version_exception">Është i instaluar një version më i freskët i <b>%1$s</b>.</string>

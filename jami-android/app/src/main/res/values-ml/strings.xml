@@ -49,6 +49,7 @@
     <item quantity="other">%d സംഭാഷണങ്ങൾ</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">തിരയുക അല്ലെങ്കിൽ ചേർക്കുക</string>
   <string name="choose_number">ഒരു നമ്പര് തിരഞ്ഞെടുക്കുക</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -457,9 +458,22 @@
   <string name="link_device_error_timeout">ഓപ്പറേഷനുള്ള സമയം കഴിഞ്ഞു.</string>
   <string name="link_device_error_canceled">യൂസർ ഓപ്പറേഷൻ റദ്ദാക്കി.</string>
   <!--Accessibility-->
+  <string name="step_title_set_password">പാസ്‌വേഡ് സജ്ജമാക്കുക</string>
   <!--Peer services-->
   <string name="peer_services_connect">ബന്ധിപ്പിക്കുക</string>
+  <string name="peer_services_disconnect">വിച്ഛേദിക്കുക</string>
+  <string name="notif_channel_peer_tunnel">പങ്കിട്ട സേവനങ്ങൾ</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">പരിഷ്കരിക്കുക</string>
+  <string name="shared_services_delete">ഇല്ലാതാക്കുക</string>
+  <string name="shared_services_description_hint">വിവരണം (ഓപ്ഷണൽ)</string>
+  <string name="shared_services_port_hint">പ്രാദേശിക പോർട്ട്</string>
+  <string name="shared_services_no_description">വിവരണമില്ല</string>
   <string name="shared_services_more_options">കൂടുതൽ ഓപ്ഷനുകൾ</string>
+  <string name="shared_services_disconnect_all_confirm">വിച്ഛേദിക്കുക</string>
+  <string name="shared_services_type_custom_label">കസ്റ്റംസ്</string>
+  <string name="shared_services_host_hint">പ്രാദേശിക ഹോസ്റ്റ്</string>
+  <string name="shared_services_policy_hint">ആക്സസ് ചെയ്യാവുന്നത്</string>
+  <string name="shared_services_policy_public">പൊതു</string>
   <string name="shared_services_save">സംരക്ഷിക്കുക</string>
 </resources>

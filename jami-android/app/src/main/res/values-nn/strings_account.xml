@@ -5,9 +5,11 @@
   <string name="ic_advanced_menu">Forfråte innstillingar</string>
   <string name="ic_blacklist_menu">Bloka kontakt</string>
   <!--Strings related to account creation-->
+  <string name="account_selection">Vel konto</string>
   <string name="add_ring_account_title">Legg til konto</string>
   <string name="add_sip_account_title">Legg til SIP konto</string>
   <string name="ring_account_default_name">Jami konto %1$s</string>
+  <string name="account_creation_error">Det oppstod ein feil under oppretting av kontoen.</string>
   <string name="prompt_alias">Aliefin</string>
   <string name="prompt_hostname">Namn på vert</string>
   <string name="prompt_username">Bruksnamn</string>
@@ -21,10 +23,17 @@
   <string name="dialog_wait_create_details">Vennligst vent til den nye kontona vert lagt til...</string>
   <string name="dialog_wait_update">Aktualisering av kontoen</string>
   <string name="dialog_wait_update_details">Vennligst vent medan den nye kontona dykkar blir oppdatert...</string>
+  <string name="dialog_warn_ip2ip_account_title">Oppretta tom SIP-konto?</string>
+  <string name="dialog_warn_ip2ip_account_message">Du er i ferd med å oppretta ein SIP-konto utan gyldig vertsnamn.
+        Du vil berre kunna ringja og ta imot direkte IP-anrop.
+        Du kan redigera kontoen seinare</string>
   <string name="account_type_ip2ip">IP-konto</string>
   <string name="help_ring">Ein Jami-konto lar deg nå folk trygt i peer to peer gjennom eit fullt distribuert nettverk.</string>
   <string name="help_sip_title">Legg til SIP konto</string>
+  <string name="help_sip">Konfigurer eksisterande SIP-konto</string>
+  <string name="create_sip_account">Konfigurer SIP-konto</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">Sletta konto?</string>
   <string name="account_delete_dialog_message">Denne handlingen kan ikkje bli gjort til nytt.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Ingen konto registrert</string>
@@ -33,6 +42,7 @@
   <string name="account_device_revoke">Einheit for å avbryta</string>
   <string name="account_device_revocation_success_title">Framgang</string>
   <string name="account_device_revocation_success">Einheten er no avkalt!</string>
+  <string name="account_device_revocation_error_title">Feil ved tilbakekalling av eining</string>
   <string name="account_device_revocation_wrong_password">Feil passord.</string>
   <string name="account_device_revocation_unknown_device">Unkjent apparat.</string>
   <string name="account_device_revocation_error_unknown">Unkjent feil.</string>
@@ -40,9 +50,13 @@
   <string name="account_password_set">Set Passord</string>
   <string name="account_password_summary">Ta nota til kontoen din.</string>
   <string name="account_password_change_wait_message">Endring av password til kontoen</string>
+  <string name="account_biometric_disable">Deaktiver biometrisk autentisering</string>
+  <string name="account_biometric_set">Aktiver biometrisk autentisering</string>
+  <string name="account_biometric_summary">Handter biometrisk autentisering for kontoen din.</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generell</string>
   <string name="account_basic_category">Grundleg innstilling</string>
+  <string name="account_alias_label">Visingsnamn</string>
   <string name="account_hostname_label">Namn på vert</string>
   <string name="account_bootstrap_label">Bootstrap</string>
   <string name="account_name_server_label">Namnsserver</string>
@@ -56,6 +70,7 @@
   <string name="account_upnp_label">Legg UPnP til</string>
   <string name="account_proxy_field">Styrkemann</string>
   <!--Extension Details-->
+  <string name="account_preferences_extension_tab">Utvidingar</string>
   <!--Audio Details-->
   <string name="account_audio_label">Audio</string>
   <string name="account_preferences_media_tab">Medeldamedia</string>
@@ -70,12 +85,16 @@
   <string name="account_video_enable">Legg videoen til</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Utfordring</string>
+  <string name="account_chat_settings_title">Sludreinnstillingar</string>
+  <string name="account_read_receipts_label">Lesekvitteringar</string>
+  <string name="account_read_receipts_summary">Send og be om leverings- og lesekvitteringar som blir sende når meldingar blir leverte eller lesne.</string>
   <string name="account_call_settings_title">Innstillingar på samtal</string>
   <string name="account_dht_public_in_calls_label">Tillate innkommende samtal frå ukjente kontakt</string>
   <string name="account_registration_exp_label">Registrering går ut</string>
   <string name="account_local_interface_label">Lokal grensesnitt</string>
   <string name="account_local_port_label">Lokal havn</string>
   <string name="account_stun_enable_label">Bruk STUN</string>
+  <string name="account_stun_server_label">STUN-tenar</string>
   <string name="account_accept_files">Ta imot innkommende filer automatisk</string>
   <string name="account_conversation_settings_title">Innstillingar for samtal</string>
   <string name="account_accept_files_max_size">Maksimal filstørrelse for å akseptera automatisk</string>
@@ -89,13 +108,16 @@
   <string name="account_published_same_as_local_label">Publisert som lokal</string>
   <string name="account_published_port_label">Utgjeven port</string>
   <string name="account_published_address_label">Adress publisert</string>
+  <string name="account_connectivity_label">Node-til-node-tilkopling</string>
   <string name="disabled">Dei funksjonshemma</string>
   <string name="enabled">Tilgjengeleg</string>
   <string name="default_value">Misligholde</string>
   <string name="account_proxy_label">DHT-proksie</string>
   <string name="account_proxy_enable_label">Bruk DHT- proxy</string>
+  <string name="account_proxy_list_enable_label">Bruk DHT-proxyliste</string>
   <string name="account_proxy_server_label">DHT-prosektoradress</string>
   <string name="account_proxy_server_list_label">DHT proxy list URL</string>
+  <string name="account_proxy_server_used">Brukar: %1$s</string>
   <string name="account_sip_proxy_label">Styrkemann</string>
   <string name="account_peer_discovery_label">Lokal peer oppdaging</string>
   <string name="account_peer_discovery_enable_label">Legg til lag for lokal peer-oppdaging</string>
@@ -110,9 +132,21 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Bruk TLS Transport</string>
+  <string name="account_tls_port_label">TLS-lytteport</string>
+  <string name="account_tls_certificate_list_label">Sertifiseringsinstansar</string>
+  <string name="account_tls_certificate_file_label">Sertifikatfil</string>
+  <string name="account_tls_private_key_file_label">Fil med privat nøkkel</string>
   <string name="account_tls_password_label">Passord med privatnøkkel</string>
+  <string name="account_tls_method_label">TLS-metode</string>
+  <string name="account_tls_ciphers_label">TLS-chiffer</string>
+  <string name="account_tls_server_name_label">Tenarnamn</string>
+  <string name="account_tls_verify_server_label">Verifiser tenar</string>
+  <string name="account_tls_verify_client_label">Verifiser klient</string>
+  <string name="account_require_client_certificate_label">TLS krev klientsertifikat</string>
+  <string name="account_tls_negotiation_timeout_sec">Tidsavbrot for forhandling (sek)</string>
   <string name="account_rtp_max_port">Maksimal</string>
   <string name="account_rtp_min_port">Minimum</string>
+  <string name="account_rtp_port_range">RTP-portområde for lyd</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Skriv inn hovudpassord for å låsa opp kontoen</string>
   <string name="error_password_char_count">Minst 6 teikn</string>
@@ -123,6 +157,8 @@
   <string name="account_export_file_summary">Du kan lagra kontoen din opp på einheten din for å gjenoppretta den seinare.</string>
   <string name="account_export_end_decryption_message">Feil passord. Prøv igjen med det rette passordet</string>
   <string name="account_enter_password">Skriv inn passord</string>
+  <string name="account_share_body">Kontakt meg via «%1$s» på den distribuerte kommunikasjonsplattforma Jami: %2$s</string>
+  <string name="account_share_body_with_username">Kontakt meg via «%1$s» eller det offentlege brukarnamnet mitt «%2$s» på den distribuerte kommunikasjonsplattforma Jami: %3$s</string>
   <string name="account_contact_me">Kontakt meg på Jami!</string>
   <string name="update_account">Oppdater kontoen</string>
   <string name="account_migration">Kontoen på Jami kan oppdaterast. Skriv inn passordet ditt.</string>
@@ -130,11 +166,21 @@
   <string name="sip_account">SIP-konto</string>
   <string name="ring_account_identity">Identitet</string>
   <string name="account_migration_title_dialog">Migrasjon til konto</string>
+  <string name="account_migration_message_dialog">Kontoane dine må oppdaterast. Vil du gå til skjermen for kontoadministrasjon for å utføra denne operasjonen?</string>
   <string name="account_update_needed">No trengs oppdatering</string>
+  <string name="account_cannot_be_found_title">Kontofeil</string>
+  <string name="account_cannot_be_found_message">Kan ikkje finna kontoen på Jami-nettverket. Forsikra deg om at han vart eksportert i Jami frå ei eksisterande eining, og at oppgitt påloggingsinformasjon er rett.</string>
+  <string name="jams_account_cannot_be_found_message">Det oppstod ein feil under tilkopling av kontoen. Kontroller påloggingsinformasjonen og prøv igjen.</string>
   <string name="account_sip_cannot_be_registered_message">Du kan fortsette med kontooppbygginga eller redigera informasjonen din her. Utgåva er òg mogleg seinare i kontoinnstillingane.</string>
   <string name="account_no_network_title">Netverksfeil</string>
+  <string name="account_no_network_message">Det oppstod ein tilkoplingsfeil under tillegg av Jami-kontoen til det distribuerte nettverket. Kontroller tilkoplinga til eininga.</string>
   <string name="account_device_added_title">Tilsett kontoapparat</string>
+  <string name="account_device_added_message">Jami-kontoen vart sett opp på denne eininga.</string>
   <string name="account_device_updated_title">Rekontoapparat oppdatert</string>
+  <string name="account_device_updated_message">Jami-kontoen vart oppdatert.</string>
+  <string name="account_cannot_be_updated_message">Det oppstod ein feil under oppdatering av kontoen. Kontroller kontopassordet.</string>
+  <string name="account_sip_success_title">SIP-konto registrert</string>
+  <string name="account_sip_success_message">SIP-kontoen vart registrert.</string>
   <string name="account_sip_register_anyway">Registrer deg likevel.</string>
   <!--TV-->
   <string name="account_tv_settings_header">Innstillingar på konto</string>
@@ -153,24 +199,31 @@
   <string name="account_link_export_button">Link nytt utstyr</string>
   <string name="account_link_show_button">Visa %d meir knytt til einheten</string>
   <string name="account_link_hide_button">Skjulde tilkobla tilleg</string>
+  <string name="account_start_export_button">Generer autentiseringskode</string>
   <string name="account_end_export_button">nær</string>
   <string name="account_export_title">Link konto til andre enheter</string>
   <string name="account_connect_server_button">Knytte til styringsservern</string>
   <string name="account_connect_button">Knytta</string>
+  <string name="prompt_server">URL for administrasjonstenaren</string>
   <string name="help_credentials_enter">Skriv inn kjennskap til organisasjonen din</string>
   <string name="help_connect_password_enter">Skriv inn ordførarens password</string>
   <string name="account_connect_prompt_username">Bruksnamn</string>
   <string name="account_connect_server">Knytte til styringsservern</string>
   <string name="account_enter_username">Skriv inn brukarnamn</string>
+  <string name="account_enter_servername">Skriv inn tenar</string>
   <!--Name registration-->
   <string name="error_username_empty">Skriv inn eit brukernavn</string>
+  <string name="no_registered_name_for_account">Ingen registrert brukarnamn</string>
+  <string name="username_available">Brukarnamnet er tilgjengeleg.</string>
   <string name="register_name">Namn på register</string>
+  <string name="trying_to_register_name">Registrering av brukarnamnet pågår. Vent litt …</string>
   <string name="registered_username">Registrert brukernavn</string>
   <string name="register_username">Registrer offentleg brukernavn</string>
   <string name="register_recommended">Tilrådeleg</string>
   <string name="username_already_taken">Nøvn som er tekne</string>
   <string name="invalid_username">Utilsett brukernavn</string>
   <string name="unknown_error">Ikkje kjent feil. Vennligst sjekk nettverksanslaget ditt!</string>
+  <string name="looking_for_username_availability">Sjekkar tilgjenget til brukarnamnet …</string>
   <string name="account_status_connecting">Kopplande</string>
   <string name="account_status_connection_error">Fell i samband</string>
   <string name="account_status_online">På nett</string>
@@ -181,21 +234,51 @@
   <string name="account_creation_home">Velkommen til Jami</string>
   <string name="account_creation_profile">Skapa profil</string>
   <string name="account_creation_ring">Skapa kontoen til Jami</string>
+  <string name="account_sip_cannot_be_registered">Det oppstod ein feil under registrering av SIP-kontoen.</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Rediger profil</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Skriv inn passord for å bekrefta</string>
   <string name="enter_password">Skriv inn passord</string>
   <string name="revoke_device_title">Einheit for å avbryta</string>
+  <string name="revoke_device_message">Vil du tilbakekalla %1$s?</string>
   <string name="revoke_device_wait_title">Vennligst vent...</string>
   <string name="revoke_device_wait_message">Avkallingsapparat</string>
   <string name="rename_device_title">Namn på denne einheten</string>
+  <string name="rename_device_message">Skriv inn eit einingsnamn for å identifisera denne eininga i Jami-kontoen din</string>
   <string name="rename_device_button">Namneapparat</string>
   <string name="account_rename_device_hint">Velg nytt enhetnamn</string>
+  <string name="account_device_name_empty">Einingsnamnet kan ikkje vera tomt.</string>
   <string name="account_device_this_indicator">Denne einheten</string>
   <string name="account_disabled_indicator">Dei funksjonshemma</string>
+  <string name="account_device_id">Einings-ID</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Dette formatet er ikkje støtta.</string>
+  <string name="account_link_info">I Jami-appen på den nye eininga, skann QR-koden eller skriv inn autentiseringskoden manuelt.</string>
   <string name="account_link_device_title">Legg ein ny enhet til</string>
+  <string name="account_link_password">Denne kontoen er passordkryptert; skriv inn passordet for å generera autentiseringskoden.</string>
+  <string name="account_link_generate_button">Generer</string>
+  <string name="account_link_time_valid">Autentiseringskoden vert ugyldig: %1$s.</string>
+  <string name="account_link_device_info">Vel «Kopla til ei ny eining» frå den andre Jami-appen for å visa QR-koden eller autentiseringskoden.</string>
+  <string name="account_generate_export_device">På den andre eininga</string>
+  <string name="account_generate_export_info">Installer og start Jami. Vel «Importer frå ei anna eining», og skann QR-koden. Alternativt kan du skriva inn PIN-koden manuelt.</string>
+  <string name="content_description_qr_generated">QR-koden til kontoen</string>
+  <string name="account_generate_export_invalid">Autentiseringskoden er ikkje lenger gyldig.\nSkriv inn passordet og generer ein ny for å kopla til den nye eininga.</string>
+  <string name="account_generate_export_invalid_two">Autentiseringskoden er ikkje lenger gyldig.\nGenerer ein ny for å kopla til den nye eininga.</string>
+  <string name="help_pin_info">Krevst viss kontoen er passordkryptert.</string>
   <string name="account_link_device_button">Knytta</string>
   <!--Biometry-->
+  <string name="account_biometry_auth_title">Lås opp Jami-konto</string>
+  <string name="account_biometry_auth_message">Bruk biometri for å låsa opp kontoen din</string>
+  <string name="account_biometry_enroll_title">Bruka biometrisk autentisering?</string>
+  <string name="account_biometry_enroll_message">Eininga di støttar sikker biometrisk autentisering.
+Biometrisk autentisering eller einingsautentisering gjev ein praktisk måte å låsa opp tilgangen til Jami-kontoen din lokalt. Du vil framleis kunna bruka passordet ditt.</string>
+  <string name="account_biometry_enroll_accept">Bruk biometri</string>
+  <string name="no_thanks">Nei takk</string>
+  <string name="account_biometry_enroll_auth_title">Legg til autentisering for Jami-kontoen din</string>
+  <string name="account_biometry_enroll_auth_message">Legg til sikker biometrisk autentisering eller einingsautentisering som eit alternativ til passordet ditt</string>
+  <string name="account_auth_error">Autentiseringsfeil: %1$s</string>
+  <string name="account_auth_success">Autentiseringa lukkast</string>
+  <string name="account_auth_key_error">Det oppstod ein feil under dekryptering av kontonøkkelen.</string>
+  <string name="account_auth_password">Bruk kontopassord</string>
 </resources>

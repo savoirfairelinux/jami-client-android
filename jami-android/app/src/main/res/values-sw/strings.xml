@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Wasilisha tatizo</string>
   <string name="section_license">Leseni</string>
   <string name="copyright_section">Haki za kuzaliwa</string>
   <string name="contribute_section">Shiriki</string>
@@ -13,7 +14,11 @@
   <string name="call_service_description">Huduma hii ni muhimu ili kuweka simu yako mbio katika eneo la mbele. Ni mbio tu wakati wa simu.</string>
   <string name="data_transfer_service_description">Huduma hii ni muhimu kwa kuonyesha taarifa kudumu wakati wa uhamisho wa faili.</string>
   <!--About dialog-->
+  <string name="thank_note">Tungependa kuwashukuru wachangiaji wetu, ambao juhudi zao kwa miaka mingi zimeifanya programu hii kuwa ilivyo.</string>
+  <string name="developers">Wasanidi programu</string>
   <string name="media">Vyombo vya habari</string>
+  <string name="community_management">Usimamizi wa Jamii</string>
+  <string name="special_thanks">Shukrani maalum kwa</string>
   <!--RingActivity-->
   <string name="error_no_network">Hakuna uhusiano wa mtandao</string>
   <string name="error_account_offline">Akaunti ni nje ya mtandao</string>
@@ -36,6 +41,7 @@
     <item quantity="other">%d Mazungumzo</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Tafuta au ongeza</string>
   <string name="choose_number">Chagua namba</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -48,6 +54,7 @@
   <string name="notif_outgoing_call">Kuondoka simu</string>
   <string name="notif_current_call_title">Kuendelea kwa simu na %1$s</string>
   <string name="notif_current_call">Mawasiliano ya sasa</string>
+  <string name="notif_channel_call_in_progress">Simu inaendelea</string>
   <string name="notif_channel_calls">Mawasiliano</string>
   <string name="notif_channel_missed_calls">Mawasiliano yaliyopotea</string>
   <string name="notif_channel_incoming_calls">Mawasiliano ya ndani</string>
@@ -58,6 +65,7 @@
   <string name="notif_channel_background_service">Huduma ya background</string>
   <string name="notif_channel_background_service_descr">Inaruhusu kupokea simu na ujumbe wakati wowote.</string>
   <string name="notif_group_calls">Mawasiliano</string>
+  <string name="notif_inprogress_group_call">Simu inaendelea</string>
   <string name="notif_mark_as_read">Alama kama ilivyosomwa</string>
   <string name="notif_dismiss">Kukataa</string>
   <string name="notif_reply">Jibu</string>
@@ -83,6 +91,9 @@
   <string name="ongoing_call">Mawasiliano ya sasa</string>
   <string name="hist_in_call">Kuingia wito wa %1$s</string>
   <string name="hist_out_call">Kuondoka wito wa %1$s</string>
+  <string name="action_call_accept">Kubali simu</string>
+  <string name="action_call_accept_audio">Kubali kwa sauti</string>
+  <string name="action_call_accept_video">Kubali kwa video</string>
   <string name="switch_to_video">Weka Video</string>
   <string name="action_call_decline">Kupungua</string>
   <string name="action_call_mic_mute">Kipaza sauti</string>
@@ -94,6 +105,7 @@
   <string name="share_via">Kushiriki kupitia</string>
   <string name="scan_qr">Scan QR Code</string>
   <string name="qr_code">Nambari ya QR</string>
+  <string name="new_group">Unda kikundi kipya</string>
   <string name="ab_action_flipcamera">Kamera flip</string>
   <string name="ab_action_hidepreview">Ficha ya awali ya kuficha</string>
   <string name="remote_recording">Kurekodi %s...</string>
@@ -110,6 +122,7 @@
   <string name="conversation_send_video">Rekodi video clip</string>
   <string name="conversation_share_location">Kushiriki eneo</string>
   <string name="ongoing_group_call">Mawasiliano ya sasa</string>
+  <string name="started_call">Simu imeanza</string>
   <string name="in_reply_to">Kwa kujibu</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kibali cha kamera</string>
@@ -147,9 +160,11 @@
   <string name="conversation_action_remove_this_title">Kufuta mawasiliano haya?</string>
   <string name="conversation_action_remove_this_message">Hii itafuta mawasiliano na dhahiri kufuta historia ya mazungumzo.</string>
   <string name="remove_conversation">Ondoa mazungumzo</string>
+  <string name="swarm_group_action_leave">Ondoka kwenye kikundi</string>
   <string name="conversation_action_select_peer_number">Chagua namba</string>
   <string name="conversation_action_block_this">Kuzuia mawasiliano</string>
   <string name="conversation_action_unblock_this">Kufungua mawasiliano</string>
+  <string name="conversation_action_go_to_call">Rudi kwenye simu</string>
   <string name="conversation_action_incoming_call">Kuwasiliana</string>
   <string name="conversation_action_latest">Kuruka kwa karibuni</string>
   <string name="conversation_open_file_error">Hakuna programu imewekwa uwezo wa kufungua aina hii ya faili.</string>
@@ -190,6 +205,7 @@
   <string name="help_password_choose">Chagua nenosiri lenye nguvu ambalo utakumbuka kulinda akaunti yako ya Jami.</string>
   <string name="help_password_enter">Ingiza nenosiri lako kuu la akaunti ya Jami.</string>
   <string name="help_server_enter">Ingiza URL ya usimamizi wa seva.</string>
+  <string name="copied_clipboard">Imenakiliwa kwenye ubao wa kunakili.</string>
   <string name="wizard_next">Yafuatayo</string>
   <string name="wizard_back">Kurudi</string>
   <string name="wizard_skip">Kwenda</string>
@@ -223,6 +239,8 @@
   <string name="accept">Kubali</string>
   <string name="decline">Kupungua</string>
   <string name="block">Block</string>
+  <string name="decline_invitation">Kataa mwaliko</string>
+  <string name="accept_invitation">Kubali mwaliko</string>
   <string name="invitation_message">Una maombi ya mawasiliano %1$d</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Hakuna mawasiliano ya kuzuia</string>
@@ -231,11 +249,13 @@
   <string name="conversation_placeholder">Wewe bado hawana mazungumzo</string>
   <string name="contact_request_sent">Maombi ya mawasiliano yaliyotumwa</string>
   <string name="start_conversation">Anza mazungumzo</string>
+  <string name="search_results">Matokeo ya utafutaji</string>
   <string name="tv_contact_row_header">Mawasiliano</string>
   <string name="gallery_error_title">Hakuna programu ya Galeria iliyopatikana</string>
   <string name="gallery_error_message">Hakuna programu iliyopatikana kwenye kifaa cha kufungua Galeria</string>
   <!--File Transfer-->
   <string name="file_transfer_status_invalid_file">Faili isiyofaa</string>
+  <string name="file_transfer_status_unjoinable_peer">Mwenza asiyefikika</string>
   <string name="file_transfer_status_canceled">Imeghairiwa</string>
   <string name="file_download">Pakua</string>
   <string name="title_media_viewer">Kiangaliaji cha media</string>
@@ -291,6 +311,7 @@
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Kushiriki</string>
   <string name="bottomSheet_dialpad_btn">Kiwango cha kugeuza</string>
+  <string name="bottomSheet_extensions_btn">Viendelezi</string>
   <string name="bottomSheet_add_participants_btn">Ongeza</string>
   <string name="bottomSheet_change_camera_btn">Mabadiliko</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
@@ -305,6 +326,7 @@
   <string name="reset">Kuanzisha upya</string>
   <!--Swarm Details-->
   <string name="rename_btn">Tumia</string>
+  <string name="swarm_description">Ongeza maelezo</string>
   <string name="tab_members">Wajumbe</string>
   <string name="tab_files">Faili</string>
   <string name="tab_settings">Mipangilio</string>
@@ -319,21 +341,44 @@
   <string name="jami_id_choose_username">Chagua jina la mtumiaji</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Karibu Jami</string>
+  <string name="welcome_jami_description">Shiriki kitambulisho chako cha Jami ili uweze kufikiwa kwa urahisi zaidi!</string>
   <!--Conversation details-->
   <string name="details">Maelezo</string>
+  <string name="swarm_type">Aina ya mazungumzo</string>
   <string name="Private">Private</string>
   <string name="mute_conversation">Mazungumzo ya kimya</string>
   <!--Donation-->
+  <string name="donation_card_description">Ikiwa unafurahia kutumia Jami na unaamini katika dhamira yetu, je, ungependa kutoa mchango?</string>
+  <string name="donation_card_not_now">Si sasa</string>
+  <string name="donation_donate">Changia</string>
   <!--Extension-->
+  <string name="export_side_step1_error_malformed">Kitambulisho cha kifaa kipya hakitambuliki. Tafadhali fuata maelekezo hapo juu.</string>
   <string name="export_side_step1_code_connect">Unganisha</string>
   <string name="export_side_step2_cancel">Kughairi</string>
   <string name="export_side_step2_confirm">Tumia</string>
   <string name="import_side_step1_share">Kushiriki</string>
   <string name="import_side_step2_password_import">Uagizaji</string>
+  <string name="import_side_step2_action_required">Hatua inahitajika. Tafadhali thibitisha akaunti kwenye kifaa chanzo.</string>
+  <string name="import_side_step3_body_done">Akaunti imeingizwa kwa mafanikio.</string>
+  <string name="link_device_error_authentication">Hitilafu ya uthibitishaji imetokea wakati wa kuunganisha kifaa. Tafadhali angalia stakabadhi na ujaribu tena.</string>
+  <string name="link_device_error_canceled">Operesheni imeghairiwa na mtumiaji.</string>
   <!--Accessibility-->
+  <string name="step_title_set_password">Weka nenosiri</string>
   <!--Peer services-->
   <string name="peer_services_connect">Unganisha</string>
+  <string name="peer_services_disconnect">Tenganisha</string>
+  <string name="notif_channel_peer_tunnel">Huduma zilizoshirikiwa</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">Hariri</string>
+  <string name="shared_services_delete">Futa</string>
+  <string name="shared_services_description_hint">Maelezo (hiari)</string>
+  <string name="shared_services_port_hint">Mlango wa ndani</string>
+  <string name="shared_services_no_description">Hakuna maelezo</string>
   <string name="shared_services_more_options">Chaguzi zaidi</string>
+  <string name="shared_services_disconnect_all_confirm">Tenganisha</string>
+  <string name="shared_services_type_custom_label">Desturi</string>
+  <string name="shared_services_host_hint">Mwenyeji wa ndani</string>
+  <string name="shared_services_policy_hint">Inaweza kufikiwa na</string>
+  <string name="shared_services_policy_public">Umma</string>
   <string name="shared_services_save">Kuokoa</string>
 </resources>

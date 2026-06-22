@@ -86,6 +86,8 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Напредно</string>
   <string name="account_chat_settings_title">Подешавања ћаскања</string>
+  <string name="account_read_receipts_label">Потврде о читању</string>
+  <string name="account_read_receipts_summary">Шаљи и захтевај потврде о испоруци и читању када су поруке испоручене или прочитане.</string>
   <string name="account_call_settings_title">Подешавања позива</string>
   <string name="account_dht_public_in_calls_label">Дозволи долазне позиве од непознатих контаката</string>
   <string name="account_registration_exp_label">Регистрација истиче</string>
@@ -197,10 +199,12 @@
   <string name="account_link_export_button">Сврнути ново уређај</string>
   <string name="account_link_show_button">Прикажи %d више повезаних уређаја</string>
   <string name="account_link_hide_button">Сакриј повезани уређај</string>
+  <string name="account_start_export_button">Генериши код за потврду идентитета</string>
   <string name="account_end_export_button">затвори</string>
   <string name="account_export_title">Повежи налог са другим уређајима</string>
   <string name="account_connect_server_button">Повежи се са сервером за управљање</string>
   <string name="account_connect_button">Повежи</string>
+  <string name="prompt_server">URL управљачког сервера</string>
   <string name="help_credentials_enter">Унеси акредитиве своје организације</string>
   <string name="help_connect_password_enter">Унеси лозинку своје организације</string>
   <string name="account_connect_prompt_username">Корисничко име</string>
@@ -247,12 +251,21 @@
   <string name="account_device_name_empty">Име уређаја не може бити празно.</string>
   <string name="account_device_this_indicator">Овај уређај</string>
   <string name="account_disabled_indicator">Онемогућено</string>
+  <string name="account_device_id">ID уређаја</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Овај формат није подржан.</string>
+  <string name="account_link_info">У Јами апликацији на новом уређају скенирајте QR код или ручно унесите код за потврду идентитета.</string>
   <string name="account_link_device_title">Повежите нови уређај</string>
+  <string name="account_link_password">Овај налог је шифрован лозинком, унесите лозинку да генеришете код за потврду идентитета.</string>
   <string name="account_link_generate_button">Генериши</string>
+  <string name="account_link_time_valid">Код за потврду идентитета ће бити неважећи: %1$s.</string>
+  <string name="account_link_device_info">Изаберите „Повежи нови уређај“ из друге Јами апликације да прикажете QR код или код за потврду идентитета.</string>
   <string name="account_generate_export_device">На другом уређају</string>
+  <string name="account_generate_export_info">Инсталирајте и покрените Јами. Изаберите „Увези са другог уређаја“ и скенирајте QR код. Алтернативно, ручно унесите PIN код.</string>
   <string name="content_description_qr_generated">QR код налога</string>
+  <string name="account_generate_export_invalid">Код за потврду идентитета више није важећи.\nУнесите лозинку и генеришите други да повежете нови уређај.</string>
+  <string name="account_generate_export_invalid_two">Код за потврду идентитета више није важећи.\nГенеришите други да повежете нови уређај.</string>
+  <string name="help_pin_info">Обавезно ако је налог шифрован лозинком.</string>
   <string name="account_link_device_button">Повежи се</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Откључајте Јами налог</string>
@@ -266,5 +279,6 @@
   <string name="account_biometry_enroll_auth_message">Додајте безбедну биометријску или аутентификацију уређаја као алтернативу лозинки</string>
   <string name="account_auth_error">Грешка при аутентификацији: %1$s</string>
   <string name="account_auth_success">Аутентификација је успела</string>
+  <string name="account_auth_key_error">Дошло је до грешке приликом дешифровања кључа налога.</string>
   <string name="account_auth_password">Користите лозинку налога</string>
 </resources>

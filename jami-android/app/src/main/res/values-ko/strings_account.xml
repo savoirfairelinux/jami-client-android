@@ -23,9 +23,14 @@
   <string name="dialog_wait_create_details">새로운 계정이 추가되는 동안 기다려 주세요</string>
   <string name="dialog_wait_update">업데이트 계정</string>
   <string name="dialog_wait_update_details">새로운 계정이 업데이트되는 동안 기다려 주세요</string>
+  <string name="dialog_warn_ip2ip_account_title">빈 SIP 계정을 만드시겠습니까?</string>
+  <string name="dialog_warn_ip2ip_account_message">유효한 호스트 이름이 없는 SIP 계정을 만들려고 합니다.
+        직접 IP 통화만 걸고 받을 수 있습니다.
+        나중에 계정을 편집할 수 있습니다</string>
   <string name="account_type_ip2ip">IP 계정</string>
   <string name="help_ring">자미 계정으로 인해 완전히 분산된 네트워크를 통해 안전하게 peer-to-peer으로 사람들을 만날 수 있습니다.</string>
   <string name="help_sip_title">SIP 계정을 추가</string>
+  <string name="help_sip">기존 SIP 계정 구성</string>
   <string name="create_sip_account">SIP 계정 구성</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">계정을 삭제하시겠습니까?</string>
@@ -37,6 +42,7 @@
   <string name="account_device_revoke">취소 장치</string>
   <string name="account_device_revocation_success_title">성공</string>
   <string name="account_device_revocation_success">장치가 취소됐어요!</string>
+  <string name="account_device_revocation_error_title">기기 해지 오류</string>
   <string name="account_device_revocation_wrong_password">일치하지 않는 암호입니다.</string>
   <string name="account_device_revocation_unknown_device">알려지지 않은 장치</string>
   <string name="account_device_revocation_error_unknown">알 수 없는 오류</string>
@@ -46,6 +52,7 @@
   <string name="account_password_change_wait_message">계정 비밀번호 변경</string>
   <string name="account_biometric_disable">생체 인증 비활성화</string>
   <string name="account_biometric_set">생체 인증 활성화</string>
+  <string name="account_biometric_summary">계정의 생체 인증을 관리합니다.</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">일반</string>
   <string name="account_basic_category">기본 설정</string>
@@ -79,6 +86,8 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">발전</string>
   <string name="account_chat_settings_title">대화 설정</string>
+  <string name="account_read_receipts_label">읽음 확인</string>
+  <string name="account_read_receipts_summary">메시지가 전달되거나 읽혔을 때 전달 및 읽음 확인을 보내고 요청합니다.</string>
   <string name="account_call_settings_title">전화 설정</string>
   <string name="account_dht_public_in_calls_label">알려지지 않은 연락처에서 수신 전화를 허용</string>
   <string name="account_registration_exp_label">등록 기간이 만료</string>
@@ -105,8 +114,10 @@
   <string name="default_value">기본값</string>
   <string name="account_proxy_label">DHT 대리</string>
   <string name="account_proxy_enable_label">DHT 대리기를 사용</string>
+  <string name="account_proxy_list_enable_label">DHT 프록시 목록 사용</string>
   <string name="account_proxy_server_label">DHT 프록시 주소</string>
   <string name="account_proxy_server_list_label">DHT 프록시 목록 URL</string>
+  <string name="account_proxy_server_used">사용 중: %1$s</string>
   <string name="account_sip_proxy_label">프록시</string>
   <string name="account_peer_discovery_label">지역 동학 발견</string>
   <string name="account_peer_discovery_enable_label">지역 동시 발견을 가능하게 합니다</string>
@@ -121,11 +132,18 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS 운송을 사용</string>
+  <string name="account_tls_port_label">TLS 수신 포트</string>
+  <string name="account_tls_certificate_list_label">인증 기관</string>
+  <string name="account_tls_certificate_file_label">인증서 파일</string>
   <string name="account_tls_private_key_file_label">개인 키 파일</string>
   <string name="account_tls_password_label">개인키 암호</string>
+  <string name="account_tls_method_label">TLS 방식</string>
+  <string name="account_tls_ciphers_label">TLS 암호</string>
   <string name="account_tls_server_name_label">서버 이름</string>
   <string name="account_tls_verify_server_label">서버 검증</string>
   <string name="account_tls_verify_client_label">클라이언트 검증</string>
+  <string name="account_require_client_certificate_label">TLS 클라이언트 인증서 요구</string>
+  <string name="account_tls_negotiation_timeout_sec">협상 시간 초과(초)</string>
   <string name="account_rtp_max_port">최대</string>
   <string name="account_rtp_min_port">최소</string>
   <string name="account_rtp_port_range">음향 RTP 포트 범위</string>
@@ -137,7 +155,10 @@
   <string name="export_account_wait_message">수출 계좌 정보</string>
   <string name="account_export_file">백업 계좌</string>
   <string name="account_export_file_summary">나중에 복구하기 위해 계정을 장치에 백업하십시오.</string>
+  <string name="account_export_end_decryption_message">비밀번호가 올바르지 않습니다. 올바른 비밀번호로 다시 시도하십시오.</string>
   <string name="account_enter_password">비밀번호를 입력</string>
+  <string name="account_share_body">Jami 분산 통신 플랫폼에서 “%1$s”(으)로 저에게 연락하십시오: %2$s</string>
+  <string name="account_share_body_with_username">Jami 분산 통신 플랫폼에서 “%1$s” 또는 제 공개 사용자 이름 “%2$s”(으)로 저에게 연락하십시오: %3$s</string>
   <string name="account_contact_me">자미에 연락해!</string>
   <string name="update_account">계정 업데이트</string>
   <string name="account_migration">자미 계정 업데이트가 가능합니다. 비밀번호를 입력하세요.</string>
@@ -145,13 +166,21 @@
   <string name="sip_account">SIP 계좌</string>
   <string name="ring_account_identity">신분</string>
   <string name="account_migration_title_dialog">계정 마이그레이션</string>
+  <string name="account_migration_message_dialog">계정을 업데이트해야 합니다. 이 작업을 수행하기 위해 계정 관리 화면으로 이동하시겠습니까?</string>
   <string name="account_update_needed">업데이트가 필요</string>
   <string name="account_cannot_be_found_title">계정 오류</string>
+  <string name="account_cannot_be_found_message">Jami 네트워크에서 계정을 찾을 수 없습니다. 기존 기기에서 Jami로 내보냈는지, 제공된 자격 증명이 올바른지 확인하십시오.</string>
+  <string name="jams_account_cannot_be_found_message">계정을 연결하는 중 오류가 발생했습니다. 자격 증명을 확인하고 다시 시도하십시오.</string>
   <string name="account_sip_cannot_be_registered_message">계정 생성 과정 을 계속 하거나 이 부분 에서 정보 를 편집 할 수 있습니다. 계정 설정 에서 나중에 에디션 을 할 수 있습니다.</string>
   <string name="account_no_network_title">네트워크 오류</string>
+  <string name="account_no_network_message">Jami 계정을 분산 네트워크에 추가하는 중 연결 오류가 발생했습니다. 기기 연결을 확인하십시오.</string>
   <string name="account_device_added_title">계정 장치 추가</string>
+  <string name="account_device_added_message">이 기기에서 Jami 계정이 성공적으로 설정되었습니다.</string>
   <string name="account_device_updated_title">계정 장치 업데이트</string>
+  <string name="account_device_updated_message">Jami 계정이 성공적으로 업데이트되었습니다.</string>
+  <string name="account_cannot_be_updated_message">계정을 업데이트하는 중 오류가 발생했습니다. 계정 비밀번호를 확인하십시오.</string>
   <string name="account_sip_success_title">SIP 계정 등록됨</string>
+  <string name="account_sip_success_message">SIP 계정이 성공적으로 등록되었습니다.</string>
   <string name="account_sip_register_anyway">어쨌든 등록해</string>
   <!--TV-->
   <string name="account_tv_settings_header">계정 설정</string>
@@ -170,6 +199,7 @@
   <string name="account_link_export_button">새로운 장치를 연결</string>
   <string name="account_link_show_button">%d 더 많은 연결된 장치를 표시</string>
   <string name="account_link_hide_button">연결된 장치를 숨기</string>
+  <string name="account_start_export_button">인증 코드 생성</string>
   <string name="account_end_export_button">가까이</string>
   <string name="account_export_title">다른 장치에 연결된 계정</string>
   <string name="account_connect_server_button">관리 서버에 연결</string>
@@ -186,6 +216,7 @@
   <string name="no_registered_name_for_account">등록된 사용자 이름 없음</string>
   <string name="username_available">사용자 이름이 사용 가능합니다.</string>
   <string name="register_name">등록 이름</string>
+  <string name="trying_to_register_name">사용자 이름 등록이 진행 중입니다. 기다려 주십시오…</string>
   <string name="registered_username">등록된 사용자 이름</string>
   <string name="register_username">공개 사용자 이름을 등록</string>
   <string name="register_recommended">추천</string>
@@ -203,29 +234,51 @@
   <string name="account_creation_home">자미에 오신 것을 환영합니다</string>
   <string name="account_creation_profile">프로필 만들기</string>
   <string name="account_creation_ring">자미 계정을 생성하세요</string>
+  <string name="account_sip_cannot_be_registered">SIP 계정을 등록하는 중 오류가 발생했습니다.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">프로필 수정</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">확인하기 위해 비밀번호를 입력</string>
   <string name="enter_password">비밀번호를 입력</string>
   <string name="revoke_device_title">취소 장치</string>
+  <string name="revoke_device_message">%1$s을(를) 해지하시겠습니까?</string>
   <string name="revoke_device_wait_title">잠깐만요</string>
   <string name="revoke_device_wait_message">취소 장치</string>
   <string name="rename_device_title">이 장치의 이름을 바꾸</string>
+  <string name="rename_device_message">Jami 계정에서 이 기기를 식별할 기기 이름을 입력하십시오</string>
   <string name="rename_device_button">이름 변경 장치</string>
   <string name="account_rename_device_hint">새로운 장치 이름을 선택</string>
+  <string name="account_device_name_empty">기기 이름은 비워 둘 수 없습니다.</string>
   <string name="account_device_this_indicator">이 장치</string>
   <string name="account_disabled_indicator">장애인</string>
   <string name="account_device_id">기기 ID</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">이 형식은 지원되지 않습니다.</string>
+  <string name="account_link_info">새 기기의 Jami 앱에서 QR 코드를 스캔하거나 인증 코드를 수동으로 입력하십시오.</string>
   <string name="account_link_device_title">새로운 장치를 연결</string>
+  <string name="account_link_password">이 계정은 비밀번호로 암호화되어 있습니다. 인증 코드를 생성하려면 비밀번호를 입력하십시오.</string>
   <string name="account_link_generate_button">생성</string>
+  <string name="account_link_time_valid">인증 코드가 무효화됩니다: %1$s.</string>
+  <string name="account_link_device_info">QR 코드 또는 인증 코드를 표시하려면 다른 Jami 앱에서 “새 기기 연결”을 선택하십시오.</string>
+  <string name="account_generate_export_device">다른 기기에서</string>
+  <string name="account_generate_export_info">Jami를 설치하고 실행하십시오. “다른 기기에서 가져오기”를 선택하고 QR 코드를 스캔하십시오. 또는 PIN 코드를 수동으로 입력하십시오.</string>
   <string name="content_description_qr_generated">계정 QR 코드</string>
+  <string name="account_generate_export_invalid">인증 코드가 더 이상 유효하지 않습니다.\n비밀번호를 입력하고 새 기기를 연결하기 위해 다른 코드를 생성하십시오.</string>
+  <string name="account_generate_export_invalid_two">인증 코드가 더 이상 유효하지 않습니다.\n새 기기를 연결하기 위해 다른 코드를 생성하십시오.</string>
+  <string name="help_pin_info">계정이 비밀번호로 암호화된 경우 필요합니다.</string>
   <string name="account_link_device_button">연결</string>
   <!--Biometry-->
+  <string name="account_biometry_auth_title">Jami 계정 잠금 해제</string>
+  <string name="account_biometry_auth_message">생체 인식을 사용하여 계정 잠금을 해제하십시오</string>
+  <string name="account_biometry_enroll_title">생체 인증을 사용하시겠습니까?</string>
+  <string name="account_biometry_enroll_message">기기가 안전한 생체 인증을 지원합니다.
+생체 또는 기기 인증은 Jami 계정에 대한 로컬 접근 잠금을 해제하는 편리한 방법을 추가합니다. 여전히 비밀번호를 사용할 수 있습니다.</string>
   <string name="account_biometry_enroll_accept">생체 인증 사용</string>
   <string name="no_thanks">괜찮습니다</string>
+  <string name="account_biometry_enroll_auth_title">Jami 계정에 인증 추가</string>
+  <string name="account_biometry_enroll_auth_message">비밀번호의 대안으로 안전한 생체 또는 기기 인증을 추가하십시오</string>
+  <string name="account_auth_error">인증 오류: %1$s</string>
   <string name="account_auth_success">인증 성공됨</string>
+  <string name="account_auth_key_error">계정 키를 복호화하는 중 오류가 발생했습니다.</string>
   <string name="account_auth_password">계정 암호 사용</string>
 </resources>

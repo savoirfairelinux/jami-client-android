@@ -52,6 +52,7 @@ contact@jami.net.</string>
     <item quantity="other">%dگفتگو ها</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">جستجو یا افزودن</string>
   <string name="choose_number">یک شماره انتخاب کنید</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -119,6 +120,7 @@ contact@jami.net.</string>
   <string name="share_via">اشتراک از طریق</string>
   <string name="scan_qr">اسکن کد QR</string>
   <string name="qr_code">کد QR</string>
+  <string name="new_group">ایجاد گروه جدید</string>
   <string name="ab_action_flipcamera">چرخاندن دوربین</string>
   <string name="ab_action_hidepreview">مخفی‌کردن پیش‌نمایش</string>
   <string name="remote_recording">%s در حال ضبط...</string>
@@ -176,11 +178,13 @@ contact@jami.net.</string>
   <string name="conversation_action_remove_this_title">حذف این مخاطب؟</string>
   <string name="conversation_action_remove_this_message">این باعث حذف مخاطب شده و قطعا تاریخچه گفتگو را پاک خواهد کرد.</string>
   <string name="remove_conversation">حذف گفتگو</string>
+  <string name="swarm_group_action_leave">ترک گروه</string>
   <string name="swarm_group_action_leave_title">گروه را ترک می کنید ؟</string>
   <string name="swarm_group_action_leave_message">این باعث حذف مکالمه از فهرست مکالمات شما خواهد شد.</string>
   <string name="conversation_action_select_peer_number">گزینش یک شماره</string>
   <string name="conversation_action_block_this">مسدودسازی مخاطب</string>
   <string name="conversation_action_unblock_this">رفع مسدودی مخاطب</string>
+  <string name="conversation_action_go_to_call">بازگشت به تماس</string>
   <string name="conversation_action_incoming_call">تماس ورودی</string>
   <string name="conversation_action_latest">پرش به آخرین</string>
   <string name="conversation_open_file_error">هیچ برنامه‌ نصب‌شده‌ای قادر به باز کردن این نوع فایل نیست.</string>
@@ -223,6 +227,7 @@ contact@jami.net.</string>
   <string name="help_password_choose">برای حفاظت از حساب جمی خود، گذرواژه‌ای قوی را که به خاطر خواهید سپرد، برگزینید.</string>
   <string name="help_password_enter">گذرواژه حساب جمی خود را وارد کنید.</string>
   <string name="help_server_enter">آدرس URL سرور مدیریت را وارد کن.</string>
+  <string name="copied_clipboard">در بریده‌دان کپی شد.</string>
   <string name="wizard_next">بعدی</string>
   <string name="wizard_back">بازگشت</string>
   <string name="wizard_skip">پرش</string>
@@ -258,6 +263,8 @@ contact@jami.net.</string>
   <string name="accept">پذیرش</string>
   <string name="decline">ردکردن</string>
   <string name="block">مسدود</string>
+  <string name="decline_invitation">رد دعوت</string>
+  <string name="accept_invitation">پذیرش دعوت</string>
   <string name="invitation_message">شما‫ %1$d درخواست ارتباط دارید</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">مخاطب مسدودی وجود ندارد</string>
@@ -266,12 +273,14 @@ contact@jami.net.</string>
   <string name="conversation_placeholder">شما تاکنون مکالمه‌ای نداشتید</string>
   <string name="contact_request_sent">درخواست ارتباط ارسال شد</string>
   <string name="start_conversation">شروع گفتگو</string>
+  <string name="search_results">نتایج جستجو</string>
   <string name="tv_contact_row_header">مخاطبان</string>
   <string name="gallery_error_title">هیچ برنامه گالری یافت نشد.</string>
   <string name="gallery_error_message">هیچ برنامه کاربردی برای باز کردن گالری، در دستگاه یافت نشد.</string>
   <!--File Transfer-->
   <string name="file_transfer_status_created">آغازِ فرایند</string>
   <string name="file_transfer_status_invalid_file">فایل نامعتبر</string>
+  <string name="file_transfer_status_unjoinable_peer">همتای در دسترس‌نبودن</string>
   <string name="file_transfer_status_canceled">لغو شده</string>
   <string name="file_download">دانلود</string>
   <string name="title_media_viewer">نمایش‌دهنده رسانه</string>
@@ -327,6 +336,7 @@ contact@jami.net.</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">اشتراک گذاری</string>
   <string name="bottomSheet_dialpad_btn">صفحه ی شماره گیری</string>
+  <string name="bottomSheet_extensions_btn">افزونه‌ها</string>
   <string name="bottomSheet_add_participants_btn">افزودن</string>
   <string name="bottomSheet_change_camera_btn">تغییر</string>
   <string name="bottomSheet_camera_onoff_switch_btn">دوربین</string>
@@ -341,6 +351,7 @@ contact@jami.net.</string>
   <string name="reset">بازنشانی </string>
   <!--Swarm Details-->
   <string name="rename_btn">تایید</string>
+  <string name="swarm_description">افزودن توضیحات</string>
   <string name="tab_members">اعضا</string>
   <string name="tab_files">فایل ها</string>
   <string name="tab_settings">تنظیمات</string>
@@ -355,25 +366,48 @@ contact@jami.net.</string>
   <string name="jami_id_choose_username">یک نام کاربری را انتخاب کنید</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">به جمی خوش آمدید</string>
+  <string name="welcome_jami_description">شناسه Jami خود را به اشتراک بگذارید تا راحت‌تر با شما تماس گرفته شود!</string>
   <!--Conversation details-->
   <string name="details">جزییات</string>
+  <string name="swarm_type">نوع گفتگو</string>
   <string name="Private">خصوصی</string>
   <string name="mute_conversation">مکالمه ای خاموش</string>
   <!--Donation-->
+  <string name="donation_card_description">اگر از استفاده از Jami لذت می‌برید و به مأموریت ما باور دارید، آیا می‌خواهید کمک مالی کنید؟</string>
   <string name="donation_card_not_now">الان نه</string>
   <string name="donation_donate">اهدا کنید</string>
   <string name="donation_setting_title">یادآوری اهدا کردن</string>
   <string name="donation_setting_description">فعال کردن یادآوری اهدا کردن</string>
   <!--Extension-->
   <string name="export_side_main_title">برون‌برد حساب</string>
+  <string name="export_side_step1_error_malformed">شناسه دستگاه جدید ناشناخته است. لطفاً دستورالعمل‌های بالا را دنبال کنید.</string>
   <string name="export_side_step1_code_connect">اتصال</string>
   <string name="export_side_step2_cancel">لغو</string>
   <string name="export_side_step2_confirm">تایید</string>
   <string name="import_side_step1_share">اشتراک گذاری</string>
   <string name="import_side_step2_password_import">واردات</string>
+  <string name="import_side_step2_action_required">اقدام لازم است. لطفاً حساب را روی دستگاه مبدأ تأیید کنید.</string>
+  <string name="import_side_step3_body_done">حساب با موفقیت وارد شد.</string>
+  <string name="link_device_error_authentication">هنگام پیوند دادن دستگاه خطای احراز هویت رخ داد. لطفاً اطلاعات ورود را بررسی کرده و دوباره تلاش کنید.</string>
+  <string name="link_device_error_canceled">عملیات توسط کاربر لغو شد.</string>
   <!--Accessibility-->
   <string name="step_title_set_password">تعیین گذرواژه</string>
   <!--Peer services-->
   <string name="peer_services_connect">اتصال</string>
+  <string name="peer_services_disconnect">قطع اتصال</string>
+  <string name="notif_channel_peer_tunnel">سرویس‌های مشترک</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">ویرایش</string>
+  <string name="shared_services_delete">حذف</string>
+  <string name="shared_services_description_hint">توضیحات (اختیاری)</string>
+  <string name="shared_services_port_hint">درگاه محلی</string>
+  <string name="shared_services_no_description">بدون توضیحات</string>
+  <string name="shared_services_more_options">تنظیمات بیشتر</string>
+  <string name="shared_services_disconnect_all_confirm">قطع اتصال</string>
+  <string name="shared_services_type_website_label">تارنما</string>
+  <string name="shared_services_type_custom_label">سفارشی</string>
+  <string name="shared_services_host_hint">میزبان محلی</string>
+  <string name="shared_services_policy_hint">قابل دسترسی توسط</string>
+  <string name="shared_services_policy_public">عمومی</string>
+  <string name="shared_services_save">ذخیره</string>
 </resources>

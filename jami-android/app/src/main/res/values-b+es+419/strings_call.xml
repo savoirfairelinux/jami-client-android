@@ -18,6 +18,24 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 <resources>
     <!-- Call error -->
     <string name="call_error">Ocurrió un error al iniciar la llamada.</string>
+    <string name="call_error_no_microphone">Llamada cancelada. No se ha detectado ningún micrófono.</string>
+    <string name="call_error_no_camera_no_microphone">Llamada cancelada. No se ha detectado ninguna cámara ni micrófono.</string>
     <string name="screen_sharing_error">Se produjo un error al iniciar la pantalla compartida.</string>
 
-    </resources>
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">Buscando</string>
+    <string name="call_human_state_incoming">Llamada entrante</string>
+    <string name="call_human_state_connecting">Conectando</string>
+    <string name="call_human_state_ringing">Sonando</string>
+    <string name="call_human_state_current">Hablando</string>
+    <string name="call_human_state_hungup">Terminado</string>
+    <string name="call_human_state_busy">Ocupado</string>
+    <string name="call_human_state_failure">Falló</string>
+    <string name="call_human_state_hold">Espera</string>
+    <string name="call_human_state_over">Terminado</string>
+    <!-- Conferences -->
+    <string name="call_moderator">Moderador</string>
+    <string name="call_muted">Silenciado</string>
+    <string name="call_handRaised">Mano levantada</string>
+
+</resources>

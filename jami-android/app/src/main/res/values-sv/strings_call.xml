@@ -16,8 +16,12 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 -->
 
 <resources>
+    <!-- Call error -->
+    <string name="call_error">\"Ett fel uppstod när samtalet skulle startas.\"</string>
     <string name="call_error_no_microphone">Samtalet avbrutet. Ingen mikrofon hittades.</string>
     <string name="call_error_no_camera_no_microphone">Samtalet avbröts. Ingen kamera eller mikrofon hittades.</string>
+    <string name="screen_sharing_error">Ett fel uppstod när skärmdelningen skulle startas.</string>
+
     <!-- SipCalls -->
     <string name="call_human_state_searching">Söker</string>
     <string name="call_human_state_incoming">Inkommande</string>

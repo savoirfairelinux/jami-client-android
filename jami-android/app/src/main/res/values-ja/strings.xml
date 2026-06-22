@@ -1,7 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">問題を報告</string>
   <string name="section_license">ライセンス</string>
+  <string name="view_switch_camera">カメラを切り替え</string>
   <string name="copyright_section">著作権表示</string>
   <string name="contribute_section">開発に協力</string>
   <string name="version_section">バージョン</string>
@@ -13,7 +15,11 @@
   <string name="call_service_description">このサービスは、通話をフォアグラウンドで実行し続けるために必要です。通話中にのみ実行されます。</string>
   <string name="data_transfer_service_description">このサービスは、ファイル転送中に持続的な通知を表示するために必要です。ファイル転送中にのみ実行されます。</string>
   <!--About dialog-->
+  <string name="thank_note">長年にわたる努力でこのソフトウェアを現在の姿にしてくれた貢献者の皆さんに感謝します。</string>
+  <string name="developers">開発者</string>
   <string name="media">メディア</string>
+  <string name="community_management">コミュニティ管理</string>
+  <string name="special_thanks">特別な感謝を</string>
   <!--RingActivity-->
   <string name="error_no_network">ネットワーク接続がありません</string>
   <string name="error_account_offline">アカウントがオフラインです</string>
@@ -36,6 +42,7 @@
     <item quantity="other">%d 件の会話</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">検索または追加</string>
   <string name="choose_number">番号を選んでください</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -85,10 +92,14 @@
   <string name="ongoing_call">通話中</string>
   <string name="hist_in_call">%1$s の着信</string>
   <string name="hist_out_call">%1$s の発信</string>
+  <string name="call_duration">通話時間 %s</string>
   <string name="action_call_accept">着信を受ける</string>
+  <string name="action_call_accept_audio">音声で承諾</string>
+  <string name="action_call_accept_video">ビデオで承諾</string>
   <string name="switch_to_video">動画を有効化</string>
   <string name="action_call_decline">辞退</string>
   <string name="action_call_mic_mute">マイクをミュート</string>
+  <string name="ab_action_speakerphone">スピーカーをオン</string>
   <string name="ab_action_contact_add">連絡先に追加</string>
   <string name="ab_action_contact_add_question">連絡先を追加しますか？</string>
   <string name="ab_action_audio_call">音声通話を開始</string>
@@ -114,6 +125,7 @@
   <string name="conversation_send_video">ビデオの録画</string>
   <string name="conversation_share_location">現在地の共有</string>
   <string name="ongoing_group_call">通話中</string>
+  <string name="started_call">通話を開始しました</string>
   <string name="in_reply_to">メッセージへの返信</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">カメラのアクセス許可</string>
@@ -151,9 +163,11 @@
   <string name="conversation_action_remove_this_title">この連絡先を削除しますか？</string>
   <string name="conversation_action_remove_this_message">この操作は連絡先を削除し、会話の履歴を完全に削除します。</string>
   <string name="remove_conversation">会話を削除</string>
+  <string name="swarm_group_action_leave">グループを退出</string>
   <string name="conversation_action_select_peer_number">番号を選択</string>
   <string name="conversation_action_block_this">連絡先をブロック</string>
   <string name="conversation_action_unblock_this">連絡先の解禁</string>
+  <string name="conversation_action_go_to_call">通話に戻る</string>
   <string name="conversation_action_incoming_call">着信</string>
   <string name="conversation_action_latest">会話の最後までスクロール</string>
   <string name="conversation_open_file_error">この種類のファイルを開けるアプリがインストールされていません。</string>
@@ -170,12 +184,18 @@
   <string name="conversation_syncing">ピア接続先から会話をダウンロードしています</string>
   <string name="conversation_blocked">この連絡はブロックされています</string>
   <string name="conversation_ended">話し合いが終わった</string>
+  <string name="conversation_message_deleted">%s さんがメッセージを削除しました</string>
   <string name="conversation_reply_you">自分</string>
   <string name="conversation_preference_color">会話の色</string>
   <string name="conversation_preference_emoji">会話の絵文字</string>
   <string name="conversation_type_contact">Jamiの連絡先</string>
   <string name="conversation_type_private">プライベート</string>
   <string name="conversation_type_group">グループ</string>
+  <string name="conversation_contact_invited">%1$s さんが会話に招待されました。</string>
+  <string name="conversation_contact_added">%1$s さんが会話に参加しました。</string>
+  <string name="conversation_contact_left">%1$s さんが会話から退出しました。</string>
+  <string name="conversation_contact_blocked">%1$s さんが会話からブロックされました。</string>
+  <string name="conversation_contact_unblocked">%1$s さんが会話のブロックを解除されました。</string>
   <string name="conversation_search_hint">会話を検索</string>
   <string name="audio_recording_in_progress">録画中…</string>
   <string name="audio_recording_send">送信</string>
@@ -195,12 +215,14 @@
   <string name="help_password_choose">あなたのJamiアカウントを守るために強固なパスワードを設定してください。また、このパスワードを忘れないでください。</string>
   <string name="help_password_enter">現在のJamiアカウントのパスワードを入力してください。</string>
   <string name="help_server_enter">管理サーバーのURLを入力してください。</string>
+  <string name="copied_clipboard">クリップボードにコピーしました。</string>
   <string name="wizard_next">次へ</string>
   <string name="wizard_back">戻る</string>
   <string name="wizard_skip">スキップ</string>
   <string name="hist_contact_invited">連絡先を招待しました</string>
   <string name="hist_contact_added">連絡先を追加しました</string>
   <string name="hist_contact_left">連絡先が退出しました</string>
+  <string name="hist_contact_blocked">連絡先をブロックしました</string>
   <string name="hist_invitation_received">招待を受信しました</string>
   <!--Account summary-->
   <string name="profile">プロフィール</string>
@@ -222,6 +244,7 @@
   <string name="share_message">このコードをJamiでスキャンしてください</string>
   <string name="share_message_no_account">共有するアカウントを選択してください。</string>
   <string name="share_your_account_information">連絡先情報を共有</string>
+  <string name="share_contact_information">連絡先情報を共有</string>
   <string name="share_label">共有</string>
   <string name="generic_error_migration">エラー</string>
   <string name="title_share_with">共有</string>
@@ -229,6 +252,8 @@
   <string name="accept">受け入れ</string>
   <string name="decline">辞退</string>
   <string name="block">ブロック</string>
+  <string name="decline_invitation">招待を辞退</string>
+  <string name="accept_invitation">招待を承諾</string>
   <string name="invitation_message">連絡先のリクエストが%1$d件あります</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">ブロックした連絡先はありません</string>
@@ -237,11 +262,13 @@
   <string name="conversation_placeholder">まだ会話がありません</string>
   <string name="contact_request_sent">連絡先のリクエストを送信しました</string>
   <string name="start_conversation">会話を開始</string>
+  <string name="search_results">検索結果</string>
   <string name="tv_contact_row_header">連絡先</string>
   <string name="gallery_error_title">ギャラリーアプリがありません</string>
   <string name="gallery_error_message">デバイス上にギャラリーを開くアプリがありません</string>
   <!--File Transfer-->
   <string name="file_transfer_status_invalid_file">無効なファイル</string>
+  <string name="file_transfer_status_unjoinable_peer">到達できないピア</string>
   <string name="file_transfer_status_canceled">キャンセルしました</string>
   <string name="file_download">入手</string>
   <string name="title_media_viewer">メディアビューアー</string>
@@ -277,6 +304,7 @@
   <string name="tv_send_video">メディアを送信</string>
   <string name="tv_action_more">更に</string>
   <string name="conversation_input_speech_hint">何か話してください…</string>
+  <string name="error_sharing_file">ファイルの共有中にエラーが発生しました。</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">推奨</string>
   <string name="wizard_status_optional">オプション</string>
@@ -297,6 +325,7 @@
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">共有</string>
   <string name="bottomSheet_dialpad_btn">ダイヤルパッド</string>
+  <string name="bottomSheet_extensions_btn">拡張機能</string>
   <string name="bottomSheet_add_participants_btn">追加</string>
   <string name="bottomSheet_change_camera_btn">カメラ切替</string>
   <string name="bottomSheet_camera_onoff_switch_btn">カメラ</string>
@@ -311,9 +340,12 @@
   <string name="reset">リセット</string>
   <!--Swarm Details-->
   <string name="rename_btn">確認</string>
+  <string name="swarm_description">説明を追加</string>
   <string name="tab_members">要員</string>
   <string name="tab_files">ファイル</string>
   <string name="tab_settings">設定</string>
+  <string name="dialogtitle_title">グループのタイトルを編集</string>
+  <string name="dialogtitle_description">グループの説明を編集</string>
   <string name="dialog_hint_title">タイトル</string>
   <string name="dialog_hint_description">記述</string>
   <string name="picker_title">連絡先を選択</string>
@@ -322,25 +354,63 @@
   <string name="bottomsheet_remove">メンバーを削除</string>
   <!--JamiId-->
   <string name="jami_id_validate">ユーザー名を登録</string>
+  <string name="jami_id_available">このユーザー名は利用可能です。</string>
+  <string name="jami_id_not_available">このユーザー名は利用できません。</string>
+  <string name="jami_id_looking_for_availability">ユーザー名の利用可否を確認中…</string>
   <string name="jami_id_choose_username">ユーザー名を選択する</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Jamiへようこそ</string>
+  <string name="welcome_jami_description">より簡単に連絡を受けられるよう、Jami 識別子を共有しましょう！</string>
   <!--Conversation details-->
   <string name="details">詳細</string>
+  <string name="swarm_type">会話の種類</string>
   <string name="Private">プライベート</string>
   <string name="mute_conversation">会話をミュートする</string>
   <!--Donation-->
+  <string name="donation_card_description">Jami の使用を楽しみ、私たちのミッションに共感していただけるなら、寄付をしませんか？</string>
   <string name="donation_card_not_now">後で</string>
+  <string name="donation_donate">寄付</string>
   <!--Extension-->
   <string name="export_side_main_title">アカウントをエクスポート</string>
+  <string name="import_side_main_title">アカウントをインポート</string>
+  <string name="link_device_dialog_stop_import_body">停止すると、アカウントのインポート操作がキャンセルされます。</string>
+  <string name="export_side_step1_error_malformed">認識できない新しいデバイス識別子です。上記の手順に従ってください。</string>
   <string name="export_side_step1_code_connect">接続</string>
+  <string name="export_side_step2_ip_only">新しいデバイスのIPアドレス: %1$s</string>
   <string name="export_side_step2_cancel">キャンセル</string>
   <string name="export_side_step2_confirm">確認</string>
+  <string name="export_side_step3_body_done">新しいデバイスでアカウントが正常にインポートされました。</string>
   <string name="import_side_step1_share">共有</string>
   <string name="import_side_step2_password_import">輸入</string>
+  <string name="import_side_step2_action_required">操作が必要です。ソースデバイスでアカウントを確認してください。</string>
+  <string name="import_side_step3_body_done">アカウントが正常にインポートされました。</string>
+  <string name="link_device_error_authentication">デバイスのリンク中に認証エラーが発生しました。認証情報を確認して、もう一度お試しください。</string>
+  <string name="link_device_error_canceled">操作がユーザーによってキャンセルされました。</string>
   <!--Accessibility-->
   <string name="step_title_set_password">パスワードを設定</string>
   <!--Peer services-->
+  <string name="peer_services_title">共有サービス</string>
+  <string name="peer_services_refresh">サービスを更新</string>
   <string name="peer_services_connect">接続</string>
+  <string name="peer_services_disconnect">切断</string>
+  <string name="peer_services_empty">利用可能な共有サービスはありません</string>
+  <string name="peer_services_error_offline">連絡先はオフラインです</string>
+  <string name="peer_services_error_unreachable">連絡先に到達できません</string>
+  <string name="peer_services_error_timeout">リクエストがタイムアウトしました</string>
+  <string name="peer_services_error_unknown">サービスを取得できませんでした</string>
+  <string name="notif_channel_peer_tunnel">共有サービス</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_settings_title">共有サービス</string>
+  <string name="shared_services_edit">編集</string>
+  <string name="shared_services_delete">削除</string>
+  <string name="shared_services_description_hint">説明 (任意)</string>
+  <string name="shared_services_port_hint">ローカルポート</string>
+  <string name="shared_services_no_description">説明なし</string>
+  <string name="shared_services_more_options">詳細な設定</string>
+  <string name="shared_services_disconnect_all_confirm">切断</string>
+  <string name="shared_services_type_custom_label">カスタム</string>
+  <string name="shared_services_host_hint">ローカルホスト</string>
+  <string name="shared_services_policy_hint">アクセス可能な相手</string>
+  <string name="shared_services_policy_public">公開</string>
+  <string name="shared_services_save">保存</string>
 </resources>

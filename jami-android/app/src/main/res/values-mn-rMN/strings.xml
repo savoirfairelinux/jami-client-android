@@ -336,6 +336,9 @@
   <!--Peer services-->
   <string name="peer_services_connect">Харилцаа холбоо</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">Харилцаажуулах</string>
+  <string name="shared_services_delete">Хасах</string>
   <string name="shared_services_more_options">Үүнээс илүү сонголт</string>
+  <string name="shared_services_type_custom_label">Хувьцааны</string>
   <string name="shared_services_save">Хөрөөж</string>
 </resources>

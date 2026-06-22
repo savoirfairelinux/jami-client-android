@@ -50,6 +50,7 @@
   <string name="pref_logs_stop">Ḥbes tuqqna </string>
   <string name="pref_connection_monitor">Asefrak n tuqqna</string>
   <string name="pref_connection_monitor_summary">Asefrak n tuqqna n wayugan ɣer wayugan </string>
+  <string name="connection_monitor_channels">Ibuda</string>
   <string name="pref_push_notifications_logs_title">Iɣmisen n yilɣuten yettudemmren</string>
   <string name="pref_push_notifications_logs_summary">Sken-d iɣmisen yettwaṭṭfen seg yilɣuten yettudemmren.</string>
   <string name="pref_typing_title">Anamal n tira</string>
@@ -80,6 +81,9 @@
   <string name="extension_reset_preferences_summary">Asiɣzef yuɣal ɣer iɣewwaṛen imezwura</string>
   <string name="extension_reset_preferences_ask">Tebɣiḍ ad talseḍ awennez n yiɣewwaren n usiɣzef amatu?</string>
   <string name="extension_reset_account_preferences_ask">Tebɣiḍ ad talseḍ awennez n yiɣewwaṛen n usiɣzef n umiḍan?</string>
+  <string name="account_advanced_reset">Ales awennez n yiɣewwaṛen leqqayen</string>
+  <string name="account_advanced_reset_summary">Err-d iɣewwaṛen leqqayen s lexṣas</string>
+  <string name="account_advanced_reset_confirm">Ales awennez n yiɣewwaṛen leqqayen akk ɣer lexṣas ?</string>
   <string name="extension_successfully_installed">Asiɣzef <b>%1$s</b> yettusbedd akken iwata.</string>
   <string name="extension_install_failure">Teḍra-d tuccḍa deg usebded n usiɣzef-a: <b>%1$s</b></string>
   <string name="extension_recent_version_exception">Lqem amaynut n <b>%1$s</b>yettwasbedd.</string>

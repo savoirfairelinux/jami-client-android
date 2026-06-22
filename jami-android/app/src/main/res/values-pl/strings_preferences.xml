@@ -54,6 +54,7 @@
   <string name="pref_push_notifications_logs_title">Logi powiadomień push</string>
   <string name="pref_push_notifications_logs_summary">Zobacz logi powiadomień push.</string>
   <string name="pref_typing_title">Wskaźnik typu</string>
+  <string name="pref_typing_summary">Wskazuj, gdy wiadomości są pisane.</string>
   <string name="pref_block_record_title">Zablokuj zrzuty ekranu i nagrywanie</string>
   <string name="pref_block_record_summary">Zablokuj robienie zrzutu ekranu lub nagrywania wideo.</string>
   <string name="pref_link_preview_title">Podglądy linków</string>
@@ -80,6 +81,9 @@
   <string name="extension_reset_preferences_summary">Rozszerzenie przywrócone do ustawień domyślnych</string>
   <string name="extension_reset_preferences_ask">Przywrócić domyślne ustawienia dla rozszerzeń?</string>
   <string name="extension_reset_account_preferences_ask">Przywrócić domyślne ustawienia rozszerzeń konta?</string>
+  <string name="account_advanced_reset">Resetuj ustawienia zaawansowane</string>
+  <string name="account_advanced_reset_summary">Przywróć domyślne ustawienia zaawansowane</string>
+  <string name="account_advanced_reset_confirm">Zresetować wszystkie ustawienia zaawansowane do domyślnych?</string>
   <string name="extension_successfully_installed">Rozszerzenie <b>%1$s</b> zainstalowane.</string>
   <string name="extension_install_failure">Błąd instalacji następującego rozszerzenia: <b>%1$s</b></string>
   <string name="extension_recent_version_exception">Nowsza wersja <b>%1$s</b> jest dostępna.</string>

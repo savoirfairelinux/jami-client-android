@@ -84,6 +84,8 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Napredno</string>
   <string name="account_chat_settings_title">Podešavanja ćaskanja</string>
+  <string name="account_read_receipts_label">Potvrde o čitanju</string>
+  <string name="account_read_receipts_summary">Šalji i zahtevaj potvrde o isporuci i čitanju kada su poruke isporučene ili pročitane.</string>
   <string name="account_call_settings_title">Podešavanje poziva</string>
   <string name="account_dht_public_in_calls_label">Dozvoli dolazne pozive od nepoznatih kontakata</string>
   <string name="account_registration_exp_label">Registracija ističe</string>
@@ -195,10 +197,12 @@
   <string name="account_link_export_button">Povežite novi uređaj</string>
   <string name="account_link_show_button">Prikaži %d više povezanih uređaja</string>
   <string name="account_link_hide_button">Sakri povezane uređaje</string>
+  <string name="account_start_export_button">Generiši kod za potvrdu identiteta</string>
   <string name="account_end_export_button">zatvori</string>
   <string name="account_export_title">Poveži nalog sa drugim uređajima</string>
   <string name="account_connect_server_button">Povežite se sa serverom za upravljanje</string>
   <string name="account_connect_button">Poveži</string>
+  <string name="prompt_server">URL upravljačkog servera</string>
   <string name="help_credentials_enter">Unesite akreditive svoje organizacije</string>
   <string name="help_connect_password_enter">Unesi lozinku za vašu organizaciju</string>
   <string name="account_connect_prompt_username">Korisničko ime</string>
@@ -245,12 +249,21 @@
   <string name="account_device_name_empty">Ime uređaja ne može biti prazno.</string>
   <string name="account_device_this_indicator">Ovaj uređaj</string>
   <string name="account_disabled_indicator">Onemogućeno</string>
+  <string name="account_device_id">ID uređaja</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Format nije podržan</string>
+  <string name="account_link_info">U Jami aplikaciji na novom uređaju skenirajte QR kod ili ručno unesite kod za potvrdu identiteta.</string>
   <string name="account_link_device_title">Povežite novi uređaj</string>
+  <string name="account_link_password">Ovaj nalog je šifrovan lozinkom, unesite lozinku da generišete kod za potvrdu identiteta.</string>
   <string name="account_link_generate_button">Generiši</string>
+  <string name="account_link_time_valid">Kod za potvrdu identiteta će biti nevažeći: %1$s.</string>
+  <string name="account_link_device_info">Izaberite „Poveži novi uređaj“ iz druge Jami aplikacije da prikažete QR kod ili kod za potvrdu identiteta.</string>
   <string name="account_generate_export_device">Na drugom uređaju</string>
+  <string name="account_generate_export_info">Instalirajte i pokrenite Jami. Izaberite „Uvezi sa drugog uređaja“ i skenirajte QR kod. Alternativno, ručno unesite PIN kod.</string>
   <string name="content_description_qr_generated">QR код налога</string>
+  <string name="account_generate_export_invalid">Kod za potvrdu identiteta više nije važeći.\nUnesite lozinku i generišite drugi da povežete novi uređaj.</string>
+  <string name="account_generate_export_invalid_two">Kod za potvrdu identiteta više nije važeći.\nGenerišite drugi da povežete novi uređaj.</string>
+  <string name="help_pin_info">Obavezno ako je nalog šifrovan lozinkom.</string>
   <string name="account_link_device_button">Poveži</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Otključajte Jami nalog</string>
@@ -263,5 +276,6 @@
   <string name="account_biometry_enroll_auth_message">Dodajte bezbednu biometrijsku ili autentifikaciju uređaja kao alternativu lozinki</string>
   <string name="account_auth_error">Greška potvrda identiteta: %1$s</string>
   <string name="account_auth_success">Autentifikacija je uspela</string>
+  <string name="account_auth_key_error">Došlo je do greške prilikom dešifrovanja ključa naloga.</string>
   <string name="account_auth_password">Koristite lozinku naloga</string>
 </resources>

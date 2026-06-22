@@ -8,6 +8,7 @@
   <string name="pref_category_diagnostic">निदान</string>
   <string name="pref_category_appearance">उपस्थिति</string>
   <string name="pref_category_connectivity">कनेक्टिविटी</string>
+  <string name="pref_category_extensions">एक्सटेंशन</string>
   <string name="pref_category_video_settings">उन्नत वीडियो सेटिंग्स</string>
   <string name="pref_mobileData_title">मोबाइल डेटा</string>
   <string name="pref_mobileData_summary">वाई-फाई के अतिरिक्त 3जी/एलटीई नेटवर्क पर जामी को अनुमति दें</string>
@@ -41,7 +42,9 @@
   <string name="pref_logs_summary">खुले डायग्नोस्टिक लॉग सेटिंग्स</string>
   <string name="pref_logs_start">लॉगिंग शुरू करें</string>
   <string name="pref_logs_stop">लकड़ी का काटना बंद करो</string>
+  <string name="connection_monitor_channels">चैनल</string>
   <string name="pref_typing_title">टाइपिंग सूचक</string>
+  <string name="pref_typing_summary">संदेश टाइप किए जाने पर संकेत दें।</string>
   <string name="pref_block_record_title">स्क्रीनशॉट और रिकॉर्डिंग को ब्लॉक करें</string>
   <string name="pref_block_record_summary">स्क्रीनशॉट लेने या वीडियो रिकॉर्ड करने से रोकें।</string>
   <string name="pref_link_preview_title">वेब लिंक पूर्वावलोकन</string>

@@ -335,6 +335,9 @@
   <!--Peer services-->
   <string name="peer_services_connect">जोड्नुहोस्</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">सम्पादन</string>
+  <string name="shared_services_delete">हटाउनु</string>
   <string name="shared_services_more_options">थप विकल्पहरू</string>
+  <string name="shared_services_type_custom_label">अनुकूलन</string>
   <string name="shared_services_save">बचत गर्नुहोस्</string>
 </resources>

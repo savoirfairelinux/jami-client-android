@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">সমস্যা জমা দিন</string>
   <string name="section_license">লাইসেন্স</string>
   <string name="copyright_section">কপিরাইট</string>
   <string name="contribute_section">অবদান</string>
@@ -13,7 +14,11 @@
   <string name="call_service_description">এই পরিষেবাটি আপনার কলগুলিকে প্রথম স্থানে রাখতে প্রয়োজনীয়। এটি শুধুমাত্র কলের সময় চালিত হয়।</string>
   <string name="data_transfer_service_description">ফাইল স্থানান্তর সময় এই পরিষেবাটি স্থায়ী বিজ্ঞপ্তি প্রদর্শন করতে প্রয়োজনীয়। এটি শুধুমাত্র ফাইল স্থানান্তর সময় চালিত হয়।</string>
   <!--About dialog-->
+  <string name="thank_note">আমরা আমাদের অবদানকারীদের ধন্যবাদ জানাতে চাই, যাদের বহু বছরের প্রচেষ্টা এই সফটওয়্যারটিকে আজকের অবস্থানে এনেছে।</string>
+  <string name="developers">ডেভেলপার</string>
   <string name="media">মিডিয়া</string>
+  <string name="community_management">কমিউনিটি ব্যবস্থাপনা</string>
+  <string name="special_thanks">বিশেষ ধন্যবাদ</string>
   <!--RingActivity-->
   <string name="error_no_network">নেটওয়ার্ক সংযোগ নেই</string>
   <string name="error_account_offline">অ্যাকাউন্টটি অফলাইনে</string>
@@ -36,6 +41,7 @@
     <item quantity="other">%d কথোপকথন</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">অনুসন্ধান করুন বা যোগ করুন</string>
   <string name="choose_number">একটি নম্বর নির্বাচন করুন</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -48,6 +54,7 @@
   <string name="notif_outgoing_call">প্রস্থান কল</string>
   <string name="notif_current_call_title">%1$s এর সাথে চলমান কল</string>
   <string name="notif_current_call">চলমান কল</string>
+  <string name="notif_channel_call_in_progress">কল চলছে</string>
   <string name="notif_channel_calls">কল</string>
   <string name="notif_channel_missed_calls">মিস করা কল</string>
   <string name="notif_channel_incoming_calls">ইনকামিং কল</string>
@@ -58,6 +65,7 @@
   <string name="notif_channel_background_service">পটভূমি পরিষেবা</string>
   <string name="notif_channel_background_service_descr">যেকোনো সময় কল ও মেসেজ গ্রহণের অনুমতি দেয়।</string>
   <string name="notif_group_calls">কল</string>
+  <string name="notif_inprogress_group_call">কল চলছে</string>
   <string name="notif_mark_as_read">চিহ্নিতকরণ</string>
   <string name="notif_dismiss">প্রত্যাখ্যান</string>
   <string name="notif_reply">উত্তর</string>
@@ -83,6 +91,9 @@
   <string name="ongoing_call">চলমান কল</string>
   <string name="hist_in_call">%1$s এর ইনকামিং কল</string>
   <string name="hist_out_call">%1$s এর বহিরাগত কল</string>
+  <string name="action_call_accept">কল গ্রহণ করুন</string>
+  <string name="action_call_accept_audio">অডিও দিয়ে গ্রহণ করুন</string>
+  <string name="action_call_accept_video">ভিডিও দিয়ে গ্রহণ করুন</string>
   <string name="switch_to_video">ভিডিও সক্ষম করুন</string>
   <string name="action_call_decline">হ্রাস</string>
   <string name="action_call_mic_mute">নিঃশব্দ মাইক্রোফোন</string>
@@ -111,6 +122,7 @@
   <string name="conversation_send_video">ভিডিও ক্লিপ রেকর্ড করুন</string>
   <string name="conversation_share_location">ভাগ করে নেওয়ার অবস্থান</string>
   <string name="ongoing_group_call">চলমান কল</string>
+  <string name="started_call">কল শুরু হয়েছে</string>
   <string name="in_reply_to">উত্তর</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">ক্যামেরা অনুমতি</string>
@@ -148,9 +160,11 @@
   <string name="conversation_action_remove_this_title">এই যোগাযোগ মুছে ফেলুন?</string>
   <string name="conversation_action_remove_this_message">এটি যোগাযোগ মুছে ফেলবে এবং কথোপকথনের ইতিহাস অবশ্যই মুছে ফেলবে।</string>
   <string name="remove_conversation">কথোপকথন মুছে ফেলুন</string>
+  <string name="swarm_group_action_leave">গ্রুপ ছেড়ে যান</string>
   <string name="conversation_action_select_peer_number">একটি নম্বর নির্বাচন করুন</string>
   <string name="conversation_action_block_this">ব্লক যোগাযোগ</string>
   <string name="conversation_action_unblock_this">যোগাযোগ বন্ধ করুন</string>
+  <string name="conversation_action_go_to_call">কলে ফিরে যান</string>
   <string name="conversation_action_incoming_call">ইনকামিং কল</string>
   <string name="conversation_action_latest">সর্বশেষতম</string>
   <string name="conversation_open_file_error">এই ফাইল টাইপটি খুলতে সক্ষম কোন অ্যাপ্লিকেশন ইনস্টল করা নেই।</string>
@@ -191,6 +205,7 @@
   <string name="help_password_choose">আপনার জামি অ্যাকাউন্টের সুরক্ষার জন্য একটি শক্তিশালী পাসওয়ার্ড নির্বাচন করুন।</string>
   <string name="help_password_enter">আপনার মূল জামি অ্যাকাউন্টের পাসওয়ার্ড লিখুন।</string>
   <string name="help_server_enter">ম্যানেজমেন্ট সার্ভারের URL লিখুন।</string>
+  <string name="copied_clipboard">ক্লিপবোর্ডে অনুলিপি করা হয়েছে।</string>
   <string name="wizard_next">পরবর্তী</string>
   <string name="wizard_back">ফিরে</string>
   <string name="wizard_skip">স্কিপ</string>
@@ -224,6 +239,8 @@
   <string name="accept">গ্রহণ করুন</string>
   <string name="decline">হ্রাস</string>
   <string name="block">ব্লক</string>
+  <string name="decline_invitation">আমন্ত্রণ প্রত্যাখ্যান করুন</string>
+  <string name="accept_invitation">আমন্ত্রণ গ্রহণ করুন</string>
   <string name="invitation_message">আপনার %1$d যোগাযোগের অনুরোধ আছে</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">কোন অবরুদ্ধ যোগাযোগ নেই</string>
@@ -232,11 +249,13 @@
   <string name="conversation_placeholder">তোমার সাথে এখনো কোন কথোপকথন হয়নি</string>
   <string name="contact_request_sent">যোগাযোগের অনুরোধ পাঠানো হয়েছে</string>
   <string name="start_conversation">কথোপকথন শুরু করুন</string>
+  <string name="search_results">অনুসন্ধানের ফলাফল</string>
   <string name="tv_contact_row_header">পরিচিতি</string>
   <string name="gallery_error_title">কোন গ্যালারি অ্যাপ পাওয়া যায় নি</string>
   <string name="gallery_error_message">গ্যালারি খুলতে ডিভাইসে কোন অ্যাপ্লিকেশন পাওয়া যায়নি</string>
   <!--File Transfer-->
   <string name="file_transfer_status_invalid_file">অবৈধ ফাইল</string>
+  <string name="file_transfer_status_unjoinable_peer">অপৌঁছানযোগ্য পিয়ার</string>
   <string name="file_transfer_status_canceled">বাতিল হয়েছে</string>
   <string name="file_download">ডাউনলোড</string>
   <string name="title_media_viewer">মিডিয়া ভিউয়ার</string>
@@ -292,6 +311,7 @@
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">ভাগ করে নেওয়ার</string>
   <string name="bottomSheet_dialpad_btn">ডায়ালপ্যাড</string>
+  <string name="bottomSheet_extensions_btn">এক্সটেনশন</string>
   <string name="bottomSheet_add_participants_btn">যোগ করুন</string>
   <string name="bottomSheet_change_camera_btn">পরিবর্তন</string>
   <string name="bottomSheet_camera_onoff_switch_btn">ক্যামেরা</string>
@@ -306,6 +326,7 @@
   <string name="reset">রিসেট</string>
   <!--Swarm Details-->
   <string name="rename_btn">নিশ্চিত করুন</string>
+  <string name="swarm_description">বিবরণ যোগ করুন</string>
   <string name="tab_members">সদস্য</string>
   <string name="tab_files">ফাইল</string>
   <string name="tab_settings">সেটিং</string>
@@ -321,20 +342,44 @@
   <string name="jami_id_choose_username">একটি ব্যবহারকারীর নাম নির্বাচন করুন</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">জামিতে স্বাগতম</string>
+  <string name="welcome_jami_description">আরও সহজে যোগাযোগ করার জন্য আপনার Jami শনাক্তকারী ভাগ করুন!</string>
   <!--Conversation details-->
   <string name="details">বিস্তারিত</string>
+  <string name="swarm_type">কথোপকথনের ধরন</string>
   <string name="Private">ব্যক্তিগত</string>
   <string name="mute_conversation">নিঃশব্দ কথোপকথন</string>
   <!--Donation-->
+  <string name="donation_card_description">আপনি যদি Jami ব্যবহার করতে উপভোগ করেন এবং আমাদের লক্ষ্যে বিশ্বাস করেন, আপনি কি একটি দান করতে চান?</string>
   <string name="donation_card_not_now">এখন না</string>
+  <string name="donation_donate">দান করুন</string>
   <!--Extension-->
+  <string name="export_side_step1_error_malformed">অচেনা নতুন ডিভাইস শনাক্তকারী। অনুগ্রহ করে উপরের নির্দেশাবলী অনুসরণ করুন।</string>
   <string name="export_side_step1_code_connect">সংযুক্ত করুন</string>
   <string name="export_side_step2_cancel">বাতিল করুন</string>
   <string name="export_side_step2_confirm">নিশ্চিত করুন</string>
   <string name="import_side_step1_share">ভাগ করে নেওয়ার</string>
   <string name="import_side_step2_password_import">আমদানি</string>
+  <string name="import_side_step2_action_required">পদক্ষেপ প্রয়োজন। অনুগ্রহ করে উৎস ডিভাইসে অ্যাকাউন্ট নিশ্চিত করুন।</string>
+  <string name="import_side_step3_body_done">অ্যাকাউন্ট সফলভাবে আমদানি করা হয়েছে।</string>
+  <string name="link_device_error_authentication">ডিভাইস লিঙ্ক করার সময় একটি প্রমাণীকরণ ত্রুটি ঘটেছে। অনুগ্রহ করে শংসাপত্র পরীক্ষা করুন এবং আবার চেষ্টা করুন।</string>
+  <string name="link_device_error_canceled">অপারেশন ব্যবহারকারী দ্বারা বাতিল করা হয়েছে।</string>
   <!--Accessibility-->
+  <string name="step_title_set_password">পাসওয়ার্ড সেট করুন</string>
   <!--Peer services-->
   <string name="peer_services_connect">সংযুক্ত করুন</string>
+  <string name="peer_services_disconnect">সংযোগ বিচ্ছিন্ন করুন</string>
+  <string name="notif_channel_peer_tunnel">ভাগ করা পরিষেবা</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">সম্পাদনা</string>
+  <string name="shared_services_delete">মুছে ফেলুন</string>
+  <string name="shared_services_description_hint">বিবরণ (ঐচ্ছিক)</string>
+  <string name="shared_services_port_hint">স্থানীয় পোর্ট</string>
+  <string name="shared_services_no_description">কোনো বিবরণ নেই</string>
+  <string name="shared_services_more_options">আরও বিকল্প</string>
+  <string name="shared_services_disconnect_all_confirm">সংযোগ বিচ্ছিন্ন করুন</string>
+  <string name="shared_services_type_custom_label">কাস্টম</string>
+  <string name="shared_services_host_hint">স্থানীয় হোস্ট</string>
+  <string name="shared_services_policy_hint">যাদের জন্য অ্যাক্সেসযোগ্য</string>
+  <string name="shared_services_policy_public">সর্বজনীন</string>
+  <string name="shared_services_save">সংরক্ষণ করুন</string>
 </resources>

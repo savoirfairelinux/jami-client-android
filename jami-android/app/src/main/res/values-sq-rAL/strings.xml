@@ -14,7 +14,7 @@
   <string name="version_section">Version</string>
   <string name="no_browser_app_installed">S\’u gjet aplikacion shfletuesi, që të shihni këtë faqe, instaloni një të tillë. </string>
   <string name="website_chooser_title">Shiheni sajtin duke përdorur…</string>
-  <string name="license">Ky software jepet \"siç është\", pa asnjë garanci të çfarëdo lloji. Për hollësi, shihni <u>GNU General Public License, version 3 ose më të re</u></string>
+  <string name="license">Ky software jepet “siç është”, pa asnjë garanci të çfarëdo lloji. Për hollësi, shihni <u>GNU General Public License, version 3 ose më të re</u></string>
   <string name="description">Jami është software i lirë për komunikim universal që respekton privatësinë e përdoruesve të tij.</string>
   <string name="credits">Kredite</string>
   <string name="pip_title">Konferencë Jami</string>
@@ -438,7 +438,6 @@
   <string name="bottomSheet_raiseHand_btn">Ngrini dorën</string>
   <string name="camera_flip_btn_description">Rrotulloni kamerën</string>
   <string name="add_participant_btn_description">Shtoni pjesëmarrës</string>
-  <string name="screen_share_btn_description">Bashkëndaj ekranin</string>
   <string name="open_account_extension_settings">Hap Rregullime Zgjerimesh Llogarish</string>
   <string name="open_general_extension_settings">Hap Rregullime të Përgjithshme Zgjerimesh</string>
   <string name="uninstall">Çinstaloje</string>
@@ -558,8 +557,12 @@
   <string name="peer_services_error_unknown">S’u morën dot shërbime</string>
   <!--Exposed/Hosted services-->
   <string name="shared_services_settings_title">Shërbime të Përbashkëta</string>
+  <string name="shared_services_edit">Përpunoni</string>
+  <string name="shared_services_delete">Fshije</string>
+  <string name="shared_services_port_hint">Portë vendore</string>
   <string name="shared_services_no_description">S’ka përshkrim</string>
   <string name="shared_services_more_options">Më tepër mundësi</string>
   <string name="shared_services_disconnect_all_confirm">Shkëpute</string>
+  <string name="shared_services_type_custom_label">Vetjake</string>
   <string name="shared_services_save">Ruaje</string>
 </resources>

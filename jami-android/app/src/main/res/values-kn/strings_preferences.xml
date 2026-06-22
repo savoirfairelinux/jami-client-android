@@ -8,6 +8,7 @@
   <string name="pref_category_diagnostic">ರೋಗನಿರ್ಣಯ</string>
   <string name="pref_category_appearance">ನೋಟ</string>
   <string name="pref_category_connectivity">ಸಂಪರ್ಕ</string>
+  <string name="pref_category_extensions">ವಿಸ್ತರಣೆಗಳು</string>
   <string name="pref_category_video_settings">ಸುಧಾರಿತ ವೀಡಿಯೊ ಸೆಟ್ಟಿಂಗ್ಗಳು</string>
   <string name="pref_mobileData_title">ಮೊಬೈಲ್ ಡೇಟಾ</string>
   <string name="pref_mobileData_summary">ವೈ-ಫೈ ಜೊತೆಗೆ 3ಜಿ/ಎಲ್ಟಿಇ ನೆಟ್ವರ್ಕ್ಗಳಲ್ಲಿ ಜಾಮಿಗೆ ಅವಕಾಶ</string>
@@ -41,6 +42,7 @@
   <string name="pref_logs_summary">ಡಯಾಗ್ನೋಸ್ಟಿಕ್ ಲಾಗ್ ಸೆಟ್ಟಿಂಗ್ಗಳನ್ನು ತೆರೆಯಿರಿ</string>
   <string name="pref_logs_start">ಲಾಗ್ ಹಾಕುವಿಕೆ ಆರಂಭಿಸಿ</string>
   <string name="pref_logs_stop">ಛೇದಕಗಳನ್ನು ನಿಲ್ಲಿಸಿ</string>
+  <string name="connection_monitor_channels">ಚಾನಲ್‌ಗಳು</string>
   <string name="pref_typing_title">ಟೈಪಿಂಗ್ ಸೂಚಕ</string>
   <string name="pref_block_record_title">ಸ್ಕ್ರೀನ್ಶಾಟ್ ಮತ್ತು ರೆಕಾರ್ಡಿಂಗ್ ಅನ್ನು ನಿರ್ಬಂಧಿಸಿ</string>
   <string name="pref_block_record_summary">ಸ್ಕ್ರೀನ್ಶಾಟ್ ತೆಗೆಯುವುದನ್ನು ಅಥವಾ ವಿಡಿಯೋ ರೆಕಾರ್ಡಿಂಗ್ ಮಾಡುವುದನ್ನು ತಡೆಗಟ್ಟಿ.</string>

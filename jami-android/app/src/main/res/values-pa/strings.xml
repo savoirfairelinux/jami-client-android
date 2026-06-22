@@ -279,5 +279,7 @@
   <!--Peer services-->
   <string name="peer_services_connect">ਜੋੜੋ</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_delete">ਮਿਟਾਓ</string>
   <string name="shared_services_type_website_label">ਵੈੱਬਸਾਈਟ</string>
+  <string name="shared_services_type_custom_label">ਮਨਮਰਜ਼ੀ</string>
 </resources>

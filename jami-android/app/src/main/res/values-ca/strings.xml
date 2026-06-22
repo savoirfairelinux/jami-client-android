@@ -1,10 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Envia una incidència</string>
+  <string name="submit_issue_action_description"><u>Crea una incidència nova</u></string>
   <string name="section_license">Llicència</string>
+  <string name="switch_conversation">Canvia de conversa</string>
+  <string name="delete_conversation_confirmation">Segur que voleu suprimir aquesta conversa?</string>
+  <string name="acc_profile_photo_capture">Captura una foto</string>
+  <string name="view_switch_camera">Canvia de càmera</string>
+  <string name="sponsor_section">Jami és programari lliure desenvolupat i mantingut per</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribueix</string>
   <string name="version_section">Versió</string>
+  <string name="no_browser_app_installed">No s\'ha trobat cap navegador web; instal·leu-ne un per veure aquesta pàgina.</string>
   <string name="website_chooser_title">Visualitza el lloc web amb...</string>
   <string name="license">Aquest programari es proporciona \"tal i com es\" sense garantia de cap tipus. Per més detalls, veure la<u> Llicència Pública General GNU versió 3 o posterior</u> </string>
   <string name="description">Jami és un programari lliure de comunicació universal, que respecta les llibertats i la privacitat dels seus usuaris.</string>
@@ -13,6 +21,7 @@
   <string name="call_service_description">Aquest servei és necessari per mantenir les trucades en curs en primer pla. Només s\'executa durant les trucades.</string>
   <string name="data_transfer_service_description">Aquest servei és necessari per mostrar notificacions persistents durant la transferència d\'arxius. Només s\'executa durant la transferència d\'arxius.</string>
   <!--About dialog-->
+  <string name="thank_note">Volem agrair els nostres col·laboradors, els esforços dels quals durant molts anys han fet d\'aquest programari el que és.</string>
   <string name="developers">Desenvolupadors</string>
   <string name="media">Mitjans</string>
   <string name="community_management">Gestió de comunitat</string>
@@ -44,6 +53,7 @@
     <item quantity="other">%d Converses</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Cerca o afegeix</string>
   <string name="choose_number">Trieu un número</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -77,6 +87,8 @@
   <string name="notif_incoming_picture">Imatge de %1$s</string>
   <string name="notif_sync_title">Sincronitzant dades…</string>
   <string name="notif_location_title">Compartint localització amb %1$s</string>
+  <string name="notif_channel_reconnect">Sincronització en segon pla</string>
+  <string name="notif_reconnect_title">El Jami s\'està sincronitzant…</string>
   <string name="location_share_contact">%1$s està compartint la localització amb tu</string>
   <string name="notif_location_multi_title">Compartint la localització amb %1$d contactes</string>
   <string name="notif_location_remaining">%1$d minuts restants</string>
@@ -87,6 +99,7 @@
   <!--Call Fragment-->
   <string name="you_txt_prefix">Usuari:</string>
   <string name="action_call_hangup">Finalitza la trucada</string>
+  <string name="action_call_resume">Reprèn</string>
   <string name="action_call_maximize">Maximitza</string>
   <string name="action_call_minimize">Redueix</string>
   <string name="action_call_mute">Silencia</string>
@@ -94,15 +107,21 @@
   <string name="ongoing_call">Trucada en curs</string>
   <string name="hist_in_call">Trucada entrant de %1$s</string>
   <string name="hist_out_call">Trucada sortint a %1$s</string>
+  <string name="call_duration">Ha durat %s</string>
+  <string name="call_on_hold">La trucada està en espera</string>
   <string name="start_error_title">Incapaç d\'arrancar Jami</string>
   <string name="action_call_accept">Accepta trucada</string>
   <string name="action_call_accept_audio">Acceptar amb audio</string>
   <string name="action_call_accept_video">Acceptar amb vídeo</string>
   <string name="action_call_hold_accept">Acceptar trucada entrant amb àudio i manté en espera la trucada actual</string>
+  <string name="switch_to_audio">Desactiva el vídeo</string>
   <string name="switch_to_video">Habilita el vídeo</string>
   <string name="action_call_hold_accept_video">Accepta la trucada entrant amb vídeo i manté en espera la trucada actual</string>
+  <string name="action_call_end_accept">Accepta la trucada entrant i finalitza l\'actual</string>
   <string name="action_call_decline">Rebutja</string>
   <string name="action_call_mic_mute">Silencia el micròfon</string>
+  <string name="action_load_extension">Carrega l\'extensió</string>
+  <string name="ab_action_speakerphone">Activa l\'altaveu</string>
   <string name="ab_action_contact_add">Afegeix als contactes</string>
   <string name="ab_action_contact_add_question">Afegir als contactes?</string>
   <string name="ab_action_audio_call">Comença una trucada de veu.</string>
@@ -112,6 +131,7 @@
   <string name="write_a_message">Escriu missatge</string>
   <string name="scan_qr">Escaneja un codi QR</string>
   <string name="qr_code">Codi QR</string>
+  <string name="qr_code_not_contact">No és un codi QR de contacte de Jami</string>
   <string name="new_group">Crea un grup nou</string>
   <string name="ab_action_flipcamera">Canvia la càmera</string>
   <string name="ab_action_hidepreview">Amaga la previsualització</string>
@@ -133,6 +153,7 @@
   <string name="in_reply_to">En resposta a</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permís de la càmera</string>
+  <string name="permission_dialog_camera_message">Les converses de vídeo requereixen el permís de la càmera. El permís de la càmera està desactivat. Activeu-lo a la configuració del dispositiu per utilitzar aquesta funció.</string>
   <string name="camera_error">Ha succeït un error iniciant la càmera</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Error</string>
@@ -140,14 +161,21 @@
   <string name="ringtone_error_size_too_big">Aquest arxiu és massa gran. La mida màxima és %1$dkB.</string>
   <string name="ringtone_custom_prompt">Posa un to de trucada personalitzat</string>
   <string name="ringtone_custom_label">Personalitzat</string>
+  <string name="ringtone_jami_tones">Tons de trucada del Jami</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">El Jami requereix el permís «Llegir els contactes». Activeu-lo a la configuració del dispositiu per utilitzar aquesta funció.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">El Jami requereix el permís «Escriure el registre de trucades». Activeu-lo a la configuració del dispositiu per utilitzar aquesta funció.</string>
   <!--Post notifications permission-->
+  <string name="permission_dialog_post_notifications_title">Permet les notificacions</string>
+  <string name="permission_dialog_post_notifications_message">El Jami necessita el permís de notificacions per avisar-vos de trucades i missatges entrants, fins i tot quan l\'aplicació està en segon pla. Sense aquest permís, podríeu perdre trucades.</string>
+  <string name="permission_dialog_post_notifications_blocked_message">Les notificacions estan desactivades per al Jami. Sense elles, perdreu trucades i missatges entrants. Activeu les notificacions per al Jami a la configuració del dispositiu.</string>
   <string name="permission_dialog_open_settings">Configuracions obertes</string>
   <string name="permission_dialog_later">Més tard</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Escanegeu el codi QR del compte que vulgueu afegir.</string>
   <string name="title_activity_qrcode">Comparteix el meu compte</string>
+  <string name="error_scan_no_camera_permissions">L\'escàner de QR requereix el permís de la càmera. El permís de la càmera està desactivat. Activeu-lo a la configuració del dispositiu per utilitzar aquesta funció.</string>
   <string name="tab_code">El meu codi</string>
   <string name="tab_scan">Escaneja codi</string>
   <!--Settings-->
@@ -159,6 +187,7 @@
   <string name="conversation_details">Detalls de la conversa</string>
   <string name="contact_details">Detalls de contacte</string>
   <string name="conversation_action_delete_this">Esborra aquesta conversa</string>
+  <string name="conversation_action_delete_this_title">Voleu suprimir aquesta conversa?</string>
   <string name="leave_conversation">Deixar la conversa</string>
   <string name="conversation_action_delete_this_message">Aquesta acció no es pot desfer.</string>
   <string name="conversation_action_history_clear">Neteja historial</string>
@@ -167,7 +196,15 @@
   <string name="delete_contact">Esborrar contacte</string>
   <string name="conversation_action_remove_this_title">Esborrar aquest contacte?</string>
   <string name="conversation_action_remove_this_message">Això esborrarà el contacte i netejarà definitivament l\'historial de converses.</string>
+  <string name="conversation_action_add_this_message">Això enviarà una sol·licitud de connexió.</string>
   <string name="remove_conversation">Esborra conversa</string>
+  <string name="conversation_action_remove_title">Voleu eliminar la conversa?</string>
+  <string name="conversation_action_remove_message">Això eliminarà aquesta conversa sense eliminar el contacte.</string>
+  <string name="swarm_group_action_leave">Abandona el grup</string>
+  <string name="swarm_group_action_leave_title">Voleu sortir d\'aquest grup?</string>
+  <string name="swarm_group_action_leave_message">Això eliminarà la conversa de la vostra llista de converses</string>
+  <string name="conversation_action_copy_peer_number">Copia l\'identificador del contacte</string>
+  <string name="copied_to_clipboard">S\'ha copiat %1$s al porta-retalls.</string>
   <string name="conversation_action_select_peer_number">Seleccioneu un número</string>
   <string name="conversation_action_block_this">Bloqueja el contacte</string>
   <string name="conversation_action_unblock_this">Desbloca contacte</string>
@@ -176,6 +213,7 @@
   <string name="conversation_action_latest">Salta a l\'última</string>
   <string name="conversation_open_file_error">No hi ha cap aplicació instaŀlada que pugui obrir aquest tipus de fitxer.</string>
   <string name="clip_contact_uri">Adreça de contacte</string>
+  <string name="clip_message">Contingut del missatge</string>
   <string name="block_contact_dialog_title">Blocar %1$s?</string>
   <string name="block_contact_dialog_message">%1$s no podrà contactar amb tu fins que no el desbloquis.</string>
   <string name="block_contact_completed">%1$s va ser blocat.</string>
@@ -188,18 +226,55 @@
   <string name="conversation_syncing">Descarregant la conversa d\'un igual</string>
   <string name="conversation_blocked">Aquest contacte està bloquejat.</string>
   <string name="conversation_ended">La conversa ha acabat.</string>
+  <string name="conversation_message_deleted">%s ha suprimit un missatge</string>
   <string name="conversation_reply_you">Tu</string>
+  <string name="video_not_found">No s\'ha trobat el fitxer de vídeo</string>
   <string name="conversation_preference_color">Color de conversa</string>
   <string name="conversation_preference_emoji">Emoticona de conversa</string>
   <string name="conversation_type_contact">Contacte de Jami</string>
   <string name="conversation_type_private">Privat</string>
+  <string name="conversation_type_group">Grup</string>
+  <string name="conversation_contact_invited">S\'ha convidat %1$s a la conversa.</string>
+  <string name="conversation_contact_added">%1$s s\'ha unit a la conversa.</string>
+  <string name="conversation_contact_left">%1$s ha sortit de la conversa.</string>
+  <string name="conversation_contact_blocked">%1$s ha estat bloquejat a la conversa.</string>
+  <string name="conversation_contact_unblocked">%1$s ha estat desbloquejat a la conversa.</string>
   <string name="conversation_search_hint">Conversació de cerca</string>
+  <string name="audio_recorder_error">No s\'ha pogut iniciar l\'enregistrador d\'àudio.</string>
   <string name="audio_recording_in_progress">Enregistrant…</string>
+  <string name="audio_recording_ready">Toqueu per reproduir, arrossegueu la forma d\'ona per cercar</string>
+  <string name="audio_recording_playing">S\'està reproduint…</string>
   <string name="audio_recording_send">Envia</string>
   <string name="audio_recording_play">Reproduir</string>
   <string name="audio_recording_pause">Pausar</string>
   <string name="audio_recording_stop">Para d\'enregistrar.</string>
+  <string name="audio_recording_extend">Continua l\'enregistrament</string>
+  <string name="audio_recording_restart">Torna a enregistrar</string>
+  <string name="audio_recording_delete">Descarta</string>
+  <string name="audio_recording_discard_title">Voleu descartar l\'enregistrament?</string>
+  <string name="audio_recording_discard_message">L\'enregistrament es perdrà.</string>
+  <string name="audio_recording_discard_keep">Continua editant</string>
+  <string name="audio_recording_discard_confirm">Descarta</string>
+  <string name="audio_recording_limit_reached">S\'ha assolit el límit d\'enregistrament. Envieu o cancel·leu.</string>
+  <string name="audio_recording_gesture_hint">Deixeu anar per enviar · llisqueu ◀ per cancel·lar · ▲ per revisar</string>
+  <string name="audio_recording_release_cancel">Deixeu anar per cancel·lar</string>
+  <string name="audio_recording_release_review">Deixeu anar per obrir l\'editor</string>
+  <string name="audio_recording_slide_cancel">Cancel·la l\'enregistrament</string>
+  <string name="audio_recording_slide_review">Obre l\'editor</string>
+  <string name="audio_recording_review_short">Revisa</string>
+  <string name="audio_recording_too_short">Mantingueu premut per enregistrar un missatge de veu</string>
+  <string name="video_recorder_error">No hi ha cap enregistrador de vídeo disponible.</string>
+  <string name="taking_picture_error">S\'ha produït un error en fer la foto.</string>
+  <string name="find_picture_error">S\'ha produït un error en cercar la foto.</string>
+  <string name="open_camera_error">S\'ha produït un error en obrir la càmera.</string>
+  <string name="starting_recorder_error">S\'ha produït un error en iniciar l\'enregistrador.</string>
   <string name="starting_camera_error">Ha succeït un error iniciant la càmera</string>
+  <string name="browser_error">No hi ha cap navegador de fitxers disponible en aquest dispositiu.</string>
+  <string name="import_archive_error">S\'ha produït un error en importar l\'arxiu.</string>
+  <string name="export_archive_error">S\'ha produït un error en exportar l\'arxiu.</string>
+  <string name="load_ringtone_error">S\'ha produït un error en carregar el to de trucada.</string>
+  <string name="sharing_log_error">S\'ha produït un error en compartir els registres.</string>
+  <string name="no_native_crash">Cap fallada nativa recent</string>
   <string name="today">Avui</string>
   <string name="yesterday">Ahir</string>
   <!--Contacts-->
@@ -213,19 +288,25 @@
   <string name="help_password_choose">Escull una contrasenya forta que puguis recordar per protegir el teu compte Jami.</string>
   <string name="help_password_enter">Introdueix la contrassenya principal de Jami</string>
   <string name="help_server_enter">Introdueix la URL del servidor de manegament</string>
+  <string name="pin_copied">S\'ha copiat el codi d\'autenticació al porta-retalls.</string>
+  <string name="copied_clipboard">S\'ha copiat al porta-retalls.</string>
   <string name="wizard_next">Endavant</string>
   <string name="wizard_back">Enrere</string>
   <string name="wizard_skip">Salta</string>
   <string name="hist_contact_invited">Contacte convidat</string>
   <string name="hist_contact_added">Contacte afegit</string>
   <string name="hist_contact_left">El contacte ha marxat</string>
+  <string name="hist_contact_blocked">Contacte bloquejat</string>
+  <string name="hist_contact_unblocked">Contacte desbloquejat</string>
   <string name="hist_invitation_received">S\'ha rebut una invitació</string>
   <!--Account summary-->
   <string name="profile">Perfil</string>
   <string name="profile_name">Nom de perfil</string>
   <string name="profile_message_warning">El perfil només és compartit entre contactes</string>
+  <string name="custom_profile_message_warning">El perfil personalitzat només és visible per al compte d\'aquest dispositiu</string>
   <string name="open_the_gallery">Obre la galeria</string>
   <string name="take_a_photo">Fer foto</string>
+  <string name="remove_photo">Elimina la foto</string>
   <string name="profile_name_hint">Escriu el teu nom</string>
   <string name="registered_name">Nom registrat</string>
   <string name="no_registered_name">Sense nom registrat</string>
@@ -240,14 +321,23 @@
   <string name="share_message">Escaneja aquest codi amb Jami</string>
   <string name="share_message_no_account">Seleccioneu un compte per compartir</string>
   <string name="share_your_account_information">Comparteix la meva informació de contacte</string>
+  <string name="share_contact_information">Comparteix la informació del contacte</string>
   <string name="share_label">Comparteix</string>
   <string name="generic_error_migration">Error</string>
+  <string name="generic_error_migration_message">S\'ha produït un error en migrar el compte.</string>
   <string name="title_share_with">Comparteix amb…</string>
   <!--Pending invitations-->
   <string name="accept">Accepta</string>
   <string name="decline">Rebutja</string>
   <string name="block">Bloca</string>
+  <string name="decline_invitation">Rebutja la invitació</string>
+  <string name="accept_invitation">Accepta la invitació</string>
+  <string name="accept_invitation_body">Invitació rebuda de %s.</string>
+  <string name="new_invitation_request_title">Invitació nova</string>
   <string name="invitation_message">Tu tens %1$dpeticions de contacte</string>
+  <string name="no_invitations">No hi ha invitacions per mostrar.</string>
+  <string name="invitation_received_message">Invitació rebuda de %s.\nVoleu acceptar o rebutjar la invitació?</string>
+  <string name="outgoing_contact_invitation_message">Aquest contacte no és a la vostra llista de contactes.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Sense contactes blocats</string>
   <!--Smartlist-->
@@ -255,13 +345,31 @@
   <string name="conversation_placeholder">Encara no tens converses</string>
   <string name="contact_request_sent">S\'ha enviat una petició de contacte</string>
   <string name="start_conversation">Inicia conversa</string>
+  <string name="search_results">Resultats de la cerca</string>
   <string name="tv_contact_row_header">Contactes</string>
   <string name="gallery_error_title">No s\'ha trobat cap applicació de Galeria</string>
   <string name="gallery_error_message">No s\'ha trobat cap aplicació al dispositiu per obrir Galeria</string>
+  <string name="generic_error">S\'ha produït un error desconegut.</string>
   <!--File Transfer-->
+  <string name="invalid_file">Fitxer no vàlid.</string>
+  <string name="not_able_to_write_file">No s\'ha pogut escriure el fitxer.</string>
+  <string name="file_transfer_status_created">S\'està inicialitzant</string>
+  <string name="file_transfer_status_unsupported">No compatible</string>
+  <string name="file_transfer_status_wait_peer_acceptance">S\'està esperant que l\'altre extrem accepti…</string>
+  <string name="file_transfer_status_wait_host_acceptance">S\'està esperant que l\'amfitrió accepti…</string>
+  <string name="file_transfer_status_ongoing">En curs</string>
+  <string name="file_transfer_status_finished">Completat</string>
+  <string name="file_transfer_status_closed_by_host">Tancat per l\'amfitrió</string>
+  <string name="file_transfer_status_closed_by_peer">Tancat per l\'altre extrem</string>
   <string name="file_transfer_status_invalid_file">Fitxer invalid</string>
+  <string name="file_transfer_status_unjoinable_peer">Parell inaccessible</string>
   <string name="file_transfer_status_canceled">Cancel·lada</string>
+  <string name="file_transfer_status_error">S\'ha produït un error en transferir el fitxer.</string>
+  <string name="file_transfer_status_timed_out">L\'operació ha excedit el temps d\'espera.</string>
+  <string name="file_saved_in">Fitxer desat a %s.</string>
+  <string name="file_saved_successfully">El fitxer s\'ha desat correctament.</string>
   <string name="file_download">Descarrega</string>
+  <string name="no_space_left_on_device">No hi ha espai d\'emmagatzematge disponible al dispositiu.</string>
   <string name="title_media_viewer">Visor de medis</string>
   <string name="menu_file_open">Obre fitxer</string>
   <string name="menu_file_download">Descarrega fitxer</string>
@@ -270,9 +378,11 @@
   <string name="menu_file_share">Comparteix fitxer</string>
   <string name="menu_message_copy">Copia</string>
   <string name="menu_message_edit">Modificar missatge</string>
+  <string name="menu_message_history">Historial de missatges</string>
   <string name="menu_message_delete">Esborra missatge</string>
   <string name="menu_message_cancel">Canceŀla missatge</string>
   <string name="menu_message_reply">Respon</string>
+  <string name="menu_message_cancel_reply">Cancel·la la resposta</string>
   <string name="menu_delete">Suprimeix</string>
   <string name="pref_darkTheme_title">Tema fosc</string>
   <string name="pref_darkTheme_summary">Activa el tema fosc sempre en comptes d\'utilitzar el predeterminat del sistema.</string>
@@ -295,7 +405,16 @@
   <string name="tv_send_video">Envia mitjans</string>
   <string name="tv_action_more">Més</string>
   <string name="conversation_input_speech_hint">Digui alguna cosa…</string>
+  <string name="audio_permission_denied">El permís del micròfon està desactivat. Activeu-lo a la configuració del dispositiu per utilitzar aquesta funció.</string>
+  <string name="camera_permission_denied">El permís de la càmera està desactivat. Activeu-lo a la configuració del dispositiu per utilitzar aquesta funció.</string>
+  <string name="speech_recogniton_unavailable">El reconeixement de veu no està disponible.</string>
   <string name="audio_permission_rationale_title">Es necessita permís d\'àudio</string>
+  <string name="camera_permission_rationale_title">Cal el permís de la càmera</string>
+  <string name="audio_permission_rationale_message">El Jami requereix el permís del micròfon per utilitzar les funcions de veu a text i d\'enregistrament d\'àudio. Es demanarà al pas següent.</string>
+  <string name="camera_permission_rationale_message">El Jami requereix el permís de la càmera per enregistrar vídeo i fer videotrucades. Es demanarà al pas següent.</string>
+  <string name="unable_to_start_recorder">No s\'ha pogut iniciar l\'enregistrament d\'àudio.</string>
+  <string name="error_sharing_file">S\'ha produït un error en compartir el fitxer.</string>
+  <string name="error_opening_file">S\'ha produït un error en obrir el fitxer.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Recomanat</string>
   <string name="wizard_status_optional">Opcional</string>
@@ -313,9 +432,11 @@
   <string name="wizard_profile_button">Desa el Perfil</string>
   <string name="wizard_profile_skip">Salta i fes-ho després</string>
   <string name="fab_path_choose">Selecciona un altre fitxer</string>
+  <string name="chat_extensions">Extensions del xat</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Comparteix</string>
   <string name="bottomSheet_dialpad_btn">Teclat de marcatge</string>
+  <string name="bottomSheet_extensions_btn">Extensions</string>
   <string name="bottomSheet_add_participants_btn">Afegir</string>
   <string name="bottomSheet_change_camera_btn">Canvia</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Càmera</string>
@@ -323,51 +444,177 @@
   <string name="bottomSheet_mute_microphone_btn">Micròfon</string>
   <string name="bottomSheet_sound_output_btn">Sons</string>
   <string name="bottomSheet_raiseHand_btn">Aixeca la mà</string>
+  <string name="camera_toggle_btn_description">Commuta la càmera</string>
   <string name="camera_flip_btn_description">Canvia la càmera</string>
   <string name="add_participant_btn_description">Afegir participant</string>
   <string name="screen_share_btn_description">Comparteix la pantalla</string>
+  <string name="open_account_extension_settings">Obre la configuració d\'extensions del compte</string>
+  <string name="open_general_extension_settings">Obre la configuració general d\'extensions</string>
   <string name="uninstall">Desinstala</string>
   <string name="reset">Reconfigura</string>
   <!--Swarm Details-->
   <string name="rename_btn">Confirma</string>
+  <string name="rename_error">no pot estar buit.</string>
   <string name="swarm_description">Afegir descripció</string>
   <string name="tab_members">Membres</string>
   <string name="tab_files">Arxius</string>
   <string name="tab_settings">Opcions</string>
+  <string name="not_admin_toast">Només els administradors poden editar la informació d\'aquest grup</string>
+  <string name="dialog_title_contact">Edita el nom visible</string>
+  <string name="dialogtitle_title">Edita el títol del grup</string>
+  <string name="dialogtitle_description">Edita la descripció del grup</string>
   <string name="dialog_hint_title">Titulat</string>
   <string name="dialog_hint_description">Descripció</string>
   <string name="picker_title">Seleccionar els contactes</string>
   <string name="picker_btn">Seleccionar els contactes</string>
+  <string name="no_contact_to_add">No teniu cap contacte per afegir</string>
   <string name="bottomsheet_contact">Contacte amb Jami\n%1$s</string>
   <string name="bottomsheet_remove">Eliminar membre</string>
+  <string name="error_open_no_app_found">No s\'ha trobat cap aplicació per gestionar aquest fitxer: %1$s</string>
+  <string name="swarm_detail_no_document">Encara no teniu cap document.</string>
+  <string name="group_admin">Administrador</string>
+  <string name="share_contact_intent_title">Afegiu aquest contacte al Jami!</string>
+  <string name="share_contact_intent_body">Podeu afegir aquest contacte «%1$s» a la plataforma de comunicació distribuïda Jami: %2$s</string>
   <!--JamiId-->
   <string name="jami_id_copy">Copia el JamiId</string>
   <string name="jami_id_share">Comparteix el JamiId</string>
   <string name="jami_id_validate">Registra nom d\'usuari</string>
+  <string name="jami_id_available">El nom d\'usuari està disponible.</string>
+  <string name="jami_id_not_available">El nom d\'usuari no està disponible.</string>
   <string name="jami_id_info">•  Màxim 32 caràcters\n· Caràcters especials permesos: guionet (-), guió baix (_)</string>
+  <string name="jami_id_looking_for_availability">S\'està comprovant la disponibilitat del nom d\'usuari…</string>
   <string name="jami_id_choose_username">Seleccioneu un nom d\'usuari</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Benvingut a Jami</string>
   <string name="welcome_jami_description">Comparteix el teu identificador de Jami per tal de ser contactat mes fàcilment!</string>
   <!--Conversation details-->
   <string name="details">Detalls</string>
+  <string name="secure_p2p_connection">Connexió segura punt a punt</string>
+  <string name="swarm_type">Tipus de conversa</string>
   <string name="Private">Privat</string>
+  <string name="swarm_id">ID de l\'eixam</string>
+  <string name="show_qr_code">Mostra el codi QR</string>
+  <string name="show_certificate">Mostra el certificat</string>
   <string name="mute_conversation">Conversació mudada</string>
   <!--Donation-->
+  <string name="donation_card_description">Si gaudiu utilitzant Jami i creieu en la nostra missió, voleu fer un donatiu?</string>
   <string name="donation_card_not_now">Ara no</string>
   <string name="donation_donate">Donar</string>
   <string name="donation_setting_title">Recordatori de donació</string>
   <string name="donation_setting_description">Activa el recordatori de donació</string>
   <!--Extension-->
+  <string name="unable_to_load">No s\'ha pogut carregar %1$s</string>
+  <string name="load_success">%1$s: activada</string>
+  <string name="unload_success">%1$s: desactivada</string>
+  <string name="install_success">L\'extensió %1$s s\'ha instal·lat correctament.</string>
+  <string name="install_error">S\'ha produït un error en importar l\'extensió.</string>
   <string name="export_side_main_title">Exporta el compte</string>
+  <string name="import_side_main_title">Importa el compte</string>
+  <string name="link_device_dialog_stop_title">Voleu aturar la vinculació del dispositiu?</string>
+  <string name="link_device_dialog_stop_export_body">Si ho atureu, es cancel·larà l\'operació d\'exportació del compte.</string>
+  <string name="link_device_dialog_stop_import_body">Si ho atureu, es cancel·larà l\'operació d\'importació del compte.</string>
+  <string name="export_side_step1_advice_qr">Al dispositiu nou, inicieu un compte nou.\nSeleccioneu <b>Compte &gt; Afegeix un compte &gt; Connecta des d\'un altre dispositiu</b>\nQuan estigueu a punt, escanegeu el codi QR</string>
+  <string name="export_side_step1_switch_to_code">O feu clic aquí per introduir el codi d\'autenticació</string>
+  <string name="export_side_step1_switch_to_qr">O feu clic aquí per escanejar el codi QR</string>
+  <string name="export_side_step1_error_malformed">Identificador de dispositiu nou no reconegut. Seguiu les instruccions anteriors.</string>
   <string name="export_side_step1_code_connect">Connectar</string>
+  <string name="export_side_step2_advice">El dispositiu nou es troba aquí. Sou vós?\nPer continuar l\'operació d\'exportació del compte, feu clic a Confirma.</string>
+  <string name="export_side_step2_advice_ip_only">Dispositiu nou connectat a l\'adreça següent. Sou vós?\nPer continuar l\'exportació del compte, feu clic a Confirma.</string>
+  <string name="export_side_step2_ip_only">Adreça IP del dispositiu nou: %1$s</string>
   <string name="export_side_step2_cancel">Canceŀla</string>
   <string name="export_side_step2_confirm">Confirma</string>
+  <string name="export_side_step2_password">El compte està protegit amb contrasenya.\nPer continuar, autentiqueu-vos al dispositiu nou.</string>
+  <string name="export_side_step3_body_loading">L\'operació d\'exportació del compte al dispositiu nou està en curs. Espereu…</string>
+  <string name="export_side_step3_body_done">El compte s\'ha importat correctament al dispositiu nou.</string>
+  <string name="export_side_step3_exit">Finalitza</string>
+  <string name="import_side_step1_advice_qr">Inicieu l\'exportació al dispositiu d\'origen.\n<b>Seleccioneu Compte &gt; Configuració del compte &gt; Vincula un dispositiu nou</b>\nQuan estigueu a punt, escanegeu el codi QR de sota.</string>
+  <string name="import_side_step1_advice_code">Inicieu l\'exportació al dispositiu d\'origen.\n<b>Seleccioneu Compte &gt; Configuració del compte &gt; Vincula un dispositiu nou</b>\nQuan estigueu a punt, introduïu el codi de sota.</string>
   <string name="import_side_step1_share">Comparteix</string>
+  <string name="import_side_step1_switch_to_code">O feu clic aquí per mostrar el codi d\'autenticació</string>
+  <string name="import_side_step1_switch_to_qr">O feu clic aquí per mostrar el codi QR</string>
+  <string name="import_side_step1_connecting">S\'està connectant al dispositiu d\'origen…</string>
+  <string name="import_side_step1_preparing_device">S\'està preparant el dispositiu…</string>
+  <string name="import_side_step2_password_prompt">El compte està protegit amb contrasenya.\nDesbloquegeu-lo per continuar.</string>
   <string name="import_side_step2_password_import">Importa</string>
+  <string name="import_side_step2_password_unlocking">S\'està desbloquejant el compte…</string>
+  <string name="import_side_step2_action_required">Cal una acció. Confirmeu el compte al dispositiu d\'origen.</string>
+  <string name="import_side_step3_body_loading">El compte s\'està important al dispositiu nou. Espereu…</string>
+  <string name="import_side_step3_body_done">El compte s\'ha importat correctament.</string>
+  <string name="import_side_step3_go_to_account">Vés al compte nou</string>
+  <string name="import_side_step3_exit">Finalitza</string>
+  <string name="link_device_share_title">Comparteix el codi d\'autenticació</string>
+  <string name="link_device_error_network">S\'ha produït un error de xarxa en vincular el dispositiu. Comproveu la connexió i torneu-ho a provar.</string>
+  <string name="link_device_error_authentication">S\'ha produït un error d\'autenticació en enllaçar el dispositiu. Comproveu les credencials i torneu-ho a provar.</string>
+  <string name="link_device_error_timeout">L\'operació ha excedit el temps d\'espera.</string>
+  <string name="link_device_error_canceled">L\'usuari ha cancel·lat l\'operació.</string>
+  <string name="link_device_error_unknown">S\'ha produït un error.</string>
+  <string name="link_device_error_bad_password">Comproveu les credencials i torneu-ho a provar.</string>
+  <string name="test_push">Prova de push</string>
   <!--Accessibility-->
+  <string name="step_title_create_username">Crea un nom d\'usuari</string>
   <string name="step_title_set_password">Estableix contrasenya</string>
+  <string name="step_title_create_profile">Crea un perfil</string>
+  <string name="step_format">Pas %1$d de %2$d: %3$s</string>
   <!--Peer services-->
+  <string name="peer_services_title">Serveis compartits</string>
+  <string name="peer_services_refresh">Actualitza els serveis</string>
   <string name="peer_services_connect">Connectar</string>
+  <string name="peer_services_disconnect">Desconnecta</string>
+  <string name="peer_services_empty">No hi ha serveis compartits disponibles</string>
+  <string name="peer_services_link_copied">S\'ha copiat l\'enllaç al porta-retalls</string>
+  <string name="peer_services_error_offline">El contacte està fora de línia</string>
+  <string name="peer_services_error_unreachable">No es pot contactar amb el contacte</string>
+  <string name="peer_services_error_timeout">La sol·licitud ha excedit el temps d\'espera</string>
+  <string name="peer_services_error_unknown">No s\'han pogut recuperar els serveis</string>
+  <string name="notif_channel_peer_tunnel">Serveis compartits</string>
+  <string name="notif_channel_peer_tunnel_descr">Es mostra mentre els túnels de serveis entre iguals estan actius en segon pla.</string>
+  <string name="notif_peer_tunnel_title">Serveis compartits actius</string>
+  <string name="notif_peer_tunnel_text">El Jami manté actives les vostres connexions de servei en segon pla</string>
+  <string name="notif_peer_tunnel_stop_all">Atura-ho tot</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_settings_title">Serveis compartits</string>
+  <string name="shared_services_settings_description">Exposa serveis locals als usuaris del Jami</string>
+  <string name="shared_services_empty">Cap servei configurat</string>
+  <string name="shared_services_add">Afegeix un servei</string>
+  <string name="shared_services_add_title">Afegeix un servei compartit</string>
+  <string name="shared_services_edit_title">Edita el servei compartit</string>
+  <string name="shared_services_edit">Edita</string>
+  <string name="shared_services_delete">Suprimeix</string>
+  <string name="shared_services_name_hint">Nom del servei</string>
+  <string name="shared_services_name_required">El nom del servei és obligatori</string>
+  <string name="shared_services_description_hint">Descripció (opcional)</string>
+  <string name="shared_services_port_hint">Port local</string>
+  <string name="shared_services_port_required">El número de port és obligatori</string>
+  <string name="shared_services_port_invalid">El port ha d\'estar entre 1 i 65535</string>
+  <string name="shared_services_port">Port: %d</string>
+  <string name="shared_services_no_description">Sense descripció</string>
+  <string name="shared_services_empty_subtitle">Compartiu fitxers o serveis locals amb els usuaris del Jami</string>
+  <string name="shared_services_more_options">Més opcions</string>
+  <string name="shared_services_open_in_browser">Obre al navegador</string>
+  <string name="shared_services_disconnect_all">Desconnecta-ho tot</string>
+  <string name="shared_services_disconnect_all_title">Voleu desconnectar-ho tot?</string>
+  <string name="shared_services_disconnect_all_message">Es desconnectarà el següent:\n\n%1$s\n\nEls serveis allotjats es desactivaran i es tancaran les connexions amb altres dispositius.</string>
+  <string name="shared_services_disconnect_all_confirm">Desconnecta</string>
+  <string name="shared_services_nothing_active">Ara mateix no hi ha res actiu</string>
+  <string name="shared_services_hosting_item">Allotjant: %1$s (%2$s)</string>
+  <string name="shared_services_tunnel_item">%1$s (des de %2$s)</string>
+  <string name="shared_services_type_website_label">Lloc web</string>
+  <string name="shared_services_type_custom_label">Personalitzat</string>
+  <string name="shared_services_local_port">Port local %d</string>
+  <string name="shared_services_local_address">%1$s:%2$d</string>
+  <string name="shared_services_type_custom">Servidor personalitzat</string>
+  <string name="shared_services_type_website">Afegeix un lloc web</string>
+  <string name="shared_services_add_custom_title">Afegeix un servidor personalitzat</string>
+  <string name="shared_services_add_website_title">Afegeix un lloc web</string>
+  <string name="shared_services_host_hint">Amfitrió local</string>
+  <string name="shared_services_scheme_hint">Esquema URI (p. ex. http, ftp)</string>
+  <string name="shared_services_directory_hint">Directori local</string>
+  <string name="shared_services_directory_required">Trieu un directori</string>
+  <string name="shared_services_choose">Tria</string>
+  <string name="shared_services_policy_hint">Accessible per</string>
+  <string name="shared_services_policy_contacts">Els meus contactes</string>
+  <string name="shared_services_policy_public">Públic</string>
+  <string name="shared_services_policy_specific">Contactes específics</string>
+  <string name="shared_services_allowed_contacts_hint">Contactes permesos (separats per comes)</string>
+  <string name="shared_services_save">Desa</string>
 </resources>

@@ -335,4 +335,9 @@
   <!--Peer services-->
   <string name="peer_services_connect">કનેક્ટ કરો</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">સંપાદિત કરો</string>
+  <string name="shared_services_delete">કાઢી નાખો</string>
+  <string name="shared_services_more_options">વધુ વિકલ્પો</string>
+  <string name="shared_services_type_custom_label">કસ્ટમ</string>
+  <string name="shared_services_save">સાચવો</string>
 </resources>

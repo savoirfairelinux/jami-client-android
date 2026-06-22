@@ -3,6 +3,7 @@
   <!--About-->
   <string name="submit_issue_title">Báo lỗi</string>
   <string name="section_license">Giấy phép</string>
+  <string name="view_switch_camera">Chuyển máy ảnh</string>
   <string name="sponsor_section">Jami là phần mềm miễn phí được phát triển và hỗ trợ bởi</string>
   <string name="copyright_section">Bản quyền</string>
   <string name="contribute_section">Đóng góp</string>
@@ -15,7 +16,11 @@
   <string name="call_service_description">Dịch vụ này là cần thiết để giữ cho cuộc gọi của bạn chạy trong nền. Nó chỉ chạy khi thực hiện các cuộc gọi.</string>
   <string name="data_transfer_service_description">Dịch vụ này là cần thiết để hiển thị liên tục các thông báo trong quá trình chuyển tệp. Nó chỉ chạy khi thực hiện chuyển tệp.</string>
   <!--About dialog-->
+  <string name="thank_note">Chúng tôi muốn cảm ơn những người đóng góp của chúng tôi, những nỗ lực qua nhiều năm của họ đã làm nên phần mềm này như ngày nay.</string>
+  <string name="developers">Nhà phát triển</string>
   <string name="media">Ảnh &amp; video&lt;br&gt;</string>
+  <string name="community_management">Quản lý Cộng đồng</string>
+  <string name="special_thanks">Cảm ơn đặc biệt đến</string>
   <!--RingActivity-->
   <string name="error_no_network">Không có kết nối mạng</string>
   <string name="error_account_offline">Tài khoản đang offline</string>
@@ -39,6 +44,7 @@
     <item quantity="other">%d Cuộc trò chuyện</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Tìm kiếm hoặc thêm</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
@@ -50,6 +56,7 @@
   <string name="notif_outgoing_call">Đang có cuộc gọi đi</string>
   <string name="notif_current_call_title">Đang gọi với %1$s</string>
   <string name="notif_current_call">Cuộc gọi đang diễn ra</string>
+  <string name="notif_channel_call_in_progress">Cuộc gọi đang diễn ra</string>
   <string name="notif_channel_calls">Cuộc gọi</string>
   <string name="notif_channel_missed_calls">Cuộc gọi nhỡ</string>
   <string name="notif_channel_incoming_calls">Cuộc gọi đến</string>
@@ -58,6 +65,7 @@
   <string name="notif_channel_sync">Đồng bộ dữ liệu</string>
   <string name="notif_channel_background_service">Dịch vụ nền</string>
   <string name="notif_group_calls">Cuộc gọi</string>
+  <string name="notif_inprogress_group_call">Cuộc gọi đang diễn ra</string>
   <string name="notif_mark_as_read">Đánh dấu là đã đọc</string>
   <string name="notif_dismiss">Cúp máy</string>
   <string name="notif_reply">Trả lời</string>
@@ -75,10 +83,15 @@
   <string name="ongoing_call">Cuộc gọi đang diễn ra</string>
   <string name="call_duration">Đã gọi %s</string>
   <string name="start_error_title">Không thể khởi động Jami</string>
+  <string name="action_call_accept">Chấp nhận cuộc gọi</string>
+  <string name="action_call_accept_audio">Chấp nhận bằng âm thanh</string>
+  <string name="action_call_accept_video">Chấp nhận bằng video</string>
   <string name="switch_to_video">Bật video</string>
   <string name="action_call_decline">Từ chối</string>
   <string name="action_call_mic_mute">Tắt tiếng micrô</string>
+  <string name="ab_action_speakerphone">Bật loa ngoài</string>
   <string name="ab_action_contact_add">Thêm vào danh bạ</string>
+  <string name="ab_action_contact_add_question">Thêm vào danh bạ?</string>
   <string name="ab_action_audio_call">Bắt đầu cuộc gọi âm thanh</string>
   <string name="ab_action_video_call">Bắt đầu cuộc gọi video</string>
   <string name="scan_qr">Quét mã QR</string>
@@ -89,6 +102,7 @@
   <string name="message_failed">Không thành công</string>
   <string name="time_just_now">Vừa xong</string>
   <string name="send_file">Gửi tệp</string>
+  <string name="select_media">Mở thư viện</string>
   <string name="hist_file_sent">Tệp đã gửi</string>
   <string name="hist_file_received">Tệp đã nhận</string>
   <string name="conversation_share_location">Chia sẻ địa điểm</string>
@@ -121,9 +135,11 @@
   <string name="conversation_action_delete_this_message">Hành động này không thể đảo ngược.</string>
   <string name="conversation_action_history_clear">Xóa lịch sử</string>
   <string name="remove_conversation">Xóa cuộc trò chuyện</string>
+  <string name="swarm_group_action_leave">Rời nhóm</string>
   <string name="copied_to_clipboard">Đã sao chép %1$s vào clipboard.</string>
   <string name="conversation_action_block_this">Chặn liên hệ</string>
   <string name="conversation_action_unblock_this">Bỏ chặn liên hệ</string>
+  <string name="conversation_action_go_to_call">Quay lại cuộc gọi</string>
   <string name="conversation_action_incoming_call">Đang gọi đến</string>
   <string name="conversation_action_latest">Chuyển đến mới nhất</string>
   <string name="block_contact_dialog_title">Chặn %1$s?</string>
@@ -131,12 +147,21 @@
   <string name="block_contact_completed">%1$s đã bị chặn.</string>
   <string name="unblock_contact_dialog_title">Bỏ chặn %1$s?</string>
   <string name="unblock_contact_completed">%1$s đã được bỏ chặn.</string>
+  <string name="conversation_info_contact_you">Bạn</string>
   <string name="conversation_members">Thành viên</string>
   <string name="conversation_blocked">Liên hệ này đã bị chặn.</string>
+  <string name="conversation_message_deleted">%s đã xóa một tin nhắn</string>
+  <string name="conversation_reply_you">Bạn</string>
   <string name="conversation_preference_color">Màu hội thoại</string>
   <string name="conversation_type_private">Riêng tư</string>
+  <string name="conversation_contact_invited">%1$s đã được mời tham gia cuộc trò chuyện.</string>
+  <string name="conversation_contact_added">%1$s đã tham gia cuộc trò chuyện.</string>
+  <string name="conversation_contact_left">%1$s đã rời khỏi cuộc trò chuyện.</string>
+  <string name="conversation_contact_blocked">%1$s đã bị chặn khỏi cuộc trò chuyện.</string>
+  <string name="conversation_contact_unblocked">%1$s đã được bỏ chặn khỏi cuộc trò chuyện.</string>
   <string name="audio_recording_send">Gửi</string>
   <string name="audio_recording_play">Phát</string>
+  <string name="audio_recording_pause">Tạm dừng</string>
   <string name="audio_recording_stop">Ngừng ghi lại</string>
   <string name="taking_picture_error">Xảy ra lỗi khi chụp ảnh.</string>
   <string name="find_picture_error">Xảy ra lỗi khi tìm ảnh.</string>
@@ -160,6 +185,7 @@
   <string name="wizard_back">Trở lại</string>
   <string name="wizard_skip">Bỏ qua</string>
   <string name="hist_contact_added">Đã thêm liên hệ</string>
+  <string name="hist_contact_blocked">Đã chặn liên hệ</string>
   <string name="hist_invitation_received">Nhận được lời mời</string>
   <!--Account summary-->
   <string name="profile">Hồ sơ</string>
@@ -178,13 +204,17 @@
   <string name="devices">Thiết bị đã liên kết</string>
   <!--Share fragment-->
   <string name="share_message">Quét mã này bằng Jami</string>
+  <string name="share_contact_information">Chia sẻ thông tin liên hệ</string>
   <string name="share_label">Chia sẻ</string>
   <string name="generic_error_migration">Lỗi</string>
   <string name="generic_error_migration_message">Xảy ra lỗi khi chuyển tài khoản.</string>
+  <string name="title_share_with">Chia sẻ với…</string>
   <!--Pending invitations-->
   <string name="accept">Đồng ý</string>
   <string name="decline">Giảm</string>
   <string name="block">Chặn</string>
+  <string name="decline_invitation">Từ chối lời mời</string>
+  <string name="accept_invitation">Chấp nhận lời mời</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Chưa chặn liên hệ nào</string>
   <!--Smartlist-->
@@ -194,6 +224,7 @@
   <string name="tv_contact_row_header">Danh bạ</string>
   <string name="generic_error">Xảy ra lỗi chưa biết.</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_unjoinable_peer">Đối tác không thể truy cập</string>
   <string name="file_transfer_status_canceled">Đã hủy bỏ</string>
   <string name="file_transfer_status_error">Xảy ra lỗi khi truyền tệp.</string>
   <string name="menu_file_open">Mở tệp</string>
@@ -208,10 +239,13 @@
   <string name="navigation_item_conversation">Các cuộc trò chuyện</string>
   <string name="navigation_item_contact_request">Lời mời</string>
   <string name="navigation_item_account">Tài khoản</string>
+  <string name="search_results_public_directory">Danh bạ công khai</string>
   <!--TV-->
   <string name="tv_media_preview">Xem trước</string>
   <string name="tv_audio_play">Phát</string>
+  <string name="tv_audio_pause">Tạm dừng</string>
   <string name="tv_dialog_send">Gửi</string>
+  <string name="tv_action_more">Thêm</string>
   <string name="unable_to_start_recorder">Không thể bắt đầu ghi âm.</string>
   <string name="error_sharing_file">Xảy ra lỗi khi chia sẻ tệp.</string>
   <string name="error_opening_file">Xảy ra lỗi khi mở tệp.</string>
@@ -266,6 +300,7 @@
   <string name="jami_id_choose_username">Chọn tên người dùng</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Chào mừng đến với Jami</string>
+  <string name="welcome_jami_description">Chia sẻ mã định danh Jami của bạn để được liên hệ dễ dàng hơn!</string>
   <!--Conversation details-->
   <string name="details">Chi tiết</string>
   <string name="swarm_type">Loại hội thoại</string>
@@ -273,28 +308,56 @@
   <string name="show_qr_code">Hiện mã QR</string>
   <string name="mute_conversation">Ẩn cuộc trò chuyện</string>
   <!--Donation-->
+  <string name="donation_card_description">Nếu bạn thích sử dụng Jami và tin vào sứ mệnh của chúng tôi, bạn có muốn quyên góp không?</string>
   <string name="donation_card_not_now">Lúc khác</string>
   <string name="donation_donate">Ủng hộ</string>
   <!--Extension-->
   <string name="install_error">Xảy ra lỗi khi nhập tiện ích mở rộng.</string>
   <string name="import_side_main_title">Nhập tài khoản</string>
+  <string name="link_device_dialog_stop_import_body">Việc dừng sẽ hủy thao tác nhập tài khoản.</string>
   <string name="export_side_step1_advice_qr">Trên thiết bị mới, hãy tạo một tài khoản mới.\nChọn <b>Tài khoản &gt; Thêm tài khoản &gt; Kết nối từ thiết bị khác</b>\nKhi sẵn sàng, hãy quét mã QR.</string>
   <string name="export_side_step1_switch_to_qr">Hoặc nhấn vào đây để quét mã QR</string>
+  <string name="export_side_step1_error_malformed">Mã định danh thiết bị mới không được nhận dạng. Vui lòng làm theo hướng dẫn ở trên.</string>
   <string name="export_side_step1_code_connect">Kết nối</string>
+  <string name="export_side_step2_ip_only">Địa chỉ IP của thiết bị mới: %1$s</string>
   <string name="export_side_step2_cancel">Hủy bỏ</string>
   <string name="export_side_step2_confirm">Xác nhận</string>
+  <string name="export_side_step3_body_done">Tài khoản đã được nhập thành công trên thiết bị mới.</string>
   <string name="import_side_step1_advice_qr">Bắt đầu quá trình xuất dữ liệu trên thiết bị nguồn.\n<b>Chọn Tài khoản &gt; Cài đặt tài khoản &gt; Liên kết thiết bị mới</b>\nKhi sẵn sàng, hãy quét mã QR bên dưới.</string>
   <string name="import_side_step1_advice_code">Bắt đầu quá trình xuất dữ liệu trên thiết bị nguồn.\n<b>Chọn Tài khoản &gt; Cài đặt tài khoản &gt; Liên kết thiết bị mới</b>\nKhi sẵn sàng, hãy nhập mã bên dưới.</string>
   <string name="import_side_step1_share">Chia sẻ</string>
   <string name="import_side_step2_password_import">Nhập</string>
+  <string name="import_side_step2_action_required">Cần thực hiện hành động. Vui lòng xác nhận tài khoản trên thiết bị nguồn.</string>
+  <string name="import_side_step3_body_done">Tài khoản đã được nhập thành công.</string>
   <string name="link_device_error_network">Có lỗi mạng trong quá trình kết nối thiết bị. Vui lòng kiểm tra kết nối và thử lại.</string>
   <string name="link_device_error_authentication">Có lỗi xác thực trong quá trình kết nối thiết bị. Vui lòng kiểm tra danh tính và thử lại.</string>
+  <string name="link_device_error_canceled">Thao tác đã bị người dùng hủy.</string>
   <string name="link_device_error_unknown">Đã xảy ra lỗi.</string>
   <!--Accessibility-->
+  <string name="step_title_set_password">Đặt mật khẩu</string>
   <!--Peer services-->
+  <string name="peer_services_title">Dịch vụ chia sẻ</string>
+  <string name="peer_services_refresh">Làm mới dịch vụ</string>
   <string name="peer_services_connect">Kết nối</string>
+  <string name="peer_services_disconnect">Ngắt kết nối</string>
+  <string name="peer_services_empty">Không có dịch vụ chia sẻ nào khả dụng</string>
+  <string name="peer_services_error_offline">Liên hệ đang ngoại tuyến</string>
+  <string name="peer_services_error_unreachable">Không thể truy cập liên hệ</string>
+  <string name="peer_services_error_timeout">Yêu cầu đã hết thời gian chờ</string>
+  <string name="peer_services_error_unknown">Không thể truy xuất dịch vụ</string>
+  <string name="notif_channel_peer_tunnel">Dịch vụ chia sẻ</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_settings_title">Dịch vụ chia sẻ</string>
   <string name="shared_services_edit">Đổi chỉnh</string>
+  <string name="shared_services_delete">Xóa</string>
+  <string name="shared_services_description_hint">Mô tả (tùy chọn)</string>
+  <string name="shared_services_port_hint">Cổng cục bộ</string>
+  <string name="shared_services_no_description">Không có mô tả</string>
   <string name="shared_services_more_options">Nhiều lựa chọn hơn</string>
+  <string name="shared_services_disconnect_all_confirm">Ngắt kết nối</string>
+  <string name="shared_services_type_custom_label">Tùy chỉnh</string>
+  <string name="shared_services_host_hint">Máy chủ cục bộ</string>
+  <string name="shared_services_policy_hint">Có thể truy cập bởi</string>
+  <string name="shared_services_policy_public">Công khai</string>
   <string name="shared_services_save">- Cứu</string>
 </resources>

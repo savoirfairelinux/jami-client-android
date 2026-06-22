@@ -335,6 +335,9 @@
   <!--Peer services-->
   <string name="peer_services_connect">కనెక్ట్</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">సవరించు</string>
+  <string name="shared_services_delete">తొలగించు</string>
   <string name="shared_services_more_options">మరిన్ని ఎంపికలు</string>
+  <string name="shared_services_type_custom_label">కస్టమ్</string>
   <string name="shared_services_save">సేవ్</string>
 </resources>

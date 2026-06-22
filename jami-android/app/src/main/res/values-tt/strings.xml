@@ -187,6 +187,7 @@
   <string name="peer_services_connect">Бәйләнешкә кертү</string>
   <!--Exposed/Hosted services-->
   <string name="shared_services_edit">Редакция</string>
+  <string name="shared_services_delete">Ачу</string>
   <string name="shared_services_more_options">Күпрәк мөмкинлекләр</string>
   <string name="shared_services_save">Каплагыз</string>
 </resources>

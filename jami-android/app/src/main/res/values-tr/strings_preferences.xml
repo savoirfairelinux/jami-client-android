@@ -82,6 +82,9 @@
   <string name="extension_reset_preferences_summary">Uzantı varsayılan ayarlara geri yüklendi</string>
   <string name="extension_reset_preferences_ask">Genel uzantı ayarlarını sıfırlamak istiyor musun?</string>
   <string name="extension_reset_account_preferences_ask">Hesap uzantısı ayarlarını sıfırlamak istiyor musun?</string>
+  <string name="account_advanced_reset">Gelişmiş ayarları sıfırla</string>
+  <string name="account_advanced_reset_summary">Varsayılan gelişmiş ayarları geri yükle</string>
+  <string name="account_advanced_reset_confirm">Tüm gelişmiş ayarlar varsayılana sıfırlansın mı?</string>
   <string name="extension_successfully_installed">Uzantı <b>%1$s</b> başarıyla yüklendi.</string>
   <string name="extension_install_failure">Aşağıdaki uzantı yüklenirken bir hata oluştu: <b>%1$s</b></string>
   <string name="extension_recent_version_exception"><b>%1$s</b> daha yeni bir sürümü yüklü.</string>

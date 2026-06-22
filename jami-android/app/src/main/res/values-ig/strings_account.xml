@@ -24,6 +24,8 @@
   <string name="account_type_ip2ip">Akụkọ IP</string>
   <string name="help_ring">Ihe ndekọ Jami na-enye gị ohere iru ndị mmadụ n\'enweghị nsogbu site na ibe site na netwọk zuru oke.</string>
   <string name="help_sip_title">Tinye akaụntụ SIP</string>
+  <string name="help_sip">Hazie akaụntụ SIP dị adị</string>
+  <string name="create_sip_account">Hazie akaụntụ SIP</string>
   <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Enweghị akaụntụ edebanyere aha</string>
@@ -32,6 +34,7 @@
   <string name="account_device_revoke">Ngwaọrụ iwepụ</string>
   <string name="account_device_revocation_success_title">Ihe Ịga nke Ọma</string>
   <string name="account_device_revocation_success">A kagbuola ngwaọrụ ahụ ugbu a!</string>
+  <string name="account_device_revocation_wrong_password">Paswọọdụ na-ezighi ezi.</string>
   <string name="account_device_revocation_unknown_device">Ihe a na-amaghị.</string>
   <string name="account_device_revocation_error_unknown">Njehie a na-amaghị.</string>
   <string name="account_password_change">Gbanwee Paswọdu</string>
@@ -41,6 +44,7 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">General</string>
   <string name="account_basic_category">Ntọala Ntọala</string>
+  <string name="account_alias_label">Aha ngosi</string>
   <string name="account_hostname_label">Aha nnabata</string>
   <string name="account_bootstrap_label">Akpụkpọ ụkwụ</string>
   <string name="account_name_server_label">Aha ihe nkesa</string>
@@ -54,6 +58,7 @@
   <string name="account_upnp_label">Gbaa UPnP</string>
   <string name="account_proxy_field">Onye nnọchianya</string>
   <!--Extension Details-->
+  <string name="account_preferences_extension_tab">Ndọtị</string>
   <!--Audio Details-->
   <string name="account_audio_label">Ihe a na-anụ</string>
   <string name="account_preferences_media_tab">Ndị mgbasa ozi</string>
@@ -68,6 +73,8 @@
   <string name="account_video_enable">Gbaa vidiyo ahụ</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Ihe Ndị Dị Elu</string>
+  <string name="account_read_receipts_label">Akwụkwọ nnata ọgụgụ</string>
+  <string name="account_read_receipts_summary">Zipu ma rịọ akwụkwọ nnata nnyefe na ọgụgụ ka e zipu mgbe e nyefere ma ọ bụ gụọ ozi.</string>
   <string name="account_call_settings_title">Ntọala oku</string>
   <string name="account_dht_public_in_calls_label">Kwe ka oku na-abata site na kọntaktị ndị a na-amaghị</string>
   <string name="account_registration_exp_label">Ndebanye aha ahụ na-agwụ</string>
@@ -153,6 +160,7 @@
   <string name="account_export_title">Njikọ akaụntụ na ngwaọrụ ndị ọzọ</string>
   <string name="account_connect_server_button">Jikọọ na njikwa ihe nkesa</string>
   <string name="account_connect_button">Jikọọ</string>
+  <string name="prompt_server">URL sava njikwa</string>
   <string name="help_credentials_enter">Tinye nzere nke nzukọ gị</string>
   <string name="help_connect_password_enter">Tinye paswọọdụ gị</string>
   <string name="account_connect_prompt_username">Aha njirimara</string>
@@ -188,6 +196,7 @@
   <string name="account_rename_device_hint">Họrọ aha ngwaọrụ ọhụrụ</string>
   <string name="account_device_this_indicator">Ngwaọrụ a</string>
   <string name="account_disabled_indicator">Ndị nwere nkwarụ</string>
+  <string name="account_device_id">ID ngwaọrụ</string>
   <!--Link a new device-->
   <string name="account_link_device_title">Jikọọ ngwaọrụ ọhụrụ</string>
   <string name="account_link_device_button">Jikọọ</string>

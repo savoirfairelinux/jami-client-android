@@ -4,6 +4,7 @@
   <string name="submit_issue_title">إرسال مشكلہ</string>
   <string name="submit_issue_action_description">إنشاء قضية جديدة</string>
   <string name="section_license">الرخصة</string>
+  <string name="view_switch_camera">تبديل الكاميرا</string>
   <string name="copyright_section">حقوق النشر</string>
   <string name="contribute_section">مساهمة</string>
   <string name="version_section">الإصدار</string>
@@ -15,7 +16,11 @@
   <string name="call_service_description">هذه الخدمه ضرورية لتبقي المكالمات تعمل في الواجهة. إنها تعمل فقط أثناء المكالمات.</string>
   <string name="data_transfer_service_description">هذه الخدمة ضرورية لعرض الإعلامات المستمرة أثناء نقل الملفات. تعمل فقط أثناء نقل الملفات.</string>
   <!--About dialog-->
+  <string name="thank_note">نود أن نشكر مساهمينا، الذين جعلت جهودهم على مدى سنوات عديدة هذا البرنامج كما هو عليه.</string>
+  <string name="developers">المطوّرون</string>
   <string name="media">وسائط</string>
+  <string name="community_management">إدارة المجتمع</string>
+  <string name="special_thanks">شكر خاص لـ</string>
   <!--RingActivity-->
   <string name="error_no_network">لا يوجد اتصال بالشبكة</string>
   <string name="error_account_offline">الحساب غير متصل</string>
@@ -33,7 +38,9 @@
   <!--Dialing Fragment-->
   <!--History Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">الدعوات المستلمة</string>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">بحث أو إضافة</string>
   <string name="choose_number">إختيار رقم</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -46,6 +53,7 @@
   <string name="notif_outgoing_call">مكالمة صادرة</string>
   <string name="notif_current_call_title">مكالمة جارية مع %1$s</string>
   <string name="notif_current_call">مكالمة جارية</string>
+  <string name="notif_channel_call_in_progress">مكالمة قيد التقدم</string>
   <string name="notif_channel_calls">مكالمات</string>
   <string name="notif_channel_missed_calls">مكالمات فائتة</string>
   <string name="notif_channel_incoming_calls">مكالمات واردة</string>
@@ -56,6 +64,7 @@
   <string name="notif_channel_background_service">خدمة تعمل في الخلفية</string>
   <string name="notif_channel_background_service_descr">السماح بإستقبال مكالمات ورسائل بأي وقت.</string>
   <string name="notif_group_calls">مكالمات</string>
+  <string name="notif_inprogress_group_call">مكالمة قيد التقدم</string>
   <string name="notif_mark_as_read">وضع علامة مقروء</string>
   <string name="notif_dismiss">رفض</string>
   <string name="notif_reply">رد</string>
@@ -81,9 +90,14 @@
   <string name="ongoing_call">مكالمة جارية</string>
   <string name="hist_in_call">مكالمة واردة من %1$s</string>
   <string name="hist_out_call">مكالمة صادرة من %1$s</string>
+  <string name="call_duration">استمرت %s</string>
+  <string name="action_call_accept">قبول المكالمة</string>
+  <string name="action_call_accept_audio">القبول بالصوت</string>
+  <string name="action_call_accept_video">القبول بالفيديو</string>
   <string name="switch_to_video">فعل الفيديو</string>
   <string name="action_call_decline">رفض</string>
   <string name="action_call_mic_mute">كتم ميكروفون</string>
+  <string name="ab_action_speakerphone">تشغيل مكبر الصوت</string>
   <string name="ab_action_contact_add">إضافة إلى جهات الاتصال</string>
   <string name="ab_action_contact_add_question">إضافة إلى جهات الإتصال؟</string>
   <string name="ab_action_audio_call">بدأ مكالمة صوتية</string>
@@ -109,6 +123,7 @@
   <string name="conversation_send_video">تسجيل مقطع فيديو</string>
   <string name="conversation_share_location">مشاركة الموقع</string>
   <string name="ongoing_group_call">مكالمة جارية</string>
+  <string name="started_call">بدأت المكالمة</string>
   <string name="in_reply_to">في جواب</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">صلاحيات الكاميرا</string>
@@ -146,9 +161,11 @@
   <string name="conversation_action_remove_this_title">حذف جهة الإتصال؟</string>
   <string name="conversation_action_remove_this_message">هذا سيزيل جهة الإتصال و بالتأكيد سيزيل تاريخ المحادثة.</string>
   <string name="remove_conversation">إزالة المحادثة</string>
+  <string name="swarm_group_action_leave">مغادرة المجموعة</string>
   <string name="conversation_action_select_peer_number">إختيار رقم</string>
   <string name="conversation_action_block_this">حظر جهة إتصال</string>
   <string name="conversation_action_unblock_this">فك الحظر على الاتصال</string>
+  <string name="conversation_action_go_to_call">العودة إلى المكالمة</string>
   <string name="conversation_action_incoming_call">مكالمة واردة</string>
   <string name="conversation_action_latest">التمرير إلى نهاية المحادثة</string>
   <string name="conversation_open_file_error">ﻻ يوجد برنامج مثبت يمكنه فتح هذا النوع من الملفات.</string>
@@ -165,12 +182,18 @@
   <string name="conversation_syncing">تحميل محادثة من أقرانه</string>
   <string name="conversation_blocked">هذا الاتصال محظور</string>
   <string name="conversation_ended">انتهت المحادثة</string>
+  <string name="conversation_message_deleted">حذف %s رسالة</string>
   <string name="conversation_reply_you">أنت</string>
   <string name="conversation_preference_color">لون المحادثة</string>
   <string name="conversation_preference_emoji">إيموجي المحادثة</string>
   <string name="conversation_type_contact">جهة اتصال جامي</string>
   <string name="conversation_type_private">خاص</string>
   <string name="conversation_type_group">مجموعة</string>
+  <string name="conversation_contact_invited">تمت دعوة %1$s للانضمام إلى المحادثة.</string>
+  <string name="conversation_contact_added">انضم %1$s إلى المحادثة.</string>
+  <string name="conversation_contact_left">غادر %1$s المحادثة.</string>
+  <string name="conversation_contact_blocked">تم حظر %1$s من المحادثة.</string>
+  <string name="conversation_contact_unblocked">تم إلغاء حظر %1$s من المحادثة.</string>
   <string name="conversation_search_hint">بحث عن المحادثة</string>
   <string name="audio_recording_in_progress">تسجيل...</string>
   <string name="audio_recording_send">إرسال</string>
@@ -190,15 +213,18 @@
   <string name="help_password_choose">إختيار كلمة مرور قوية يمكن تذكرها لحماية حساب جامي الخاص بك.</string>
   <string name="help_password_enter">إدخال كلمة مرور حسابك الرئيسي على جامي.</string>
   <string name="help_server_enter">إدخال رابط خادم الإدارة.</string>
+  <string name="copied_clipboard">تم النسخ إلى الحافظة.</string>
   <string name="wizard_next">التالي</string>
   <string name="wizard_back">السابق</string>
   <string name="wizard_skip">تخطي</string>
   <string name="hist_contact_invited">الاتصال مدعو</string>
   <string name="hist_contact_added">تم إضافة جهة إتصال</string>
   <string name="hist_contact_left">الاتصال يسارا</string>
+  <string name="hist_contact_blocked">تم حظر جهة الاتصال</string>
   <string name="hist_invitation_received">تم تلقي دعوة</string>
   <!--Account summary-->
   <string name="profile">الملف الشخصى</string>
+  <string name="profile_name">اسم الملف الشخصي</string>
   <string name="profile_message_warning">الملف الشخصي تتم مشاركته فقط مع جهات الإتصال</string>
   <string name="open_the_gallery">فتح المعرض</string>
   <string name="take_a_photo">التقاط صورة</string>
@@ -216,6 +242,7 @@
   <string name="share_message">إمسح هذا الكود بإستعمال جامي</string>
   <string name="share_message_no_account">الرجاء إختيار حساب للمشاركة.</string>
   <string name="share_your_account_information">شارك معلومات الإتصال الخاصة بي</string>
+  <string name="share_contact_information">مشاركة معلومات جهة الاتصال</string>
   <string name="share_label">مشاركة</string>
   <string name="generic_error_migration">خطأ</string>
   <string name="title_share_with">شارك مع...</string>
@@ -223,6 +250,8 @@
   <string name="accept">اقبل</string>
   <string name="decline">رفض</string>
   <string name="block">حظر</string>
+  <string name="decline_invitation">رفض الدعوة</string>
+  <string name="accept_invitation">قبول الدعوة</string>
   <string name="invitation_message">لديك %1$d طلبات جهات اتصال</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">لا توجد جهات إتصال محظورة</string>
@@ -231,11 +260,13 @@
   <string name="conversation_placeholder">لا يوجد محادثات لك بعد</string>
   <string name="contact_request_sent">تم إرسال طلب جهة إتصال</string>
   <string name="start_conversation">بدء محادثة</string>
+  <string name="search_results">نتائج البحث</string>
   <string name="tv_contact_row_header">جهات الاتصال</string>
   <string name="gallery_error_title">لا يوجد برنامج المعرض</string>
   <string name="gallery_error_message">لم يتم إيجاد برنامج على الجهاز لفتح المعرض</string>
   <!--File Transfer-->
   <string name="file_transfer_status_invalid_file">ملف غير صالح</string>
+  <string name="file_transfer_status_unjoinable_peer">نظير غير قابل للوصول</string>
   <string name="file_transfer_status_canceled">تم الإلغاء</string>
   <string name="file_download">تنزيل</string>
   <string name="title_media_viewer">عارض الوسائط</string>
@@ -271,6 +302,7 @@
   <string name="tv_send_video">إرسال وسائط متعددة</string>
   <string name="tv_action_more">المزيد</string>
   <string name="conversation_input_speech_hint">قل شيئا...</string>
+  <string name="error_sharing_file">حدث خطأ أثناء مشاركة الملف.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">موصى به</string>
   <string name="wizard_status_optional">اختياري</string>
@@ -291,6 +323,7 @@
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">مشاركة</string>
   <string name="bottomSheet_dialpad_btn">لوحة الطلب</string>
+  <string name="bottomSheet_extensions_btn">الإضافات</string>
   <string name="bottomSheet_add_participants_btn">إضافة</string>
   <string name="bottomSheet_change_camera_btn">التغيير</string>
   <string name="bottomSheet_camera_onoff_switch_btn">كاميرا</string>
@@ -305,9 +338,12 @@
   <string name="reset">إعادة تعيين</string>
   <!--Swarm Details-->
   <string name="rename_btn">تأكيد</string>
+  <string name="swarm_description">إضافة وصف</string>
   <string name="tab_members">الأعضاء</string>
   <string name="tab_files">الملفات</string>
   <string name="tab_settings">الإعدادات</string>
+  <string name="dialogtitle_title">تعديل عنوان المجموعة</string>
+  <string name="dialogtitle_description">تعديل وصف المجموعة</string>
   <string name="dialog_hint_title">العنوان</string>
   <string name="dialog_hint_description">وصف</string>
   <string name="picker_title">إختيار جهات الاتصال</string>
@@ -316,25 +352,65 @@
   <string name="bottomsheet_remove">إزالة عضو</string>
   <!--JamiId-->
   <string name="jami_id_validate">تسجيل اسم المستخدم</string>
+  <string name="jami_id_available">اسم المستخدم متاح.</string>
+  <string name="jami_id_not_available">اسم المستخدم غير متاح.</string>
+  <string name="jami_id_looking_for_availability">جارٍ التحقق من توفّر اسم المستخدم…</string>
   <string name="jami_id_choose_username">اختر اسم مستخدم</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">مرحبا بك في جامي</string>
+  <string name="welcome_jami_description">شارك معرّف Jami الخاص بك لتسهيل التواصل معك!</string>
   <!--Conversation details-->
   <string name="details">التفاصيل</string>
+  <string name="swarm_type">نوع المحادثة</string>
   <string name="Private">خاص</string>
   <string name="mute_conversation">محادثة صامتة</string>
   <!--Donation-->
+  <string name="donation_card_description">إذا كنت تستمتع باستخدام Jami وتؤمن برسالتنا، فهل تريد التبرّع؟</string>
   <string name="donation_card_not_now">ليس الآن</string>
+  <string name="donation_donate">تبرّع</string>
   <!--Extension-->
   <string name="export_side_main_title">تصدير الحساب</string>
+  <string name="import_side_main_title">استيراد حساب</string>
+  <string name="link_device_dialog_stop_import_body">سيؤدي الإيقاف إلى إلغاء عملية استيراد الحساب.</string>
+  <string name="export_side_step1_error_malformed">معرّف جهاز جديد غير معروف. يُرجى اتباع التعليمات أعلاه.</string>
   <string name="export_side_step1_code_connect">إتصال</string>
+  <string name="export_side_step2_ip_only">عنوان IP للجهاز الجديد: %1$s</string>
   <string name="export_side_step2_cancel">إلغاء الأمر</string>
   <string name="export_side_step2_confirm">تأكيد</string>
+  <string name="export_side_step3_body_done">تم استيراد الحساب بنجاح على الجهاز الجديد.</string>
   <string name="import_side_step1_share">مشاركة</string>
   <string name="import_side_step2_password_import">استيراد</string>
+  <string name="import_side_step2_action_required">إجراء مطلوب. يُرجى تأكيد الحساب على الجهاز المصدر.</string>
+  <string name="import_side_step3_body_done">تم استيراد الحساب بنجاح.</string>
+  <string name="link_device_error_authentication">حدث خطأ في المصادقة أثناء ربط الجهاز. يُرجى التحقق من بيانات الاعتماد والمحاولة مجددًا.</string>
+  <string name="link_device_error_canceled">أُلغيت العملية من قِبل المستخدم.</string>
   <!--Accessibility-->
   <string name="step_title_set_password">تعيين كلمة المرور</string>
   <!--Peer services-->
+  <string name="peer_services_title">الخدمات المشتركة</string>
+  <string name="peer_services_refresh">تحديث الخدمات</string>
   <string name="peer_services_connect">إتصال</string>
+  <string name="peer_services_disconnect">قطع الاتصال</string>
+  <string name="peer_services_empty">لا توجد خدمات مشتركة متاحة</string>
+  <string name="peer_services_error_offline">جهة الاتصال غير متصلة</string>
+  <string name="peer_services_error_unreachable">يتعذّر الوصول إلى جهة الاتصال</string>
+  <string name="peer_services_error_timeout">انتهت مهلة الطلب</string>
+  <string name="peer_services_error_unknown">تعذّر استرجاع الخدمات</string>
+  <string name="notif_channel_peer_tunnel">الخدمات المشتركة</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_settings_title">الخدمات المشتركة</string>
+  <string name="shared_services_edit">تصحيح</string>
+  <string name="shared_services_delete">حذف</string>
+  <string name="shared_services_description_hint">الوصف (اختياري)</string>
+  <string name="shared_services_port_hint">منفذ عبور محلي</string>
+  <string name="shared_services_no_description">لا يوجد وصف</string>
+  <string name="shared_services_more_options">المزيد من الخيارات</string>
+  <string name="shared_services_disconnect_all_confirm">قطع الاتصال</string>
+  <string name="shared_services_type_website_label">الموقع الإلكتروني</string>
+  <string name="shared_services_type_custom_label">تخصيص</string>
+  <string name="shared_services_host_hint">المضيف المحلي</string>
+  <string name="shared_services_choose">إختار</string>
+  <string name="shared_services_policy_hint">يمكن الوصول إليه بواسطة</string>
+  <string name="shared_services_policy_public">عام</string>
+  <string name="shared_services_save">سجل</string>
 </resources>

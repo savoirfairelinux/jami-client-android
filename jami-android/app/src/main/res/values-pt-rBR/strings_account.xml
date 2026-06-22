@@ -30,6 +30,7 @@
   <string name="account_type_ip2ip">IP da conta</string>
   <string name="help_ring">Uma conta Jami permite que você entre em contato com as pessoas de forma segura, ponto a ponto, por meio de uma rede totalmente distribuída.</string>
   <string name="help_sip_title">Adicionar conta SIP</string>
+  <string name="help_sip">Configurar conta SIP existente</string>
   <string name="create_sip_account">Configurar conta SIP</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Eliminar conta?</string>
@@ -85,6 +86,8 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avançado</string>
   <string name="account_chat_settings_title">Configurações de bate-papo</string>
+  <string name="account_read_receipts_label">Confirmações de leitura</string>
+  <string name="account_read_receipts_summary">Enviar e solicitar confirmações de entrega e de leitura quando as mensagens são entregues ou lidas.</string>
   <string name="account_call_settings_title">Configurações de chamada</string>
   <string name="account_dht_public_in_calls_label">Permitir chamadas de contatos desconhecidos</string>
   <string name="account_registration_exp_label">Registro expirou</string>
@@ -196,10 +199,12 @@
   <string name="account_link_export_button">Vincular novo dispositivo</string>
   <string name="account_link_show_button">Mostrar mais %d dispositivo(s) vinculado(s)</string>
   <string name="account_link_hide_button">Ocultar dispositivo vinculado</string>
+  <string name="account_start_export_button">Gerar código de autenticação</string>
   <string name="account_end_export_button">fechar</string>
   <string name="account_export_title">Vincular a conta a outros dispositivos</string>
   <string name="account_connect_server_button">Conectar ao servidor de gerenciamento</string>
   <string name="account_connect_button">Conectar</string>
+  <string name="prompt_server">URL do servidor de gestão</string>
   <string name="help_credentials_enter">Digite as credenciais da sua organização</string>
   <string name="help_connect_password_enter">Digite a senha da sua organização</string>
   <string name="account_connect_prompt_username">Nome de usuário</string>
@@ -246,12 +251,21 @@
   <string name="account_device_name_empty">O nome do dispositivo não pode estar vazio</string>
   <string name="account_device_this_indicator">Este dispositivo</string>
   <string name="account_disabled_indicator">Desabilitado</string>
+  <string name="account_device_id">ID do dispositivo</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Este formato não é suportado.</string>
+  <string name="account_link_info">Na aplicação Jami do novo dispositivo, leia o código QR ou introduza o código de autenticação manualmente.</string>
   <string name="account_link_device_title">Vincular um novo dispositivo</string>
+  <string name="account_link_password">Esta conta está encriptada com palavra-passe, introduza a palavra-passe para gerar o código de autenticação.</string>
   <string name="account_link_generate_button">Gerar</string>
+  <string name="account_link_time_valid">O código de autenticação ficará inválido: %1$s.</string>
+  <string name="account_link_device_info">Escolha “Associar um novo dispositivo” na outra aplicação Jami para mostrar o código QR ou o código de autenticação.</string>
   <string name="account_generate_export_device">No outro dispositivo</string>
+  <string name="account_generate_export_info">Instale e inicie o Jami. Selecione “Importar de outro dispositivo” e leia o código QR. Em alternativa, introduza o código PIN manualmente.</string>
   <string name="content_description_qr_generated">Código QR da conta</string>
+  <string name="account_generate_export_invalid">O código de autenticação já não é válido.\nIntroduza a palavra-passe e gere outro para associar o novo dispositivo.</string>
+  <string name="account_generate_export_invalid_two">O código de autenticação já não é válido.\nGere outro para associar o novo dispositivo.</string>
+  <string name="help_pin_info">Necessário se a conta estiver encriptada com palavra-passe.</string>
   <string name="account_link_device_button">Conectar</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Desbloquear a conta Jami</string>
@@ -265,5 +279,6 @@ A autenticação biométrica ou de dispositivo adiciona uma maneira conveniente 
   <string name="account_biometry_enroll_auth_message">Adicione autenticação biométrica ou de dispositivo segura como uma alternativa à sua senha</string>
   <string name="account_auth_error">Erro de autenticação: %1$s</string>
   <string name="account_auth_success">A autenticação foi bem sucedida</string>
+  <string name="account_auth_key_error">Ocorreu um erro ao desencriptar a chave da conta.</string>
   <string name="account_auth_password">Usar a senha da conta</string>
 </resources>

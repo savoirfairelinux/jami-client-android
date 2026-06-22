@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Nyefee nsogbu</string>
   <string name="section_license">Akwụkwọ ikike</string>
   <string name="copyright_section">Ihe e dere n\'akwụkwọ</string>
   <string name="contribute_section">Nye aka</string>
@@ -13,7 +14,11 @@
   <string name="call_service_description">Ọrụ a dị mkpa iji mee ka oku gị na-agba ọsọ na mbara ala. Ọ na-agba ọsọ naanị n\'oge oku.</string>
   <string name="data_transfer_service_description">Ọrụ a dị mkpa iji gosipụta ọkwa na-adịgide adịgide n\'oge nnyefe faịlụ. Ọ na-agba naanị n\'oge nnyefe faịlụ.</string>
   <!--About dialog-->
+  <string name="thank_note">Anyị ga-achọ ikele ndị nyere aka, ndị mbọ ha kemgbe ọtụtụ afọ mere ka sọftụwịa a bụrụ ihe ọ bụ.</string>
+  <string name="developers">Ndị mmepe</string>
   <string name="media">Ndị mgbasa ozi</string>
+  <string name="community_management">Njikwa Obodo</string>
+  <string name="special_thanks">Ekele pụrụ iche nye</string>
   <!--RingActivity-->
   <string name="error_no_network">Enweghị njikọ netwọk</string>
   <string name="error_account_offline">Akaụntụ ahụ adịghị</string>
@@ -32,6 +37,7 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Chọọ ma ọ bụ tinye</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
@@ -39,10 +45,12 @@
   <string name="notif_missed_outgoing_call">Ọ dịghị onye na-akpọ gị</string>
   <string name="notif_incoming_call">N\'ọhịa</string>
   <string name="notif_outgoing_call">N\'imepụta oku</string>
+  <string name="notif_channel_call_in_progress">Oku na-aga n\'ihu</string>
   <string name="notif_channel_calls">Ọ na-akpọ</string>
   <string name="notif_channel_messages">Ozi</string>
   <string name="notif_channel_file_transfer">Nyefe faịlụ</string>
   <string name="notif_group_calls">Ọ na-akpọ</string>
+  <string name="notif_inprogress_group_call">Oku na-aga n\'ihu</string>
   <string name="notif_dismiss">Ịkwụsị</string>
   <string name="notif_reply">Zaa</string>
   <string name="location_share_action_stop">Kwụsị ịkekọrịta</string>
@@ -53,21 +61,28 @@
   <string name="action_call_minimize">Belata</string>
   <string name="action_call_mute">Ndị na-adịghị ekwu okwu</string>
   <string name="action_call_unmute">Ndị na-adịghị ekwu okwu</string>
+  <string name="action_call_accept">Nabata oku</string>
+  <string name="action_call_accept_audio">Jiri ọdiyo nabata</string>
+  <string name="action_call_accept_video">Jiri vidiyo nabata</string>
   <string name="switch_to_video">Gbaa vidiyo ahụ</string>
   <string name="action_call_decline">Ọdịda</string>
   <string name="action_call_mic_mute">Igwe okwu na-adịghị arụ ọrụ</string>
   <string name="ab_action_contact_add">Tinye na kọntaktị</string>
   <string name="ab_action_audio_call">Malite oku ọdịyo</string>
   <string name="ab_action_video_call">Malite ịkpọ oku vidiyo</string>
+  <string name="new_group">Mepụta otu ọhụrụ</string>
   <!--Text messages-->
   <string name="send_message">Zie ozi</string>
   <string name="message_failed">Ihe na-agaghị ekwe omume</string>
+  <string name="time_just_now">Ugbu a</string>
   <string name="send_file">Zipu faịlụ</string>
   <string name="conversation_share_location">Ebe a na-ekenye ndị mmadụ</string>
+  <string name="started_call">Oku amalitela</string>
   <string name="in_reply_to">Na nzaghachi</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Njehie</string>
+  <string name="ringtone_custom_label">Ahaziri ahazi</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
@@ -83,7 +98,10 @@
   <string name="leave_conversation">Hapụ mkparịta ụka ahụ</string>
   <string name="conversation_action_history_clear">Akụkọ ihe mere eme doro anya</string>
   <string name="remove_conversation">Wepụ mkparịta ụka ahụ</string>
+  <string name="swarm_group_action_leave">Hapụ otu</string>
   <string name="conversation_action_block_this">Njikọ na-ekpuchi</string>
+  <string name="conversation_action_unblock_this">Wepụ mgbochi kọntaktị</string>
+  <string name="conversation_action_go_to_call">Laghachi na oku</string>
   <string name="conversation_action_incoming_call">N\'ọhịa</string>
   <string name="conversation_members">Ndị otu</string>
   <string name="conversation_type_private">Ndị mmadụ n\'onwe ha</string>
@@ -95,6 +113,7 @@
   <string name="prompt_new_password_repeat">Nyochaa paswọọdụ ọhụrụ</string>
   <string name="account_create_title">Mepụta akaụntụ Jami</string>
   <string name="prompt_hint_username">Aha njirimara</string>
+  <string name="copied_clipboard">Edetuola ya na klipbọọdụ.</string>
   <string name="wizard_next">Nke na-abịa</string>
   <string name="wizard_back">Ịlaghachi azụ</string>
   <string name="wizard_skip">Ịpụ</string>
@@ -114,15 +133,20 @@
   <!--Share fragment-->
   <string name="share_label">Ịkekọrịta</string>
   <string name="generic_error_migration">Njehie</string>
+  <string name="title_share_with">Kekọrịta na…</string>
   <!--Pending invitations-->
   <string name="accept">Nabata Ya</string>
   <string name="decline">Ọdịda</string>
   <string name="block">Ihe mgbochi</string>
+  <string name="decline_invitation">Jụ òkù</string>
+  <string name="accept_invitation">Nabata òkù</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Enweghị kọntaktị egbochi</string>
   <!--Smartlist-->
+  <string name="search_results">Nsonaazụ nchọta</string>
   <string name="tv_contact_row_header">Ndị a na-akpọtụrụ</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_unjoinable_peer">Onye a na-apụghị iru</string>
   <string name="file_transfer_status_canceled">A kagbuola ihe omume ahụ.</string>
   <string name="menu_file_open">Mepee faịlụ</string>
   <string name="menu_file_save">Chekwaa faịlụ</string>
@@ -140,6 +164,7 @@
   <!--TV-->
   <string name="tv_media_preview">Nlele</string>
   <string name="tv_dialog_send">Zie</string>
+  <string name="tv_action_more">Ọzọ</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">A Na-atụ aro ya</string>
   <string name="wizard_status_optional">N\'enweghị Mmasị</string>
@@ -150,6 +175,7 @@
   <string name="wizard_profile_info">Profaịlụ na-akọrọ naanị na kọntaktị</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Ịkekọrịta</string>
+  <string name="bottomSheet_extensions_btn">Ndọtị</string>
   <string name="bottomSheet_add_participants_btn">Tinye</string>
   <string name="bottomSheet_change_camera_btn">Mgbanwe</string>
   <string name="bottomSheet_hangup_btn">Kwụsị oku</string>
@@ -160,31 +186,58 @@
   <string name="reset">Tọgharia</string>
   <!--Swarm Details-->
   <string name="rename_btn">Kwado</string>
+  <string name="swarm_description">Tinye nkọwa</string>
   <string name="tab_members">Ndị otu</string>
   <string name="tab_files">Ihe ndekọ</string>
   <string name="tab_settings">Ntọala</string>
   <string name="dialog_hint_title">Isiokwu</string>
   <string name="dialog_hint_description">Nkọwa</string>
+  <string name="picker_title">Họrọ kọntaktị</string>
+  <string name="picker_btn">Họrọ kọntaktị</string>
   <string name="bottomsheet_remove">Wepụ onye so</string>
   <!--JamiId-->
   <string name="jami_id_validate">Debanye aha njirimara</string>
   <string name="jami_id_choose_username">Họrọ aha njirimara</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Mmadụ Bịa na Jami</string>
+  <string name="welcome_jami_description">Kekọrịta njirimara Jami gị ka e wee na-akpọtụrụ gị ngwa ngwa!</string>
   <!--Conversation details-->
   <string name="details">Ihe ndị ọzọ</string>
+  <string name="swarm_type">Ụdị nkata</string>
   <string name="Private">Ndị mmadụ n\'onwe ha</string>
   <string name="mute_conversation">Mkparịta ụka nkịtị</string>
   <!--Donation-->
+  <string name="donation_card_description">Ọ bụrụ na ị na-enwe mmasị iji Jami ma kwenye na ebumnobi anyị, ị chọrọ inye onyinye?</string>
   <string name="donation_card_not_now">Ọbụghị ugbu a</string>
+  <string name="donation_donate">Nye onyinye</string>
   <!--Extension-->
+  <string name="export_side_step1_error_malformed">Njirimara ngwaọrụ ọhụrụ amaghị ama. Biko soro ntuziaka dị n\'elu.</string>
   <string name="export_side_step1_code_connect">Jikọọ</string>
   <string name="export_side_step2_cancel">Kagbụo</string>
   <string name="export_side_step2_confirm">Kwado</string>
   <string name="import_side_step1_share">Ịkekọrịta</string>
   <string name="import_side_step2_password_import">Ịba n\'ime</string>
+  <string name="import_side_step2_action_required">Achọrọ ihe omume. Biko kwado akaụntụ na ngwaọrụ isi.</string>
+  <string name="import_side_step3_body_done">E bubatara akaụntụ ahụ nke ọma.</string>
+  <string name="link_device_error_authentication">Njehie nkwado mere mgbe a na-ejikọ ngwaọrụ. Biko lelee nzere ma nwaa ọzọ.</string>
+  <string name="link_device_error_canceled">Onye ọrụ kagburu ọrụ ahụ.</string>
   <!--Accessibility-->
+  <string name="step_title_set_password">Tọọ paswọọdụ</string>
   <!--Peer services-->
   <string name="peer_services_connect">Jikọọ</string>
+  <string name="peer_services_disconnect">Kwụsị njikọ</string>
+  <string name="notif_channel_peer_tunnel">Ọrụ e kekọrọ</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">Dezie</string>
+  <string name="shared_services_delete">Ihichapụ</string>
+  <string name="shared_services_description_hint">Nkọwa (nhọrọ)</string>
+  <string name="shared_services_port_hint">Ọdụ mpaghara</string>
+  <string name="shared_services_no_description">Enweghị nkọwa</string>
+  <string name="shared_services_more_options">Ihe ndị ọzọ ị ga-eme</string>
+  <string name="shared_services_disconnect_all_confirm">Kwụsị njikọ</string>
+  <string name="shared_services_type_custom_label">Ahaziri ahazi</string>
+  <string name="shared_services_host_hint">Ọbịa mpaghara</string>
+  <string name="shared_services_policy_hint">Onye nwere ike ịnweta</string>
+  <string name="shared_services_policy_public">Ọha</string>
+  <string name="shared_services_save">Chekwaa</string>
 </resources>

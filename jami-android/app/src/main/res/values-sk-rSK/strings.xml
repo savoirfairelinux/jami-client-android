@@ -2,7 +2,12 @@
 <resources>
   <!--About-->
   <string name="submit_issue_title">Odoslať problém</string>
+  <string name="submit_issue_action_description"><u>Vytvoriť nový problém</u></string>
   <string name="section_license">Licencia</string>
+  <string name="switch_conversation">Prepnúť konverzáciu</string>
+  <string name="delete_conversation_confirmation">Naozaj chcete odstrániť túto konverzáciu?</string>
+  <string name="acc_profile_photo_capture">Zachytiť fotografiu</string>
+  <string name="view_switch_camera">Prepnúť kameru</string>
   <string name="sponsor_section">Jami je bezplatný softvér vyvíjaný a podporovaný</string>
   <string name="copyright_section">Autorské právo</string>
   <string name="contribute_section">Prispejte</string>
@@ -19,7 +24,9 @@
   <string name="thank_note">Chceli by sme poďakovať našim prispievateľom, ktorých úsilie počas mnohých rokov urobilo tento program tým, čím je.</string>
   <string name="developers">Vývojári</string>
   <string name="media">Médiá</string>
+  <string name="community_management">Správa komunity</string>
   <string name="special_thanks">Špeciálne poďakovanie</string>
+  <string name="end_note">Toto je zoznam ľudí, ktorí investovali značné množstvo času s užitočnými výsledkami do Jami. Všetci takíto prispievatelia, ktorí chcú byť pridaní do zoznamu, by mali kontaktovať tím Jami na adrese contact@jami.net.</string>
   <!--RingActivity-->
   <string name="error_no_network">Žiadne sieťové pripojenie</string>
   <string name="error_account_offline">Účet je offline</string>
@@ -32,10 +39,12 @@
   <string name="menu_item_settings">Nastavenia</string>
   <string name="menu_item_app_settings">Nastavenia aplikácie</string>
   <string name="menu_item_account_settings">Nastavenia účtu</string>
+  <string name="menu_item_extension_list">Nastavenia rozšírení</string>
   <string name="menu_item_share">Zdieľať môj účet</string>
   <string name="menu_item_about">O programe Jami</string>
   <string name="video_setting_title">Nastavenia videa</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">Vytočiť číslo</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Prijaté pozvania</string>
@@ -46,6 +55,7 @@
     <item quantity="other">%d Konverzácií</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Hľadať alebo pridať</string>
   <string name="choose_number">Vyberte číslo</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -58,6 +68,7 @@
   <string name="notif_outgoing_call">Odchádzajúci hovor</string>
   <string name="notif_current_call_title">Prebiehajúci hovor s %1$s</string>
   <string name="notif_current_call">Prebiehajúci hovor</string>
+  <string name="notif_channel_call_in_progress">Prebieha hovor</string>
   <string name="notif_channel_calls">Hovory</string>
   <string name="notif_channel_missed_calls">Zmeškané hovory</string>
   <string name="notif_channel_incoming_calls">Prichádzajúce hovory</string>
@@ -68,6 +79,8 @@
   <string name="notif_channel_background_service">Služba na pozadí</string>
   <string name="notif_channel_background_service_descr">Povoliť neustále prijímanie a odosielanie správ.</string>
   <string name="notif_group_calls">Hovory</string>
+  <string name="notif_inprogress_group_call">Prebieha hovor</string>
+  <string name="notif_background_service">Jami je momentálne spustený na pozadí</string>
   <string name="notif_mark_as_read">Označiť ako prečítané</string>
   <string name="notif_dismiss">Odmietnuť</string>
   <string name="notif_reply">Odpovedať</string>
@@ -76,6 +89,8 @@
   <string name="notif_incoming_picture">Obrázok od %1$s</string>
   <string name="notif_sync_title">Synchronizovanie dát...</string>
   <string name="notif_location_title">Zdieľanie polohy s %1$s</string>
+  <string name="notif_channel_reconnect">Synchronizácia na pozadí</string>
+  <string name="notif_reconnect_title">Jami synchronizuje…</string>
   <string name="location_share_contact">%1$s s vami zdieľa polohu</string>
   <string name="notif_location_multi_title">Zdieľanie polohy s %1$d kontaktami</string>
   <string name="notif_location_remaining">Zostáva %1$d minút</string>
@@ -86,6 +101,7 @@
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vy:</string>
   <string name="action_call_hangup">Ukončiť hovor</string>
+  <string name="action_call_resume">Pokračovať</string>
   <string name="action_call_maximize">Maximálne</string>
   <string name="action_call_minimize">Zníženie</string>
   <string name="action_call_mute">Nezvláštne</string>
@@ -93,18 +109,32 @@
   <string name="ongoing_call">Prebiehajúci hovor</string>
   <string name="hist_in_call">Prichádzajúci hovor dĺžky %1$s</string>
   <string name="hist_out_call">Odchádzajúci hovor dĺžky %1$s</string>
+  <string name="call_duration">Trvalo %s</string>
+  <string name="call_on_hold">Hovor je podržaný</string>
+  <string name="start_error_title">Nie je možné spustiť Jami</string>
   <string name="action_call_accept">Prijať hovor</string>
+  <string name="action_call_accept_audio">Prijať so zvukom</string>
+  <string name="action_call_accept_video">Prijať s videom</string>
+  <string name="action_call_hold_accept">Prijať prichádzajúci hovor iba so zvukom a podržať aktuálny hovor</string>
+  <string name="switch_to_audio">Vypnúť video</string>
   <string name="switch_to_video">Povoliť video</string>
+  <string name="action_call_hold_accept_video">Prijať prichádzajúci hovor s videom a podržať aktuálny hovor</string>
+  <string name="action_call_end_accept">Prijať prichádzajúci hovor a ukončiť aktuálny hovor</string>
   <string name="action_call_decline">Odmietnuť</string>
   <string name="action_call_mic_mute">Stlmiť mikrofón</string>
+  <string name="action_load_extension">Načítať rozšírenie</string>
+  <string name="ab_action_speakerphone">Zapnúť reproduktor</string>
   <string name="ab_action_contact_add">Pridať kontakt</string>
   <string name="ab_action_contact_add_question">Pridať do kontaktov?</string>
   <string name="ab_action_audio_call">Začať audio hovor</string>
   <string name="ab_action_video_call">Začať video hovor</string>
   <string name="ab_action_change_screen_orientation">Zmeniť orientáciu obrazovky</string>
   <string name="share_via">Zdieľať pomocou</string>
+  <string name="write_a_message">Napísať správu</string>
   <string name="scan_qr">Nasnímať QR kód</string>
   <string name="qr_code">QR kód</string>
+  <string name="qr_code_not_contact">Nie je to QR kód kontaktu Jami</string>
+  <string name="new_group">Vytvoriť novú skupinu</string>
   <string name="ab_action_flipcamera">Otočiť kameru</string>
   <string name="ab_action_hidepreview">Skryť náhľad</string>
   <string name="remote_recording">Záznam %s...</string>
@@ -121,23 +151,33 @@
   <string name="conversation_send_video">Zaznamenať video klip</string>
   <string name="conversation_share_location">Zdieľať polohu</string>
   <string name="ongoing_group_call">Prebiehajúci hovor</string>
+  <string name="started_call">Hovor sa začal</string>
   <string name="in_reply_to">V odpovedi na</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Povolenie kamery</string>
+  <string name="permission_dialog_camera_message">Videokonverzácie vyžadujú povolenie kamery. Povolenie kamery je zakázané. Povoľte ho v nastaveniach zariadenia, aby ste mohli použiť túto funkciu.</string>
+  <string name="camera_error">Pri spúšťaní kamery sa vyskytla chyba.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Chyba</string>
   <string name="ringtone_error_format_not_supported">Tento formát nie je podporovaný.</string>
   <string name="ringtone_error_size_too_big">Tento súbor je priveľký. Maximálna veľkosť je %1$dkB.</string>
   <string name="ringtone_custom_prompt">Nastaviť vlastný vyzváňací tón</string>
   <string name="ringtone_custom_label">Vlastný</string>
+  <string name="ringtone_jami_tones">Vyzváňacie tóny Jami</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jami vyžaduje povolenie „Čítať kontakty“. Povoľte ho v nastaveniach zariadenia, aby ste mohli použiť túto funkciu.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jami vyžaduje povolenie „Zapisovať záznam hovorov“. Povoľte ho v nastaveniach zariadenia, aby ste mohli použiť túto funkciu.</string>
   <!--Post notifications permission-->
+  <string name="permission_dialog_post_notifications_title">Povoliť oznámenia</string>
+  <string name="permission_dialog_post_notifications_message">Jami potrebuje povolenie oznámení, aby vás upozornil na prichádzajúce hovory a správy, aj keď je aplikácia na pozadí. Bez neho môžete zmeškať hovory.</string>
+  <string name="permission_dialog_post_notifications_blocked_message">Oznámenia sú pre Jami zakázané. Bez nich zmeškáte prichádzajúce hovory a správy. Povoľte oznámenia pre Jami v nastaveniach zariadenia.</string>
   <string name="permission_dialog_open_settings">Otvoriť nastavenia</string>
   <string name="permission_dialog_later">Neskôr</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Nasnímajte QR kód účtu, ktorý chcete pridať.</string>
   <string name="title_activity_qrcode">Zdieľať môj účet</string>
+  <string name="error_scan_no_camera_permissions">Skener QR kódov vyžaduje povolenie kamery. Povolenie kamery je zakázané. Povoľte ho v nastaveniach zariadenia, aby ste mohli použiť túto funkciu.</string>
   <string name="tab_code">Môj kód</string>
   <string name="tab_scan">Nasnímať Kód</string>
   <!--Settings-->
@@ -149,6 +189,7 @@
   <string name="conversation_details">Podrobnosti rozhovoru</string>
   <string name="contact_details">Informácie o kontakte</string>
   <string name="conversation_action_delete_this">Vymazať túto konverzáciu</string>
+  <string name="conversation_action_delete_this_title">Odstrániť túto konverzáciu?</string>
   <string name="leave_conversation">Nechaj rozhovor</string>
   <string name="conversation_action_delete_this_message">Túto operáciu nie je možné vrátiť.</string>
   <string name="conversation_action_history_clear">Vymazať históriu</string>
@@ -157,14 +198,24 @@
   <string name="delete_contact">Odstrániť kontakt</string>
   <string name="conversation_action_remove_this_title">Odstrániť tento kontakt?</string>
   <string name="conversation_action_remove_this_message">Kontakt i história konverzácie bude natrvalo vymazaná. </string>
+  <string name="conversation_action_add_this_message">Týmto sa odošle žiadosť o spojenie.</string>
   <string name="remove_conversation">Odstrániť konverzáciu</string>
+  <string name="conversation_action_remove_title">Odstrániť konverzáciu?</string>
+  <string name="conversation_action_remove_message">Týmto sa odstráni táto konverzácia bez odstránenia kontaktu.</string>
+  <string name="swarm_group_action_leave">Opustiť skupinu</string>
+  <string name="swarm_group_action_leave_title">Opustiť túto skupinu?</string>
+  <string name="swarm_group_action_leave_message">Týmto sa konverzácia odstráni zo zoznamu vašich konverzácií</string>
+  <string name="conversation_action_copy_peer_number">Kopírovať identifikátor kontaktu</string>
+  <string name="copied_to_clipboard">%1$s skopírované do schránky.</string>
   <string name="conversation_action_select_peer_number">Zvoliť číslo</string>
   <string name="conversation_action_block_this">Zablokovať kontakt</string>
   <string name="conversation_action_unblock_this">Odblokovať kontakt</string>
+  <string name="conversation_action_go_to_call">Vrátiť sa k hovoru</string>
   <string name="conversation_action_incoming_call">Prichádzajúci hovor</string>
   <string name="conversation_action_latest">Prejsť na koniec konverzácie</string>
   <string name="conversation_open_file_error">Nie je nainštalovaná žiadna aplikácia schopná otvoriť tento typ súboru.</string>
   <string name="clip_contact_uri">Adresa kontaktu</string>
+  <string name="clip_message">Obsah správy</string>
   <string name="block_contact_dialog_title">Zablokovať %1$s?</string>
   <string name="block_contact_dialog_message">%1$s nebude mať možnosť kontaktovať vás až do odblokovania.</string>
   <string name="block_contact_completed">Kontakt %1$s bol zablokovaný.</string>
@@ -177,18 +228,55 @@
   <string name="conversation_syncing">Stiahnutie konverzácie z peer</string>
   <string name="conversation_blocked">Tento kontakt je zablokovaný.</string>
   <string name="conversation_ended">Rozpráva sa skončila.</string>
+  <string name="conversation_message_deleted">%s odstránil(a) správu</string>
   <string name="conversation_reply_you">Ty...</string>
+  <string name="video_not_found">Videosúbor sa nenašiel</string>
   <string name="conversation_preference_color">Farba konverzácie</string>
   <string name="conversation_preference_emoji">Emoji konverzácie</string>
   <string name="conversation_type_contact">Kontakt s Jami</string>
   <string name="conversation_type_private">Privátny</string>
   <string name="conversation_type_group">Skupina</string>
+  <string name="conversation_contact_invited">%1$s bol(a) pozvaný(á) do konverzácie.</string>
+  <string name="conversation_contact_added">%1$s sa pripojil(a) ku konverzácii.</string>
+  <string name="conversation_contact_left">%1$s opustil(a) konverzáciu.</string>
+  <string name="conversation_contact_blocked">%1$s bol(a) zablokovaný(á) v konverzácii.</string>
+  <string name="conversation_contact_unblocked">%1$s bol(a) odblokovaný(á) v konverzácii.</string>
   <string name="conversation_search_hint">Vyhľadávacie rozhovor</string>
+  <string name="audio_recorder_error">Nie je možné spustiť záznamník zvuku.</string>
   <string name="audio_recording_in_progress">Nahrávanie...</string>
+  <string name="audio_recording_ready">Ťuknutím prehráte, potiahnutím vlnového priebehu vyhľadáte</string>
+  <string name="audio_recording_playing">Prehráva sa…</string>
   <string name="audio_recording_send">Poslať</string>
   <string name="audio_recording_play">Spustiť</string>
   <string name="audio_recording_pause">Pozastaviť</string>
   <string name="audio_recording_stop">Ukončiť zaznamenávanie</string>
+  <string name="audio_recording_extend">Pokračovať v nahrávaní</string>
+  <string name="audio_recording_restart">Nahrať znova</string>
+  <string name="audio_recording_delete">Zahodiť</string>
+  <string name="audio_recording_discard_title">Zahodiť nahrávku?</string>
+  <string name="audio_recording_discard_message">Vaša nahrávka bude stratená.</string>
+  <string name="audio_recording_discard_keep">Pokračovať v úpravách</string>
+  <string name="audio_recording_discard_confirm">Zahodiť</string>
+  <string name="audio_recording_limit_reached">Bol dosiahnutý limit nahrávania. Odošlite alebo zrušte.</string>
+  <string name="audio_recording_gesture_hint">Uvoľnením odošlete · potiahnutím ◀ zrušíte · ▲ skontrolujete</string>
+  <string name="audio_recording_release_cancel">Uvoľnením zrušíte</string>
+  <string name="audio_recording_release_review">Uvoľnením otvoríte editor</string>
+  <string name="audio_recording_slide_cancel">Zrušiť nahrávanie</string>
+  <string name="audio_recording_slide_review">Otvoriť editor</string>
+  <string name="audio_recording_review_short">Skontrolovať</string>
+  <string name="audio_recording_too_short">Podržaním nahráte hlasovú správu</string>
+  <string name="video_recorder_error">Nie je k dispozícii žiadny videozáznamník.</string>
+  <string name="taking_picture_error">Pri snímaní fotografie sa vyskytla chyba.</string>
+  <string name="find_picture_error">Pri hľadaní fotografie sa vyskytla chyba.</string>
+  <string name="open_camera_error">Pri otváraní kamery sa vyskytla chyba.</string>
+  <string name="starting_recorder_error">Pri spúšťaní záznamníka sa vyskytla chyba.</string>
+  <string name="starting_camera_error">Pri spúšťaní kamery sa vyskytla chyba.</string>
+  <string name="browser_error">Na tomto zariadení nie je k dispozícii žiadny prehliadač súborov.</string>
+  <string name="import_archive_error">Pri importe archívu sa vyskytla chyba.</string>
+  <string name="export_archive_error">Pri exporte archívu sa vyskytla chyba.</string>
+  <string name="load_ringtone_error">Pri načítaní vyzváňacieho tónu sa vyskytla chyba.</string>
+  <string name="sharing_log_error">Pri zdieľaní záznamov sa vyskytla chyba.</string>
+  <string name="no_native_crash">Žiadne nedávne natívne zlyhanie</string>
   <string name="today">Dnes</string>
   <string name="yesterday">Včera</string>
   <!--Contacts-->
@@ -202,19 +290,25 @@
   <string name="help_password_choose">Zvoľte si silné heslo, ktoré si zapamätáte, na ochranu vášho účtu.</string>
   <string name="help_password_enter">Vložte si heslo na účet Jami.</string>
   <string name="help_server_enter">Vložte URL správneho servera.</string>
+  <string name="pin_copied">Overovací kód skopírovaný do schránky.</string>
+  <string name="copied_clipboard">Skopírované do schránky.</string>
   <string name="wizard_next">Ďalej</string>
   <string name="wizard_back">Späť</string>
   <string name="wizard_skip">Preskočiť</string>
   <string name="hist_contact_invited">Kontaktný pozvaný</string>
   <string name="hist_contact_added">Kontakt pridaný</string>
   <string name="hist_contact_left">Kontakt doľava</string>
+  <string name="hist_contact_blocked">Kontakt zablokovaný</string>
+  <string name="hist_contact_unblocked">Kontakt odblokovaný</string>
   <string name="hist_invitation_received">Bola prijatá pozvánka</string>
   <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Profilové meno</string>
   <string name="profile_message_warning">Profil je zdieľaný len s kontaktmi</string>
+  <string name="custom_profile_message_warning">Vlastný profil je viditeľný iba pre účet na tomto zariadení</string>
   <string name="open_the_gallery">Otvoriť galériu</string>
   <string name="take_a_photo">Zhotoviť fotografiu</string>
+  <string name="remove_photo">Odstrániť fotografiu</string>
   <string name="profile_name_hint">Vložte svoje meno</string>
   <string name="registered_name">Registrované meno</string>
   <string name="no_registered_name">Žiadne registrované meno</string>
@@ -229,14 +323,23 @@
   <string name="share_message">Nasnímajte tento kód aplikáciou Jami</string>
   <string name="share_message_no_account">Vyberte účet, ktorý chcete zdieľať.</string>
   <string name="share_your_account_information">Zdieľať moje kontaktné informácie </string>
+  <string name="share_contact_information">Zdieľať kontaktné informácie</string>
   <string name="share_label">Zdieľať</string>
   <string name="generic_error_migration">Chyba</string>
+  <string name="generic_error_migration_message">Pri migrácii účtu sa vyskytla chyba.</string>
   <string name="title_share_with">Zdieľať s...</string>
   <!--Pending invitations-->
   <string name="accept">Prijať</string>
   <string name="decline">Odmietnuť</string>
   <string name="block">Blokovať</string>
+  <string name="decline_invitation">Odmietnuť pozvánku</string>
+  <string name="accept_invitation">Prijať pozvánku</string>
+  <string name="accept_invitation_body">Pozvánka prijatá od %s.</string>
+  <string name="new_invitation_request_title">Nová pozvánka</string>
   <string name="invitation_message">Máte %1$d kontaktné požiadavky</string>
+  <string name="no_invitations">Nie sú žiadne pozvánky na zobrazenie.</string>
+  <string name="invitation_received_message">Pozvánka prijatá od %s.\nPrijať alebo odmietnuť pozvánku?</string>
+  <string name="outgoing_contact_invitation_message">Tento kontakt nie je vo vašom zozname kontaktov.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Žiadne blokované kontakty</string>
   <!--Smartlist-->
@@ -244,14 +347,31 @@
   <string name="conversation_placeholder">Ešte ste nemali žiadne rozhovory.</string>
   <string name="contact_request_sent">Žiadosť o kontakt poslaná</string>
   <string name="start_conversation">Začať konverzáciu</string>
+  <string name="search_results">Výsledky vyhľadávania</string>
   <string name="tv_contact_row_header">Kontakty</string>
   <string name="gallery_error_title">Aplikácia Galéria nebola nájdená</string>
   <string name="gallery_error_message">Nebola nájdená žiadna aplikácia na otvorenie Galérie</string>
+  <string name="generic_error">Vyskytla sa neznáma chyba.</string>
   <!--File Transfer-->
+  <string name="invalid_file">Neplatný súbor.</string>
+  <string name="not_able_to_write_file">Nie je možné zapísať súbor.</string>
   <string name="file_transfer_status_created">Inicializácia</string>
+  <string name="file_transfer_status_unsupported">Nepodporované</string>
+  <string name="file_transfer_status_wait_peer_acceptance">Čaká sa na prijatie partnerom…</string>
+  <string name="file_transfer_status_wait_host_acceptance">Čaká sa na prijatie hostiteľom…</string>
+  <string name="file_transfer_status_ongoing">Prebieha</string>
+  <string name="file_transfer_status_finished">Dokončené</string>
+  <string name="file_transfer_status_closed_by_host">Zatvorené hostiteľom</string>
+  <string name="file_transfer_status_closed_by_peer">Zatvorené partnerom</string>
   <string name="file_transfer_status_invalid_file">Neplatný súbor</string>
+  <string name="file_transfer_status_unjoinable_peer">Nedostupný partner</string>
   <string name="file_transfer_status_canceled">Zrušené</string>
+  <string name="file_transfer_status_error">Pri prenose súboru sa vyskytla chyba.</string>
+  <string name="file_transfer_status_timed_out">Operácii vypršal časový limit.</string>
+  <string name="file_saved_in">Súbor uložený v %s.</string>
+  <string name="file_saved_successfully">Súbor bol úspešne uložený.</string>
   <string name="file_download">Stiahnite</string>
+  <string name="no_space_left_on_device">Na zariadení nie je k dispozícii žiadne úložné miesto.</string>
   <string name="title_media_viewer">Zobrazovač médií</string>
   <string name="menu_file_open">Otvoriť súbor</string>
   <string name="menu_file_download">Stiahnuť súbor</string>
@@ -260,9 +380,11 @@
   <string name="menu_file_share">Zdieľať súbor</string>
   <string name="menu_message_copy">Kopírovať</string>
   <string name="menu_message_edit">Zobraziť správu</string>
+  <string name="menu_message_history">História správ</string>
   <string name="menu_message_delete">Vymazať správu</string>
   <string name="menu_message_cancel">Zrušiť správu</string>
   <string name="menu_message_reply">Odpovedať</string>
+  <string name="menu_message_cancel_reply">Zrušiť odpoveď</string>
   <string name="menu_delete">Vymazať</string>
   <string name="pref_darkTheme_title">Tmavá téma</string>
   <string name="pref_darkTheme_summary">Vždy použiť tmavú tému namiesto systémovej</string>
@@ -285,6 +407,16 @@
   <string name="tv_send_video">Poslať Médiá</string>
   <string name="tv_action_more">Viac</string>
   <string name="conversation_input_speech_hint">Povedzte niečo...</string>
+  <string name="audio_permission_denied">Povolenie mikrofónu je zakázané. Povoľte ho v nastaveniach zariadenia, aby ste mohli použiť túto funkciu.</string>
+  <string name="camera_permission_denied">Povolenie kamery je zakázané. Povoľte ho v nastaveniach zariadenia, aby ste mohli použiť túto funkciu.</string>
+  <string name="speech_recogniton_unavailable">Rozpoznávanie reči nie je k dispozícii.</string>
+  <string name="audio_permission_rationale_title">Vyžaduje sa povolenie zvuku</string>
+  <string name="camera_permission_rationale_title">Vyžaduje sa povolenie kamery</string>
+  <string name="audio_permission_rationale_message">Jami vyžaduje povolenie mikrofónu na používanie funkcií prevodu reči na text a nahrávania zvuku. Bude vyžiadané v ďalšom kroku.</string>
+  <string name="camera_permission_rationale_message">Jami vyžaduje povolenie kamery na nahrávanie videa a uskutočňovanie videohovorov. Bude vyžiadané v ďalšom kroku.</string>
+  <string name="unable_to_start_recorder">Nie je možné spustiť nahrávanie zvuku.</string>
+  <string name="error_sharing_file">Pri zdieľaní súboru sa vyskytla chyba.</string>
+  <string name="error_opening_file">Pri otváraní súboru sa vyskytla chyba.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Odporúčané</string>
   <string name="wizard_status_optional">Voliteľné</string>
@@ -302,9 +434,11 @@
   <string name="wizard_profile_button">Uloženie profilu</string>
   <string name="wizard_profile_skip">Preskoč a urob to neskôr.</string>
   <string name="fab_path_choose">Vyberte iný súbor</string>
+  <string name="chat_extensions">Rozšírenia četu</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Zdieľať</string>
   <string name="bottomSheet_dialpad_btn">Vypínacie displeje</string>
+  <string name="bottomSheet_extensions_btn">Rozšírenia</string>
   <string name="bottomSheet_add_participants_btn">Pridať</string>
   <string name="bottomSheet_change_camera_btn">Zmena</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
@@ -312,49 +446,177 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Znie to</string>
   <string name="bottomSheet_raiseHand_btn">Zdvihnite ruku</string>
+  <string name="camera_toggle_btn_description">Prepnúť kameru</string>
   <string name="camera_flip_btn_description">Otočiť kameru</string>
   <string name="add_participant_btn_description">Pridať účastníka</string>
   <string name="screen_share_btn_description">Zdieľať obrazovku</string>
+  <string name="open_account_extension_settings">Otvoriť nastavenia rozšírení účtu</string>
+  <string name="open_general_extension_settings">Otvoriť všeobecné nastavenia rozšírení</string>
   <string name="uninstall">Odinstalacia</string>
   <string name="reset">Nastavenie</string>
   <!--Swarm Details-->
   <string name="rename_btn">Potvrdiť</string>
+  <string name="rename_error">nemôže byť prázdne.</string>
   <string name="swarm_description">Pridať popis</string>
   <string name="tab_members">Členovia</string>
   <string name="tab_files">Súbory</string>
   <string name="tab_settings">Nastavenia</string>
+  <string name="not_admin_toast">Iba správcovia môžu upravovať informácie tejto skupiny</string>
+  <string name="dialog_title_contact">Upraviť zobrazované meno</string>
+  <string name="dialogtitle_title">Upraviť názov skupiny</string>
+  <string name="dialogtitle_description">Upraviť popis skupiny</string>
   <string name="dialog_hint_title">Nadpis</string>
   <string name="dialog_hint_description">Opis</string>
   <string name="picker_title">Vyberte kontakty</string>
   <string name="picker_btn">Vyberte kontakty</string>
+  <string name="no_contact_to_add">Nemáte žiadny kontakt na pridanie</string>
   <string name="bottomsheet_contact">Kontaktujte Jami\n%1$s</string>
   <string name="bottomsheet_remove">Odstránenie člena</string>
+  <string name="error_open_no_app_found">Nenašla sa žiadna aplikácia na spracovanie tohto súboru: %1$s</string>
+  <string name="swarm_detail_no_document">Zatiaľ nemáte žiadne dokumenty.</string>
+  <string name="group_admin">Správca</string>
+  <string name="share_contact_intent_title">Pridajte tento kontakt v Jami!</string>
+  <string name="share_contact_intent_body">Tento kontakt „%1$s“ môžete pridať na distribuovanej komunikačnej platforme Jami: %2$s</string>
   <!--JamiId-->
+  <string name="jami_id_copy">Kopírovať JamiId</string>
+  <string name="jami_id_share">Zdieľať JamiId</string>
   <string name="jami_id_validate">Registrovať používateľské meno</string>
+  <string name="jami_id_available">Používateľské meno je dostupné.</string>
+  <string name="jami_id_not_available">Používateľské meno nie je dostupné.</string>
+  <string name="jami_id_info">• Maximálne 32 znakov\n• Povolené špeciálne znaky: pomlčka (-), podčiarkovník (_)</string>
+  <string name="jami_id_looking_for_availability">Kontroluje sa dostupnosť používateľského mena…</string>
   <string name="jami_id_choose_username">Vyberte používateľské meno</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Vitajte v Jami</string>
+  <string name="welcome_jami_description">Zdieľajte svoj identifikátor Jami, aby vás bolo možné ľahšie kontaktovať!</string>
   <!--Conversation details-->
   <string name="details">Detaily</string>
+  <string name="secure_p2p_connection">Zabezpečené spojenie typu peer-to-peer</string>
   <string name="swarm_type">Typ konverzácie</string>
   <string name="Private">Privátny</string>
+  <string name="swarm_id">ID roja</string>
+  <string name="show_qr_code">Zobraziť QR kód</string>
+  <string name="show_certificate">Zobraziť certifikát</string>
   <string name="mute_conversation">Mlčité rozhovory</string>
   <!--Donation-->
+  <string name="donation_card_description">Ak vás baví používať Jami a veríte v naše poslanie, chcete prispieť?</string>
   <string name="donation_card_not_now">Teraz nie</string>
   <string name="donation_donate">Prispejte</string>
+  <string name="donation_setting_title">Pripomienka daru</string>
+  <string name="donation_setting_description">Povoliť pripomienku daru</string>
   <!--Extension-->
+  <string name="unable_to_load">Nie je možné načítať %1$s</string>
+  <string name="load_success">%1$s: povolené</string>
+  <string name="unload_success">%1$s: zakázané</string>
+  <string name="install_success">Rozšírenie %1$s bolo úspešne nainštalované.</string>
+  <string name="install_error">Pri importe rozšírenia sa vyskytla chyba.</string>
   <string name="export_side_main_title">Exportovať účet</string>
+  <string name="import_side_main_title">Importovať účet</string>
+  <string name="link_device_dialog_stop_title">Chcete zastaviť prepájanie zariadenia?</string>
+  <string name="link_device_dialog_stop_export_body">Zastavením sa zruší operácia exportu účtu.</string>
+  <string name="link_device_dialog_stop_import_body">Zastavením sa zruší operácia importu účtu.</string>
+  <string name="export_side_step1_advice_qr">Na novom zariadení iniciujte nový účet.\nVyberte <b>Účet &gt; Pridať účet &gt; Pripojiť z iného zariadenia</b>\nKeď budete pripravení, naskenujte QR kód</string>
+  <string name="export_side_step1_switch_to_code">Alebo kliknutím sem zadajte overovací kód</string>
+  <string name="export_side_step1_switch_to_qr">Alebo kliknutím sem naskenujte QR kód</string>
+  <string name="export_side_step1_error_malformed">Nerozpoznaný identifikátor nového zariadenia. Postupujte prosím podľa pokynov vyššie.</string>
   <string name="export_side_step1_code_connect">Pripojiť</string>
+  <string name="export_side_step2_advice">Nové zariadenie sa nachádza tu. Ste to vy?\nAk chcete pokračovať v operácii exportu účtu, kliknite na Potvrdiť.</string>
+  <string name="export_side_step2_advice_ip_only">Nové zariadenie pripojené na adrese nižšie. Ste to vy?\nAk chcete pokračovať v exporte účtu, kliknite na Potvrdiť.</string>
+  <string name="export_side_step2_ip_only">IP adresa nového zariadenia: %1$s</string>
   <string name="export_side_step2_cancel">Zrušiť</string>
   <string name="export_side_step2_confirm">Potvrdiť</string>
+  <string name="export_side_step2_password">Účet je chránený heslom.\nAk chcete pokračovať, overte sa na novom zariadení.</string>
+  <string name="export_side_step3_body_loading">Operácia exportu účtu na nové zariadenie prebieha. Čakajte, prosím…</string>
+  <string name="export_side_step3_body_done">Účet bol úspešne importovaný na nové zariadenie.</string>
+  <string name="export_side_step3_exit">Dokončiť</string>
+  <string name="import_side_step1_advice_qr">Iniciujte export na zdrojovom zariadení.\n<b>Vyberte Účet &gt; Nastavenia účtu &gt; Prepojiť nové zariadenie</b>\nKeď budete pripravení, naskenujte QR kód nižšie.</string>
+  <string name="import_side_step1_advice_code">Iniciujte export na zdrojovom zariadení.\n<b>Vyberte Účet &gt; Nastavenia účtu &gt; Prepojiť nové zariadenie</b>\nKeď budete pripravení, zadajte kód nižšie.</string>
   <string name="import_side_step1_share">Zdieľať</string>
+  <string name="import_side_step1_switch_to_code">Alebo kliknutím sem zobrazte overovací kód</string>
+  <string name="import_side_step1_switch_to_qr">Alebo kliknutím sem zobrazte QR kód</string>
+  <string name="import_side_step1_connecting">Pripája sa k zdrojovému zariadeniu…</string>
+  <string name="import_side_step1_preparing_device">Pripravuje sa zariadenie…</string>
+  <string name="import_side_step2_password_prompt">Účet je chránený heslom.\nOdomknite ho, aby ste mohli pokračovať.</string>
   <string name="import_side_step2_password_import">Dovoz</string>
+  <string name="import_side_step2_password_unlocking">Odomyká sa účet…</string>
+  <string name="import_side_step2_action_required">Vyžaduje sa akcia. Potvrďte prosím účet na zdrojovom zariadení.</string>
+  <string name="import_side_step3_body_loading">Účet sa importuje na nové zariadenie. Čakajte, prosím…</string>
+  <string name="import_side_step3_body_done">Účet bol úspešne importovaný.</string>
+  <string name="import_side_step3_go_to_account">Prejsť na nový účet</string>
+  <string name="import_side_step3_exit">Dokončiť</string>
+  <string name="link_device_share_title">Zdieľať overovací kód</string>
+  <string name="link_device_error_network">Pri prepájaní zariadenia sa vyskytla sieťová chyba. Skontrolujte svoje pripojenie a skúste to znova.</string>
+  <string name="link_device_error_authentication">Pri prepájaní zariadenia došlo k chybe overenia. Skontrolujte prihlasovacie údaje a skúste to znova.</string>
+  <string name="link_device_error_timeout">Operácii vypršal časový limit.</string>
+  <string name="link_device_error_canceled">Operácia bola zrušená používateľom.</string>
+  <string name="link_device_error_unknown">Vyskytla sa chyba.</string>
+  <string name="link_device_error_bad_password">Skontrolujte prihlasovacie údaje a skúste to znova.</string>
+  <string name="test_push">Testovať push</string>
   <!--Accessibility-->
+  <string name="step_title_create_username">Vytvoriť používateľské meno</string>
   <string name="step_title_set_password">Nastaviť heslo</string>
+  <string name="step_title_create_profile">Vytvoriť profil</string>
+  <string name="step_format">Krok %1$d z %2$d: %3$s</string>
   <!--Peer services-->
+  <string name="peer_services_title">Zdieľané služby</string>
+  <string name="peer_services_refresh">Obnoviť služby</string>
   <string name="peer_services_connect">Pripojiť</string>
+  <string name="peer_services_disconnect">Odpojiť</string>
+  <string name="peer_services_empty">Nie sú k dispozícii žiadne zdieľané služby</string>
+  <string name="peer_services_link_copied">Odkaz skopírovaný do schránky</string>
+  <string name="peer_services_error_offline">Kontakt je offline</string>
+  <string name="peer_services_error_unreachable">Kontakt je nedosiahnuteľný</string>
+  <string name="peer_services_error_timeout">Žiadosti vypršal časový limit</string>
+  <string name="peer_services_error_unknown">Nepodarilo sa načítať služby</string>
+  <string name="notif_channel_peer_tunnel">Zdieľané služby</string>
+  <string name="notif_channel_peer_tunnel_descr">Zobrazené, keď sú na pozadí aktívne tunely partnerských služieb.</string>
+  <string name="notif_peer_tunnel_title">Zdieľané služby aktívne</string>
+  <string name="notif_peer_tunnel_text">Jami udržuje vaše pripojenia služieb aktívne na pozadí</string>
+  <string name="notif_peer_tunnel_stop_all">Zastaviť všetko</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_settings_title">Zdieľané služby</string>
+  <string name="shared_services_settings_description">Sprístupniť miestne služby používateľom Jami</string>
+  <string name="shared_services_empty">Žiadne služby nie sú nakonfigurované</string>
+  <string name="shared_services_add">Pridať službu</string>
+  <string name="shared_services_add_title">Pridať zdieľanú službu</string>
+  <string name="shared_services_edit_title">Upraviť zdieľanú službu</string>
   <string name="shared_services_edit">Upraviť</string>
+  <string name="shared_services_delete">Vymazať</string>
+  <string name="shared_services_name_hint">Názov služby</string>
+  <string name="shared_services_name_required">Názov služby je povinný</string>
+  <string name="shared_services_description_hint">Popis (voliteľné)</string>
+  <string name="shared_services_port_hint">Miestny port</string>
+  <string name="shared_services_port_required">Číslo portu je povinné</string>
+  <string name="shared_services_port_invalid">Port musí byť medzi 1 a 65535</string>
+  <string name="shared_services_port">Port: %d</string>
+  <string name="shared_services_no_description">Žiadny popis</string>
+  <string name="shared_services_empty_subtitle">Zdieľajte miestne súbory alebo služby s používateľmi Jami</string>
   <string name="shared_services_more_options">Viac možností</string>
+  <string name="shared_services_open_in_browser">Otvoriť v prehliadači</string>
+  <string name="shared_services_disconnect_all">Odpojiť všetko</string>
+  <string name="shared_services_disconnect_all_title">Odpojiť všetko?</string>
+  <string name="shared_services_disconnect_all_message">Nasledujúce bude odpojené:\n\n%1$s\n\nHostované služby budú vypnuté a pripojenia k ostatným zariadeniam budú uzavreté.</string>
+  <string name="shared_services_disconnect_all_confirm">Odpojiť</string>
+  <string name="shared_services_nothing_active">Momentálne nie je nič aktívne</string>
+  <string name="shared_services_hosting_item">Hostovanie: %1$s (%2$s)</string>
+  <string name="shared_services_tunnel_item">%1$s (z %2$s)</string>
+  <string name="shared_services_type_website_label">Webová stránka</string>
+  <string name="shared_services_type_custom_label">Vlastný</string>
+  <string name="shared_services_local_port">Miestny port %d</string>
+  <string name="shared_services_local_address">%1$s:%2$d</string>
+  <string name="shared_services_type_custom">Vlastný server</string>
+  <string name="shared_services_type_website">Pridať webovú stránku</string>
+  <string name="shared_services_add_custom_title">Pridať vlastný server</string>
+  <string name="shared_services_add_website_title">Pridať webovú stránku</string>
+  <string name="shared_services_host_hint">Miestny hostiteľ</string>
+  <string name="shared_services_scheme_hint">Schéma URI (napr. http, ftp)</string>
+  <string name="shared_services_directory_hint">Miestny adresár</string>
+  <string name="shared_services_directory_required">Vyberte adresár</string>
+  <string name="shared_services_choose">Vybrať</string>
+  <string name="shared_services_policy_hint">Prístupné pre</string>
+  <string name="shared_services_policy_contacts">Moje kontakty</string>
+  <string name="shared_services_policy_public">Verejné</string>
+  <string name="shared_services_policy_specific">Konkrétne kontakty</string>
+  <string name="shared_services_allowed_contacts_hint">Povolené kontakty (oddelené čiarkami)</string>
   <string name="shared_services_save">Uložiť</string>
 </resources>

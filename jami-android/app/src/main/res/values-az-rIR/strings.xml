@@ -334,4 +334,9 @@
   <!--Peer services-->
   <string name="peer_services_connect">باغلا</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">ترمیم</string>
+  <string name="shared_services_delete">حذف</string>
+  <string name="shared_services_more_options">داها چوخ سئچیش</string>
+  <string name="shared_services_type_custom_label">آدامی</string>
+  <string name="shared_services_save">ساقلاماق</string>
 </resources>

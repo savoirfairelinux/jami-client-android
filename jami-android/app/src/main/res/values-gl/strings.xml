@@ -1,10 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Enviar incidencia</string>
+  <string name="submit_issue_action_description"><u>Crear unha incidencia nova</u></string>
   <string name="section_license">Licenza</string>
+  <string name="switch_conversation">Cambiar de conversa</string>
+  <string name="delete_conversation_confirmation">Seguro que queres eliminar esta conversa?</string>
+  <string name="acc_profile_photo_capture">Capturar foto</string>
+  <string name="view_switch_camera">Cambiar de cámara</string>
+  <string name="sponsor_section">Jami é software libre desenvolvido e mantido por</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Colaborar</string>
   <string name="version_section">Versión</string>
+  <string name="no_browser_app_installed">Non se atopou ningún navegador web; instala un para ver esta páxina.</string>
   <string name="website_chooser_title">Ver sitio web utilizando...</string>
   <string name="license">Este software proporcionase \"tal como é\", sen garantía de ningún tipo: Ao detalle en <u>GNU General Public License versión 3 ou posterior</u></string>
   <string name="description">Jami é software libre para comunicacións universais e que respecta as liberdades e privacidade das súas usuarias.</string>
@@ -13,7 +21,12 @@
   <string name="call_service_description">Este servizo é preciso para manter as túas chamadas en marcha en primeiro plano. Só funciona durante as chamadas.</string>
   <string name="data_transfer_service_description">Este servizo é necesario para mostrar notificacións persistentes durante a transferencia de ficheiros. Só funciona durante as transferencias.</string>
   <!--About dialog-->
+  <string name="thank_note">Queremos agradecer aos nosos colaboradores, cuxos esforzos ao longo de moitos anos fixeron deste software o que é.</string>
+  <string name="developers">Desenvolvedores</string>
   <string name="media">Multimedia</string>
+  <string name="community_management">Xestión da comunidade</string>
+  <string name="special_thanks">Agradecementos especiais a</string>
+  <string name="end_note">Esta é unha lista de persoas que investiron unha cantidade significativa de tempo, con resultados útiles, en Jami. Calquera destes colaboradores que desexe ser engadido á lista debe contactar co equipo de Jami en contact@jami.net.</string>
   <!--RingActivity-->
   <string name="error_no_network">Sen conexión a rede</string>
   <string name="error_account_offline">A conta non está conectada</string>
@@ -24,11 +37,14 @@
   <string name="menu_item_accounts">Xestionar contas</string>
   <string name="menu_item_account">Xestionar conta</string>
   <string name="menu_item_settings">Axustes</string>
+  <string name="menu_item_app_settings">Configuración da aplicación</string>
   <string name="menu_item_account_settings">Axustes da Conta</string>
+  <string name="menu_item_extension_list">Configuración das extensións</string>
   <string name="menu_item_share">Compartir a miña conta</string>
   <string name="menu_item_about">Acerca de Jami</string>
   <string name="video_setting_title">Configuración de vídeo</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">Marcar número</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Convites recibidos</string>
@@ -37,6 +53,7 @@
     <item quantity="other">%d Conversas</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Buscar ou engadir</string>
   <string name="choose_number">Escolle un número</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -61,6 +78,7 @@
   <string name="notif_channel_background_service_descr">Permite recibir chamadas e mensaxes en todo momento.</string>
   <string name="notif_group_calls">Chamadas</string>
   <string name="notif_inprogress_group_call">Chamada en curso</string>
+  <string name="notif_background_service">Jami estase a executar en segundo plano</string>
   <string name="notif_mark_as_read">Marcar como lido</string>
   <string name="notif_dismiss">Desbotar</string>
   <string name="notif_reply">Responder</string>
@@ -69,6 +87,8 @@
   <string name="notif_incoming_picture">Imaxe desde %1$s</string>
   <string name="notif_sync_title">Sincr. datos...</string>
   <string name="notif_location_title">Compartindo localización con %1$s</string>
+  <string name="notif_channel_reconnect">Sincronización en segundo plano</string>
+  <string name="notif_reconnect_title">Jami estase a sincronizar…</string>
   <string name="location_share_contact">%1$s está compartindo a localización contigo</string>
   <string name="notif_location_multi_title">Compartindo a localización con %1$d contactos</string>
   <string name="notif_location_remaining">%1$d minutos restantes</string>
@@ -79,6 +99,7 @@
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ti:</string>
   <string name="action_call_hangup">Finalizar chamada</string>
+  <string name="action_call_resume">Retomar</string>
   <string name="action_call_maximize">Maximizar</string>
   <string name="action_call_minimize">Reducir</string>
   <string name="action_call_mute">Acalar</string>
@@ -87,18 +108,31 @@
   <string name="hist_in_call">Chamada de %1$s</string>
   <string name="hist_out_call">Chamada a %1$s</string>
   <string name="call_duration">Durou %s</string>
+  <string name="call_on_hold">A chamada está en espera</string>
+  <string name="start_error_title">Non se puido iniciar Jami</string>
   <string name="action_call_accept">Aceptar chamada</string>
+  <string name="action_call_accept_audio">Aceptar con audio</string>
+  <string name="action_call_accept_video">Aceptar con vídeo</string>
+  <string name="action_call_hold_accept">Aceptar a chamada entrante só con audio e poñer en espera a actual</string>
+  <string name="switch_to_audio">Desactivar o vídeo</string>
   <string name="switch_to_video">Activar vídeo</string>
+  <string name="action_call_hold_accept_video">Aceptar a chamada entrante con vídeo e poñer en espera a actual</string>
+  <string name="action_call_end_accept">Aceptar a chamada entrante e rematar a actual</string>
   <string name="action_call_decline">Rexeitar</string>
   <string name="action_call_mic_mute">Apagar micrófono</string>
+  <string name="action_load_extension">Cargar extensión</string>
+  <string name="ab_action_speakerphone">Activar o altofalante</string>
   <string name="ab_action_contact_add">Engadir a contactos</string>
   <string name="ab_action_contact_add_question">Engadir a contactos?</string>
   <string name="ab_action_audio_call">Iniciar chamada de audio</string>
   <string name="ab_action_video_call">Iniciar chamada de vídeo</string>
   <string name="ab_action_change_screen_orientation">Cambiar orientación da pantalla</string>
   <string name="share_via">Compartir vía</string>
+  <string name="write_a_message">Escribir mensaxe</string>
   <string name="scan_qr">Escanear código QR</string>
   <string name="qr_code">Código QR</string>
+  <string name="qr_code_not_contact">Non é un código QR de contacto de Jami</string>
+  <string name="new_group">Crear novo grupo</string>
   <string name="ab_action_flipcamera">Cambiar de cámara</string>
   <string name="ab_action_hidepreview">Agochar vista previa</string>
   <string name="remote_recording">%s gravando...</string>
@@ -115,23 +149,33 @@
   <string name="conversation_send_video">Gravar clip de vídeo</string>
   <string name="conversation_share_location">Compartir localización</string>
   <string name="ongoing_group_call">Chamada en curso</string>
+  <string name="started_call">Chamada iniciada</string>
   <string name="in_reply_to">En resposta a</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permiso de cámara</string>
+  <string name="permission_dialog_camera_message">As conversas de vídeo requiren o permiso da cámara. O permiso da cámara está desactivado. Actívao na configuración do dispositivo para usar esta función.</string>
+  <string name="camera_error">Produciuse un erro ao iniciar a cámara.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Erro</string>
   <string name="ringtone_error_format_not_supported">Este formato non está soportado.</string>
   <string name="ringtone_error_size_too_big">Este ficheiro é moi grande. O tamaño máximo é de %1$d kB.</string>
   <string name="ringtone_custom_prompt">Establecer ton personalizado</string>
   <string name="ringtone_custom_label">Personalizar</string>
+  <string name="ringtone_jami_tones">Tons de chamada de Jami</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jami require o permiso «Ler os contactos». Actívao na configuración do dispositivo para usar esta función.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jami require o permiso «Escribir o rexistro de chamadas». Actívao na configuración do dispositivo para usar esta función.</string>
   <!--Post notifications permission-->
+  <string name="permission_dialog_post_notifications_title">Permitir as notificacións</string>
+  <string name="permission_dialog_post_notifications_message">Jami necesita o permiso de notificacións para avisarte de chamadas e mensaxes entrantes, mesmo cando a aplicación está en segundo plano. Sen el, podes perder chamadas.</string>
+  <string name="permission_dialog_post_notifications_blocked_message">As notificacións están desactivadas para Jami. Sen elas, perderás chamadas e mensaxes entrantes. Activa as notificacións para Jami na configuración do dispositivo.</string>
   <string name="permission_dialog_open_settings">Abrir os axustes</string>
   <string name="permission_dialog_later">Máis tarde</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Escanea o código QR da conta que queres engadir.</string>
   <string name="title_activity_qrcode">Compartir a miña conta</string>
+  <string name="error_scan_no_camera_permissions">O escáner de QR require o permiso da cámara. O permiso da cámara está desactivado. Actívao na configuración do dispositivo para usar esta función.</string>
   <string name="tab_code">O meu Código</string>
   <string name="tab_scan">Escanear Código</string>
   <!--Settings-->
@@ -143,6 +187,7 @@
   <string name="conversation_details">Detalles da conversa</string>
   <string name="contact_details">Detalles do contacto</string>
   <string name="conversation_action_delete_this">Eliminar esta conversa</string>
+  <string name="conversation_action_delete_this_title">Eliminar esta conversa?</string>
   <string name="leave_conversation">Deixar a conversa</string>
   <string name="conversation_action_delete_this_message">Esta acción non ten volta.</string>
   <string name="conversation_action_history_clear">Eliminar historial</string>
@@ -151,14 +196,24 @@
   <string name="delete_contact">Eliminar contacto</string>
   <string name="conversation_action_remove_this_title">Eliminar este contacto?</string>
   <string name="conversation_action_remove_this_message">Esto eliminará o contacto de xeito definitivo e tamén o historial da conversa.</string>
+  <string name="conversation_action_add_this_message">Isto enviará unha solicitude de conexión.</string>
   <string name="remove_conversation">Eliminar conversa</string>
+  <string name="conversation_action_remove_title">Retirar a conversa?</string>
+  <string name="conversation_action_remove_message">Isto retirará esta conversa sen eliminar o contacto.</string>
+  <string name="swarm_group_action_leave">Abandonar grupo</string>
+  <string name="swarm_group_action_leave_title">Saír deste grupo?</string>
+  <string name="swarm_group_action_leave_message">Isto retirará a conversa da túa lista de conversas</string>
+  <string name="conversation_action_copy_peer_number">Copiar o identificador do contacto</string>
+  <string name="copied_to_clipboard">Copiouse %1$s no portapapeis.</string>
   <string name="conversation_action_select_peer_number">Escolle un número</string>
   <string name="conversation_action_block_this">Bloquear contacto</string>
   <string name="conversation_action_unblock_this">Desbloquear contacto</string>
+  <string name="conversation_action_go_to_call">Volver á chamada</string>
   <string name="conversation_action_incoming_call">Chamada entrante</string>
   <string name="conversation_action_latest">Ir á última</string>
   <string name="conversation_open_file_error">Non hai aplicacións instaladas que poidan abrir este tipo de ficheiro.</string>
   <string name="clip_contact_uri">Enderezo do contacto</string>
+  <string name="clip_message">Contido da mensaxe</string>
   <string name="block_contact_dialog_title">Bloquear a %1$s?</string>
   <string name="block_contact_dialog_message">%1$s non poderá contactar contigo ata que o desbloquees.</string>
   <string name="block_contact_completed">%1$s foi bloqueada.</string>
@@ -171,17 +226,55 @@
   <string name="conversation_syncing">Descargando a conversa desde parceiro</string>
   <string name="conversation_blocked">Este contacto está bloqueado.</string>
   <string name="conversation_ended">Rematou a conversa.</string>
+  <string name="conversation_message_deleted">%s eliminou unha mensaxe</string>
   <string name="conversation_reply_you">Ti</string>
+  <string name="video_not_found">Non se atopou o ficheiro de vídeo</string>
   <string name="conversation_preference_color">Cor da conversa</string>
   <string name="conversation_preference_emoji">Emojis da conversa</string>
   <string name="conversation_type_contact">Contacto Jami</string>
   <string name="conversation_type_private">Privado</string>
+  <string name="conversation_type_group">Grupo</string>
+  <string name="conversation_contact_invited">Convidouse a %1$s á conversa.</string>
+  <string name="conversation_contact_added">%1$s uniuse á conversa.</string>
+  <string name="conversation_contact_left">%1$s saíu da conversa.</string>
+  <string name="conversation_contact_blocked">Bloqueouse a %1$s na conversa.</string>
+  <string name="conversation_contact_unblocked">Desbloqueouse a %1$s na conversa.</string>
   <string name="conversation_search_hint">Buscar conversa</string>
+  <string name="audio_recorder_error">Non se puido iniciar o gravador de audio.</string>
   <string name="audio_recording_in_progress">Gravando...</string>
+  <string name="audio_recording_ready">Toca para reproducir, arrastra a forma de onda para navegar</string>
+  <string name="audio_recording_playing">Reproducindo…</string>
   <string name="audio_recording_send">Enviar</string>
   <string name="audio_recording_play">Reproducir</string>
   <string name="audio_recording_pause">Deter</string>
   <string name="audio_recording_stop">Deixar de gravar</string>
+  <string name="audio_recording_extend">Continuar a gravación</string>
+  <string name="audio_recording_restart">Gravar de novo</string>
+  <string name="audio_recording_delete">Descartar</string>
+  <string name="audio_recording_discard_title">Descartar a gravación?</string>
+  <string name="audio_recording_discard_message">Perderase a túa gravación.</string>
+  <string name="audio_recording_discard_keep">Continuar editando</string>
+  <string name="audio_recording_discard_confirm">Descartar</string>
+  <string name="audio_recording_limit_reached">Acadouse o límite de gravación. Envía ou cancela.</string>
+  <string name="audio_recording_gesture_hint">Solta para enviar · desliza ◀ para cancelar · ▲ para revisar</string>
+  <string name="audio_recording_release_cancel">Solta para cancelar</string>
+  <string name="audio_recording_release_review">Solta para abrir o editor</string>
+  <string name="audio_recording_slide_cancel">Cancelar a gravación</string>
+  <string name="audio_recording_slide_review">Abrir o editor</string>
+  <string name="audio_recording_review_short">Revisar</string>
+  <string name="audio_recording_too_short">Mantén premido para gravar unha mensaxe de voz</string>
+  <string name="video_recorder_error">Non hai ningún gravador de vídeo dispoñible.</string>
+  <string name="taking_picture_error">Produciuse un erro ao tomar a foto.</string>
+  <string name="find_picture_error">Produciuse un erro ao buscar a foto.</string>
+  <string name="open_camera_error">Produciuse un erro ao abrir a cámara.</string>
+  <string name="starting_recorder_error">Produciuse un erro ao iniciar o gravador.</string>
+  <string name="starting_camera_error">Produciuse un erro ao iniciar a cámara.</string>
+  <string name="browser_error">Non hai ningún navegador de ficheiros dispoñible neste dispositivo.</string>
+  <string name="import_archive_error">Produciuse un erro ao importar o arquivo.</string>
+  <string name="export_archive_error">Produciuse un erro ao exportar o arquivo.</string>
+  <string name="load_ringtone_error">Produciuse un erro ao cargar o ton de chamada.</string>
+  <string name="sharing_log_error">Produciuse un erro ao compartir os rexistros.</string>
+  <string name="no_native_crash">Ningún fallo nativo recente</string>
   <string name="today">Hoxe</string>
   <string name="yesterday">Onte</string>
   <!--Contacts-->
@@ -195,18 +288,25 @@
   <string name="help_password_choose">Escolle un contrasinal forte e gárdao para protexer a túa conta Jami.</string>
   <string name="help_password_enter">Escribe o contrasinal da conta Jami</string>
   <string name="help_server_enter">Escribe o URL do servidor de xestión.</string>
+  <string name="pin_copied">Copiouse o código de autenticación no portapapeis.</string>
+  <string name="copied_clipboard">Copiado ao portapapeis.</string>
   <string name="wizard_next">Seguinte</string>
   <string name="wizard_back">Atrás</string>
   <string name="wizard_skip">Saltar</string>
   <string name="hist_contact_invited">Contacto convidado</string>
   <string name="hist_contact_added">Contacto engadido</string>
   <string name="hist_contact_left">Contacto desbotado</string>
+  <string name="hist_contact_blocked">Contacto bloqueado</string>
+  <string name="hist_contact_unblocked">Contacto desbloqueado</string>
   <string name="hist_invitation_received">Convite recibido</string>
   <!--Account summary-->
   <string name="profile">Perfil</string>
+  <string name="profile_name">Nome do perfil</string>
   <string name="profile_message_warning">O perfil só se comparte cos contactos</string>
+  <string name="custom_profile_message_warning">O perfil personalizado só é visible para a conta deste dispositivo</string>
   <string name="open_the_gallery">Abrir a galería</string>
   <string name="take_a_photo">Tomar foto</string>
+  <string name="remove_photo">Retirar a foto</string>
   <string name="profile_name_hint">Escribe o teu nome</string>
   <string name="registered_name">Nome rexistrado</string>
   <string name="no_registered_name">Sen nome rexistrado</string>
@@ -221,14 +321,23 @@
   <string name="share_message">Escanea este código con Jami</string>
   <string name="share_message_no_account">Escolle a conta a compartir.</string>
   <string name="share_your_account_information">Compartir a miña información de contacto</string>
+  <string name="share_contact_information">Compartir a información do contacto</string>
   <string name="share_label">Compartir</string>
   <string name="generic_error_migration">Erro</string>
+  <string name="generic_error_migration_message">Produciuse un erro ao migrar a conta.</string>
   <string name="title_share_with">Compartir con...</string>
   <!--Pending invitations-->
   <string name="accept">Aceptar</string>
   <string name="decline">Rexeitar</string>
   <string name="block">Bloquar</string>
+  <string name="decline_invitation">Rexeitar invitación</string>
+  <string name="accept_invitation">Aceptar invitación</string>
+  <string name="accept_invitation_body">Convite recibido de %s.</string>
+  <string name="new_invitation_request_title">Convite novo</string>
   <string name="invitation_message">Tes %1$d solicitudes de contacto  </string>
+  <string name="no_invitations">Non hai convites para mostrar.</string>
+  <string name="invitation_received_message">Convite recibido de %s.\nQueres aceptar ou rexeitar o convite?</string>
+  <string name="outgoing_contact_invitation_message">Este contacto non está na túa lista de contactos.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Sen contactos bloqueados</string>
   <!--Smartlist-->
@@ -236,13 +345,31 @@
   <string name="conversation_placeholder">Aínda non tes conversas</string>
   <string name="contact_request_sent">Solicitude de contacto enviada</string>
   <string name="start_conversation">Comezar conversa</string>
+  <string name="search_results">Resultados da busca</string>
   <string name="tv_contact_row_header">Contactos</string>
   <string name="gallery_error_title">Non se atopa app Galería</string>
   <string name="gallery_error_message">Non se atopa unha app no dispositivo para abrir Galería</string>
+  <string name="generic_error">Produciuse un erro descoñecido.</string>
   <!--File Transfer-->
+  <string name="invalid_file">Ficheiro non válido.</string>
+  <string name="not_able_to_write_file">Non se puido escribir o ficheiro.</string>
+  <string name="file_transfer_status_created">Inicializando</string>
+  <string name="file_transfer_status_unsupported">Non compatible</string>
+  <string name="file_transfer_status_wait_peer_acceptance">Agardando a que o outro extremo acepte…</string>
+  <string name="file_transfer_status_wait_host_acceptance">Agardando a que o anfitrión acepte…</string>
+  <string name="file_transfer_status_ongoing">En curso</string>
+  <string name="file_transfer_status_finished">Completado</string>
+  <string name="file_transfer_status_closed_by_host">Pechado polo anfitrión</string>
+  <string name="file_transfer_status_closed_by_peer">Pechado polo outro extremo</string>
   <string name="file_transfer_status_invalid_file">Ficheiro non válido</string>
+  <string name="file_transfer_status_unjoinable_peer">Par inaccesible</string>
   <string name="file_transfer_status_canceled">Cancelado</string>
+  <string name="file_transfer_status_error">Produciuse un erro ao transferir o ficheiro.</string>
+  <string name="file_transfer_status_timed_out">A operación esgotou o tempo de espera.</string>
+  <string name="file_saved_in">Ficheiro gardado en %s.</string>
+  <string name="file_saved_successfully">O ficheiro gardouse correctamente.</string>
   <string name="file_download">Descargar</string>
+  <string name="no_space_left_on_device">Non hai espazo de almacenamento dispoñible no dispositivo.</string>
   <string name="title_media_viewer">Visor de multimedia</string>
   <string name="menu_file_open">Abrir ficheiro</string>
   <string name="menu_file_download">Descargar ficheiro</string>
@@ -251,9 +378,11 @@
   <string name="menu_file_share">Compartir ficheiro</string>
   <string name="menu_message_copy">Copiar</string>
   <string name="menu_message_edit">Editar mensaxe</string>
+  <string name="menu_message_history">Historial de mensaxes</string>
   <string name="menu_message_delete">Eliminar mensaxe</string>
   <string name="menu_message_cancel">Cancelar mensaxe</string>
   <string name="menu_message_reply">Responder</string>
+  <string name="menu_message_cancel_reply">Cancelar a resposta</string>
   <string name="menu_delete">Eliminar</string>
   <string name="pref_darkTheme_title">Decorado escuro</string>
   <string name="pref_darkTheme_summary">Activar sempre o decorado escuro no lugar de utilizar preferencias do sistema</string>
@@ -276,6 +405,16 @@
   <string name="tv_send_video">Enviar multimedia</string>
   <string name="tv_action_more">Máis</string>
   <string name="conversation_input_speech_hint">Dí algo...</string>
+  <string name="audio_permission_denied">O permiso do micrófono está desactivado. Actívao na configuración do dispositivo para usar esta función.</string>
+  <string name="camera_permission_denied">O permiso da cámara está desactivado. Actívao na configuración do dispositivo para usar esta función.</string>
+  <string name="speech_recogniton_unavailable">O recoñecemento de voz non está dispoñible.</string>
+  <string name="audio_permission_rationale_title">Requírese o permiso de audio</string>
+  <string name="camera_permission_rationale_title">Requírese o permiso da cámara</string>
+  <string name="audio_permission_rationale_message">Jami require o permiso do micrófono para usar as funcións de voz a texto e de gravación de audio. Solicitarase no seguinte paso.</string>
+  <string name="camera_permission_rationale_message">Jami require o permiso da cámara para gravar vídeo e facer videochamadas. Solicitarase no seguinte paso.</string>
+  <string name="unable_to_start_recorder">Non se puido iniciar a gravación de audio.</string>
+  <string name="error_sharing_file">Produciuse un erro ao compartir o ficheiro.</string>
+  <string name="error_opening_file">Produciuse un erro ao abrir o ficheiro.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Recomendado</string>
   <string name="wizard_status_optional">Opcional</string>
@@ -293,6 +432,7 @@
   <string name="wizard_profile_button">Gardar perfil</string>
   <string name="wizard_profile_skip">Saltar e facer esto máis tarde</string>
   <string name="fab_path_choose">Escolle outro ficheiro</string>
+  <string name="chat_extensions">Extensións de conversa</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Compartir</string>
   <string name="bottomSheet_dialpad_btn">Teclado</string>
@@ -304,37 +444,60 @@
   <string name="bottomSheet_mute_microphone_btn">Micro</string>
   <string name="bottomSheet_sound_output_btn">Sons</string>
   <string name="bottomSheet_raiseHand_btn">Ergue a man</string>
+  <string name="camera_toggle_btn_description">Alternar a cámara</string>
   <string name="camera_flip_btn_description">Cambiar de cámara</string>
   <string name="add_participant_btn_description">Engadir participante</string>
   <string name="screen_share_btn_description">Compartir pantalla</string>
+  <string name="open_account_extension_settings">Abrir a configuración de extensións da conta</string>
+  <string name="open_general_extension_settings">Abrir a configuración xeral de extensións</string>
   <string name="uninstall">Desinstalar</string>
   <string name="reset">Restablecer</string>
   <!--Swarm Details-->
   <string name="rename_btn">Confirmar</string>
+  <string name="rename_error">non pode estar baleiro.</string>
+  <string name="swarm_description">Engadir descrición</string>
   <string name="tab_members">Membresía</string>
   <string name="tab_files">Arquivos</string>
   <string name="tab_settings">Axustes</string>
+  <string name="not_admin_toast">Só os administradores poden editar a información deste grupo</string>
+  <string name="dialog_title_contact">Editar o nome visible</string>
+  <string name="dialogtitle_title">Editar o título do grupo</string>
+  <string name="dialogtitle_description">Editar a descrición do grupo</string>
   <string name="dialog_hint_title">Título</string>
   <string name="dialog_hint_description">Descrición</string>
   <string name="picker_title">Elexir contactos</string>
   <string name="picker_btn">Elexir conctactos</string>
+  <string name="no_contact_to_add">Non tes ningún contacto para engadir</string>
   <string name="bottomsheet_contact">Contacta con Jami\n %1$s</string>
   <string name="bottomsheet_remove">Remover membro</string>
   <string name="error_open_no_app_found">Non atopamos unha aplicación para abrir o ficheiro: %1$s</string>
+  <string name="swarm_detail_no_document">Aínda non tes documentos.</string>
+  <string name="group_admin">Administrador</string>
+  <string name="share_contact_intent_title">Engade este contacto en Jami!</string>
+  <string name="share_contact_intent_body">Podes engadir este contacto «%1$s» na plataforma de comunicación distribuída Jami: %2$s</string>
   <!--JamiId-->
   <string name="jami_id_copy">Copiar Jamild</string>
   <string name="jami_id_share">Compartir Jamild</string>
   <string name="jami_id_validate">Rexistrar o nome de usuario/a</string>
+  <string name="jami_id_available">O nome de usuario está dispoñible.</string>
+  <string name="jami_id_not_available">O nome de usuario non está dispoñible.</string>
   <string name="jami_id_info">· Máximo 32 caracteres\n· Permitidos caracteres especiais: trazo (-), trazo baixo (_)</string>
+  <string name="jami_id_looking_for_availability">Comprobando a dispoñibilidade do nome de usuario…</string>
   <string name="jami_id_choose_username">Escoller un nome de usuario</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Benvida/o a Jami</string>
   <string name="welcome_jami_description">Comparte o teu identificador Jami para que te atopen máis facilmente!</string>
   <!--Conversation details-->
   <string name="details">Detalles</string>
+  <string name="secure_p2p_connection">Conexión segura punto a punto</string>
+  <string name="swarm_type">Tipo de conversa</string>
   <string name="Private">Privado</string>
+  <string name="swarm_id">ID do enxame</string>
+  <string name="show_qr_code">Mostrar o código QR</string>
+  <string name="show_certificate">Mostrar o certificado</string>
   <string name="mute_conversation">Acalar conversa</string>
   <!--Donation-->
+  <string name="donation_card_description">Se gozas usando Jami e cres na nosa misión, queres facer unha doazón?</string>
   <string name="donation_card_not_now">Agora non</string>
   <string name="donation_donate">Doar</string>
   <string name="donation_setting_title">Lembrar doazón</string>
@@ -343,15 +506,115 @@
   <string name="unable_to_load">Non se cargou %1$s</string>
   <string name="load_success">%1$s: activado</string>
   <string name="unload_success">%1$s: desactivado </string>
+  <string name="install_success">A extensión %1$s instalouse correctamente.</string>
+  <string name="install_error">Produciuse un erro ao importar a extensión.</string>
   <string name="export_side_main_title">Exportar conta</string>
+  <string name="import_side_main_title">Importar conta</string>
+  <string name="link_device_dialog_stop_title">Queres deter a vinculación do dispositivo?</string>
+  <string name="link_device_dialog_stop_export_body">Se a detés, cancelarase a operación de exportación da conta.</string>
+  <string name="link_device_dialog_stop_import_body">Se a detés, cancelarase a operación de importación da conta.</string>
+  <string name="export_side_step1_advice_qr">No dispositivo novo, inicia unha conta nova.\nSelecciona <b>Conta &gt; Engadir conta &gt; Conectar desde outro dispositivo</b>\nCando esteas listo, escanea o código QR</string>
+  <string name="export_side_step1_switch_to_code">Ou fai clic aquí para introducir o código de autenticación</string>
+  <string name="export_side_step1_switch_to_qr">Ou fai clic aquí para escanear o código QR</string>
+  <string name="export_side_step1_error_malformed">Identificador de novo dispositivo non recoñecido. Segue as instrucións anteriores.</string>
   <string name="export_side_step1_code_connect">Conectar</string>
+  <string name="export_side_step2_advice">O dispositivo novo está aquí. Es ti?\nPara continuar coa operación de exportación da conta, fai clic en Confirmar.</string>
+  <string name="export_side_step2_advice_ip_only">Dispositivo novo conectado no enderezo de abaixo. Es ti?\nPara continuar coa exportación da conta, fai clic en Confirmar.</string>
+  <string name="export_side_step2_ip_only">Enderezo IP do dispositivo novo: %1$s</string>
   <string name="export_side_step2_cancel">Cancelar</string>
   <string name="export_side_step2_confirm">Confirmar</string>
+  <string name="export_side_step2_password">A conta está protexida con contrasinal.\nPara continuar, autentícate no dispositivo novo.</string>
+  <string name="export_side_step3_body_loading">A operación de exportación da conta ao dispositivo novo está en curso. Agarda…</string>
+  <string name="export_side_step3_body_done">A conta importouse correctamente no dispositivo novo.</string>
+  <string name="export_side_step3_exit">Rematar</string>
+  <string name="import_side_step1_advice_qr">Inicia a exportación no dispositivo de orixe.\n<b>Selecciona Conta &gt; Configuración da conta &gt; Vincular dispositivo novo</b>\nCando esteas listo, escanea o código QR de abaixo.</string>
+  <string name="import_side_step1_advice_code">Inicia a exportación no dispositivo de orixe.\n<b>Selecciona Conta &gt; Configuración da conta &gt; Vincular dispositivo novo</b>\nCando esteas listo, introduce o código de abaixo.</string>
   <string name="import_side_step1_share">Compartir</string>
+  <string name="import_side_step1_switch_to_code">Ou fai clic aquí para mostrar o código de autenticación</string>
+  <string name="import_side_step1_switch_to_qr">Ou fai clic aquí para mostrar o código QR</string>
+  <string name="import_side_step1_connecting">Conectando co dispositivo de orixe…</string>
+  <string name="import_side_step1_preparing_device">Preparando o dispositivo…</string>
+  <string name="import_side_step2_password_prompt">A conta está protexida con contrasinal.\nDesbloquéaa para continuar.</string>
   <string name="import_side_step2_password_import">Importación</string>
+  <string name="import_side_step2_password_unlocking">Desbloqueando a conta…</string>
+  <string name="import_side_step2_action_required">Acción requirida. Confirma a conta no dispositivo de orixe.</string>
+  <string name="import_side_step3_body_loading">A conta estase a importar no dispositivo novo. Agarda…</string>
+  <string name="import_side_step3_body_done">A conta importouse correctamente.</string>
+  <string name="import_side_step3_go_to_account">Ir á conta nova</string>
+  <string name="import_side_step3_exit">Rematar</string>
+  <string name="link_device_share_title">Compartir o código de autenticación</string>
+  <string name="link_device_error_network">Produciuse un erro de rede ao vincular o dispositivo. Verifica a conexión e téntao de novo.</string>
+  <string name="link_device_error_authentication">Produciuse un erro de autenticación ao vincular o dispositivo. Comproba as credenciais e téntao de novo.</string>
+  <string name="link_device_error_timeout">A operación esgotou o tempo de espera.</string>
+  <string name="link_device_error_canceled">O usuario cancelou a operación.</string>
+  <string name="link_device_error_unknown">Produciuse un erro.</string>
+  <string name="link_device_error_bad_password">Comproba as credenciais e téntao de novo.</string>
+  <string name="test_push">Proba de push</string>
   <!--Accessibility-->
+  <string name="step_title_create_username">Crear nome de usuario</string>
   <string name="step_title_set_password">Escribe contrasinal</string>
+  <string name="step_title_create_profile">Crear perfil</string>
+  <string name="step_format">Paso %1$d de %2$d: %3$s</string>
   <!--Peer services-->
+  <string name="peer_services_title">Servizos compartidos</string>
+  <string name="peer_services_refresh">Actualizar os servizos</string>
   <string name="peer_services_connect">Conectar</string>
+  <string name="peer_services_disconnect">Desconectar</string>
+  <string name="peer_services_empty">Non hai servizos compartidos dispoñibles</string>
+  <string name="peer_services_link_copied">Copiouse a ligazón no portapapeis</string>
+  <string name="peer_services_error_offline">O contacto está sen conexión</string>
+  <string name="peer_services_error_unreachable">Non se pode contactar co contacto</string>
+  <string name="peer_services_error_timeout">A solicitude esgotou o tempo de espera</string>
+  <string name="peer_services_error_unknown">Non se puideron recuperar os servizos</string>
+  <string name="notif_channel_peer_tunnel">Servizos compartidos</string>
+  <string name="notif_channel_peer_tunnel_descr">Móstrase mentres os túneles de servizos entre pares están activos en segundo plano.</string>
+  <string name="notif_peer_tunnel_title">Servizos compartidos activos</string>
+  <string name="notif_peer_tunnel_text">Jami mantén activas as túas conexións de servizo en segundo plano</string>
+  <string name="notif_peer_tunnel_stop_all">Deter todo</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_settings_title">Servizos compartidos</string>
+  <string name="shared_services_settings_description">Expoñer servizos locais aos usuarios de Jami</string>
+  <string name="shared_services_empty">Ningún servizo configurado</string>
+  <string name="shared_services_add">Engadir servizo</string>
+  <string name="shared_services_add_title">Engadir servizo compartido</string>
+  <string name="shared_services_edit_title">Editar servizo compartido</string>
+  <string name="shared_services_edit">Edit</string>
+  <string name="shared_services_delete">Eliminar</string>
+  <string name="shared_services_name_hint">Nome do servizo</string>
+  <string name="shared_services_name_required">O nome do servizo é obrigatorio</string>
+  <string name="shared_services_description_hint">Descrición (opcional)</string>
+  <string name="shared_services_port_hint">Porto local</string>
+  <string name="shared_services_port_required">O número de porto é obrigatorio</string>
+  <string name="shared_services_port_invalid">O porto debe estar entre 1 e 65535</string>
+  <string name="shared_services_port">Porto: %d</string>
+  <string name="shared_services_no_description">Sen descrición</string>
+  <string name="shared_services_empty_subtitle">Comparte ficheiros ou servizos locais cos usuarios de Jami</string>
+  <string name="shared_services_more_options">Máis opcións</string>
+  <string name="shared_services_open_in_browser">Abrir no navegador</string>
+  <string name="shared_services_disconnect_all">Desconectar todo</string>
+  <string name="shared_services_disconnect_all_title">Desconectar todo?</string>
+  <string name="shared_services_disconnect_all_message">Desconectarase o seguinte:\n\n%1$s\n\nOs servizos aloxados desactivaranse e pecharanse as conexións con outros dispositivos.</string>
+  <string name="shared_services_disconnect_all_confirm">Desconectar</string>
+  <string name="shared_services_nothing_active">Agora mesmo non hai nada activo</string>
+  <string name="shared_services_hosting_item">Aloxando: %1$s (%2$s)</string>
+  <string name="shared_services_tunnel_item">%1$s (desde %2$s)</string>
+  <string name="shared_services_type_website_label">Sitio web</string>
+  <string name="shared_services_type_custom_label">Personalizar</string>
+  <string name="shared_services_local_port">Porto local %d</string>
+  <string name="shared_services_local_address">%1$s:%2$d</string>
+  <string name="shared_services_type_custom">Servidor personalizado</string>
+  <string name="shared_services_type_website">Engadir sitio web</string>
+  <string name="shared_services_add_custom_title">Engadir servidor personalizado</string>
+  <string name="shared_services_add_website_title">Engadir sitio web</string>
+  <string name="shared_services_host_hint">Servidor local</string>
+  <string name="shared_services_scheme_hint">Esquema URI (p. ex. http, ftp)</string>
+  <string name="shared_services_directory_hint">Directorio local</string>
+  <string name="shared_services_directory_required">Escolle un directorio</string>
+  <string name="shared_services_choose">Escoller</string>
+  <string name="shared_services_policy_hint">Accesible por</string>
+  <string name="shared_services_policy_contacts">Os meus contactos</string>
+  <string name="shared_services_policy_public">Público</string>
+  <string name="shared_services_policy_specific">Contactos específicos</string>
+  <string name="shared_services_allowed_contacts_hint">Contactos permitidos (separados por comas)</string>
+  <string name="shared_services_save">Salvar</string>
 </resources>

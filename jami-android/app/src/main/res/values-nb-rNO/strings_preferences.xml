@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_category_contacts">Kontakter</string>
+  <string name="pref_category_video">Video</string>
+  <string name="pref_category_system">System</string>
+  <string name="pref_category_appearance">Utseende</string>
+  <string name="pref_category_connectivity">Forbindelsesstatus</string>
+  <string name="pref_category_extensions">Utvidelser</string>
+  <string name="pref_videoBitrate_title">Video bitrate</string>
+  <string name="pref_clearHistory_title">Slett historikk</string>
+  <string name="pref_clearHistory_summary">Tøm historikken for alle samtaler. Denne handlingen kan ikke angres.</string>
+  <string name="pref_connectivity_title">Tilkoblingsmodus</string>
+  <string name="pref_connectivity_summary">Velg hvordan Jami skal kobles til det distribuerte systemet for å motta samtaler og meldinger.</string>
+  <string name="pref_delete_account_title">Slett konto</string>
+  <string name="pref_delete_account_summary">Slett konto fra denne enheten</string>
+  <string name="pref_persistNotification_title">Kjør i bakgrunnen</string>
+  <string name="pref_persistNotification_summary">Tillat kjøring i bakgrunnen for å motta samtaler og meldinger.</string>
+  <string name="pref_connection_monitor">Tilkoblingsovervåker</string>
+  <string name="pref_connection_monitor_summary">Overvåk node-til-node-tilkoblinger</string>
+  <string name="connection_monitor_channels">Kanaler</string>
+  <string name="pref_push_notifications_logs_title">Logger for push-varsler</string>
+  <string name="pref_push_notifications_logs_summary">Vis logger fanget fra push-varsler.</string>
+  <string name="pref_typing_summary">Angi når meldinger blir skrevet.</string>
+  <string name="pref_link_preview_title">Koblingsforhåndsvisninger</string>
+  <string name="pref_link_preview_summary">Forutsetning krever å laste ned innhold fra tredjepartsservere.</string>
+  <!--Notifications Visibility-->
+  <string name="notification_public">Offentlig\n(vis varsler og innholdet deres på låseskjermen)\n</string>
+  <string name="notification_private">Privat\n(vis varsler, men skjul innholdet deres på låseskjermen)\n</string>
+  <string name="notification_secret">Hemmelig\n(ikke vis varsler på låseskjermen)</string>
+  <string name="connectivity_google_services_title">Google-tjenester</string>
+  <string name="connectivity_google_services_description">Bruk Google Firebase og en DHT-proxy for å motta push-varsler.</string>
+  <string name="connectivity_local_node_title">Lokal DHT-node</string>
+  <string name="connectivity_local_node_description">Bruk en lokal DHT-node for å koble til andre Jami-enheter og -kontakter.</string>
+  <string name="connectivity_unified_push_description">Bruk en tilpasset UnifiedPush-server for å motta push-varsler.</string>
+  <string name="connectivity_custom_title">Egendefinert</string>
+  <string name="connectivity_custom_description">Bruker for øyeblikket ingen av de tilgjengelige konfigurasjonsforhåndsinnstillingene.</string>
+  <!--Extension-->
+  <string name="pref_enable_extensions_title">Aktiver utvidelser</string>
+  <string name="pref_enable_extensions_summary">Aktiver utvidelser og angi parametrene deres</string>
+  <string name="pref_available_extensions_title">Tilgjengelige utvidelser</string>
+  <string name="pref_available_extensions_summary">Installerte utvidelser og legg til nye utvidelser</string>
+  <string name="fab_extensions_add">Legg til ny utvidelse</string>
+  <string name="extension_uninstall_title">Avinstallere utvidelse?</string>
+  <string name="extension_reset_preferences">Tilbakestill utvidelsesinnstillinger</string>
+  <string name="extension_reset_preferences_summary">Utvidelsen tilbakestilt til standardinnstillingene</string>
+  <string name="extension_reset_preferences_ask">Vil du tilbakestille de generelle utvidelsesinnstillingene?</string>
+  <string name="extension_reset_account_preferences_ask">Vil du tilbakestille kontoens utvidelsesinnstillinger?</string>
+  <string name="account_advanced_reset">Tilbakestill avanserte innstillinger</string>
+  <string name="account_advanced_reset_summary">Gjenopprett avanserte standardinnstillinger</string>
+  <string name="account_advanced_reset_confirm">Tilbakestille alle avanserte innstillinger til standard?</string>
+  <string name="extension_successfully_installed">Utvidelsen <b>%1$s</b> ble installert.</string>
+  <string name="extension_install_failure">Det oppstod en feil under installasjon av følgende utvidelse: <b>%1$s</b></string>
+  <string name="extension_recent_version_exception">En nyere versjon av <b>%1$s</b> er installert.</string>
+  <string name="extension_same_version_exception">Den samme versjonen av <b>%1$s</b> er installert.</string>
+  <string name="extension_invalid_signature"><b>%1$s</b> har en ugyldig signatur</string>
+  <string name="extension_invalid_authority">Det oppstod en feil under verifisering av autoriteten for følgende utvidelse: <b>%1$s</b></string>
+  <string name="extension_invalid_format">Ugyldig utvidelsesformat: <b>%1$s</b></string>
+  <string name="extension_force_install">tving\ninstallasjon</string>
+  <string name="extension_path_image_add">Legg til nytt bilde</string>
+</resources>

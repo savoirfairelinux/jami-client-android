@@ -8,6 +8,7 @@
   <string name="pref_category_diagnostic">Дыягностыка</string>
   <string name="pref_category_appearance">Знешні выгляд</string>
   <string name="pref_category_connectivity">Злучнасць</string>
+  <string name="pref_category_extensions">Пашырэнні</string>
   <string name="pref_category_video_settings">Пашыранныя налады відэа</string>
   <string name="pref_mobileData_title">Мабільная сетка</string>
   <string name="pref_mobileData_summary">Дазволіць Jami працаваць на сетках 3G/LTE і так сама праз Wi-Fi</string>
@@ -41,11 +42,13 @@
   <string name="pref_logs_summary">Адкрытыя налады дыягнастычнага часопіса</string>
   <string name="pref_logs_start">Пачаць запіс</string>
   <string name="pref_logs_stop">Спыніце лагаванне</string>
+  <string name="connection_monitor_channels">Каналы</string>
   <string name="pref_typing_title">Паказчык тыпу</string>
   <string name="pref_block_record_title">Блокіраванне скрыншот і запіс</string>
   <string name="pref_block_record_summary">Блокіруйце здымак экрана або запіс відэа.</string>
   <string name="pref_link_preview_title">Папярэднія прагляды вэб-спасылак</string>
   <string name="pref_link_preview_summary">Перагляд патрабуе спампоўкі кантэнту з сервераў трэціх бакоў.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">Карыстальніцкі</string>
   <!--Extension-->
 </resources>

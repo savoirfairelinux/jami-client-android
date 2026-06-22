@@ -7,4 +7,5 @@
   <string name="control_play">再生</string>
   <string name="control_replay">再生</string>
   <string name="control_pause">一時停止</string>
+  <string name="searchbar_navigation_account">アカウントを選択</string>
 </resources>

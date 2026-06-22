@@ -81,6 +81,9 @@
   <string name="extension_reset_preferences_summary">Les paramètres  des extensions ont été réinitialisés à leur valeur par défaut.</string>
   <string name="extension_reset_preferences_ask">Voulez-vous réinitialiser les paramètres généraux du module d\'extension ?</string>
   <string name="extension_reset_account_preferences_ask">Voulez-vous réinitialiser les paramètres généraux du module d\'extension ?</string>
+  <string name="account_advanced_reset">Réinitialiser les paramètres avancés</string>
+  <string name="account_advanced_reset_summary">Restaurer les paramètres avancés par défaut</string>
+  <string name="account_advanced_reset_confirm">Réinitialiser tous les paramètres avancés aux valeurs par défaut ?</string>
   <string name="extension_successfully_installed">Le module d\'extension <b>%1$s</b> a été correctement installé.</string>
   <string name="extension_install_failure">Une erreur s\'est produite pendant l\'installation du module d\'extension : <b>%1$s</b></string>
   <string name="extension_recent_version_exception">Une version plus récente de <b>%1$s</b> est déjà installée</string>

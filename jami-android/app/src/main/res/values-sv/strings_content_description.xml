@@ -1,10 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">Snabbsamtal</string>
+  <string name="contact_picture_description">Kontaktbild</string>
   <string name="dial_numeric_pad">Numerisk knappsats</string>
   <string name="contact_unblock">Ta bort blockering</string>
+  <string name="video_extensions">Videotillägg</string>
   <string name="file_download_button">Ladda ner</string>
   <string name="control_play">Spela</string>
   <string name="control_replay">Svara</string>
   <string name="control_pause">Paus</string>
+  <string name="searchbar_navigation_account">Välj konto</string>
+  <string name="add_conversation_member">Lägg till konversationsmedlem</string>
+  <string name="qrcode_to_scan">QR-kod att skanna</string>
 </resources>

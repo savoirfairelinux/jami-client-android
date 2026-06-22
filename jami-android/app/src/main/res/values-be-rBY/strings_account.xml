@@ -24,6 +24,8 @@
   <string name="account_type_ip2ip">IP-уліковы запіс</string>
   <string name="help_ring">Уліковы запіс Jami дазваляе вам бяспечна далучацца да людзей з аднаму па аднаму праз цалкам размеркаваную сетку.</string>
   <string name="help_sip_title">Дадаць SIP-улік</string>
+  <string name="help_sip">Наладзіць існуючы ўліковы запіс SIP</string>
+  <string name="create_sip_account">Наладзіць уліковы запіс SIP</string>
   <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Ніякіх рахункаў не зарэгістравана</string>
@@ -32,6 +34,7 @@
   <string name="account_device_revoke">Прылада адмены</string>
   <string name="account_device_revocation_success_title">Поспех</string>
   <string name="account_device_revocation_success">Прылада цяпер адклікана!</string>
+  <string name="account_device_revocation_wrong_password">Няправільны пароль.</string>
   <string name="account_device_revocation_unknown_device">Невядомы прыбор.</string>
   <string name="account_device_revocation_error_unknown">Невядомая памылка.</string>
   <string name="account_password_change">Змяніць пароль</string>
@@ -41,6 +44,7 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Генеральны</string>
   <string name="account_basic_category">Асноўныя налады</string>
+  <string name="account_alias_label">Адлюстраванае імя</string>
   <string name="account_hostname_label">Гасцінічнае імя</string>
   <string name="account_bootstrap_label">Падпрыемства</string>
   <string name="account_name_server_label">Назва сервера</string>
@@ -54,6 +58,7 @@
   <string name="account_upnp_label">Уключыць UPnP</string>
   <string name="account_proxy_field">Практыкаванне</string>
   <!--Extension Details-->
+  <string name="account_preferences_extension_tab">Пашырэнні</string>
   <!--Audio Details-->
   <string name="account_audio_label">Аўдыё</string>
   <string name="account_preferences_media_tab">СМІ</string>
@@ -68,6 +73,8 @@
   <string name="account_video_enable">Уключыць відэа</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Дасканалы</string>
+  <string name="account_read_receipts_label">Квітанцыі аб прачытанні</string>
+  <string name="account_read_receipts_summary">Адпраўляць і запытваць квітанцыі аб дастаўцы і прачытанні, якія адпраўляюцца, калі паведамленні дастаўлены або прачытаны.</string>
   <string name="account_call_settings_title">Налады званка</string>
   <string name="account_dht_public_in_calls_label">Дазвольце прыступальныя званкі з невядомых кантактаў</string>
   <string name="account_registration_exp_label">Рэгістрацыя заканчваецца</string>
@@ -153,6 +160,7 @@
   <string name="account_export_title">Уліковы запіс да іншых прылад</string>
   <string name="account_connect_server_button">Падключэнне да сервера кіравання</string>
   <string name="account_connect_button">Злучэнне</string>
+  <string name="prompt_server">URL сервера кіравання</string>
   <string name="help_credentials_enter">Уведайце даведку аб арганізацыі</string>
   <string name="help_connect_password_enter">Увядзіце пароль арганізацыі</string>
   <string name="account_connect_prompt_username">Назва карыстальніка</string>
@@ -188,6 +196,7 @@
   <string name="account_rename_device_hint">Выберыце імя прылады</string>
   <string name="account_device_this_indicator">Гэта прылада</string>
   <string name="account_disabled_indicator">З інваліднасцю</string>
+  <string name="account_device_id">Ідэнтыфікатар прылады</string>
   <!--Link a new device-->
   <string name="account_link_device_title">Злучыць новае прылада</string>
   <string name="account_link_device_button">Злучэнне</string>

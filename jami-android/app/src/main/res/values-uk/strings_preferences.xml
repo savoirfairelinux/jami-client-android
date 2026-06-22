@@ -54,6 +54,7 @@
   <string name="pref_push_notifications_logs_title">Журнали пуш-сповіщень</string>
   <string name="pref_push_notifications_logs_summary">Переглянути журнали, отримані з пуш-сповіщень.</string>
   <string name="pref_typing_title">Індикатор типування</string>
+  <string name="pref_typing_summary">Показувати, коли набираються повідомлення.</string>
   <string name="pref_block_record_title">Блокувати скріншоти і запис</string>
   <string name="pref_block_record_summary">Заборонити знімки екрана або запис відео.</string>
   <string name="pref_link_preview_title">Перегляди веб-посилань</string>
@@ -80,6 +81,9 @@
   <string name="extension_reset_preferences_summary">Розширення відновлено до налаштувань за замовчуванням</string>
   <string name="extension_reset_preferences_ask">Чи хочете ви скинути загальні налаштування розширень?</string>
   <string name="extension_reset_account_preferences_ask">Чи хочете ви скинути налаштування розширень облікового запису?</string>
+  <string name="account_advanced_reset">Скинути розширені налаштування</string>
+  <string name="account_advanced_reset_summary">Відновити типові розширені налаштування</string>
+  <string name="account_advanced_reset_confirm">Скинути всі розширені налаштування до типових?</string>
   <string name="extension_successfully_installed">Розширення <b>%1$s</b>встановлено успішно.</string>
   <string name="extension_install_failure">Сталася помилка під час встановлення наступного розширення:<b>%1$s</b></string>
   <string name="extension_recent_version_exception">Більш нова версія <b>%1$s</b> вже встановлена.</string>

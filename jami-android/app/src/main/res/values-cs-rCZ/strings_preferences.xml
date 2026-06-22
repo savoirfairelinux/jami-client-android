@@ -55,6 +55,7 @@
   <string name="pref_push_notifications_logs_summary">Zobrazit protokoly zachycené z push
         oznámení.</string>
   <string name="pref_typing_title">Indikátor psaní</string>
+  <string name="pref_typing_summary">Označovat, když se píší zprávy.</string>
   <string name="pref_block_record_title">Blokování snímku obrazovky a nahrávání</string>
   <string name="pref_block_record_summary">Blokování pořizování snímků obrazovky nebo nahrávání videa.</string>
   <string name="pref_link_preview_title">Náhledy odkazů</string>
@@ -81,6 +82,9 @@
   <string name="extension_reset_preferences_summary">Rozšíření bylo obnoveno na výchozí nastavení</string>
   <string name="extension_reset_preferences_ask">Chcete obnovit obecná nastavení rozšíření?</string>
   <string name="extension_reset_account_preferences_ask">Chcete obnovit nastavení rozšíření účtu?</string>
+  <string name="account_advanced_reset">Obnovit pokročilá nastavení</string>
+  <string name="account_advanced_reset_summary">Obnovit výchozí pokročilá nastavení</string>
+  <string name="account_advanced_reset_confirm">Obnovit všechna pokročilá nastavení na výchozí?</string>
   <string name="extension_successfully_installed">Rozšíření <b>%1$s</b> bylo úspěšně nainstalováno.</string>
   <string name="extension_install_failure">Při instalaci následujícího rozšíření došlo k chybě: <b>%1$s</b></string>
   <string name="extension_recent_version_exception">Novější verze <b>%1$s</b> je instalována.</string>

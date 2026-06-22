@@ -8,6 +8,7 @@
   <string name="pref_category_diagnostic">Diagnostikoak</string>
   <string name="pref_category_appearance">Itxura</string>
   <string name="pref_category_connectivity">Lotura</string>
+  <string name="pref_category_extensions">Luzapenak</string>
   <string name="pref_category_video_settings">Bideo ezarpen aurreratuak</string>
   <string name="pref_mobileData_title">Datu mugikorrak</string>
   <string name="pref_mobileData_summary">Baimendu Jami  3G/LTE sareetan, wifi sareetan gain</string>
@@ -41,6 +42,7 @@
   <string name="pref_logs_summary">Diagnostikoaren egunerokoaren konfigurazioa ireki</string>
   <string name="pref_logs_start">Hasten da eguraldia.</string>
   <string name="pref_logs_stop">Utzi eguraldia.</string>
+  <string name="connection_monitor_channels">Kanalak</string>
   <string name="pref_typing_title">Tipografia-indizatzailea</string>
   <string name="pref_block_record_title">Ezabatu pantaila-irudia eta grabazioa</string>
   <string name="pref_block_record_summary">Ez atera pantaila edo grabatu bideo bat.</string>

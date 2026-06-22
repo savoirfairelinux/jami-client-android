@@ -4,6 +4,9 @@
   <string name="submit_issue_title">Сообщить о проблеме</string>
   <string name="submit_issue_action_description"><u>Отправить на рассмотрение</u></string>
   <string name="section_license">Лицензия</string>
+  <string name="switch_conversation">Переключить беседу</string>
+  <string name="delete_conversation_confirmation">Вы уверены, что хотите удалить эту беседу?</string>
+  <string name="acc_profile_photo_capture">Сделать фото</string>
   <string name="view_switch_camera">Переключить камеру</string>
   <string name="sponsor_section">Jami – это бесплатное программное обеспечение, разработанное и поддерживаемое</string>
   <string name="copyright_section">Авторские права</string>
@@ -52,6 +55,7 @@
     <item quantity="other">%d беседы</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Найти или добавить</string>
   <string name="choose_number">Выбор номера</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -85,6 +89,8 @@
   <string name="notif_incoming_picture">Изображение от %1$s</string>
   <string name="notif_sync_title">Синхронизация данных...</string>
   <string name="notif_location_title">Вы делитесь местоположением с %1$s</string>
+  <string name="notif_channel_reconnect">Фоновая синхронизация</string>
+  <string name="notif_reconnect_title">Jami синхронизируется…</string>
   <string name="location_share_contact">%1$sделится с вами местоположением</string>
   <string name="notif_location_multi_title">Начать делиться местоположением с %1$dконтактами</string>
   <string name="notif_location_remaining">осталось %1$d минут(ы)</string>
@@ -104,11 +110,13 @@
   <string name="hist_in_call">Входящий вызов от %1$s</string>
   <string name="hist_out_call">Исходящий вызов от %1$s</string>
   <string name="call_duration">Длилось %s</string>
+  <string name="call_on_hold">Вызов на удержании</string>
   <string name="start_error_title">Невозможно запустить Jami!</string>
   <string name="action_call_accept">Принять звонок</string>
   <string name="action_call_accept_audio">Принять с аудио</string>
   <string name="action_call_accept_video">Принять с видео</string>
   <string name="action_call_hold_accept">Принять входящий звонок, только аудио и поставить текущий вызов на удержание</string>
+  <string name="switch_to_audio">Отключить видео</string>
   <string name="switch_to_video">Включить видео</string>
   <string name="action_call_hold_accept_video">Принять входящий звонок с видео и поставить текущий вызов на удержание</string>
   <string name="action_call_end_accept">Принять входящий звонок и завершить текущий вызов</string>
@@ -162,6 +170,9 @@
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami необходимо разрешение «Запись в журнал звонков». Включите его в настройках устройства, чтобы использовать эту функцию.</string>
   <!--Post notifications permission-->
+  <string name="permission_dialog_post_notifications_title">Разрешить уведомления</string>
+  <string name="permission_dialog_post_notifications_message">Jami требуется разрешение на уведомления, чтобы оповещать вас о входящих вызовах и сообщениях, даже когда приложение работает в фоне. Без него вы можете пропускать вызовы.</string>
+  <string name="permission_dialog_post_notifications_blocked_message">Уведомления для Jami отключены. Без них вы будете пропускать входящие вызовы и сообщения. Включите уведомления для Jami в настройках устройства.</string>
   <string name="permission_dialog_open_settings">Открыть настройки</string>
   <string name="permission_dialog_later">Позже</string>
   <!--QRCode Scan-->
@@ -190,6 +201,8 @@
   <string name="conversation_action_remove_this_message">Это удалит контакт и историю переписки.</string>
   <string name="conversation_action_add_this_message">Будет отправлен запрос на подключение.</string>
   <string name="remove_conversation">Удалить диалог</string>
+  <string name="conversation_action_remove_title">Удалить беседу?</string>
+  <string name="conversation_action_remove_message">Это удалит данную беседу, не удаляя контакт.</string>
   <string name="swarm_group_action_leave">Покинуть группу</string>
   <string name="swarm_group_action_leave_title">Покинуть эту группу?</string>
   <string name="swarm_group_action_leave_message">Будет удалена беседа из вашего списка бесед.</string>
@@ -230,13 +243,30 @@
   <string name="conversation_contact_blocked">%1$sбыл(а) заблокирован(а) для участия в беседе.</string>
   <string name="conversation_contact_unblocked">%1$sбыл(а) разблокирован(а) для участия в беседе.</string>
   <string name="conversation_search_hint">Найти беседу</string>
+  <string name="audio_recorder_error">Не удалось запустить аудиозапись.</string>
   <string name="audio_recording_in_progress">Запись...</string>
+  <string name="audio_recording_ready">Коснитесь для воспроизведения, перетащите форму волны для перемотки</string>
+  <string name="audio_recording_playing">Воспроизведение…</string>
   <string name="audio_recording_send">Отправть</string>
   <string name="audio_recording_play">Воспроизвести</string>
   <string name="audio_recording_pause">Пауза</string>
   <string name="audio_recording_stop">Остановить запись</string>
+  <string name="audio_recording_extend">Продолжить запись</string>
+  <string name="audio_recording_restart">Записать снова</string>
   <string name="audio_recording_delete">Отклонить</string>
+  <string name="audio_recording_discard_title">Удалить запись?</string>
+  <string name="audio_recording_discard_message">Ваша запись будет потеряна.</string>
+  <string name="audio_recording_discard_keep">Продолжить редактирование</string>
   <string name="audio_recording_discard_confirm">Отклонить</string>
+  <string name="audio_recording_limit_reached">Достигнут предел записи. Отправьте или отмените.</string>
+  <string name="audio_recording_gesture_hint">Отпустите для отправки · смахните ◀ для отмены · ▲ для просмотра</string>
+  <string name="audio_recording_release_cancel">Отпустите для отмены</string>
+  <string name="audio_recording_release_review">Отпустите, чтобы открыть редактор</string>
+  <string name="audio_recording_slide_cancel">Отменить запись</string>
+  <string name="audio_recording_slide_review">Открыть редактор</string>
+  <string name="audio_recording_review_short">Просмотр</string>
+  <string name="audio_recording_too_short">Удерживайте для записи голосового сообщения</string>
+  <string name="video_recorder_error">Нет доступной видеозаписи.</string>
   <string name="taking_picture_error">При съемке фотографии возникла ошибка.</string>
   <string name="find_picture_error">При поиске изображения возникла ошибка.</string>
   <string name="open_camera_error">При открытии камеры возникла ошибка.</string>
@@ -262,6 +292,7 @@
   <string name="help_password_choose">Выберите надежный пароль, который вы запомните, чтобы защитить свою учетную запись Jami.</string>
   <string name="help_password_enter">Введите ваш основной пароль учётной записи Jami </string>
   <string name="help_server_enter">Введите URL сервера управления.</string>
+  <string name="pin_copied">Код аутентификации скопирован в буфер обмена.</string>
   <string name="copied_clipboard">Скопировано в буфер обмена.</string>
   <string name="wizard_next">Далее</string>
   <string name="wizard_back">Назад</string>
@@ -340,6 +371,7 @@
   <string name="file_transfer_status_error">Произошла ошибка при передаче файла.</string>
   <string name="file_transfer_status_timed_out">Время операции истекло.</string>
   <string name="file_saved_in">Файл сохранен в %s.</string>
+  <string name="file_saved_successfully">Файл успешно сохранён.</string>
   <string name="file_download">Загрузить</string>
   <string name="no_space_left_on_device">На устройстве нет свободного места.</string>
   <string name="title_media_viewer">Просмотр медиа</string>
@@ -354,6 +386,7 @@
   <string name="menu_message_delete">Удалить сообщение</string>
   <string name="menu_message_cancel">Отменить сообщение</string>
   <string name="menu_message_reply">Ответить</string>
+  <string name="menu_message_cancel_reply">Отменить ответ</string>
   <string name="menu_delete">Удалить</string>
   <string name="pref_darkTheme_title">Тёмная тема</string>
   <string name="pref_darkTheme_summary">Всегда включать темную тему вместо использования системных параметров.</string>
@@ -415,6 +448,7 @@
   <string name="bottomSheet_mute_microphone_btn">Микрофон</string>
   <string name="bottomSheet_sound_output_btn">Звуки</string>
   <string name="bottomSheet_raiseHand_btn">Поднять руку</string>
+  <string name="camera_toggle_btn_description">Переключить камеру</string>
   <string name="camera_flip_btn_description">Перевернуть камеру</string>
   <string name="add_participant_btn_description">Добавить участника</string>
   <string name="screen_share_btn_description">Демонстрация экрана</string>
@@ -476,12 +510,17 @@
   <string name="unable_to_load">Невозможно загрузить %1$s</string>
   <string name="load_success">%1$s: включён</string>
   <string name="unload_success">%1$s: отключён</string>
+  <string name="install_success">Расширение %1$s успешно установлено.</string>
   <string name="install_error">При импорте расширения возникла ошибка.</string>
   <string name="export_side_main_title">Экспортировать аккаунт</string>
   <string name="import_side_main_title">Импорт учетной записи</string>
+  <string name="link_device_dialog_stop_title">Остановить привязку устройства?</string>
+  <string name="link_device_dialog_stop_export_body">Остановка отменит операцию экспорта аккаунта.</string>
+  <string name="link_device_dialog_stop_import_body">Остановка отменит операцию импорта аккаунта.</string>
   <string name="export_side_step1_advice_qr">На новом устройстве создайте новую учетную запись.\nВыберите <b>Учетная запись &gt; Добавить учетную запись &gt; Подключиться с другого устройства</b>\nКогда будете готовы, отсканируйте QR-код</string>
   <string name="export_side_step1_switch_to_code">Или нажмите здесь, чтобы ввести код аутентификации</string>
   <string name="export_side_step1_switch_to_qr">Или нажмите здесь, чтобы отсканировать QR-код</string>
+  <string name="export_side_step1_error_malformed">Нераспознанный идентификатор нового устройства. Следуйте инструкциям выше.</string>
   <string name="export_side_step1_code_connect">Соединение...</string>
   <string name="export_side_step2_advice">Новое устройство расположено здесь. Это вы?\nНажмите Подтвердить для продолжения операции экспорта учетной записи.</string>
   <string name="export_side_step2_advice_ip_only">Новое устройство подключено по указанному ниже адресу. Это вы?\nНажмите Подтвердить для продолжения экспорта учетной записи.</string>
@@ -489,6 +528,8 @@
   <string name="export_side_step2_cancel">Отмена</string>
   <string name="export_side_step2_confirm">Подтвердить</string>
   <string name="export_side_step2_password">Учетная запись защищена паролем.\nЧтобы продолжить, выполните аутентификацию на новом устройстве.</string>
+  <string name="export_side_step3_body_loading">Выполняется операция экспорта аккаунта на новое устройство. Пожалуйста, подождите…</string>
+  <string name="export_side_step3_body_done">Аккаунт успешно импортирован на новое устройство.</string>
   <string name="export_side_step3_exit">Готово</string>
   <string name="import_side_step1_advice_qr">Запустите экспорт на исходном устройстве.\n<b>Выберите Учетная запись &gt; Настройки учетной записи &gt; Привязать новое устройство</b>\nКогда будете готовы, отсканируйте QR-код ниже.</string>
   <string name="import_side_step1_advice_code">Запустите экспорт на исходном устройстве.\n<b>Выберите Учетная запись &gt; Настройки учетной записи &gt; Привязать новое устройство\n</b>Когда будете готовы, введите код ниже.</string>
@@ -500,17 +541,84 @@
   <string name="import_side_step2_password_prompt">Учетная запись защищена паролем.\nРазблокируйте ее для продолжения.</string>
   <string name="import_side_step2_password_import">Импорт</string>
   <string name="import_side_step2_password_unlocking">Разблокировка учетной записи...</string>
+  <string name="import_side_step2_action_required">Требуется действие. Подтвердите аккаунт на исходном устройстве.</string>
+  <string name="import_side_step3_body_loading">Аккаунт импортируется на новое устройство. Пожалуйста, подождите…</string>
+  <string name="import_side_step3_body_done">Аккаунт успешно импортирован.</string>
+  <string name="import_side_step3_go_to_account">Перейти к новому аккаунту</string>
   <string name="import_side_step3_exit">Готово</string>
+  <string name="link_device_share_title">Поделиться кодом аутентификации</string>
+  <string name="link_device_error_network">Произошла сетевая ошибка при привязке устройства. Проверьте подключение и повторите попытку.</string>
+  <string name="link_device_error_authentication">Произошла ошибка аутентификации при подключении устройства. Проверьте учётные данные и повторите попытку.</string>
   <string name="link_device_error_timeout">Время операции истекло.</string>
+  <string name="link_device_error_canceled">Операция отменена пользователем.</string>
   <string name="link_device_error_unknown">Произошла ошибка.</string>
   <string name="link_device_error_bad_password">Проверьте учетные данные и повторите попытку.</string>
+  <string name="test_push">Тестовое push-уведомление</string>
   <!--Accessibility-->
+  <string name="step_title_create_username">Создать имя пользователя</string>
   <string name="step_title_set_password">Задать пароль</string>
+  <string name="step_title_create_profile">Создать профиль</string>
+  <string name="step_format">Шаг %1$d из %2$d: %3$s</string>
   <!--Peer services-->
+  <string name="peer_services_title">Общие сервисы</string>
+  <string name="peer_services_refresh">Обновить сервисы</string>
   <string name="peer_services_connect">Соединение...</string>
+  <string name="peer_services_disconnect">Отключить</string>
+  <string name="peer_services_empty">Нет доступных общих сервисов</string>
+  <string name="peer_services_link_copied">Ссылка скопирована в буфер обмена</string>
+  <string name="peer_services_error_offline">Контакт не в сети</string>
+  <string name="peer_services_error_unreachable">Контакт недоступен</string>
+  <string name="peer_services_error_timeout">Время ожидания запроса истекло</string>
+  <string name="peer_services_error_unknown">Не удалось получить сервисы</string>
+  <string name="notif_channel_peer_tunnel">Общие сервисы</string>
+  <string name="notif_channel_peer_tunnel_descr">Отображается, когда туннели одноранговых служб активны в фоновом режиме.</string>
+  <string name="notif_peer_tunnel_title">Общие службы активны</string>
+  <string name="notif_peer_tunnel_text">Jami поддерживает ваши служебные соединения активными в фоновом режиме</string>
+  <string name="notif_peer_tunnel_stop_all">Остановить все</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_settings_title">Общие сервисы</string>
+  <string name="shared_services_settings_description">Предоставить локальные службы пользователям Jami</string>
+  <string name="shared_services_empty">Службы не настроены</string>
+  <string name="shared_services_add">Добавить службу</string>
+  <string name="shared_services_add_title">Добавить общую службу</string>
+  <string name="shared_services_edit_title">Изменить общую службу</string>
+  <string name="shared_services_edit">Редактировать</string>
+  <string name="shared_services_delete">Удалить</string>
+  <string name="shared_services_name_hint">Название службы</string>
+  <string name="shared_services_name_required">Требуется название службы</string>
+  <string name="shared_services_description_hint">Описание (необязательно)</string>
+  <string name="shared_services_port_hint">Локальный порт</string>
+  <string name="shared_services_port_required">Требуется номер порта</string>
+  <string name="shared_services_port_invalid">Порт должен быть от 1 до 65535</string>
+  <string name="shared_services_port">Порт: %d</string>
+  <string name="shared_services_no_description">Нет описания</string>
+  <string name="shared_services_empty_subtitle">Делитесь локальными файлами или службами с пользователями Jami</string>
   <string name="shared_services_more_options">Дополнительные опции</string>
+  <string name="shared_services_open_in_browser">Открыть в браузере</string>
+  <string name="shared_services_disconnect_all">Отключить все</string>
+  <string name="shared_services_disconnect_all_title">Отключить все?</string>
+  <string name="shared_services_disconnect_all_message">Следующее будет отключено:\n\n%1$s\n\nРазмещенные службы будут отключены, а соединения с другими устройствами закрыты.</string>
+  <string name="shared_services_disconnect_all_confirm">Отключить</string>
+  <string name="shared_services_nothing_active">Сейчас ничего не активно</string>
+  <string name="shared_services_hosting_item">Размещение: %1$s (%2$s)</string>
+  <string name="shared_services_tunnel_item">%1$s (от %2$s)</string>
   <string name="shared_services_type_website_label">Сайт</string>
+  <string name="shared_services_type_custom_label">Своё</string>
+  <string name="shared_services_local_port">Локальный порт %d</string>
+  <string name="shared_services_local_address">%1$s:%2$d</string>
+  <string name="shared_services_type_custom">Пользовательский сервер</string>
+  <string name="shared_services_type_website">Добавить веб-сайт</string>
+  <string name="shared_services_add_custom_title">Добавить пользовательский сервер</string>
+  <string name="shared_services_add_website_title">Добавить веб-сайт</string>
+  <string name="shared_services_host_hint">Локальный хост</string>
+  <string name="shared_services_scheme_hint">Схема URI (напр. http, ftp)</string>
+  <string name="shared_services_directory_hint">Локальный каталог</string>
+  <string name="shared_services_directory_required">Выберите каталог</string>
   <string name="shared_services_choose">Выбор</string>
+  <string name="shared_services_policy_hint">Доступно для</string>
+  <string name="shared_services_policy_contacts">Мои контакты</string>
+  <string name="shared_services_policy_public">Публичный</string>
+  <string name="shared_services_policy_specific">Определенные контакты</string>
+  <string name="shared_services_allowed_contacts_hint">Разрешенные контакты (через запятую)</string>
   <string name="shared_services_save">Сохранить</string>
 </resources>

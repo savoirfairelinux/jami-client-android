@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">שלח בעיה</string>
   <string name="section_license">רישיון</string>
   <string name="copyright_section">זכויות יוצרים</string>
   <string name="contribute_section">תרום</string>
@@ -13,7 +14,11 @@
   <string name="call_service_description">שירות זה הכרחי כדי לשמור על השיחות שלך פועלות בקודם. הוא פועל רק במהלך השיחות.</string>
   <string name="data_transfer_service_description">שירות זה הכרחי להציג הודעות מתמשכות במהלך העברת קבצים. הוא פועל רק במהלך העברת קבצים.</string>
   <!--About dialog-->
+  <string name="thank_note">ברצוננו להודות לתורמים שלנו, שמאמציהם לאורך שנים רבות הפכו את התוכנה הזו למה שהיא.</string>
+  <string name="developers">מפתחים</string>
   <string name="media">מדיה</string>
+  <string name="community_management">ניהול קהילה</string>
+  <string name="special_thanks">תודה מיוחדת ל-</string>
   <!--RingActivity-->
   <string name="error_no_network">אין חיבור לרשת</string>
   <string name="error_account_offline">החשבון לא פועל.</string>
@@ -32,6 +37,7 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">חפש או הוסף</string>
   <string name="choose_number">נא לבחור מספר</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -41,10 +47,12 @@
   <string name="notif_incoming_call">שיחה נכנסת</string>
   <string name="notif_outgoing_call">שיחה יוצאת</string>
   <string name="notif_current_call">שיחה יוצאת</string>
+  <string name="notif_channel_call_in_progress">שיחה מתבצעת</string>
   <string name="notif_channel_calls">שיחות</string>
   <string name="notif_channel_messages">הודעות</string>
   <string name="notif_channel_file_transfer">העברת קבצים</string>
   <string name="notif_group_calls">שיחות</string>
+  <string name="notif_inprogress_group_call">שיחה מתבצעת</string>
   <string name="notif_dismiss">פטור</string>
   <string name="notif_reply">תשובה</string>
   <string name="location_share_action_stop">תפסיק לחלוק</string>
@@ -59,6 +67,9 @@
   <string name="ongoing_call">שיחה יוצאת</string>
   <string name="hist_in_call">שיחה נכנסת מ%1$s</string>
   <string name="hist_out_call">שיחה יוצאת אל %1$s</string>
+  <string name="action_call_accept">קבל שיחה</string>
+  <string name="action_call_accept_audio">קבל עם שמע</string>
+  <string name="action_call_accept_video">קבל עם וידאו</string>
   <string name="switch_to_video">אפשר וידאו</string>
   <string name="action_call_decline">ירידה</string>
   <string name="action_call_mic_mute">מיקרופון שקט</string>
@@ -73,6 +84,7 @@
   <string name="send_file">שלח קובץ</string>
   <string name="conversation_share_location">מיקום שיתוף</string>
   <string name="ongoing_group_call">שיחה יוצאת</string>
+  <string name="started_call">שיחה התחילה</string>
   <string name="in_reply_to">בתשובה</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
@@ -94,7 +106,10 @@
   <string name="leave_conversation">עזוב את השיחה</string>
   <string name="conversation_action_history_clear">היסטוריה ברורה</string>
   <string name="remove_conversation">תבטל את השיחה</string>
+  <string name="swarm_group_action_leave">עזוב קבוצה</string>
   <string name="conversation_action_block_this">פגע בלוק</string>
+  <string name="conversation_action_unblock_this">בטל חסימת איש קשר</string>
+  <string name="conversation_action_go_to_call">חזור לשיחה</string>
   <string name="conversation_action_incoming_call">שיחה נכנסת</string>
   <string name="conversation_action_latest">גלול לקצה השיחה</string>
   <string name="conversation_members">חברי</string>
@@ -108,6 +123,7 @@
   <string name="prompt_new_password_repeat">אישר סיסמה חדשה</string>
   <string name="account_create_title">ליצור חשבון Jami</string>
   <string name="prompt_hint_username">שם משתמש</string>
+  <string name="copied_clipboard">הועתק ללוח.</string>
   <string name="wizard_next">קדימה</string>
   <string name="wizard_back">חזרה</string>
   <string name="wizard_skip">דילוג</string>
@@ -127,16 +143,21 @@
   <!--Share fragment-->
   <string name="share_label">שיתוף</string>
   <string name="generic_error_migration">שגיאה</string>
+  <string name="title_share_with">שתף עם…</string>
   <!--Pending invitations-->
   <string name="accept">לקבל</string>
   <string name="decline">ירידה</string>
   <string name="block">חסימה</string>
+  <string name="decline_invitation">דחה הזמנה</string>
+  <string name="accept_invitation">קבל הזמנה</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">אין קשרים חסומים</string>
   <!--Smartlist-->
+  <string name="search_results">תוצאות חיפוש</string>
   <string name="tv_contact_row_header">אנשי קשר</string>
   <!--File Transfer-->
   <string name="file_transfer_status_invalid_file">קובץ לא חוקי</string>
+  <string name="file_transfer_status_unjoinable_peer">עמית בלתי נגיש</string>
   <string name="file_transfer_status_canceled">מבוטל</string>
   <string name="menu_file_open">פתיחת קובץ</string>
   <string name="menu_file_save">שמירת קובץ</string>
@@ -154,6 +175,7 @@
   <!--TV-->
   <string name="tv_media_preview">תצוגה ראשונה</string>
   <string name="tv_dialog_send">שליחה</string>
+  <string name="tv_action_more">עוד</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">מומלץ</string>
   <string name="wizard_status_optional">בחופשי</string>
@@ -164,6 +186,7 @@
   <string name="wizard_profile_info">פרופיל משתף רק עם אנשי קשר</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">שיתוף</string>
+  <string name="bottomSheet_extensions_btn">תוספים</string>
   <string name="bottomSheet_add_participants_btn">הוסף</string>
   <string name="bottomSheet_change_camera_btn">שינוי</string>
   <string name="bottomSheet_hangup_btn">סיום השיחה</string>
@@ -174,31 +197,59 @@
   <string name="reset">-הקמת מחדש</string>
   <!--Swarm Details-->
   <string name="rename_btn">אישר</string>
+  <string name="swarm_description">הוסף תיאור</string>
   <string name="tab_members">חברי</string>
   <string name="tab_files">קבצים</string>
   <string name="tab_settings">הגדרות</string>
   <string name="dialog_hint_title">כותרת</string>
   <string name="dialog_hint_description">תיאור</string>
+  <string name="picker_title">בחירת אנשי קשר</string>
+  <string name="picker_btn">בחירת אנשי קשר</string>
   <string name="bottomsheet_remove">הסיר חבר</string>
   <!--JamiId-->
   <string name="jami_id_validate">רשום שם משתמש</string>
   <string name="jami_id_choose_username">בחר שם משתמש</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ברוך בואך אל Jami</string>
+  <string name="welcome_jami_description">שתף את מזהה ה-Jami שלך כדי שיהיה קל יותר ליצור איתך קשר!</string>
   <!--Conversation details-->
   <string name="details">פרטים</string>
+  <string name="swarm_type">סוג שיחה</string>
   <string name="Private">פרטי</string>
   <string name="mute_conversation">שיחה שקטה</string>
   <!--Donation-->
+  <string name="donation_card_description">אם אתה נהנה משימוש ב-Jami ומאמין בשליחות שלנו, האם ברצונך לתרום?</string>
   <string name="donation_card_not_now">לא עכשיו</string>
+  <string name="donation_donate">תרום</string>
   <!--Extension-->
+  <string name="export_side_step1_error_malformed">מזהה מכשיר חדש לא מזוהה. אנא עקוב אחר ההוראות לעיל.</string>
   <string name="export_side_step1_code_connect">חיבור</string>
   <string name="export_side_step2_cancel">ביטול</string>
   <string name="export_side_step2_confirm">אישר</string>
   <string name="import_side_step1_share">שיתוף</string>
   <string name="import_side_step2_password_import">יבוא</string>
+  <string name="import_side_step2_action_required">נדרשת פעולה. אנא אשר את החשבון במכשיר המקור.</string>
+  <string name="import_side_step3_body_done">החשבון יובא בהצלחה.</string>
+  <string name="link_device_error_authentication">אירעה שגיאת אימות בעת קישור המכשיר. אנא בדוק את פרטי הכניסה ונסה שוב.</string>
+  <string name="link_device_error_canceled">הפעולה בוטלה על ידי המשתמש.</string>
   <!--Accessibility-->
+  <string name="step_title_set_password">הגדר סיסמה</string>
   <!--Peer services-->
   <string name="peer_services_connect">חיבור</string>
+  <string name="peer_services_disconnect">נתק</string>
+  <string name="notif_channel_peer_tunnel">שירותים משותפים</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">עורך</string>
+  <string name="shared_services_delete">מחיקה</string>
+  <string name="shared_services_description_hint">תיאור (אופציונלי)</string>
+  <string name="shared_services_port_hint">יציאה מקומית</string>
+  <string name="shared_services_no_description">אין תיאור</string>
+  <string name="shared_services_more_options">אפשרויות נוספות</string>
+  <string name="shared_services_disconnect_all_confirm">נתק</string>
+  <string name="shared_services_type_website_label">אתר רשת</string>
+  <string name="shared_services_type_custom_label">התאמה אישית</string>
+  <string name="shared_services_host_hint">מארח מקומי</string>
+  <string name="shared_services_policy_hint">נגיש על ידי</string>
+  <string name="shared_services_policy_public">ציבורי</string>
+  <string name="shared_services_save">שמור</string>
 </resources>

@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Подаване на проблем</string>
   <string name="section_license">Лиценз</string>
   <string name="copyright_section">Авторски права</string>
   <string name="contribute_section">Принос</string>
@@ -13,7 +14,11 @@
   <string name="call_service_description">Тази услуга е необходима, за да се поддържат обажданията ви в предната линия.</string>
   <string name="data_transfer_service_description">Тази услуга е необходима за показване на постоянни уведомления по време на прехвърляне на файлове.</string>
   <!--About dialog-->
+  <string name="thank_note">Бихме искали да благодарим на нашите сътрудници, чиито усилия през много години направиха този софтуер такъв, какъвто е.</string>
+  <string name="developers">Разработчици</string>
   <string name="media">Звук и видео</string>
+  <string name="community_management">Управление на общността</string>
+  <string name="special_thanks">Специални благодарности на</string>
   <!--RingActivity-->
   <string name="error_no_network">Няма връзка с мрежата</string>
   <string name="error_account_offline">Счетоводното е изключено.</string>
@@ -36,6 +41,7 @@
     <item quantity="other">%d разговора</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Търсене или добавяне</string>
   <string name="choose_number">Изберете номер</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -48,6 +54,7 @@
   <string name="notif_outgoing_call">Изходящо обаждане</string>
   <string name="notif_current_call_title">Продължаващ разговор с %1$s</string>
   <string name="notif_current_call">Текущо обаждане</string>
+  <string name="notif_channel_call_in_progress">Обаждане в ход</string>
   <string name="notif_channel_calls">Обаждания</string>
   <string name="notif_channel_missed_calls">Пропуснати обаждания</string>
   <string name="notif_channel_incoming_calls">Пристъпващи обаждания</string>
@@ -58,6 +65,7 @@
   <string name="notif_channel_background_service">Фонов режим</string>
   <string name="notif_channel_background_service_descr">Позволява получаването на обаждания и съобщения по всяко време.</string>
   <string name="notif_group_calls">Обаждания</string>
+  <string name="notif_inprogress_group_call">Обаждане в ход</string>
   <string name="notif_mark_as_read">Маркиране като прочетено</string>
   <string name="notif_dismiss">Отказ</string>
   <string name="notif_reply">Отговор</string>
@@ -84,6 +92,8 @@
   <string name="hist_in_call">Входящо обаждане от %1$s</string>
   <string name="hist_out_call">Изходящо обаждане до %1$s</string>
   <string name="action_call_accept">Приемане на обаждането</string>
+  <string name="action_call_accept_audio">Приемане с аудио</string>
+  <string name="action_call_accept_video">Приемане с видео</string>
   <string name="switch_to_video">Активиране на видео</string>
   <string name="action_call_decline">Отказ</string>
   <string name="action_call_mic_mute">Заглушаване на микрофона</string>
@@ -95,6 +105,7 @@
   <string name="share_via">Споделяне чрез</string>
   <string name="scan_qr">Сканиране на QR-код</string>
   <string name="qr_code">QR код</string>
+  <string name="new_group">Създаване на нова група</string>
   <string name="ab_action_flipcamera">Обръщане на камерата</string>
   <string name="ab_action_hidepreview">Скрийте предварителното преглеждане</string>
   <string name="remote_recording">Записване на %s...</string>
@@ -111,6 +122,7 @@
   <string name="conversation_send_video">Записване на видео клип</string>
   <string name="conversation_share_location">Разподели местоположение</string>
   <string name="ongoing_group_call">Текущо обаждане</string>
+  <string name="started_call">Обаждането започна</string>
   <string name="in_reply_to">В отговор на</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Право за използване на камерата</string>
@@ -148,9 +160,11 @@
   <string name="conversation_action_remove_this_title">Изтриване на този контакт?</string>
   <string name="conversation_action_remove_this_message">Това определено ще изтрие този контакт и ще изчисти историята на повикванията.</string>
   <string name="remove_conversation">Премахване на разговора</string>
+  <string name="swarm_group_action_leave">Напускане на групата</string>
   <string name="conversation_action_select_peer_number">Изберете номер</string>
   <string name="conversation_action_block_this">Блокиране на контакт</string>
   <string name="conversation_action_unblock_this">Деблокиране на контакта</string>
+  <string name="conversation_action_go_to_call">Връщане към обаждането</string>
   <string name="conversation_action_incoming_call">Входящо обаждане</string>
   <string name="conversation_action_latest">Прескочи до най-новото.</string>
   <string name="conversation_open_file_error">Няма инсталирано приложение, което да може да отвори този тип файл.</string>
@@ -192,6 +206,7 @@
   <string name="help_password_choose">Изберете сигурна парола, която ще запомните, за да е защитен профилът ви.</string>
   <string name="help_password_enter">Введете паролата за основната сметка на Джами.</string>
   <string name="help_server_enter">Введете URL на сървъра за управление.</string>
+  <string name="copied_clipboard">Копирано в клипборда.</string>
   <string name="wizard_next">Напред</string>
   <string name="wizard_back">Назад</string>
   <string name="wizard_skip">Пропускане</string>
@@ -225,6 +240,8 @@
   <string name="accept">Приемане</string>
   <string name="decline">Отказ</string>
   <string name="block">Блокиране</string>
+  <string name="decline_invitation">Отхвърляне на покана</string>
+  <string name="accept_invitation">Приемане на покана</string>
   <string name="invitation_message">Имате %1$d заявки за контакт</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Без блокирани контакти</string>
@@ -233,11 +250,13 @@
   <string name="conversation_placeholder">Още не сте говорили.</string>
   <string name="contact_request_sent">Заявката за свързване с нов контакт е изпратена</string>
   <string name="start_conversation">Започнете разговор.</string>
+  <string name="search_results">Резултати от търсенето</string>
   <string name="tv_contact_row_header">Контакти</string>
   <string name="gallery_error_title">Не е намерено приложение на Галерия</string>
   <string name="gallery_error_message">Не е намерено приложение на устройството, което да отвори Галерия</string>
   <!--File Transfer-->
   <string name="file_transfer_status_invalid_file">Невалиден файл</string>
+  <string name="file_transfer_status_unjoinable_peer">Недостъпен абонат</string>
   <string name="file_transfer_status_canceled">Отменено</string>
   <string name="file_download">Скачане</string>
   <string name="title_media_viewer">Прегледник на медиите</string>
@@ -293,6 +312,7 @@
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Споделяне</string>
   <string name="bottomSheet_dialpad_btn">Диапад</string>
+  <string name="bottomSheet_extensions_btn">Разширения</string>
   <string name="bottomSheet_add_participants_btn">Добавяне</string>
   <string name="bottomSheet_change_camera_btn">Промяна</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Камера</string>
@@ -307,6 +327,7 @@
   <string name="reset">Презареждане</string>
   <!--Swarm Details-->
   <string name="rename_btn">Потвърди</string>
+  <string name="swarm_description">Добавяне на описание</string>
   <string name="tab_members">Членове</string>
   <string name="tab_files">Файлове</string>
   <string name="tab_settings">Настройки</string>
@@ -321,20 +342,47 @@
   <string name="jami_id_choose_username">Изберете потребителско име</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Добре дошли в Jami</string>
+  <string name="welcome_jami_description">Споделете идентификатора си в Jami, за да можете да бъдете лесно намирани!</string>
   <!--Conversation details-->
   <string name="details">Подробности</string>
+  <string name="swarm_type">Тип разговор</string>
   <string name="Private">Приватна</string>
   <string name="mute_conversation">Мълчави разговори</string>
   <!--Donation-->
+  <string name="donation_card_description">Ако харесвате да използвате Jami и вярвате в нашата мисия, искате ли да направите дарение?</string>
+  <string name="donation_card_not_now">Не сега</string>
+  <string name="donation_donate">Дарете</string>
   <!--Extension-->
   <string name="export_side_main_title">Изнасяне на акаунта</string>
+  <string name="export_side_step1_error_malformed">Неразпознат идентификатор на новото устройство. Моля, следвайте инструкциите по-горе.</string>
   <string name="export_side_step1_code_connect">Свържете се</string>
   <string name="export_side_step2_cancel">Отказ</string>
   <string name="export_side_step2_confirm">Потвърди</string>
   <string name="import_side_step1_share">Споделяне</string>
   <string name="import_side_step2_password_import">Внасяне</string>
+  <string name="import_side_step2_action_required">Изисква се действие. Моля, потвърдете акаунта на устройството източник.</string>
+  <string name="import_side_step3_body_done">Акаунтът беше импортиран успешно.</string>
+  <string name="link_device_error_authentication">Възникна грешка при удостоверяването при свързването на устройството. Моля, проверете идентификационните данни и опитайте отново.</string>
+  <string name="link_device_error_canceled">Операцията беше отменена от потребителя.</string>
   <!--Accessibility-->
+  <string name="step_title_set_password">Задаване на парола</string>
   <!--Peer services-->
   <string name="peer_services_connect">Свържете се</string>
+  <string name="peer_services_disconnect">Прекъсване на връзката</string>
+  <string name="notif_channel_peer_tunnel">Споделени услуги</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">Редактиране</string>
+  <string name="shared_services_delete">Изтриване</string>
+  <string name="shared_services_description_hint">Описание (по избор)</string>
+  <string name="shared_services_port_hint">Местен порт</string>
+  <string name="shared_services_no_description">Без описание</string>
+  <string name="shared_services_more_options">Повече възможности</string>
+  <string name="shared_services_disconnect_all_confirm">Прекъсване на връзката</string>
+  <string name="shared_services_type_website_label">Уеб сайт</string>
+  <string name="shared_services_type_custom_label">Персонализиран</string>
+  <string name="shared_services_host_hint">Локален хост</string>
+  <string name="shared_services_choose">Избиране</string>
+  <string name="shared_services_policy_hint">Достъпно за</string>
+  <string name="shared_services_policy_public">Публично</string>
+  <string name="shared_services_save">Запазване</string>
 </resources>

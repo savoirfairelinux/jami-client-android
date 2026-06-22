@@ -24,6 +24,8 @@
   <string name="account_type_ip2ip">Akun IP</string>
   <string name="help_ring">Akun Jami memungkinkan Anda untuk menjangkau orang-orang dengan aman secara peer to peer melalui jaringan yang sepenuhnya terdistribusi.</string>
   <string name="help_sip_title">Tambahkan akun SIP</string>
+  <string name="help_sip">Konfigurasikan akun SIP yang ada</string>
+  <string name="create_sip_account">Konfigurasikan akun SIP</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">Aksi ini tak bisa dibatalkan</string>
   <!--AccountManagementFragment-->
@@ -33,6 +35,7 @@
   <string name="account_device_revoke">Hapus perangkat</string>
   <string name="account_device_revocation_success_title">Sukses</string>
   <string name="account_device_revocation_success">Perangkat telah dihapus</string>
+  <string name="account_device_revocation_wrong_password">Kata sandi salah.</string>
   <string name="account_device_revocation_unknown_device">Perangkat tidak diketahui.</string>
   <string name="account_device_revocation_error_unknown">Error tak dikenal.</string>
   <string name="account_password_change">Ubah kata sandi</string>
@@ -42,6 +45,7 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Umum</string>
   <string name="account_basic_category">Pengaturan Dasar</string>
+  <string name="account_alias_label">Nama tampilan</string>
   <string name="account_hostname_label">Nama host</string>
   <string name="account_bootstrap_label">Bootstrap</string>
   <string name="account_name_server_label">Nama peladen</string>
@@ -55,6 +59,7 @@
   <string name="account_upnp_label">Aktifkan UPnP</string>
   <string name="account_proxy_field">Proksi</string>
   <!--Extension Details-->
+  <string name="account_preferences_extension_tab">Ekstensi</string>
   <!--Audio Details-->
   <string name="account_audio_label">Suara</string>
   <string name="account_preferences_media_tab">Media</string>
@@ -69,6 +74,8 @@
   <string name="account_video_enable">Aktifkan Video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Lanjutan</string>
+  <string name="account_read_receipts_label">Tanda terima dibaca</string>
+  <string name="account_read_receipts_summary">Kirim dan minta tanda terima pengiriman dan baca untuk dikirim saat pesan terkirim atau dibaca.</string>
   <string name="account_call_settings_title">Pengaturan telepon</string>
   <string name="account_dht_public_in_calls_label">Izinkan panggilan dari kontak tak dikenal</string>
   <string name="account_registration_exp_label">Registrasi Kedaluarsa</string>
@@ -154,6 +161,7 @@
   <string name="account_export_title">Tautkan akun ke perangkat lain</string>
   <string name="account_connect_server_button">Hubungkan ke peladen manajemen</string>
   <string name="account_connect_button">Hubungkan</string>
+  <string name="prompt_server">URL server manajemen</string>
   <string name="help_credentials_enter">Masukkan kredensial organisasi Anda</string>
   <string name="help_connect_password_enter">Masukkan kata sandi organisasi Anda</string>
   <string name="account_connect_prompt_username">Nama pengguna</string>
@@ -190,6 +198,7 @@
   <string name="account_rename_device_hint">Pilih nama perangkat baru</string>
   <string name="account_device_this_indicator">Perangkat ini</string>
   <string name="account_disabled_indicator">Dinonaktifan</string>
+  <string name="account_device_id">ID perangkat</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Format tidak didukung.</string>
   <string name="account_link_device_title">Hubungkan perangkat baru</string>

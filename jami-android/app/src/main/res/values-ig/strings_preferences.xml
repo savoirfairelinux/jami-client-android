@@ -8,6 +8,7 @@
   <string name="pref_category_diagnostic">Ihe ndị e ji amata ọrịa</string>
   <string name="pref_category_appearance">Otú Ọ Dị</string>
   <string name="pref_category_connectivity">Njikọ</string>
+  <string name="pref_category_extensions">Ndọtị</string>
   <string name="pref_category_video_settings">Ntọala vidiyo dị elu</string>
   <string name="pref_mobileData_title">Data mkpanaka</string>
   <string name="pref_mobileData_summary">Hapụ Jami na netwọk 3G / LTE na mgbakwunye na Wi-Fi</string>
@@ -41,10 +42,13 @@
   <string name="pref_logs_summary">Mbido ndekọ ndekọ nchọpụta na-emeghe</string>
   <string name="pref_logs_start">Malite Ịkụ Ụgbọ</string>
   <string name="pref_logs_stop">Kwụsị ịkwa osisi</string>
+  <string name="connection_monitor_channels">Ọwa</string>
   <string name="pref_typing_title">Ihe ngosi maka ịpị</string>
   <string name="pref_block_record_title">Gbochie nseta ihuenyo na ndekọ</string>
   <string name="pref_block_record_summary">Kwụsị iwere nseta ihuenyo ma ọ bụ idekọ vidiyo.</string>
+  <string name="pref_link_preview_title">Nlele njikọ weebụ</string>
   <string name="pref_link_preview_summary">Nlele anya chọrọ ibudata ọdịnaya site na sava ndị ọzọ.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">Ahaziri ahazi</string>
   <!--Extension-->
 </resources>

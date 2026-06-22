@@ -24,6 +24,8 @@
   <string name="account_type_ip2ip">আইপি অ্যাকাউন্ট</string>
   <string name="help_ring">জামি অ্যাকাউন্ট আপনাকে সম্পূর্ণ বিতরণকৃত নেটওয়ার্কের মাধ্যমে নিরাপদে ব্যক্তিদের সাথে যোগাযোগ করতে দেয়।</string>
   <string name="help_sip_title">SIP অ্যাকাউন্ট যোগ করুন</string>
+  <string name="help_sip">বিদ্যমান SIP অ্যাকাউন্ট কনফিগার করুন</string>
+  <string name="create_sip_account">SIP অ্যাকাউন্ট কনফিগার করুন</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">এই পদক্ষেপটি বাতিল করা যাবে না।</string>
   <!--AccountManagementFragment-->
@@ -33,6 +35,7 @@
   <string name="account_device_revoke">বাতিলকরণ ডিভাইস</string>
   <string name="account_device_revocation_success_title">সাফল্য</string>
   <string name="account_device_revocation_success">ডিভাইস এখন প্রত্যাহার করা হয়েছে!</string>
+  <string name="account_device_revocation_wrong_password">ভুল পাসওয়ার্ড।</string>
   <string name="account_device_revocation_unknown_device">অজানা ডিভাইস।</string>
   <string name="account_device_revocation_error_unknown">অজানা ত্রুটি।</string>
   <string name="account_password_change">পাসওয়ার্ড পরিবর্তন করুন</string>
@@ -42,6 +45,7 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">সাধারণ</string>
   <string name="account_basic_category">বেসিক সেটিংস</string>
+  <string name="account_alias_label">প্রদর্শন নাম</string>
   <string name="account_hostname_label">হোস্ট নাম</string>
   <string name="account_bootstrap_label">বুটস্ট্র্যাপ</string>
   <string name="account_name_server_label">নাম সার্ভার</string>
@@ -55,6 +59,7 @@
   <string name="account_upnp_label">UPnP সক্ষম করুন</string>
   <string name="account_proxy_field">প্রক্সি</string>
   <!--Extension Details-->
+  <string name="account_preferences_extension_tab">এক্সটেনশন</string>
   <!--Audio Details-->
   <string name="account_audio_label">অডিও</string>
   <string name="account_preferences_media_tab">মিডিয়া</string>
@@ -69,6 +74,8 @@
   <string name="account_video_enable">ভিডিও সক্ষম করুন</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">উন্নত</string>
+  <string name="account_read_receipts_label">পঠিত রসিদ</string>
+  <string name="account_read_receipts_summary">বার্তা সরবরাহ বা পঠিত হলে পাঠানোর জন্য সরবরাহ এবং পঠিত রসিদ পাঠান ও অনুরোধ করুন।</string>
   <string name="account_call_settings_title">কল সেটিং</string>
   <string name="account_dht_public_in_calls_label">অজানা পরিচিতি থেকে ইনকামিং কলগুলিকে অনুমতি দিন</string>
   <string name="account_registration_exp_label">নিবন্ধন মেয়াদ শেষ</string>
@@ -154,6 +161,7 @@
   <string name="account_export_title">অন্যান্য ডিভাইসের সাথে লিঙ্ক অ্যাকাউন্ট</string>
   <string name="account_connect_server_button">ম্যানেজমেন্ট সার্ভারের সাথে সংযোগ স্থাপন</string>
   <string name="account_connect_button">সংযুক্ত করুন</string>
+  <string name="prompt_server">ব্যবস্থাপনা সার্ভার URL</string>
   <string name="help_credentials_enter">আপনার প্রতিষ্ঠানের পরিচয়পত্র লিখুন</string>
   <string name="help_connect_password_enter">আপনার প্রতিষ্ঠানের পাসওয়ার্ড লিখুন</string>
   <string name="account_connect_prompt_username">ব্যবহারকারীর নাম</string>
@@ -189,6 +197,7 @@
   <string name="account_rename_device_hint">নতুন ডিভাইসের নাম নির্বাচন করুন</string>
   <string name="account_device_this_indicator">এই ডিভাইস</string>
   <string name="account_disabled_indicator">অক্ষম</string>
+  <string name="account_device_id">ডিভাইস ID</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">এই ফরম্যাট সমর্থিত নয়।</string>
   <string name="account_link_device_title">একটি নতুন ডিভাইস লিঙ্ক</string>

@@ -24,6 +24,8 @@
   <string name="account_type_ip2ip">บัญชีไอพี</string>
   <string name="help_ring">บัญชี Jami ช่วยให้คุณเข้าถึงผู้คนได้อย่างปลอดภัยแบบ peer-to-peer ผ่านเครือข่ายแบบกระจายอย่างสมบูรณ์</string>
   <string name="help_sip_title">เพิ่มบัญชี SIP</string>
+  <string name="help_sip">กำหนดค่าบัญชี SIP ที่มีอยู่</string>
+  <string name="create_sip_account">กำหนดค่าบัญชี SIP</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">การดำเนินการนี้ไม่สามารถยกเลิกได้</string>
   <!--AccountManagementFragment-->
@@ -33,6 +35,7 @@
   <string name="account_device_revoke">เพิกถอนอุปกรณ์</string>
   <string name="account_device_revocation_success_title">ความสำเร็จ</string>
   <string name="account_device_revocation_success">อุปกรณ์ถูกเพิกถอนแล้ว!</string>
+  <string name="account_device_revocation_wrong_password">รหัสผ่านไม่ถูกต้อง</string>
   <string name="account_device_revocation_unknown_device">อุปกรณ์ที่ไม่รู้จัก</string>
   <string name="account_device_revocation_error_unknown">ข้อผิดพลาดที่ไม่รู้จัก</string>
   <string name="account_password_change">เปลี่ยนรหัสผ่าน</string>
@@ -42,6 +45,7 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">ทั่วไป</string>
   <string name="account_basic_category">การตั้งค่าพื้นฐาน</string>
+  <string name="account_alias_label">ชื่อที่แสดง</string>
   <string name="account_hostname_label">ชื่อโฮสต์</string>
   <string name="account_bootstrap_label">แถวกระดาน</string>
   <string name="account_name_server_label">เซอร์เวอร์ชื่อ</string>
@@ -55,6 +59,7 @@
   <string name="account_upnp_label">เปิด UPnP</string>
   <string name="account_proxy_field">พอร์กส</string>
   <!--Extension Details-->
+  <string name="account_preferences_extension_tab">ส่วนขยาย</string>
   <!--Audio Details-->
   <string name="account_audio_label">เครื่องเสียง</string>
   <string name="account_preferences_media_tab">สื่อ</string>
@@ -69,6 +74,8 @@
   <string name="account_video_enable">เปิดวีดีโอ</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">ขั้นสูง</string>
+  <string name="account_read_receipts_label">การแจ้งอ่าน</string>
+  <string name="account_read_receipts_summary">ส่งและขอการแจ้งการนำส่งและการอ่านให้ส่งเมื่อมีการนำส่งหรืออ่านข้อความ</string>
   <string name="account_call_settings_title">การตั้งค่าการโทร</string>
   <string name="account_dht_public_in_calls_label">อนุญาตสายเรียกเข้าจากผู้ติดต่อที่ไม่รู้จัก</string>
   <string name="account_registration_exp_label">การลงทะเบียนหมดอายุ</string>
@@ -154,6 +161,7 @@
   <string name="account_export_title">บัญชีเชื่อมต่อกับอุปกรณ์อื่นๆ</string>
   <string name="account_connect_server_button">เชื่อมต่อเซอร์เวอร์บริหาร</string>
   <string name="account_connect_button">เชื่อมต่อ</string>
+  <string name="prompt_server">URL เซิร์ฟเวอร์การจัดการ</string>
   <string name="help_credentials_enter">กรอกข้อมูลองค์กรของคุณ</string>
   <string name="help_connect_password_enter">กรอกรหัสผ่านองค์กรของคุณ</string>
   <string name="account_connect_prompt_username">ชื่อผู้ใช้</string>
@@ -189,6 +197,7 @@
   <string name="account_rename_device_hint">เลือกชื่ออุปกรณ์ใหม่</string>
   <string name="account_device_this_indicator">เครื่องนี้</string>
   <string name="account_disabled_indicator">คนพิการ</string>
+  <string name="account_device_id">รหัสอุปกรณ์</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">ไม่รองรับรูปแบบนี้</string>
   <string name="account_link_device_title">เชื่อมโยงอุปกรณ์ใหม่</string>

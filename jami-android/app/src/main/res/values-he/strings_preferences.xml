@@ -8,6 +8,7 @@
   <string name="pref_category_diagnostic">אבחון</string>
   <string name="pref_category_appearance">מראה</string>
   <string name="pref_category_connectivity">קישור</string>
+  <string name="pref_category_extensions">תוספים</string>
   <string name="pref_category_video_settings">הגדרות וידאו מתקדמות</string>
   <string name="pref_mobileData_title">נתונים ניידים</string>
   <string name="pref_mobileData_summary">אפשרות לג\'מי ברשתות 3G/LTE בנוסף ל-Wi-Fi</string>
@@ -41,6 +42,7 @@
   <string name="pref_logs_summary">הגדרות של תיעוד האבחנה פתוחה</string>
   <string name="pref_logs_start">התחל לגרות</string>
   <string name="pref_logs_stop">תפסיקו לחתוך.</string>
+  <string name="connection_monitor_channels">ערוצים</string>
   <string name="pref_typing_title">מדד טייפ</string>
   <string name="pref_block_record_title">חוסם צילום מסך וזירת</string>
   <string name="pref_block_record_summary">חוסם צילום מסך או הקלטת וידאו.</string>

@@ -86,6 +86,8 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Розширені</string>
   <string name="account_chat_settings_title">Налаштування чату</string>
+  <string name="account_read_receipts_label">Сповіщення про прочитання</string>
+  <string name="account_read_receipts_summary">Надсилати й запитувати сповіщення про доставлення та прочитання, коли повідомлення доставлено або прочитано.</string>
   <string name="account_call_settings_title">Налаштування дзвінків</string>
   <string name="account_dht_public_in_calls_label">Дозвольте прийом покликів з невідомих контактів</string>
   <string name="account_registration_exp_label">Реєстрація спливла</string>
@@ -197,10 +199,12 @@
   <string name="account_link_export_button">Привʼязати новий пристрій</string>
   <string name="account_link_show_button">Покажіть %d більше пов\'язаних пристроїв</string>
   <string name="account_link_hide_button">Сховати з\'єднане пристрої</string>
+  <string name="account_start_export_button">Згенерувати код автентифікації</string>
   <string name="account_end_export_button">закрити</string>
   <string name="account_export_title">Спіль посилання на інші пристрої</string>
   <string name="account_connect_server_button">Підключення до сервера управління</string>
   <string name="account_connect_button">З\'єднати</string>
+  <string name="prompt_server">URL-адреса сервера керування</string>
   <string name="help_credentials_enter">Введіть дані організації</string>
   <string name="help_connect_password_enter">Введіть пароль організації</string>
   <string name="account_connect_prompt_username">Ім’я</string>
@@ -247,12 +251,21 @@
   <string name="account_device_name_empty">Назва пристрою не може бути порожньою.</string>
   <string name="account_device_this_indicator">Цей пристрій</string>
   <string name="account_disabled_indicator">Вимкнено</string>
+  <string name="account_device_id">Ідентифікатор пристрою</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Цей формат не підтримується</string>
+  <string name="account_link_info">У застосунку Jami на новому пристрої відскануйте QR-код або введіть код автентифікації вручну.</string>
   <string name="account_link_device_title">Прив\'язати новий пристрій</string>
+  <string name="account_link_password">Цей обліковий запис зашифровано паролем, введіть пароль для генерації коду автентифікації.</string>
   <string name="account_link_generate_button">Згенерувати</string>
+  <string name="account_link_time_valid">Код автентифікації стане недійсним: %1$s.</string>
+  <string name="account_link_device_info">Виберіть «Прив\'язати новий пристрій» в іншому застосунку Jami, щоб показати QR-код або код автентифікації.</string>
   <string name="account_generate_export_device">На іншому пристрої</string>
+  <string name="account_generate_export_info">Встановіть і запустіть Jami. Виберіть «Імпортувати з іншого пристрою» та відскануйте QR-код. Або введіть PIN-код вручну.</string>
   <string name="content_description_qr_generated">QR-код облікового запису</string>
+  <string name="account_generate_export_invalid">Код автентифікації більше недійсний.\nВведіть пароль і згенеруйте новий, щоб прив\'язати новий пристрій.</string>
+  <string name="account_generate_export_invalid_two">Код автентифікації більше недійсний.\nЗгенеруйте новий, щоб прив\'язати новий пристрій.</string>
+  <string name="help_pin_info">Потрібно, якщо обліковий запис зашифровано паролем.</string>
   <string name="account_link_device_button">З\'єднати</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Розблокувати обліковий запис Jami</string>
@@ -266,5 +279,6 @@
   <string name="account_biometry_enroll_auth_message">Додати захищену біометричну або автентифікацію пристрою як альтернативу вашому паролю</string>
   <string name="account_auth_error">Помилка автентифікації: %1$s</string>
   <string name="account_auth_success">Автентифікацію успішно виконано</string>
+  <string name="account_auth_key_error">Сталася помилка під час розшифрування ключа облікового запису.</string>
   <string name="account_auth_password">Використовувати пароль облікового запису</string>
 </resources>

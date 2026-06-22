@@ -35,6 +35,7 @@
   <string name="pref_notification_title">Vidljivost obaveštenja</string>
   <string name="pref_notification_summary">Podesite vidljivost obaveštenja aplikacija na zaključanom ekranu.</string>
   <string name="pref_connectivity_title">Režim povezivanja</string>
+  <string name="pref_connectivity_summary">Izaberite kako da povežete Jami sa distribuiranim sistemom za prijem poziva i poruka.</string>
   <string name="pref_blackList_title">Blok lista</string>
   <string name="pref_blackList_summary">Proverite svoju listu blokiranih.</string>
   <string name="pref_delete_account_title">Obrisati nalog</string>
@@ -49,10 +50,12 @@
   <string name="pref_logs_stop">Zaustavite evidentiranje</string>
   <string name="pref_connection_monitor">Monitor veze</string>
   <string name="pref_connection_monitor_summary">Pratite peer to peer veze</string>
+  <string name="connection_monitor_channels">Kanali</string>
   <string name="pref_push_notifications_logs_title">Dnevnici push obaveštenja</string>
   <string name="pref_push_notifications_logs_summary">Прегледајте евиденције снимљене из push
 обавештења.</string>
   <string name="pref_typing_title">Индикатор за типовање</string>
+  <string name="pref_typing_summary">Označi kada se kucaju poruke.</string>
   <string name="pref_block_record_title">Blokirajte snimak ekrana i snimanje</string>
   <string name="pref_block_record_summary">Blokirajte snimanje ekrana ili video snimak.</string>
   <string name="pref_link_preview_title">Pregledi veb-veza</string>
@@ -62,17 +65,26 @@
   <string name="notification_private">Приватно\n(прикажите обавештења, али сакријте њихов садржај на закључаном екрану)\n</string>
   <string name="notification_secret">Тајно\n(не приказуј обавештења на закључаном екрану)</string>
   <string name="connectivity_google_services_title">Google сервиси</string>
+  <string name="connectivity_google_services_description">Koristite Google Firebase i DHT proksi za prijem push obaveštenja.</string>
   <string name="connectivity_local_node_title">Локални DHT node</string>
+  <string name="connectivity_local_node_description">Koristite lokalni DHT čvor za povezivanje sa drugim Jami uređajima i kontaktima.</string>
+  <string name="connectivity_unified_push_description">Koristite prilagođeni UnifiedPush server za prijem push obaveštenja.</string>
   <string name="connectivity_custom_title">Prilagođeno</string>
+  <string name="connectivity_custom_description">Trenutno se ne koristi nijedna od dostupnih unapred podešenih konfiguracija.</string>
   <!--Extension-->
   <string name="pref_enable_extensions_title">Омогући екстензије</string>
+  <string name="pref_enable_extensions_summary">Omogući proširenja i postavi njihove parametre</string>
   <string name="pref_available_extensions_title">Доступна проширења</string>
+  <string name="pref_available_extensions_summary">Instalirana proširenja i dodavanje novih proširenja</string>
   <string name="fab_extensions_add">Додајте нову екстензију</string>
   <string name="extension_uninstall_title">Деинсталирати проширење?</string>
   <string name="extension_reset_preferences">Ресетујте подешавања екстензија</string>
   <string name="extension_reset_preferences_summary">Екстензија је враћена на подразумевана подешавања</string>
   <string name="extension_reset_preferences_ask">Да ли желите да ресетујете општа подешавања екстензија?</string>
   <string name="extension_reset_account_preferences_ask">Да ли желите да ресетујете подешавања проширења налога?</string>
+  <string name="account_advanced_reset">Resetuj napredna podešavanja</string>
+  <string name="account_advanced_reset_summary">Vrati podrazumevana napredna podešavanja</string>
+  <string name="account_advanced_reset_confirm">Resetovati sva napredna podešavanja na podrazumevana?</string>
   <string name="extension_successfully_installed">Додатак <b>%1$s</b> је инсталиран успешно.</string>
   <string name="extension_install_failure">Дошло је до грешке приликом инсталирања следећег додатка: <b>%1$s</b></string>
   <string name="extension_recent_version_exception">Новија верзија <b>%1$s</b> је инсталирана.</string>

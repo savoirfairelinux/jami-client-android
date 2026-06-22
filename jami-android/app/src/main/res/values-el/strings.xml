@@ -1,7 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Υποβολή προβλήματος</string>
   <string name="section_license">Άδεια</string>
+  <string name="view_switch_camera">Εναλλαγή κάμερας</string>
   <string name="copyright_section">Πνευματική Ιδιοκτησία</string>
   <string name="contribute_section">Συνεισφέρετε</string>
   <string name="version_section">Έκδοση</string>
@@ -13,7 +15,11 @@
   <string name="call_service_description">Αυτή η υπηρεσία είναι απαραίτητη για να μπορείτε να δέχεστε κλήσεις. Εκτελείται μόνο κατά τη διάρκεια των κλήσεων.</string>
   <string name="data_transfer_service_description">Αυτή η υπηρεσία είναι απαραίτητη για την προβολή διαρκών ειδοποιήσεων κατά τη μεταφορά αρχείων.</string>
   <!--About dialog-->
+  <string name="thank_note">Θα θέλαμε να ευχαριστήσουμε τους συνεισφέροντές μας, των οποίων οι προσπάθειες επί πολλά χρόνια έκαναν αυτό το λογισμικό αυτό που είναι.</string>
+  <string name="developers">Προγραμματιστές</string>
   <string name="media">Μέσα</string>
+  <string name="community_management">Διαχείριση κοινότητας</string>
+  <string name="special_thanks">Ιδιαίτερες ευχαριστίες σε</string>
   <!--RingActivity-->
   <string name="error_no_network">Χωρίς σύνδεση στο δίκτυο</string>
   <string name="error_account_offline">Ο λογαριασμός είναι εκτός σύνδεσης</string>
@@ -31,11 +37,13 @@
   <!--Dialing Fragment-->
   <!--History Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">Ληφθείσες προσκλήσεις</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%dΣυνομιλία</item>
     <item quantity="other">%dΣυνομιλίες</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Αναζήτηση ή προσθήκη</string>
   <string name="choose_number">Επιλέξτε αριθμό</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -48,6 +56,7 @@
   <string name="notif_outgoing_call">Εξερχόμενη κλήση</string>
   <string name="notif_current_call_title">Κλήση σε εξέλιξη με %1$s</string>
   <string name="notif_current_call">Εξερχόμενη κλήση</string>
+  <string name="notif_channel_call_in_progress">Κλήση σε εξέλιξη</string>
   <string name="notif_channel_calls">Κλήσεις</string>
   <string name="notif_channel_missed_calls">Αναπάντητες Κλήσεις</string>
   <string name="notif_channel_incoming_calls">Εισερχόμενες Κλήσεις</string>
@@ -58,6 +67,7 @@
   <string name="notif_channel_background_service">Υπηρεσία Παρασκηνίου</string>
   <string name="notif_channel_background_service_descr">Επιτρέπει τη λήψη κλήσεων και μηνυμάτων οποτεδήποτε.</string>
   <string name="notif_group_calls">Κλήσεις</string>
+  <string name="notif_inprogress_group_call">Κλήση σε εξέλιξη</string>
   <string name="notif_mark_as_read">Σημείωση ως αναγνωσμένο</string>
   <string name="notif_dismiss">Απόρριψη</string>
   <string name="notif_reply">Απάντηση</string>
@@ -83,10 +93,14 @@
   <string name="ongoing_call">Εξερχόμενη κλήση</string>
   <string name="hist_in_call">Εισερχόμενη κλήση από %1$s</string>
   <string name="hist_out_call">Εξερχόμενη κλήση από %1$s</string>
+  <string name="call_duration">Διήρκεσε %s</string>
   <string name="action_call_accept">Αποδοχή κλήσης</string>
+  <string name="action_call_accept_audio">Αποδοχή με ήχο</string>
+  <string name="action_call_accept_video">Αποδοχή με βίντεο</string>
   <string name="switch_to_video">Ενεργοποίηση βίντεο</string>
   <string name="action_call_decline">Απόρριψη κλήσης</string>
   <string name="action_call_mic_mute">Σίγαση μικροφώνου</string>
+  <string name="ab_action_speakerphone">Ενεργοποίηση ηχείου</string>
   <string name="ab_action_contact_add">Προσθήκη στις επαφές</string>
   <string name="ab_action_contact_add_question">Προσθήκη στις επαφές;</string>
   <string name="ab_action_audio_call">Ξεκινάτε την οχητική κλήση</string>
@@ -112,6 +126,7 @@
   <string name="conversation_send_video">Εγγραφή κλιπ βίντεο</string>
   <string name="conversation_share_location">Κοινοποίηση τοποθεσίας</string>
   <string name="ongoing_group_call">Εξερχόμενη κλήση</string>
+  <string name="started_call">Η κλήση ξεκίνησε</string>
   <string name="in_reply_to">Απαντώντας</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Άδεια πρόσβασης στην κάμερα</string>
@@ -149,9 +164,11 @@
   <string name="conversation_action_remove_this_title">Διαγραφή αυτής της επαφής;</string>
   <string name="conversation_action_remove_this_message">Αυτό θα διαγράψει την επαφή και σίγουρα και το ιστορικό συνομιλίας.</string>
   <string name="remove_conversation">Διαγραφή συνομιλίας</string>
+  <string name="swarm_group_action_leave">Αποχώρηση από την ομάδα</string>
   <string name="conversation_action_select_peer_number">Επιλέξτε αριθμό </string>
   <string name="conversation_action_block_this">Μπλοκάρισμα επαφής</string>
   <string name="conversation_action_unblock_this">Ανοίξτε την επαφή</string>
+  <string name="conversation_action_go_to_call">Επιστροφή στην κλήση</string>
   <string name="conversation_action_incoming_call">Εισερχόμενη κλήση</string>
   <string name="conversation_action_latest">Κύλιση στο τέλος της συνομιλίας</string>
   <string name="conversation_open_file_error">Δεν υπάρχει εγκατεστημένη εφαρμογή για το άνοιγμα αυτού του τύπου αρχείου</string>
@@ -168,12 +185,18 @@
   <string name="conversation_syncing">Λήψη συνομιλίας από χρήστη</string>
   <string name="conversation_blocked">Η επαφή είναι μπλοκαρισμένη.</string>
   <string name="conversation_ended">Η συζήτηση τελείωσε.</string>
+  <string name="conversation_message_deleted">Ο/Η %s διέγραψε ένα μήνυμα</string>
   <string name="conversation_reply_you">Εσύ</string>
   <string name="conversation_preference_color">Χρώμα συνομιλίας</string>
   <string name="conversation_preference_emoji">Emoji συνομιλίας</string>
   <string name="conversation_type_contact">Επαφή Jami</string>
   <string name="conversation_type_private">Ιδιωτικό</string>
   <string name="conversation_type_group">Ομάδα</string>
+  <string name="conversation_contact_invited">Ο/Η %1$s προσκλήθηκε να συμμετάσχει στη συνομιλία.</string>
+  <string name="conversation_contact_added">Ο/Η %1$s συμμετείχε στη συνομιλία.</string>
+  <string name="conversation_contact_left">Ο/Η %1$s αποχώρησε από τη συνομιλία.</string>
+  <string name="conversation_contact_blocked">Ο/Η %1$s αποκλείστηκε από τη συνομιλία.</string>
+  <string name="conversation_contact_unblocked">Ο/Η %1$s ξεμπλοκαρίστηκε από τη συνομιλία.</string>
   <string name="conversation_search_hint">Ψάξτε για συζήτηση</string>
   <string name="audio_recording_in_progress">Ηχογράφηση..</string>
   <string name="audio_recording_send">Αποστολή</string>
@@ -193,15 +216,18 @@
   <string name="help_password_choose">Επιλέξτε έναν κωδικό που θα θυμάστε για την προστασία του λογαριασμού σας στο Jami.</string>
   <string name="help_password_enter">Καταχώρησε το κωδικό του κύριου λογαριασμού σου Jami.</string>
   <string name="help_server_enter">Εισάγετε το URL του διακομιστή διαχείρισης.</string>
+  <string name="copied_clipboard">Αντιγράφηκε στο πρόχειρο.</string>
   <string name="wizard_next">Επόμενο</string>
   <string name="wizard_back">Πίσω</string>
   <string name="wizard_skip">Παράληψη</string>
   <string name="hist_contact_invited">Η επαφή προσκλήθηκε</string>
   <string name="hist_contact_added">Η επαφή προστέθηκε</string>
   <string name="hist_contact_left">Η επαφή αποχώρησε</string>
+  <string name="hist_contact_blocked">Η επαφή αποκλείστηκε</string>
   <string name="hist_invitation_received">Η πρόσκληση παραλήφθηκε</string>
   <!--Account summary-->
   <string name="profile">Προφίλ</string>
+  <string name="profile_name">Όνομα προφίλ</string>
   <string name="profile_message_warning">Το προφίλ σας διαμοιράζεται μόνο με τις επαφές σας</string>
   <string name="open_the_gallery">Άνοιγμα έκθεσης</string>
   <string name="take_a_photo">Λήψη φωτογραφίας</string>
@@ -219,6 +245,7 @@
   <string name="share_message">Σάρωσε αυτό τον κώδικα με το Jami</string>
   <string name="share_message_no_account">Επιλέξτε έναν λογαριασμό για διαμοιρασμό.</string>
   <string name="share_your_account_information">Μοίρασε τις πληροφορίες των επαφών μου</string>
+  <string name="share_contact_information">Κοινή χρήση στοιχείων επαφής</string>
   <string name="share_label">Κοινοποίηση</string>
   <string name="generic_error_migration">Σφάλμα</string>
   <string name="title_share_with">Κοινοποίησε με...</string>
@@ -226,6 +253,8 @@
   <string name="accept">Αποδοχή</string>
   <string name="decline">Απόρριψη κλήσης</string>
   <string name="block">Μπλοκάρισμα</string>
+  <string name="decline_invitation">Απόρριψη πρόσκλησης</string>
+  <string name="accept_invitation">Αποδοχή πρόσκλησης</string>
   <string name="invitation_message">Έχεις %1$d αιτήματα επαφών</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Μη μπλοκαρισμένες επαφές</string>
@@ -234,11 +263,13 @@
   <string name="conversation_placeholder">Δεν έχεις συνομιλίες ακόμη</string>
   <string name="contact_request_sent">Αίτημα επαφής εστάλει</string>
   <string name="start_conversation">Έναρξη συνομιλίας</string>
+  <string name="search_results">Αποτελέσματα αναζήτησης</string>
   <string name="tv_contact_row_header">Επαφές</string>
   <string name="gallery_error_title">Δεν βρέθηκε εφαρμογή συλλογής</string>
   <string name="gallery_error_message">Δεν βρέθηκε εφαρμογή σε αυτή τη συσκευή για άνοιγμα της Συλλογής</string>
   <!--File Transfer-->
   <string name="file_transfer_status_invalid_file">Μη έγκυρο αρχείο</string>
+  <string name="file_transfer_status_unjoinable_peer">Απρόσιτος ομότιμος</string>
   <string name="file_transfer_status_canceled">Ακυρώθηκε</string>
   <string name="file_download">Λήψη</string>
   <string name="title_media_viewer">Προβολέας πολυμέσων</string>
@@ -274,6 +305,7 @@
   <string name="tv_send_video">Αποστολή Πολυμέσων</string>
   <string name="tv_action_more">Περισσότερα</string>
   <string name="conversation_input_speech_hint">Πείτε κάτι...</string>
+  <string name="error_sharing_file">Παρουσιάστηκε σφάλμα κατά την κοινή χρήση του αρχείου.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Προτεινόμενα</string>
   <string name="wizard_status_optional">Προαιρετικό</string>
@@ -294,6 +326,7 @@
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Κοινοποίηση</string>
   <string name="bottomSheet_dialpad_btn">Πληκτρολόγιο κλήσης</string>
+  <string name="bottomSheet_extensions_btn">Επεκτάσεις</string>
   <string name="bottomSheet_add_participants_btn">Προσθήκη</string>
   <string name="bottomSheet_change_camera_btn">Αλλαγή</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Κάμερα</string>
@@ -308,9 +341,12 @@
   <string name="reset">Ανακατάσταση</string>
   <!--Swarm Details-->
   <string name="rename_btn">Επιβεβαίωση</string>
+  <string name="swarm_description">Προσθήκη περιγραφής</string>
   <string name="tab_members">Μέλη</string>
   <string name="tab_files">Αρχεία</string>
   <string name="tab_settings">Ρυθμίσεις</string>
+  <string name="dialogtitle_title">Επεξεργασία τίτλου ομάδας</string>
+  <string name="dialogtitle_description">Επεξεργασία περιγραφής ομάδας</string>
   <string name="dialog_hint_title">Τίτλος</string>
   <string name="dialog_hint_description">Περιγραφή</string>
   <string name="picker_title">Επιλέξτε επαφές</string>
@@ -319,25 +355,63 @@
   <string name="bottomsheet_remove">Αφαίρεση μέλος</string>
   <!--JamiId-->
   <string name="jami_id_validate">Καταχωρίστε το όνομα χρήστη</string>
+  <string name="jami_id_available">Το όνομα χρήστη είναι διαθέσιμο.</string>
+  <string name="jami_id_not_available">Το όνομα χρήστη δεν είναι διαθέσιμο.</string>
+  <string name="jami_id_looking_for_availability">Έλεγχος διαθεσιμότητας ονόματος χρήστη…</string>
   <string name="jami_id_choose_username">Επιλέξτε όνομα χρήστη</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Καλώς ήλθατε στο  Jami</string>
+  <string name="welcome_jami_description">Μοιραστείτε το αναγνωριστικό σας Jami για να επικοινωνούν μαζί σας πιο εύκολα!</string>
   <!--Conversation details-->
   <string name="details">Λεπτομέρειες</string>
+  <string name="swarm_type">Τύπος συνομιλίας</string>
   <string name="Private">Ιδιωτικό</string>
   <string name="mute_conversation">Μείνε αθόρυβα.</string>
   <!--Donation-->
+  <string name="donation_card_description">Εάν σας αρέσει να χρησιμοποιείτε το Jami και πιστεύετε στην αποστολή μας, θέλετε να κάνετε μια δωρεά;</string>
   <string name="donation_card_not_now">Όχι τώρα</string>
   <string name="donation_donate">Δωρεά</string>
   <!--Extension-->
   <string name="export_side_main_title">Εξαγωγή λογαριασμού</string>
+  <string name="import_side_main_title">Εισαγωγή λογαριασμού</string>
+  <string name="link_device_dialog_stop_import_body">Η διακοπή θα ακυρώσει τη λειτουργία εισαγωγής λογαριασμού.</string>
+  <string name="export_side_step1_error_malformed">Μη αναγνωρισμένο αναγνωριστικό νέας συσκευής. Ακολουθήστε τις παραπάνω οδηγίες.</string>
   <string name="export_side_step1_code_connect">Σύνδεση</string>
+  <string name="export_side_step2_ip_only">Διεύθυνση IP νέας συσκευής: %1$s</string>
   <string name="export_side_step2_cancel">Ακύρωση</string>
   <string name="export_side_step2_confirm">Επιβεβαίωση</string>
+  <string name="export_side_step3_body_done">Ο λογαριασμός εισήχθη με επιτυχία στη νέα συσκευή.</string>
   <string name="import_side_step1_share">Κοινοποίηση</string>
   <string name="import_side_step2_password_import">Εισαγωγή</string>
+  <string name="import_side_step2_action_required">Απαιτείται ενέργεια. Επιβεβαιώστε τον λογαριασμό στη συσκευή προέλευσης.</string>
+  <string name="import_side_step3_body_done">Ο λογαριασμός εισήχθη με επιτυχία.</string>
+  <string name="link_device_error_authentication">Παρουσιάστηκε σφάλμα ελέγχου ταυτότητας κατά τη σύνδεση της συσκευής. Ελέγξτε τα διαπιστευτήρια και δοκιμάστε ξανά.</string>
+  <string name="link_device_error_canceled">Η λειτουργία ακυρώθηκε από τον χρήστη.</string>
   <!--Accessibility-->
+  <string name="step_title_set_password">Ορισμός κωδικού πρόσβασης</string>
   <!--Peer services-->
+  <string name="peer_services_title">Κοινόχρηστες υπηρεσίες</string>
+  <string name="peer_services_refresh">Ανανέωση υπηρεσιών</string>
   <string name="peer_services_connect">Σύνδεση</string>
+  <string name="peer_services_disconnect">Αποσύνδεση</string>
+  <string name="peer_services_empty">Δεν υπάρχουν διαθέσιμες κοινόχρηστες υπηρεσίες</string>
+  <string name="peer_services_error_offline">Η επαφή είναι εκτός σύνδεσης</string>
+  <string name="peer_services_error_unreachable">Η επαφή δεν είναι προσβάσιμη</string>
+  <string name="peer_services_error_timeout">Το αίτημα έληξε</string>
+  <string name="peer_services_error_unknown">Δεν ήταν δυνατή η ανάκτηση των υπηρεσιών</string>
+  <string name="notif_channel_peer_tunnel">Κοινόχρηστες υπηρεσίες</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_settings_title">Κοινόχρηστες υπηρεσίες</string>
+  <string name="shared_services_edit">Επεξεργασία</string>
+  <string name="shared_services_delete">Διαγραφή</string>
+  <string name="shared_services_description_hint">Περιγραφή (προαιρετικό)</string>
+  <string name="shared_services_port_hint">Τοπική θύρα</string>
+  <string name="shared_services_no_description">Χωρίς περιγραφή</string>
+  <string name="shared_services_more_options">Περισσότερες επιλογές</string>
+  <string name="shared_services_disconnect_all_confirm">Αποσύνδεση</string>
+  <string name="shared_services_type_custom_label">Προμηθευτές</string>
+  <string name="shared_services_host_hint">Τοπικός κεντρικός υπολογιστής</string>
+  <string name="shared_services_policy_hint">Προσβάσιμο από</string>
+  <string name="shared_services_policy_public">Δημόσιο</string>
+  <string name="shared_services_save">Αποθήκευση</string>
 </resources>

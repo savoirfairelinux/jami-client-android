@@ -8,6 +8,7 @@
   <string name="pref_category_diagnostic">Diagnóstaí</string>
   <string name="pref_category_appearance">Breathnaíonn</string>
   <string name="pref_category_connectivity">Conactivity</string>
+  <string name="pref_category_extensions">Breiseáin</string>
   <string name="pref_category_video_settings">Agasú físeáin ard</string>
   <string name="pref_mobileData_title">sonraí soghluaiste</string>
   <string name="pref_mobileData_summary">Ceadaigh Jami ar líonraí 3G/LTE chomh maith le Wi-Fi</string>
@@ -41,10 +42,13 @@
   <string name="pref_logs_summary">Cinntíocht leabhar diagnóis oscailte</string>
   <string name="pref_logs_start">Tosaíocht a Thosaigh</string>
   <string name="pref_logs_stop">Stop logging</string>
+  <string name="connection_monitor_channels">Cainéil</string>
   <string name="pref_typing_title">Treoir maidir le cineálú</string>
   <string name="pref_block_record_title">Scáileán agus taifeadadh bloc</string>
   <string name="pref_block_record_summary">Stop a ghlacadh grianghraf scrion nó físeán a thaifeadadh.</string>
+  <string name="pref_link_preview_title">Réamhamhairc nasc gréasáin</string>
   <string name="pref_link_preview_summary">Ní mór don réamhsheiceáil ábhar a íoslódáil ó sheirbhísí tríú páirtí.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">Saincheaptha</string>
   <!--Extension-->
 </resources>

@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Cuir saincheist isteach</string>
   <string name="section_license">Ceadúnas</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Cuidiú</string>
@@ -13,7 +14,11 @@
   <string name="call_service_description">Tá an tseirbhís seo riachtanach chun do ghlaoí a choinneáil ag rith i d\'ard-scéal.</string>
   <string name="data_transfer_service_description">Tá an tseirbhís seo riachtanach chun fógraí leanúnacha a thaispeáint le linn aistriú comhaid.</string>
   <!--About dialog-->
+  <string name="thank_note">Ba mhaith linn buíochas a ghabháil lenár ranníocóirí, a ndearna a gcuid iarrachtaí thar na blianta an bogearra seo mar atá sé.</string>
+  <string name="developers">Forbróirí</string>
   <string name="media">Meáin</string>
+  <string name="community_management">Bainistíocht Pobail</string>
+  <string name="special_thanks">Buíochas ar leith le</string>
   <!--RingActivity-->
   <string name="error_no_network">Ní bheidh aon nasc líonra</string>
   <string name="error_account_offline">Tá an cuntas ar líne</string>
@@ -32,6 +37,7 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Cuardaigh nó cuir leis</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
@@ -39,10 +45,12 @@
   <string name="notif_missed_outgoing_call">Ag iarraidh glaoch a fháil</string>
   <string name="notif_incoming_call">Glacadh isteach</string>
   <string name="notif_outgoing_call">Glacadh amach</string>
+  <string name="notif_channel_call_in_progress">Glao ar siúl</string>
   <string name="notif_channel_calls">Glaoigh</string>
   <string name="notif_channel_messages">Teachtaireachtaí</string>
   <string name="notif_channel_file_transfer">Cuairteoirí</string>
   <string name="notif_group_calls">Glaoigh</string>
+  <string name="notif_inprogress_group_call">Glao ar siúl</string>
   <string name="notif_dismiss">Cúlghairm</string>
   <string name="notif_reply">Freagra</string>
   <string name="location_share_action_stop">Stop ag roinnt</string>
@@ -53,21 +61,27 @@
   <string name="action_call_minimize">Cinntíonn</string>
   <string name="action_call_mute">Múnla</string>
   <string name="action_call_unmute">Unmute</string>
+  <string name="action_call_accept">Glac le glao</string>
+  <string name="action_call_accept_audio">Glac le fuaim</string>
+  <string name="action_call_accept_video">Glac le físeán</string>
   <string name="switch_to_video">Céadú físeán</string>
   <string name="action_call_decline">Tarraing</string>
   <string name="action_call_mic_mute">Micrófón muinte</string>
   <string name="ab_action_contact_add">Cuir le teagmhálacha</string>
   <string name="ab_action_audio_call">Tosaigh glao fuaime</string>
   <string name="ab_action_video_call">Tosaigh glao físe</string>
+  <string name="new_group">Cruthaigh grúpa nua</string>
   <!--Text messages-->
   <string name="message_failed">Fágadh</string>
   <string name="time_just_now">Díreach anois</string>
   <string name="send_file">Comhad a sheoladh</string>
   <string name="conversation_share_location">Lonnaithe roinnte</string>
+  <string name="started_call">Tosaíodh an glao</string>
   <string name="in_reply_to">I dtuarascáil do</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Meas</string>
+  <string name="ringtone_custom_label">Saincheaptha</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
@@ -83,7 +97,10 @@
   <string name="leave_conversation">Cinnigh comhrá</string>
   <string name="conversation_action_history_clear">Tuairiscí soiléir</string>
   <string name="remove_conversation">Scrios an comhrá</string>
+  <string name="swarm_group_action_leave">Fág an grúpa</string>
   <string name="conversation_action_block_this">Contae Bloc</string>
+  <string name="conversation_action_unblock_this">Bain bac den teagmhálaí</string>
+  <string name="conversation_action_go_to_call">Fill ar an nglao</string>
   <string name="conversation_action_incoming_call">Glacadh isteach</string>
   <string name="conversation_members">Comhaltaí</string>
   <string name="conversation_type_private">Priontáil</string>
@@ -95,6 +112,7 @@
   <string name="prompt_new_password_repeat">Déan pasfhocal nua a dhearbhú</string>
   <string name="account_create_title">Creidigh cuntas Jami</string>
   <string name="prompt_hint_username">Ainm úsáideora</string>
+  <string name="copied_clipboard">Cóipeáilte chuig an ngearrthaisce.</string>
   <string name="wizard_next">Next</string>
   <string name="wizard_back">Ar ais</string>
   <string name="wizard_skip">Skip</string>
@@ -114,15 +132,20 @@
   <!--Share fragment-->
   <string name="share_label">Comhroinnt</string>
   <string name="generic_error_migration">Meas</string>
+  <string name="title_share_with">Roinn le…</string>
   <!--Pending invitations-->
   <string name="accept">Tabhair faoi deara</string>
   <string name="decline">Tarraing</string>
   <string name="block">Bloc</string>
+  <string name="decline_invitation">Diúltaigh cuireadh</string>
+  <string name="accept_invitation">Glac le cuireadh</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Ní thiocfar teagmhálacha</string>
   <!--Smartlist-->
+  <string name="search_results">Torthaí cuardaigh</string>
   <string name="tv_contact_row_header">Contacts</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_unjoinable_peer">Comhghleacaí dorochtana</string>
   <string name="file_transfer_status_canceled">Cealaithe</string>
   <string name="menu_file_open">Dhomhchlár oscailte</string>
   <string name="menu_file_save">Fail a shábháil</string>
@@ -140,6 +163,7 @@
   <!--TV-->
   <string name="tv_media_preview">Taispeántas réamhshocraithe</string>
   <string name="tv_dialog_send">Cuir isteach</string>
+  <string name="tv_action_more">Tuilleadh</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Moltar</string>
   <string name="wizard_status_optional">Roghnach</string>
@@ -150,6 +174,7 @@
   <string name="wizard_profile_info">Ní roinntear próifíl ach le teagmhálacha</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Comhroinnt</string>
+  <string name="bottomSheet_extensions_btn">Breiseáin</string>
   <string name="bottomSheet_add_participants_btn">Cuir leis</string>
   <string name="bottomSheet_change_camera_btn">Athrú</string>
   <string name="bottomSheet_hangup_btn">Críochnaigh an glao</string>
@@ -160,31 +185,58 @@
   <string name="reset">Athsheasamh</string>
   <!--Swarm Details-->
   <string name="rename_btn">Cinntíonn</string>
+  <string name="swarm_description">Cuir cur síos leis</string>
   <string name="tab_members">Comhaltaí</string>
   <string name="tab_files">Fioscail</string>
   <string name="tab_settings">Cinntí</string>
   <string name="dialog_hint_title">Teideal</string>
   <string name="dialog_hint_description">Tuairisc</string>
+  <string name="picker_title">Roghnaigh teagmhálacha</string>
+  <string name="picker_btn">Roghnaigh teagmhálacha</string>
   <string name="bottomsheet_remove">Cúlghairm a bhaint</string>
   <!--JamiId-->
   <string name="jami_id_validate">Ainm úsáideora a chlárú</string>
   <string name="jami_id_choose_username">Roghnaigh ainm úsáideora</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Fáilte go Jami</string>
+  <string name="welcome_jami_description">Roinn d\'aitheantóir Jami chun teagmháil a dhéanamh leat níos éasca!</string>
   <!--Conversation details-->
   <string name="details">Níos mó</string>
+  <string name="swarm_type">Cineál comhrá</string>
   <string name="Private">Priontáil</string>
   <string name="mute_conversation">Cainteas muice</string>
   <!--Donation-->
+  <string name="donation_card_description">Má bhaineann tú taitneamh as Jami a úsáid agus má chreideann tú inár misean, ar mhaith leat síntiús a thabhairt?</string>
   <string name="donation_card_not_now">Níos déanaí</string>
+  <string name="donation_donate">Tabhair síntiús</string>
   <!--Extension-->
+  <string name="export_side_step1_error_malformed">Aitheantóir gléis nua anaithnid. Lean na treoracha thuas le do thoil.</string>
   <string name="export_side_step1_code_connect">Déan nasc</string>
   <string name="export_side_step2_cancel">Cealaigh</string>
   <string name="export_side_step2_confirm">Cinntíonn</string>
   <string name="import_side_step1_share">Comhroinnt</string>
   <string name="import_side_step2_password_import">Éireodh</string>
+  <string name="import_side_step2_action_required">Gníomh riachtanach. Deimhnigh an cuntas ar an ngléas foinse le do thoil.</string>
+  <string name="import_side_step3_body_done">D\'iompórtáladh an cuntas go rathúil.</string>
+  <string name="link_device_error_authentication">Tharla earráid fhíordheimhnithe agus an gléas á nascadh. Seiceáil na dintiúir agus bain triail eile as le do thoil.</string>
+  <string name="link_device_error_canceled">Chuir an t-úsáideoir an oibríocht ar ceal.</string>
   <!--Accessibility-->
+  <string name="step_title_set_password">Socraigh pasfhocal</string>
   <!--Peer services-->
   <string name="peer_services_connect">Déan nasc</string>
+  <string name="peer_services_disconnect">Dícheangail</string>
+  <string name="notif_channel_peer_tunnel">Seirbhísí roinnte</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">Edit</string>
+  <string name="shared_services_delete">Scriosadh</string>
+  <string name="shared_services_description_hint">Cur síos (roghnach)</string>
+  <string name="shared_services_port_hint">Port áitiúil</string>
+  <string name="shared_services_no_description">Gan cur síos</string>
+  <string name="shared_services_more_options">Níos mó roghanna</string>
+  <string name="shared_services_disconnect_all_confirm">Dícheangail</string>
+  <string name="shared_services_type_custom_label">Saincheaptha</string>
+  <string name="shared_services_host_hint">Óstach áitiúil</string>
+  <string name="shared_services_policy_hint">Inrochtana ag</string>
+  <string name="shared_services_policy_public">Poiblí</string>
+  <string name="shared_services_save">Cinntí</string>
 </resources>

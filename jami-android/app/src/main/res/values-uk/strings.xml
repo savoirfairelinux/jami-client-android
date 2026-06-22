@@ -4,6 +4,10 @@
   <string name="submit_issue_title">Надіслати \"проблему\"</string>
   <string name="submit_issue_action_description">Створити нову \"проблему\"</string>
   <string name="section_license">Ліцензія</string>
+  <string name="switch_conversation">Перемкнути розмову</string>
+  <string name="delete_conversation_confirmation">Ви впевнені, що хочете видалити цю розмову?</string>
+  <string name="acc_profile_photo_capture">Зробити фото</string>
+  <string name="view_switch_camera">Перемкнути камеру</string>
   <string name="sponsor_section">Jami — це вільне програмне забезпечення, яке розроблене й підтримується</string>
   <string name="copyright_section">Авторське право</string>
   <string name="contribute_section">Зробити внесок</string>
@@ -51,6 +55,7 @@
     <item quantity="other">%d Групові чати</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Знайти або додати</string>
   <string name="choose_number">Оберіть номер</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -84,6 +89,8 @@
   <string name="notif_incoming_picture">Картинка від %1$s</string>
   <string name="notif_sync_title">Синхронізація даних в процесі...</string>
   <string name="notif_location_title">Розділення місця з %1$s</string>
+  <string name="notif_channel_reconnect">Фонова синхронізація</string>
+  <string name="notif_reconnect_title">Jami синхронізується…</string>
   <string name="location_share_contact">%1$s ділиться з вами місцезнаходженням</string>
   <string name="notif_location_multi_title">Розділення місця з %1$d контактів</string>
   <string name="notif_location_remaining">Залишилось %1$d хвилин</string>
@@ -94,6 +101,7 @@
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ви:</string>
   <string name="action_call_hangup">Закінчити дзвінок</string>
+  <string name="action_call_resume">Відновити</string>
   <string name="action_call_maximize">Збільшити</string>
   <string name="action_call_minimize">Зменшити</string>
   <string name="action_call_mute">Без звуку</string>
@@ -102,11 +110,13 @@
   <string name="hist_in_call">Вхідний виклик тривалістю %1$s</string>
   <string name="hist_out_call">Вихідний виклик тривалістю %1$s</string>
   <string name="call_duration">Тривалість %s</string>
+  <string name="call_on_hold">Виклик утримується</string>
   <string name="start_error_title">Неможливо запустити Jami</string>
   <string name="action_call_accept">Прийняти дзвінок</string>
   <string name="action_call_accept_audio">Прийняти зі звуком</string>
   <string name="action_call_accept_video">Прийняти з відео</string>
   <string name="action_call_hold_accept">Прийняти вхідний дзвінок тільки зі звуком та утримати поточний дзвінок</string>
+  <string name="switch_to_audio">Вимкнути відео</string>
   <string name="switch_to_video">Увімкнути відео</string>
   <string name="action_call_hold_accept_video">Прийняти вхідний дзвінок з відео та утримати поточний дзвінок</string>
   <string name="action_call_end_accept">Прийняти вхідний дзвінок та завершити поточний дзвінок</string>
@@ -159,6 +169,9 @@
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami потребує дозволу на \"Запис журналу дзвінків\". Увімкніть його в налаштуваннях пристрою, щоб користуватися цією функцією.</string>
   <!--Post notifications permission-->
+  <string name="permission_dialog_post_notifications_title">Дозволити сповіщення</string>
+  <string name="permission_dialog_post_notifications_message">Jami потрібен дозвіл на сповіщення, щоб повідомляти вас про вхідні виклики та повідомлення, навіть коли застосунок працює у фоні. Без нього ви можете пропускати виклики.</string>
+  <string name="permission_dialog_post_notifications_blocked_message">Сповіщення для Jami вимкнені. Без них ви пропускатимете вхідні виклики та повідомлення. Увімкніть сповіщення для Jami в налаштуваннях пристрою.</string>
   <string name="permission_dialog_open_settings">Відкрити налаштування</string>
   <string name="permission_dialog_later">Пізніше</string>
   <!--QRCode Scan-->
@@ -187,6 +200,8 @@
   <string name="conversation_action_remove_this_message">Це видалить контакт і остаточно очистить історію розмов.</string>
   <string name="conversation_action_add_this_message">Це надішле запит на з\'єднання.</string>
   <string name="remove_conversation">Вилучити розмову</string>
+  <string name="conversation_action_remove_title">Видалити розмову?</string>
+  <string name="conversation_action_remove_message">Це видалить цю розмову, не видаляючи контакт.</string>
   <string name="swarm_group_action_leave">Покинути групу</string>
   <string name="swarm_group_action_leave_title">Покинути групу?</string>
   <string name="swarm_group_action_leave_message">Це видалить розмову зі списку ваших розмов</string>
@@ -215,6 +230,7 @@
   <string name="conversation_ended">Розмова закінчилася.</string>
   <string name="conversation_message_deleted">%s видалив(-ла) повідомлення</string>
   <string name="conversation_reply_you">Ви</string>
+  <string name="video_not_found">Відеофайл не знайдено</string>
   <string name="conversation_preference_color">Колір розмови</string>
   <string name="conversation_preference_emoji">Емоджи розмови</string>
   <string name="conversation_type_contact">Контакт Jami</string>
@@ -226,11 +242,30 @@
   <string name="conversation_contact_blocked">%1$s був(-ла) заблокований(-а) в розмові.</string>
   <string name="conversation_contact_unblocked">%1$s був(-ла) розблокований(-а) в розмові.</string>
   <string name="conversation_search_hint">Пошук розмов</string>
+  <string name="audio_recorder_error">Не вдалося запустити аудіозапис.</string>
   <string name="audio_recording_in_progress">Запис...</string>
+  <string name="audio_recording_ready">Торкніться для відтворення, перетягніть форму хвилі для перемотування</string>
+  <string name="audio_recording_playing">Відтворення…</string>
   <string name="audio_recording_send">Відправити</string>
   <string name="audio_recording_play">Програти</string>
   <string name="audio_recording_pause">Пауза</string>
   <string name="audio_recording_stop">Зупинити запис</string>
+  <string name="audio_recording_extend">Продовжити запис</string>
+  <string name="audio_recording_restart">Записати знову</string>
+  <string name="audio_recording_delete">Відхилити</string>
+  <string name="audio_recording_discard_title">Відхилити запис?</string>
+  <string name="audio_recording_discard_message">Ваш запис буде втрачено.</string>
+  <string name="audio_recording_discard_keep">Продовжити редагування</string>
+  <string name="audio_recording_discard_confirm">Відхилити</string>
+  <string name="audio_recording_limit_reached">Досягнуто межі запису. Надішліть або скасуйте.</string>
+  <string name="audio_recording_gesture_hint">Відпустіть, щоб надіслати · проведіть ◀ для скасування · ▲ для перегляду</string>
+  <string name="audio_recording_release_cancel">Відпустіть для скасування</string>
+  <string name="audio_recording_release_review">Відпустіть, щоб відкрити редактор</string>
+  <string name="audio_recording_slide_cancel">Скасувати запис</string>
+  <string name="audio_recording_slide_review">Відкрити редактор</string>
+  <string name="audio_recording_review_short">Переглянути</string>
+  <string name="audio_recording_too_short">Утримуйте, щоб записати голосове повідомлення</string>
+  <string name="video_recorder_error">Немає доступного відеозаписувача.</string>
   <string name="taking_picture_error">Сталася помилка під час додавання зображення.</string>
   <string name="find_picture_error">Сталася помилка під час пошуку зображення.</string>
   <string name="open_camera_error">Сталася помилка під час відкриття камери.</string>
@@ -255,6 +290,7 @@
   <string name="help_password_choose">Оберіть сильний пароль, який ви запамʼятаєте, щоб захистити свій обліковий запис Jami.</string>
   <string name="help_password_enter">Уведіть свій основний пароль для облікового запису Jami.</string>
   <string name="help_server_enter">Введіть URL сервера управління.</string>
+  <string name="pin_copied">Код автентифікації скопійовано в буфер обміну.</string>
   <string name="copied_clipboard">Скопійовано в буфер обміну.</string>
   <string name="wizard_next">Далі</string>
   <string name="wizard_back">Назад</string>
@@ -303,6 +339,7 @@
   <string name="invitation_message">У вас є %1$d запити контактів</string>
   <string name="no_invitations">Немає запрошень для відображення.</string>
   <string name="invitation_received_message">Отримано запрошення від %s.\nПрийняти чи відхилити запрошення?</string>
+  <string name="outgoing_contact_invitation_message">Цього контакту немає у вашому списку контактів.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Заблоковані користувачі відсутні</string>
   <!--Smartlist-->
@@ -332,6 +369,7 @@
   <string name="file_transfer_status_error">Сталася помилка під час передачі файлу.</string>
   <string name="file_transfer_status_timed_out">Час очікування операції вичерпано.</string>
   <string name="file_saved_in">Файл збережено в %s.</string>
+  <string name="file_saved_successfully">Файл успішно збережено.</string>
   <string name="file_download">Завантажити</string>
   <string name="no_space_left_on_device">Немає доступного місця для зберігання на пристрої.</string>
   <string name="title_media_viewer">Медіа переглядач</string>
@@ -346,6 +384,7 @@
   <string name="menu_message_delete">Видалити повідомлення</string>
   <string name="menu_message_cancel">Скасувати повідомлення</string>
   <string name="menu_message_reply">Відповісти</string>
+  <string name="menu_message_cancel_reply">Скасувати відповідь</string>
   <string name="menu_delete">Видалити</string>
   <string name="pref_darkTheme_title">Темна тема</string>
   <string name="pref_darkTheme_summary">Завжди використовувати темну тему замість теми за замовчуванням</string>
@@ -407,6 +446,7 @@
   <string name="bottomSheet_mute_microphone_btn">Микро</string>
   <string name="bottomSheet_sound_output_btn">Звуки</string>
   <string name="bottomSheet_raiseHand_btn">Підняти руку</string>
+  <string name="camera_toggle_btn_description">Перемкнути камеру</string>
   <string name="camera_flip_btn_description">Змінити камеру</string>
   <string name="add_participant_btn_description">Додати учасників</string>
   <string name="screen_share_btn_description">Спільний перегляд екрана</string>
@@ -468,12 +508,17 @@
   <string name="unable_to_load">Неможливо завантажити %1$s</string>
   <string name="load_success">%1$s: увімкнено</string>
   <string name="unload_success">%1$s: вимкнено</string>
+  <string name="install_success">Розширення %1$s успішно встановлено.</string>
   <string name="install_error">Сталася помилка під час імпорту розширення.</string>
   <string name="export_side_main_title">Експортувати обліковий запис</string>
   <string name="import_side_main_title">Імпортувати аккаунт</string>
+  <string name="link_device_dialog_stop_title">Зупинити прив\'язування пристрою?</string>
+  <string name="link_device_dialog_stop_export_body">Зупинка скасує операцію експорту облікового запису.</string>
+  <string name="link_device_dialog_stop_import_body">Зупинка скасує операцію імпорту облікового запису.</string>
   <string name="export_side_step1_advice_qr">На новому пристрої ініціюйте новий обліковий запис.\nВиберіть <b>Обліковий запис &gt; Додати обліковий запис &gt; Підключитися з іншого пристрою</b>\nКоли будете готові, відскануйте QR-код</string>
   <string name="export_side_step1_switch_to_code">Або натисніть тут, щоб ввести код автентифікації</string>
   <string name="export_side_step1_switch_to_qr">Або натисніть тут, щоб сканувати QR-код</string>
+  <string name="export_side_step1_error_malformed">Нерозпізнаний ідентифікатор нового пристрою. Дотримуйтесь інструкцій вище.</string>
   <string name="export_side_step1_code_connect">З\'єднати</string>
   <string name="export_side_step2_advice">Новий пристрій знаходиться тут. Це ви?\nЩоб продовжити операцію експорту облікового запису, натисніть Підтвердити.</string>
   <string name="export_side_step2_advice_ip_only">Новий пристрій підключено за адресою нижче. Це ви?
@@ -482,6 +527,8 @@
   <string name="export_side_step2_cancel">Скасувати</string>
   <string name="export_side_step2_confirm">Підтвердження</string>
   <string name="export_side_step2_password">Обліковий запис захищений паролем.\nЩоб продовжити, аутентифікуйтеся на новому пристрої.</string>
+  <string name="export_side_step3_body_loading">Операція експорту облікового запису на новий пристрій триває. Зачекайте…</string>
+  <string name="export_side_step3_body_done">Обліковий запис успішно імпортовано на новий пристрій.</string>
   <string name="export_side_step3_exit">Завершити</string>
   <string name="import_side_step1_advice_qr">Ініціюйте експорт на вихідному пристрої.\n<b>Виберіть Обліковий запис &gt; Налаштування облікового запису &gt; Прив\'язати новий пристрій</b>\nКоли будете готові, відскануйте QR-код нижче.</string>
   <string name="import_side_step1_advice_code">Ініціюйте експорт на вихідному пристрої.\n<b>Виберіть Обліковий запис &gt; Налаштування облікового запису &gt; Прив\'язати новий пристрій</b>\nКоли будете готові, введіть код нижче.</string>
@@ -493,18 +540,84 @@
   <string name="import_side_step2_password_prompt">Обліковий запис захищений паролем.\nРозблокуйте його, щоб продовжити.</string>
   <string name="import_side_step2_password_import">Імпортувати</string>
   <string name="import_side_step2_password_unlocking">Розблокування облікового запису...</string>
+  <string name="import_side_step2_action_required">Потрібна дія. Підтвердьте обліковий запис на пристрої-джерелі.</string>
+  <string name="import_side_step3_body_loading">Обліковий запис імпортується на новий пристрій. Зачекайте…</string>
+  <string name="import_side_step3_body_done">Обліковий запис успішно імпортовано.</string>
+  <string name="import_side_step3_go_to_account">Перейти до нового облікового запису</string>
   <string name="import_side_step3_exit">Завершити</string>
+  <string name="link_device_share_title">Поділитися кодом автентифікації</string>
+  <string name="link_device_error_network">Під час прив\'язування пристрою сталася помилка мережі. Перевірте з\'єднання та повторіть спробу.</string>
+  <string name="link_device_error_authentication">Сталася помилка автентифікації під час підключення пристрою. Перевірте облікові дані та повторіть спробу.</string>
   <string name="link_device_error_timeout">Час очікування операції вичерпано.</string>
+  <string name="link_device_error_canceled">Операцію скасовано користувачем.</string>
   <string name="link_device_error_unknown">Сталася помилка.</string>
   <string name="link_device_error_bad_password">Будь ласка, перевірте облікові дані та спробуйте знову.</string>
+  <string name="test_push">Тестове push-сповіщення</string>
   <!--Accessibility-->
+  <string name="step_title_create_username">Створити ім\'я користувача</string>
   <string name="step_title_set_password">Задати пароль</string>
+  <string name="step_title_create_profile">Створити профіль</string>
+  <string name="step_format">Крок %1$d з %2$d: %3$s</string>
   <!--Peer services-->
+  <string name="peer_services_title">Спільні сервіси</string>
+  <string name="peer_services_refresh">Оновити сервіси</string>
   <string name="peer_services_connect">З\'єднати</string>
+  <string name="peer_services_disconnect">Від\'єднати</string>
+  <string name="peer_services_empty">Немає доступних спільних сервісів</string>
+  <string name="peer_services_link_copied">Посилання скопійовано в буфер обміну</string>
+  <string name="peer_services_error_offline">Контакт не в мережі</string>
+  <string name="peer_services_error_unreachable">Контакт недоступний</string>
+  <string name="peer_services_error_timeout">Час очікування запиту вичерпано</string>
+  <string name="peer_services_error_unknown">Не вдалося отримати сервіси</string>
+  <string name="notif_channel_peer_tunnel">Спільні служби</string>
+  <string name="notif_channel_peer_tunnel_descr">Показується, коли тунелі однорангових служб активні у фоновому режимі.</string>
+  <string name="notif_peer_tunnel_title">Спільні служби активні</string>
+  <string name="notif_peer_tunnel_text">Jami підтримує ваші службові з\'єднання активними у фоновому режимі</string>
+  <string name="notif_peer_tunnel_stop_all">Зупинити все</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_settings_title">Спільні сервіси</string>
+  <string name="shared_services_settings_description">Надати локальні служби користувачам Jami</string>
+  <string name="shared_services_empty">Жодних служб не налаштовано</string>
+  <string name="shared_services_add">Додати службу</string>
+  <string name="shared_services_add_title">Додати спільну службу</string>
+  <string name="shared_services_edit_title">Редагувати спільну службу</string>
   <string name="shared_services_edit">Редагувати</string>
+  <string name="shared_services_delete">Видалити</string>
+  <string name="shared_services_name_hint">Назва служби</string>
+  <string name="shared_services_name_required">Потрібна назва служби</string>
+  <string name="shared_services_description_hint">Опис (необов\'язково)</string>
+  <string name="shared_services_port_hint">Локальний порт</string>
+  <string name="shared_services_port_required">Потрібен номер порту</string>
+  <string name="shared_services_port_invalid">Порт має бути від 1 до 65535</string>
+  <string name="shared_services_port">Порт: %d</string>
+  <string name="shared_services_no_description">Без опису</string>
+  <string name="shared_services_empty_subtitle">Діліться локальними файлами або службами з користувачами Jami</string>
   <string name="shared_services_more_options">Більше параметрів</string>
+  <string name="shared_services_open_in_browser">Відкрити у браузері</string>
+  <string name="shared_services_disconnect_all">Від\'єднати все</string>
+  <string name="shared_services_disconnect_all_title">Від\'єднати все?</string>
+  <string name="shared_services_disconnect_all_message">Наступне буде від\'єднано:\n\n%1$s\n\nРозміщені служби буде вимкнено, а з\'єднання з іншими пристроями закрито.</string>
+  <string name="shared_services_disconnect_all_confirm">Від\'єднати</string>
+  <string name="shared_services_nothing_active">Зараз нічого не активне</string>
+  <string name="shared_services_hosting_item">Розміщення: %1$s (%2$s)</string>
+  <string name="shared_services_tunnel_item">%1$s (від %2$s)</string>
   <string name="shared_services_type_website_label">Веб-сайт</string>
+  <string name="shared_services_type_custom_label">Кастомізація</string>
+  <string name="shared_services_local_port">Локальний порт %d</string>
+  <string name="shared_services_local_address">%1$s:%2$d</string>
+  <string name="shared_services_type_custom">Власний сервер</string>
+  <string name="shared_services_type_website">Додати вебсайт</string>
+  <string name="shared_services_add_custom_title">Додати власний сервер</string>
+  <string name="shared_services_add_website_title">Додати вебсайт</string>
+  <string name="shared_services_host_hint">Локальний хост</string>
+  <string name="shared_services_scheme_hint">Схема URI (напр. http, ftp)</string>
+  <string name="shared_services_directory_hint">Локальний каталог</string>
+  <string name="shared_services_directory_required">Виберіть каталог</string>
   <string name="shared_services_choose">Виберіть</string>
+  <string name="shared_services_policy_hint">Доступно для</string>
+  <string name="shared_services_policy_contacts">Мої контакти</string>
+  <string name="shared_services_policy_public">Публічний</string>
+  <string name="shared_services_policy_specific">Певні контакти</string>
+  <string name="shared_services_allowed_contacts_hint">Дозволені контакти (через кому)</string>
   <string name="shared_services_save">Зберігти</string>
 </resources>

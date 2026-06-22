@@ -25,6 +25,7 @@
   <string name="help_ring">ജാമി അക്കൌണ്ട് നിങ്ങളെ ഒരു പൂർണ്ണമായി വിതരണം ചെയ്ത നെറ്റ് വർക്കിലൂടെ സുരക്ഷിതമായി ആളുകളുമായി ബന്ധപ്പെടാൻ അനുവദിക്കുന്നു.</string>
   <string name="help_sip_title">SIP അക്കൌണ്ട് ചേർക്കുക</string>
   <string name="help_sip">നിലവിലുള്ള SIP അക്കൗണ്ട് ക്രമീകരിക്കുക</string>
+  <string name="create_sip_account">SIP അക്കൗണ്ട് ക്രമീകരിക്കുക</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">ഈ നടപടി മാറ്റാന് കഴിയില്ല.</string>
   <!--AccountManagementFragment-->
@@ -160,6 +161,7 @@
   <string name="account_export_title">മറ്റ് ഉപകരണങ്ങളുമായി ലിങ്ക് അക്കൌണ്ട്</string>
   <string name="account_connect_server_button">മാനേജ്മെന്റ് സെർവറുമായി ബന്ധിപ്പിക്കുക</string>
   <string name="account_connect_button">ബന്ധിപ്പിക്കുക</string>
+  <string name="prompt_server">മാനേജ്മെന്റ് സെർവർ URL</string>
   <string name="help_credentials_enter">നിങ്ങളുടെ സംഘടനയുടെ ക്രെഡിറ്റീവുകൾ നൽകുക</string>
   <string name="help_connect_password_enter">നിങ്ങളുടെ സംഘടനയുടെ പാസ്വേഡ് നൽകുക</string>
   <string name="account_connect_prompt_username">ഉപയോക്തൃനാമം</string>
@@ -195,6 +197,7 @@
   <string name="account_rename_device_hint">പുതിയ ഉപകരണ നാമം തിരഞ്ഞെടുക്കുക</string>
   <string name="account_device_this_indicator">ഈ ഉപകരണം</string>
   <string name="account_disabled_indicator">വൈകല്യമുള്ളവർ</string>
+  <string name="account_device_id">ഉപകരണ ഐഡി</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">ഈ ഫോർമാറ്റിന് പിന്തുണയില്ല.</string>
   <string name="account_link_device_title">പുതിയ ഉപകരണം ബന്ധിപ്പിക്കുക</string>

@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Адправіць праблему</string>
   <string name="section_license">Ліцэнзія</string>
   <string name="copyright_section">Аўтарскія правы</string>
   <string name="contribute_section">Уклад</string>
@@ -13,7 +14,11 @@
   <string name="call_service_description">Гэты сэрвіс неабходны для таго, каб выклікі працавалі ў першую чаргу. Ён працуе толькі падчас званкоў.</string>
   <string name="data_transfer_service_description">Гэтая служба неабходная для прагляду пастаянных апавяданняў падчас перадачы файлаў.</string>
   <!--About dialog-->
+  <string name="thank_note">Мы хацелі б падзякаваць нашым удзельнікам, чые намаганні на працягу многіх гадоў зрабілі гэтае праграмнае забеспячэнне такім, якое яно ёсць.</string>
+  <string name="developers">Распрацоўшчыкі</string>
   <string name="media">СМІ</string>
+  <string name="community_management">Кіраванне супольнасцю</string>
+  <string name="special_thanks">Асаблівая падзяка</string>
   <!--RingActivity-->
   <string name="error_no_network">Ніякай сеткавай сувязі</string>
   <string name="error_account_offline">Рахунак не працуе</string>
@@ -32,6 +37,7 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Шукаць або дадаць</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
@@ -39,10 +45,12 @@
   <string name="notif_missed_outgoing_call">Адпусцілі выхадны званок</string>
   <string name="notif_incoming_call">Паступны званок</string>
   <string name="notif_outgoing_call">Выходны званок</string>
+  <string name="notif_channel_call_in_progress">Выклік выконваецца</string>
   <string name="notif_channel_calls">Званкі</string>
   <string name="notif_channel_messages">Паведамленні</string>
   <string name="notif_channel_file_transfer">Перадача файлаў</string>
   <string name="notif_group_calls">Званкі</string>
+  <string name="notif_inprogress_group_call">Выклік выконваецца</string>
   <string name="notif_dismiss">Адхіленне</string>
   <string name="notif_reply">Адказ</string>
   <string name="location_share_action_stop">Спыніце дзяліцца</string>
@@ -53,6 +61,9 @@
   <string name="action_call_minimize">Зніжэнне</string>
   <string name="action_call_mute">Непаўторны</string>
   <string name="action_call_unmute">Неўмоўнае</string>
+  <string name="action_call_accept">Прыняць выклік</string>
+  <string name="action_call_accept_audio">Прыняць з аўдыя</string>
+  <string name="action_call_accept_video">Прыняць з відэа</string>
   <string name="switch_to_video">Уключыць відэа</string>
   <string name="action_call_decline">Падзенне</string>
   <string name="action_call_mic_mute">Непаўны мікрафон</string>
@@ -65,10 +76,12 @@
   <string name="time_just_now">Толькі што</string>
   <string name="send_file">Адправіць файл</string>
   <string name="conversation_share_location">Падзяліцца месцазнаходжаннем</string>
+  <string name="started_call">Выклік пачаўся</string>
   <string name="in_reply_to">У адказ на</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Памылка</string>
+  <string name="ringtone_custom_label">Карыстальніцкі</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
@@ -84,7 +97,10 @@
   <string name="leave_conversation">Пакіньце размову</string>
   <string name="conversation_action_history_clear">Ясная гісторыя</string>
   <string name="remove_conversation">Выключыць размову</string>
+  <string name="swarm_group_action_leave">Пакінуць групу</string>
   <string name="conversation_action_block_this">Блокальны кантакт</string>
+  <string name="conversation_action_unblock_this">Разблакіраваць кантакт</string>
+  <string name="conversation_action_go_to_call">Вярнуцца да выкліку</string>
   <string name="conversation_action_incoming_call">Паступны званок</string>
   <string name="conversation_members">Члены</string>
   <string name="conversation_type_private">Прыватныя</string>
@@ -96,6 +112,7 @@
   <string name="prompt_new_password_repeat">Пацвердзіце новы пароль</string>
   <string name="account_create_title">Стварэнне ўліковага запісу Jami</string>
   <string name="prompt_hint_username">Назва карыстальніка</string>
+  <string name="copied_clipboard">Скапіравана ў буфер абмену.</string>
   <string name="wizard_next">Далей</string>
   <string name="wizard_back">Звярніцеся назад</string>
   <string name="wizard_skip">Скінг</string>
@@ -115,15 +132,20 @@
   <!--Share fragment-->
   <string name="share_label">Падзяліцца</string>
   <string name="generic_error_migration">Памылка</string>
+  <string name="title_share_with">Абагуліць з…</string>
   <!--Pending invitations-->
   <string name="accept">Прыняць</string>
   <string name="decline">Падзенне</string>
   <string name="block">Блокіроўванне</string>
+  <string name="decline_invitation">Адхіліць запрашэнне</string>
+  <string name="accept_invitation">Прыняць запрашэнне</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Ніякіх заблакаваных кантактаў</string>
   <!--Smartlist-->
+  <string name="search_results">Вынікі пошуку</string>
   <string name="tv_contact_row_header">Кантакты</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_unjoinable_peer">Недасягальны абанент</string>
   <string name="file_transfer_status_canceled">Скасавана</string>
   <string name="menu_file_open">Адкрыты файл</string>
   <string name="menu_file_save">Захаваць файл</string>
@@ -141,6 +163,7 @@
   <!--TV-->
   <string name="tv_media_preview">Перагляд</string>
   <string name="tv_dialog_send">Пашляць</string>
+  <string name="tv_action_more">Больш</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Рэкамендуецца</string>
   <string name="wizard_status_optional">Неабходнае</string>
@@ -151,6 +174,7 @@
   <string name="wizard_profile_info">Профіль падзяляецца толькі з кантактамі</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Падзяліцца</string>
+  <string name="bottomSheet_extensions_btn">Пашырэнні</string>
   <string name="bottomSheet_add_participants_btn">Дадаць</string>
   <string name="bottomSheet_change_camera_btn">Змена</string>
   <string name="bottomSheet_hangup_btn">Скончыць выклік</string>
@@ -161,31 +185,58 @@
   <string name="reset">Падстаўка</string>
   <!--Swarm Details-->
   <string name="rename_btn">Пацвердзіць</string>
+  <string name="swarm_description">Дадаць апісанне</string>
   <string name="tab_members">Члены</string>
   <string name="tab_files">Файлы</string>
   <string name="tab_settings">Налады</string>
   <string name="dialog_hint_title">Назва</string>
   <string name="dialog_hint_description">Апісанне</string>
+  <string name="picker_title">Выберыце кантакты</string>
+  <string name="picker_btn">Выберыце кантакты</string>
   <string name="bottomsheet_remove">Выключыць члена</string>
   <!--JamiId-->
   <string name="jami_id_validate">Запіс імя карыстальніка</string>
   <string name="jami_id_choose_username">Выберыце імя карыстальніка</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Сардэчна запрашаем у Джамі</string>
+  <string name="welcome_jami_description">Падзяліцеся вашым ідэнтыфікатарам Jami, каб з вамі было лягчэй звязацца!</string>
   <!--Conversation details-->
   <string name="details">Падрабязнасці</string>
+  <string name="swarm_type">Тып размовы</string>
   <string name="Private">Прыватныя</string>
   <string name="mute_conversation">Маўчаная размова</string>
   <!--Donation-->
+  <string name="donation_card_description">Калі вам падабаецца карыстацца Jami і вы верыце ў нашу місію, хочаце зрабіць ахвяраванне?</string>
   <string name="donation_card_not_now">Не зараз</string>
+  <string name="donation_donate">Ахвяраваць</string>
   <!--Extension-->
+  <string name="export_side_step1_error_malformed">Нераспазнаны ідэнтыфікатар новай прылады. Калі ласка, выконвайце інструкцыі вышэй.</string>
   <string name="export_side_step1_code_connect">Злучэнне</string>
   <string name="export_side_step2_cancel">Скасаваць</string>
   <string name="export_side_step2_confirm">Пацвердзіць</string>
   <string name="import_side_step1_share">Падзяліцца</string>
   <string name="import_side_step2_password_import">Імпарт</string>
+  <string name="import_side_step2_action_required">Патрабуецца дзеянне. Калі ласка, пацвердзіце ўліковы запіс на зыходнай прыладзе.</string>
+  <string name="import_side_step3_body_done">Уліковы запіс паспяхова імпартаваны.</string>
+  <string name="link_device_error_authentication">Адбылася памылка аўтэнтыфікацыі пры далучэнні прылады. Калі ласка, праверце ўліковыя даныя і паспрабуйце зноў.</string>
+  <string name="link_device_error_canceled">Аперацыя была скасавана карыстальнікам.</string>
   <!--Accessibility-->
+  <string name="step_title_set_password">Задаць пароль</string>
   <!--Peer services-->
   <string name="peer_services_connect">Злучэнне</string>
+  <string name="peer_services_disconnect">Адлучыцца</string>
+  <string name="notif_channel_peer_tunnel">Агульныя службы</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">Рэдагаваць</string>
+  <string name="shared_services_delete">Знішчыць</string>
+  <string name="shared_services_description_hint">Апісанне (неабавязкова)</string>
+  <string name="shared_services_port_hint">Лакальны порт</string>
+  <string name="shared_services_no_description">Без апісання</string>
+  <string name="shared_services_more_options">Больш варыянтаў</string>
+  <string name="shared_services_disconnect_all_confirm">Адлучыцца</string>
+  <string name="shared_services_type_custom_label">Карыстальніцкі</string>
+  <string name="shared_services_host_hint">Лакальны хост</string>
+  <string name="shared_services_policy_hint">Даступна для</string>
+  <string name="shared_services_policy_public">Публічна</string>
+  <string name="shared_services_save">Захаваць</string>
 </resources>

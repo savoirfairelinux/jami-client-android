@@ -86,6 +86,8 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Pokročilé</string>
   <string name="account_chat_settings_title">Nastavení chatu</string>
+  <string name="account_read_receipts_label">Potvrzení o přečtení</string>
+  <string name="account_read_receipts_summary">Odesílat a vyžadovat potvrzení o doručení a přečtení při doručení nebo přečtení zpráv.</string>
   <string name="account_call_settings_title">Nastavení volání</string>
   <string name="account_dht_public_in_calls_label">Povolit příchozí hovory od neznámých kontatků</string>
   <string name="account_registration_exp_label">Vypršení registrace</string>
@@ -198,10 +200,12 @@ Zadejte, prosím, své heslo.</string>
   <string name="account_link_export_button">Připojit nové zařízení</string>
   <string name="account_link_show_button">Zobrazit %d další propojené zařízení</string>
   <string name="account_link_hide_button">Skrýt propojené zařízení</string>
+  <string name="account_start_export_button">Vygenerovat ověřovací kód</string>
   <string name="account_end_export_button">zavřít</string>
   <string name="account_export_title">Propojení účtu s dalšími zařízeními</string>
   <string name="account_connect_server_button">Připojit se ke správcovskému serveru</string>
   <string name="account_connect_button">Připojit</string>
+  <string name="prompt_server">URL serveru pro správu</string>
   <string name="help_credentials_enter">Zadejte přihlašovací údaje vaší organizace</string>
   <string name="help_connect_password_enter">Zadejte heslo vaší organizace</string>
   <string name="account_connect_prompt_username">Uživatelské jméno</string>
@@ -248,12 +252,21 @@ Zadejte, prosím, své heslo.</string>
   <string name="account_device_name_empty">Název zařízení nesmí být prázdný.</string>
   <string name="account_device_this_indicator">Toto zařízení</string>
   <string name="account_disabled_indicator">zakázáno</string>
+  <string name="account_device_id">ID zařízení</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Tento formát je nepodporovaný.</string>
+  <string name="account_link_info">V aplikaci Jami na novém zařízení naskenujte QR kód nebo zadejte ověřovací kód ručně.</string>
   <string name="account_link_device_title">Připojit nové zařízení</string>
+  <string name="account_link_password">Tento účet je šifrován heslem, zadejte heslo pro vygenerování ověřovacího kódu.</string>
   <string name="account_link_generate_button">Generovat</string>
+  <string name="account_link_time_valid">Ověřovací kód bude neplatný: %1$s.</string>
+  <string name="account_link_device_info">Vyberte „Propojit nové zařízení“ v druhé aplikaci Jami pro zobrazení QR kódu nebo ověřovacího kódu.</string>
   <string name="account_generate_export_device">Na druhém zařízení</string>
+  <string name="account_generate_export_info">Nainstalujte a spusťte Jami. Vyberte „Importovat z jiného zařízení“ a naskenujte QR kód. Případně zadejte kód PIN ručně.</string>
   <string name="content_description_qr_generated">QR kód účtu</string>
+  <string name="account_generate_export_invalid">Ověřovací kód již není platný.\nZadejte heslo a vygenerujte nový pro propojení nového zařízení.</string>
+  <string name="account_generate_export_invalid_two">Ověřovací kód již není platný.\nVygenerujte nový pro propojení nového zařízení.</string>
+  <string name="help_pin_info">Vyžadováno, pokud je účet šifrován heslem.</string>
   <string name="account_link_device_button">Připojit</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Odemkněte Jami účet</string>
@@ -267,5 +280,6 @@ Biometrické ověřování nebo ověřování zařízení přidává pohodlný z
   <string name="account_biometry_enroll_auth_message">Přidejte zabezpečenou biometrickou nebo autentizaci pomocí zařízení jako alternativu k vašemu heslu</string>
   <string name="account_auth_error">Chyba ověření: %1$s</string>
   <string name="account_auth_success">Ověření proběhlo úspěšně</string>
+  <string name="account_auth_key_error">Při dešifrování klíče účtu došlo k chybě.</string>
   <string name="account_auth_password">Použijte heslo účtu</string>
 </resources>

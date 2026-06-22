@@ -335,6 +335,9 @@
   <!--Peer services-->
   <string name="peer_services_connect">ബന്ധിപ്പിക്കുക</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">പരിഷ്കരിക്കുക</string>
+  <string name="shared_services_delete">Hapus</string>
   <string name="shared_services_more_options">കൂടുതൽ ഓപ്ഷനുകൾ</string>
+  <string name="shared_services_type_custom_label">Tidak lalai</string>
   <string name="shared_services_save">സംരക്ഷിക്കുക</string>
 </resources>

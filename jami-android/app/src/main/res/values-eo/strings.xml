@@ -335,4 +335,12 @@
   <!--Peer services-->
   <string name="peer_services_connect">Konekti</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">Modifi</string>
+  <string name="shared_services_delete">Forigi</string>
+  <string name="shared_services_port_hint">Loka pordo</string>
+  <string name="shared_services_more_options">Pli da ebloj</string>
+  <string name="shared_services_type_website_label">Retejo</string>
+  <string name="shared_services_type_custom_label">Propra</string>
+  <string name="shared_services_choose">Elektu dosieron</string>
+  <string name="shared_services_save">Savi</string>
 </resources>

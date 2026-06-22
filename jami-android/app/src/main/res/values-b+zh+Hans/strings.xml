@@ -3,16 +3,21 @@
   <!--About-->
   <string name="submit_issue_title">提交问题</string>
   <string name="submit_issue_action_description"><u>创建新问题</u></string>
+  <string name="section_license">许可</string>
   <string name="switch_conversation">切换对话</string>
   <string name="delete_conversation_confirmation">你确定要删除这个对话吗？</string>
   <string name="acc_profile_photo_capture">拍摄照片</string>
   <string name="view_switch_camera">翻轉相機</string>
   <string name="sponsor_section">Jami 是自由软件，它的开发和支持者是：</string>
+  <string name="copyright_section">版权所有</string>
+  <string name="contribute_section">贡献</string>
+  <string name="version_section">版本</string>
   <string name="no_browser_app_installed">未找到web浏览器应用程序，请安装一个以查看此页面。</string>
   <string name="website_chooser_title">使用…浏览网站</string>
   <string name="license">本软件由版权持有人及其他责任者“按原样”提供，不提供任何形式的担保。详细信息请参阅 <u>GNU 通用公共许可证版本 3 或更新</u></string>
   <string name="description">Jami 是一款用于通用通信的自由软件，它尊重用户的自由和隐私。</string>
   <string name="credits">致謝</string>
+  <string name="pip_title">Jami 会议</string>
   <string name="call_service_description">此项服务为保持您的通话在前台运行所必需。仅在您通话时运行。</string>
   <string name="data_transfer_service_description">此项服务为在文件传输过程中显示持久通知所必需。仅在传输文件时运行。</string>
   <!--About dialog-->
@@ -23,22 +28,32 @@
   <string name="special_thanks">特别感谢</string>
   <string name="end_note">这是一份为Jami投入大量时间并取得有益成果的人的名单。任何希望被添加到列表中的此类贡献者都应通过以下方式联系Jami团队contact@jami.net.</string>
   <!--RingActivity-->
+  <string name="error_no_network">无网络连接</string>
+  <string name="error_account_offline">账户离线</string>
   <!--AB menus-->
+  <string name="ab_action_chat">文字消息</string>
   <!--Sections-->
+  <string name="menu_item_contact_request">联系人请求</string>
+  <string name="menu_item_accounts">管理账户</string>
   <string name="menu_item_account">管理账户</string>
   <string name="menu_item_settings">设置</string>
   <string name="menu_item_app_settings">APP设置</string>
   <string name="menu_item_account_settings">账户设置</string>
   <string name="menu_item_extension_list">扩展设置</string>
   <string name="menu_item_share">分享我的账户</string>
+  <string name="menu_item_about">关于 Jami</string>
   <string name="video_setting_title">视频设置</string>
   <!--Dialing Fragment-->
   <string name="dial_number">拨号</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">邀请已发送</string>
+  <plurals name="home_conferences_title">
+    <item quantity="other">%d个会话</item>
+  </plurals>
   <!--ContactList Fragment-->
   <string name="searchbar_hint">搜索或添加</string>
+  <string name="choose_number">选择一个数字</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
@@ -48,11 +63,18 @@
   <string name="notif_incoming_call">来电</string>
   <string name="notif_outgoing_call_title">%1$s的去电</string>
   <string name="notif_outgoing_call">去电</string>
+  <string name="notif_current_call_title">正在与%1$s通话</string>
   <string name="notif_current_call">正在通话</string>
   <string name="notif_channel_call_in_progress">通话中</string>
   <string name="notif_channel_calls">通话</string>
+  <string name="notif_channel_missed_calls">未接电话</string>
+  <string name="notif_channel_incoming_calls">来电</string>
   <string name="notif_channel_messages">消息</string>
+  <string name="notif_channel_requests">请求</string>
+  <string name="notif_channel_file_transfer">文件传输</string>
   <string name="notif_channel_sync">数据同步</string>
+  <string name="notif_channel_background_service">后台服务</string>
+  <string name="notif_channel_background_service_descr">允许在任何时间接受电话和消息。</string>
   <string name="notif_group_calls">通话</string>
   <string name="notif_inprogress_group_call">通话中</string>
   <string name="notif_background_service">Jami 正在后台运行</string>
@@ -60,12 +82,27 @@
   <string name="notif_dismiss">移除</string>
   <string name="notif_reply">回覆</string>
   <string name="notif_incoming_file_transfer_title">从%1$s收到文件</string>
+  <string name="notif_outgoing_file_transfer_title">发送文件到%1$s</string>
+  <string name="notif_incoming_picture">来自%1$s的图片</string>
   <string name="notif_sync_title">正在同步数据……</string>
+  <string name="notif_location_title">正与%1$s分享位置</string>
   <string name="notif_channel_reconnect">后台同步</string>
   <string name="notif_reconnect_title">Jami正在同步中…</string>
+  <string name="location_share_contact">%1$s正在与您分享位置</string>
+  <string name="notif_location_multi_title">正与%1$d联系人分享位置</string>
+  <string name="notif_location_remaining">剩余%1$d分钟</string>
+  <string name="notif_location_action_stop">停止分享位置</string>
+  <string name="location_share_action_start">开始分享</string>
+  <string name="location_share_action_stop">停止分享</string>
+  <string name="location_share_about_title">地图信息</string>
   <!--Call Fragment-->
+  <string name="you_txt_prefix">您：</string>
   <string name="action_call_hangup">結束電話</string>
   <string name="action_call_resume">继续</string>
+  <string name="action_call_maximize">最大化</string>
+  <string name="action_call_minimize">减少</string>
+  <string name="action_call_mute">静音</string>
+  <string name="action_call_unmute">取消静音</string>
   <string name="ongoing_call">正在通话</string>
   <string name="hist_in_call">%1$s 的来电</string>
   <string name="hist_out_call">%1$s 的去电</string>
@@ -80,21 +117,36 @@
   <string name="switch_to_video">启用视频</string>
   <string name="action_call_hold_accept_video">接受视频来电并保持当前通话</string>
   <string name="action_call_end_accept">接听来电并结束当前通话</string>
+  <string name="action_call_decline">拒接</string>
   <string name="action_call_mic_mute">禁用麦克风</string>
   <string name="action_load_extension">加载扩展</string>
   <string name="ab_action_speakerphone">打开扬声器</string>
   <string name="ab_action_contact_add">加到联系人</string>
+  <string name="ab_action_contact_add_question">添加至通讯录吗？</string>
   <string name="ab_action_audio_call">发起语音通话</string>
   <string name="ab_action_video_call">開始視訊通話</string>
   <string name="ab_action_change_screen_orientation">更改屏幕方向</string>
+  <string name="share_via">通过…共享</string>
   <string name="write_a_message">写消息</string>
+  <string name="scan_qr">扫描二维码</string>
+  <string name="qr_code">二维码</string>
   <string name="qr_code_not_contact">不是Jami的二维码</string>
   <string name="new_group">创建新组</string>
   <string name="ab_action_flipcamera">翻转相机</string>
+  <string name="ab_action_hidepreview">隐藏预览</string>
+  <string name="remote_recording">%s录制中...</string>
   <!--Text messages-->
   <string name="send_message">发送消息</string>
+  <string name="message_sending">正在发送消息…</string>
+  <string name="message_failed">失败</string>
+  <string name="time_just_now">刚才</string>
   <string name="send_file">发送文件</string>
   <string name="select_media">打开相册</string>
+  <string name="hist_file_sent">文件已发送</string>
+  <string name="hist_file_received">文件已接收</string>
+  <string name="conversation_send_audio">录制音频片段</string>
+  <string name="conversation_send_video">录制视频片段</string>
+  <string name="conversation_share_location">分享位置</string>
   <string name="ongoing_group_call">尚在進行中的通話</string>
   <string name="started_call">通话已开始</string>
   <string name="in_reply_to">回复</string>
@@ -103,7 +155,10 @@
   <string name="permission_dialog_camera_message">视频会话需要使用摄像头，请设置相应权限。</string>
   <string name="camera_error">启动相机时出错</string>
   <!--Ringtone activity-->
+  <string name="ringtone_error_title">错误</string>
   <string name="ringtone_error_format_not_supported">不支持此格式。</string>
+  <string name="ringtone_error_size_too_big">文件过大。最大支持%1$dKB。</string>
+  <string name="ringtone_custom_prompt">设置一个自定义铃声</string>
   <string name="ringtone_custom_label">自定义</string>
   <string name="ringtone_jami_tones">Jami铃声</string>
   <!--Read contacts permission-->
@@ -117,9 +172,16 @@
   <string name="permission_dialog_open_settings">打开设置</string>
   <string name="permission_dialog_later">稍后</string>
   <!--QRCode Scan-->
+  <string name="scan_qr_account_message">扫描您想添加账户的二维码。</string>
   <string name="title_activity_qrcode">分享我的账户</string>
   <string name="error_scan_no_camera_permissions">二维码扫描仪需要相机许可。相机权限已禁用。在设备设置中启用它以使用此功能。</string>
+  <string name="tab_code">我的二维码</string>
+  <string name="tab_scan">扫描二维码</string>
   <!--Settings-->
+  <string name="clear_history_dialog_title">清除历史记录？</string>
+  <string name="clear_history_dialog_message">此操作不可撤销。</string>
+  <string name="clear_history_completed">已清除历史记录。</string>
+  <string name="clear_history">清除</string>
   <!--Conversation-->
   <string name="conversation_details">对话详情</string>
   <string name="contact_details">联系人详情</string>
@@ -131,6 +193,7 @@
   <string name="conversation_action_history_clear_title">清除对话历史吗？</string>
   <string name="conversation_action_history_clear_message">这将会清除所有对话记录。</string>
   <string name="delete_contact">刪除聯絡人</string>
+  <string name="conversation_action_remove_this_title">删除该联系人？</string>
   <string name="conversation_action_remove_this_message">这将删除联系人并彻底清除对话历史记录。</string>
   <string name="conversation_action_add_this_message">这将发送连接请求。</string>
   <string name="remove_conversation">移除会话</string>
@@ -141,16 +204,24 @@
   <string name="swarm_group_action_leave_message">这将从您的对话列表中删除该对话</string>
   <string name="conversation_action_copy_peer_number">复制联系人号码</string>
   <string name="copied_to_clipboard">%1$s已复制到剪贴板。</string>
+  <string name="conversation_action_select_peer_number">选择一个数字</string>
   <string name="conversation_action_block_this">屏蔽联系人</string>
   <string name="conversation_action_unblock_this">取消屏蔽该联系人</string>
   <string name="conversation_action_go_to_call">返回通话</string>
   <string name="conversation_action_incoming_call">来电</string>
+  <string name="conversation_action_latest">跳转至最新</string>
   <string name="conversation_open_file_error">没有适合打开这种文件类型的应用。</string>
+  <string name="clip_contact_uri">联系人地址</string>
   <string name="clip_message">消息内容</string>
+  <string name="block_contact_dialog_title">屏蔽%1$s？</string>
   <string name="block_contact_dialog_message">在您解除屏蔽之前 %1$s将不能联系您。</string>
+  <string name="block_contact_completed">%1$s已被屏蔽。</string>
   <string name="unblock_contact_dialog_title">解除屏蔽%1$s?</string>
   <string name="unblock_contact_dialog_message">%1$s将能够再次联系您。</string>
   <string name="unblock_contact_completed">已解除屏蔽 %1$s。</string>
+  <string name="conversation_contact_is_typing">联系人正在输入...</string>
+  <string name="conversation_info_contact_you">您</string>
+  <string name="conversation_members">成员</string>
   <string name="conversation_syncing">正在从对等端下载对话</string>
   <string name="conversation_blocked">此联系人已屏蔽。</string>
   <string name="conversation_ended">对话中止</string>
@@ -159,6 +230,7 @@
   <string name="video_not_found">未找到视频文件</string>
   <string name="conversation_preference_color">对话框颜色</string>
   <string name="conversation_preference_emoji">对话表情</string>
+  <string name="conversation_type_contact">Jami 联系人</string>
   <string name="conversation_type_private">私人</string>
   <string name="conversation_type_group">群組</string>
   <string name="conversation_contact_invited">%1$s被邀请加入对话。</string>
@@ -179,6 +251,9 @@
   <string name="audio_recording_extend">继续录制</string>
   <string name="audio_recording_restart">再次录制</string>
   <string name="audio_recording_delete">丟棄</string>
+  <string name="audio_recording_discard_title">放弃录制？</string>
+  <string name="audio_recording_discard_message">您的录音将丢失。</string>
+  <string name="audio_recording_discard_keep">继续编辑</string>
   <string name="audio_recording_discard_confirm">丟棄</string>
   <string name="audio_recording_limit_reached">已达到录制限制。请发送或取消。</string>
   <string name="audio_recording_gesture_hint">释放以发送 · 滑动 ◀ 以取消 · ▲ 以查看</string>
@@ -203,14 +278,24 @@
   <string name="today">今天</string>
   <string name="yesterday">昨天</string>
   <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">添加%1$s？</string>
   <string name="prompt_new_password">新密码</string>
+  <string name="prompt_new_password_optional">新的密码（可选）</string>
   <string name="prompt_new_password_repeat">确认新密码</string>
   <string name="account_create_title">建立 Jami 帳號</string>
   <string name="prompt_new_username">输入新用户名</string>
+  <string name="prompt_hint_username">用户名</string>
+  <string name="help_password_choose">为了保护您的 Jami 账户，请使用一个强密码并牢记。</string>
+  <string name="help_password_enter">输入您的 Jami 主账户密码。</string>
+  <string name="help_server_enter">输入管理服务器的 URL。</string>
   <string name="pin_copied">验证码已复制到剪贴板。</string>
   <string name="copied_clipboard">已复制到剪贴板。</string>
+  <string name="wizard_next">下一步</string>
   <string name="wizard_back">上一步</string>
+  <string name="wizard_skip">跳过</string>
+  <string name="hist_contact_invited">联系人已邀请</string>
   <string name="hist_contact_added">已添加联系人</string>
+  <string name="hist_contact_left">联系人离开</string>
   <string name="hist_contact_blocked">联系人被封锁</string>
   <string name="hist_contact_unblocked">联系人解除封锁</string>
   <string name="hist_invitation_received">已收到邀請</string>
@@ -222,15 +307,29 @@
   <string name="open_the_gallery">打开相册</string>
   <string name="take_a_photo">照相</string>
   <string name="remove_photo">删除照片</string>
+  <string name="profile_name_hint">输入您的名字</string>
+  <string name="registered_name">注册名称</string>
+  <string name="no_registered_name">没有注册名称</string>
+  <string name="identity">身份</string>
   <string name="identifier">識別碼</string>
   <string name="account">账户</string>
+  <string name="link_new_device">关联新设备</string>
   <string name="devices_header">裝置</string>
+  <string name="devices">关联设备</string>
+  <string name="total_devices">全部设备：</string>
   <!--Share fragment-->
   <string name="share_message">用 Jami 扫描此代码</string>
+  <string name="share_message_no_account">请选择要共享的账户。</string>
+  <string name="share_your_account_information">共享我的通讯信息</string>
   <string name="share_contact_information">分享联系人</string>
+  <string name="share_label">共享</string>
+  <string name="generic_error_migration">错误</string>
   <string name="generic_error_migration_message">迁移帐户时出错。</string>
+  <string name="title_share_with">分享给...</string>
   <!--Pending invitations-->
+  <string name="accept">接受</string>
   <string name="decline">拒接</string>
+  <string name="block">屏蔽</string>
   <string name="decline_invitation">拒绝邀请</string>
   <string name="accept_invitation">Accept invitation</string>
   <string name="accept_invitation_body">聊天邀请来自%s</string>
@@ -240,10 +339,16 @@
   <string name="invitation_received_message">收到%s的邀请。\n接受还是拒绝邀请？</string>
   <string name="outgoing_contact_invitation_message">此联系人不在您的联系人列表中。</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">没有被屏蔽的联系人</string>
   <!--Smartlist-->
+  <string name="no_contact_request">联系人请求未发送</string>
+  <string name="conversation_placeholder">您当前没有会话</string>
+  <string name="contact_request_sent">联系人请求已发送</string>
   <string name="start_conversation">发起对话</string>
   <string name="search_results">搜索结果</string>
   <string name="tv_contact_row_header">联系人</string>
+  <string name="gallery_error_title">未发现图库应用</string>
+  <string name="gallery_error_message">设备上没有程序用来打开图库</string>
   <string name="generic_error">发生未知错误。</string>
   <!--File Transfer-->
   <string name="invalid_file">无效文件。</string>
@@ -263,24 +368,43 @@
   <string name="file_transfer_status_timed_out">操作超时。</string>
   <string name="file_saved_in">文件保存在%s。</string>
   <string name="file_saved_successfully">文件已成功保存。</string>
+  <string name="file_download">下载</string>
   <string name="no_space_left_on_device">设备上没有可用存储空间。</string>
+  <string name="title_media_viewer">媒体播放器</string>
+  <string name="menu_file_open">打开文件</string>
+  <string name="menu_file_download">下载文件</string>
   <string name="menu_file_save">保存文件</string>
+  <string name="menu_file_delete">删除文件</string>
   <string name="menu_file_share">共享文件</string>
   <string name="menu_message_copy">复制</string>
   <string name="menu_message_edit">編輯消息</string>
   <string name="menu_message_history">消息历史记录</string>
   <string name="menu_message_delete">删除消息</string>
+  <string name="menu_message_cancel">取消消息</string>
   <string name="menu_message_reply">回覆</string>
   <string name="menu_message_cancel_reply">取消回复</string>
+  <string name="menu_delete">删除</string>
+  <string name="pref_darkTheme_title">黑色主题</string>
   <string name="pref_darkTheme_summary">不跟從系統主題，總是啟用深色主題</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">会话</string>
   <string name="navigation_item_contact_request">邀请</string>
   <string name="navigation_item_account">账户</string>
+  <string name="search_results_public_directory">公共目录</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">发送音频消息？</string>
+  <string name="tv_send_image_dialog_message">发送该图片吗？</string>
+  <string name="tv_send_video_dialog_message">发送该视频吗？</string>
   <string name="tv_media_preview">预览</string>
+  <string name="tv_audio_play">播放</string>
   <string name="tv_audio_pause">暂停</string>
   <string name="tv_dialog_send">发送</string>
+  <string name="tv_audio_recording">录制中…</string>
+  <string name="tv_send_text">发送文本</string>
+  <string name="tv_send_audio">发送音频</string>
+  <string name="tv_send_video">发送媒体文件</string>
+  <string name="tv_action_more">更多</string>
+  <string name="conversation_input_speech_hint">说点什么…</string>
   <string name="audio_permission_denied">麦克风权限已禁用。在设备设置中启用它以使用此功能。</string>
   <string name="camera_permission_denied">相机权限已禁用。在设备设置中启用它以使用此功能。</string>
   <string name="speech_recogniton_unavailable">语音识别不可用。</string>
@@ -292,23 +416,47 @@
   <string name="error_sharing_file">共享文件时出错。</string>
   <string name="error_opening_file">打开文件时出错。</string>
   <!--Wizard-->
+  <string name="wizard_status_recommended">推荐</string>
   <string name="wizard_status_optional">可選的</string>
+  <string name="wizard_status_required">必填</string>
+  <string name="wizard_username_info">为您的账户创建一个用户名</string>
+  <string name="wizard_username_button">设置用户名</string>
+  <string name="wizard_username_skip">跳过用户名设置</string>
+  <string name="wizard_password_info">账户密码</string>
+  <string name="wizard_password_placeholder">创建密码来加密此设备上的账户密钥</string>
+  <string name="wizard_password_button">输入密码</string>
+  <string name="wizard_password_skip">创建账户</string>
+  <string name="wizard_password_switch">用密码加密账户</string>
+  <string name="wizard_password_warning">注意密码不能恢复</string>
+  <string name="wizard_profile_info">资料仅会与联系人分享</string>
+  <string name="wizard_profile_button">保存资料</string>
+  <string name="wizard_profile_skip">跳过此步骤稍后进行</string>
+  <string name="fab_path_choose">选择另一个文件</string>
   <string name="chat_extensions">聊天扩展</string>
   <!--Bottom sheet-->
+  <string name="bottomSheet_share_btn">共享</string>
+  <string name="bottomSheet_dialpad_btn">拨号盘</string>
   <string name="bottomSheet_extensions_btn">扩展</string>
+  <string name="bottomSheet_add_participants_btn">添加</string>
   <string name="bottomSheet_change_camera_btn">更改</string>
   <string name="bottomSheet_camera_onoff_switch_btn">摄像头</string>
   <string name="bottomSheet_hangup_btn">結束電話</string>
+  <string name="bottomSheet_mute_microphone_btn">麦克风</string>
+  <string name="bottomSheet_sound_output_btn">声音</string>
+  <string name="bottomSheet_raiseHand_btn">举手</string>
   <string name="camera_toggle_btn_description">切换摄像头</string>
   <string name="camera_flip_btn_description">翻转相机</string>
   <string name="add_participant_btn_description">添加参与者</string>
   <string name="screen_share_btn_description">共享屏幕</string>
   <string name="open_account_extension_settings">打开帐户扩展设置</string>
   <string name="open_general_extension_settings">打开常规扩展设置</string>
+  <string name="uninstall">卸载</string>
+  <string name="reset">重置</string>
   <!--Swarm Details-->
   <string name="rename_btn">确认</string>
   <string name="rename_error">不能为空。</string>
   <string name="swarm_description">添加描述</string>
+  <string name="tab_members">成员</string>
   <string name="tab_files">文件</string>
   <string name="tab_settings">設定</string>
   <string name="not_admin_toast">只有管理员可以编辑此组的信息</string>
@@ -316,6 +464,7 @@
   <string name="dialogtitle_title">编辑群名称</string>
   <string name="dialogtitle_description">编辑群简介</string>
   <string name="dialog_hint_title">标题</string>
+  <string name="dialog_hint_description">描述</string>
   <string name="picker_title">選擇聯繫人</string>
   <string name="picker_btn">選擇聯繫人</string>
   <string name="no_contact_to_add">您没有要添加的联系人</string>
@@ -329,12 +478,14 @@
   <!--JamiId-->
   <string name="jami_id_copy">复制Jami的Id</string>
   <string name="jami_id_share">分享jami的ID</string>
+  <string name="jami_id_validate">注册用户名</string>
   <string name="jami_id_available">用户名可用。</string>
   <string name="jami_id_not_available">用户名不可用。</string>
   <string name="jami_id_info">• 最多32字符\n• 允许使用的特殊字符：破折号（-），下划线（_）</string>
   <string name="jami_id_looking_for_availability">检查用户名是否可用...</string>
   <string name="jami_id_choose_username">選擇一個用戶名</string>
   <!--WelcomeJami-->
+  <string name="welcome_jami_title">欢迎使用 Jami</string>
   <string name="welcome_jami_description">分享您的 Jami 識別碼，以便更方便地與您聯繫！</string>
   <!--Conversation details-->
   <string name="details">详细</string>
@@ -415,12 +566,55 @@
   <string name="peer_services_error_unreachable">无法联系</string>
   <string name="peer_services_error_timeout">请求超时</string>
   <string name="peer_services_error_unknown">无法检索服务</string>
+  <string name="notif_channel_peer_tunnel">共享服务</string>
+  <string name="notif_channel_peer_tunnel_descr">当对等服务隧道在后台处于活动状态时显示。</string>
+  <string name="notif_peer_tunnel_title">共享服务运行中</string>
+  <string name="notif_peer_tunnel_text">Jami正在后台保持您的服务连接畅通</string>
+  <string name="notif_peer_tunnel_stop_all">全部停止</string>
   <!--Exposed/Hosted services-->
   <string name="shared_services_settings_title">共享服务</string>
+  <string name="shared_services_settings_description">向Jami用户公开本地服务</string>
+  <string name="shared_services_empty">未配置服务</string>
+  <string name="shared_services_add">添加服务</string>
+  <string name="shared_services_add_title">添加共享服务</string>
+  <string name="shared_services_edit_title">编辑共享服务</string>
   <string name="shared_services_edit">編輯</string>
+  <string name="shared_services_delete">刪除</string>
+  <string name="shared_services_name_hint">服务名称</string>
+  <string name="shared_services_name_required">服务名称是必需的</string>
+  <string name="shared_services_description_hint">说明（可选）</string>
+  <string name="shared_services_port_hint">本機連接埠</string>
+  <string name="shared_services_port_required">端口号是必需的</string>
+  <string name="shared_services_port_invalid">端口必须介于1和65535之间</string>
+  <string name="shared_services_port">端口：%d</string>
   <string name="shared_services_no_description">无描述</string>
+  <string name="shared_services_empty_subtitle">与Jami用户共享本地文件或服务</string>
   <string name="shared_services_more_options">更多选项</string>
+  <string name="shared_services_open_in_browser">在浏览器中打开</string>
+  <string name="shared_services_disconnect_all">断开所有连接</string>
+  <string name="shared_services_disconnect_all_title">断开所有连接？</string>
+  <string name="shared_services_disconnect_all_message">将断开以下连接：\n\n%1$s\n\n将关闭托管服务，并关闭与其他设备的连接。</string>
   <string name="shared_services_disconnect_all_confirm">断开</string>
+  <string name="shared_services_nothing_active">当前没有任何活动</string>
+  <string name="shared_services_hosting_item">主机：%1$s(%2$s)</string>
+  <string name="shared_services_tunnel_item"> %1$s(从%2$s开始)</string>
+  <string name="shared_services_type_website_label">网站</string>
+  <string name="shared_services_type_custom_label">自定义</string>
+  <string name="shared_services_local_port">本地端口%d</string>
+  <string name="shared_services_local_address">%1$s:%2$d</string>
+  <string name="shared_services_type_custom">自定义服务器</string>
+  <string name="shared_services_type_website">添加网站</string>
+  <string name="shared_services_add_custom_title">添加自定义服务器</string>
+  <string name="shared_services_add_website_title">添加网站</string>
+  <string name="shared_services_host_hint">本地主机</string>
+  <string name="shared_services_scheme_hint">URI方案（例如http、ftp）</string>
+  <string name="shared_services_directory_hint">本地目录</string>
+  <string name="shared_services_directory_required">请选择一个目录</string>
   <string name="shared_services_choose">選擇</string>
+  <string name="shared_services_policy_hint">可由以下人员访问</string>
+  <string name="shared_services_policy_contacts">我的联系人</string>
+  <string name="shared_services_policy_public">公共</string>
+  <string name="shared_services_policy_specific">具体联系人</string>
+  <string name="shared_services_allowed_contacts_hint">允许的联系人（逗号分隔）</string>
   <string name="shared_services_save">保存</string>
 </resources>

@@ -4,6 +4,7 @@
   <string name="submit_issue_title">Pateikti pranešimą apie klaidą</string>
   <string name="submit_issue_action_description"><u>Sukurti naują pranešimą apie klaidą</u></string>
   <string name="section_license">Licencija</string>
+  <string name="switch_conversation">Perjungti pokalbį</string>
   <string name="delete_conversation_confirmation">Ar tikrai norite ištrinti šį pokalbį?</string>
   <string name="acc_profile_photo_capture">Fotografuoti</string>
   <string name="view_switch_camera">Perjungti kamerą</string>
@@ -23,9 +24,12 @@
   <string name="thank_note">Norėtume padėkoti mūsų pagalbininkams, dėl kurių daugiamečių pastangų ši programa tapo tokia, kokia yra.</string>
   <string name="developers">Plėtotojai</string>
   <string name="media">Medija</string>
+  <string name="community_management">Bendruomenės valdymas</string>
   <string name="special_thanks">Ypatingai dėkojame</string>
+  <string name="end_note">Tai sąrašas žmonių, kurie skyrė daug laiko ir pasiekė naudingų rezultatų kurdami Jami. Visi tokie bendraautoriai, norintys būti įtraukti į sąrašą, turėtų susisiekti su Jami komanda adresu contact@jami.net.</string>
   <!--RingActivity-->
   <string name="error_no_network">Nėra tinklo ryšio</string>
+  <string name="error_account_offline">Paskyra yra neprisijungusi</string>
   <!--AB menus-->
   <string name="ab_action_chat">Tekstinis susirašinėjimas</string>
   <!--Sections-->
@@ -43,6 +47,7 @@
   <string name="dial_number">Rinkti numerį</string>
   <!--History Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">Gauti kvietimai</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d pokalbis</item>
     <item quantity="few">%d pokalbiai</item>
@@ -51,14 +56,19 @@
   </plurals>
   <!--ContactList Fragment-->
   <string name="searchbar_hint">Ieškoti arba pridėti</string>
+  <string name="choose_number">Pasirinkite numerį</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
   <string name="notif_missed_incoming_call">Praleistas gaunamasis skambutis</string>
+  <string name="notif_missed_outgoing_call">Praleistas išeinantis skambutis</string>
   <string name="notif_incoming_call_title">Gaunamasis skambutis nuo %1$s</string>
   <string name="notif_incoming_call">Gaunamasis skambutis</string>
   <string name="notif_outgoing_call_title">Išsiunčiamasis skambutis naudotojui %1$s</string>
   <string name="notif_outgoing_call">Išsiunčiamasis skambutis</string>
+  <string name="notif_current_call_title">Vykstantis skambutis su %1$s</string>
+  <string name="notif_current_call">Vykstantis skambutis</string>
+  <string name="notif_channel_call_in_progress">Vyksta skambutis</string>
   <string name="notif_channel_calls">Skambučiai</string>
   <string name="notif_channel_missed_calls">Praleisti skambučiai</string>
   <string name="notif_channel_incoming_calls">Gaunamieji skambučiai</string>
@@ -69,6 +79,7 @@
   <string name="notif_channel_background_service">Foninė tarnyba</string>
   <string name="notif_channel_background_service_descr">Leidžia bet kuriuo metu priimti skambučius ir gauti žinutes.</string>
   <string name="notif_group_calls">Skambučiai</string>
+  <string name="notif_inprogress_group_call">Vyksta skambutis</string>
   <string name="notif_background_service">Jami šiuo metu veikia fone</string>
   <string name="notif_mark_as_read">Žymėti kaip skaitytą</string>
   <string name="notif_dismiss">Atmesti</string>
@@ -78,6 +89,8 @@
   <string name="notif_incoming_picture">Paveikslas nuo %1$s</string>
   <string name="notif_sync_title">Sinchronizuojami duomenys…</string>
   <string name="notif_location_title">Vietovė bendrinama su %1$s</string>
+  <string name="notif_channel_reconnect">Sinchronizavimas fone</string>
+  <string name="notif_reconnect_title">Jami sinchronizuojasi…</string>
   <string name="location_share_contact">%1$s bendrina su jumis savo vietovę</string>
   <string name="notif_location_multi_title">Vietovė bendrinama su %1$d adresatais</string>
   <string name="notif_location_remaining">Liko %1$d min.</string>
@@ -88,17 +101,25 @@
   <!--Call Fragment-->
   <string name="you_txt_prefix">Jūs:</string>
   <string name="action_call_hangup">Baigti skambutį</string>
+  <string name="action_call_resume">Tęsti</string>
   <string name="action_call_maximize">Išskleisti</string>
   <string name="action_call_minimize">Sumažinti</string>
+  <string name="action_call_mute">Nutildyti</string>
+  <string name="action_call_unmute">Įjungti garsą</string>
+  <string name="ongoing_call">Vykstantis skambutis</string>
   <string name="hist_in_call">%1$s gaunamasis skambutis</string>
   <string name="hist_out_call">%1$s išsiunčiamasis skambutis</string>
   <string name="call_duration">Trukmė: %s</string>
+  <string name="call_on_hold">Skambutis sulaikytas</string>
   <string name="start_error_title">Nepavyko paleisti Jami</string>
   <string name="action_call_accept">Atsiliepti</string>
   <string name="action_call_accept_audio">Atsiliepti su garsu</string>
   <string name="action_call_accept_video">Atsiliepti su vaizdu</string>
+  <string name="action_call_hold_accept">Priimti įeinantį skambutį tik su garsu ir sulaikyti dabartinį skambutį</string>
   <string name="switch_to_audio">Išjungti vaizdą</string>
   <string name="switch_to_video">Įjungti vaizdą</string>
+  <string name="action_call_hold_accept_video">Priimti įeinantį skambutį su vaizdu ir sulaikyti dabartinį skambutį</string>
+  <string name="action_call_end_accept">Priimti įeinantį skambutį ir baigti dabartinį skambutį</string>
   <string name="action_call_decline">Atmesti</string>
   <string name="action_call_mic_mute">Išjungti mikrofoną</string>
   <string name="action_load_extension">Įkelti plėtinį</string>
@@ -116,6 +137,7 @@
   <string name="new_group">Sukurti naują grupę</string>
   <string name="ab_action_flipcamera">Apversti kamerą</string>
   <string name="ab_action_hidepreview">Slėpti peržiūrą</string>
+  <string name="remote_recording">%s įrašinėja…</string>
   <!--Text messages-->
   <string name="send_message">Siųsti žinutę</string>
   <string name="message_sending">Siunčiama žinutė...</string>
@@ -125,9 +147,15 @@
   <string name="select_media">Atverti galeriją</string>
   <string name="hist_file_sent">Failas išsiųstas</string>
   <string name="hist_file_received">Failas gautas</string>
+  <string name="conversation_send_audio">Įrašyti garso įrašą</string>
+  <string name="conversation_send_video">Įrašyti vaizdo įrašą</string>
   <string name="conversation_share_location">Bendrinti vietovę</string>
+  <string name="ongoing_group_call">Vykstantis skambutis</string>
+  <string name="started_call">Skambutis pradėtas</string>
+  <string name="in_reply_to">Atsakant į</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kameros leidimas</string>
+  <string name="permission_dialog_camera_message">Vaizdo pokalbiams reikia kameros leidimo. Kameros leidimas išjungtas. Įjunkite jį įrenginio nustatymuose, kad galėtumėte naudotis šia funkcija.</string>
   <string name="camera_error">Paleidžiant kamerą įvyko klaida.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Klaida</string>
@@ -137,13 +165,19 @@
   <string name="ringtone_custom_label">Tinkinta</string>
   <string name="ringtone_jami_tones">Jami skambučio melodijos</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jami reikia leidimo „Skaityti kontaktus“. Įjunkite jį įrenginio nustatymuose, kad galėtumėte naudotis šia funkcija.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jami reikia leidimo „Rašyti skambučių žurnalą“. Įjunkite jį įrenginio nustatymuose, kad galėtumėte naudotis šia funkcija.</string>
   <!--Post notifications permission-->
+  <string name="permission_dialog_post_notifications_title">Leisti pranešimus</string>
+  <string name="permission_dialog_post_notifications_message">Jami reikia pranešimų leidimo, kad galėtų įspėti apie įeinančius skambučius ir žinutes, net kai programa veikia fone. Be jo galite praleisti skambučius.</string>
+  <string name="permission_dialog_post_notifications_blocked_message">Jami pranešimai išjungti. Be jų praleisite įeinančius skambučius ir žinutes. Įjunkite Jami pranešimus įrenginio nustatymuose.</string>
   <string name="permission_dialog_open_settings">Atverti nustatymus</string>
   <string name="permission_dialog_later">Vėliau</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Nuskenuokite paskyros, kurią norite pridėti, QR kodą.</string>
   <string name="title_activity_qrcode">Bendrinti mano paskyrą</string>
+  <string name="error_scan_no_camera_permissions">QR skaitytuvui reikia kameros leidimo. Kameros leidimas išjungtas. Įjunkite jį įrenginio nustatymuose, kad galėtumėte naudotis šia funkcija.</string>
   <string name="tab_code">Mano kodas</string>
   <string name="tab_scan">Skenuoti kodą</string>
   <!--Settings-->
@@ -164,6 +198,7 @@
   <string name="delete_contact">Ištrinti adresatą</string>
   <string name="conversation_action_remove_this_title">Ištrinti šį adresatą?</string>
   <string name="conversation_action_remove_this_message">Tai ištrins adresatą ir išvalys pokalbio istoriją.</string>
+  <string name="conversation_action_add_this_message">Tai išsiųs ryšio užklausą.</string>
   <string name="remove_conversation">Šalinti pokalbį</string>
   <string name="conversation_action_remove_title">Šalinti pokalbį?</string>
   <string name="conversation_action_remove_message">Tai pašalins šį pokalbį, bet nepašalins adresato.</string>
@@ -177,6 +212,7 @@
   <string name="conversation_action_unblock_this">Atblokuoti adresatą</string>
   <string name="conversation_action_go_to_call">Grįžti į skambutį</string>
   <string name="conversation_action_incoming_call">Gaunamasis skambutis</string>
+  <string name="conversation_action_latest">Pereiti prie naujausio</string>
   <string name="conversation_open_file_error">Nėra įdiegtos programos, kuri galėtų atverti šį failo tipą.</string>
   <string name="clip_contact_uri">Adresato adresas</string>
   <string name="clip_message">Žinutės turinys</string>
@@ -203,17 +239,44 @@
   <string name="conversation_contact_invited">%1$s buvo pakviesta(s) prisijungti prie pokalbio.</string>
   <string name="conversation_contact_added">%1$s prisijungė prie pokalbio.</string>
   <string name="conversation_contact_left">%1$s išėjo iš pokalbio.</string>
+  <string name="conversation_contact_blocked">%1$s buvo užblokuotas pokalbyje.</string>
+  <string name="conversation_contact_unblocked">%1$s buvo atblokuotas pokalbyje.</string>
   <string name="conversation_search_hint">Ieškoti pokalbyje</string>
+  <string name="audio_recorder_error">Nepavyko paleisti garso įrašymo įrenginio.</string>
+  <string name="audio_recording_in_progress">Įrašoma…</string>
+  <string name="audio_recording_ready">Bakstelėkite norėdami atkurti, vilkite bangos formą norėdami naršyti</string>
+  <string name="audio_recording_playing">Atkuriama…</string>
   <string name="audio_recording_send">Siųsti</string>
   <string name="audio_recording_play">Atkurti</string>
   <string name="audio_recording_pause">Pristabdyti</string>
   <string name="audio_recording_stop">Nustokite įrašyti</string>
+  <string name="audio_recording_extend">Tęsti įrašymą</string>
+  <string name="audio_recording_restart">Įrašyti dar kartą</string>
   <string name="audio_recording_delete">Atmesti</string>
+  <string name="audio_recording_discard_title">Atsisakyti įrašo?</string>
+  <string name="audio_recording_discard_message">Jūsų įrašas bus prarastas.</string>
+  <string name="audio_recording_discard_keep">Tęsti redagavimą</string>
+  <string name="audio_recording_discard_confirm">Atmesti</string>
+  <string name="audio_recording_limit_reached">Pasiekta įrašymo riba. Išsiųskite arba atšaukite.</string>
+  <string name="audio_recording_gesture_hint">Atleiskite norėdami išsiųsti · braukite ◀ norėdami atšaukti · ▲ norėdami peržiūrėti</string>
+  <string name="audio_recording_release_cancel">Atleiskite norėdami atšaukti</string>
+  <string name="audio_recording_release_review">Atleiskite norėdami atverti rengyklę</string>
+  <string name="audio_recording_slide_cancel">Atšaukti įrašymą</string>
+  <string name="audio_recording_slide_review">Atverti rengyklę</string>
+  <string name="audio_recording_review_short">Peržiūrėti</string>
+  <string name="audio_recording_too_short">Laikykite norėdami įrašyti balso žinutę</string>
+  <string name="video_recorder_error">Nėra prieinamo vaizdo įrašymo įrenginio.</string>
   <string name="taking_picture_error">Fotografuojant įvyko klaida.</string>
+  <string name="find_picture_error">Ieškant paveikslėlio įvyko klaida.</string>
   <string name="open_camera_error">Atveriant kamerą įvyko klaida.</string>
+  <string name="starting_recorder_error">Paleidžiant įrašymo įrenginį įvyko klaida.</string>
   <string name="starting_camera_error">Paleidžiant kamerą įvyko klaida.</string>
   <string name="browser_error">Šiame įrenginyje neprieinama jokia failų naršyklė.</string>
+  <string name="import_archive_error">Importuojant archyvą įvyko klaida.</string>
+  <string name="export_archive_error">Eksportuojant archyvą įvyko klaida.</string>
   <string name="load_ringtone_error">Įkeliant skambučio melodiją įvyko klaida.</string>
+  <string name="sharing_log_error">Bendrinant žurnalus įvyko klaida.</string>
+  <string name="no_native_crash">Nėra naujų savosios aplinkos strigčių</string>
   <string name="today">Šiandien</string>
   <string name="yesterday">Vakar</string>
   <!--Contacts-->
@@ -225,6 +288,8 @@
   <string name="prompt_new_username">Įveskite naują naudotojo vardą</string>
   <string name="prompt_hint_username">Naudotojo vardas</string>
   <string name="help_password_choose">Pasirinkite stiprų slaptažodį, kurį prisiminsite, kad apsaugotumėte savo Jami paskyrą.</string>
+  <string name="help_password_enter">Įveskite pagrindinį Jami paskyros slaptažodį.</string>
+  <string name="help_server_enter">Įveskite valdymo serverio URL.</string>
   <string name="pin_copied">Tapatybės nustatymo kodas nukopijuotas į iškarpinę.</string>
   <string name="copied_clipboard">Nukopijuota į iškarpinę.</string>
   <string name="wizard_next">Kitas</string>
@@ -240,6 +305,7 @@
   <string name="profile">Profilis</string>
   <string name="profile_name">Profilio pavadinimas</string>
   <string name="profile_message_warning">Profilis yra bendrinamas tik su adresatais</string>
+  <string name="custom_profile_message_warning">Pasirinktinis profilis matomas tik šio įrenginio paskyrai</string>
   <string name="open_the_gallery">Atverti galeriją</string>
   <string name="take_a_photo">Padaryti nuotrauką</string>
   <string name="remove_photo">Šalinti nuotrauką</string>
@@ -260,6 +326,7 @@
   <string name="share_contact_information">Bendrinti kontaktinę informaciją</string>
   <string name="share_label">Bendrinti</string>
   <string name="generic_error_migration">Klaida</string>
+  <string name="generic_error_migration_message">Perkeliant paskyrą įvyko klaida.</string>
   <string name="title_share_with">Bendrinti su…</string>
   <!--Pending invitations-->
   <string name="accept">Priimti</string>
@@ -269,10 +336,14 @@
   <string name="accept_invitation">Priimti pakvietimą</string>
   <string name="accept_invitation_body">Gautas pakvietimas iš %s.</string>
   <string name="new_invitation_request_title">Naujas pakvietimas</string>
+  <string name="invitation_message">Turite %1$d kontaktų užklausų</string>
+  <string name="no_invitations">Nėra kvietimų, kuriuos būtų galima rodyti.</string>
+  <string name="invitation_received_message">Gautas kvietimas iš %s.\nPriimti ar atmesti kvietimą?</string>
   <string name="outgoing_contact_invitation_message">Šio adresato nėra jūsų adresatų sąraše.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Nėra užblokuotų adresatų</string>
   <!--Smartlist-->
+  <string name="no_contact_request">Neišsiųsta jokia kontakto užklausa</string>
   <string name="conversation_placeholder">Kol kas neturite jokių pokalbių</string>
   <string name="contact_request_sent">Adresato užklausa išsiųsta</string>
   <string name="start_conversation">Pradėti pokalbį</string>
@@ -283,10 +354,19 @@
   <string name="generic_error">Įvyko nežinoma klaida.</string>
   <!--File Transfer-->
   <string name="invalid_file">Neteisingas failas.</string>
+  <string name="not_able_to_write_file">Nepavyko įrašyti failo.</string>
   <string name="file_transfer_status_created">Inicijuojama</string>
   <string name="file_transfer_status_unsupported">Nepalaikoma</string>
+  <string name="file_transfer_status_wait_peer_acceptance">Laukiama, kol kitas naudotojas priims…</string>
+  <string name="file_transfer_status_wait_host_acceptance">Laukiama, kol pagrindinis kompiuteris priims…</string>
+  <string name="file_transfer_status_ongoing">Vyksta</string>
+  <string name="file_transfer_status_finished">Baigta</string>
+  <string name="file_transfer_status_closed_by_host">Uždarė pagrindinis kompiuteris</string>
+  <string name="file_transfer_status_closed_by_peer">Uždarė kitas naudotojas</string>
   <string name="file_transfer_status_invalid_file">Neteisingas failas</string>
+  <string name="file_transfer_status_unjoinable_peer">Nepasiekiamas naudotojas</string>
   <string name="file_transfer_status_canceled">Atsisakyta</string>
+  <string name="file_transfer_status_error">Perkeliant failą įvyko klaida.</string>
   <string name="file_transfer_status_timed_out">Pasibaigė operacijai skirtas laikas.</string>
   <string name="file_saved_in">Failas įrašytas į %s.</string>
   <string name="file_saved_successfully">Failas buvo sėkmingai įrašytas.</string>
@@ -300,9 +380,11 @@
   <string name="menu_file_share">Bendrinti failą</string>
   <string name="menu_message_copy">Kopijuoti</string>
   <string name="menu_message_edit">Taisyti žinutę</string>
+  <string name="menu_message_history">Žinučių istorija</string>
   <string name="menu_message_delete">Ištrinti žinutę</string>
   <string name="menu_message_cancel">Atsisakyti žinutės</string>
   <string name="menu_message_reply">Atsakyti</string>
+  <string name="menu_message_cancel_reply">Atšaukti atsakymą</string>
   <string name="menu_delete">Ištrinti</string>
   <string name="pref_darkTheme_title">Tamsus apipavidalinimas</string>
   <string name="pref_darkTheme_summary">Vietoj sistemos elgsenos, visada naudoti tamsų apipavidalinimą</string>
@@ -319,17 +401,26 @@
   <string name="tv_audio_play">Atkurti</string>
   <string name="tv_audio_pause">Pristabdyti</string>
   <string name="tv_dialog_send">Siųsti</string>
+  <string name="tv_audio_recording">Įrašoma…</string>
   <string name="tv_send_text">Siųsti tekstą</string>
   <string name="tv_send_audio">Siųsti garsą</string>
   <string name="tv_send_video">Siųsti mediją</string>
   <string name="tv_action_more">Daugiau</string>
   <string name="conversation_input_speech_hint">Ką nors sakykite…</string>
+  <string name="audio_permission_denied">Mikrofono leidimas išjungtas. Įjunkite jį įrenginio nustatymuose, kad galėtumėte naudotis šia funkcija.</string>
+  <string name="camera_permission_denied">Kameros leidimas išjungtas. Įjunkite jį įrenginio nustatymuose, kad galėtumėte naudotis šia funkcija.</string>
   <string name="speech_recogniton_unavailable">Šnekos atpažinimas neprieinamas.</string>
+  <string name="audio_permission_rationale_title">Reikalingas garso leidimas</string>
+  <string name="camera_permission_rationale_title">Reikalingas kameros leidimas</string>
+  <string name="audio_permission_rationale_message">Jami reikia mikrofono leidimo, kad galėtų naudoti kalbos atpažinimo ir garso įrašymo funkcijas. Jo bus paprašyta kitame žingsnyje.</string>
+  <string name="camera_permission_rationale_message">Jami reikia kameros leidimo, kad galėtų įrašyti vaizdą ir skambinti vaizdo skambučius. Jo bus paprašyta kitame žingsnyje.</string>
+  <string name="unable_to_start_recorder">Nepavyko paleisti garso įrašymo.</string>
   <string name="error_sharing_file">Bendrinant failą įvyko klaida.</string>
   <string name="error_opening_file">Atveriant failą įvyko klaida.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Rekomenduojama</string>
   <string name="wizard_status_optional">Nebūtina</string>
+  <string name="wizard_status_required">Privaloma</string>
   <string name="wizard_username_info">Pasirinkite paskyrai naudotojo vardą</string>
   <string name="wizard_username_button">Pasirinkti naudotojo vardą</string>
   <string name="wizard_username_skip">Praleisti naudotojo vardo pasirinkimą</string>
@@ -355,9 +446,12 @@
   <string name="bottomSheet_mute_microphone_btn">Mikrofonas</string>
   <string name="bottomSheet_sound_output_btn">Garsai</string>
   <string name="bottomSheet_raiseHand_btn">Pakelti ranką</string>
+  <string name="camera_toggle_btn_description">Perjungti kamerą</string>
   <string name="camera_flip_btn_description">Apversti kamerą</string>
   <string name="add_participant_btn_description">Pridėti dalyvį</string>
   <string name="screen_share_btn_description">Bendrinti ekraną</string>
+  <string name="open_account_extension_settings">Atverti paskyros plėtinių nustatymus</string>
+  <string name="open_general_extension_settings">Atverti bendruosius plėtinių nustatymus</string>
   <string name="uninstall">Pašalinti</string>
   <string name="reset">Atstatyti</string>
   <!--Swarm Details-->
@@ -373,29 +467,43 @@
   <string name="dialogtitle_description">Taisyti grupės aprašą</string>
   <string name="dialog_hint_title">Pavadinimas</string>
   <string name="dialog_hint_description">Aprašas</string>
+  <string name="picker_title">Pasirinkti kontaktus</string>
+  <string name="picker_btn">Pasirinkti kontaktus</string>
+  <string name="no_contact_to_add">Neturite kontaktų, kuriuos galėtumėte pridėti</string>
+  <string name="bottomsheet_contact">Kontaktas Jami\n%1$s</string>
   <string name="bottomsheet_remove">Ištrinti narį</string>
   <string name="error_open_no_app_found">Nerasta programa, galinti apdoroti šį failą: %1$s</string>
   <string name="swarm_detail_no_document">Kol kas neturite jokių dokumentų.</string>
   <string name="group_admin">Administratorius</string>
+  <string name="share_contact_intent_title">Pridėkite šį kontaktą Jami!</string>
+  <string name="share_contact_intent_body">Galite pridėti šį kontaktą „%1$s“ paskirstytoje Jami komunikacijos platformoje: %2$s</string>
   <!--JamiId-->
   <string name="jami_id_copy">Kopijuoti JamiId</string>
   <string name="jami_id_share">Bendrinti JamiId</string>
   <string name="jami_id_validate">Registruoti naudotojo vardą</string>
   <string name="jami_id_available">Naudotojo vardas yra prieinamas.</string>
   <string name="jami_id_not_available">Naudotojo vardas yra neprieinamas.</string>
+  <string name="jami_id_info">• Daugiausia 32 simboliai\n• Leidžiami specialieji simboliai: brūkšnelis (-), pabraukimas (_)</string>
   <string name="jami_id_looking_for_availability">Tikrinamas naudotojo vardo prieinamumas…</string>
+  <string name="jami_id_choose_username">Pasirinkite naudotojo vardą</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Sveiki atvykę į Jami</string>
+  <string name="welcome_jami_description">Bendrinkite savo Jami identifikatorių, kad su jumis būtų lengviau susisiekti!</string>
   <!--Conversation details-->
   <string name="details">Išsamiau</string>
   <string name="secure_p2p_connection">Saugus lygiarangis ryšys</string>
   <string name="swarm_type">Pokalbio tipas</string>
   <string name="Private">Privatus</string>
+  <string name="swarm_id">Spiečiaus ID</string>
   <string name="show_qr_code">Rodyti QR kodą</string>
   <string name="show_certificate">Rodyti liudijimą</string>
+  <string name="mute_conversation">Nutildyti pokalbį</string>
   <!--Donation-->
+  <string name="donation_card_description">Jei jums patinka naudotis Jami ir tikite mūsų misija, ar norėtumėte paaukoti?</string>
   <string name="donation_card_not_now">Ne dabar</string>
   <string name="donation_donate">Paremkite</string>
+  <string name="donation_setting_title">Aukojimo priminimas</string>
+  <string name="donation_setting_description">Įjungti aukojimo priminimą</string>
   <!--Extension-->
   <string name="unable_to_load">Nepavyko įkelti %1$s</string>
   <string name="load_success">%1$s: įjungta</string>
@@ -404,8 +512,13 @@
   <string name="install_error">Importuojant plėtinį įvyko klaida.</string>
   <string name="export_side_main_title">Eksportuoti paskyrą</string>
   <string name="import_side_main_title">Importuoti paskyrą</string>
+  <string name="link_device_dialog_stop_title">Ar norite sustabdyti įrenginio susiejimą?</string>
+  <string name="link_device_dialog_stop_export_body">Sustabdžius bus atšaukta paskyros eksportavimo operacija.</string>
+  <string name="link_device_dialog_stop_import_body">Sustabdžius bus atšaukta paskyros importavimo operacija.</string>
+  <string name="export_side_step1_advice_qr">Naujame įrenginyje pradėkite naują paskyrą.\nPasirinkite <b>Paskyra &gt; Pridėti paskyrą &gt; Prisijungti iš kito įrenginio</b>\nKai būsite pasiruošę, nuskaitykite QR kodą</string>
   <string name="export_side_step1_switch_to_code">Arba spustelėkite čia norėdami įvesti tapatybės nustatymo kodą</string>
   <string name="export_side_step1_switch_to_qr">Arba spustelėkite čia norėdami nuskenuoti QR kodą</string>
+  <string name="export_side_step1_error_malformed">Neatpažintas naujo įrenginio identifikatorius. Vadovaukitės aukščiau pateiktomis instrukcijomis.</string>
   <string name="export_side_step1_code_connect">Prisijungti</string>
   <string name="export_side_step2_advice">Naujo įrenginio vieta yra štai čia. Ar tai esate jūs?\nNorėdami tęsti paskyros eksportavimo operaciją spustelėkite „Patvirtinti“.</string>
   <string name="export_side_step2_advice_ip_only">Naujas įrenginys prisijungęs žemiau nurodytu adresu. Ar tai esate jūs?\nNorėdami tęsti paskyros eksportavimą spustelėkite „Patvirtinti“.</string>
@@ -416,31 +529,94 @@
   <string name="export_side_step3_body_loading">Vyksta paskyros eksportavimo į naują įrenginį operacija. Palaukite…</string>
   <string name="export_side_step3_body_done">Paskyra buvo sėkmingai importuota naujame įrenginyje.</string>
   <string name="export_side_step3_exit">Užbaigti</string>
+  <string name="import_side_step1_advice_qr">Pradėkite eksportavimą šaltinio įrenginyje.\n<b>Pasirinkite Paskyra &gt; Paskyros nustatymai &gt; Susieti naują įrenginį</b>\nKai būsite pasiruošę, nuskaitykite QR kodą žemiau.</string>
+  <string name="import_side_step1_advice_code">Pradėkite eksportavimą šaltinio įrenginyje.\n<b>Pasirinkite Paskyra &gt; Paskyros nustatymai &gt; Susieti naują įrenginį</b>\nKai būsite pasiruošę, įveskite kodą žemiau.</string>
   <string name="import_side_step1_share">Bendrinti</string>
   <string name="import_side_step1_switch_to_code">Arba spustelėkite čia norėdami rodyti tapatybės nustatymo kodą</string>
   <string name="import_side_step1_switch_to_qr">Arba spustelėkite čia norėdami rodyti QR kodą</string>
+  <string name="import_side_step1_connecting">Jungiamasi prie šaltinio įrenginio…</string>
   <string name="import_side_step1_preparing_device">Ruošiamas įrenginys…</string>
+  <string name="import_side_step2_password_prompt">Paskyra apsaugota slaptažodžiu.\nAtrakinkite ją, kad galėtumėte tęsti.</string>
   <string name="import_side_step2_password_import">Importuoti</string>
   <string name="import_side_step2_password_unlocking">Atrakinama paskyra…</string>
+  <string name="import_side_step2_action_required">Reikalingas veiksmas. Patvirtinkite paskyrą šaltinio įrenginyje.</string>
   <string name="import_side_step3_body_loading">Paskyra importuojama naujame įrenginyje. Palaukite…</string>
   <string name="import_side_step3_body_done">Paskyra buvo sėkmingai importuota.</string>
   <string name="import_side_step3_go_to_account">Eiti į naują paskyrą</string>
   <string name="import_side_step3_exit">Užbaigti</string>
+  <string name="link_device_share_title">Bendrinti tapatybės nustatymo kodą</string>
   <string name="link_device_error_network">Susiejant įrenginį įvyko tinklo klaida. Patikrinkite ryšį ir bandykite dar kartą.</string>
   <string name="link_device_error_authentication">Susiejant paskyrą įvyko tapatybės nustatymo klaida. Patikrinkite prisijungimo duomenis ir bandykite dar kartą.</string>
   <string name="link_device_error_timeout">Pasibaigė operacijai skirtas laikas.</string>
   <string name="link_device_error_canceled">Naudotojas atsisakė operacijos.</string>
   <string name="link_device_error_unknown">Įvyko klaida.</string>
   <string name="link_device_error_bad_password">Patikrinkite prisijungimo duomenis ir bandykite dar kartą.</string>
+  <string name="test_push">Bandomasis push</string>
   <!--Accessibility-->
   <string name="step_title_create_username">Sukurti naudotojo vardą</string>
   <string name="step_title_set_password">Nustatyti slaptažodį</string>
   <string name="step_title_create_profile">Susikurkite profilį</string>
   <string name="step_format">Žingsnis %1$d iš %2$d: %3$s</string>
   <!--Peer services-->
+  <string name="peer_services_title">Bendrinamos paslaugos</string>
+  <string name="peer_services_refresh">Atnaujinti paslaugas</string>
   <string name="peer_services_connect">Prisijungti</string>
+  <string name="peer_services_disconnect">Atsijungti</string>
+  <string name="peer_services_empty">Nėra prieinamų bendrinamų paslaugų</string>
+  <string name="peer_services_link_copied">Nuoroda nukopijuota į iškarpinę</string>
+  <string name="peer_services_error_offline">Kontaktas neprisijungęs</string>
+  <string name="peer_services_error_unreachable">Kontaktas nepasiekiamas</string>
+  <string name="peer_services_error_timeout">Baigėsi užklausos laikas</string>
+  <string name="peer_services_error_unknown">Nepavyko gauti paslaugų</string>
+  <string name="notif_channel_peer_tunnel">Bendrinamos paslaugos</string>
+  <string name="notif_channel_peer_tunnel_descr">Rodoma, kai lygiaverčių paslaugų tuneliai aktyvūs fone.</string>
+  <string name="notif_peer_tunnel_title">Bendrinamos paslaugos aktyvios</string>
+  <string name="notif_peer_tunnel_text">Jami palaiko jūsų paslaugų ryšius aktyvius fone</string>
+  <string name="notif_peer_tunnel_stop_all">Stabdyti viską</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_settings_title">Bendrinamos paslaugos</string>
+  <string name="shared_services_settings_description">Atverti vietines paslaugas Jami naudotojams</string>
+  <string name="shared_services_empty">Nesukonfigūruota jokių paslaugų</string>
+  <string name="shared_services_add">Pridėti paslaugą</string>
+  <string name="shared_services_add_title">Pridėti bendrinamą paslaugą</string>
+  <string name="shared_services_edit_title">Redaguoti bendrinamą paslaugą</string>
+  <string name="shared_services_edit">Taisa</string>
+  <string name="shared_services_delete">Ištrinti</string>
+  <string name="shared_services_name_hint">Paslaugos pavadinimas</string>
+  <string name="shared_services_name_required">Paslaugos pavadinimas yra privalomas</string>
+  <string name="shared_services_description_hint">Aprašymas (neprivalomas)</string>
+  <string name="shared_services_port_hint">Vietinis prievadas</string>
+  <string name="shared_services_port_required">Prievado numeris yra privalomas</string>
+  <string name="shared_services_port_invalid">Prievadas turi būti nuo 1 iki 65535</string>
+  <string name="shared_services_port">Prievadas: %d</string>
+  <string name="shared_services_no_description">Nėra aprašymo</string>
+  <string name="shared_services_empty_subtitle">Bendrinkite vietinius failus ar paslaugas su Jami naudotojais</string>
   <string name="shared_services_more_options">Daugiau parinkčių</string>
+  <string name="shared_services_open_in_browser">Atverti naršyklėje</string>
+  <string name="shared_services_disconnect_all">Atjungti viską</string>
+  <string name="shared_services_disconnect_all_title">Atjungti viską?</string>
+  <string name="shared_services_disconnect_all_message">Bus atjungta:\n\n%1$s\n\nTalpinamos paslaugos bus išjungtos, o ryšiai su kitais įrenginiais bus uždaryti.</string>
+  <string name="shared_services_disconnect_all_confirm">Atsijungti</string>
+  <string name="shared_services_nothing_active">Šiuo metu niekas neaktyvu</string>
+  <string name="shared_services_hosting_item">Talpinama: %1$s (%2$s)</string>
+  <string name="shared_services_tunnel_item">%1$s (iš %2$s)</string>
+  <string name="shared_services_type_website_label">Internetinė svetainė</string>
+  <string name="shared_services_type_custom_label">Tinkinta</string>
+  <string name="shared_services_local_port">Vietinis prievadas %d</string>
+  <string name="shared_services_local_address">%1$s:%2$d</string>
+  <string name="shared_services_type_custom">Pasirinktinis serveris</string>
+  <string name="shared_services_type_website">Pridėti svetainę</string>
+  <string name="shared_services_add_custom_title">Pridėti pasirinktinį serverį</string>
+  <string name="shared_services_add_website_title">Pridėti svetainę</string>
+  <string name="shared_services_host_hint">Vietinis serveris</string>
+  <string name="shared_services_scheme_hint">URI schema (pvz. http, ftp)</string>
+  <string name="shared_services_directory_hint">Vietinis katalogas</string>
+  <string name="shared_services_directory_required">Pasirinkite katalogą</string>
   <string name="shared_services_choose">Choose</string>
+  <string name="shared_services_policy_hint">Pasiekiama</string>
+  <string name="shared_services_policy_contacts">Mano adresatai</string>
+  <string name="shared_services_policy_public">Vieša</string>
+  <string name="shared_services_policy_specific">Konkretūs adresatai</string>
+  <string name="shared_services_allowed_contacts_hint">Leidžiami adresatai (atskirti kableliais)</string>
   <string name="shared_services_save">Įrašyti</string>
 </resources>

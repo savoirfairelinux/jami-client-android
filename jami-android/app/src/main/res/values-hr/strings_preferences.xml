@@ -42,6 +42,7 @@
   <string name="pref_logs_summary">Otvorena postavka dijagnostičkog dnevnika</string>
   <string name="pref_logs_start">Počnite s logiranjem</string>
   <string name="pref_logs_stop">Prestani se drvoći.</string>
+  <string name="connection_monitor_channels">Kanali</string>
   <string name="pref_typing_title">U skladu s člankom 1. stavkom 1.</string>
   <string name="pref_block_record_title">Blokavanje snimka zaslona i snimanja</string>
   <string name="pref_block_record_summary">Zabranite snimanje ekrana ili snimanje video.</string>

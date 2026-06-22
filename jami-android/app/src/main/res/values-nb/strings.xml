@@ -1,10 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Send inn sak</string>
+  <string name="submit_issue_action_description"><u>Opprett ny sak</u></string>
   <string name="section_license">Lisens</string>
+  <string name="switch_conversation">Bytt samtale</string>
+  <string name="delete_conversation_confirmation">Er du sikker på at du vil slette denne samtalen?</string>
+  <string name="acc_profile_photo_capture">Ta bilde</string>
+  <string name="view_switch_camera">Bytt kamera</string>
+  <string name="sponsor_section">Jami er fri programvare som utvikles og støttes av</string>
   <string name="copyright_section">Opphavsrett</string>
   <string name="contribute_section">Bidra</string>
   <string name="version_section">Versjon</string>
+  <string name="no_browser_app_installed">Fant ingen nettleserapp; installer en for å vise denne siden.</string>
   <string name="website_chooser_title">Vis nettside ved bruk av…</string>
   <string name="license">Denne programvaren tilbys «som den er», uten garantier av noe slag.  For detaljer, se <u>GNU General Public License versjon 3 eller senere</u></string>
   <string name="description">Jami er fri programvare for allsidig kommunikasjon som respekterer brukernes frihet og retten til privatliv.</string>
@@ -13,7 +21,12 @@
   <string name="call_service_description">Denne tjenesten er nødvendig for å holde samtalene dine i forgrunnen. Tjenesten kjører bare under samtaler.</string>
   <string name="data_transfer_service_description">Denne tjenesten er nødvendig for å vise vedvarende varsler under filoverføring. Tjenesten kjøres bare under filoverføring.</string>
   <!--About dialog-->
+  <string name="thank_note">Vi vil takke bidragsyterne våre, hvis innsats gjennom mange år har gjort denne programvaren til det den er.</string>
+  <string name="developers">Utviklere</string>
   <string name="media">Media</string>
+  <string name="community_management">Fellesskapsadministrasjon</string>
+  <string name="special_thanks">Spesiell takk til</string>
+  <string name="end_note">Dette er en liste over personer som har lagt ned en betydelig mengde tid, med nyttige resultater, i Jami. Alle slike bidragsytere som ønsker å bli lagt til i listen bør kontakte Jami-teamet på contact@jami.net.</string>
   <!--RingActivity-->
   <string name="error_no_network">Mangler nettverksforbindelse</string>
   <string name="error_account_offline">Kontoen er offline</string>
@@ -24,11 +37,14 @@
   <string name="menu_item_accounts">Behandle kontoer</string>
   <string name="menu_item_account">Behandle konto</string>
   <string name="menu_item_settings">Innstillinger</string>
+  <string name="menu_item_app_settings">Appinnstillinger</string>
   <string name="menu_item_account_settings">Kontoinnstillinger</string>
+  <string name="menu_item_extension_list">Innstillinger for utvidelser</string>
   <string name="menu_item_share">Del min konto</string>
   <string name="menu_item_about">Om Jami</string>
   <string name="video_setting_title">Videoinnstillinger</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">Slå nummer</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Invitasjoner mottatt</string>
@@ -37,6 +53,7 @@
     <item quantity="other">%d samtaler</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Søk eller legg til</string>
   <string name="choose_number">Velg et nummer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -49,6 +66,7 @@
   <string name="notif_outgoing_call">Utgående samtale</string>
   <string name="notif_current_call_title">Pågående samtale med %1$s</string>
   <string name="notif_current_call">Pågående samtale</string>
+  <string name="notif_channel_call_in_progress">Anrop pågår</string>
   <string name="notif_channel_calls">Samtaler</string>
   <string name="notif_channel_missed_calls">Tapte anrop</string>
   <string name="notif_channel_incoming_calls">Innkommende anrop</string>
@@ -59,6 +77,8 @@
   <string name="notif_channel_background_service">Bakgrunnstjeneste</string>
   <string name="notif_channel_background_service_descr">Tillater anropsmottak og meldinger når som helst.</string>
   <string name="notif_group_calls">Samtaler</string>
+  <string name="notif_inprogress_group_call">Anrop pågår</string>
+  <string name="notif_background_service">Jami kjører for øyeblikket i bakgrunnen</string>
   <string name="notif_mark_as_read">Merk som lest</string>
   <string name="notif_dismiss">Avvis</string>
   <string name="notif_reply">Svar</string>
@@ -67,6 +87,8 @@
   <string name="notif_incoming_picture">Bilde fra %1$s</string>
   <string name="notif_sync_title">Synkroniserer data...</string>
   <string name="notif_location_title">Deling av lokasjon med %1$s</string>
+  <string name="notif_channel_reconnect">Bakgrunnssynkronisering</string>
+  <string name="notif_reconnect_title">Jami synkroniserer …</string>
   <string name="location_share_contact">%1$s deler lokasjon med deg</string>
   <string name="notif_location_multi_title">Deling av lokasjon med %1$d kontakter</string>
   <string name="notif_location_remaining">%1$d minutter igjen</string>
@@ -85,18 +107,32 @@
   <string name="ongoing_call">Pågående samtale</string>
   <string name="hist_in_call">Innkommende samtale med %1$s</string>
   <string name="hist_out_call">Utgående samtale med %1$s</string>
+  <string name="call_duration">Varte %s</string>
+  <string name="call_on_hold">Samtalen er satt på vent</string>
+  <string name="start_error_title">Kan ikke starte Jami</string>
   <string name="action_call_accept">Ta imot samtale</string>
+  <string name="action_call_accept_audio">Godta med lyd</string>
+  <string name="action_call_accept_video">Godta med video</string>
+  <string name="action_call_hold_accept">Godta innkommende samtale med kun lyd og sett gjeldende samtale på vent</string>
+  <string name="switch_to_audio">Slå av video</string>
   <string name="switch_to_video">Aktiver video</string>
+  <string name="action_call_hold_accept_video">Godta innkommende samtale med video og sett gjeldende samtale på vent</string>
+  <string name="action_call_end_accept">Godta innkommende samtale og avslutt gjeldende samtale</string>
   <string name="action_call_decline">Avslå</string>
   <string name="action_call_mic_mute">Koble ut mikrofon</string>
+  <string name="action_load_extension">Last inn utvidelse</string>
+  <string name="ab_action_speakerphone">Slå på høyttaler</string>
   <string name="ab_action_contact_add">Legg til kontakter</string>
   <string name="ab_action_contact_add_question">Legg til kontakter?</string>
   <string name="ab_action_audio_call">Start lydsamtale</string>
   <string name="ab_action_video_call">Start videosamtale</string>
   <string name="ab_action_change_screen_orientation">Endre skjermretning</string>
   <string name="share_via">Del via</string>
+  <string name="write_a_message">Skriv melding</string>
   <string name="scan_qr">Skann QR-kode</string>
   <string name="qr_code">QR kode</string>
+  <string name="qr_code_not_contact">Ikke en QR-kode for en Jami-kontakt</string>
+  <string name="new_group">Opprett ny gruppe</string>
   <string name="ab_action_flipcamera">Snu kamera</string>
   <string name="ab_action_hidepreview">Skjul forhåndsvisning</string>
   <string name="remote_recording">%srecording...</string>
@@ -113,23 +149,33 @@
   <string name="conversation_send_video">Spill inn videoklipp</string>
   <string name="conversation_share_location">Del lokasjon</string>
   <string name="ongoing_group_call">Pågående samtale</string>
+  <string name="started_call">Anrop startet</string>
   <string name="in_reply_to">I svar til</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamerarettigheter</string>
+  <string name="permission_dialog_camera_message">Videosamtaler krever kameratillatelsen. Kameratillatelsen er deaktivert. Aktiver den i enhetsinnstillingene for å bruke denne funksjonen.</string>
+  <string name="camera_error">Det oppstod en feil under oppstart av kameraet.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Feil</string>
   <string name="ringtone_error_format_not_supported">Dette formatet støttes ikke</string>
   <string name="ringtone_error_size_too_big">Filen er for stor.  Maksimal størrelse er %1$d kB.</string>
   <string name="ringtone_custom_prompt">Angi en tilpasset ringetone</string>
   <string name="ringtone_custom_label">Tilpasset</string>
+  <string name="ringtone_jami_tones">Jami-ringetoner</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jami krever tillatelsen «Les kontakter». Aktiver den i enhetsinnstillingene for å bruke denne funksjonen.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jami krever tillatelsen «Skriv anropslogg». Aktiver den i enhetsinnstillingene for å bruke denne funksjonen.</string>
   <!--Post notifications permission-->
+  <string name="permission_dialog_post_notifications_title">Tillat varsler</string>
+  <string name="permission_dialog_post_notifications_message">Jami trenger varslingstillatelsen for å varsle deg om innkommende samtaler og meldinger, selv når appen er i bakgrunnen. Uten den kan du gå glipp av samtaler.</string>
+  <string name="permission_dialog_post_notifications_blocked_message">Varsler er deaktivert for Jami. Uten dem går du glipp av innkommende samtaler og meldinger. Aktiver varsler for Jami i enhetsinnstillingene.</string>
   <string name="permission_dialog_open_settings">Åpne innstillinger</string>
   <string name="permission_dialog_later">Senere</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skann QR-koden tilhørende kontoen du ønsker å legge til.</string>
   <string name="title_activity_qrcode">Del min konto</string>
+  <string name="error_scan_no_camera_permissions">QR-skanneren krever kameratillatelsen. Kameratillatelsen er deaktivert. Aktiver den i enhetsinnstillingene for å bruke denne funksjonen.</string>
   <string name="tab_code">Min kode</string>
   <string name="tab_scan">Skann kode</string>
   <!--Settings-->
@@ -141,6 +187,7 @@
   <string name="conversation_details">Samtale detaljer</string>
   <string name="contact_details">Kontaktdetaljer</string>
   <string name="conversation_action_delete_this">Slett denne samtalen</string>
+  <string name="conversation_action_delete_this_title">Slette denne samtalen?</string>
   <string name="leave_conversation">La samtalen være</string>
   <string name="conversation_action_delete_this_message">Denne handlingen kan ikke angres.</string>
   <string name="conversation_action_history_clear">Slett historikk</string>
@@ -149,14 +196,24 @@
   <string name="delete_contact">Slett kontakt</string>
   <string name="conversation_action_remove_this_title">Slett denne kontakten?</string>
   <string name="conversation_action_remove_this_message">Dette vil slette denne kontakten og permanent nullstille samtalehistorikken.</string>
+  <string name="conversation_action_add_this_message">Dette sender en tilkoblingsforespørsel.</string>
   <string name="remove_conversation">Slett samtale</string>
+  <string name="conversation_action_remove_title">Fjerne samtale?</string>
+  <string name="conversation_action_remove_message">Dette fjerner denne samtalen uten å fjerne kontakten.</string>
+  <string name="swarm_group_action_leave">Forlat gruppe</string>
+  <string name="swarm_group_action_leave_title">Forlate denne gruppen?</string>
+  <string name="swarm_group_action_leave_message">Dette fjerner samtalen fra samtalelisten din</string>
+  <string name="conversation_action_copy_peer_number">Kopier kontaktidentifikator</string>
+  <string name="copied_to_clipboard">%1$s kopiert til utklippstavlen.</string>
   <string name="conversation_action_select_peer_number">Velg et nummer</string>
   <string name="conversation_action_block_this">Blokker kontakt</string>
   <string name="conversation_action_unblock_this">Fjern kontaktblokkering</string>
+  <string name="conversation_action_go_to_call">Gå tilbake til anrop</string>
   <string name="conversation_action_incoming_call">Innkommende samtale</string>
   <string name="conversation_action_latest">Bla til slutten av samtalen</string>
   <string name="conversation_open_file_error">Det er intet installert program som er i stand til å åpne denne filtypen.</string>
   <string name="clip_contact_uri">Kontaktadresser</string>
+  <string name="clip_message">Meldingsinnhold</string>
   <string name="block_contact_dialog_title">Blokker %1$s?</string>
   <string name="block_contact_dialog_message">%1$s vil ikke være i stand til å kontakte deg inntil du fjerner blokkeringen.</string>
   <string name="block_contact_completed">%1$s ble blokkert.</string>
@@ -169,19 +226,55 @@
   <string name="conversation_syncing">Laster ned samtale fra meddeler</string>
   <string name="conversation_blocked">Denne kontakten er blokkert.</string>
   <string name="conversation_ended">Samtale avsluttet</string>
+  <string name="conversation_message_deleted">%s slettet en melding</string>
   <string name="conversation_reply_you">Deg</string>
+  <string name="video_not_found">Videofilen ble ikke funnet</string>
   <string name="conversation_preference_color">Samtalefarge</string>
   <string name="conversation_preference_emoji">Samtale-emoji</string>
   <string name="conversation_type_contact">Jami-kontakt</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_type_group">Gruppe</string>
+  <string name="conversation_contact_invited">%1$s ble invitert til samtalen.</string>
+  <string name="conversation_contact_added">%1$s har blitt med i samtalen.</string>
+  <string name="conversation_contact_left">%1$s har forlatt samtalen.</string>
+  <string name="conversation_contact_blocked">%1$s ble blokkert fra samtalen.</string>
+  <string name="conversation_contact_unblocked">%1$s ble avblokkert fra samtalen.</string>
   <string name="conversation_search_hint">Søk samtale</string>
+  <string name="audio_recorder_error">Kan ikke starte lydopptakeren.</string>
   <string name="audio_recording_in_progress">Opptak pågår...</string>
+  <string name="audio_recording_ready">Trykk for å spille av, dra bølgeformen for å søke</string>
+  <string name="audio_recording_playing">Spiller av …</string>
   <string name="audio_recording_send">Send</string>
   <string name="audio_recording_play">Spill av</string>
   <string name="audio_recording_pause">Pause</string>
   <string name="audio_recording_stop">Stopp opptak</string>
+  <string name="audio_recording_extend">Fortsett opptaket</string>
+  <string name="audio_recording_restart">Ta opp på nytt</string>
   <string name="audio_recording_delete">Avslå</string>
+  <string name="audio_recording_discard_title">Forkaste opptaket?</string>
+  <string name="audio_recording_discard_message">Opptaket ditt går tapt.</string>
+  <string name="audio_recording_discard_keep">Fortsett redigeringen</string>
+  <string name="audio_recording_discard_confirm">Avslå</string>
+  <string name="audio_recording_limit_reached">Opptaksgrensen er nådd. Send eller avbryt.</string>
+  <string name="audio_recording_gesture_hint">Slipp for å sende · dra ◀ for å avbryte · ▲ for å se gjennom</string>
+  <string name="audio_recording_release_cancel">Slipp for å avbryte</string>
+  <string name="audio_recording_release_review">Slipp for å åpne redigeringsprogrammet</string>
+  <string name="audio_recording_slide_cancel">Avbryt opptaket</string>
+  <string name="audio_recording_slide_review">Åpne redigeringsprogrammet</string>
+  <string name="audio_recording_review_short">Se gjennom</string>
+  <string name="audio_recording_too_short">Hold inne for å ta opp en talemelding</string>
+  <string name="video_recorder_error">Ingen videoopptaker tilgjengelig.</string>
+  <string name="taking_picture_error">Det oppstod en feil under fotografering.</string>
+  <string name="find_picture_error">Det oppstod en feil under søk etter bildet.</string>
+  <string name="open_camera_error">Det oppstod en feil under åpning av kameraet.</string>
+  <string name="starting_recorder_error">Det oppstod en feil under oppstart av opptakeren.</string>
+  <string name="starting_camera_error">Det oppstod en feil under oppstart av kameraet.</string>
+  <string name="browser_error">Ingen filutforsker tilgjengelig på denne enheten.</string>
+  <string name="import_archive_error">Det oppstod en feil under import av arkivet.</string>
+  <string name="export_archive_error">Det oppstod en feil under eksport av arkivet.</string>
+  <string name="load_ringtone_error">Det oppstod en feil under innlasting av ringetonen.</string>
+  <string name="sharing_log_error">Det oppstod en feil under deling av loggene.</string>
+  <string name="no_native_crash">Ingen nylig innebygd krasj</string>
   <string name="today">I dag</string>
   <string name="yesterday">Igår</string>
   <!--Contacts-->
@@ -195,18 +288,25 @@
   <string name="help_password_choose">Velg et sterkt passord som du husker, for å beskytte Jami-kontoen din.</string>
   <string name="help_password_enter">Tast inn ditt Jami konto passord.</string>
   <string name="help_server_enter">Fyll ut URL til administrasjonstjener</string>
+  <string name="pin_copied">Autentiseringskoden er kopiert til utklippstavlen.</string>
+  <string name="copied_clipboard">Kopiert til utklippstavlen.</string>
   <string name="wizard_next">Neste</string>
   <string name="wizard_back">Tilbake</string>
   <string name="wizard_skip">Hopp over</string>
   <string name="hist_contact_invited">Er invitert</string>
   <string name="hist_contact_added">Kontakt lagt til</string>
   <string name="hist_contact_left">Har forlatt samtalen</string>
+  <string name="hist_contact_blocked">Kontakt blokkert</string>
+  <string name="hist_contact_unblocked">Kontakt avblokkert</string>
   <string name="hist_invitation_received">Invitasjon mottatt</string>
   <!--Account summary-->
   <string name="profile">Profil</string>
+  <string name="profile_name">Profilnavn</string>
   <string name="profile_message_warning">Profil deles bare med kontakter</string>
+  <string name="custom_profile_message_warning">Den tilpassede profilen er bare synlig for kontoen på denne enheten</string>
   <string name="open_the_gallery">Åpne galleriet</string>
   <string name="take_a_photo">Ta bilde</string>
+  <string name="remove_photo">Fjern bilde</string>
   <string name="profile_name_hint">Tast inn ditt navn</string>
   <string name="registered_name">Registrert navn</string>
   <string name="no_registered_name">Navn ikke registrert</string>
@@ -221,14 +321,23 @@
   <string name="share_message">Søk etter denne koden med Jami</string>
   <string name="share_message_no_account">Velg en konto å dele.</string>
   <string name="share_your_account_information">Del min kontaktinformasjon</string>
+  <string name="share_contact_information">Del kontaktinformasjon</string>
   <string name="share_label">Del</string>
   <string name="generic_error_migration">Feil</string>
+  <string name="generic_error_migration_message">Det oppstod en feil under migrering av kontoen.</string>
   <string name="title_share_with">Del med...</string>
   <!--Pending invitations-->
   <string name="accept">Aksepter</string>
   <string name="decline">Avslå</string>
   <string name="block">Blokker</string>
+  <string name="decline_invitation">Avslå invitasjon</string>
+  <string name="accept_invitation">Godta invitasjon</string>
+  <string name="accept_invitation_body">Invitasjon mottatt fra %s.</string>
+  <string name="new_invitation_request_title">Ny invitasjon</string>
   <string name="invitation_message">Du har %1$d kontaktforespørsler</string>
+  <string name="no_invitations">Det er ingen invitasjoner å vise.</string>
+  <string name="invitation_received_message">Invitasjon mottatt fra %s.\nVil du godta eller avslå invitasjonen?</string>
+  <string name="outgoing_contact_invitation_message">Denne kontakten er ikke i kontaktlisten din.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Ingen blokkerte kontakter</string>
   <!--Smartlist-->
@@ -236,14 +345,31 @@
   <string name="conversation_placeholder">Du har ingen samtaler foreløpig</string>
   <string name="contact_request_sent">Kontaktforespørsel sendt</string>
   <string name="start_conversation">Ny samtale</string>
+  <string name="search_results">Søkeresultater</string>
   <string name="tv_contact_row_header">Kontakter</string>
   <string name="gallery_error_title">Fant ingen galleriprogrammer</string>
   <string name="gallery_error_message">Fant ingen programmer på enheten for åpning av galleri</string>
+  <string name="generic_error">Det oppstod en ukjent feil.</string>
   <!--File Transfer-->
+  <string name="invalid_file">Ugyldig fil.</string>
+  <string name="not_able_to_write_file">Kan ikke skrive filen.</string>
   <string name="file_transfer_status_created">Igangsetter</string>
+  <string name="file_transfer_status_unsupported">Støttes ikke</string>
+  <string name="file_transfer_status_wait_peer_acceptance">Venter på at motparten skal godta …</string>
+  <string name="file_transfer_status_wait_host_acceptance">Venter på at verten skal godta …</string>
+  <string name="file_transfer_status_ongoing">Pågår</string>
+  <string name="file_transfer_status_finished">Fullført</string>
+  <string name="file_transfer_status_closed_by_host">Lukket av verten</string>
+  <string name="file_transfer_status_closed_by_peer">Lukket av motparten</string>
   <string name="file_transfer_status_invalid_file">Ugyldig fil</string>
+  <string name="file_transfer_status_unjoinable_peer">Utilgjengelig motpart</string>
   <string name="file_transfer_status_canceled">Avbrutt</string>
+  <string name="file_transfer_status_error">Det oppstod en feil under overføring av filen.</string>
+  <string name="file_transfer_status_timed_out">Tidsavbrudd for operasjonen.</string>
+  <string name="file_saved_in">Filen ble lagret i %s.</string>
+  <string name="file_saved_successfully">Filen ble lagret.</string>
   <string name="file_download">Last ned</string>
+  <string name="no_space_left_on_device">Ingen lagringsplass tilgjengelig på enheten.</string>
   <string name="title_media_viewer">Mediaviser</string>
   <string name="menu_file_open">Åpne fil</string>
   <string name="menu_file_download">Last ned fil</string>
@@ -252,9 +378,11 @@
   <string name="menu_file_share">Del fil</string>
   <string name="menu_message_copy">Kopier</string>
   <string name="menu_message_edit">Redigere melding</string>
+  <string name="menu_message_history">Meldingshistorikk</string>
   <string name="menu_message_delete">Slett melding</string>
   <string name="menu_message_cancel">Avbryt melding</string>
   <string name="menu_message_reply">Svar</string>
+  <string name="menu_message_cancel_reply">Avbryt svar</string>
   <string name="menu_delete">Slett</string>
   <string name="pref_darkTheme_title">Mørkt tema</string>
   <string name="pref_darkTheme_summary">Aktiver alltid mørkt tema i stedet for å bruke systematferd</string>
@@ -277,6 +405,16 @@
   <string name="tv_send_video">Send media</string>
   <string name="tv_action_more">Mer</string>
   <string name="conversation_input_speech_hint">Si noe...</string>
+  <string name="audio_permission_denied">Mikrofontillatelsen er deaktivert. Aktiver den i enhetsinnstillingene for å bruke denne funksjonen.</string>
+  <string name="camera_permission_denied">Kameratillatelsen er deaktivert. Aktiver den i enhetsinnstillingene for å bruke denne funksjonen.</string>
+  <string name="speech_recogniton_unavailable">Talegjenkjenning er utilgjengelig.</string>
+  <string name="audio_permission_rationale_title">Lydtillatelse kreves</string>
+  <string name="camera_permission_rationale_title">Kameratillatelse kreves</string>
+  <string name="audio_permission_rationale_message">Jami krever mikrofontillatelsen for å bruke funksjonene tale-til-tekst og lydopptak. Den blir bedt om i neste trinn.</string>
+  <string name="camera_permission_rationale_message">Jami krever kameratillatelsen for å ta opp video og ringe videosamtaler. Den blir bedt om i neste trinn.</string>
+  <string name="unable_to_start_recorder">Kan ikke starte lydopptaket.</string>
+  <string name="error_sharing_file">Det oppstod en feil under deling av filen.</string>
+  <string name="error_opening_file">Det oppstod en feil under åpning av filen.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Anbefalt</string>
   <string name="wizard_status_optional">Valgfritt</string>
@@ -294,9 +432,11 @@
   <string name="wizard_profile_button">Lagre profil</string>
   <string name="wizard_profile_skip">Hopp over og gjør dette senere</string>
   <string name="fab_path_choose">Velg en annen fil</string>
+  <string name="chat_extensions">Chatteutvidelser</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Del</string>
   <string name="bottomSheet_dialpad_btn">Nummertaster</string>
+  <string name="bottomSheet_extensions_btn">Utvidelser</string>
   <string name="bottomSheet_add_participants_btn">Legg til</string>
   <string name="bottomSheet_change_camera_btn">Endre</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
@@ -304,46 +444,177 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Lyder</string>
   <string name="bottomSheet_raiseHand_btn">Rekk opp hånden</string>
+  <string name="camera_toggle_btn_description">Veksle kamera</string>
   <string name="camera_flip_btn_description">Snu kamera</string>
   <string name="add_participant_btn_description">Legg til deltager</string>
   <string name="screen_share_btn_description">Del skjerm</string>
+  <string name="open_account_extension_settings">Åpne innstillinger for kontoutvidelser</string>
+  <string name="open_general_extension_settings">Åpne generelle utvidelsesinnstillinger</string>
   <string name="uninstall">Avinstaller</string>
   <string name="reset">Nullstill</string>
   <!--Swarm Details-->
   <string name="rename_btn">Bekreft</string>
+  <string name="rename_error">kan ikke være tom.</string>
+  <string name="swarm_description">Legg til beskrivelse</string>
   <string name="tab_members">Medlemmer</string>
   <string name="tab_files">Filer</string>
   <string name="tab_settings">Innstillinger</string>
+  <string name="not_admin_toast">Bare administratorer kan redigere informasjonen for denne gruppen</string>
+  <string name="dialog_title_contact">Rediger visningsnavn</string>
+  <string name="dialogtitle_title">Rediger gruppetittel</string>
+  <string name="dialogtitle_description">Rediger gruppebeskrivelse</string>
   <string name="dialog_hint_title">Tittel</string>
   <string name="dialog_hint_description">Beskrivelse</string>
   <string name="picker_title">Velg kontakter</string>
   <string name="picker_btn">Velg kontakter</string>
+  <string name="no_contact_to_add">Du har ingen kontakt å legge til</string>
   <string name="bottomsheet_contact">Kontakt Jami\n%1$s</string>
   <string name="bottomsheet_remove">Fjern medlem</string>
+  <string name="error_open_no_app_found">Fant ingen app for å håndtere denne filen: %1$s</string>
+  <string name="swarm_detail_no_document">Du har ingen dokumenter ennå.</string>
+  <string name="group_admin">Administrator</string>
+  <string name="share_contact_intent_title">Legg til denne kontakten på Jami!</string>
+  <string name="share_contact_intent_body">Du kan legge til denne kontakten «%1$s» på den distribuerte kommunikasjonsplattformen Jami: %2$s</string>
   <!--JamiId-->
+  <string name="jami_id_copy">Kopier JamiId</string>
+  <string name="jami_id_share">Del JamiId</string>
   <string name="jami_id_validate">Registrer brukernavn</string>
+  <string name="jami_id_available">Brukernavnet er tilgjengelig.</string>
+  <string name="jami_id_not_available">Brukernavnet er ikke tilgjengelig.</string>
+  <string name="jami_id_info">• Maks 32 tegn\n• Tillatte spesialtegn: bindestrek (-), understrek (_)</string>
+  <string name="jami_id_looking_for_availability">Sjekker tilgjengeligheten av brukernavnet …</string>
   <string name="jami_id_choose_username">Velg et brukernavn</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Velkommen til Jami</string>
+  <string name="welcome_jami_description">Del Jami-identifikatoren din for å bli kontaktet lettere!</string>
   <!--Conversation details-->
   <string name="details">Detaljer</string>
+  <string name="secure_p2p_connection">Sikker node-til-node-tilkobling</string>
+  <string name="swarm_type">Samtaletype</string>
   <string name="Private">Privat</string>
+  <string name="swarm_id">Sverm-ID</string>
+  <string name="show_qr_code">Vis QR-kode</string>
+  <string name="show_certificate">Vis sertifikat</string>
   <string name="mute_conversation">Taus samtale</string>
   <!--Donation-->
+  <string name="donation_card_description">Hvis du liker å bruke Jami og tror på oppdraget vårt, vil du gi en donasjon?</string>
   <string name="donation_card_not_now">Ikke nå</string>
   <string name="donation_donate">Doner</string>
+  <string name="donation_setting_title">Donasjonspåminnelse</string>
+  <string name="donation_setting_description">Aktiver donasjonspåminnelsen</string>
   <!--Extension-->
+  <string name="unable_to_load">Kan ikke laste inn %1$s</string>
+  <string name="load_success">%1$s: aktivert</string>
+  <string name="unload_success">%1$s: deaktivert</string>
+  <string name="install_success">Utvidelsen %1$s er installert.</string>
+  <string name="install_error">Det oppstod en feil under import av utvidelsen.</string>
   <string name="export_side_main_title">Eksporter konto</string>
+  <string name="import_side_main_title">Importer konto</string>
+  <string name="link_device_dialog_stop_title">Vil du slutte å koble til enheten?</string>
+  <string name="link_device_dialog_stop_export_body">Hvis du stopper, avbrytes operasjonen for kontoeksport.</string>
+  <string name="link_device_dialog_stop_import_body">Hvis du stopper, avbrytes operasjonen for kontoimport.</string>
+  <string name="export_side_step1_advice_qr">Start en ny konto på den nye enheten.\nVelg <b>Konto &gt; Legg til konto &gt; Koble til fra en annen enhet</b>\nNår du er klar, skann QR-koden</string>
+  <string name="export_side_step1_switch_to_code">Eller klikk her for å skrive inn autentiseringskoden</string>
+  <string name="export_side_step1_switch_to_qr">Eller klikk her for å skanne QR-koden</string>
+  <string name="export_side_step1_error_malformed">Ukjent ny enhetsidentifikator. Følg instruksjonene ovenfor.</string>
   <string name="export_side_step1_code_connect">Koble til</string>
+  <string name="export_side_step2_advice">Den nye enheten er her. Er det deg?\nKlikk på Bekreft for å fortsette operasjonen for kontoeksport.</string>
+  <string name="export_side_step2_advice_ip_only">Ny enhet tilkoblet på adressen nedenfor. Er det deg?\nKlikk på Bekreft for å fortsette eksporten av kontoen.</string>
+  <string name="export_side_step2_ip_only">Den nye enhetens IP-adresse: %1$s</string>
   <string name="export_side_step2_cancel">Avbryt</string>
   <string name="export_side_step2_confirm">Bekreft</string>
+  <string name="export_side_step2_password">Kontoen er passordbeskyttet.\nFor å fortsette, autentiser på den nye enheten.</string>
+  <string name="export_side_step3_body_loading">Operasjonen for kontoeksport til den nye enheten pågår. Vent litt …</string>
+  <string name="export_side_step3_body_done">Kontoen ble importert på den nye enheten.</string>
+  <string name="export_side_step3_exit">Fullfør</string>
+  <string name="import_side_step1_advice_qr">Start eksporten på kildeenheten.\n<b>Velg Konto &gt; Kontoinnstillinger &gt; Koble til ny enhet</b>\nNår du er klar, skann QR-koden nedenfor.</string>
+  <string name="import_side_step1_advice_code">Start eksporten på kildeenheten.\n<b>Velg Konto &gt; Kontoinnstillinger &gt; Koble til ny enhet</b>\nNår du er klar, skriv inn koden nedenfor.</string>
   <string name="import_side_step1_share">Del</string>
+  <string name="import_side_step1_switch_to_code">Eller klikk her for å vise autentiseringskoden</string>
+  <string name="import_side_step1_switch_to_qr">Eller klikk her for å vise QR-koden</string>
+  <string name="import_side_step1_connecting">Kobler til kildeenheten …</string>
+  <string name="import_side_step1_preparing_device">Forbereder enheten …</string>
+  <string name="import_side_step2_password_prompt">Kontoen er passordbeskyttet.\nLås den opp for å fortsette.</string>
   <string name="import_side_step2_password_import">Importer</string>
+  <string name="import_side_step2_password_unlocking">Låser opp kontoen …</string>
+  <string name="import_side_step2_action_required">Handling kreves. Bekreft kontoen på kildeenheten.</string>
+  <string name="import_side_step3_body_loading">Kontoen importeres på den nye enheten. Vent litt …</string>
+  <string name="import_side_step3_body_done">Kontoen ble importert.</string>
+  <string name="import_side_step3_go_to_account">Gå til den nye kontoen</string>
+  <string name="import_side_step3_exit">Fullfør</string>
+  <string name="link_device_share_title">Del autentiseringskode</string>
+  <string name="link_device_error_network">Det oppstod en nettverksfeil under tilkobling av enheten. Kontroller tilkoblingen din og prøv igjen.</string>
+  <string name="link_device_error_authentication">Det oppstod en autentiseringsfeil under tilkobling av enheten. Sjekk legitimasjonen og prøv igjen.</string>
+  <string name="link_device_error_timeout">Tidsavbrudd for operasjonen.</string>
+  <string name="link_device_error_canceled">Operasjonen ble avbrutt av brukeren.</string>
+  <string name="link_device_error_unknown">Det oppstod en feil.</string>
+  <string name="link_device_error_bad_password">Kontroller påloggingsinformasjonen og prøv igjen.</string>
+  <string name="test_push">Test push</string>
   <!--Accessibility-->
+  <string name="step_title_create_username">Opprett brukernavn</string>
   <string name="step_title_set_password">Lagre passord</string>
+  <string name="step_title_create_profile">Opprett profil</string>
+  <string name="step_format">Trinn %1$d av %2$d: %3$s</string>
   <!--Peer services-->
+  <string name="peer_services_title">Delte tjenester</string>
+  <string name="peer_services_refresh">Oppdater tjenester</string>
   <string name="peer_services_connect">Koble til</string>
+  <string name="peer_services_disconnect">Koble fra</string>
+  <string name="peer_services_empty">Ingen delte tjenester tilgjengelig</string>
+  <string name="peer_services_link_copied">Lenken er kopiert til utklippstavlen</string>
+  <string name="peer_services_error_offline">Kontakten er frakoblet</string>
+  <string name="peer_services_error_unreachable">Kontakten er ikke tilgjengelig</string>
+  <string name="peer_services_error_timeout">Tidsavbrudd for forespørselen</string>
+  <string name="peer_services_error_unknown">Kunne ikke hente tjenestene</string>
+  <string name="notif_channel_peer_tunnel">Delte tjenester</string>
+  <string name="notif_channel_peer_tunnel_descr">Vises mens tjenestetunneler mellom noder er aktive i bakgrunnen.</string>
+  <string name="notif_peer_tunnel_title">Delte tjenester aktive</string>
+  <string name="notif_peer_tunnel_text">Jami holder tjenestetilkoblingene dine i live i bakgrunnen</string>
+  <string name="notif_peer_tunnel_stop_all">Stopp alle</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_settings_title">Delte tjenester</string>
+  <string name="shared_services_settings_description">Eksponer lokale tjenester for Jami-brukere</string>
+  <string name="shared_services_empty">Ingen tjenester konfigurert</string>
+  <string name="shared_services_add">Legg til tjeneste</string>
+  <string name="shared_services_add_title">Legg til delt tjeneste</string>
+  <string name="shared_services_edit_title">Rediger delt tjeneste</string>
+  <string name="shared_services_edit">Redigere</string>
+  <string name="shared_services_delete">Slett</string>
+  <string name="shared_services_name_hint">Tjenestenavn</string>
+  <string name="shared_services_name_required">Tjenestenavn er påkrevd</string>
+  <string name="shared_services_description_hint">Beskrivelse (valgfritt)</string>
+  <string name="shared_services_port_hint">Lokal port</string>
+  <string name="shared_services_port_required">Portnummer er påkrevd</string>
+  <string name="shared_services_port_invalid">Porten må være mellom 1 og 65535</string>
+  <string name="shared_services_port">Port: %d</string>
+  <string name="shared_services_no_description">Ingen beskrivelse</string>
+  <string name="shared_services_empty_subtitle">Del lokale filer eller tjenester med Jami-brukere</string>
   <string name="shared_services_more_options">Flere alternativer</string>
+  <string name="shared_services_open_in_browser">Åpne i nettleser</string>
+  <string name="shared_services_disconnect_all">Koble fra alle</string>
+  <string name="shared_services_disconnect_all_title">Koble fra alt?</string>
+  <string name="shared_services_disconnect_all_message">Følgende vil bli koblet fra:\n\n%1$s\n\nVertstjenester slås av og tilkoblinger til andre enheter lukkes.</string>
+  <string name="shared_services_disconnect_all_confirm">Koble fra</string>
+  <string name="shared_services_nothing_active">Ingenting er aktivt for øyeblikket</string>
+  <string name="shared_services_hosting_item">Er vert for: %1$s (%2$s)</string>
+  <string name="shared_services_tunnel_item">%1$s (fra %2$s)</string>
+  <string name="shared_services_type_website_label">Nettsted</string>
+  <string name="shared_services_type_custom_label">Tilpasset</string>
+  <string name="shared_services_local_port">Lokal port %d</string>
+  <string name="shared_services_local_address">%1$s:%2$d</string>
+  <string name="shared_services_type_custom">Tilpasset server</string>
+  <string name="shared_services_type_website">Legg til nettsted</string>
+  <string name="shared_services_add_custom_title">Legg til tilpasset server</string>
+  <string name="shared_services_add_website_title">Legg til nettsted</string>
+  <string name="shared_services_host_hint">Lokal vert</string>
+  <string name="shared_services_scheme_hint">URI-skjema (f.eks. http, ftp)</string>
+  <string name="shared_services_directory_hint">Lokal mappe</string>
+  <string name="shared_services_directory_required">Velg en mappe</string>
+  <string name="shared_services_choose">Velg</string>
+  <string name="shared_services_policy_hint">Tilgjengelig for</string>
+  <string name="shared_services_policy_contacts">Kontaktene mine</string>
+  <string name="shared_services_policy_public">Offentlig</string>
+  <string name="shared_services_policy_specific">Bestemte kontakter</string>
+  <string name="shared_services_allowed_contacts_hint">Tillatte kontakter (kommaseparert)</string>
   <string name="shared_services_save">Lagre</string>
 </resources>

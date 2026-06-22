@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Pošalji problem</string>
   <string name="section_license">Licenca</string>
   <string name="copyright_section">Autorska prava</string>
   <string name="contribute_section">Doprinesite</string>
@@ -13,7 +14,11 @@
   <string name="call_service_description">Ova usluga je potrebna da bi se pozivi bili u prvom planu.</string>
   <string name="data_transfer_service_description">Ova usluga je potrebna za prikaz stalnih obavijesti tijekom prijenosa datoteka.</string>
   <!--About dialog-->
+  <string name="thank_note">Željeli bismo zahvaliti našim suradnicima, čiji su napori tijekom mnogih godina učinili ovaj softver onim što jest.</string>
+  <string name="developers">Razvojni programeri</string>
   <string name="media">Medij</string>
+  <string name="community_management">Upravljanje zajednicom</string>
+  <string name="special_thanks">Posebne zahvale</string>
   <!--RingActivity-->
   <string name="error_no_network">Veza nedostupna</string>
   <string name="error_account_offline">Račun je isključen.</string>
@@ -37,6 +42,7 @@
     <item quantity="other">%d razgovora</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Pretraži ili dodaj</string>
   <string name="choose_number">Izaberite broj</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -49,6 +55,7 @@
   <string name="notif_outgoing_call">Odlazni poziv</string>
   <string name="notif_current_call_title">Odlazni poziv sa %1$s</string>
   <string name="notif_current_call">Poziv koji je u tijeku</string>
+  <string name="notif_channel_call_in_progress">Poziv u tijeku</string>
   <string name="notif_channel_calls">Pozivi</string>
   <string name="notif_channel_missed_calls">Propušteni pozivi</string>
   <string name="notif_channel_incoming_calls">Dolazni pozivi</string>
@@ -59,6 +66,7 @@
   <string name="notif_channel_background_service">Pozadinska usluga</string>
   <string name="notif_channel_background_service_descr">Dopušta primanje poziva i poruka bilo kada.</string>
   <string name="notif_group_calls">Pozivi</string>
+  <string name="notif_inprogress_group_call">Poziv u tijeku</string>
   <string name="notif_mark_as_read">Označi kao pročitano</string>
   <string name="notif_dismiss">Odbacujem</string>
   <string name="notif_reply">Odgovori</string>
@@ -84,6 +92,9 @@
   <string name="ongoing_call">Poziv koji je u tijeku</string>
   <string name="hist_in_call">Dolazni poziv od %1$s</string>
   <string name="hist_out_call">Odlazni poziv prema %1$s</string>
+  <string name="action_call_accept">Prihvati poziv</string>
+  <string name="action_call_accept_audio">Prihvati sa zvukom</string>
+  <string name="action_call_accept_video">Prihvati s videom</string>
   <string name="switch_to_video">Omogući video</string>
   <string name="action_call_decline">Odbij</string>
   <string name="action_call_mic_mute">Utišaj mikrofon</string>
@@ -112,6 +123,7 @@
   <string name="conversation_send_video">Snimanje video klipa</string>
   <string name="conversation_share_location">Podijeli lokaciju</string>
   <string name="ongoing_group_call">Poziv koji je u tijeku</string>
+  <string name="started_call">Poziv je započeo</string>
   <string name="in_reply_to">U odgovor na</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Dozvola kamere</string>
@@ -149,9 +161,11 @@
   <string name="conversation_action_remove_this_title">Obrisati ovaj kontakt?</string>
   <string name="conversation_action_remove_this_message">Ovo će obrisati kontakt i definitivno obrisati povijest razgovora.</string>
   <string name="remove_conversation">Uklonite razgovor</string>
+  <string name="swarm_group_action_leave">Napusti grupu</string>
   <string name="conversation_action_select_peer_number">Odaberite broj</string>
   <string name="conversation_action_block_this">Blokiraj kontakt</string>
   <string name="conversation_action_unblock_this">Otključaj kontakt</string>
+  <string name="conversation_action_go_to_call">Vrati se na poziv</string>
   <string name="conversation_action_incoming_call">Dolazni poziv</string>
   <string name="conversation_action_latest">Pomicanje na kraj razgovora</string>
   <string name="conversation_open_file_error">Ne postoji instalirana aplikacija koja može otvoriti ovaj tip datoteke.</string>
@@ -193,6 +207,7 @@
   <string name="help_password_choose">Odaberite jaku lozinku koje ćete se sjećati da biste zaštitili vaš Jami račun.</string>
   <string name="help_password_enter">Ubaci lozinku za glavni račun Jamija.</string>
   <string name="help_server_enter">Ubaci URL-a za upravljački server.</string>
+  <string name="copied_clipboard">Kopirano u međuspremnik.</string>
   <string name="wizard_next">Slijedeće</string>
   <string name="wizard_back">Natrag</string>
   <string name="wizard_skip">Preskoči</string>
@@ -226,6 +241,8 @@
   <string name="accept">Prihvati</string>
   <string name="decline">Odbij</string>
   <string name="block">Blokiraj</string>
+  <string name="decline_invitation">Odbij pozivnicu</string>
+  <string name="accept_invitation">Prihvati pozivnicu</string>
   <string name="invitation_message">Imate %1$d zahtjeve za kontakt</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Nema blokiranih kontakata</string>
@@ -234,11 +251,13 @@
   <string name="conversation_placeholder">Još niste razgovarali.</string>
   <string name="contact_request_sent">Poslan kontaktni zahtjev</string>
   <string name="start_conversation">Pokrenite razgovor.</string>
+  <string name="search_results">Rezultati pretraživanja</string>
   <string name="tv_contact_row_header">Kontakti</string>
   <string name="gallery_error_title">Ne pronađeno aplikacija Galerija</string>
   <string name="gallery_error_message">Nije pronađena aplikacija na uređaju za otvaranje Galerije</string>
   <!--File Transfer-->
   <string name="file_transfer_status_invalid_file">Neispravna datoteka</string>
+  <string name="file_transfer_status_unjoinable_peer">Nedostupan sugovornik</string>
   <string name="file_transfer_status_canceled">Otkazano</string>
   <string name="file_download">Snimka</string>
   <string name="title_media_viewer">Sredni gledatelj</string>
@@ -309,6 +328,7 @@
   <string name="reset">Nastavljanje</string>
   <!--Swarm Details-->
   <string name="rename_btn">Potvrdi</string>
+  <string name="swarm_description">Dodaj opis</string>
   <string name="tab_members">Članovi</string>
   <string name="tab_files">Dosje</string>
   <string name="tab_settings">Postavke</string>
@@ -323,22 +343,45 @@
   <string name="jami_id_choose_username">Izaberite korisničko ime</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Dobrodošli u Jami</string>
+  <string name="welcome_jami_description">Podijelite svoj Jami identifikator kako bi vas se lakše kontaktiralo!</string>
   <!--Conversation details-->
   <string name="details">Pojedinosti</string>
+  <string name="swarm_type">Vrsta konverzacije</string>
   <string name="Private">Privredni</string>
   <string name="mute_conversation">Tiho razgovor</string>
   <!--Donation-->
+  <string name="donation_card_description">Ako uživate u korištenju Jamija i vjerujete u našu misiju, želite li donirati?</string>
   <string name="donation_card_not_now">Ne sada</string>
   <string name="donation_donate">Doniraj</string>
   <!--Extension-->
+  <string name="export_side_step1_error_malformed">Neprepoznat identifikator novog uređaja. Slijedite upute iznad.</string>
   <string name="export_side_step1_code_connect">Povezivanje</string>
   <string name="export_side_step2_cancel">Otkaži</string>
   <string name="export_side_step2_confirm">Potvrdi</string>
   <string name="import_side_step1_share">Podijeli</string>
   <string name="import_side_step2_password_import">Uvezi</string>
+  <string name="import_side_step2_action_required">Potrebna je radnja. Potvrdite račun na izvornom uređaju.</string>
+  <string name="import_side_step3_body_done">Račun je uspješno uvezen.</string>
+  <string name="link_device_error_authentication">Došlo je do pogreške autentifikacije prilikom povezivanja uređaja. Provjerite vjerodajnice i pokušajte ponovno.</string>
+  <string name="link_device_error_canceled">Korisnik je otkazao operaciju.</string>
   <!--Accessibility-->
+  <string name="step_title_set_password">Postavi lozinku</string>
   <!--Peer services-->
   <string name="peer_services_connect">Povezivanje</string>
+  <string name="peer_services_disconnect">Prekini vezu</string>
+  <string name="notif_channel_peer_tunnel">Dijeljene usluge</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">Uredi</string>
+  <string name="shared_services_delete">Izbriši</string>
+  <string name="shared_services_description_hint">Opis (neobavezno)</string>
+  <string name="shared_services_port_hint">Lokalni port</string>
+  <string name="shared_services_no_description">Nema opisa</string>
+  <string name="shared_services_more_options">Više opcija</string>
+  <string name="shared_services_disconnect_all_confirm">Prekini vezu</string>
+  <string name="shared_services_type_custom_label">Prilagođeno</string>
+  <string name="shared_services_host_hint">Lokalno računalo</string>
   <string name="shared_services_choose">Izaberi</string>
+  <string name="shared_services_policy_hint">Dostupno za</string>
+  <string name="shared_services_policy_public">Javno</string>
+  <string name="shared_services_save">Spremi</string>
 </resources>

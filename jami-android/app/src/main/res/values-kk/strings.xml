@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Мәселені жіберу</string>
   <string name="section_license">Лицензия</string>
   <string name="copyright_section">Авторлық құқық</string>
   <string name="contribute_section">Қосымша</string>
@@ -13,7 +14,11 @@
   <string name="call_service_description">Бұл қызмет сіздің шақыруларыңызды бірінші планда ұстау үшін қажет. Ол тек шақырулар кезінде ғана жүреді.</string>
   <string name="data_transfer_service_description">Бұл қызмет файлдарды беру кезінде тұрақты хабарламаларды көрсету үшін қажет.</string>
   <!--About dialog-->
+  <string name="thank_note">Біз көп жыл бойы күш салып, осы бағдарламалық жасақтаманы қазіргідей еткен үлес қосушыларымызға алғыс айтқымыз келеді.</string>
+  <string name="developers">Әзірлеушілер</string>
   <string name="media">БАҚ</string>
+  <string name="community_management">Қауымдастықты басқару</string>
+  <string name="special_thanks">Ерекше алғыс</string>
   <!--RingActivity-->
   <string name="error_no_network">Желілік қосылым жоқ</string>
   <string name="error_account_offline">Тіркелгісі қосылмайды</string>
@@ -36,6 +41,7 @@
     <item quantity="other">%d Әңгімелесу</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Іздеу немесе қосу</string>
   <string name="choose_number">Санды таңдаңыз</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -48,6 +54,7 @@
   <string name="notif_outgoing_call">Шығушы шақыру</string>
   <string name="notif_current_call_title">%1$s-пен жалғасып жатқан шақыру</string>
   <string name="notif_current_call">Ағымдағы шақыру</string>
+  <string name="notif_channel_call_in_progress">Қоңырау орындалуда</string>
   <string name="notif_channel_calls">Зерттеу</string>
   <string name="notif_channel_missed_calls">Ұсталған шақырулар</string>
   <string name="notif_channel_incoming_calls">Келесі шақырулар</string>
@@ -58,6 +65,7 @@
   <string name="notif_channel_background_service">Баяғы қызмет</string>
   <string name="notif_channel_background_service_descr">Кез келген уақытта хабарлар мен шақыруларды алуға мүмкіндік береді.</string>
   <string name="notif_group_calls">Зерттеу</string>
+  <string name="notif_inprogress_group_call">Қоңырау орындалуда</string>
   <string name="notif_mark_as_read">Оқылған белгі</string>
   <string name="notif_dismiss">Алып тастау</string>
   <string name="notif_reply">Жауап беру</string>
@@ -83,6 +91,9 @@
   <string name="ongoing_call">Ағымдағы шақыру</string>
   <string name="hist_in_call">%1$s кіріс шақыру</string>
   <string name="hist_out_call">%1$s шығыс шақыру</string>
+  <string name="action_call_accept">Қоңырауды қабылдау</string>
+  <string name="action_call_accept_audio">Аудиомен қабылдау</string>
+  <string name="action_call_accept_video">Бейнемен қабылдау</string>
   <string name="switch_to_video">Видеоны қосу</string>
   <string name="action_call_decline">Ауыру</string>
   <string name="action_call_mic_mute">Ақысыз микрофон</string>
@@ -94,6 +105,7 @@
   <string name="share_via">арқылы бөлісу</string>
   <string name="scan_qr">QR кодын сканерлеу</string>
   <string name="qr_code">QR кодтары</string>
+  <string name="new_group">Жаңа топ жасау</string>
   <string name="ab_action_flipcamera">Қалған камера</string>
   <string name="ab_action_hidepreview">Алдын ала қарауды жасыру</string>
   <string name="remote_recording">%s жазуы...</string>
@@ -110,6 +122,7 @@
   <string name="conversation_send_video">Видео клип жазу</string>
   <string name="conversation_share_location">Ортақ жер</string>
   <string name="ongoing_group_call">Ағымдағы шақыру</string>
+  <string name="started_call">Қоңырау басталды</string>
   <string name="in_reply_to">Жауап ретінде</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Камера рұқсаты</string>
@@ -147,9 +160,11 @@
   <string name="conversation_action_remove_this_title">Бұл байланысты өшіру?</string>
   <string name="conversation_action_remove_this_message">Бұл байланыстарды өшіріп, әңгіме тарихын мүлдем өшіреді.</string>
   <string name="remove_conversation">Әңгімелерді алып тастау</string>
+  <string name="swarm_group_action_leave">Топтан шығу</string>
   <string name="conversation_action_select_peer_number">Санды таңдау</string>
   <string name="conversation_action_block_this">Блок контакт</string>
   <string name="conversation_action_unblock_this">Байланысты бұғаттау</string>
+  <string name="conversation_action_go_to_call">Қоңырауға оралу</string>
   <string name="conversation_action_incoming_call">Келесі шақыру</string>
   <string name="conversation_action_latest">Соңғыға секіру</string>
   <string name="conversation_open_file_error">Бұл файл түрін ашуға қабілетті орнатылған қолданба жоқ.</string>
@@ -190,6 +205,7 @@
   <string name="help_password_choose">Jami тіркелгіңізді қорғау үшін естен шығармайтын күшті парольді таңдаңыз.</string>
   <string name="help_password_enter">Негізгі Jami тіркелгіңіздің паролін келтіріңіз.</string>
   <string name="help_server_enter">Басқару серверінің URL-ін келтіріңіз.</string>
+  <string name="copied_clipboard">Алмасу буферіне көшірілді.</string>
   <string name="wizard_next">Келесі</string>
   <string name="wizard_back">Қайта оралу</string>
   <string name="wizard_skip">Кетіңіз</string>
@@ -223,6 +239,8 @@
   <string name="accept">Қабылда</string>
   <string name="decline">Ауыру</string>
   <string name="block">Блок</string>
+  <string name="decline_invitation">Шақыруды қабылдамау</string>
+  <string name="accept_invitation">Шақыруды қабылдау</string>
   <string name="invitation_message">%1$d контакт сұрақтарыңыз бар</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Контакттар тосқауылданбаған</string>
@@ -231,11 +249,13 @@
   <string name="conversation_placeholder">Сізде әлі сөйлесу жоқ</string>
   <string name="contact_request_sent">Байланыс сұранысы жіберілді</string>
   <string name="start_conversation">Әңгіме бастаңыз</string>
+  <string name="search_results">Іздеу нәтижелері</string>
   <string name="tv_contact_row_header">Байланыстар</string>
   <string name="gallery_error_title">Галерея қолданбасы табылмады</string>
   <string name="gallery_error_message">Галереяны ашу үшін құрылғыда қолданба табылмады</string>
   <!--File Transfer-->
   <string name="file_transfer_status_invalid_file">Қате файл</string>
+  <string name="file_transfer_status_unjoinable_peer">Қолжетімсіз әріптес</string>
   <string name="file_transfer_status_canceled">Бас тартылды</string>
   <string name="file_download">Жүктеу</string>
   <string name="title_media_viewer">Медиа қараушы</string>
@@ -291,6 +311,7 @@
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Ортақ</string>
   <string name="bottomSheet_dialpad_btn">Диалог</string>
+  <string name="bottomSheet_extensions_btn">Кеңейтімдер</string>
   <string name="bottomSheet_add_participants_btn">Қосылу</string>
   <string name="bottomSheet_change_camera_btn">Өзгерістер</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Камера</string>
@@ -305,6 +326,7 @@
   <string name="reset">Қайта орнату</string>
   <!--Swarm Details-->
   <string name="rename_btn">Куәлікті растау</string>
+  <string name="swarm_description">Сипаттама қосу</string>
   <string name="tab_members">Қауым мүшелері</string>
   <string name="tab_files">Файлдар</string>
   <string name="tab_settings">Параметрлері</string>
@@ -319,20 +341,44 @@
   <string name="jami_id_choose_username">Пайдаланушы атауын таңдау</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Жамиге қош келдіңіздер</string>
+  <string name="welcome_jami_description">Сізбен оңайырақ байланысу үшін Jami идентификаторыңызды бөлісіңіз!</string>
   <!--Conversation details-->
   <string name="details">Толығырақ</string>
+  <string name="swarm_type">Әңгіме түрі</string>
   <string name="Private">Жеке</string>
   <string name="mute_conversation">Тілсіз әңгіме</string>
   <!--Donation-->
+  <string name="donation_card_description">Егер сізге Jami-ді пайдалану ұнаса және біздің миссияға сенсеңіз, қайырымдылық жасағыңыз келе ме?</string>
   <string name="donation_card_not_now">Қазір емес</string>
+  <string name="donation_donate">Қайырымдылық жасау</string>
   <!--Extension-->
+  <string name="export_side_step1_error_malformed">Жаңа құрылғының идентификаторы танылмады. Жоғарыдағы нұсқауларды орындаңыз.</string>
   <string name="export_side_step1_code_connect">Қосылыңыз</string>
   <string name="export_side_step2_cancel">Болдырмау</string>
   <string name="export_side_step2_confirm">Куәлікті растау</string>
   <string name="import_side_step1_share">Ортақ</string>
   <string name="import_side_step2_password_import">Импорт</string>
+  <string name="import_side_step2_action_required">Әрекет қажет. Бастапқы құрылғыда тіркелгіні растаңыз.</string>
+  <string name="import_side_step3_body_done">Тіркелгі сәтті импортталды.</string>
+  <string name="link_device_error_authentication">Құрылғыны байланыстыру кезінде түпнұсқалық растау қатесі орын алды. Тіркелгі деректерін тексеріп, қайталап көріңіз.</string>
+  <string name="link_device_error_canceled">Әрекетті пайдаланушы болдырмады.</string>
   <!--Accessibility-->
+  <string name="step_title_set_password">Құпия сөзді орнату</string>
   <!--Peer services-->
   <string name="peer_services_connect">Қосылыңыз</string>
+  <string name="peer_services_disconnect">Ажырату</string>
+  <string name="notif_channel_peer_tunnel">Ортақ қызметтер</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">Жасату</string>
+  <string name="shared_services_delete">Өшіру</string>
+  <string name="shared_services_description_hint">Сипаттама (міндетті емес)</string>
+  <string name="shared_services_port_hint">Жергілікті порт</string>
+  <string name="shared_services_no_description">Сипаттама жоқ</string>
+  <string name="shared_services_more_options">Көбiр нұсқалар</string>
+  <string name="shared_services_disconnect_all_confirm">Ажырату</string>
+  <string name="shared_services_type_custom_label">Әдеттегі</string>
+  <string name="shared_services_host_hint">Жергілікті хост</string>
+  <string name="shared_services_policy_hint">Қол жеткізе алатындар</string>
+  <string name="shared_services_policy_public">Жалпыға ортақ</string>
+  <string name="shared_services_save">Сақтау</string>
 </resources>

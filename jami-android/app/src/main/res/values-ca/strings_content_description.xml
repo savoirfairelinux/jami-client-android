@@ -1,11 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">Trucada ràpida</string>
+  <string name="contact_picture_description">Imatge del contacte</string>
   <string name="dial_numeric_pad">Marcador numèric</string>
   <string name="contact_unblock">Desbloqeja</string>
+  <string name="video_extensions">Extensions de vídeo</string>
   <string name="file_download_button">Descarrega</string>
   <string name="control_play">Reproduir</string>
   <string name="control_replay">Repetir</string>
   <string name="control_pause">Pausar</string>
   <string name="searchbar_navigation_account">Selecciona el compte</string>
+  <string name="add_conversation_member">Afegeix un membre a la conversa</string>
+  <string name="qrcode_to_scan">Codi QR per escanejar</string>
 </resources>

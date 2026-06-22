@@ -334,4 +334,9 @@
   <!--Peer services-->
   <string name="peer_services_connect">Conectar</string>
   <!--Exposed/Hosted services-->
+  <string name="shared_services_edit">Edición</string>
+  <string name="shared_services_delete">Esborrar</string>
+  <string name="shared_services_more_options">Más opciones</string>
+  <string name="shared_services_type_custom_label">La personalidá</string>
+  <string name="shared_services_save">El so nome ye \"Castor\".</string>
 </resources>

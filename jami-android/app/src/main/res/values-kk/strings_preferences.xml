@@ -8,6 +8,7 @@
   <string name="pref_category_diagnostic">Диагностика</string>
   <string name="pref_category_appearance">Көрініс</string>
   <string name="pref_category_connectivity">Қосылым</string>
+  <string name="pref_category_extensions">Кеңейтімдер</string>
   <string name="pref_category_video_settings">Жедел бейне параметрлері</string>
   <string name="pref_mobileData_title">Мобильді деректер</string>
   <string name="pref_mobileData_summary">Jami-ге Wi-Fi-ге қосымша 3G/LTE желілерінде рұқсат беру</string>
@@ -41,6 +42,7 @@
   <string name="pref_logs_summary">Диагностикалық журналды ашу параметрлері</string>
   <string name="pref_logs_start">Жазбаларды жазуды бастаңыз</string>
   <string name="pref_logs_stop">Ағаштарды кесуді тоқтату</string>
+  <string name="connection_monitor_channels">Арналар</string>
   <string name="pref_typing_title">Типолау көрсеткіші</string>
   <string name="pref_block_record_title">Экран түсірілімін және жазуды бөлеңіз</string>
   <string name="pref_block_record_summary">Скрийн түсіруді немесе бейне түсіруді тоқтату.</string>

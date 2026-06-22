@@ -54,6 +54,7 @@
   <string name="pref_push_notifications_logs_title">Журналы push-уведомлений</string>
   <string name="pref_push_notifications_logs_summary">Просмотр журналов push-уведомлений</string>
   <string name="pref_typing_title">Индикатор набора сообщения</string>
+  <string name="pref_typing_summary">Показывать, когда печатаются сообщения.</string>
   <string name="pref_block_record_title">Отключить снимки и запись экрана</string>
   <string name="pref_block_record_summary">Отключить снимки и запись экрана</string>
   <string name="pref_link_preview_title">Предпросмотры ссылок</string>
@@ -80,6 +81,9 @@
   <string name="extension_reset_preferences_summary">Расширение сброшено к настройкам по умолчанию</string>
   <string name="extension_reset_preferences_ask">Вы хотите сбросить общие настройки расширения?</string>
   <string name="extension_reset_account_preferences_ask">Вы хотите сбросить настройки расширения аккаунта?</string>
+  <string name="account_advanced_reset">Сбросить расширенные настройки</string>
+  <string name="account_advanced_reset_summary">Восстановить расширенные настройки по умолчанию</string>
+  <string name="account_advanced_reset_confirm">Сбросить все расширенные настройки до значений по умолчанию?</string>
   <string name="extension_successfully_installed">Расширение <b>%1$s</b> установлено успешно.</string>
   <string name="extension_install_failure">Произошла ошибка при установке расширения: <b>%1$s</b></string>
   <string name="extension_recent_version_exception">Уже установлена более новая версия <b>%1$s</b></string>

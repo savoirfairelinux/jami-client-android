@@ -55,6 +55,7 @@
   <string name="pref_push_notifications_logs_summary">Ver os registos capturados por
         notificações push.</string>
   <string name="pref_typing_title">Indicador de digitação</string>
+  <string name="pref_typing_summary">Indicar quando as mensagens estão a ser escritas.</string>
   <string name="pref_block_record_title">Bloquear captura de ecrã e gravação</string>
   <string name="pref_block_record_summary">Bloquear a captura de ecrã ou a gravação de vídeo.</string>
   <string name="pref_link_preview_title">Pré-visualizações de ligações Web</string>
@@ -81,6 +82,9 @@
   <string name="extension_reset_preferences_summary">Configurações da extensão repostas para os valores de origem</string>
   <string name="extension_reset_preferences_ask">Quer repor as configurações da extensão geral para os valores de origem?</string>
   <string name="extension_reset_account_preferences_ask">Quer repor as configurações da extensão da conta para os valores de origem?</string>
+  <string name="account_advanced_reset">Repor definições avançadas</string>
+  <string name="account_advanced_reset_summary">Restaurar as definições avançadas predefinidas</string>
+  <string name="account_advanced_reset_confirm">Repor todas as definições avançadas para as predefinições?</string>
   <string name="extension_successfully_installed">A extensão <b>%1$s</b> foi instalada com sucesso.</string>
   <string name="extension_install_failure">Ocorreu um erro ao instalar a seguinte extensão: <b>%1$s</b></string>
   <string name="extension_recent_version_exception">Já está instalada uma versão mais recente de <b>%1$s</b>.</string>

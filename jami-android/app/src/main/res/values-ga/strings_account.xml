@@ -24,6 +24,8 @@
   <string name="account_type_ip2ip">Conta IP</string>
   <string name="help_ring">Ligeann cuntas Jami duit daoine a bhaint amach go sábháilte in peer to peer trí líonra atá scaipthe go hiomlán.</string>
   <string name="help_sip_title">Cuid SIP a chur leis</string>
+  <string name="help_sip">Cumraigh cuntas SIP atá ann</string>
+  <string name="create_sip_account">Cumraigh cuntas SIP</string>
   <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Níl aon chuntas cláraithe</string>
@@ -32,6 +34,7 @@
   <string name="account_device_revoke">Iarráid athchóirithe</string>
   <string name="account_device_revocation_success_title">Is rath é</string>
   <string name="account_device_revocation_success">Tá an gléas curtha ar ais anois!</string>
+  <string name="account_device_revocation_wrong_password">Pasfhocal mícheart.</string>
   <string name="account_device_revocation_unknown_device">Feiste neamhaithne.</string>
   <string name="account_device_revocation_error_unknown">Mearachta neamhiomlán.</string>
   <string name="account_password_change">Pasfhocal a athrú</string>
@@ -41,6 +44,7 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Coimisinéir</string>
   <string name="account_basic_category">Bunreacht</string>
+  <string name="account_alias_label">Ainm taispeána</string>
   <string name="account_hostname_label">Ainm óstála</string>
   <string name="account_bootstrap_label">Bootstrap</string>
   <string name="account_name_server_label">Seirbheáil ainm</string>
@@ -54,6 +58,7 @@
   <string name="account_upnp_label">Céadú UPnP</string>
   <string name="account_proxy_field">Cláir</string>
   <!--Extension Details-->
+  <string name="account_preferences_extension_tab">Breiseáin</string>
   <!--Audio Details-->
   <string name="account_audio_label">Audio</string>
   <string name="account_preferences_media_tab">Meáin</string>
@@ -68,6 +73,8 @@
   <string name="account_video_enable">Céadú físeán</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Ardaithe</string>
+  <string name="account_read_receipts_label">Admhálacha léite</string>
+  <string name="account_read_receipts_summary">Seol agus iarr admhálacha seachadta agus léite le seoladh nuair a sheachadtar nó a léitear teachtaireachtaí.</string>
   <string name="account_call_settings_title">Cluiche Aistriúcháin</string>
   <string name="account_dht_public_in_calls_label">Ceadaigh glaonna a thagann isteach ó theagmhálacha neamhaithne</string>
   <string name="account_registration_exp_label">Críochnaíonn clárú</string>
@@ -153,6 +160,7 @@
   <string name="account_export_title">Contae nasc chuig feistí eile</string>
   <string name="account_connect_server_button">Déan nasc chuig an tseirbhís bainistíochta</string>
   <string name="account_connect_button">Déan nasc</string>
+  <string name="prompt_server">URL an fhreastalaí bainistíochta</string>
   <string name="help_credentials_enter">Cuir isteach do shaincheapanna eagraíochta</string>
   <string name="help_connect_password_enter">Cuir isteach do phasfhocal eagraíochta</string>
   <string name="account_connect_prompt_username">Ainm úsáideora</string>
@@ -188,6 +196,7 @@
   <string name="account_rename_device_hint">Roghnaigh ainm an t-inneal nua</string>
   <string name="account_device_this_indicator">An t-ordú seo</string>
   <string name="account_disabled_indicator">An duine atá faoi mhíchumas</string>
+  <string name="account_device_id">Aitheantas gléis</string>
   <!--Link a new device-->
   <string name="account_link_device_title">Déan nasc a dhéanamh ar ghléas nua</string>
   <string name="account_link_device_button">Déan nasc</string>

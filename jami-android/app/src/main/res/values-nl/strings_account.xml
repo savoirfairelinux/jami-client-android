@@ -5,9 +5,11 @@
   <string name="ic_advanced_menu">Geavanceerde instellingen</string>
   <string name="ic_blacklist_menu">Geblokkeerde contacten</string>
   <!--Strings related to account creation-->
+  <string name="account_selection">Account selecteren</string>
   <string name="add_ring_account_title">Account toevoegen</string>
   <string name="add_sip_account_title">SIP-account toevoegen</string>
   <string name="ring_account_default_name">Jami-account %1$s</string>
+  <string name="account_creation_error">Er is een fout opgetreden bij het aanmaken van de account.</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Hostnaam</string>
   <string name="prompt_username">Gebruikersnaam</string>
@@ -21,10 +23,17 @@
   <string name="dialog_wait_create_details">Uw nieuw account wordt toegevoegd, even geduld…</string>
   <string name="dialog_wait_update">Account wordt bijgewerkt</string>
   <string name="dialog_wait_update_details">Uw account wordt bijgewerkt, even geduld…</string>
+  <string name="dialog_warn_ip2ip_account_title">Lege SIP-account aanmaken?</string>
+  <string name="dialog_warn_ip2ip_account_message">U staat op het punt een SIP-account zonder geldige hostnaam aan te maken.
+        U kunt alleen directe IP-oproepen plaatsen en ontvangen.
+        U kunt uw account later bewerken</string>
   <string name="account_type_ip2ip">IP-account</string>
   <string name="help_ring">Een Jami-account stelt u in staat andere mensen veilig te bereiken in peer-to-peer middels een volledig gedistribueerd netwerk.</string>
   <string name="help_sip_title">SIP-account toevoegen</string>
+  <string name="help_sip">Bestaand SIP-account configureren</string>
+  <string name="create_sip_account">SIP-account configureren</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">Account verwijderen?</string>
   <string name="account_delete_dialog_message">Deze handeling kan niet ongedaan gemaakt worden.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Geen account geregistreerd</string>
@@ -33,15 +42,21 @@
   <string name="account_device_revoke">Apparaat intrekken</string>
   <string name="account_device_revocation_success_title">Klaar</string>
   <string name="account_device_revocation_success">Het apparaat is nu ingetrokken!</string>
+  <string name="account_device_revocation_error_title">Fout bij intrekken apparaat</string>
+  <string name="account_device_revocation_wrong_password">Onjuist wachtwoord.</string>
   <string name="account_device_revocation_unknown_device">Onbekend apparaat.</string>
   <string name="account_device_revocation_error_unknown">Onbekende fout.</string>
   <string name="account_password_change">Wachtwoord wijzigen</string>
   <string name="account_password_set">Wachtwoord Instellen</string>
   <string name="account_password_summary">Beheer het wachtwoord van uw account</string>
   <string name="account_password_change_wait_message">Accountwachtwoord wordt gewijzigd</string>
+  <string name="account_biometric_disable">Biometrische authenticatie uitschakelen</string>
+  <string name="account_biometric_set">Biometrische authenticatie inschakelen</string>
+  <string name="account_biometric_summary">Beheer de biometrische authenticatie voor uw account.</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Algemeen</string>
   <string name="account_basic_category">Basisinstellingen</string>
+  <string name="account_alias_label">Weergavenaam</string>
   <string name="account_hostname_label">Hostnaam</string>
   <string name="account_bootstrap_label">Bootstrap</string>
   <string name="account_name_server_label">Naamserver</string>
@@ -55,6 +70,7 @@
   <string name="account_upnp_label">UPnP inschakelen</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Extension Details-->
+  <string name="account_preferences_extension_tab">Extensies</string>
   <!--Audio Details-->
   <string name="account_audio_label">Geluid</string>
   <string name="account_preferences_media_tab">Media</string>
@@ -69,12 +85,16 @@
   <string name="account_video_enable">Video inschakelen</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Geavanceerd</string>
+  <string name="account_chat_settings_title">Chatinstellingen</string>
+  <string name="account_read_receipts_label">Leesbevestigingen</string>
+  <string name="account_read_receipts_summary">Bevestigingen van bezorging en lezen verzenden en aanvragen wanneer berichten worden bezorgd of gelezen.</string>
   <string name="account_call_settings_title">Oproepinstellingen</string>
   <string name="account_dht_public_in_calls_label">Sta inkomende oproepen van onbekende contacten toe</string>
   <string name="account_registration_exp_label">Verval registratie</string>
   <string name="account_local_interface_label">Lokale interface</string>
   <string name="account_local_port_label">Lokale poort</string>
   <string name="account_stun_enable_label">STUN gebruiken</string>
+  <string name="account_stun_server_label">STUN-server</string>
   <string name="account_accept_files">Automatisch inkomende bestanden accepteren</string>
   <string name="account_conversation_settings_title">Gespreksinstellingen</string>
   <string name="account_accept_files_max_size">Maximale bestandsgrootte wat automatisch geaccepteerd wordt</string>
@@ -88,13 +108,16 @@
   <string name="account_published_same_as_local_label">Gepubliceerd gelijk aan lokaal</string>
   <string name="account_published_port_label">Gepubliceerde poort</string>
   <string name="account_published_address_label">Gepubliceerd adres</string>
+  <string name="account_connectivity_label">Peer-to-peerconnectiviteit</string>
   <string name="disabled">Belemmeringen</string>
   <string name="enabled">Ingeschakeld</string>
   <string name="default_value">Standaard</string>
   <string name="account_proxy_label">DHT-proxy</string>
   <string name="account_proxy_enable_label">DHT-proxy gebruiken</string>
+  <string name="account_proxy_list_enable_label">DHT-proxylijst gebruiken</string>
   <string name="account_proxy_server_label">DHT-proxyadres</string>
   <string name="account_proxy_server_list_label">DHT proxy-lijst URL</string>
+  <string name="account_proxy_server_used">In gebruik: %1$s</string>
   <string name="account_sip_proxy_label">Proxy</string>
   <string name="account_peer_discovery_label">Lokale verwanten ontdekken</string>
   <string name="account_peer_discovery_enable_label">Lokale verwanten ontdekken inschakelen</string>
@@ -109,17 +132,33 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS-transport gebruiken</string>
+  <string name="account_tls_port_label">TLS-luisterpoort</string>
+  <string name="account_tls_certificate_list_label">Certificeringsinstanties</string>
+  <string name="account_tls_certificate_file_label">Certificaatbestand</string>
+  <string name="account_tls_private_key_file_label">Privésleutelbestand</string>
   <string name="account_tls_password_label">Wachtwoord persoonlijke sleutel</string>
+  <string name="account_tls_method_label">TLS-methode</string>
+  <string name="account_tls_ciphers_label">TLS-versleutelingen</string>
+  <string name="account_tls_server_name_label">Servernaam</string>
+  <string name="account_tls_verify_server_label">Server verifiëren</string>
+  <string name="account_tls_verify_client_label">Client verifiëren</string>
+  <string name="account_require_client_certificate_label">TLS vereist clientcertificaat</string>
+  <string name="account_tls_negotiation_timeout_sec">Onderhandelingstime-out (sec)</string>
   <string name="account_rtp_max_port">Maximum</string>
   <string name="account_rtp_min_port">Minimum</string>
+  <string name="account_rtp_port_range">RTP-poortbereik voor audio</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Voer hoofdwachtwoord in om account te ontgrendelen</string>
   <string name="error_password_char_count">Minimaal 6 tekens</string>
+  <string name="error_passwords_not_equals">Wachtwoorden komen niet overeen.</string>
   <string name="export_account_wait_title">Even geduld…</string>
   <string name="export_account_wait_message">Accountinformatie wordt geëxporteerd</string>
   <string name="account_export_file">Reservekopie van account maken</string>
   <string name="account_export_file_summary">Backup je account op je apparaat om het later te herstellen.</string>
+  <string name="account_export_end_decryption_message">Onjuist wachtwoord. Probeer het opnieuw met het juiste wachtwoord.</string>
   <string name="account_enter_password">Voer wachtwoord in</string>
+  <string name="account_share_body">Neem contact met me op via “%1$s” op het gedistribueerde communicatieplatform Jami: %2$s</string>
+  <string name="account_share_body_with_username">Neem contact met me op via “%1$s” of mijn openbare gebruikersnaam “%2$s” op het gedistribueerde communicatieplatform Jami: %3$s</string>
   <string name="account_contact_me">Contacteer me op Jami!</string>
   <string name="update_account">Account bijwerken</string>
   <string name="account_migration">Uw Jami-account kan worden bijgewerkt.\nVoer uw wachtwoord in.</string>
@@ -127,11 +166,21 @@
   <string name="sip_account">SIP-rekening</string>
   <string name="ring_account_identity">Identiteit</string>
   <string name="account_migration_title_dialog">Accountmigratie</string>
+  <string name="account_migration_message_dialog">Uw accounts moeten worden bijgewerkt. Wilt u naar het scherm voor accountbeheer gaan om deze bewerking uit te voeren?</string>
   <string name="account_update_needed">Update vereist</string>
+  <string name="account_cannot_be_found_title">Accountfout</string>
+  <string name="account_cannot_be_found_message">Kan de account niet vinden op het Jami-netwerk. Zorg ervoor dat deze in Jami is geëxporteerd vanaf een bestaand apparaat en dat de opgegeven inloggegevens correct zijn.</string>
+  <string name="jams_account_cannot_be_found_message">Er is een fout opgetreden bij het verbinden van de account. Controleer de inloggegevens en probeer het opnieuw.</string>
   <string name="account_sip_cannot_be_registered_message">U kunt doorgaan met het aanmaken van uw account, of uw gegevens hier aanpassen. Aanpassen is later ook mogelijk vanuit de accountinstellingen.</string>
   <string name="account_no_network_title">Netwerkfout</string>
+  <string name="account_no_network_message">Er is een verbindingsfout opgetreden bij het toevoegen van de Jami-account aan het gedistribueerde netwerk. Controleer de verbinding van uw apparaat.</string>
   <string name="account_device_added_title">Accountapparaat toegevoegd</string>
+  <string name="account_device_added_message">Jami-account succesvol ingesteld op dit apparaat.</string>
   <string name="account_device_updated_title">Accountapparaat bijgewerkt</string>
+  <string name="account_device_updated_message">Jami-account succesvol bijgewerkt.</string>
+  <string name="account_cannot_be_updated_message">Er is een fout opgetreden bij het bijwerken van de account. Controleer het accountwachtwoord.</string>
+  <string name="account_sip_success_title">SIP-account geregistreerd</string>
+  <string name="account_sip_success_message">SIP-account succesvol geregistreerd.</string>
   <string name="account_sip_register_anyway">Toch registreren</string>
   <!--TV-->
   <string name="account_tv_settings_header">Accountinstellingen</string>
@@ -150,24 +199,31 @@
   <string name="account_link_export_button">Nieuw apparaat koppelen</string>
   <string name="account_link_show_button">Toon %d meer gekoppelde apparaten</string>
   <string name="account_link_hide_button">Gekoppelde apparaten verbergen</string>
+  <string name="account_start_export_button">Authenticatiecode genereren</string>
   <string name="account_end_export_button">sluiten</string>
   <string name="account_export_title">Link account naar andere apparaten</string>
   <string name="account_connect_server_button">Verbinden met beheerserver</string>
   <string name="account_connect_button">Verbinden</string>
+  <string name="prompt_server">URL van de beheerserver</string>
   <string name="help_credentials_enter">Voer de referenties van uw organisatie in</string>
   <string name="help_connect_password_enter">Voer het wachtwoord van uw organisatie in</string>
   <string name="account_connect_prompt_username">Gebruikersnaam</string>
   <string name="account_connect_server">Verbinden met beheerserver</string>
   <string name="account_enter_username">Voer gebruikersnaam in</string>
+  <string name="account_enter_servername">Server invoeren</string>
   <!--Name registration-->
   <string name="error_username_empty">Voer een gebruikersnaam in</string>
+  <string name="no_registered_name_for_account">Geen geregistreerde gebruikersnaam</string>
+  <string name="username_available">De gebruikersnaam is beschikbaar.</string>
   <string name="register_name">Naam van het register</string>
+  <string name="trying_to_register_name">Registratie van gebruikersnaam is bezig. Even geduld…</string>
   <string name="registered_username">Geregistreerde gebruikersnaam</string>
   <string name="register_username">Registreer een openbare gebruikersnaam</string>
   <string name="register_recommended">Aanbevolen</string>
   <string name="username_already_taken">Gebruikersnaam reeds in gebruik</string>
   <string name="invalid_username">Ongeldige gebruikersnaam</string>
   <string name="unknown_error">Onbekende fout. Controleer uw netwerkverbinding!</string>
+  <string name="looking_for_username_availability">Beschikbaarheid van gebruikersnaam controleren…</string>
   <string name="account_status_connecting">Verbinden</string>
   <string name="account_status_connection_error">Verbindingsfout</string>
   <string name="account_status_online">Online</string>
@@ -178,21 +234,51 @@
   <string name="account_creation_home">Welkom bij Jami</string>
   <string name="account_creation_profile">Maak uw profiel aan</string>
   <string name="account_creation_ring">Maak uw Jami-account aan</string>
+  <string name="account_sip_cannot_be_registered">Er is een fout opgetreden bij het registreren van de SIP-account.</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Profiel bewerken</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Voer wachtwoord in om te bevestigen</string>
   <string name="enter_password">Voer wachtwoord in</string>
   <string name="revoke_device_title">Apparaat intrekken</string>
+  <string name="revoke_device_message">Wilt u %1$s intrekken?</string>
   <string name="revoke_device_wait_title">Even geduld…</string>
   <string name="revoke_device_wait_message">Apparaat wordt ingetrokken</string>
   <string name="rename_device_title">Dit apparaat hernoemen</string>
+  <string name="rename_device_message">Voer een apparaatnaam in om dit apparaat in uw Jami-account te identificeren</string>
   <string name="rename_device_button">Apparaat hernoemen</string>
   <string name="account_rename_device_hint">Kies een nieuwe apparaatnaam</string>
+  <string name="account_device_name_empty">Apparaatnaam mag niet leeg zijn.</string>
   <string name="account_device_this_indicator">Dit apparaat</string>
   <string name="account_disabled_indicator">Belemmeringen</string>
+  <string name="account_device_id">Apparaat-ID</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Dit formaat wordt niet ondersteund.</string>
+  <string name="account_link_info">Scan in de Jami-app op het nieuwe apparaat de QR-code of voer de authenticatiecode handmatig in.</string>
   <string name="account_link_device_title">Een nieuw apparaat koppelen</string>
+  <string name="account_link_password">Deze account is met een wachtwoord versleuteld; voer het wachtwoord in om de authenticatiecode te genereren.</string>
+  <string name="account_link_generate_button">Genereren</string>
+  <string name="account_link_time_valid">De authenticatiecode wordt ongeldig: %1$s.</string>
+  <string name="account_link_device_info">Kies “Een nieuw apparaat koppelen” in de andere Jami-app om de QR-code of de authenticatiecode te tonen.</string>
+  <string name="account_generate_export_device">Op het andere apparaat</string>
+  <string name="account_generate_export_info">Installeer en start Jami. Selecteer “Importeren vanaf een ander apparaat” en scan de QR-code. U kunt ook de PIN-code handmatig invoeren.</string>
+  <string name="content_description_qr_generated">Account-QR-code</string>
+  <string name="account_generate_export_invalid">De authenticatiecode is niet langer geldig.\nVoer het wachtwoord in en genereer een nieuwe om het nieuwe apparaat te koppelen.</string>
+  <string name="account_generate_export_invalid_two">De authenticatiecode is niet langer geldig.\nGenereer een nieuwe om het nieuwe apparaat te koppelen.</string>
+  <string name="help_pin_info">Vereist als de account met een wachtwoord is versleuteld.</string>
   <string name="account_link_device_button">Verbinden</string>
   <!--Biometry-->
+  <string name="account_biometry_auth_title">Jami-account ontgrendelen</string>
+  <string name="account_biometry_auth_message">Gebruik biometrie om uw account te ontgrendelen</string>
+  <string name="account_biometry_enroll_title">Biometrische authenticatie gebruiken?</string>
+  <string name="account_biometry_enroll_message">Uw apparaat ondersteunt veilige biometrische authenticatie.
+Biometrische of apparaatauthenticatie biedt een handige manier om de toegang tot uw Jami-account lokaal te ontgrendelen. U kunt nog steeds uw wachtwoord gebruiken.</string>
+  <string name="account_biometry_enroll_accept">Biometrie gebruiken</string>
+  <string name="no_thanks">Nee, bedankt</string>
+  <string name="account_biometry_enroll_auth_title">Authenticatie toevoegen voor uw Jami-account</string>
+  <string name="account_biometry_enroll_auth_message">Voeg veilige biometrische of apparaatauthenticatie toe als alternatief voor uw wachtwoord</string>
+  <string name="account_auth_error">Authenticatiefout: %1$s</string>
+  <string name="account_auth_success">Authenticatie geslaagd</string>
+  <string name="account_auth_key_error">Er is een fout opgetreden bij het ontsleutelen van de accountsleutel.</string>
+  <string name="account_auth_password">Accountwachtwoord gebruiken</string>
 </resources>
