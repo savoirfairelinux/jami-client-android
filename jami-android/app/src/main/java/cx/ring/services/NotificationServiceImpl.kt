@@ -229,6 +229,22 @@ class NotificationServiceImpl(
         }
     }
 
+    fun foregroundRejectionReason(notification: Notification): String? {
+        return try {
+            val channelId = notification.channelId
+            if (channelId == null || notificationManager.getNotificationChannel(channelId) == null)
+                return REASON_CHANNEL_NOT_REGISTERED
+            Notification.Builder.recoverBuilder(mContext, notification).build()
+            val smallIcon = notification.smallIcon ?: return REASON_MISSING_SMALL_ICON
+            smallIcon.loadDrawable(mContext) ?: return REASON_SMALL_ICON_UNRESOLVED
+            notification.getLargeIcon()?.loadDrawable(mContext)
+            null
+        } catch (e: Throwable) {
+            Log.e(TAG, "Notification failed foreground validation", e)
+            e.message ?: e.javaClass.simpleName
+        }
+    }
+
     override fun showCallNotification(notifId: Int): Any? = callNotifications.remove(notifId)
 
     override fun showLocationNotification(first: Account, contact: Contact, conversation: Conversation) {
@@ -1123,6 +1139,9 @@ class NotificationServiceImpl(
     companion object {
         const val EXTRA_BUBBLE = "bubble"
         private val TAG = NotificationServiceImpl::class.java.simpleName
+        private const val REASON_CHANNEL_NOT_REGISTERED = "notification channel not registered"
+        private const val REASON_MISSING_SMALL_ICON = "missing small icon"
+        private const val REASON_SMALL_ICON_UNRESOLVED = "small icon failed to resolve"
         private const val NOTIF_MSG = "MESSAGE"
         private const val NOTIF_TRUST_REQUEST = "TRUST REQUEST"
         private const val NOTIF_FILE_TRANSFER = "FILE_TRANSFER"

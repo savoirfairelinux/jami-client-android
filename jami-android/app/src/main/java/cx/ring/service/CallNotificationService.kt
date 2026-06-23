@@ -53,6 +53,13 @@ class CallNotificationService : Service() {
             val notification = mNotificationService.showCallNotification(intent.getIntExtra(NotificationService.KEY_NOTIFICATION_ID, -1)) as Notification?
             val startScreenshare = intent.getBooleanExtra(NotificationService.KEY_SCREENSHARE, false)
             if (notification != null) {
+                val rejection = (mNotificationService as? NotificationServiceImpl)
+                    ?.foregroundRejectionReason(notification)
+                if (rejection != null) {
+                    Log.e(TAG, "Skipping startForeground: call notification would be rejected ($rejection)")
+                    stopSelf()
+                    return START_NOT_STICKY
+                }
                 try {
                     if (Build.VERSION.SDK_INT >= 37) {
                         // API 37+: microphone and camera FGS types require an eligible foreground
