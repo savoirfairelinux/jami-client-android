@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+    ~ Copyright (C) 2004-2025 Savoir-faire Linux Inc.
+    ~
+    ~ This program is free software: you can redistribute it and/or modify
+    ~ it under the terms of the GNU General Public License as published by
+    ~ the Free Software Foundation, either version 3 of the License, or
+    ~ (at your option) any later version.
+    ~
+    ~ This program is distributed in the hope that it will be useful,
+    ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    ~ GNU General Public License for more details.
+    ~
+    ~ You should have received a copy of the GNU General Public License
+    ~ along with this program. If not, see <https://www.gnu.org/licenses/>.
+    -->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/file_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:clickable="true"
+    android:descendantFocusability="blocksDescendants"
+    android:focusable="true"
+    android:paddingBottom="@dimen/padding_xsmall">
+
+    <TextView
+        android:id="@+id/message_time_permanent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/conversation_date_padding"
+        android:textColor="@color/textColorSecondary"
+        android:textSize="@dimen/conversation_timestamp_textsize"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/time_just_now"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/peer_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxEms="8"
+        android:maxLines="1"
+        android:padding="4dp"
+        android:textColor="@color/msg_display_name"
+        android:textSize="@dimen/message_display_name_textsize"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/fileInfoLayout"
+        app:layout_constraintStart_toStartOf="@id/fileInfoLayout"
+        app:layout_constraintTop_toBottomOf="@id/message_time_permanent"
+        tools:text="Bob"
+        tools:visibility="visible" />
+
+    <cx.ring.views.AvatarView
+        android:id="@+id/photo"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/conversation_avatar_size"
+        android:layout_marginStart="@dimen/base_left_conversation_margin"
+        app:layout_constraintBottom_toBottomOf="@id/fileInfoLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:avatar="@tools:sample/avatars" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fileInfoLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/conditional_left_conversation_margin"
+        android:animateLayoutChanges="true"
+        android:background="@drawable/filemsg_background_in"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/photo"
+        app:layout_constraintTop_toBottomOf="@id/peer_name">
+
+        <ImageView
+            android:id="@+id/file_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="@drawable/file_icon_background"
+            android:backgroundTint="@color/file_icon_background_in"
+            android:contentDescription="@null"
+            android:maxWidth="@dimen/conversation_file_preview"
+            android:maxHeight="@dimen/conversation_file_preview"
+            android:padding="16dp"
+            android:scaleType="fitStart"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/file_title"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/baseline_edit_rounded_24"
+            app:tint="@color/colorOnSurface" />
+
+        <TextView
+            android:id="@+id/file_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:ellipsize="middle"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textColor="@color/colorOnSurface"
+            android:textSize="@dimen/file_name"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/file_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="My shared notes" />
+
+        <TextView
+            android:id="@+id/file_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="middle"
+            android:textAppearance="@android:style/TextAppearance.Small"
+            android:textColor="@color/colorOnSurface"
+            android:textSize="@dimen/file_size"
+            app:layout_constraintStart_toStartOf="@id/file_title"
+            app:layout_constraintTop_toBottomOf="@id/file_title"
+            tools:text="@string/collab_editable_document" />
+
+        <TextView
+            android:id="@+id/file_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/file_time_text_in"
+            android:textSize="@dimen/conversation_timestamp_textsize"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toStartOf="@id/file_title"
+            app:layout_constraintTop_toBottomOf="@id/file_size"
+            tools:text="11:36am" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/reaction_chip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="-6dp"
+        android:background="@drawable/background_reaction_chip"
+        android:lines="1"
+        android:maxLines="1"
+        android:outlineProvider="none"
+        android:padding="5dp"
+        android:singleLine="true"
+        app:layout_constraintStart_toStartOf="@id/fileInfoLayout"
+        app:layout_constraintTop_toBottomOf="@id/fileInfoLayout"
+        tools:text="👍😍 3" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

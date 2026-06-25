@@ -133,6 +133,21 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
             compositeDisposable.add(conversation.getVisible()
                 .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { activated -> binding.root.isActivated = activated })
+            fun updateCollabIndicator() {
+                val count = conversationFacade.unreadCollaborativeDocumentUpdateCount(
+                    conversation.accountId,
+                    conversation.uri.rawRingId
+                )
+                binding.collabUpdateCount.isVisible = count > 0
+                binding.collabUpdateCount.text = if (count > 9) "9+" else count.toString()
+            }
+            updateCollabIndicator()
+            compositeDisposable.add(conversationFacade.collaborativeDocumentUpdates
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe { update ->
+                    if (update.accountId == conversation.accountId && update.conversationId == conversation.uri.rawRingId)
+                        updateCollabIndicator()
+                })
         }
     }
 

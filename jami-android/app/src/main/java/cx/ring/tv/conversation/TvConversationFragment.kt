@@ -372,6 +372,10 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         }
     }
 
+    // Collaborative document editing is not available on the TV client.
+    override fun openCollaborativeDocument(accountId: String, conversationId: String, documentId: String, name: String, kind: String) {}
+    override fun showCollaborativeDocuments(accountId: String, conversationId: String, documents: List<net.jami.model.interaction.CollaborativeDocument>) {}
+
     /**
      * Creates an intent using Android Storage Access Framework
      * This intent is then received by applications that can handle it like

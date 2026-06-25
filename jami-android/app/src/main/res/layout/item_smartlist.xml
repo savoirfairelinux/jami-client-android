@@ -35,6 +35,22 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         tools:uri="@tools:sample/us_phones"
         tools:avatar="@tools:sample/avatars" />
 
+    <TextView
+        android:id="@+id/collab_update_count"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/background_collab_update_count"
+        android:fontFamily="@font/ubuntu_regular"
+        android:gravity="center"
+        android:textColor="@color/collab_update_count_text"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        tools:text="2"
+        tools:visibility="visible" />
+
     <RelativeLayout
         android:id="@+id/conv_info"
         android:layout_width="match_parent"

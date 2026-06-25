@@ -32,6 +32,20 @@
         tools:ignore="AlwaysShowAction" />
 
     <item
+        android:id="@+id/conv_new_collab_doc"
+        android:icon="@drawable/baseline_edit_rounded_24"
+        android:title="@string/collab_new_document"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+
+    <item
+        android:id="@+id/conv_collab_doc_list"
+        android:icon="@drawable/baseline_edit_rounded_24"
+        android:title="@string/collab_editable_documents"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+
+    <item
         android:id="@+id/chat_extensions"
         android:icon="@drawable/ic_extension_24"
         android:title="@string/chat_extensions"

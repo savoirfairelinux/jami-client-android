@@ -52,6 +52,7 @@ import androidx.recyclerview.widget.RecyclerView
 import cx.ring.R
 import cx.ring.adapters.ConversationAdapter
 import cx.ring.client.CallActivity
+import cx.ring.client.CollabEditorActivity
 import cx.ring.client.ConversationDetailsActivity
 import cx.ring.client.ConversationActivity
 import cx.ring.client.ConversationDetailsActivity.Companion.EXIT_REASON
@@ -81,6 +82,7 @@ import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
 import net.jami.model.Call.CallStatus
 import net.jami.model.interaction.DataTransfer
+import net.jami.model.interaction.CollaborativeDocument
 import net.jami.model.interaction.Interaction
 import net.jami.model.interaction.TextMessage
 import net.jami.services.NotificationService
@@ -480,6 +482,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 R.id.conv_send_file -> openFilePicker()
                 R.id.conv_select_media -> openGallery()
                 R.id.conv_share_location -> shareLocation()
+                R.id.conv_new_collab_doc -> showNewCollabDocDialog()
+                R.id.conv_collab_doc_list -> presenter.showCollaborativeDocuments()
                 R.id.chat_extensions -> presenter.showExtensionListHandlers()
             }
             false
@@ -487,6 +491,35 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         popup.menu.findItem(R.id.chat_extensions).isVisible = JamiService.getPluginsEnabled() && !JamiService.getChatHandlers().isEmpty()
         popup.setForceShowIcon(true)
         popup.show()
+    }
+
+    private fun showNewCollabDocDialog() {
+        val c = context ?: return
+        val input = EditText(c).apply {
+            hint = getString(R.string.collab_document_name_hint)
+            setSingleLine()
+        }
+        val richSwitch = com.google.android.material.materialswitch.MaterialSwitch(c).apply {
+            text = getString(R.string.collab_rich_text)
+            isChecked = true
+        }
+        val pad = resources.getDimensionPixelSize(R.dimen.padding_large)
+        val container = LinearLayout(c).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(pad, 0, pad, 0)
+            addView(input)
+            addView(richSwitch)
+        }
+        MaterialAlertDialogBuilder(c)
+            .setTitle(R.string.collab_new_document)
+            .setView(container)
+            .setPositiveButton(R.string.collab_create) { _, _ ->
+                val name = input.text.toString().trim().ifEmpty { getString(R.string.collab_document_name_hint) }
+                val kind = if (richSwitch.isChecked) "rich" else "text"
+                presenter.createCollaborativeDocument(name, kind)
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 
     override fun showExtensionListHandlers(accountId: String, contactId: String) {
@@ -837,6 +870,46 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     override fun openFile(path: File, displayName: String) {
         val c = context ?: return
         AndroidFileUtils.openFile(c, path, displayName)
+    }
+
+    override fun openCollaborativeDocument(accountId: String, conversationId: String, documentId: String, name: String, kind: String) {
+        val c = context ?: return
+        startActivity(Intent(c, CollabEditorActivity::class.java)
+            .putExtra(CollabEditorActivity.EXTRA_ACCOUNT_ID, accountId)
+            .putExtra(CollabEditorActivity.EXTRA_CONVERSATION_ID, conversationId)
+            .putExtra(CollabEditorActivity.EXTRA_DOCUMENT_ID, documentId)
+            .putExtra(CollabEditorActivity.EXTRA_NAME, name)
+            .putExtra(CollabEditorActivity.EXTRA_KIND, kind))
+    }
+
+    override fun showCollaborativeDocuments(accountId: String, conversationId: String, documents: List<CollaborativeDocument>) {
+        val c = context ?: return
+        if (documents.isEmpty()) {
+            Toast.makeText(c, R.string.collab_no_editable_documents, Toast.LENGTH_SHORT).show()
+            return
+        }
+        val adapter = object : BaseAdapter() {
+            override fun getCount() = documents.size
+            override fun getItem(position: Int) = documents[position]
+            override fun getItemId(position: Int) = position.toLong()
+
+            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val row = convertView ?: layoutInflater.inflate(R.layout.item_collab_doc_list, parent, false)
+                val doc = getItem(position)
+                row.findViewById<TextView>(R.id.doc_title).text = doc.displayName.ifEmpty { getString(R.string.collab_document_name_hint) }
+                row.findViewById<TextView>(R.id.doc_subtitle).text = getString(R.string.collab_editable_document)
+                row.findViewById<View>(R.id.doc_update_indicator).isVisible = presenter.hasUnreadCollaborativeDocumentUpdate(doc.documentId)
+                return row
+            }
+        }
+        MaterialAlertDialogBuilder(c)
+            .setTitle(R.string.collab_editable_documents)
+            .setAdapter(adapter) { dialog, which ->
+                val doc = documents[which]
+                openCollaborativeDocument(accountId, conversationId, doc.documentId, doc.displayName, doc.kind)
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private fun actionSendMsgText(actionId: Int): Boolean = when (actionId) {

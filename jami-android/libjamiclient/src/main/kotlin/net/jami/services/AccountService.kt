@@ -196,6 +196,7 @@ class AccountService(
     )
 
     data class ConversationSearchResult(val results: List<Interaction>)
+    data class CollaborativeDocumentUpdate(val accountId: String, val conversationId: String)
     private val conversationSearches: MutableMap<Long, Subject<ConversationSearchResult>> = ConcurrentHashMap()
     private val loadingTasks: MutableMap<Long, SingleSubject<List<Interaction>>> = ConcurrentHashMap()
 
@@ -217,6 +218,14 @@ class AccountService(
 
     private val mDeviceRevocationSubject: Subject<DeviceRevocationResult> = PublishSubject.create()
     private val mMigrationSubject: Subject<MigrationResult> = PublishSubject.create()
+    private val collaborativeEventSubject: Subject<CollaborativeEvent> = PublishSubject.create()
+    private val collaborativeDocumentUpdateSubject: Subject<CollaborativeDocumentUpdate> = PublishSubject.create()
+    private val updatedCollaborativeDocuments: MutableMap<String, MutableSet<String>> = ConcurrentHashMap()
+    /** Real-time events for open collaborative documents, filtered by the editor. */
+    val collaborativeEvents: Observable<CollaborativeEvent>
+        get() = collaborativeEventSubject
+    val collaborativeDocumentUpdates: Observable<CollaborativeDocumentUpdate>
+        get() = collaborativeDocumentUpdateSubject
     private val registeredNames: Observable<RegisteredName>
         get() = registeredNameSubject
     private val searchResults: Observable<UserSearchResult>
@@ -516,6 +525,49 @@ class AccountService(
             JamiService.sendMessage(accountId, conversationUri.rawRingId, txt, replyTo ?: "", flag)
         }
     }
+
+    // --- Collaborative editing ---------------------------------------------------------------
+
+    /** Create a new collaborative document. [kind] is "text" or "rich". Returns the document id. */
+    fun createCollaborativeDocument(accountId: String, conversationId: String, name: String, kind: String): Single<String> =
+        Single.fromCallable { JamiService.createCollaborativeDocument(accountId, conversationId, name, kind) }
+            .subscribeOn(Schedulers.io())
+
+    /** Open a document for editing. Returns its current plain-text content. */
+    fun openCollaborativeDocument(accountId: String, conversationId: String, documentId: String): Single<String> =
+        Single.fromCallable { JamiService.openCollaborativeDocument(accountId, conversationId, documentId) }
+            .doOnSuccess { clearCollaborativeDocumentUpdate(accountId, conversationId, documentId) }
+            .subscribeOn(Schedulers.io())
+
+    fun closeCollaborativeDocument(accountId: String, conversationId: String, documentId: String) {
+        mExecutor.execute { JamiService.closeCollaborativeDocument(accountId, conversationId, documentId) }
+    }
+
+    /**
+     * Apply a local plain-text edit. Called synchronously from the editor so edits stay ordered
+     * (the index refers to the current document state, like the Qt client).
+     */
+    fun editCollaborativeDocument(accountId: String, conversationId: String, documentId: String, index: Int, deleteLen: Int, insert: String) {
+        JamiService.editCollaborativeDocument(accountId, conversationId, documentId, index.toLong(), deleteLen.toLong(), insert)
+    }
+
+    fun setCollaborativeCursor(accountId: String, conversationId: String, documentId: String, position: Int, anchor: Int) {
+        JamiService.setCollaborativeCursor(accountId, conversationId, documentId, position, anchor)
+    }
+
+    fun setCollaborativeDocumentName(accountId: String, conversationId: String, documentId: String, name: String) {
+        mExecutor.execute { JamiService.setCollaborativeDocumentName(accountId, conversationId, documentId, name) }
+    }
+
+    /** Apply a local rich-text delta (Quill-delta JSON). */
+    fun applyCollaborativeDelta(accountId: String, conversationId: String, documentId: String, deltaJson: String) {
+        JamiService.applyCollaborativeDelta(accountId, conversationId, documentId, deltaJson)
+    }
+
+    /** Current document content as a Quill-delta JSON string (rich documents). */
+    fun collaborativeDocumentContentDelta(accountId: String, conversationId: String, documentId: String): Single<String> =
+        Single.fromCallable { JamiService.collaborativeDocumentContentDelta(accountId, conversationId, documentId) }
+            .subscribeOn(Schedulers.io())
 
     fun deleteConversationMessage(accountId: String, conversationUri: Uri, messageId: String) {
         sendConversationMessage(accountId, conversationUri, "", messageId, 1)
@@ -1237,6 +1289,56 @@ class AccountService(
         getAccount(accountId)?.composingStatusChanged(conversationId, Uri.fromId(contactUri), Account.ComposingStatus.fromInt(status))
     }
 
+    fun collaborativeDocumentChanged(accountId: String, conversationId: String, documentId: String, index: Int, deleteLen: Int, insert: String) {
+        markCollaborativeDocumentUpdated(accountId, conversationId, documentId)
+        collaborativeEventSubject.onNext(CollaborativeEvent.TextChange(accountId, conversationId, documentId, index, deleteLen, insert))
+    }
+
+    fun collaborativeDocumentDelta(accountId: String, conversationId: String, documentId: String, deltaJson: String) {
+        markCollaborativeDocumentUpdated(accountId, conversationId, documentId)
+        collaborativeEventSubject.onNext(CollaborativeEvent.Delta(accountId, conversationId, documentId, deltaJson))
+    }
+
+    fun collaborativeCursorChanged(accountId: String, conversationId: String, documentId: String, peerId: String, position: Int, anchor: Int) {
+        collaborativeEventSubject.onNext(CollaborativeEvent.Cursor(accountId, conversationId, documentId, peerId, position, anchor))
+    }
+
+    fun collaborativeParticipantLeft(accountId: String, conversationId: String, documentId: String, peerId: String) {
+        collaborativeEventSubject.onNext(CollaborativeEvent.ParticipantLeft(accountId, conversationId, documentId, peerId))
+    }
+
+    fun collaborativeDocumentRenamed(accountId: String, conversationId: String, documentId: String, name: String) {
+        collaborativeEventSubject.onNext(CollaborativeEvent.Renamed(accountId, conversationId, documentId, name))
+    }
+
+    fun hasUnreadCollaborativeDocumentUpdate(accountId: String, conversationId: String): Boolean =
+        unreadCollaborativeDocumentUpdateCount(accountId, conversationId) > 0
+
+    fun unreadCollaborativeDocumentUpdateCount(accountId: String, conversationId: String): Int =
+        updatedCollaborativeDocuments[collabUpdateKey(accountId, conversationId)]?.size ?: 0
+
+    fun hasUnreadCollaborativeDocumentUpdate(accountId: String, conversationId: String, documentId: String): Boolean =
+        updatedCollaborativeDocuments[collabUpdateKey(accountId, conversationId)]?.contains(documentId) == true
+
+    private fun markCollaborativeDocumentUpdated(accountId: String, conversationId: String, documentId: String) {
+        val key = collabUpdateKey(accountId, conversationId)
+        val docs = updatedCollaborativeDocuments.getOrPut(key) { Collections.synchronizedSet(mutableSetOf()) }
+        if (docs.add(documentId))
+            collaborativeDocumentUpdateSubject.onNext(CollaborativeDocumentUpdate(accountId, conversationId))
+    }
+
+    private fun clearCollaborativeDocumentUpdate(accountId: String, conversationId: String, documentId: String) {
+        val key = collabUpdateKey(accountId, conversationId)
+        val docs = updatedCollaborativeDocuments[key] ?: return
+        if (!docs.remove(documentId))
+            return
+        if (docs.isEmpty())
+            updatedCollaborativeDocuments.remove(key)
+        collaborativeDocumentUpdateSubject.onNext(CollaborativeDocumentUpdate(accountId, conversationId))
+    }
+
+    private fun collabUpdateKey(accountId: String, conversationId: String) = "$accountId\u0000$conversationId"
+
     fun errorAlert(alert: Int) {
         Log.d(TAG, "errorAlert : $alert")
     }
@@ -1442,6 +1544,12 @@ class AccountService(
                     }
             }
             "application/update-profile" -> Interaction(conversation, Interaction.InteractionType.INVALID)
+            "application/collab-doc+json" -> {
+                val documentId = message["uri"] ?: ""
+                val name = message["displayName"] ?: message["body"] ?: ""
+                val kind = message["kind"] ?: CollaborativeDocument.KIND_TEXT
+                CollaborativeDocument(account.accountId, author, documentId, name, kind, !contact.isUser, timestamp)
+            }
             else -> Interaction(conversation, Interaction.InteractionType.INVALID)
         }
         interaction.replyToId = replyTo

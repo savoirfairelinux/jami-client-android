@@ -19,6 +19,7 @@ package net.jami.conversation
 import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
 import net.jami.model.interaction.DataTransfer
+import net.jami.model.interaction.CollaborativeDocument
 import net.jami.model.interaction.Interaction
 import net.jami.smartlist.ConversationItemViewModel
 import java.io.File
@@ -50,6 +51,8 @@ interface ConversationView {
     fun goToGroupCall(conversation: Conversation, contactUri: Uri, hasVideo: Boolean)
     fun shareFile(path: File, displayName: String)
     fun openFile(path: File, displayName: String)
+    fun openCollaborativeDocument(accountId: String, conversationId: String, documentId: String, name: String, kind: String)
+    fun showCollaborativeDocuments(accountId: String, conversationId: String, documents: List<CollaborativeDocument>)
     fun addElement(element: Interaction)
     fun updateElement(element: Interaction)
     fun removeElement(element: Interaction)

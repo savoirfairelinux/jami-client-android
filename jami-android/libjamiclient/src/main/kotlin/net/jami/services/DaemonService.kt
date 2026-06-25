@@ -142,6 +142,26 @@ class DaemonService(
             mExecutor.submit { mAccountService.composingStatusChanged(accountId, conversationId, contactUri, status) }
         }
 
+        override fun collaborativeDocumentChanged(accountId: String, convId: String, documentId: String, index: Int, deleteLen: Int, insert: String) {
+            mExecutor.submit { mAccountService.collaborativeDocumentChanged(accountId, convId, documentId, index, deleteLen, insert) }
+        }
+
+        override fun collaborativeDocumentDelta(accountId: String, convId: String, documentId: String, deltaJson: String) {
+            mExecutor.submit { mAccountService.collaborativeDocumentDelta(accountId, convId, documentId, deltaJson) }
+        }
+
+        override fun collaborativeCursorChanged(accountId: String, convId: String, documentId: String, peerId: String, position: Int, anchor: Int) {
+            mExecutor.submit { mAccountService.collaborativeCursorChanged(accountId, convId, documentId, peerId, position, anchor) }
+        }
+
+        override fun collaborativeParticipantLeft(accountId: String, convId: String, documentId: String, peerId: String) {
+            mExecutor.submit { mAccountService.collaborativeParticipantLeft(accountId, convId, documentId, peerId) }
+        }
+
+        override fun collaborativeDocumentRenamed(accountId: String, convId: String, documentId: String, name: String) {
+            mExecutor.submit { mAccountService.collaborativeDocumentRenamed(accountId, convId, documentId, name) }
+        }
+
         override fun errorAlert(alert: Int) {
             mExecutor.submit { mAccountService.errorAlert(alert) }
         }

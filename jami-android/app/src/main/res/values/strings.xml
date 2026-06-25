@@ -825,4 +825,22 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="shared_services_allowed_contacts_hint">Allowed contacts (comma-separated)</string>
     <string name="shared_services_save">Save</string>
 
+    <!-- Collaborative editing -->
+    <string name="collab_editable_document">Editable document</string>
+    <string name="collab_editable_documents">Editable documents</string>
+    <string name="collab_no_editable_documents">No editable document in this conversation yet.</string>
+    <string name="collab_new_document">New editable document</string>
+    <string name="collab_document_name">Document name</string>
+    <string name="collab_document_name_hint">Untitled document</string>
+    <string name="collab_create">Create</string>
+    <string name="collab_rich_text">Formatted text</string>
+    <string name="collab_editor_hint">Start typing…</string>
+    <string name="collab_fmt_bold">B</string>
+    <string name="collab_fmt_italic">I</string>
+    <string name="collab_fmt_underline">U</string>
+    <string name="collab_fmt_strike">S</string>
+    <string name="collab_fmt_h1">H1</string>
+    <string name="collab_fmt_h2">H2</string>
+    <string name="collab_fmt_h3">H3</string>
+
 </resources>

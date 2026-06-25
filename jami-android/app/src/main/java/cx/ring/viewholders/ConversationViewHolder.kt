@@ -60,6 +60,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.INCOMING_IMAGE,
         MessageType.INCOMING_AUDIO,
         MessageType.INCOMING_VIDEO-> v.findViewById(R.id.photo)
+        MessageType.COLLAB_DOC -> v.findViewById(R.id.photo)
         else -> null
     }
     val mImage: ImageView? = when (type) {
@@ -89,6 +90,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.INCOMING_IMAGE,
         MessageType.INCOMING_VIDEO,
         MessageType.INCOMING_TEXT_MESSAGE -> v.findViewById(R.id.peer_name)
+        MessageType.COLLAB_DOC -> v.findViewById(R.id.peer_name)
         else -> null
     }
     var mFileTime: TextView? = when (type) {
@@ -100,6 +102,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.INCOMING_VIDEO,
         MessageType.OUTGOING_VIDEO,
         MessageType.OUTGOING_FILE -> v.findViewById(R.id.file_time)
+        MessageType.COLLAB_DOC -> v.findViewById(R.id.file_time)
         else -> null
     }
     var mMessageBubble: MessageBubble? = null
@@ -114,6 +117,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.OUTGOING_CALL_INFORMATION -> v.findViewById(R.id.call_icon)
         MessageType.INCOMING_FILE,
         MessageType.OUTGOING_FILE -> v.findViewById(R.id.file_icon)
+        MessageType.COLLAB_DOC -> v.findViewById(R.id.file_icon)
         MessageType.COMPOSING_INDICATION -> v.findViewById(R.id.status_icon)
         else -> null
     }
@@ -221,6 +225,14 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 mFileInfoLayout = v.findViewById(R.id.fileInfoLayout)
                 progress = v.findViewById(R.id.file_download_progress)
                 mFileDownloadButton = v.findViewById(R.id.file_download_button)
+                mMsgDetailTxtPerm = v.findViewById(R.id.message_time_permanent)
+                primaryClickableView = mFileInfoLayout
+            }
+            MessageType.COLLAB_DOC -> {
+                mFileTitle = v.findViewById(R.id.file_title)
+                mFileSize = v.findViewById(R.id.file_size)
+                mLayout = v.findViewById(R.id.file_layout)
+                mFileInfoLayout = v.findViewById(R.id.fileInfoLayout)
                 mMsgDetailTxtPerm = v.findViewById(R.id.message_time_permanent)
                 primaryClickableView = mFileInfoLayout
             }

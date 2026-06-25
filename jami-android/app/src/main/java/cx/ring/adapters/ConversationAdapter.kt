@@ -86,6 +86,7 @@ import net.jami.conversation.ConversationPresenter
 import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
 import net.jami.model.interaction.CallHistory
+import net.jami.model.interaction.CollaborativeDocument
 import net.jami.model.interaction.ContactEvent
 import net.jami.model.interaction.DataTransfer
 import net.jami.model.interaction.Interaction
@@ -353,6 +354,8 @@ class ConversationAdapter(
                     } else MessageType.OUTGOING_FILE.ordinal
                 }
             }
+
+            Interaction.InteractionType.COLLAB_DOC -> MessageType.COLLAB_DOC.ordinal
 
             Interaction.InteractionType.INVALID -> MessageType.INVALID.ordinal
         }
@@ -638,6 +641,11 @@ class ConversationAdapter(
                     position
             )
             Interaction.InteractionType.DATA_TRANSFER -> configureForFileInfo(
+                    conversationViewHolder,
+                    interaction,
+                    position
+            )
+            Interaction.InteractionType.COLLAB_DOC -> configureForCollabDoc(
                     conversationViewHolder,
                     interaction,
                     position
@@ -1144,6 +1152,48 @@ class ConversationAdapter(
                     popupWindow.dismiss()
                 }
         }
+    }
+
+    private fun configureForCollabDoc(
+        viewHolder: ConversationViewHolder,
+        interaction: Interaction,
+        position: Int
+    ) {
+        val context = viewHolder.itemView.context
+        val doc = interaction as CollaborativeDocument
+
+        viewHolder.mFileTitle?.text = doc.displayName
+        viewHolder.mFileSize?.text = context.getString(R.string.collab_editable_document)
+        viewHolder.mFileTime?.text = TextUtils.timestampToTime(context, formatter, doc.timestamp)
+        viewHolder.mIcon?.setImageResource(R.drawable.baseline_edit_rounded_24)
+
+        val isDateShown = hasPermanentDateString(doc, position)
+        configureTimestamp(viewHolder, doc, isDateShown)
+
+        val contact = doc.contact
+        if (doc.isIncoming && presenter.isGroup() && contact != null) {
+            viewHolder.mAvatar?.let { avatar ->
+                avatar.setAvatar(conversationFragment.getConversationAvatar(contact.primaryNumber))
+                avatar.visibility = View.VISIBLE
+            }
+            val account = doc.account
+            if (account != null) {
+                viewHolder.mPeerDisplayName?.apply {
+                    visibility = View.VISIBLE
+                    viewHolder.compositeDisposable.add(
+                        presenter.contactService
+                            .observeContact(account, contact, false)
+                            .observeOn(DeviceUtils.uiScheduler)
+                            .subscribe { text = it.displayName }
+                    )
+                }
+            }
+        } else {
+            viewHolder.mAvatar?.visibility = View.GONE
+            viewHolder.mPeerDisplayName?.visibility = View.GONE
+        }
+
+        viewHolder.mFileInfoLayout?.setOnClickListener { presenter.openCollaborativeDocument(doc) }
     }
 
     private fun configureForFileInfo(

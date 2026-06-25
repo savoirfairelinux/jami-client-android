@@ -36,6 +36,7 @@ enum class MessageType(@LayoutRes val layout: Int, @LayoutRes val tvLayout: Int 
     OUTGOING_TEXT_MESSAGE(R.layout.item_conv_msg_me, R.layout.item_conv_msg_me_tv),
     COMPOSING_INDICATION(R.layout.item_conv_composing),
     HEADER(R.layout.tv_header_blank),
+    COLLAB_DOC(R.layout.item_conv_collab),
     INVALID(-1);
 
     val isFile: Boolean

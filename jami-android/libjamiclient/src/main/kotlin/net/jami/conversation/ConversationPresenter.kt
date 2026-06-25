@@ -32,6 +32,7 @@ import net.jami.model.Account.ComposingStatus
 import net.jami.model.Conversation.ElementStatus
 import net.jami.model.Call.CallStatus
 import net.jami.model.interaction.CallHistory
+import net.jami.model.interaction.CollaborativeDocument
 import net.jami.model.interaction.DataTransfer
 import net.jami.model.interaction.Interaction
 import net.jami.model.interaction.TextMessage
@@ -327,6 +328,52 @@ class ConversationPresenter @Inject constructor(
         val file = interaction as DataTransfer
         val path = deviceRuntimeService.getConversationPath(file)
         view?.openFile(path, file.displayName)
+    }
+
+    fun openCollaborativeDocument(doc: CollaborativeDocument) {
+        val conversation = mConversation ?: return
+        view?.openCollaborativeDocument(
+            conversation.accountId, conversation.uri.rawRingId, doc.documentId, doc.displayName, doc.kind
+        )
+    }
+
+    fun showCollaborativeDocuments() {
+        val conversation = mConversation ?: return
+        mCompositeDisposable.add(conversation.sortedHistory
+            .subscribeOn(Schedulers.computation())
+            .observeOn(uiScheduler)
+            .subscribe({ history ->
+                val seen = HashSet<String>()
+                val documents = history.asReversed()
+                    .filterIsInstance<CollaborativeDocument>()
+                    .filter { seen.add(it.documentId) }
+                view?.showCollaborativeDocuments(conversation.accountId, conversation.uri.rawRingId, documents)
+            }) { e -> Log.e(TAG, "Error listing collaborative documents", e) })
+    }
+
+    fun hasUnreadCollaborativeDocumentUpdate(documentId: String): Boolean {
+        val conversation = mConversation ?: return false
+        return conversationFacade.hasUnreadCollaborativeDocumentUpdate(
+            conversation.accountId,
+            conversation.uri.rawRingId,
+            documentId
+        )
+    }
+
+    fun createCollaborativeDocument(name: String, kind: String) {
+        val conversation = mConversation ?: return
+        val accountId = conversation.accountId
+        val conversationId = conversation.uri.rawRingId
+        mCompositeDisposable.add(
+            accountService.createCollaborativeDocument(accountId, conversationId, name, kind)
+                .observeOn(uiScheduler)
+                .subscribe({ documentId ->
+                    if (documentId.isNotEmpty())
+                        view?.openCollaborativeDocument(accountId, conversationId, documentId, name, kind)
+                    else
+                        Log.e(TAG, "Empty document id returned by createCollaborativeDocument")
+                }) { e -> Log.e(TAG, "Error creating collaborative document", e) }
+        )
     }
 
     fun acceptFile(transfer: DataTransfer) {

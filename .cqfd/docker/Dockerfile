@@ -81,6 +81,20 @@ RUN sdkmanager --channel=1 --no_https "platforms;android-${API_LEVEL}" \
 ENV ANDROID_SDK=${ANDROID_SDK_ROOT}
 ENV ANDROID_NDK=${ANDROID_SDK_ROOT}/ndk/29.0.14206865
 
+# Rust toolchain, required to cross-compile the yffi (Y-CRDT) contrib package used
+# by the collaborative editing feature. Installed system-wide with the Android
+# target triples so the daemon contrib build can produce libyrs.a per ABI.
+ENV RUSTUP_HOME=/usr/local/rustup \
+    CARGO_HOME=/usr/local/cargo \
+    PATH=/usr/local/cargo/bin:${PATH}
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
+        | sh -s -- -y --profile minimal --default-toolchain stable && \
+    rustup target add aarch64-linux-android armv7-linux-androideabi \
+        i686-linux-android x86_64-linux-android && \
+    chmod -R a+rwX /usr/local/rustup /usr/local/cargo && \
+    ln -sf /usr/local/rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo /usr/local/bin/cargo && \
+    ln -sf /usr/local/rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc /usr/local/bin/rustc
+
 
 FROM build AS test
 

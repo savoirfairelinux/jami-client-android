@@ -48,6 +48,8 @@ class ConversationFacade(
     private val mDisposableBag = CompositeDisposable()
     val currentAccountSubject: Observable<Account> = mAccountService.currentAccountSubject
             .switchMapSingle { account: Account -> loadSmartlist(account) }
+    val collaborativeDocumentUpdates: Observable<AccountService.CollaborativeDocumentUpdate>
+        get() = mAccountService.collaborativeDocumentUpdates
 
     /**
      * Two cases: Swarm conversation or non-swarm conversation.
@@ -76,6 +78,15 @@ class ConversationFacade(
         val account = mAccountService.getAccount(accountId)
         return account?.getByUri(conversationUri)
     }
+
+    fun hasUnreadCollaborativeDocumentUpdate(accountId: String, conversationId: String): Boolean =
+        mAccountService.hasUnreadCollaborativeDocumentUpdate(accountId, conversationId)
+
+    fun unreadCollaborativeDocumentUpdateCount(accountId: String, conversationId: String): Int =
+        mAccountService.unreadCollaborativeDocumentUpdateCount(accountId, conversationId)
+
+    fun hasUnreadCollaborativeDocumentUpdate(accountId: String, conversationId: String, documentId: String): Boolean =
+        mAccountService.hasUnreadCollaborativeDocumentUpdate(accountId, conversationId, documentId)
 
     fun startConversation(accountId: String, contactId: Uri): Single<Conversation> =
         getAccountSubject(accountId).map { account: Account -> account.getByUri(contactId)!! }
