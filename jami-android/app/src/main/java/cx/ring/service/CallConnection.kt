@@ -66,6 +66,10 @@ class CallConnection(
     private var availableEndpoints: List<CallEndpoint> = emptyList()
     private var pendingEndpointId: String? = null
 
+    private val connectionStateSubject: Subject<Int> = BehaviorSubject.createDefault(state)
+    val connectionState: Observable<Int>
+        get() = connectionStateSubject
+
     val audioState: Observable<CallAudioState>
         get() = audioStateSubject
 
@@ -86,6 +90,7 @@ class CallConnection(
             if (value != null) {
                 if (value.callStatus == CallStatus.RINGING)
                     setRinging()
+                connectionStateSubject.onNext(state)
                 disposable.add(service.callService.callsUpdates
                     .filter { it === value }
                     .subscribe { call ->
@@ -110,6 +115,7 @@ class CallConnection(
                             CallStatus.OVER -> dispose()
                             else -> {}
                         }
+                        connectionStateSubject.onNext(state)
                     })
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
                     disposable.add(wantedAudioStateSubject.subscribe { wantedState ->
@@ -158,6 +164,7 @@ class CallConnection(
     val disposable = CompositeDisposable()
 
     fun dispose() {
+        connectionStateSubject.onComplete()
         disposable.dispose()
         destroy()
     }
