@@ -49,9 +49,10 @@ class JamiApplicationFirebase : JamiApplication() {
     @Volatile var isForeground: Boolean = false
         private set
 
-    // elapsedRealtime of the last background push / last call push, used as grace windows
-    // that keep accounts active long enough for the daemon to reconnect and deliver the
-    // incoming call or message. Written from the FCM thread, read from the main thread.
+    // elapsedRealtime of the last background push or token refresh / last call push, used
+    // as grace windows that keep accounts active long enough for the daemon to reconnect
+    // and deliver the incoming call or message. Written from the FCM thread, read from the
+    // main thread.
     private val lastPushTime = AtomicLong(0L)
     private val lastCallPushTime = AtomicLong(0L)
     private val lastMessagePushTime = AtomicLong(0L)
@@ -88,7 +89,7 @@ class JamiApplicationFirebase : JamiApplication() {
             // grace window, also exempt from the cap.
             callGraceRemaining > 0 -> scheduleBackgroundDeactivation(callGraceRemaining)
             messageGraceRemaining > 0 -> scheduleBackgroundDeactivation(messageGraceRemaining)
-            // Recent push: wait out the grace window unless the episode cap is reached.
+            // Recent push/token refresh: wait out the grace window unless the episode cap is reached.
             graceRemaining > 0 && !capReached -> scheduleBackgroundDeactivation(graceRemaining)
             else -> {
                 Log.d(TAG, "App went to background with push enabled — deactivating accounts"
@@ -160,9 +161,16 @@ class JamiApplicationFirebase : JamiApplication() {
             field = token
             if (token != null && mPreferencesService.settings.enablePushNotifications) {
                 mAccountService.setPushNotificationConfig(token.first, token.second, PUSH_PLATFORM)
-                // Token arrived while already backgrounded: the last check ran without it and
-                // restored accounts, so re-arm the deactivation now that push works.
-                backgroundHandler.post { if (!isAppVisible()) scheduleBackgroundDeactivation() }
+                // Keep the account online long enough to re-announce the new token before
+                // background optimization shuts the DHT down.
+                lastPushTime.set(SystemClock.elapsedRealtime())
+                backgroundHandler.post {
+                    mAccountService.restoreProxyAccountsAfterBackground()
+                    if (!isAppVisible()) {
+                        hardwareService.connectivityChanged(true)
+                        scheduleBackgroundDeactivation(PUSH_GRACE_MS)
+                    }
+                }
             } else {
                 mAccountService.setPushNotificationToken("")
                 // Push unusable: restore immediately (no-op if nothing was deactivated).
