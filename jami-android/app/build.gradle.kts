@@ -1,6 +1,12 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val buildFirebase = project.hasProperty("buildFirebase") || gradle.startParameter.taskRequests.toString().contains("Firebase")
+val taskRequests = gradle.startParameter.taskRequests.toString()
+val buildsAllDebugVariants = taskRequests.contains("assembleDebug") || taskRequests.contains("assembleAndroidTest")
+val buildsAllReleaseVariants = taskRequests.contains("assembleRelease") || taskRequests.contains("bundleRelease")
+val buildFirebase = project.hasProperty("buildFirebase")
+    || taskRequests.contains("Firebase")
+    || buildsAllDebugVariants
+    || buildsAllReleaseVariants
 
 plugins {
     alias(libs.plugins.android.application)

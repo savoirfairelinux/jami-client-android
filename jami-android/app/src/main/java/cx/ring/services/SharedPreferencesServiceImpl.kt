@@ -24,6 +24,7 @@ import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
+import cx.ring.BuildConfig
 import cx.ring.R
 import cx.ring.application.JamiApplication
 import cx.ring.utils.DeviceUtils
@@ -74,7 +75,7 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
             useSystemContacts = appPrefs.getBoolean(PREF_SYSTEM_CONTACTS, false),
             allowPlaceSystemCalls = appPrefs.getBoolean(PREF_PLACE_CALLS, false),
             runOnStartup = appPrefs.getBoolean(PREF_ON_STARTUP, true),
-            enablePushNotifications = appPrefs.getBoolean(PREF_PUSH_NOTIFICATIONS, false),
+            enablePushNotifications = appPrefs.getBoolean(PREF_PUSH_NOTIFICATIONS, BuildConfig.FLAVOR == "withFirebase"),
             enablePermanentService = appPrefs.getBoolean(PREF_PERSISTENT_NOTIFICATION, false),
             enableAddGroup = appPrefs.getBoolean(PREF_ADD_GROUP, false),
             enableTypingIndicator = appPrefs.getBoolean(PREF_SHOW_TYPING, true),

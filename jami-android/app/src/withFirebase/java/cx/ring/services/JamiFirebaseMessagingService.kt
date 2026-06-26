@@ -54,6 +54,7 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
         val isMessageWakeup = wakeup.isMessage
         val app = JamiApplication.instance as? JamiApplicationFirebase
         val appInForeground = app?.isForeground ?: false
+        Log.d(TAG, "push call=$isCallWakeup message=$isMessageWakeup exp=$isExpiration foreground=$appInForeground priority=${remoteMessage.priority}/${remoteMessage.originalPriority}")
 
         // Start FGS for calls and messages when backgrounded: both trigger an async daemon
         // fetch (proxy reconnect + DHT/swarm pull).
