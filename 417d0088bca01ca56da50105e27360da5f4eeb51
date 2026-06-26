@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "314d3feb_1c1b73cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-06-26T17:05:02Z",
+      "side": 1,
+      "message": "Resulting in buffer issues which is blocking the encoding pipeline.\n\n\n2026-06-26 12:58:29.867 26576-28075 BufferQueueConsumer     cx.ring                              E  [GraphicBufferSource](id:67d000000022,api:4,p:1517,c:26576) acquireBuffer: max acquired buffer count reached: 17 (max 16)\n2026-06-26 12:58:29.868 26576-28075 GraphicBufferSource     cx.ring                              W  acquireBuffer_l: failed with err\u003d-38\n2026-06-26 12:58:29.868 26576-28075 GraphicBufferSource     cx.ring                              E  onFrameAvailable: acquireBuffer returned err\u003d-38\n2026-06-26 12:58:29.942 26576-28075 BufferQueueConsumer     cx.ring                              E  [GraphicBufferSource](id:67d000000022,api:4,p:1517,c:26576) acquireBuffer: max acquired buffer count reached: 17 (max 16)\n2026-06-26 12:58:29.942 26576-28075 GraphicBufferSource     cx.ring                              W  acquireBuffer_l: failed with err\u003d-38\n2026-06-26 12:58:29.942 26576-28075 GraphicBufferSource     cx.ring                              E  onFrameAvailable: acquireBuffer returned err\u003d-38",
+      "revId": "417d0088bca01ca56da50105e27360da5f4eeb51",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
