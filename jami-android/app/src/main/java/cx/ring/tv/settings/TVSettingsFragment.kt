@@ -17,6 +17,7 @@
 package cx.ring.tv.settings
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -31,9 +32,11 @@ import cx.ring.tv.account.JamiPreferenceFragment
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.model.Account
 import net.jami.model.ConfigKey
+import net.jami.services.HardwareService
 import net.jami.settings.GeneralAccountPresenter
 import net.jami.settings.GeneralAccountView
 import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class TVSettingsFragment : LeanbackSettingsFragmentCompat() {
@@ -68,9 +71,36 @@ class TVSettingsFragment : LeanbackSettingsFragmentCompat() {
 
     @AndroidEntryPoint
     class PrefsFragment : JamiPreferenceFragment<GeneralAccountPresenter>(), GeneralAccountView {
+        @Inject
+        lateinit var mHardwareService: HardwareService
+
+        private val videoPreferenceChangeListener =
+            SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+                // When the resolution changes, re-register the video devices so the
+                // daemon picks up the new resolution immediately, without requiring
+                // the application to be restarted.
+                if (key == SharedPreferencesServiceImpl.PREF_RESOLUTION && mHardwareService.isVideoAvailable) {
+                    mHardwareService.initVideo(resetCamera = true)
+                        .onErrorComplete()
+                        .subscribe()
+                }
+            }
+
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
             presenter.init()
+        }
+
+        override fun onResume() {
+            super.onResume()
+            preferenceManager.sharedPreferences
+                ?.registerOnSharedPreferenceChangeListener(videoPreferenceChangeListener)
+        }
+
+        override fun onPause() {
+            preferenceManager.sharedPreferences
+                ?.unregisterOnSharedPreferenceChangeListener(videoPreferenceChangeListener)
+            super.onPause()
         }
 
         override fun addJamiPreferences(accountId: String) {}

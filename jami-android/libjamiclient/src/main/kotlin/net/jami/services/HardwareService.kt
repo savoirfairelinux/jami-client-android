@@ -73,7 +73,7 @@ abstract class HardwareService(
     val connectivityState: Observable<Boolean>
         get() = connectivityEvents
 
-    abstract fun initVideo(): Completable
+    abstract fun initVideo(resetCamera: Boolean = false): Completable
     abstract val isVideoAvailable: Boolean
     abstract fun updateAudioState(conf: Conference?, call: Call, incomingCall: Boolean, isOngoingVideo: Boolean)
     abstract fun closeAudioState()

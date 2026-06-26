@@ -97,7 +97,7 @@ class HardwareServiceImpl(
     val handler: Handler
         get() = cameraService.handler
 
-    override fun initVideo(): Completable = cameraService.init()
+    override fun initVideo(resetCamera: Boolean): Completable = cameraService.init(resetCamera)
 
     override val maxResolutions: Observable<Pair<Int?, Int?>>
         get() = cameraService.maxResolutions
