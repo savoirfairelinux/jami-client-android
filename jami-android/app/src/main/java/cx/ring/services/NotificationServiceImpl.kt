@@ -28,6 +28,7 @@ import android.media.AudioManager
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
+import android.telecom.Connection
 import android.text.TextUtils
 import android.text.format.Formatter
 import android.util.JsonWriter
@@ -99,6 +100,7 @@ class NotificationServiceImpl(
     private val dataTransferNotifications = ConcurrentHashMap<Int, Notification>()
     private var pendingNotificationActions = ArrayList<() -> Unit>()
     private var pendingScreenshareCallbacks = HashMap<String, () -> Unit>()
+    @Volatile private var callServiceStarted = false
 
     init {
         Schedulers.io().createWorker().schedule {
@@ -229,7 +231,8 @@ class NotificationServiceImpl(
         }
     }
 
-    override fun showCallNotification(notifId: Int): Any? = callNotifications.remove(notifId)
+    override fun showCallNotification(notifId: Int): Any? =
+        callNotifications.remove(notifId)?.also { callServiceStarted = true }
 
     override fun showLocationNotification(first: Account, contact: Contact, conversation: Conversation) {
         // Ignore new notification if conversation is muted.
@@ -321,6 +324,12 @@ class NotificationServiceImpl(
         }
     }
 
+    private fun isConnectionReadyForForeground(state: Int): Boolean =
+        state == Connection.STATE_RINGING ||
+            state == Connection.STATE_DIALING ||
+            state == Connection.STATE_ACTIVE ||
+            state == Connection.STATE_HOLDING
+
     private fun manageCallNotification(conference: Conference, remove: Boolean, startScreenshare: Boolean): Completable {
         if (DeviceUtils.isTv(mContext)) {
             if (!remove) startCallActivity(conference.id)
@@ -350,8 +359,8 @@ class NotificationServiceImpl(
             .flatMapCompletable { notification ->
                 Log.w(TAG, "showCallNotification $notification")
                 val nid = random.nextInt()
-                callNotifications[nid] = notification
                 val start = {
+                    callNotifications[nid] = notification
                     ContextCompat.startForegroundService(mContext,
                         Intent(CallNotificationService.ACTION_START, null, mContext, CallNotificationService::class.java)
                             .putExtra(NotificationService.KEY_NOTIFICATION_ID, nid)
@@ -359,20 +368,44 @@ class NotificationServiceImpl(
                             .putExtra(NotificationService.KEY_CALL_ID, id)
                     )
                 }
-                try {
-                    start()
-                } catch (e: Exception) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                        if (e is ForegroundServiceStartNotAllowedException) {
-                            pingPush(conference.accountId, start)
+                val safeStart = {
+                    if (!currentCalls.containsKey(id)) {
+                        Log.w(TAG, "Skipping call foreground service start: call is no longer active")
+                    } else try {
+                        start()
+                    } catch (e: Exception) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                            if (e is ForegroundServiceStartNotAllowedException) {
+                                pingPush(conference.accountId, start)
+                            } else {
+                                Log.w(TAG, "Can't show call notification", e)
+                            }
                         } else {
                             Log.w(TAG, "Can't show call notification", e)
                         }
-                    } else {
-                        Log.w(TAG, "Can't show call notification", e)
                     }
                 }
-                Completable.complete()
+
+                val call = conference.call
+                if (call != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    call.systemConnection
+                        .flatMapCompletable { systemCall ->
+                            val connection = (systemCall as? CallServiceImpl.AndroidCall)?.connection
+                            if (connection == null) {
+                                Completable.fromAction { safeStart() }
+                            } else {
+                                connection.connectionState
+                                    .takeUntil { it == Connection.STATE_DISCONNECTED }
+                                    .filter { isConnectionReadyForForeground(it) }
+                                    .firstElement()
+                                    .doOnSuccess { safeStart() }
+                                    .ignoreElement()
+                            }
+                        }
+                        .onErrorResumeNext { Completable.fromAction { safeStart() } }
+                } else {
+                    Completable.fromAction { safeStart() }
+                }
             }
             .onErrorComplete()
             .doOnComplete {
@@ -470,6 +503,7 @@ class NotificationServiceImpl(
     }
 
     override fun removeCallNotification() {
+        callServiceStarted = false
         try {
             mContext.startService(Intent(CallNotificationService.ACTION_STOP, null, mContext, CallNotificationService::class.java))
         } catch (e: Exception) {
@@ -1027,6 +1061,7 @@ class NotificationServiceImpl(
     }
 
     override fun cancelCallNotification() {
+        callServiceStarted = false
         notificationManager.cancel(NOTIF_CALL_ID)
         mNotificationBuilders.remove(NOTIF_CALL_ID)
         callNotifications.clear()
