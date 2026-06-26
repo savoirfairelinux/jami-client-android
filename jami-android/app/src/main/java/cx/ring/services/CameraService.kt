@@ -311,8 +311,7 @@ class CameraService internal constructor(c: Context) {
         }.subscribeOn(AndroidSchedulers.from(videoLooper))
     }
 
-    fun init(): Completable {
-        val resetCamera = false
+    fun init(resetCamera: Boolean = false): Completable {
         return if (manager == null)
             Completable.error(IllegalStateException("Video manager is unavailable"))
         else loadDevices(manager)

@@ -80,6 +80,10 @@ class HardwareServiceImpl(
     private var currentFocus: AudioFocusRequestCompat? = null
     private var pendingScreenSharingSession: MediaProjection? = null
     private val shouldCapture = HashSet<String>()
+    // A resolution change requested while a capture is active is deferred until
+    // the capture stops, to avoid disrupting the running encoder pipeline.
+    @Volatile
+    private var pendingResolutionReset = false
     private var mShouldSpeakerphone = false
     private val mHasSpeakerPhone: Boolean by lazy { hasSpeakerphone() }
     private var mIsChooseExtension = false
@@ -97,7 +101,18 @@ class HardwareServiceImpl(
     val handler: Handler
         get() = cameraService.handler
 
-    override fun initVideo(): Completable = cameraService.init()
+    override fun initVideo(resetCamera: Boolean): Completable = cameraService.init(resetCamera)
+
+    override fun onVideoResolutionChanged() {
+        // Re-register the camera so the daemon picks up the new resolution. While
+        // a capture is active, doing so would tear down the device under the
+        // running encoder and overflow its input buffer queue, so defer the
+        // reset until the capture stops.
+        if (shouldCapture.isEmpty())
+            initVideo(resetCamera = true).onErrorComplete().subscribe()
+        else
+            pendingResolutionReset = true
+    }
 
     override val maxResolutions: Observable<Pair<Int?, Int?>>
         get() = cameraService.maxResolutions
@@ -743,6 +758,12 @@ class HardwareServiceImpl(
         shouldCapture.remove(camId)
         cameraService.closeCamera(camId)
         cameraEvents.onNext(VideoEvent(camId, started = false))
+        // Apply a resolution change that was deferred during the capture, now
+        // that the encoder pipeline is no longer running.
+        if (pendingResolutionReset && shouldCapture.isEmpty()) {
+            pendingResolutionReset = false
+            initVideo(resetCamera = true).onErrorComplete().subscribe()
+        }
     }
 
     override fun requestKeyFrame(camId: String) {
