@@ -17,6 +17,7 @@
 package cx.ring.settings
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.preference.Preference
@@ -24,8 +25,25 @@ import androidx.preference.PreferenceFragmentCompat
 import cx.ring.R
 import cx.ring.interfaces.AppBarStateListener
 import cx.ring.services.SharedPreferencesServiceImpl
+import dagger.hilt.android.AndroidEntryPoint
+import net.jami.services.HardwareService
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class VideoSettingsFragment : PreferenceFragmentCompat() {
+    @Inject
+    lateinit var mHardwareService: HardwareService
+
+    private val videoPreferenceChangeListener =
+        SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            // When the resolution changes, re-register the video devices so the
+            // daemon picks up the new resolution without requiring the
+            // application to be restarted (deferred while a call is capturing).
+            if (key == SharedPreferencesServiceImpl.PREF_RESOLUTION && mHardwareService.isVideoAvailable) {
+                mHardwareService.onVideoResolutionChanged()
+            }
+        }
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         val pm = preferenceManager
         pm.sharedPreferencesMode = Context.MODE_PRIVATE
@@ -41,6 +59,18 @@ class VideoSettingsFragment : PreferenceFragmentCompat() {
                     true
                 }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        preferenceManager.sharedPreferences
+            ?.registerOnSharedPreferenceChangeListener(videoPreferenceChangeListener)
+    }
+
+    override fun onPause() {
+        preferenceManager.sharedPreferences
+            ?.unregisterOnSharedPreferenceChangeListener(videoPreferenceChangeListener)
+        super.onPause()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -73,7 +73,10 @@ abstract class HardwareService(
     val connectivityState: Observable<Boolean>
         get() = connectivityEvents
 
-    abstract fun initVideo(): Completable
+    abstract fun initVideo(resetCamera: Boolean = false): Completable
+    // Called when the video resolution preference changes, to re-register the
+    // camera so the daemon applies the new resolution without an app restart.
+    abstract fun onVideoResolutionChanged()
     abstract val isVideoAvailable: Boolean
     abstract fun updateAudioState(conf: Conference?, call: Call, incomingCall: Boolean, isOngoingVideo: Boolean)
     abstract fun closeAudioState()
