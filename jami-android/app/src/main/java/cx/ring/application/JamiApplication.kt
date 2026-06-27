@@ -41,8 +41,10 @@ import cx.ring.service.DRingService
 import cx.ring.service.JamiJobService
 import cx.ring.service.PeerTunnelForegroundService
 import cx.ring.linkpreview.LinkPreview
+import androidx.core.app.NotificationManagerCompat
 import cx.ring.services.AndroidExposedServicesService
 import cx.ring.services.CallServiceImpl.Companion.CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY
+import cx.ring.services.NotificationServiceImpl
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.views.AvatarFactory
 import io.reactivex.rxjava3.core.Completable
@@ -222,6 +224,15 @@ abstract class JamiApplication : Application() {
         super.onCreate()
         instance = this
         LinkPreview.init(this)
+
+        // Register notification channels synchronously and early. Application
+        // onCreate() always runs before any Service.onStartCommand(), so this
+        // guarantees the channels exist before a foreground service (e.g. one
+        // started from a background push) posts its notification. Otherwise the
+        // system rejects the notification with
+        // CannotPostForegroundServiceNotificationException. The call is
+        // idempotent, so it is safe even if channels were already created.
+        NotificationServiceImpl.registerNotificationChannels(this, NotificationManagerCompat.from(this))
 
         // Launch logging if previously set up by user (info is stored in shared preferences).
         // Subscribe on it (first element) to initialize pipe construction.
