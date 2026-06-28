@@ -19,9 +19,7 @@ package cx.ring.service
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.text.format.DateUtils
 import android.util.Log
-import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.services.PreferencesService
 import javax.inject.Inject
@@ -36,13 +34,11 @@ class BootReceiver : BroadcastReceiver() {
         if (Intent.ACTION_BOOT_COMPLETED == action || Intent.ACTION_REBOOT == action || Intent.ACTION_MY_PACKAGE_REPLACED == action) {
             try {
                 if (mPreferencesService.settings.runOnStartup) {
-                    try {
-                        ContextCompat.startForegroundService(context, Intent(SyncService.ACTION_START)
-                                .setClass(context, SyncService::class.java)
-                                .putExtra(SyncService.EXTRA_TIMEOUT, 7 * DateUtils.SECOND_IN_MILLIS))
-                    } catch (e: IllegalStateException) {
-                        Log.e(TAG, "Error starting service", e)
-                    }
+                    // Android 15 (API 35) forbids BOOT_COMPLETED receivers from starting
+                    // restricted foreground service types such as dataSync (SyncService).
+                    // Defer the sync to a JobScheduler job, which starts the service
+                    // outside of the boot broadcast context.
+                    JamiJobService.scheduleBootSync(context)
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Can't start on boot", e)
