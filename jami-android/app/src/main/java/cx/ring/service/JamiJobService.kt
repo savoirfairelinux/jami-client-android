@@ -16,8 +16,12 @@
  */
 package cx.ring.service
 
+import android.app.job.JobInfo
 import android.app.job.JobParameters
+import android.app.job.JobScheduler
 import android.app.job.JobService
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.os.Handler
 import android.text.format.DateUtils
@@ -27,7 +31,7 @@ import cx.ring.application.JamiApplication
 
 class JamiJobService : JobService() {
     override fun onStartJob(params: JobParameters): Boolean {
-        if (params.jobId != JOB_ID) return false
+        if (params.jobId != JOB_ID && params.jobId != BOOT_JOB_ID) return false
         Log.w(TAG, "onStartJob() $params")
         try {
             try {
@@ -66,5 +70,27 @@ class JamiJobService : JobService() {
         const val JOB_FLEX = 60 * DateUtils.MINUTE_IN_MILLIS
         const val JOB_DURATION = 7 * DateUtils.SECOND_IN_MILLIS
         const val JOB_ID = 3905
+        const val BOOT_JOB_ID = 3906
+
+        /**
+         * Schedule a one-shot job that synchronizes accounts shortly after boot.
+         *
+         * Apps targeting Android 15 (API level 35) are not allowed to start
+         * restricted foreground service types (such as dataSync) directly from a
+         * BOOT_COMPLETED broadcast receiver: doing so throws
+         * ForegroundServiceStartNotAllowedException and crashes the app. Running
+         * the sync from a JobScheduler job moves the foreground service start out
+         * of the boot broadcast context, while the running job keeps the process
+         * alive long enough to bring accounts online.
+         */
+        fun scheduleBootSync(context: Context) {
+            val scheduler = context.getSystemService(JobScheduler::class.java) ?: return
+            Log.w(TAG, "JobScheduler: scheduling boot sync job")
+            scheduler.schedule(
+                JobInfo.Builder(BOOT_JOB_ID, ComponentName(context, JamiJobService::class.java))
+                    .setOverrideDeadline(DateUtils.SECOND_IN_MILLIS)
+                    .build()
+            )
+        }
     }
 }
