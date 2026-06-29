@@ -664,10 +664,11 @@ class CameraService internal constructor(c: Context) {
 
 
     private fun startMediaCodecIfNeeded(params: VideoParams) {
+        val codec = params.mediaCodec ?: return
         if (!params.codecStarted) {
             try {
                 params.forceKeyFrame = true
-                params.mediaCodec?.start()
+                codec.start()
                 params.codecStarted = true
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to start codec", e)
