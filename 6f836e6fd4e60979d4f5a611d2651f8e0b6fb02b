@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b607668d_7fab54bd",
+        "filename": "jami-android/app/build.gradle.kts",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-06-29T19:54:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3959315e_9cefde13",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 31
+      },
+      "revId": "6f836e6fd4e60979d4f5a611d2651f8e0b6fb02b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a951dc71_2d4609ea",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-06-26T15:33:59Z",
       "side": 1,
       "message": "While the account is created or imported, enable notifications is already set to true, which is persisted.",
+      "range": {
+        "startLine": 78,
+        "startChar": 12,
+        "endLine": 78,
+        "endChar": 121
+      },
+      "revId": "6f836e6fd4e60979d4f5a611d2651f8e0b6fb02b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7323a480_c9533d3f",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/SharedPreferencesServiceImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-06-29T19:54:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a951dc71_2d4609ea",
       "range": {
         "startLine": 78,
         "startChar": 12,
