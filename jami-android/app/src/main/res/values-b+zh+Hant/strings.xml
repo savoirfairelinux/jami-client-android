@@ -443,6 +443,12 @@
   <string name="bottomSheet_hangup_btn">結束電話</string>
   <string name="bottomSheet_mute_microphone_btn">微</string>
   <string name="bottomSheet_sound_output_btn">聲音</string>
+  <string name="audio_output_dialog_title">音频输出</string>
+  <string name="audio_output_content_description">音频输出：%1$s</string>
+  <string name="audio_output_speaker">演讲者</string>
+  <string name="audio_output_earpiece">耳机</string>
+  <string name="audio_output_headset">耳机</string>
+  <string name="audio_output_bluetooth">蓝牙</string>
   <string name="bottomSheet_raiseHand_btn">舉手</string>
   <string name="camera_toggle_btn_description">切换摄像头</string>
   <string name="camera_flip_btn_description">翻转相机</string>

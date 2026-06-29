@@ -443,6 +443,12 @@
   <string name="bottomSheet_hangup_btn">Lõpeta kõne</string>
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Helid</string>
+  <string name="audio_output_dialog_title">Heliväljund</string>
+  <string name="audio_output_content_description">Heliväljund: %1$s</string>
+  <string name="audio_output_speaker">Kõlar</string>
+  <string name="audio_output_earpiece">Kõrvakuular</string>
+  <string name="audio_output_headset">Kõrvaklapid</string>
+  <string name="audio_output_bluetooth">Bluetooth</string>
   <string name="bottomSheet_raiseHand_btn">Anna käega märku</string>
   <string name="camera_toggle_btn_description">Lülita kaamera sisse/välja</string>
   <string name="camera_flip_btn_description">Pööra kaamerat</string>

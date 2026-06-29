@@ -444,6 +444,12 @@
   <string name="bottomSheet_hangup_btn">Finalizar llamada</string>
   <string name="bottomSheet_mute_microphone_btn">Micro</string>
   <string name="bottomSheet_sound_output_btn">Sonidos</string>
+  <string name="audio_output_dialog_title">Salida de audio</string>
+  <string name="audio_output_content_description">Salida de audio: %1$s</string>
+  <string name="audio_output_speaker">altavoz</string>
+  <string name="audio_output_earpiece">Auricular</string>
+  <string name="audio_output_headset">Cascos</string>
+  <string name="audio_output_bluetooth">Bluetooth</string>
   <string name="bottomSheet_raiseHand_btn">Levanta tu mano</string>
   <string name="camera_toggle_btn_description">Alternar cámara</string>
   <string name="camera_flip_btn_description">Girar cámara</string>

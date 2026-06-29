@@ -443,6 +443,12 @@
   <string name="bottomSheet_hangup_btn">Lopeta puhelu</string>
   <string name="bottomSheet_mute_microphone_btn">Pieni</string>
   <string name="bottomSheet_sound_output_btn">Äänet</string>
+  <string name="audio_output_dialog_title">Äänilähtö</string>
+  <string name="audio_output_content_description">Äänilähtö: %1$s</string>
+  <string name="audio_output_speaker">Kaiutin</string>
+  <string name="audio_output_earpiece">Kuuloke</string>
+  <string name="audio_output_headset">Kuulokkeet</string>
+  <string name="audio_output_bluetooth">Bluetooth</string>
   <string name="bottomSheet_raiseHand_btn">Nosta käsi</string>
   <string name="camera_toggle_btn_description">Kamera</string>
   <string name="camera_flip_btn_description">Käännä kamera</string>
