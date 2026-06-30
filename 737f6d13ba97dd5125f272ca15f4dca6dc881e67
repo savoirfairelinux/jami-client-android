@@ -16,6 +16,24 @@
       "message": "[warning] Line 361: Moving `callNotifications[nid] \u003d notification` inside `start` means a failed `startForegroundService` attempt leaves an unreachable pending notification in `callNotifications`. On Android S+, `ForegroundServiceStartNotAllowedException` is caught and `pingPush` may retry later, but the failed `nid` remains stored forever because `CallNotificationService` was never started to consume it. This can accumulate stale notifications during repeated blocked starts. Roll back the map insertion when starting the service throws, or insert only after a successful start path can consume it. For example:\n```suggestion\n                    callNotifications[nid] \u003d notification\n                    try {\n                        ContextCompat.startForegroundService(mContext,\n                            Intent(CallNotificationService.ACTION_START, null, mContext, CallNotificationService::class.java)\n                                .putExtra(NotificationService.KEY_NOTIFICATION_ID, nid)\n                                .putExtra(NotificationService.KEY_SCREENSHARE, startScreenshare)\n                                .putExtra(NotificationService.KEY_CALL_ID, id)\n                        )\n                    } catch (e: Exception) {\n                        callNotifications.remove(nid)\n                        throw e\n                    }\n```",
       "revId": "737f6d13ba97dd5125f272ca15f4dca6dc881e67",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e17fbe6f_565f2a17",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-06-30T22:29:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "863730e5_010f2203",
+      "revId": "737f6d13ba97dd5125f272ca15f4dca6dc881e67",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
