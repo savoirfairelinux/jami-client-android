@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7304a3eb_96a0b1c9",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-30T22:29:31Z",
+      "side": 1,
+      "message": "[warning] Line 374: The `pingPush` retry is registered with `start` instead of `safeStart`, so it bypasses the `currentCalls.containsKey(id)` stale-call guard when the retry runs later. If the call ends before push wake-up retries the foreground service start, this can still start `CallNotificationService` for a disconnected call. Register the guarded action for delayed retry, and keep rollback behavior inside that path. For example:\n```suggestion\n                                pingPush(conference.accountId) { safeStart() }\n```",
+      "revId": "39d55f26d03b44606822311a70d9a8d4a20fbc96",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
