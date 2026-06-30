@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23c0ac11_cb3b51bb",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-30T20:11:03Z",
+      "side": 1,
+      "message": "[warning] Line 338: This skips rebuilding/updating the foreground call notification whenever the call status is unchanged after the service has started. Call notifications contain more than just `CallStatus` (participants/contact data, actions, screen share state, etc.), so those updates can be dropped while the UI still shows stale content. Only suppress a foreground-service start when no notification-visible state changed, or still update the existing notification without restarting the service. For example, track a richer notification key or remove this early return:\n```suggestion\n                lastCallNotificationStatus[id] \u003d status\n```\nThen let the existing notification path update the service/notification.",
+      "revId": "355d3ab4146666a09c98bbf612d09d5f59189456",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b84af2e0_456e3488",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-06-30T20:11:03Z",
+      "side": 1,
+      "message": "[warning] Line 378: `safeStart` checks only `currentCalls.isEmpty()`, so a delayed Telecom-state emission for an old conference can still start the foreground service after that specific call was removed, as long as another call exists. Because `callNotifications[nid]` is populated inside `start()`, this can queue and start a stale notification/call id. Check that the same conference id is still current before starting.\n```suggestion\n                    if (!currentCalls.containsKey(id)) {\n                        Log.w(TAG, \"Skipping call foreground service start: call is no longer active\")\n                    } else try {\n```\nThis avoids racing disconnected calls against later active calls.",
+      "revId": "355d3ab4146666a09c98bbf612d09d5f59189456",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
