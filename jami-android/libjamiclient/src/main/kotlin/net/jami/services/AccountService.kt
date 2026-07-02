@@ -730,13 +730,13 @@ class AccountService(
     }
 
     fun updateProfile(accountId: String, displayName: String, avatarBase64: String, fileType: String) {
-        JamiService.updateProfile(accountId, displayName, avatarBase64, fileType, if (avatarBase64.isEmpty()) 2 else 1)
+        JamiService.updateProfile(accountId, displayName, avatarBase64, fileType, "", if (avatarBase64.isEmpty()) 2 else 1)
     }
     fun updateProfile(accountId: String, displayName: String, avatarPath: File, fileType: String) {
-        JamiService.updateProfile(accountId, displayName, avatarPath.absolutePath, fileType, 0)
+        JamiService.updateProfile(accountId, displayName, avatarPath.absolutePath, fileType, "", 0)
     }
     fun updateProfile(accountId: String, displayName: String) {
-        JamiService.updateProfile(accountId, displayName, "", "", 0)
+        JamiService.updateProfile(accountId, displayName, "", "", "", 0)
     }
 
     /**
