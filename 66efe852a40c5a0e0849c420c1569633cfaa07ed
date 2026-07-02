@@ -16,6 +16,24 @@
       "message": "[warning] Line 375: If a foreground-service start succeeds but `CallNotificationService` never consumes the pending notification, `callNotifications[nid]` remains in the map because cleanup only happens on thrown exceptions or stale-call checks. This can happen if the service is killed before `showCallNotification()` runs or fails during startup. Track the start attempt and remove the pending entry when the gated Completable terminates without the service consuming it, for example by storing a consumed flag or removing the nid in a `doFinally` unless `showCallNotification()` has removed it.",
       "revId": "66efe852a40c5a0e0849c420c1569633cfaa07ed",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1644e492_1c3a9185",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-07-02T15:20:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cb2e6d8_c4d427c5",
+      "revId": "66efe852a40c5a0e0849c420c1569633cfaa07ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
