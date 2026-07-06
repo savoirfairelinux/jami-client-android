@@ -81,7 +81,7 @@ class ConversationTest {
     @Test
     @Throws(Exception::class)
     fun addHistoryCall() {
-        val oldSize = conversation!!.aggregateHistory.size
+        val oldSize = conversation!!.sortedHistory.blockingGet().size
         conversation!!.addCall(
             CallHistory(
                 "Coucou",
@@ -91,7 +91,7 @@ class ConversationTest {
                 0L
             )
         )
-        val newSize = conversation!!.aggregateHistory.size
+        val newSize = conversation!!.sortedHistory.blockingGet().size
         Assert.assertEquals(0, oldSize.toLong())
         Assert.assertEquals(oldSize.toLong(), (newSize - 1).toLong())
     }
@@ -99,9 +99,9 @@ class ConversationTest {
     @Test
     @Throws(Exception::class)
     fun addTextMessage() {
-        val oldSize = conversation!!.aggregateHistory.size
+        val oldSize = conversation!!.sortedHistory.blockingGet().size
         conversation!!.addTextMessage(TextMessage("Coucou", "ring:test", "1", conversation, "Toi"))
-        val newSize = conversation!!.aggregateHistory.size
+        val newSize = conversation!!.sortedHistory.blockingGet().size
         Assert.assertEquals(0, oldSize.toLong())
         Assert.assertEquals(oldSize.toLong(), (newSize - 1).toLong())
     }
@@ -164,7 +164,7 @@ class ConversationTest {
     @Test
     @Throws(Exception::class)
     fun addFileTransfer() {
-        val oldSize = conversation!!.aggregateHistory.size
+        val oldSize = conversation!!.sortedHistory.blockingGet().size
         conversation!!.addFileTransfer(
             DataTransfer(
                 "1",
@@ -177,7 +177,7 @@ class ConversationTest {
                 0L
             )
         )
-        val newSize = conversation!!.aggregateHistory.size
+        val newSize = conversation!!.sortedHistory.blockingGet().size
         Assert.assertEquals(0, oldSize.toLong())
         Assert.assertEquals(oldSize.toLong(), (newSize - 1).toLong())
     }
@@ -204,9 +204,9 @@ class ConversationTest {
         for (i in 0 until random) {
             conversation!!.addTextMessage(TextMessage("Coucou", "ring:test", "1", conversation, "Toi"))
         }
-        val newSize = conversation!!.aggregateHistory.size
+        val newSize = conversation!!.sortedHistory.blockingGet().size
         conversation!!.removeAll()
-        val lastSize = conversation!!.aggregateHistory.size
+        val lastSize = conversation!!.sortedHistory.blockingGet().size
         Assert.assertEquals(random.toLong(), newSize.toLong())
         Assert.assertEquals(0, lastSize.toLong())
     }

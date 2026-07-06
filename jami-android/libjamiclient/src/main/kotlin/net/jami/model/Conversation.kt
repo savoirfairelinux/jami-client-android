@@ -707,6 +707,14 @@ class Conversation(
         }
     }
 
+    @Synchronized
+    fun notifyDataTransferUpdated(transfer: DataTransfer): Boolean {
+        if (transfer.messageId == null || mMessages[transfer.messageId] !== transfer)
+            return false
+        updatedElementSubject.onNext(Pair(transfer, ElementStatus.UPDATE))
+        return true
+    }
+
     fun removeInteraction(interaction: Interaction) {
         if (isSwarm) {
             if (removeSwarmInteraction(interaction.messageId!!)) updatedElementSubject.onNext(Pair(interaction, ElementStatus.REMOVE))

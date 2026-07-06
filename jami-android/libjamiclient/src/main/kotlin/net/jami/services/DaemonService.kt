@@ -38,6 +38,7 @@ class DaemonService(
     private var mDataCallback: DaemonDataTransferCallback? = null
     private var mConversationCallback: ConversationCallback? = null
     private var mNetworkServiceCallback: DaemonNetworkServiceCallback? = null
+    private val conversationCallbackSnapshotLock = Any()
     var isStarted = false
         private set
 
@@ -350,13 +351,17 @@ class DaemonService(
     internal inner class DaemonDataTransferCallback : DataTransferCallback() {
         override fun dataTransferEvent(accountId: String, conversationId: String, interactionId: String, fileId: String, eventCode: Int) {
             Log.d(TAG, "dataTransferEvent: conversationId=$conversationId, fileId=$fileId, eventCode=$eventCode")
-            mAccountService.dataTransferEvent(accountId, conversationId, interactionId, fileId, eventCode)
+            snapshotConversationCallback {
+                mAccountService.dataTransferEvent(accountId, conversationId, interactionId, fileId, eventCode)
+            }
         }
     }
 
     internal inner class ConversationCallbackImpl : ConversationCallback() {
         override fun swarmLoaded(id: Long, accountId: String, conversationId: String, messages: SwarmMessageVect) {
-            mAccountService.swarmLoaded(id, accountId, conversationId, messages)
+            snapshotConversationCallback {
+                mAccountService.swarmLoaded(id, accountId, conversationId, messages.map(SwarmMessageData::from))
+            }
         }
 
         override fun messagesFound(id: Long, accountId: String, conversationId: String, messages: VectMap) {
@@ -364,11 +369,15 @@ class DaemonService(
         }
 
         override fun conversationReady(accountId: String, conversationId: String) {
-            mAccountService.conversationReady(accountId, conversationId)
+            snapshotConversationCallback {
+                mAccountService.conversationReady(accountId, conversationId)
+            }
         }
 
         override fun conversationRemoved(accountId: String, conversationId: String) {
-            mAccountService.conversationRemoved(accountId, conversationId)
+            snapshotConversationCallback {
+                mAccountService.conversationRemoved(accountId, conversationId)
+            }
         }
 
         override fun conversationRequestReceived(accountId: String, conversationId: String, metadata: StringMap) {
@@ -380,32 +389,52 @@ class DaemonService(
         }
 
         override fun conversationMemberEvent(accountId: String, conversationId: String, uri: String, event: Int) {
-            mAccountService.conversationMemberEvent(accountId, conversationId, uri, event)
+            snapshotConversationCallback {
+                mAccountService.conversationMemberEvent(accountId, conversationId, uri, event)
+            }
         }
 
         override fun conversationProfileUpdated(accountId: String, conversationId: String, profile: StringMap) {
-            mAccountService.conversationProfileUpdated(accountId, conversationId, profile)
+            snapshotConversationCallback {
+                mAccountService.conversationProfileUpdated(accountId, conversationId, profile.toNativeFromUtf8())
+            }
         }
 
         override fun conversationPreferencesUpdated(accountId: String, conversationId: String, preferences: StringMap) {
-            mAccountService.conversationPreferencesUpdated(accountId, conversationId, preferences)
+            snapshotConversationCallback {
+                mAccountService.conversationPreferencesUpdated(accountId, conversationId, preferences.toNative())
+            }
         }
 
         override fun swarmMessageReceived(accountId: String, conversationId: String, message: SwarmMessage) {
-            mAccountService.swarmMessageReceived(accountId, conversationId, message)
+            snapshotConversationCallback {
+                mAccountService.swarmMessageReceived(accountId, conversationId, SwarmMessageData.from(message))
+            }
         }
 
         override fun swarmMessageUpdated(accountId: String, conversationId: String, message: SwarmMessage) {
-            mAccountService.swarmMessageUpdated(accountId, conversationId, message)
+            snapshotConversationCallback {
+                mAccountService.swarmMessageUpdated(accountId, conversationId, SwarmMessageData.from(message))
+            }
         }
 
         override fun reactionAdded(accountId: String, conversationId: String, messageId: String, reaction: StringMap) {
-            mAccountService.reactionAdded(accountId, conversationId, messageId, reaction)
+            snapshotConversationCallback {
+                mAccountService.reactionAdded(accountId, conversationId, messageId, reaction.toNative())
+            }
         }
 
         override fun reactionRemoved(accountId: String, conversationId: String, messageId: String, reactionId: String) {
-            mAccountService.reactionRemoved(accountId, conversationId, messageId, reactionId)
+            snapshotConversationCallback {
+                mAccountService.reactionRemoved(accountId, conversationId, messageId, reactionId)
+            }
         }
+    }
+
+    private inline fun snapshotConversationCallback(callback: () -> Unit) {
+        // SWIG callback values are borrowed. Copy and enqueue them in the same short critical
+        // section so concurrent daemon callbacks cannot overtake one another during conversion.
+        synchronized(conversationCallbackSnapshotLock, callback)
     }
 
     companion object {
