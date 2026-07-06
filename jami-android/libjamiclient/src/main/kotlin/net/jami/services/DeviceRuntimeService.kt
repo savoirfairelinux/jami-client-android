@@ -29,7 +29,8 @@ abstract class DeviceRuntimeService : SystemInfoCallbacks {
     fun getConversationPath(interaction: DataTransfer): File =
         if (interaction.conversationId == null)
             getConversationPath(interaction.account!!, interaction.conversation!!.participant!!, interaction.storagePath)
-        else interaction.publicPath!!
+        else interaction.publicPath
+            ?: getConversationPath(interaction.account!!, interaction.conversationId!!, interaction.storagePath)
 
     fun getNewConversationPath(accountId: String, conversationId: String, name: String): File {
         var prefix = 0

@@ -58,9 +58,16 @@ class AccountService(
     private val mExecutor: ScheduledExecutorService,
     private val mHistoryService: HistoryService,
     private val mDeviceRuntimeService: DeviceRuntimeService,
-    private val mVCardService: VCardService
+    private val mVCardService: VCardService,
+    private val fileTransferInfoProvider: FileTransferInfoProvider = JamiFileTransferInfoProvider
 ) {
     private val scheduler = Schedulers.from(mExecutor)
+    private val conversationCallbacks = ConversationCallbackDispatcher()
+    private class ConversationLoad(
+        val conversation: Conversation,
+        val subject: SingleSubject<Conversation>
+    )
+    private val conversationLoadingTasks = HashMap<Long, ConversationLoad>()
     /**
      * @return the current Account from the local cache
      */
@@ -454,10 +461,6 @@ class AccountService(
         Completable.fromAction { JamiService.removeConversation(accountId, conversationUri.rawRingId) }
             .subscribeOn(scheduler)
 
-    private fun loadConversationHistory(accountId: String, conversationUri: Uri, root: String, n: Long) =
-        Schedulers.io().scheduleDirect { JamiService.loadConversation(accountId, conversationUri.rawRingId, root, n) }
-
-
     fun loadMore(conversation: Conversation, n: Int = 32): Single<Conversation> {
         synchronized(conversation.loadingLock()) {
             val mode = conversation.mode.blockingFirst()
@@ -468,9 +471,28 @@ class AccountService(
             conversation.loading?.let { return it }
             val ret = SingleSubject.create<Conversation>()
             conversation.loading = ret
-            // load n messages before the oldest one in the history
-            loadConversationHistory(conversation.accountId, conversation.uri, "", n.toLong())
+            val load = ConversationLoad(conversation, ret)
+            Single.fromCallable {
+                synchronized(conversationLoadingTasks) {
+                    JamiService.loadConversation(conversation.accountId, conversation.uri.rawRingId, "", n.toLong()).also { id ->
+                        if (id != 0L)
+                            conversationLoadingTasks[id] = load
+                    }
+                }
+            }.subscribeOn(Schedulers.io()).subscribe({ id ->
+                if (id == 0L)
+                    failConversationLoad(load, IllegalStateException("Conversation is unavailable"))
+            }, { error ->
+                failConversationLoad(load, error)
+            })
             return ret
+        }
+    }
+
+    private fun failConversationLoad(load: ConversationLoad, error: Throwable) {
+        synchronized(load.conversation.loadingLock()) {
+            if (load.conversation.loading === load.subject)
+                load.conversation.stopLoading()?.onError(error)
         }
     }
 
@@ -1410,20 +1432,9 @@ class AccountService(
                 try {
                     val fileName = message["displayName"]!!
                     val fileId = message["fileId"]
-                    val paths = arrayOfNulls<String>(1)
-                    val progressA = LongArray(1)
-                    val totalA = LongArray(1)
-                    JamiService.fileTransferInfo(account.accountId, conversation.uri.rawRingId, fileId, paths, totalA, progressA)
-                    if (totalA[0] == 0L) {
-                        totalA[0] = message["totalSize"]!!.toLong()
-                    }
-                    val path = File(paths[0]!!)
-                    val isComplete = path.exists() && progressA[0] == totalA[0]
-                    DataTransfer(fileId, account.accountId, author, fileName, contact.isUser, timestamp, totalA[0], progressA[0]).apply {
-                        daemonPath = path
-                        transferStatus = if (isComplete)
-                            TransferStatus.TRANSFER_FINISHED
-                        else if (fileId == "") TransferStatus.FILE_REMOVED
+                    val total = message["totalSize"]?.toLongOrNull() ?: 0L
+                    DataTransfer(fileId, account.accountId, author, fileName, contact.isUser, timestamp, total, 0).apply {
+                        transferStatus = if (fileId.isNullOrEmpty()) TransferStatus.FILE_REMOVED
                         else TransferStatus.FILE_AVAILABLE
                     }
                 } catch (e: Exception) {
@@ -1468,15 +1479,15 @@ class AccountService(
      * @param message The message to convert to an interaction.
      * @return The swarm message as an interaction.
      */
-    private fun getInteractionFromSwarmMessage(account: Account, conversation: Conversation, message: SwarmMessage): Interaction {
-        val body = message.body.toNative()
+    private fun getInteractionFromSwarmMessage(account: Account, conversation: Conversation, message: SwarmMessageData): Interaction {
+        val body = HashMap(message.body)
         body["id"] = message.id
         body["type"] = message.type
         body["linearizedParent"] = message.linearizedParent
 
         val interaction = getInteraction(account, conversation, body)
-        val edits = message.editions.map { getInteraction(account, conversation, it.toNative()) }
-        val reactions = message.reactions.map { getInteraction(account, conversation, it.toNative()) }
+        val edits = message.editions.map { getInteraction(account, conversation, it) }
+        val reactions = message.reactions.map { getInteraction(account, conversation, it) }
         val statusMap = message.status.mapValues { Interaction.MessageStates.fromInt(it.value) }
 
         interaction.addEdits(edits)
@@ -1486,35 +1497,55 @@ class AccountService(
         return interaction
     }
 
-    private fun addMessage(account: Account, conversation: Conversation, message: SwarmMessage, newMessage: Boolean): Interaction {
-        val interaction = getInteractionFromSwarmMessage(account, conversation, message)
-        conversation.addSwarmElement(interaction, newMessage)
-        return interaction
-    }
-
-    fun swarmLoaded(id: Long, accountId: String, conversationId: String, messages: SwarmMessageVect) {
-        try {
-            val task = loadingTasks.remove(id)
-            getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
-                val interactions: List<Interaction>
-                val subject = synchronized(conversation) {
-                    interactions = messages.map { addMessage(account, conversation, it, false) }
-                    conversation.stopLoading()
-                }
-                subject?.onSuccess(conversation)
-                task?.onSuccess(interactions)
-            }}
-        } catch (e: Exception) {
-            Log.e(TAG, "Exception loading message", e)
+    internal fun swarmLoaded(id: Long, accountId: String, conversationId: String, messages: List<SwarmMessageData>) {
+        conversationCallbacks.dispatch(accountId, conversationId) {
+            swarmLoadedNow(id, accountId, conversationId, messages)
         }
     }
 
-    fun conversationProfileUpdated(accountId: String, conversationId: String, info: StringMap) {
-        getAccount(accountId)?.getSwarm(conversationId)?.setProfile(mVCardService.loadConversationProfile(info.toNativeFromUtf8()))
+    private fun swarmLoadedNow(id: Long, accountId: String, conversationId: String, messages: List<SwarmMessageData>) {
+        var conversationLoad: ConversationLoad? = null
+        try {
+            val task = loadingTasks.remove(id)
+            conversationLoad = synchronized(conversationLoadingTasks) {
+                conversationLoadingTasks.remove(id)
+            }
+            val account = getAccount(accountId)
+            val conversation = account?.getSwarm(conversationId)
+            if (account == null || conversation == null) {
+                conversationLoad?.let { failConversationLoad(it, IllegalStateException("Conversation is unavailable")) }
+                return
+            }
+            val interactions = messages.map { getInteractionFromSwarmMessage(account, conversation, it) }
+            val subject = synchronized(conversation) {
+                interactions.forEach { conversation.addSwarmElement(it, false) }
+                conversationLoad?.takeIf { it.conversation === conversation }?.let { load ->
+                    synchronized(conversation.loadingLock()) {
+                        if (conversation.loading === load.subject) conversation.stopLoading() else null
+                    }
+                }
+            }
+            subject?.onSuccess(conversation)
+            task?.onSuccess(interactions)
+            interactions.filterIsInstance<DataTransfer>().forEach {
+                hydrateDataTransfer(accountId, conversationId, it)
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Exception loading message", e)
+            conversationLoad?.let { failConversationLoad(it, e) }
+        }
     }
 
-    fun conversationPreferencesUpdated(accountId: String, conversationId: String, preferences: StringMap) {
-        getAccount(accountId)?.getSwarm(conversationId)?.updatePreferences(preferences)
+    fun conversationProfileUpdated(accountId: String, conversationId: String, info: Map<String, String>) {
+        conversationCallbacks.dispatch(accountId, conversationId) {
+            getAccount(accountId)?.getSwarm(conversationId)?.setProfile(mVCardService.loadConversationProfile(info))
+        }
+    }
+
+    fun conversationPreferencesUpdated(accountId: String, conversationId: String, preferences: Map<String, String>) {
+        conversationCallbacks.dispatch(accountId, conversationId) {
+            getAccount(accountId)?.getSwarm(conversationId)?.updatePreferences(preferences)
+        }
     }
 
     private enum class ConversationMemberEvent {
@@ -1522,30 +1553,44 @@ class AccountService(
     }
 
     fun conversationMemberEvent(accountId: String, conversationId: String, peerUri: String, event: Int) {
+        conversationCallbacks.dispatch(accountId, conversationId) {
+            conversationMemberEventNow(accountId, conversationId, peerUri, event)
+        }
+    }
+
+    private fun conversationMemberEventNow(accountId: String, conversationId: String, peerUri: String, event: Int) {
         Log.w(TAG, "ConversationCallback: conversationMemberEvent $accountId/$conversationId")
         getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
             val uri = Uri.fromId(peerUri)
-            when (val memberEvent = ConversationMemberEvent.entries[event]) {
-                ConversationMemberEvent.Add,
-                ConversationMemberEvent.Join,
-                ConversationMemberEvent.Unblock -> {
-                    val contact = conversation.findContact(uri)
-                    if (contact == null) {
-                        val role = if (memberEvent == ConversationMemberEvent.Add)
-                            MemberRole.INVITED else MemberRole.MEMBER
-                        conversation.addContact(account.getContactFromCache(uri), role)
+            synchronized(conversation) {
+                when (val memberEvent = ConversationMemberEvent.entries[event]) {
+                    ConversationMemberEvent.Add,
+                    ConversationMemberEvent.Join,
+                    ConversationMemberEvent.Unblock -> {
+                        val contact = conversation.findContact(uri)
+                        if (contact == null) {
+                            val role = if (memberEvent == ConversationMemberEvent.Add)
+                                MemberRole.INVITED else MemberRole.MEMBER
+                            conversation.addContact(account.getContactFromCache(uri), role)
+                        }
                     }
-                }
-                ConversationMemberEvent.Remove, ConversationMemberEvent.Block -> {
-                    val role = if (memberEvent == ConversationMemberEvent.Remove)
-                        MemberRole.LEFT else MemberRole.BLOCKED
-                    conversation.findContact(uri)?.let { contact -> conversation.removeContact(contact, role) }
+                    ConversationMemberEvent.Remove, ConversationMemberEvent.Block -> {
+                        val role = if (memberEvent == ConversationMemberEvent.Remove)
+                            MemberRole.LEFT else MemberRole.BLOCKED
+                        conversation.findContact(uri)?.let { contact -> conversation.removeContact(contact, role) }
+                    }
                 }
             }
         }}
     }
 
     fun conversationReady(accountId: String, conversationId: String) {
+        conversationCallbacks.dispatch(accountId, conversationId) {
+            conversationReadyNow(accountId, conversationId)
+        }
+    }
+
+    private fun conversationReadyNow(accountId: String, conversationId: String) {
         Log.w(TAG, "ConversationCallback: conversationReady $accountId/$conversationId")
         val account = getAccount(accountId)
         if (account == null) {
@@ -1557,6 +1602,7 @@ class AccountService(
             Log.w(TAG, "conversation info: " + i.getKey() + " " + i.getValue());
         }*/
         val mode = Conversation.Mode.entries[info["mode"]!!.toInt()]
+        val members = JamiService.getConversationMembers(accountId, conversationId).map { HashMap(it) }
         val uri = Uri(Uri.SWARM_SCHEME, conversationId)
         var c = account.getByUri(uri)//getSwarm(conversationId) ?: account.getByUri(Uri(Uri.SWARM_SCHEME, conversationId))
         var setMode = false
@@ -1572,7 +1618,7 @@ class AccountService(
         synchronized(conversation) {
             conversation.setProfile(mVCardService.loadConversationProfile(info))
             // Making sure to add contacts before changing the mode
-            for (member in JamiService.getConversationMembers(accountId, conversationId)) {
+            for (member in members) {
                 val memberUri = Uri.fromId(member["uri"]!!)
                 val role = MemberRole.fromString(member["role"]!!)
                 var contact = conversation.findContact(memberUri)
@@ -1589,6 +1635,12 @@ class AccountService(
     }
 
     fun conversationRemoved(accountId: String, conversationId: String) {
+        conversationCallbacks.dispatchAndClose(accountId, conversationId) {
+            conversationRemovedNow(accountId, conversationId)
+        }
+    }
+
+    private fun conversationRemovedNow(accountId: String, conversationId: String) {
         val account = getAccount(accountId)
         if (account == null) {
             Log.w(TAG, "conversationRemoved: unable to find account")
@@ -1619,20 +1671,36 @@ class AccountService(
             metadata["mode"]?.let { m -> Conversation.Mode.entries[m.toInt()] } ?: Conversation.Mode.OneToOne))
     }
 
-    fun swarmMessageReceived(accountId: String, conversationId: String, message: SwarmMessage) {
+    internal fun swarmMessageReceived(accountId: String, conversationId: String, message: SwarmMessageData) {
+        conversationCallbacks.dispatch(accountId, conversationId) {
+            swarmMessageReceivedNow(accountId, conversationId, message)
+        }
+    }
+
+    private fun swarmMessageReceivedNow(accountId: String, conversationId: String, message: SwarmMessageData) {
         getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
-            synchronized(conversation) {
-                val interaction = addMessage(account, conversation, message, true)
-                val isIncoming = !interaction.contact!!.isUser
-                if (isIncoming)
-                    incomingSwarmMessageSubject.onNext(interaction)
-                if (interaction is DataTransfer)
-                    dataTransfersProcessor.onNext(interaction)
+            val interaction = synchronized(conversation) {
+                val interaction = getInteractionFromSwarmMessage(account, conversation, message)
+                conversation.addSwarmElement(interaction, true)
+                interaction
+            }
+            val isIncoming = !interaction.contact!!.isUser
+            if (isIncoming)
+                incomingSwarmMessageSubject.onNext(interaction)
+            if (interaction is DataTransfer) {
+                dataTransfersProcessor.onNext(interaction)
+                hydrateDataTransfer(accountId, conversationId, interaction)
             }
         }}
     }
 
-    fun swarmMessageUpdated(accountId: String, conversationId: String, message: SwarmMessage) {
+    internal fun swarmMessageUpdated(accountId: String, conversationId: String, message: SwarmMessageData) {
+        conversationCallbacks.dispatch(accountId, conversationId) {
+            swarmMessageUpdatedNow(accountId, conversationId, message)
+        }
+    }
+
+    private fun swarmMessageUpdatedNow(accountId: String, conversationId: String, message: SwarmMessageData) {
         getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
             synchronized(conversation) {
                 val interaction = getInteractionFromSwarmMessage(account, conversation, message)
@@ -1641,7 +1709,13 @@ class AccountService(
         }}
     }
 
-    fun reactionAdded(accountId: String, conversationId: String, messageId: String, reaction: StringMap) {
+    fun reactionAdded(accountId: String, conversationId: String, messageId: String, reaction: Map<String, String>) {
+        conversationCallbacks.dispatch(accountId, conversationId) {
+            reactionAddedNow(accountId, conversationId, messageId, reaction)
+        }
+    }
+
+    private fun reactionAddedNow(accountId: String, conversationId: String, messageId: String, reaction: Map<String, String>) {
         getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
             synchronized(conversation) {
                 val interaction = getInteraction(account, conversation, reaction)
@@ -1651,11 +1725,37 @@ class AccountService(
     }
 
     fun reactionRemoved(accountId: String, conversationId: String, messageId: String, reactionId: String) {
+        conversationCallbacks.dispatch(accountId, conversationId) {
+            reactionRemovedNow(accountId, conversationId, messageId, reactionId)
+        }
+    }
+
+    private fun reactionRemovedNow(accountId: String, conversationId: String, messageId: String, reactionId: String) {
         getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
             synchronized(conversation) {
                 conversation.removeReaction(messageId, reactionId)
             }
         }}
+    }
+
+    private fun hydrateDataTransfer(accountId: String, conversationId: String, transfer: DataTransfer) {
+        val fileId = transfer.fileId?.takeIf(String::isNotEmpty) ?: return
+        Single.fromCallable {
+            fileTransferInfoProvider.get(accountId, conversationId, fileId)
+        }
+            .subscribeOn(Schedulers.computation())
+            .subscribe({ info ->
+                val account = getAccount(accountId) ?: return@subscribe
+                val conversation = account.getSwarm(conversationId) ?: return@subscribe
+                val updated = synchronized(conversation) {
+                    if (conversation.getMessage(transfer.messageId ?: return@synchronized false) !== transfer)
+                        return@synchronized false
+                    transfer.applyDaemonInfo(info.path?.let { File(it) }, info.total, info.progress) &&
+                        conversation.notifyDataTransferUpdated(transfer)
+                }
+                if (updated)
+                    dataTransfersProcessor.onNext(transfer)
+            }, { error -> Log.w(TAG, "Unable to load data transfer info", error) })
     }
 
     fun sendFile(conversation: Conversation, file: File) {
@@ -1698,17 +1798,20 @@ class AccountService(
             DATA_TRANSFER_REFRESH_PERIOD, TimeUnit.MILLISECONDS
         )
         override fun run() {
-            synchronized(toUpdate) {
-                if (toUpdate.transferStatus == TransferStatus.TRANSFER_ONGOING) {
-                    dataTransferEvent(account, conversation, toUpdate.messageId, toUpdate.fileId!!, 5)
-                } else {
-                    scheduledTask.cancel(false)
-                }
-            }
+            if (synchronized(toUpdate) { toUpdate.transferStatus == TransferStatus.TRANSFER_ONGOING })
+                dataTransferEvent(account, conversation, toUpdate.messageId, toUpdate.fileId!!, 5)
+            else
+                scheduledTask.cancel(false)
         }
     }
 
     fun dataTransferEvent(accountId: String, conversationId: String, interactionId: String, fileId: String, eventCode: Int) {
+        conversationCallbacks.dispatch(accountId, conversationId) {
+            dataTransferEventNow(accountId, conversationId, interactionId, fileId, eventCode)
+        }
+    }
+
+    private fun dataTransferEventNow(accountId: String, conversationId: String, interactionId: String, fileId: String, eventCode: Int) {
         val account = getAccount(accountId)
         if (account != null) {
             val conversation = account.getSwarm(conversationId) ?: return
@@ -1720,18 +1823,20 @@ class AccountService(
         val transferStatus = TransferStatus.fromIntFile(eventCode)
         Log.d(TAG, "Data Transfer $interactionId $fileId $transferStatus")
         val transfer = account.getDataTransfer(fileId) ?: conversation.getMessage(interactionId!!) as DataTransfer? ?: return
-        val paths = arrayOfNulls<String>(1)
-        val progressA = LongArray(1)
-        val totalA = LongArray(1)
-        JamiService.fileTransferInfo(account.accountId, conversation.uri.rawRingId, fileId, paths, totalA, progressA)
-        val progress = progressA[0]
-        val total = totalA[0]
+        val info = try {
+            fileTransferInfoProvider.get(account.accountId, conversation.uri.rawRingId, fileId)
+        } catch (e: Exception) {
+            Log.w(TAG, "Unable to load data transfer info", e)
+            return
+        }
         synchronized(transfer) {
             val oldState = transfer.transferStatus
+            if (!transfer.canTransitionTo(transferStatus))
+                return
             transfer.conversation = conversation
-            transfer.daemonPath = File(paths[0]!!)
+            info.path?.let { transfer.daemonPath = File(it) }
             transfer.transferStatus = transferStatus
-            transfer.bytesProgress = progress
+            transfer.bytesProgress = info.progress
             if (oldState != transferStatus) {
                 if (transferStatus == TransferStatus.TRANSFER_ONGOING) {
                     DataTransferRefreshTask(account, conversation, transfer)
