@@ -98,6 +98,7 @@ class NotificationServiceImpl(
 
     private val callNotifications = ConcurrentHashMap<Int, Notification>()
     private val dataTransferNotifications = ConcurrentHashMap<Int, Notification>()
+    private val fileTransferNotificationWorker = Schedulers.io().createWorker()
     private var pendingNotificationActions = ArrayList<() -> Unit>()
     private var pendingScreenshareCallbacks = HashMap<String, () -> Unit>()
     @Volatile private var callServiceStarted = false
@@ -867,6 +868,16 @@ class NotificationServiceImpl(
 
     @SuppressLint("RestrictedApi")
     override fun showFileTransferNotification(conversation: Conversation, info: DataTransfer) {
+        fileTransferNotificationWorker.schedule {
+            try {
+                showFileTransferNotificationNow(conversation, info)
+            } catch (e: Exception) {
+                Log.w(TAG, "Error showing file transfer notification", e)
+            }
+        }
+    }
+
+    private fun showFileTransferNotificationNow(conversation: Conversation, info: DataTransfer) {
         val event = info.transferStatus
         if (event == TransferStatus.FILE_AVAILABLE)
             return

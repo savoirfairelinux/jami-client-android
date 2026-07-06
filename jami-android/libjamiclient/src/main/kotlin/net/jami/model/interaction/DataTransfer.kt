@@ -133,6 +133,34 @@ class DataTransfer : Interaction {
     val isError: Boolean
         get() = transferStatus.isError
 
+    @Synchronized
+    fun applyDaemonInfo(path: File?, total: Long, progress: Long): Boolean {
+        if (transferStatus != TransferStatus.FILE_AVAILABLE)
+            return false
+        var changed = false
+        if (path != null && daemonPath != path) {
+            daemonPath = path
+            changed = true
+        }
+        if (total > 0 && totalSize != total) {
+            totalSize = total
+            changed = true
+        }
+        if (progress >= 0 && bytesProgress != progress) {
+            bytesProgress = progress
+            changed = true
+        }
+        if (path?.exists() == true && totalSize > 0 && bytesProgress == totalSize) {
+            transferStatus = TransferStatus.TRANSFER_FINISHED
+            changed = true
+        }
+        return changed
+    }
+
+    @Synchronized
+    fun canTransitionTo(status: TransferStatus): Boolean =
+        status == transferStatus || (!transferStatus.isOver && transferStatus != TransferStatus.FILE_REMOVED)
+
     fun canAutoAccept(maxSize: Int): Boolean {
         return maxSize == UNLIMITED_SIZE || totalSize <= maxSize
     }
