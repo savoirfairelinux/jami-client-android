@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2025 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2026 Savoir-faire Linux Inc.
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,32 +18,44 @@ package cx.ring.views
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
 import android.widget.GridLayout
 import androidx.core.view.isVisible
 
+/**
+ * GridLayout that reflows its visible children so hidden (GONE) children
+ * don't leave holes in the grid.
+ *
+ * Children are never detached: cell specs of visible children are reassigned
+ * in declaration order before each measure pass. Mutating the child list from
+ * a layout pass (previous implementation) corrupts GridLayout's placement
+ * state and produces misplaced, oversized cells.
+ */
 class CustomGridLayout(context: Context?, attrs: AttributeSet?, defStyle: Int) :
     GridLayout(context, attrs, defStyle) {
-
-    private val views = ArrayList<View>()
 
     constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context?) : this(context, null)
 
     private fun arrangeElements() {
-        if (views.isEmpty()) {
-            for (i in 0 until childCount) {
-                views.add(getChildAt(i))
+        val columns = columnCount
+        var index = 0
+        for (i in 0 until childCount) {
+            val view = getChildAt(i)
+            if (!view.isVisible) continue
+            val rowSpec = spec(index / columns, 1f)
+            val columnSpec = spec(index % columns, 1f)
+            val lp = view.layoutParams as LayoutParams
+            if (lp.rowSpec != rowSpec || lp.columnSpec != columnSpec) {
+                lp.rowSpec = rowSpec
+                lp.columnSpec = columnSpec
+                view.layoutParams = lp
             }
-        }
-        removeAllViews()
-        for (i in views.indices) {
-            if (views[i].isVisible) addView(views[i])
+            index++
         }
     }
 
-     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+    override fun onMeasure(widthSpec: Int, heightSpec: Int) {
         arrangeElements()
-        super.onLayout(changed, left, top, right, bottom)
+        super.onMeasure(widthSpec, heightSpec)
     }
 }
