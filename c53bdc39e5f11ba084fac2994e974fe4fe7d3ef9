@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfb0dc4a_04ebfadf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2026-07-07T13:26:03Z",
+      "side": 1,
+      "message": "Using the earpeice is not supported during a video call for obvious reasons.",
+      "revId": "c53bdc39e5f11ba084fac2994e974fe4fe7d3ef9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
