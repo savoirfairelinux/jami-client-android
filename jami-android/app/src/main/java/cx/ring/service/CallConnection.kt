@@ -62,6 +62,7 @@ class CallConnection(
 
     private val audioStateSubject: Subject<CallAudioState> = BehaviorSubject.create()
     private val wantedAudioStateSubject: Subject<WantedAudioState> = BehaviorSubject.create()
+    private val endpointsChangedSubject: Subject<Unit> = BehaviorSubject.createDefault(Unit)
     private var currentEndpoint: CallEndpoint? = null
     private var availableEndpoints: List<CallEndpoint> = emptyList()
     private var pendingEndpointId: String? = null
@@ -118,10 +119,21 @@ class CallConnection(
                         connectionStateSubject.onNext(state)
                     })
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                    disposable.add(wantedAudioStateSubject.subscribe { wantedState ->
-                        val endpoint = wantedState.endpointId?.let(::findEndpoint)
-                        if (endpoint != null) {
-                            // Skip if already on the target endpoint.
+                    // Re-evaluate when the available endpoints change, so a wanted state
+                    // received before the endpoint list is known is not silently dropped.
+                    disposable.add(Observable
+                        .combineLatest(wantedAudioStateSubject, endpointsChangedSubject) { w, _ -> w }
+                        .subscribe { wantedState ->
+                            // Keep enforcing the latest wanted route. An in-app output change
+                            // always arrives as a new WantedAudioState, so re-evaluating on
+                            // every endpoint change only re-applies the route after a
+                            // system-initiated endpoint change, not a manual one.
+                            val endpoint = if (wantedState.endpointId != null)
+                                findEndpoint(wantedState.endpointId)
+                            else
+                                findEndpointForRoutes(wantedState.routes)
+                            if (endpoint == null) return@subscribe
+                            // Already on the target endpoint: nothing to do.
                             if (currentEndpoint?.identifier == endpoint.identifier) return@subscribe
                             // Skip if a request for this endpoint is already in flight.
                             val endpointKey = endpoint.identifier.toString()
@@ -142,12 +154,7 @@ class CallConnection(
                                     }
                                 }
                             )
-                        } else {
-                            callAudioState?.supportedRouteMask?.let { mask ->
-                                wantedState.routes.firstOrNull { it and mask != 0 }?.let { setAudioRoute(it) }
-                            }
-                        }
-                    })
+                        })
                 } else {
                     // API < 34: use legacy CallAudioState routing.
                     disposable.add(Observable
@@ -223,14 +230,16 @@ class CallConnection(
     override fun onAvailableCallEndpointsChanged(availableEndpoints: MutableList<CallEndpoint>) {
         Log.w(TAG, "onAvailableCallEndpointsChanged: $availableEndpoints")
         this.availableEndpoints = availableEndpoints.toList()
-        callAudioState?.let { emitAudioState(it) }
+        endpointsChangedSubject.onNext(Unit)
+        emitAudioState(callAudioState ?: DEFAULT_AUDIO_STATE)
     }
 
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCallEndpointChanged(callEndpoint: CallEndpoint) {
         Log.w(TAG, "onCallEndpointChanged: $callEndpoint")
         currentEndpoint = callEndpoint
-        callAudioState?.let { emitAudioState(it) }
+        endpointsChangedSubject.onNext(Unit)
+        emitAudioState(callAudioState ?: DEFAULT_AUDIO_STATE)
     }
 
     override fun onShowIncomingCallUi() {
@@ -249,12 +258,40 @@ class CallConnection(
             ?: current?.takeIf { it.identifier.toString() == endpointId }
     }
 
+    /** Maps a legacy route preference list to the first matching available CallEndpoint. */
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    private fun findEndpointForRoutes(routes: List<Int>): CallEndpoint? {
+        val endpoints = availableAudioEndpoints
+        for (route in routes) {
+            val types = when (route) {
+                CallAudioState.ROUTE_SPEAKER -> listOf(CallEndpoint.TYPE_SPEAKER)
+                CallAudioState.ROUTE_BLUETOOTH -> listOf(CallEndpoint.TYPE_BLUETOOTH)
+                CallAudioState.ROUTE_WIRED_HEADSET -> listOf(CallEndpoint.TYPE_WIRED_HEADSET)
+                CallAudioState.ROUTE_EARPIECE -> listOf(CallEndpoint.TYPE_EARPIECE)
+                CallAudioState.ROUTE_WIRED_OR_EARPIECE ->
+                    listOf(CallEndpoint.TYPE_WIRED_HEADSET, CallEndpoint.TYPE_EARPIECE)
+                else -> emptyList()
+            }
+            for (type in types)
+                endpoints.firstOrNull { it.endpointType == type }?.let { return it }
+        }
+        return null
+    }
+
     private fun emitAudioState(state: CallAudioState) {
         audioStateSubject.onNext(state)
     }
 
     companion object {
         private val TAG: String = CallConnection::class.java.simpleName
+
+        /** Synthetic state used to notify observers when no CallAudioState was received (API 34+). */
+        @Suppress("DEPRECATION")
+        private val DEFAULT_AUDIO_STATE = CallAudioState(
+            false,
+            CallAudioState.ROUTE_EARPIECE,
+            CallAudioState.ROUTE_EARPIECE or CallAudioState.ROUTE_SPEAKER
+        )
 
         /** Default route list for audio calls */
         val ROUTE_LIST_DEFAULT = listOf(
