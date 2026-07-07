@@ -420,7 +420,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:contentDescription="@string/ab_action_speakerphone"
                             android:padding="16dp"
                             app:srcCompat="@drawable/baseline_sound_24"
-                            app:tint="@color/white" />
+                            app:tint="@color/call_speaker_button" />
 
                         <TextView
                             android:id="@+id/textView_call_speaker"

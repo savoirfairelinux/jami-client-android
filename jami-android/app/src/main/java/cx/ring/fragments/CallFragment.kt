@@ -1411,18 +1411,13 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             HardwareService.AudioOutputType.BLUETOOTH -> getString(R.string.audio_output_bluetooth)
         }
 
-    private fun availableAudioOutputs(state: AudioState): List<AudioOutput> =
-        state.availableOutputs.filter {
-            if (currentAudioHasVideo) it.type != HardwareService.AudioOutputType.INTERNAL else true
-        }
+    private fun availableAudioOutputs(state: AudioState): List<AudioOutput> = state.availableOutputs
 
     private fun renderAudioOutputState(state: AudioState, hasVideo: Boolean) {
         val binding = binding ?: return
-        val availableOutput = state.availableOutputs.filter {
-            if (hasVideo) it.type != HardwareService.AudioOutputType.INTERNAL else true
-        }
-        binding.callSpeakerBtn.isEnabled = availableOutput.size > 1
+        binding.callSpeakerBtn.isEnabled = state.availableOutputs.size > 1
         binding.callSpeakerBtn.isChecked = state.output.type == HardwareService.AudioOutputType.SPEAKERS
+        binding.callSpeakerBtn.setImageResource(audioOutputIconRes(state.output))
         binding.textViewCallSpeaker.text = audioOutputLabel(state.output)
         binding.callSpeakerBtn.contentDescription = getString(
             R.string.audio_output_content_description,
