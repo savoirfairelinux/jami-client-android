@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e79c314b_fcf01d34",
+        "filename": "jami-android/app/src/main/java/cx/ring/service/CallConnection.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-07-09T15:10:27Z",
+      "side": 1,
+      "message": "[warning] Line 145: `wantedState.applied` is set to `true` (line 135) *before* the request completes, but it is never reset when the request fails. In `onError` you only clear `pendingEndpointId`. As a result, if `requestCallEndpointChange` fails, a subsequent `endpointsChangedSubject` re-emission will short-circuit at `if (wantedState.applied) return@subscribe` and the target endpoint will never be retried — which partially defeats the resilience goal of this patch. Reset the flag on failure:\n```suggestion\n                                    override fun onError(error: CallEndpointException) {\n                                        if (pendingEndpointId \u003d\u003d endpointKey) pendingEndpointId \u003d null\n                                        wantedState.applied \u003d false\n                                        Log.e(TAG, \"setWantedAudioState endpoint failed: $endpoint\", error)\n                                    }\n```",
+      "revId": "996da057232b530169121222d1177c892ff7ee1a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8067a55_936977b9",
+        "filename": "jami-android/app/src/main/java/cx/ring/service/CallConnection.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-07-09T15:10:27Z",
+      "side": 1,
+      "message": "[info] Line 227: Emitting the synthetic `DEFAULT_AUDIO_STATE` publishes a fabricated EARPIECE state (with a supported-route mask of only EARPIECE|SPEAKER) onto `audioStateSubject`, which is exposed publicly via `audioState`. On API 34+ the legacy route branch isn\u0027t subscribed, so this value isn\u0027t consumed internally here — but any external subscriber of `audioState` could momentarily observe a misleading earpiece/route state that doesn\u0027t reflect the real active endpoint. Confirm no UI consumer of `audioState` derives display state from this synthetic emission on 34+; if it might, gate the synthetic emit so it only drives the endpoint re-evaluation rather than the public audio-state stream.",
+      "revId": "996da057232b530169121222d1177c892ff7ee1a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
