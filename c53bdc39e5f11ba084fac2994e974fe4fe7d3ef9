@@ -16,6 +16,40 @@
       "message": "Using the earpeice is not supported during a video call for obvious reasons.",
       "revId": "c53bdc39e5f11ba084fac2994e974fe4fe7d3ef9",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83e643fd_8220c41a",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1414,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-07-09T15:10:31Z",
+      "side": 1,
+      "message": "[warning] Line 1414: This drops the previous filtering that hid the INTERNAL (earpiece) output during video calls (`if (currentAudioHasVideo) it.type !\u003d INTERNAL`). As a result, during a video call the earpiece now counts toward `availableOutputs.size`, so the speaker button becomes enabled and can toggle to the earpiece where it previously couldn\u0027t. This behavior change isn\u0027t mentioned in the commit subject (which is only about the button icon). Please confirm it\u0027s intentional; if not, keep the video filter for the list/enablement while still setting the icon from `state.output`.",
+      "revId": "c53bdc39e5f11ba084fac2994e974fe4fe7d3ef9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "821571c6_1d6ea69c",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1416,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-07-09T15:10:31Z",
+      "side": 1,
+      "message": "[info] Line 1416: With the filter gone, the `hasVideo` parameter is no longer read inside `renderAudioOutputState`, and the `currentAudioHasVideo` field is now only assigned/passed but never actually used (lines 878, 1394, 1456). If the removal is intentional, drop the unused parameter and field to avoid dead code and misleading call sites.",
+      "revId": "c53bdc39e5f11ba084fac2994e974fe4fe7d3ef9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
