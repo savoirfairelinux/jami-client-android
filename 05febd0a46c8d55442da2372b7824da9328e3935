@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2df7f10b_825f4327",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/CustomGridLayout.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-07-09T15:10:19Z",
+      "side": 1,
+      "message": "[info] Line 41: This introduces a behavioral change vs. the previous implementation: `spec(pos, 1f)` assigns weight 1f to every row and column, so visible cells now stretch and share space evenly, whereas the old `addView` path used the children\u0027s default (content-sized) specs. If even distribution is the goal of this fix, consider noting it in the commit message; if it isn\u0027t intended, drop the weight and use `spec(index / columns)` / `spec(index % columns)`.",
+      "revId": "05febd0a46c8d55442da2372b7824da9328e3935",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
