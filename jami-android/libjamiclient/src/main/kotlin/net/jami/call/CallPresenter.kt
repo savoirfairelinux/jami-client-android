@@ -629,7 +629,7 @@ class CallPresenter @Inject constructor(
                     val contactUri = if (uri.isSwarm) conversation.contact!!.uri else uri
 
                     // Place new call, join to conference when answered
-                    val newCall = mCallService.placeCallObservable(accountId, null, contactUri, wantVideo)
+                    val newCall = mCallService.placeAddParticipantCallObservable(accountId, null, contactUri, wantVideo)
                         .takeWhile{ c -> !c.callStatus.isOver }
                         .doOnEach(pendingObserver)
                         .filter(Call::isOnGoing)
