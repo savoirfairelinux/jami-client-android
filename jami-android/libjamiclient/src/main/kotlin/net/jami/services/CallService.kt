@@ -236,8 +236,11 @@ abstract class CallService(
         call: Call
     ): Single<SystemCall> = CALL_ALLOWED
 
-    fun placeCallObservable(accountId: String, conversationUri: Uri?, number: Uri, hasVideo: Boolean): Observable<Call> =
+    fun placeAddParticipantCallObservable(accountId: String, conversationUri: Uri?, number: Uri, hasVideo: Boolean): Observable<Call> =
+        // Add-participant calls intentionally bypass Telecom; resolve systemConnection here since no
+        // Telecom Connection will be created, preventing downstream call-state processing from hanging.
         placeCall(accountId, conversationUri, number, hasVideo)
+            .doOnSuccess { call -> call.setSystemConnection(CALL_ALLOWED_VAL) }
             .flatMapObservable { call: Call -> getCallUpdates(call) }
 
     fun placeCallIfAllowed(
@@ -845,6 +848,8 @@ abstract class CallService(
 
             conferenceSubject.onNext(conf)
             if (removed && conf.participants.size == 1) {
+                // Remove the obsolete conference so later stale events can't recreate it.
+                conferences.remove(confId)
                 val call = conf.participants[0]
                 call.confId = null
                 addConference(call)
