@@ -16,6 +16,24 @@
       "message": "[info] Line 240: The `doOnSuccess { call -\u003e call.setSystemConnection(CALL_ALLOWED_VAL) }` is applied unconditionally to every call routed through `placeCallObservable`, yet the rationale comment scopes it strictly to add-participant calls. The method name is generic, so a future caller reusing `placeCallObservable` for a non-add-participant call would silently bypass Telecom and preempt the real Telecom-driven connection. Consider making the Telecom-bypass intent explicit at the call site (e.g. a dedicated method or a boolean parameter such as `placeAddParticipantCall(...)`) rather than baking it into a generically-named observable, so the bypass can\u0027t be applied unintentionally.",
       "revId": "8ada3a138463b7af3d73a72b7a1ef5e3dc79c91c",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0dc39e9b_7d9610a8",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/CallService.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-07-10T19:08:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "611d0cf7_3e1c91c7",
+      "revId": "8ada3a138463b7af3d73a72b7a1ef5e3dc79c91c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
