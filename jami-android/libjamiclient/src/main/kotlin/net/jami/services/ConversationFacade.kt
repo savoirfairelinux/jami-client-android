@@ -582,6 +582,12 @@ class ConversationFacade(
 
     private fun onConfStateChange(conference: Conference) {
         Log.d(TAG, "onConfStateChange Thread id: " + Thread.currentThread().id)
+        // Clear the notification when a conference is fully torn down, since later per-call events
+        // no longer reference the original conference id and can't remove it.
+        if (conference.participants.isEmpty() && conference.hostCall == null) {
+            mDisposableBag.add(mNotificationService.handleCallNotification(conference, true)
+                .subscribe({}, { e -> Log.e(TAG, "Error removing call notification for conference ${conference.id}", e) }))
+        }
     }
 
     private fun onCallStateChange(call: Call): Completable {
