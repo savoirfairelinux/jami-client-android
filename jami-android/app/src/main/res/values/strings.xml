@@ -329,6 +329,9 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="permission_dialog_post_notifications_title">Allow notifications</string>
     <string name="permission_dialog_post_notifications_message">Jami needs the notifications permission to alert you of incoming calls and messages, even when the app is in the background. Without it, you may miss calls.</string>
     <string name="permission_dialog_post_notifications_blocked_message">Notifications are disabled for Jami. Without them you will miss incoming calls and messages. Please enable notifications for Jami in the device settings.</string>
+    <string name="permission_dialog_local_network_title">Allow local network access</string>
+    <string name="permission_dialog_local_network_message">Jami needs local network access to connect calls directly to devices on your network. Without it, calls may use a relay and have lower quality.</string>
+    <string name="permission_dialog_local_network_blocked_message">Local network access is disabled for Jami. Calls to devices on your network may use a relay and have lower quality. Please enable local network access for Jami in the device settings.</string>
     <string name="permission_dialog_open_settings">Open settings</string>
     <string name="permission_dialog_later">Later</string>
 

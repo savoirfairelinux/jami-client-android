@@ -141,7 +141,16 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             }
         }
 
+    private var localNetworkPermissionPromptShown = false
     private var notifPermissionPromptShown = false
+
+    private val localNetworkPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            getSharedPreferences(PREFS_LOCAL_NETWORK_PERM, Context.MODE_PRIVATE)
+                .edit().putBoolean(PREF_LOCAL_NETWORK_PERM_ASKED, true).apply()
+            Log.d(TAG, "ACCESS_LOCAL_NETWORK result: $granted")
+            checkPostNotificationsPermission()
+        }
 
     private val postNotificationsPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
@@ -153,6 +162,8 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        localNetworkPermissionPromptShown =
+            savedInstanceState?.getBoolean(STATE_LOCAL_NETWORK_PROMPT_SHOWN) ?: false
         notifPermissionPromptShown =
             savedInstanceState?.getBoolean(STATE_NOTIF_PROMPT_SHOWN) ?: false
 
@@ -240,7 +251,66 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         }
         onBackPressedDispatcher.addCallback(this, conversationBackPressedCallback)
         handleIntent(intent)
-        checkPostNotificationsPermission()
+        checkLocalNetworkPermission()
+    }
+
+    private fun checkLocalNetworkPermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.CINNAMON_BUN) {
+            checkPostNotificationsPermission()
+            return
+        }
+        if (localNetworkPermissionPromptShown) return
+        val granted = ContextCompat.checkSelfPermission(
+            this, Manifest.permission.ACCESS_LOCAL_NETWORK
+        ) == PackageManager.PERMISSION_GRANTED
+        if (granted) {
+            checkPostNotificationsPermission()
+            return
+        }
+
+        val prefs = getSharedPreferences(PREFS_LOCAL_NETWORK_PERM, Context.MODE_PRIVATE)
+        val askedOnce = prefs.getBoolean(PREF_LOCAL_NETWORK_PERM_ASKED, false)
+        val showRationale = ActivityCompat.shouldShowRequestPermissionRationale(
+            this, Manifest.permission.ACCESS_LOCAL_NETWORK
+        )
+
+        when {
+            !askedOnce && !showRationale -> {
+                localNetworkPermissionPromptShown = true
+                localNetworkPermissionLauncher.launch(Manifest.permission.ACCESS_LOCAL_NETWORK)
+            }
+            showRationale -> {
+                localNetworkPermissionPromptShown = true
+                MaterialAlertDialogBuilder(this)
+                    .setTitle(R.string.permission_dialog_local_network_title)
+                    .setMessage(R.string.permission_dialog_local_network_message)
+                    .setNegativeButton(R.string.permission_dialog_later) { _, _ ->
+                        checkPostNotificationsPermission()
+                    }
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
+                        localNetworkPermissionLauncher.launch(Manifest.permission.ACCESS_LOCAL_NETWORK)
+                    }
+                    .show()
+            }
+            else -> {
+                localNetworkPermissionPromptShown = true
+                MaterialAlertDialogBuilder(this)
+                    .setTitle(R.string.permission_dialog_local_network_title)
+                    .setMessage(R.string.permission_dialog_local_network_blocked_message)
+                    .setNegativeButton(R.string.permission_dialog_later) { _, _ ->
+                        checkPostNotificationsPermission()
+                    }
+                    .setPositiveButton(R.string.permission_dialog_open_settings) { _, _ ->
+                        try {
+                            startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                                .setData(AndroidUri.fromParts("package", packageName, null)))
+                        } catch (e: Exception) {
+                            Log.w(TAG, "Cannot open app settings", e)
+                        }
+                    }
+                    .show()
+            }
+        }
     }
 
     private fun checkPostNotificationsPermission() {
@@ -296,6 +366,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        outState.putBoolean(STATE_LOCAL_NETWORK_PROMPT_SHOWN, localNetworkPermissionPromptShown)
         outState.putBoolean(STATE_NOTIF_PROMPT_SHOWN, notifPermissionPromptShown)
     }
 
@@ -707,6 +778,9 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         const val REQUEST_PERMISSION_CAMERA = 113
         const val REQUEST_PERMISSION_READ_STORAGE = 114
         const val ACTION_SHOW_SHARED_SERVICES = "cx.ring.action.SHOW_SHARED_SERVICES"
+        private const val PREFS_LOCAL_NETWORK_PERM = "local_network_permission"
+        private const val PREF_LOCAL_NETWORK_PERM_ASKED = "asked_once"
+        private const val STATE_LOCAL_NETWORK_PROMPT_SHOWN = "local_network_permission_prompt_shown"
         private const val PREFS_NOTIF_PERM = "notif_permission"
         private const val PREF_NOTIF_PERM_ASKED = "asked_once"
         private const val STATE_NOTIF_PROMPT_SHOWN = "notif_permission_prompt_shown"
