@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf562038_9b243c33",
+        "filename": "jami-android/app/src/main/java/cx/ring/service/CallConnection.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1193
+      },
+      "writtenOn": "2026-07-15T18:59:20Z",
+      "side": 1,
+      "message": "[warning] Line 131: Setting `wantedState.applied \u003d true` when the current endpoint already matches can make this wanted state permanently inert. If Telecom later changes the current endpoint away from the requested one and `onCallEndpointChanged` re-emits, this same wanted state will now hit `if (wantedState.applied) return@subscribe` and will not restore the requested endpoint. If the wanted state is meant to remain the latest desired route, only skip the current match without marking it applied, or reset `applied` when the current endpoint changes away from the target. For example:\n```suggestion\n                            if (currentEndpoint?.identifier \u003d\u003d endpoint.identifier) return@subscribe\n                            if (wantedState.applied) return@subscribe\n```",
+      "revId": "2c23ca4ffc63e7ba18a2e484ca486d6740850413",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
