@@ -38,7 +38,9 @@ platform :android do
 
     upload_to_play_store(
       track: options[:store_track],
-      json_key: options[:json_key]
+      json_key: options[:json_key],
+      skip_upload_images: true,
+      skip_upload_screenshots: true
     )
   end
 
@@ -60,7 +62,9 @@ platform :android do
 
     upload_to_play_store(
       track: "beta",
-      json_key: options[:json_key]
+      json_key: options[:json_key],
+      skip_upload_images: true,
+      skip_upload_screenshots: true
     )
   end
 
@@ -82,7 +86,9 @@ platform :android do
 
     upload_to_play_store(
       track: "production",
-      json_key: options[:json_key]
+      json_key: options[:json_key],
+      skip_upload_images: true,
+      skip_upload_screenshots: true
     )
   end
 
