@@ -16,6 +16,24 @@
       "message": "[warning] Line 42: This only skips Fastlane\u0027s metadata images, but screenshots are controlled by a separate option and will still be uploaded on every deploy if present. To fully avoid re-uploading store images, add `skip_upload_screenshots: true` to each `upload_to_play_store` call as well.\n\n```suggestion\n      json_key: options[:json_key],\n      skip_upload_images: true,\n      skip_upload_screenshots: true\n```",
       "revId": "983a3b9d6292861d1e25404e77f124ec87c5707d",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8dec37d4_adad135f",
+        "filename": "fastlane/Fastfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2026-07-16T19:37:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d024a715_ed4ff1dc",
+      "revId": "983a3b9d6292861d1e25404e77f124ec87c5707d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
