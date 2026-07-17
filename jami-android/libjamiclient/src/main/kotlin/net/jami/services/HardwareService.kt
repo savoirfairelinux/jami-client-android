@@ -50,7 +50,7 @@ abstract class HardwareService(
     data class BluetoothEvent(val connected: Boolean)
 
     enum class AudioOutputType {
-        INTERNAL, WIRED, SPEAKERS, BLUETOOTH
+        INTERNAL, WIRED, SPEAKERS, BLUETOOTH, MUTE
     }
     data class AudioOutput(val type: AudioOutputType, val outputName: String? = null, val outputId: String? = null)
 
@@ -262,6 +262,7 @@ abstract class HardwareService(
         val OUTPUT_INTERNAL = AudioOutput(AudioOutputType.INTERNAL)
         val OUTPUT_WIRED = AudioOutput(AudioOutputType.WIRED)
         val OUTPUT_BLUETOOTH = AudioOutput(AudioOutputType.BLUETOOTH)
+        val OUTPUT_MUTE = AudioOutput(AudioOutputType.MUTE)
         val STATE_INTERNAL = AudioState(OUTPUT_INTERNAL)
     }
 }

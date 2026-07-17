@@ -631,6 +631,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="audio_output_earpiece">Earpiece</string>
     <string name="audio_output_headset">Headset</string>
     <string name="audio_output_bluetooth">Bluetooth</string>
+    <string name="audio_output_mute">Mute</string>
     <string name="bottomSheet_raiseHand_btn">Raise hand</string>
     <string name="camera_toggle_btn_description">Toggle camera</string>
     <string name="camera_flip_btn_description">Flip camera</string>

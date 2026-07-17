@@ -53,6 +53,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import net.jami.daemon.IntVect
 import net.jami.daemon.JamiService
 import net.jami.daemon.UintVect
@@ -85,6 +86,11 @@ class HardwareServiceImpl(
     @Volatile
     private var pendingResolutionReset = false
     private var mShouldSpeakerphone = false
+    // Tracks whether the call's output stream is muted via the "Mute Audio Output"
+    // option. Since Telecom/AudioManager routing APIs do not expose this state,
+    // it must be tracked and reported explicitly.
+    private var mIsOutputMuted = false
+    private val mMuteState = BehaviorSubject.createDefault(false)
     private val mHasSpeakerPhone: Boolean by lazy { hasSpeakerphone() }
     private var mIsChooseExtension = false
     private var mMediaHandlerId: String? = null
@@ -183,7 +189,7 @@ class HardwareServiceImpl(
         (conf.call ?: conf.hostCall ?: conf.firstCall)!!.systemConnection
             .flatMapObservable { systemCall ->
                 val connection = (systemCall as CallServiceImpl.AndroidCall).connection!!
-                connection.audioState.map { audioState ->
+                Observable.combineLatest(connection.audioState, mMuteState) { audioState, _ ->
                     connectionToAudioState(connection, audioState)
                 }
             }
@@ -228,20 +234,24 @@ class HardwareServiceImpl(
             CallAudioState.ROUTE_BLUETOOTH,
             CallAudioState.ROUTE_SPEAKER
         )
+        // Mute never routes through Telecom (it fully silences the call's output stream
+        // instead of changing the route); this branch is unreachable, see selectAudioOutput().
+        AudioOutputType.MUTE -> CallConnection.ROUTE_LIST_DEFAULT
     }
 
     private fun connectionToAudioState(connection: CallConnection, state: CallAudioState): AudioState {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            val availableOutputs = connection.availableAudioEndpoints.map { endpointToAudioOutput(it) }
+            val availableOutputs = connection.availableAudioEndpoints.map { endpointToAudioOutput(it) } + OUTPUT_MUTE
             val currentOutput = connection.currentAudioEndpoint?.let { endpointToAudioOutput(it) }
             if (currentOutput != null || availableOutputs.isNotEmpty()) {
                 return AudioState(
-                    output = currentOutput ?: availableOutputs.first(),
+                    output = if (mIsOutputMuted) OUTPUT_MUTE else (currentOutput ?: availableOutputs.first()),
                     availableOutputs = availableOutputs
                 )
             }
         }
-        return AudioState(routeToType(state.route), maskToList(state.supportedRouteMask))
+        val output = if (mIsOutputMuted) OUTPUT_MUTE else routeToType(state.route)
+        return AudioState(output, maskToList(state.supportedRouteMask) + OUTPUT_MUTE)
     }
 
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
@@ -266,6 +276,18 @@ class HardwareServiceImpl(
     fun setAudioState(call: CallConnection, wantSpeaker: Boolean) {
         Log.w(TAG, "setAudioState Telecom API $wantSpeaker ${call.callAudioState}")
         call.setWantedAudioState(if (wantSpeaker) CallConnection.ROUTE_LIST_SPEAKER_IMPLICIT else CallConnection.ROUTE_LIST_DEFAULT)
+    }
+
+    private fun setOutputMuted(muted: Boolean) {
+        if (mIsOutputMuted == muted) return
+        mIsOutputMuted = muted
+        Log.w(TAG, "setOutputMuted $muted")
+        JamiService.mutePlayback(muted)
+        mMuteState.onNext(muted)
+        audioStateSubject.onNext(
+            if (muted) AudioState(OUTPUT_MUTE)
+            else AudioState(routeToType(if (isSpeakerphoneOn()) CallAudioState.ROUTE_SPEAKER else CallAudioState.ROUTE_EARPIECE))
+        )
     }
 
     val disposables = CompositeDisposable()
@@ -325,6 +347,7 @@ class HardwareServiceImpl(
 
     @Synchronized
     override fun closeAudioState() {
+        if (mIsOutputMuted) setOutputMuted(false)
         abandonAudioFocus()
     }
 
@@ -418,6 +441,7 @@ class HardwareServiceImpl(
     @Synchronized
     override fun toggleSpeakerphone(conf: Conference, checked: Boolean) {
         Log.w(TAG, "toggleSpeakerphone $conf $checked")
+        if (mIsOutputMuted) setOutputMuted(false)
 
         conf.call?.let { call ->
             val hasVideo = conf.hasActiveVideo()
@@ -491,6 +515,12 @@ class HardwareServiceImpl(
     override fun selectAudioOutput(conf: Conference, output: AudioOutput) {
         Log.w(TAG, "selectAudioOutput $conf $output")
 
+        if (output.type == AudioOutputType.MUTE) {
+            setOutputMuted(true)
+            return
+        }
+        if (mIsOutputMuted) setOutputMuted(false)
+
         conf.call?.let { call ->
             disposables.add(
                 call.systemConnection
@@ -519,6 +549,7 @@ class HardwareServiceImpl(
                                 mShouldSpeakerphone = false
                                 resetAudio()
                             }
+                            AudioOutputType.MUTE -> {}
                         }
                     }
             )
