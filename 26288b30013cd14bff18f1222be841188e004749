@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a89100d_9c9af63a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-07-17T18:22:33Z",
+      "side": 1,
+      "message": "Introduces a corner case when Bluetooth is connected while the call is ongoing, it triggers multiple switches between audio sources.",
+      "revId": "26288b30013cd14bff18f1222be841188e004749",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
