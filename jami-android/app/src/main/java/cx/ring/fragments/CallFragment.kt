@@ -31,6 +31,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.graphics.*
 import android.graphics.drawable.Icon
@@ -75,7 +76,6 @@ import cx.ring.utils.ActionHelper
 import cx.ring.utils.ContentUri
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils.isTablet
-import cx.ring.utils.DeviceUtils.isTv
 import cx.ring.utils.MediaButtonsHelper.MediaButtonsHelperCallback
 import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
@@ -1409,6 +1409,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             HardwareService.AudioOutputType.WIRED -> getString(R.string.audio_output_headset)
             HardwareService.AudioOutputType.SPEAKERS -> getString(R.string.audio_output_speaker)
             HardwareService.AudioOutputType.BLUETOOTH -> getString(R.string.audio_output_bluetooth)
+            HardwareService.AudioOutputType.MUTE -> getString(R.string.audio_output_mute)
         }
 
     private fun availableAudioOutputs(state: AudioState): List<AudioOutput> =
@@ -1423,6 +1424,9 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
         binding.callSpeakerBtn.isEnabled = availableOutput.size > 1
         binding.callSpeakerBtn.isChecked = state.output.type == HardwareService.AudioOutputType.SPEAKERS
+        binding.callSpeakerBtn.setImageResource(audioOutputIconRes(state.output))
+        binding.callSpeakerBtn.imageTintList = if (state.output.type == HardwareService.AudioOutputType.MUTE)
+            null else ColorStateList.valueOf(Color.WHITE)
         binding.textViewCallSpeaker.text = audioOutputLabel(state.output)
         binding.callSpeakerBtn.contentDescription = getString(
             R.string.audio_output_content_description,
@@ -1432,7 +1436,9 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     private fun hasExternalAudioDevice(outputs: List<AudioOutput>): Boolean =
         outputs.any {
-            it.type == HardwareService.AudioOutputType.WIRED || it.type == HardwareService.AudioOutputType.BLUETOOTH
+            it.type == HardwareService.AudioOutputType.WIRED ||
+                    it.type == HardwareService.AudioOutputType.BLUETOOTH ||
+                    it.type == HardwareService.AudioOutputType.MUTE
         }
 
     private fun nextSimpleAudioOutput(currentOutput: AudioOutput, outputs: List<AudioOutput>): AudioOutput? {
@@ -1491,6 +1497,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         HardwareService.AudioOutputType.SPEAKERS -> R.drawable.baseline_volume_up_24
         HardwareService.AudioOutputType.WIRED -> R.drawable.baseline_devices_24
         HardwareService.AudioOutputType.BLUETOOTH -> R.drawable.baseline_bluetooth_24
+        HardwareService.AudioOutputType.MUTE -> R.drawable.baseline_sound_off_24
     }
 
     private fun startScreenShare(resultCode: Int, data: Intent) {
