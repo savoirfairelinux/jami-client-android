@@ -450,6 +450,7 @@
   <string name="audio_output_earpiece">Auricular</string>
   <string name="audio_output_headset">Cascos</string>
   <string name="audio_output_bluetooth">Bluetooth</string>
+  <string name="audio_output_mute">Silenciar</string>
   <string name="bottomSheet_raiseHand_btn">Levanta tu mano</string>
   <string name="camera_toggle_btn_description">Alternar cámara</string>
   <string name="camera_flip_btn_description">Girar cámara</string>

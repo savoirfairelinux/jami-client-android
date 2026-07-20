@@ -443,6 +443,7 @@
   <string name="bottomSheet_hangup_btn">Çağrıyı sonlandır</string>
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Sesler</string>
+  <string name="audio_output_mute">Sessiz</string>
   <string name="bottomSheet_raiseHand_btn">El kaldır</string>
   <string name="camera_toggle_btn_description">Kamerayı aç/kapat</string>
   <string name="camera_flip_btn_description">Kamerayı döndür</string>

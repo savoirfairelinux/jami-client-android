@@ -447,6 +447,7 @@
   <string name="bottomSheet_hangup_btn">Завершить вызов</string>
   <string name="bottomSheet_mute_microphone_btn">Микрофон</string>
   <string name="bottomSheet_sound_output_btn">Звуки</string>
+  <string name="audio_output_mute">Заглушить</string>
   <string name="bottomSheet_raiseHand_btn">Поднять руку</string>
   <string name="camera_toggle_btn_description">Переключить камеру</string>
   <string name="camera_flip_btn_description">Перевернуть камеру</string>

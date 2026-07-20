@@ -442,6 +442,7 @@
   <string name="bottomSheet_hangup_btn">통화 종료</string>
   <string name="bottomSheet_mute_microphone_btn">미세</string>
   <string name="bottomSheet_sound_output_btn">음향이</string>
+  <string name="audio_output_mute">무음</string>
   <string name="bottomSheet_raiseHand_btn">손 들기</string>
   <string name="camera_toggle_btn_description">카메라 전환</string>
   <string name="camera_flip_btn_description"> 카메라</string>

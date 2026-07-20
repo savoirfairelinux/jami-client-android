@@ -332,6 +332,7 @@
   <string name="bottomSheet_hangup_btn">通話を終了</string>
   <string name="bottomSheet_mute_microphone_btn">マイク</string>
   <string name="bottomSheet_sound_output_btn">スピーカー</string>
+  <string name="audio_output_mute">消音</string>
   <string name="bottomSheet_raiseHand_btn">手を挙げる</string>
   <string name="camera_flip_btn_description">カメラを押す</string>
   <string name="add_participant_btn_description">参加者を追加</string>

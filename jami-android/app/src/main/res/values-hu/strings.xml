@@ -443,6 +443,7 @@
   <string name="bottomSheet_hangup_btn">Hívás befejezése</string>
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Hangok</string>
+  <string name="audio_output_mute">Elnémítás</string>
   <string name="bottomSheet_raiseHand_btn">Kéz felemelése</string>
   <string name="camera_toggle_btn_description">Kamera be-/kikapcsolása</string>
   <string name="camera_flip_btn_description">Fényképezőgép tükrözése</string>

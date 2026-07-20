@@ -46,6 +46,7 @@
   <!--Wizard-->
   <!--Bottom sheet-->
   <string name="bottomSheet_hangup_btn">କଲ୍ ଶେଷ</string>
+  <string name="audio_output_mute">ମୌନ</string>
   <string name="screen_share_btn_description">ସ୍କ୍ରିନ୍ ଅଂଶିଦାର କରନ୍ତୁ</string>
   <!--Swarm Details-->
   <!--JamiId-->

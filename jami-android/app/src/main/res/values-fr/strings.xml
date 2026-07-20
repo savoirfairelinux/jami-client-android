@@ -444,6 +444,7 @@
   <string name="bottomSheet_hangup_btn">Fin d’appel</string>
   <string name="bottomSheet_mute_microphone_btn">Micro</string>
   <string name="bottomSheet_sound_output_btn">Sons</string>
+  <string name="audio_output_mute">Désactiver le micro</string>
   <string name="bottomSheet_raiseHand_btn">Lever la main</string>
   <string name="camera_toggle_btn_description">Activer/désactiver la caméra</string>
   <string name="camera_flip_btn_description">Changer de caméra</string>

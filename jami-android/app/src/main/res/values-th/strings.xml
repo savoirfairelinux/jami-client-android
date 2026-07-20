@@ -317,6 +317,7 @@
   <string name="bottomSheet_hangup_btn">สิ้นสุดการโทร</string>
   <string name="bottomSheet_mute_microphone_btn">ไมโคร</string>
   <string name="bottomSheet_sound_output_btn">เสียง</string>
+  <string name="audio_output_mute">ปิดเสียง</string>
   <string name="bottomSheet_raiseHand_btn">ยกมือ</string>
   <string name="camera_flip_btn_description">พลิกกล้อง</string>
   <string name="add_participant_btn_description">เพิ่มผู้เข้าร่วม</string>

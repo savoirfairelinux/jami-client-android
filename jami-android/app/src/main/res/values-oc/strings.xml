@@ -299,6 +299,7 @@
   <string name="bottomSheet_hangup_btn">Terminar</string>
   <string name="bottomSheet_mute_microphone_btn">Micro</string>
   <string name="bottomSheet_sound_output_btn">Sonèt</string>
+  <string name="audio_output_mute">Muç</string>
   <string name="bottomSheet_raiseHand_btn">Levant la man</string>
   <string name="camera_flip_btn_description">Camèra de virar</string>
   <string name="add_participant_btn_description">Ajustar participant</string>

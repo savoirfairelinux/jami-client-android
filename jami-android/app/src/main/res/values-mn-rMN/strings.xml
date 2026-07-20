@@ -298,6 +298,7 @@
   <string name="bottomSheet_hangup_btn">Дуудлагыг дуусгах</string>
   <string name="bottomSheet_mute_microphone_btn">Микро</string>
   <string name="bottomSheet_sound_output_btn">- Үнэндээ</string>
+  <string name="audio_output_mute">Үмээнгүй</string>
   <string name="bottomSheet_raiseHand_btn">Та гар нь дээшлүүлж</string>
   <string name="camera_flip_btn_description">Хэлтийн камер</string>
   <string name="add_participant_btn_description">Үүнд оролцогч нэмнэ</string>
