@@ -297,6 +297,7 @@
   <string name="bottomSheet_hangup_btn">కాల్‌ను ముగించు</string>
   <string name="bottomSheet_mute_microphone_btn">మైక్రో</string>
   <string name="bottomSheet_sound_output_btn">శబ్దాలు</string>
+  <string name="audio_output_mute">మ్యూట్</string>
   <string name="bottomSheet_raiseHand_btn">చేతి పైకి</string>
   <string name="camera_flip_btn_description">ఫ్లిప్ కెమెరా</string>
   <string name="add_participant_btn_description">పాల్గొనేవారిని జోడించండి</string>

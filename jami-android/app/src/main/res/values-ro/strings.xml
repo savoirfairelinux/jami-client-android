@@ -450,6 +450,7 @@
   <string name="audio_output_earpiece">Auricular</string>
   <string name="audio_output_headset">Căști</string>
   <string name="audio_output_bluetooth">Bluetooth</string>
+  <string name="audio_output_mute">Oprește</string>
   <string name="bottomSheet_raiseHand_btn">Mîna sus</string>
   <string name="camera_toggle_btn_description">Act/Dez camera</string>
   <string name="camera_flip_btn_description">Schimbă camera</string>

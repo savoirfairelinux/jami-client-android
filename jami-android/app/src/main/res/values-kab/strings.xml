@@ -443,6 +443,7 @@
   <string name="bottomSheet_hangup_btn">Fak tiɣri</string>
   <string name="bottomSheet_mute_microphone_btn">Amikṛu</string>
   <string name="bottomSheet_sound_output_btn">Imeslan</string>
+  <string name="audio_output_mute"> Sgugem</string>
   <string name="bottomSheet_raiseHand_btn">Rfed afus-ik-im</string>
   <string name="camera_toggle_btn_description">Beddel takamiṛat</string>
   <string name="camera_flip_btn_description">Zzi takamirat</string>

@@ -443,6 +443,7 @@
   <string name="bottomSheet_hangup_btn">Avslutt samtale</string>
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Det høyrast</string>
+  <string name="audio_output_mute">Stum</string>
   <string name="bottomSheet_raiseHand_btn">Rekk opp handa</string>
   <string name="camera_toggle_btn_description">Veksla kamera</string>
   <string name="camera_flip_btn_description">Flip-kamera</string>

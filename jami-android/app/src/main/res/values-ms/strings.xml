@@ -297,6 +297,7 @@
   <string name="bottomSheet_hangup_btn">Tamatkan panggilan</string>
   <string name="bottomSheet_mute_microphone_btn">മൈക്രോ</string>
   <string name="bottomSheet_sound_output_btn">ശബ്ദങ്ങൾ</string>
+  <string name="audio_output_mute">നിശബ്ദത</string>
   <string name="bottomSheet_raiseHand_btn">കൈ ഉയര് ത്തുക</string>
   <string name="camera_flip_btn_description">Tukar kamera</string>
   <string name="add_participant_btn_description">പങ്കാളിയെ കൂട്ടിച്ചേർക്കുക</string>

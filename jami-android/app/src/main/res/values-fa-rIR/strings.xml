@@ -341,6 +341,7 @@ contact@jami.net</string>
   <string name="bottomSheet_hangup_btn">پایان تماس</string>
   <string name="bottomSheet_mute_microphone_btn">میکروفون</string>
   <string name="bottomSheet_sound_output_btn">صداها</string>
+  <string name="audio_output_mute">بی‌صدا کردن</string>
   <string name="bottomSheet_raiseHand_btn">بالا بردن دست </string>
   <string name="camera_flip_btn_description">چرخاندن دوربین</string>
   <string name="add_participant_btn_description">افزودن شرکت کننده</string>

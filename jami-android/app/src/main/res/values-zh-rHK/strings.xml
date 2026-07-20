@@ -449,6 +449,7 @@
   <string name="audio_output_earpiece">耳机</string>
   <string name="audio_output_headset">耳机</string>
   <string name="audio_output_bluetooth">蓝牙</string>
+  <string name="audio_output_mute">静音</string>
   <string name="bottomSheet_raiseHand_btn">举手</string>
   <string name="camera_toggle_btn_description">切换摄像头</string>
   <string name="camera_flip_btn_description">翻轉攝影機</string>

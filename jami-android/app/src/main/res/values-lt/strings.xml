@@ -351,6 +351,7 @@
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
   <string name="bottomSheet_hangup_btn">Baigti skambutį</string>
   <string name="bottomSheet_sound_output_btn">Garsai</string>
+  <string name="audio_output_mute">Nešlapti</string>
   <string name="bottomSheet_raiseHand_btn">Pakelti ranką</string>
   <string name="screen_share_btn_description">Bendrinti ekraną</string>
   <string name="uninstall">Pašalinti</string>

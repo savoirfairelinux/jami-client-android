@@ -346,6 +346,7 @@
   <string name="bottomSheet_hangup_btn">कॉल समाप्त करें</string>
   <string name="bottomSheet_mute_microphone_btn">माइक्रो</string>
   <string name="bottomSheet_sound_output_btn">ध्वनि</string>
+  <string name="audio_output_mute">आवाज़ बंद करें</string>
   <string name="bottomSheet_raiseHand_btn">हाथ उठाओ</string>
   <string name="camera_flip_btn_description">फ्लिप कैमरा</string>
   <string name="add_participant_btn_description">प्रतिभागी जोड़ें</string>

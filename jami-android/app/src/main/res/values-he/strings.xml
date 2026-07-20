@@ -190,6 +190,7 @@
   <string name="bottomSheet_add_participants_btn">הוסף</string>
   <string name="bottomSheet_change_camera_btn">שינוי</string>
   <string name="bottomSheet_hangup_btn">סיום השיחה</string>
+  <string name="audio_output_mute">שקט</string>
   <string name="bottomSheet_raiseHand_btn">תרים את היד.</string>
   <string name="add_participant_btn_description">הוסף משתתף</string>
   <string name="screen_share_btn_description">שתף מסך</string>

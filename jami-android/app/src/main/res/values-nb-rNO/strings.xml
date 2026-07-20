@@ -261,6 +261,7 @@
   <string name="bottomSheet_add_participants_btn">Legg til</string>
   <string name="bottomSheet_change_camera_btn">Endre</string>
   <string name="bottomSheet_hangup_btn">Avslutt samtale</string>
+  <string name="audio_output_mute">Mikrofon av</string>
   <string name="bottomSheet_raiseHand_btn">Rekk opp hånden</string>
   <string name="camera_toggle_btn_description">Veksle kamera</string>
   <string name="camera_flip_btn_description">Snu kamera</string>

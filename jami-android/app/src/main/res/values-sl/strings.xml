@@ -445,6 +445,7 @@
   <string name="bottomSheet_hangup_btn">Zaključi klic</string>
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Zvoki</string>
+  <string name="audio_output_mute">Utišaj</string>
   <string name="bottomSheet_raiseHand_btn">Dvigni roko</string>
   <string name="camera_toggle_btn_description">Preklopi kamero</string>
   <string name="camera_flip_btn_description">Zrcali kamero</string>

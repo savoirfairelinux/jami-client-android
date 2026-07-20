@@ -443,6 +443,7 @@
   <string name="bottomSheet_hangup_btn">Finalizar chamada</string>
   <string name="bottomSheet_mute_microphone_btn">Micro</string>
   <string name="bottomSheet_sound_output_btn">Sons</string>
+  <string name="audio_output_mute">Acalar</string>
   <string name="bottomSheet_raiseHand_btn">Ergue a man</string>
   <string name="camera_toggle_btn_description">Alternar a cámara</string>
   <string name="camera_flip_btn_description">Cambiar de cámara</string>
