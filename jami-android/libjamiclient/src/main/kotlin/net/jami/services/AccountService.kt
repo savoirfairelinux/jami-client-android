@@ -1527,14 +1527,20 @@ class AccountService(
             val uri = Uri.fromId(peerUri)
             when (val memberEvent = ConversationMemberEvent.entries[event]) {
                 ConversationMemberEvent.Add,
-                ConversationMemberEvent.Join,
+                ConversationMemberEvent.Join -> {
+                    val contact = conversation.findContact(uri) ?: account.getContactFromCache(uri)
+                    val role = if (memberEvent == ConversationMemberEvent.Add)
+                        MemberRole.INVITED else MemberRole.MEMBER
+                    conversation.addContact(contact, role)
+                }
                 ConversationMemberEvent.Unblock -> {
-                    val contact = conversation.findContact(uri)
-                    if (contact == null) {
-                        val role = if (memberEvent == ConversationMemberEvent.Add)
-                            MemberRole.INVITED else MemberRole.MEMBER
-                        conversation.addContact(account.getContactFromCache(uri), role)
-                    }
+                    val contact = conversation.findContact(uri) ?: account.getContactFromCache(uri)
+                    val role = JamiService.getConversationMembers(accountId, conversationId)
+                        .firstOrNull { it["uri"] == peerUri }
+                        ?.get("role")
+                        ?.let { MemberRole.fromString(it) }
+                        ?: MemberRole.MEMBER
+                    conversation.addContact(contact, role)
                 }
                 ConversationMemberEvent.Remove, ConversationMemberEvent.Block -> {
                     val role = if (memberEvent == ConversationMemberEvent.Remove)
