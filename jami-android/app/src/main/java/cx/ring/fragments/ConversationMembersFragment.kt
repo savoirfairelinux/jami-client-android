@@ -65,7 +65,11 @@ class ConversationMembersFragment : Fragment() {
             .startConversation(path.accountId, path.conversationUri)
             .flatMapObservable { conversation -> // Keep reference on conversation for roles.
                 conversation.contactUpdates.map { contacts ->
-                    Pair(conversation, contacts.sortedBy { !it.isUser }) // Sort to show user first
+                    // Non-admins should never see banned members in the member list,
+                    val isAdmin = conversation.isUserGroupAdmin()
+                    val visibleContacts = if (isAdmin) contacts
+                        else contacts.filterNot { conversation.roles[it.uri.uri] == MemberRole.BLOCKED }
+                    Pair(conversation, visibleContacts.sortedBy { !it.isUser })
                 }
             }
             .flatMap { (conversation, contacts) ->
@@ -136,7 +140,28 @@ class ConversationMembersFragment : Fragment() {
                 .subscribe { drawable: Drawable ->
                     holder.binding.photo.setImageDrawable(drawable)
                 })
-            holder.binding.moderator.isVisible = roles[contact.contact.uri.uri] == MemberRole.ADMIN
+            val role = roles[contact.contact.uri.uri]
+            holder.binding.moderator.apply {
+                when (role) {
+                    MemberRole.ADMIN -> {
+                        isVisible = true
+                        text = context.getText(R.string.group_admin)
+                        setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.baseline_moderateur, 0)
+                    }
+                    MemberRole.BLOCKED -> {
+                        isVisible = true
+                        text = context.getText(R.string.group_member_blocked)
+                        setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.baseline_block_24, 0)
+                    }
+                    MemberRole.INVITED -> {
+                        isVisible = true
+                        text = context.getText(R.string.group_member_invited)
+                        setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.baseline_mail_24, 0)
+                    }
+                    else -> isVisible = false
+                }
+            }
+            holder.itemView.alpha = if (role == MemberRole.BLOCKED || role == MemberRole.INVITED) 0.5f else 1f
             holder.binding.displayName.text =
                 if (contact.contact.isUser) holder.itemView.context.getText(R.string.conversation_info_contact_you) else contact.displayName
             holder.itemView.setOnClickListener { callback.invoke(contact.contact) }

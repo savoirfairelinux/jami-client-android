@@ -1567,17 +1567,16 @@ class AccountService(
                     ConversationMemberEvent.Add,
                     ConversationMemberEvent.Join,
                     ConversationMemberEvent.Unblock -> {
-                        val contact = conversation.findContact(uri)
-                        if (contact == null) {
-                            val role = if (memberEvent == ConversationMemberEvent.Add)
-                                MemberRole.INVITED else MemberRole.MEMBER
-                            conversation.addContact(account.getContactFromCache(uri), role)
-                        }
+                        val contact = conversation.findContact(uri) ?: account.getContactFromCache(uri)
+                        val role = if (memberEvent == ConversationMemberEvent.Add)
+                            MemberRole.INVITED else MemberRole.MEMBER
+                        conversation.addContact(contact, role)
                     }
                     ConversationMemberEvent.Remove, ConversationMemberEvent.Block -> {
                         val role = if (memberEvent == ConversationMemberEvent.Remove)
                             MemberRole.LEFT else MemberRole.BLOCKED
-                        conversation.findContact(uri)?.let { contact -> conversation.removeContact(contact, role) }
+                        val contact = conversation.findContact(uri) ?: account.getContactFromCache(uri)
+                        conversation.removeContact(contact, role)
                     }
                 }
             }

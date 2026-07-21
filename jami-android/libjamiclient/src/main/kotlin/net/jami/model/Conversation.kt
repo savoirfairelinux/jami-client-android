@@ -178,12 +178,12 @@ class Conversation(
                 allowContactAdding = true
             }
         } else {
-            if (memberRole != MemberRole.BLOCKED && memberRole != MemberRole.LEFT) {
+            if (memberRole != MemberRole.LEFT) {
                 allowContactAdding = true
             }
         }
 
-        if (allowContactAdding) {
+        if (allowContactAdding && !contacts.contains(contact)) {
             contacts.add(contact)
         }
 
@@ -192,8 +192,13 @@ class Conversation(
 
 
     fun removeContact(contact: Contact, memberRole: MemberRole? = null) {
-        memberRole?.let { roles[contact.uri.uri] = it }
-        if (mode.blockingFirst() != Mode.OneToOne) {
+        if (memberRole == null) {
+            contacts.remove(contact)
+            mContactSubject.onNext(contacts)
+            return
+        }
+        roles[contact.uri.uri] = memberRole
+        if (mode.blockingFirst() != Mode.OneToOne && memberRole == MemberRole.LEFT) {
             contacts.remove(contact)
         }
         mContactSubject.onNext(contacts)
