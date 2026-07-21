@@ -162,6 +162,7 @@ dependencies {
     // Markwon (Markdown support)
     implementation(libs.markwon.core)
     implementation(libs.markwon.linkify)
+    implementation(libs.markwon.html)
 
     implementation(libs.zoomage)
     implementation(libs.ez.vcard) {

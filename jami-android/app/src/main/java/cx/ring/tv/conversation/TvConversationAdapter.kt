@@ -60,6 +60,7 @@ import cx.ring.utils.DeviceUtils
 import cx.ring.utils.TextUtils
 import cx.ring.viewholders.ConversationViewHolder
 import io.noties.markwon.Markwon
+import io.noties.markwon.html.HtmlPlugin
 import io.noties.markwon.linkify.LinkifyPlugin
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
@@ -117,6 +118,7 @@ class TvConversationAdapter(
     private var lastDeliveredPosition = -1
     private val markwon: Markwon = Markwon.builder(conversationFragment.requireContext())
         .usePlugin(LinkifyPlugin.create())
+        .usePlugin(HtmlPlugin.create())
         .build()
     private val formatter = Formatter(StringBuilder(64), Locale.getDefault())
 

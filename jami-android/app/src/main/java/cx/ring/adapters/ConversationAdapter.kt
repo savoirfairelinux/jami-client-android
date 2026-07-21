@@ -76,6 +76,7 @@ import cx.ring.views.MessageStatusView
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
 import io.noties.markwon.MarkwonVisitor
+import io.noties.markwon.html.HtmlPlugin
 import io.noties.markwon.linkify.LinkifyPlugin
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
@@ -142,6 +143,7 @@ class ConversationAdapter(
     var showLinkPreviews = true
     private val markwon: Markwon = Markwon.builder(conversationFragment.requireContext())
             .usePlugin(LinkifyPlugin.create())
+            .usePlugin(HtmlPlugin.create())
             // Plugin to add a new line when a soft break is used.
             .usePlugin(object : AbstractMarkwonPlugin() {
                 override fun configureVisitor(builder: MarkwonVisitor.Builder) {
