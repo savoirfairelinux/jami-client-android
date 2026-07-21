@@ -36,6 +36,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Uri
+import net.jami.model.MemberRole
 import net.jami.services.AccountService
 import net.jami.services.ConversationFacade
 import javax.inject.Inject
@@ -87,14 +88,27 @@ class MembersBottomSheetFragment : BottomSheetDialogFragment() {
             (activity as? ConversationDetailsActivity)?.goToConversationActivity(path.accountId, contactUri)
         })
 
-        adapter.actions.add(ContactAction(null, getString(R.string.bottomsheet_remove)) {
-            mAccountService.removeConversationMember(
-                path.accountId,
-                conversationId = path.conversationUri.host,
-                uri = contactUri
-            )
-            dismiss()
-        })
+        val isAdmin = conversation.isUserGroupAdmin()
+        if (isAdmin) {
+            val isBlocked = conversation.roles[contactUri.uri] == MemberRole.BLOCKED
+            adapter.actions.add(ContactAction(null,
+                getString(if (isBlocked) R.string.bottomsheet_unblock else R.string.bottomsheet_block)) {
+                if (isBlocked) {
+                    mAccountService.addConversationMembers(
+                        path.accountId,
+                        path.conversationUri.host,
+                        listOf(contactUri)
+                    )
+                } else {
+                    mAccountService.removeConversationMember(
+                        path.accountId,
+                        conversationId = path.conversationUri.host,
+                        uri = contactUri
+                    )
+                }
+                dismiss()
+            })
+        }
 
         binding!!.actions.adapter = adapter
     }
