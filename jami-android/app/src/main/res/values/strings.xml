@@ -659,10 +659,13 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="picker_btn">Select contacts</string>
     <string name="no_contact_to_add">You have no contact to add</string>
     <string name="bottomsheet_contact">Contact Jami\n%1$s</string>
-    <string name="bottomsheet_remove">Remove member</string>
+    <string name="bottomsheet_block">Block member</string>
+    <string name="bottomsheet_unblock">Unblock member</string>
     <string name="error_open_no_app_found">No application found to handle this file: %1$s</string>
     <string name="swarm_detail_no_document">You have no documents yet.</string>
     <string name="group_admin">Admin</string>
+    <string name="group_member_blocked">Blocked</string>
+    <string name="group_member_invited">Invited</string>
     <string name="share_contact_intent_title">Add this contact on Jami!</string>
     <string name="share_contact_intent_body">You can add this contact “%1$s” on the Jami distributed communication platform: %2$s</string>
 
