@@ -9,7 +9,8 @@ internal data class SwarmMessageData(
     val body: Map<String, String>,
     val reactions: List<Map<String, String>>,
     val editions: List<Map<String, String>>,
-    val status: Map<String, Int>
+    val status: Map<String, Int>,
+    val pluginData: Map<String, String>
 ) {
     companion object {
         fun from(message: SwarmMessage) = SwarmMessageData(
@@ -19,7 +20,8 @@ internal data class SwarmMessageData(
             body = message.body.toNative(),
             reactions = message.reactions.toNative(),
             editions = message.editions.toNative(),
-            status = HashMap(message.status)
+            status = HashMap(message.status),
+            pluginData = message.pluginData.toNative()
         )
     }
 }

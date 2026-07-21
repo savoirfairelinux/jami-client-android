@@ -1485,8 +1485,21 @@ class AccountService(
         body["type"] = message.type
         body["linearizedParent"] = message.linearizedParent
 
+        // If a plugin provided a bodyOverwrite (e.g. a translation), show it instead of the
+        // original body. Mirrors the Qt client (interaction.cpp).
+        message.pluginData["bodyOverwrite"]?.let { overwrite ->
+            if (overwrite.isNotEmpty()) body["body"] = overwrite
+        }
+
         val interaction = getInteraction(account, conversation, body)
-        val edits = message.editions.map { getInteraction(account, conversation, it) }
+        val edits = message.editions.map { edition ->
+            val bodyOverwrite = edition["bodyOverwrite"]
+            val editionMap = HashMap(edition)
+            bodyOverwrite?.let { overwrite ->
+                if (overwrite.isNotEmpty()) editionMap["body"] = overwrite
+            }
+            getInteraction(account, conversation, editionMap)
+        }
         val reactions = message.reactions.map { getInteraction(account, conversation, it) }
         val statusMap = message.status.mapValues { Interaction.MessageStates.fromInt(it.value) }
 
