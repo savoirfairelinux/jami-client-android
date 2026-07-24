@@ -16,6 +16,23 @@
       "message": "misattributed crash",
       "revId": "24822dbb0499b707910dbe60b58ddee3adb26c62",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6fcb5bbe_24e340fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-07-24T17:58:38Z",
+      "side": 1,
+      "message": "!build",
+      "revId": "24822dbb0499b707910dbe60b58ddee3adb26c62",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
