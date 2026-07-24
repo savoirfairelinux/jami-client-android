@@ -16,9 +16,14 @@
  */
 package cx.ring.service
 
+import android.app.job.JobInfo
 import android.app.job.JobParameters
+import android.app.job.JobScheduler
 import android.app.job.JobService
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Handler
 import android.text.format.DateUtils
 import android.util.Log
@@ -27,7 +32,7 @@ import cx.ring.application.JamiApplication
 
 class JamiJobService : JobService() {
     override fun onStartJob(params: JobParameters): Boolean {
-        if (params.jobId != JOB_ID) return false
+        if (params.jobId != JOB_ID && params.jobId != BOOT_JOB_ID) return false
         Log.w(TAG, "onStartJob() $params")
         try {
             try {
@@ -66,5 +71,37 @@ class JamiJobService : JobService() {
         const val JOB_FLEX = 60 * DateUtils.MINUTE_IN_MILLIS
         const val JOB_DURATION = 7 * DateUtils.SECOND_IN_MILLIS
         const val JOB_ID = 3905
+        const val BOOT_JOB_ID = 3906
+
+        /**
+         * Schedules a one-time sync job to run shortly after device boot.
+         *
+         * Apps targeting Android 15 (API 35) or higher can no longer start a
+         * restricted foreground service type (such as `dataSync`) directly from a
+         * BOOT_COMPLETED broadcast receiver: doing so throws
+         * ForegroundServiceStartNotAllowedException. We therefore defer the boot
+         * sync to a JobScheduler job, which is the approach recommended by Google.
+         */
+        fun scheduleBootSync(context: Context) {
+            Log.w(TAG, "JobScheduler: scheduling boot sync job")
+            val scheduler = context.getSystemService(JobScheduler::class.java) ?: return
+            val component = ComponentName(context, JamiJobService::class.java)
+            try {
+                // Prefer an expedited job so the sync runs shortly after boot.
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    val result = scheduler.schedule(JobInfo.Builder(BOOT_JOB_ID, component)
+                        .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                        .setExpedited(true)
+                        .build())
+                    if (result == JobScheduler.RESULT_SUCCESS) return
+                    Log.w(TAG, "Expedited boot sync job rejected, falling back to a regular job")
+                }
+                scheduler.schedule(JobInfo.Builder(BOOT_JOB_ID, component)
+                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                    .build())
+            } catch (e: Exception) {
+                Log.e(TAG, "Error scheduling boot sync job", e)
+            }
+        }
     }
 }
