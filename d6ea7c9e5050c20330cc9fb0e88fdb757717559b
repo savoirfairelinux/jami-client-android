@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d17a245_e19964d1",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 1743,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-24T23:44:48Z",
+      "side": 1,
+      "message": "[warning] Line 1743: 🟡 `fileTransferInfoProvider.get(...)` calls into `JamiService.fileTransferInfo`, which is daemon/native I/O. Running it on `Schedulers.computation()` can starve CPU-bound Rx work if the daemon blocks or is slow. Use `Schedulers.io()` here, matching the notification/file-transfer offloading intent.",
+      "revId": "d6ea7c9e5050c20330cc9fb0e88fdb757717559b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c29a18a4_641830dd",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/ConversationCallbackDispatcher.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-24T23:44:48Z",
+      "side": 1,
+      "message": "[warning] Line 101: 🟡 Please add the trailing newline. Several files added in this patch miss it, which creates avoidable diff churn and may violate repository formatting checks.",
+      "revId": "d6ea7c9e5050c20330cc9fb0e88fdb757717559b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
