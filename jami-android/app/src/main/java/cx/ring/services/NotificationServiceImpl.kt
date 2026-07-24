@@ -101,9 +101,15 @@ class NotificationServiceImpl(
     private var pendingScreenshareCallbacks = HashMap<String, () -> Unit>()
 
     init {
-        Schedulers.io().createWorker().schedule {
-            registerNotificationChannels(mContext, notificationManager)
-        }
+        // Notification channels must exist before any foreground service calls
+        // startForeground(): registering them on a background thread races with
+        // cold-start foreground services (push wake-up, boot sync) and makes the
+        // system reject the notification with a
+        // RemoteServiceException$CannotPostForegroundServiceNotificationException.
+        // NotificationServiceImpl is constructed eagerly from JamiApplication.onCreate
+        // (and from each foreground service's onCreate injection), so this runs once,
+        // early, before startForeground is ever reached.
+        registerNotificationChannels(mContext, notificationManager)
     }
 
     /**
