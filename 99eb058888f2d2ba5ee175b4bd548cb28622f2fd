@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2417f050_76711310",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2026-07-24T18:28:03Z",
+      "side": 1,
+      "message": "Duplicate of https://review.jami.net/c/jami-client-android/+/34764\nIntroduces new race conditions",
+      "revId": "99eb058888f2d2ba5ee175b4bd548cb28622f2fd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
