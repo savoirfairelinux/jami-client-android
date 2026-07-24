@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1cb89d1_37fe3050",
+        "filename": "jami-android/app/src/main/java/cx/ring/service/JamiJobService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-24T15:15:56Z",
+      "side": 1,
+      "message": "[warning] Line 93: 🟡 The fallback regular job scheduling result is ignored. If the regular job is also rejected, boot sync silently never runs; check the return value and log failures consistently with the expedited path.",
+      "revId": "a99955a749f6e15da7a41ebad6203137b0621a7a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
