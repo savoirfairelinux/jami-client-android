@@ -171,6 +171,9 @@
   <string name="permission_dialog_post_notifications_title">Permitir notificaciones</string>
   <string name="permission_dialog_post_notifications_message">Jami necesita el permiso de notificaciones para avisarle de llamadas y mensajes entrantes, incluso cuando la aplicación está en segundo plano. Sin él, puede perder llamadas.</string>
   <string name="permission_dialog_post_notifications_blocked_message">Las notificaciones están deshabilitadas para Jami. Sin ellas, perderá llamadas y mensajes entrantes. Habilite las notificaciones de Jami en la configuración del dispositivo.</string>
+  <string name="permission_dialog_local_network_title">Permitir acceso a la red local</string>
+  <string name="permission_dialog_local_network_message">Jami necesita acceso a la red local para conectar llamadas directamente a los dispositivos de su red. Sin él, las llamadas pueden usar un relé y tener una calidad inferior.</string>
+  <string name="permission_dialog_local_network_blocked_message">El acceso a la red local está deshabilitado para Jami. Las llamadas a dispositivos en su red pueden usar un relé y tener una calidad inferior. Habilite el acceso a la red local para Jami en la configuración del dispositivo.</string>
   <string name="permission_dialog_open_settings">Abrir configuración</string>
   <string name="permission_dialog_later">Más tarde</string>
   <!--QRCode Scan-->

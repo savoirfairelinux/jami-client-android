@@ -171,6 +171,9 @@
   <string name="permission_dialog_post_notifications_title">Permite notificările</string>
   <string name="permission_dialog_post_notifications_message">Jami are nevoie de permisiunea pentru notificări ca să te anunțe despre apeluri și mesaje primite, chiar și atunci când aplicația rulează în fundal. Fără ea poți pierde apeluri.</string>
   <string name="permission_dialog_post_notifications_blocked_message">Notificările sunt dezactivate pentru Jami. Fără ele vei pierde apelurile și mesajele primite. Activează notificările pentru Jami în setările dispozitivului.</string>
+  <string name="permission_dialog_local_network_title">Permite accesul la rețeaua locală</string>
+  <string name="permission_dialog_local_network_message">Jami are nevoie de acces la rețeaua locală pentru a stabili legături directe între aparatele din aceeași rețea. Altfel, apelurile pot trece printr-un server intermediar, ceea ce le poate reduce calitatea.</string>
+  <string name="permission_dialog_local_network_blocked_message">Accesul la rețeaua locală este dezactivat pentru Jami. Apelurile către aparatele din rețeaua ta pot trece printr-un server intermediar, ceea ce le poate reduce calitatea. Accesul la rețeaua locală pentru Jami poate fi activat din reglările aparatului.</string>
   <string name="permission_dialog_open_settings">Deschide reglările</string>
   <string name="permission_dialog_later">Mai târziu</string>
   <!--QRCode Scan-->

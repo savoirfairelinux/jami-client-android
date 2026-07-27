@@ -169,6 +169,9 @@
   <string name="permission_dialog_post_notifications_title">允许通知</string>
   <string name="permission_dialog_post_notifications_message">Jami需要获取通知权限，以便在有来电和消息时提醒您，即使该应用处于后台。如果没有此权限，您可能会错过电话。</string>
   <string name="permission_dialog_post_notifications_blocked_message">Jami的通知功能已被禁用。没有通知，您将错过来电和消息。请在设备设置中为Jami启用通知功能。</string>
+  <string name="permission_dialog_local_network_title">允许本地网络访问</string>
+  <string name="permission_dialog_local_network_message">Jami需要本地网络访问权限，以便直接与您网络中的设备进行通话连接。若未授权，通话可能会通过中继服务器进行，导致音质下降。</string>
+  <string name="permission_dialog_local_network_blocked_message">Jami的本地网络访问已被禁用。与您网络内设备的通话可能会通过中继服务器进行，导致音质下降。请在设备设置中为Jami启用本地网络访问权限。</string>
   <string name="permission_dialog_open_settings">開啟設定</string>
   <string name="permission_dialog_later">稍後</string>
   <!--QRCode Scan-->

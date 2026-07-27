@@ -170,6 +170,9 @@
   <string name="permission_dialog_post_notifications_title">Salli ilmoitukset</string>
   <string name="permission_dialog_post_notifications_message">Jami tarvitsee luvan ilmoittaakseen sinulle saapuvista puheluista ja viesteistä, vaikka sovellus olisi taustalla. Ilman sitä puheluista ei tule hälytystä.</string>
   <string name="permission_dialog_post_notifications_blocked_message">Jamin ilmoitukset on poistettu käytöstä. Ilman niitä et näe saapuvia puheluita ja viestejä. Ota Jamin ilmoitukset käyttöön laitteen asetuksista.</string>
+  <string name="permission_dialog_local_network_title">Salli paikallisverkon käyttö</string>
+  <string name="permission_dialog_local_network_message">Jami tarvitsee lähiverkon käyttöoikeuden yhdistääkseen puhelut suoraan verkossasi oleviin laitteisiin. Ilman sitä puhelut saattavat käyttää välityspalvelinta ja laatu voi olla heikompi.</string>
+  <string name="permission_dialog_local_network_blocked_message">Jamin lähiverkon käyttö on poistettu käytöstä. Puhelut verkossasi oleviin laitteisiin käyttää välityspalvelinta ja laatu voi olla heikompi. Ota lähiverkon käyttö käyttöön Jamille laitteen asetuksista.</string>
   <string name="permission_dialog_open_settings">Avaa asetukset</string>
   <string name="permission_dialog_later">Myöhemmin</string>
   <!--QRCode Scan-->

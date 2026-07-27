@@ -297,6 +297,7 @@
   <string name="bottomSheet_hangup_btn">Zəngi bitir</string>
   <string name="bottomSheet_mute_microphone_btn">میکرو</string>
   <string name="bottomSheet_sound_output_btn">سسلر</string>
+  <string name="audio_output_mute">ساکئت</string>
   <string name="bottomSheet_raiseHand_btn">ال قالديريب</string>
   <string name="camera_flip_btn_description">فلپ کاميرا</string>
   <string name="add_participant_btn_description">شرکتچی قوش</string>

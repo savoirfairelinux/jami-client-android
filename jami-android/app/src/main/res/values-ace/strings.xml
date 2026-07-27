@@ -151,6 +151,7 @@
   <string name="bottomSheet_add_participants_btn">مڠمبيل</string>
   <string name="bottomSheet_change_camera_btn">ڤرچاي</string>
   <string name="bottomSheet_hangup_btn">ڤڠاجرن اخير</string>
+  <string name="audio_output_mute">ساكن</string>
   <string name="bottomSheet_raiseHand_btn">كرانڽ</string>
   <string name="add_participant_btn_description">مڠمبيل ڤڠوربان</string>
   <string name="screen_share_btn_description">ڤڠاجرن ڤڠاجرن</string>

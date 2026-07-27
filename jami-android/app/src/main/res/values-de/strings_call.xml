@@ -27,7 +27,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="call_human_state_incoming">Eingehend</string>
     <string name="call_human_state_connecting">Verbindungsaufbau</string>
     <string name="call_human_state_ringing">Klingelt</string>
-    <string name="call_human_state_current">Sprechend</string>
+    <string name="call_human_state_current">Spricht gerade</string>
     <string name="call_human_state_hungup">Beendet</string>
     <string name="call_human_state_busy">Beschäftigt</string>
     <string name="call_human_state_failure">Fehlgeschlagen</string>

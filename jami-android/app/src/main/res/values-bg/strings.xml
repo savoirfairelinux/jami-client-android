@@ -319,6 +319,7 @@
   <string name="bottomSheet_hangup_btn">Край на разговора</string>
   <string name="bottomSheet_mute_microphone_btn">Микро</string>
   <string name="bottomSheet_sound_output_btn">Звучи.</string>
+  <string name="audio_output_mute">Мълчави</string>
   <string name="bottomSheet_raiseHand_btn">Вдигнете ръка</string>
   <string name="camera_flip_btn_description">Обръщане на камерата</string>
   <string name="add_participant_btn_description">Добавяне на участник</string>

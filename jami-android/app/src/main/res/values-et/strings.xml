@@ -170,6 +170,9 @@
   <string name="permission_dialog_post_notifications_title">Luba teavitused</string>
   <string name="permission_dialog_post_notifications_message">Jami vajab õigust saata teavitusi saabuvate kõnede ja sõnumite kohta ka siis, kui rakendus ise töötab taustal. Ilma selleta võib erinev suhtus jääda sul märkamata.</string>
   <string name="permission_dialog_post_notifications_blocked_message">Teavitused on Jami puhul keelatud. Ilma nendeta jäävad sul kõned ja sõnumid märkamata. Palun luba nutiseadme seadistustes Jamil saata teavitusi.</string>
+  <string name="permission_dialog_local_network_title">Luba ligipääs kohtvõrgule</string>
+  <string name="permission_dialog_local_network_message">Võimaldamaks otseühendusi kohtvõrgu seadmete vahel luba Jamil kasutada oma kohtvõrku. Ilma selleta pruugitakse kõnede jaoks edastusserverit ja kõnete kvaliteet ilmselt on kehvem.</string>
+  <string name="permission_dialog_local_network_blocked_message">Hetkel Jami ei tohi kasutada kohtvõrku. Ilma selleta pruugitakse kõnede jaoks edastusserverit ja kõnete kvaliteet ilmselt on kehvem. Palun lülita nutiseadme seadistustest Jami ligipääs kohtvõrgule sisse.</string>
   <string name="permission_dialog_open_settings">Ava seadistused</string>
   <string name="permission_dialog_later">Hiljem</string>
   <!--QRCode Scan-->

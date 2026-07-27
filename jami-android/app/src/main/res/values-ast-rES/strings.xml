@@ -297,6 +297,7 @@
   <string name="bottomSheet_hangup_btn">La llamada final</string>
   <string name="bottomSheet_mute_microphone_btn">Micro</string>
   <string name="bottomSheet_sound_output_btn">Son los sos soníos.</string>
+  <string name="audio_output_mute">El so nome ye \"Mud\".</string>
   <string name="bottomSheet_raiseHand_btn">Ellí ye la mano.</string>
   <string name="camera_flip_btn_description">La cámara de vuelta</string>
   <string name="add_participant_btn_description">Aúna de les partes</string>

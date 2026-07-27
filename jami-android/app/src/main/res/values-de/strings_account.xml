@@ -41,15 +41,15 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="normal_devices_titles">Verknüpfte Geräte</string>
   <string name="account_device_revoke">Gerät widerrufen</string>
   <string name="account_device_revocation_success_title">Erfolg</string>
-  <string name="account_device_revocation_success">Gerät wurde jetzt widerrufen!</string>
+  <string name="account_device_revocation_success">Das Gerät ist jetzt widerrufen!</string>
   <string name="account_device_revocation_error_title">Fehler beim Widerrufen des Geräts</string>
   <string name="account_device_revocation_wrong_password">Falsches Passwort.</string>
   <string name="account_device_revocation_unknown_device">Unbekanntes Gerät.</string>
   <string name="account_device_revocation_error_unknown">Unbekannter Fehler.</string>
   <string name="account_password_change">Passwort ändern</string>
   <string name="account_password_set">Passwort festlegen</string>
-  <string name="account_password_summary">Kontopasswort verwalten.</string>
-  <string name="account_password_change_wait_message">Kontopasswort ändern</string>
+  <string name="account_password_summary">Verwalten Sie Ihr Kontopasswort.</string>
+  <string name="account_password_change_wait_message">Kontopasswort wird geändert</string>
   <string name="account_biometric_disable">Biometrische Authentifizierung deaktivieren</string>
   <string name="account_biometric_set">Biometrische Authentifizierung aktivieren</string>
   <string name="account_biometric_summary">Biometrische Authentifizierung für Ihr Konto verwalten.</string>
@@ -77,9 +77,9 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="account_ringtone_label">Klingeltöne</string>
   <string name="account_ringtone_enabled_label">Klingeltöne aktivieren</string>
   <string name="account_ringtone_path_label">Klingeltonpfad</string>
-  <string name="account_ringtone_custom_label">Eigenen Klingelton verwenden</string>
+  <string name="account_ringtone_custom_label">Benutzerdefinierten Klingelton verwenden</string>
   <string name="account_ringtone_title">Einen Klingelton auswählen</string>
-  <string name="account_ringtone_summary">Wählen Sie einen Klingelton aus oder suchen Sie sich Ihren eigenen aus</string>
+  <string name="account_ringtone_summary">Wählen Sie einen Klingelton aus oder verwenden Sie Ihren eigenen</string>
   <!--Video Details-->
   <string name="account_video_label">Video</string>
   <string name="account_video_enable">Video aktivieren</string>
@@ -119,11 +119,11 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="account_proxy_server_list_label">DHT-Proxy-Listen-URL</string>
   <string name="account_proxy_server_used">Verwendet: %1$s</string>
   <string name="account_sip_proxy_label">Proxy</string>
-  <string name="account_peer_discovery_label">Lokale Teilnehmer-Erkennung</string>
-  <string name="account_peer_discovery_enable_label">Lokale Teilnehmer-Erkennung aktivieren</string>
+  <string name="account_peer_discovery_label">Lokale Teilnehmererkennung</string>
+  <string name="account_peer_discovery_enable_label">Lokale Teilnehmererkennung aktivieren</string>
   <string name="account_peer_discovery_enable_summary">Mit anderen DHT-Knoten verbinden, die sich in Ihrem lokalen Netzwerk ankündigen.</string>
   <!--Security Details-->
-  <string name="account_credentials_label">Anmeldeinformationen</string>
+  <string name="account_credentials_label">Anmeldedaten</string>
   <string name="account_credentials_edit">Anmeldedaten bearbeiten</string>
   <string name="account_credentials_add">Anmeldedaten hinzufügen</string>
   <!--SRTP Details-->
@@ -132,7 +132,7 @@ Sie können Ihr Konto später bearbeiten</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS-Transport verwenden</string>
-  <string name="account_tls_port_label">TLS-Empfangsport</string>
+  <string name="account_tls_port_label">TLS-Überwachungsport</string>
   <string name="account_tls_certificate_list_label">Zertifizierungsstellen</string>
   <string name="account_tls_certificate_file_label">Zertifikatsdatei</string>
   <string name="account_tls_private_key_file_label">Private Schlüsseldatei</string>
@@ -143,7 +143,7 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="account_tls_verify_server_label">Server verifizieren</string>
   <string name="account_tls_verify_client_label">Client verifizieren</string>
   <string name="account_require_client_certificate_label">TLS erfordert ein Client-Zertifikat</string>
-  <string name="account_tls_negotiation_timeout_sec">Verhandlungs-Timeout (Sek.)</string>
+  <string name="account_tls_negotiation_timeout_sec">Aushandlungs-Timeout (Sek.)</string>
   <string name="account_rtp_max_port">Maximum</string>
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Audio-RTP-Portbereich</string>
@@ -193,7 +193,7 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="tv_about_author">Autorenrechte</string>
   <string name="tv_about_credits">Mitwirkende</string>
   <string name="account_link_device">Von einem anderen Gerät aus verbinden</string>
-  <string name="account_link_button">Über Netzwerk verbinden</string>
+  <string name="account_link_button">Aus Netzwerk verbinden</string>
   <string name="account_link_archive_button">Aus Sicherung verbinden</string>
   <string name="account_new_button">Jami-Konto erstellen</string>
   <string name="account_link_export_button">Neues Gerät verknüpfen</string>
@@ -209,20 +209,20 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="help_connect_password_enter">Geben Sie das Passwort Ihrer Organisation ein</string>
   <string name="account_connect_prompt_username">Benutzername</string>
   <string name="account_connect_server">Mit dem Verwaltungsserver verbinden</string>
-  <string name="account_enter_username">Benutzername eingeben</string>
+  <string name="account_enter_username">Benutzernamen eingeben</string>
   <string name="account_enter_servername">Server eingeben</string>
   <!--Name registration-->
-  <string name="error_username_empty">Benutzername eingeben</string>
+  <string name="error_username_empty">Einen Benutzernamen eingeben</string>
   <string name="no_registered_name_for_account">Kein registrierter Benutzername</string>
   <string name="username_available">Der Benutzername ist verfügbar.</string>
-  <string name="register_name">Registriere Namen</string>
+  <string name="register_name">Namen registrieren</string>
   <string name="trying_to_register_name">Die Registrierung des Benutzernamens ist im Gange. Bitte warten…</string>
-  <string name="registered_username">Benutzername registriert</string>
+  <string name="registered_username">Registrierter Benutzername</string>
   <string name="register_username">Öffentlichen Benutzernamen registrieren</string>
   <string name="register_recommended">Empfohlen</string>
   <string name="username_already_taken">Benutzername bereits vergeben</string>
   <string name="invalid_username">Ungültiger Benutzername</string>
-  <string name="unknown_error">Unbekannter Fehler. Bitte überprüfen sie ihre Netzwerkverbindung!</string>
+  <string name="unknown_error">Unbekannter Fehler. Bitte überprüfen Sie Ihre Netzwerkverbindung!</string>
   <string name="looking_for_username_availability">Verfügbarkeit des Benutzernamens wird geprüft…</string>
   <string name="account_status_connecting">Verbindung wird hergestellt</string>
   <string name="account_status_connection_error">Verbindungsfehler</string>

@@ -338,6 +338,7 @@
   <string name="bottomSheet_hangup_btn">إنهاء المكالمة</string>
   <string name="bottomSheet_mute_microphone_btn">الميكرفون</string>
   <string name="bottomSheet_sound_output_btn">الأصوات</string>
+  <string name="audio_output_mute">كتم الصوت</string>
   <string name="bottomSheet_raiseHand_btn">رفع اليد</string>
   <string name="camera_flip_btn_description">قلب كاميرا</string>
   <string name="add_participant_btn_description">أضف مشارك</string>
