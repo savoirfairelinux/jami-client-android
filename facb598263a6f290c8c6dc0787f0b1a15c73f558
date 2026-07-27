@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b723a7ce_b1a1f0a3",
+        "filename": ".cqfd/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-27T20:56:56Z",
+      "side": 1,
+      "message": "[warning] Line 60: 🟡 Installing `stable` via the rustup bootstrap script makes the CQFD image non-reproducible because the compiler version can change between image rebuilds. Pin a specific Rust toolchain version, and preferably verify the bootstrap script/checksum or install from a pinned artifact, so CI failures are not caused by an unexpected toolchain update.",
+      "revId": "facb598263a6f290c8c6dc0787f0b1a15c73f558",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8c919fd_1ff493eb",
+        "filename": ".cqfd/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-27T20:56:56Z",
+      "side": 1,
+      "message": "[error] Line 68: 🔴 `chmod -R a+rwX /usr/local/rustup /usr/local/cargo` makes every Rust binary on PATH world-writable, so any unprivileged process in the image can replace `cargo`/`rustc` and affect later builds. Keep these directories owned by root and grant write access only to the actual build user or a dedicated group, e.g. `chown -R \u003cbuild-user\u003e:\u003cbuild-user\u003e` or `chmod -R go-w` after installation.",
+      "revId": "facb598263a6f290c8c6dc0787f0b1a15c73f558",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
