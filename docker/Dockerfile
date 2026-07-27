@@ -48,6 +48,22 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     zip \
     && locale-gen $LANG $LC_ALL && update-locale $LANG $LC_ALL
 
+# Rust toolchain, required to build the yffi (Y-CRDT) contrib package that the daemon
+# uses for collaborative editing. Installed system-wide, and prepended to PATH, so it is
+# reachable by the unprivileged user the build runs as (which has no writable HOME).
+# The Android targets are added here so that contrib does not have to fetch them while
+# building. They must stay in sync with the ABIs in jami-android/gradle.properties.
+ENV RUSTUP_HOME=/usr/local/rustup \
+    CARGO_HOME=/usr/local/cargo
+ENV PATH="/usr/local/cargo/bin:$PATH"
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
+        | sh -s -- -y --profile minimal --default-toolchain stable && \
+    rustup target add \
+        aarch64-linux-android \
+        armv7-linux-androideabi \
+        x86_64-linux-android && \
+    chmod -R a+rwX /usr/local/rustup /usr/local/cargo
+
 # Swig
 RUN wget -O /tmp/swig.tar.gz https://github.com/swig/swig/archive/v4.4.1.tar.gz && \
     tar xzf  /tmp/swig.tar.gz -C /opt && \
