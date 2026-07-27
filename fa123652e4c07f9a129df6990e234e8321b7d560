@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc252301_18ed34be",
+        "filename": ".cqfd/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-27T21:34:54Z",
+      "side": 1,
+      "message": "[error] Line 60: 🔴 This installs the moving `stable` Rust toolchain via `curl | sh`, so the Docker image is not reproducible and can start failing or producing different artifacts when Rust stable advances. Pin an explicit Rust version, ideally with rustup-init checksum verification or another pinned package source.",
+      "revId": "fa123652e4c07f9a129df6990e234e8321b7d560",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70ecf540_e1640f2d",
+        "filename": ".cqfd/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-27T21:34:54Z",
+      "side": 1,
+      "message": "[error] Line 66: 🔴 `chmod -R a+rwX` makes the Rust toolchain and Cargo binaries world-writable while `/usr/local/cargo/bin` is prepended to PATH. Any build step running as the unprivileged user can modify executables used later, which is a privilege/supply-chain risk. Keep installed binaries read-only and grant write access only to the specific cache directories needed, preferably via ownership/group permissions for the build user.",
+      "revId": "fa123652e4c07f9a129df6990e234e8321b7d560",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d0c58c2_2fcb784a",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-27T21:34:54Z",
+      "side": 1,
+      "message": "[error] Line 60: 🔴 This installs the moving `stable` Rust toolchain via `curl | sh`, so the Docker image is not reproducible and can start failing or producing different artifacts when Rust stable advances. Pin an explicit Rust version, ideally with rustup-init checksum verification or another pinned package source.",
+      "revId": "fa123652e4c07f9a129df6990e234e8321b7d560",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c01292f_1a538645",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-27T21:34:54Z",
+      "side": 1,
+      "message": "[error] Line 66: 🔴 `chmod -R a+rwX` makes the Rust toolchain and Cargo binaries world-writable while `/usr/local/cargo/bin` is prepended to PATH. Any build step running as the unprivileged user can modify executables used later, which is a privilege/supply-chain risk. Keep installed binaries read-only and grant write access only to the specific cache directories needed, preferably via ownership/group permissions for the build user.",
+      "revId": "fa123652e4c07f9a129df6990e234e8321b7d560",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
