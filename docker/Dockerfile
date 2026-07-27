@@ -48,6 +48,25 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     zip \
     && locale-gen $LANG $LC_ALL && update-locale $LANG $LC_ALL
 
+# Rust toolchain, required to build the yffi (Y-CRDT) contrib package used by
+# the collaborative editing feature. Installed system-wide, and on PATH, so it
+# is reachable by the unprivileged user the build runs as. The version is
+# pinned so that an upstream Rust release cannot silently change the image from
+# one rebuild to the next. The Android targets are added here so that
+# cross-compiling does not need network access at build time.
+ARG RUST_VERSION=1.97.1
+ENV RUSTUP_HOME=/usr/local/rustup \
+    CARGO_HOME=/usr/local/cargo
+ENV PATH="/usr/local/cargo/bin:$PATH"
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
+        | sh -s -- -y --profile minimal --default-toolchain ${RUST_VERSION} && \
+    rustup target add \
+        armv7-linux-androideabi \
+        aarch64-linux-android \
+        i686-linux-android \
+        x86_64-linux-android && \
+    chmod -R go-w /usr/local/rustup /usr/local/cargo
+
 # Swig
 RUN wget -O /tmp/swig.tar.gz https://github.com/swig/swig/archive/v4.4.1.tar.gz && \
     tar xzf  /tmp/swig.tar.gz -C /opt && \
@@ -116,6 +135,11 @@ ARG HOST_UID
 ARG HOST_GID
 RUN groupadd -g $HOST_GID jenkins && \
     useradd --no-log-init --system --uid $HOST_UID --gid jenkins jenkins --create-home
+
+# Cargo writes its registry cache under CARGO_HOME, so the toolchain has to be
+# writable by the build user. Hand it over to that user rather than making it
+# world-writable, which would let any process in the image replace cargo/rustc.
+RUN chown -R jenkins:jenkins /usr/local/rustup /usr/local/cargo
 
 # Define environment variables.
 ENV JAVA_HOME=/opt/java/openjdk/
