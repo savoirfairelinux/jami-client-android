@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbfda4c4_3d1b0139",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-28T20:25:21Z",
+      "side": 1,
+      "message": "[warning] Line 99: 🟡 `fileTransferNotificationWorker` is created for the lifetime of the service but is never disposed. Rx workers retain scheduler resources and queued actions; dispose it in the service teardown path matching the existing lifecycle cleanup.",
+      "revId": "9d408842083c23d893fc4170a5830cab51bafaec",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a9e9236_f2e234f0",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-28T20:25:21Z",
+      "side": 1,
+      "message": "[error] Line 467: 🔴 `conversationLoadingTasks` is a plain `HashMap` accessed from multiple threads without consistent synchronization. `loadMore()` reads it inside `synchronized(conversationLoadingTasks)`, but `swarmLoadedNow()` still calls `loadingTasks.remove(id)` without synchronization, and `loadingTasks` appears to be the same/old shared map path. Use one consistently synchronized map for both registration and removal, or a `ConcurrentHashMap`, and remove the obsolete unsynchronized access.",
+      "revId": "9d408842083c23d893fc4170a5830cab51bafaec",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
