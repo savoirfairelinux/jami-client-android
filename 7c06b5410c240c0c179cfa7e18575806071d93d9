@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e30c61ca_8b39b0b6",
+        "filename": ".cqfd/docker/Dockerfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-29T20:38:31Z",
+      "side": 1,
+      "message": "[error] Line 56: 🔴 `RUST_VERSION\u003d1.97.1` appears to reference an unreleased/nonexistent Rust toolchain, so `rustup` will fail to install it and the image build will break. Pin this to an available stable release, or update it once that exact version exists.",
+      "revId": "7c06b5410c240c0c179cfa7e18575806071d93d9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e0878b2_457082c3",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-29T20:38:31Z",
+      "side": 1,
+      "message": "[error] Line 56: 🔴 `RUST_VERSION\u003d1.97.1` appears to reference an unreleased/nonexistent Rust toolchain, so `rustup` will fail to install it and the image build will break. Pin this to an available stable release, or update it once that exact version exists.",
+      "revId": "7c06b5410c240c0c179cfa7e18575806071d93d9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
