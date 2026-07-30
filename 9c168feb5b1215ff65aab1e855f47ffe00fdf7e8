@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "353d43e0_481f6f30",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/CollabEditorActivity.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-30T18:09:27Z",
+      "side": 1,
+      "message": "[error] Line 634: 🔴 Restoring immediately shows a success toast even when the WebView call fails or the editor is not currently previewing a version. `callEditor(\"restoreVersion\")` is asynchronous and `restoreVersion()` in JS can also no-op, so this can tell the user the document was restored when nothing changed. Have the JS method return a boolean/result through the existing bridge callback, or keep the bar open and show the success message only after a confirmed restore update was applied/sent.",
+      "revId": "9c168feb5b1215ff65aab1e855f47ffe00fdf7e8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfe3288d_502b927b",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-30T18:09:27Z",
+      "side": 1,
+      "message": "[warning] Line 853: 🟡 `change(s)` is not localization-friendly and cannot be pluralized correctly in many languages. Replace this with an Android `\u003cplurals\u003e` resource for the delta count and build the label from the selected plural string.",
+      "revId": "9c168feb5b1215ff65aab1e855f47ffe00fdf7e8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
