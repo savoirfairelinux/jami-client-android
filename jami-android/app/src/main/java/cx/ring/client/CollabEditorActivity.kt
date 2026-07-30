@@ -140,7 +140,7 @@ class CollabEditorActivity : AppCompatActivity() {
             .distinctUntilChanged()
             .flatMapCompletable { state ->
                 collaborationService
-                    .setAwareness(path.accountId, path.conversationId, documentId, state)
+                    .setAwareness(path.accountId, path.conversationUri, documentId, state)
                     .onErrorComplete()
             }
             .subscribe({}, { e -> Log.w(TAG, "awareness", e) }))
@@ -167,7 +167,7 @@ class CollabEditorActivity : AppCompatActivity() {
         if (opened) {
             // Fire and forget: the daemon has to know this replica is gone so the
             // others stop showing its caret, but there is nothing to wait for.
-            collaborationService.closeDocument(path.accountId, path.conversationId, documentId)
+            collaborationService.closeDocument(path.accountId, path.conversationUri, documentId)
                 .subscribe({}, { e -> Log.w(TAG, "close", e) })
         }
         binding.editor.destroy()
@@ -271,7 +271,7 @@ class CollabEditorActivity : AppCompatActivity() {
         if (attachmentId.isNullOrEmpty()) return null
         return try {
             val data = collaborationService
-                .attachment(path.accountId, path.conversationId, documentId, attachmentId)
+                .attachment(path.accountId, path.conversationUri, documentId, attachmentId)
                 .blockingGet()
             if (data.isEmpty()) null
             else WebResourceResponse(
@@ -339,11 +339,23 @@ class CollabEditorActivity : AppCompatActivity() {
 
     private fun openDocument() {
         disposable.add(collaborationService
-            .openDocument(path.accountId, path.conversationId, documentId)
+            .openDocument(path.accountId, path.conversationUri, documentId)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ state ->
+                // The daemon answers with the whole document as one update, and
+                // an empty answer is how it says no: the document was never
+                // announced in this conversation, or it refused to open it.
+                // Showing an empty page instead would look like a document that
+                // simply never syncs.
+                if (state.isEmpty()) {
+                    Log.e(TAG, "open $documentId: the daemon returned no state")
+                    binding.loading.isVisible = false
+                    binding.error.isVisible = true
+                    binding.error.setText(R.string.collab_open_error)
+                    return@subscribe
+                }
                 opened = true
-                if (state.isNotEmpty()) callEditor("applyUpdate", quote(encode(state)))
+                callEditor("applyUpdate", quote(encode(state)))
                 binding.loading.isVisible = false
                 binding.editor.isVisible = true
                 // Whatever the page did while it waited now has a document to
@@ -362,13 +374,13 @@ class CollabEditorActivity : AppCompatActivity() {
 
     private fun listen() {
         disposable.add(collaborationService
-            .updatesFor(path.accountId, path.conversationId, documentId)
+            .updatesFor(path.accountId, path.conversationUri, documentId)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ update -> callEditor("applyUpdate", quote(encode(update))) },
                 { e -> Log.e(TAG, "updates", e) }))
 
         disposable.add(collaborationService
-            .awarenessFor(path.accountId, path.conversationId, documentId)
+            .awarenessFor(path.accountId, path.conversationUri, documentId)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ a ->
                 val peer = peerFor(a.peerId)
@@ -379,7 +391,7 @@ class CollabEditorActivity : AppCompatActivity() {
             }, { e -> Log.e(TAG, "awareness", e) }))
 
         disposable.add(collaborationService
-            .departuresFor(path.accountId, path.conversationId, documentId)
+            .departuresFor(path.accountId, path.conversationUri, documentId)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ left ->
                 present.remove(left.peerId + "/" + left.clientId)
@@ -388,7 +400,8 @@ class CollabEditorActivity : AppCompatActivity() {
             }, { e -> Log.e(TAG, "departures", e) }))
 
         disposable.add(collaborationService.documentsRenamed
-            .filter { it.accountId == path.accountId && it.conversationId == path.conversationId
+            .filter { it.accountId == path.accountId
+                    && it.conversationId == path.conversationUri.rawRingId
                     && it.documentId == documentId }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ renamed ->
@@ -399,7 +412,7 @@ class CollabEditorActivity : AppCompatActivity() {
 
     private fun sendUpdate(base64: String) {
         disposable.add(collaborationService
-            .applyUpdate(path.accountId, path.conversationId, documentId, decode(base64))
+            .applyUpdate(path.accountId, path.conversationUri, documentId, decode(base64))
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({}, { e ->
                 Log.e(TAG, "apply", e)
@@ -409,7 +422,7 @@ class CollabEditorActivity : AppCompatActivity() {
 
     private fun refreshName() {
         disposable.add(collaborationService
-            .name(path.accountId, path.conversationId, documentId)
+            .name(path.accountId, path.conversationUri, documentId)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ name -> documentName = name; showTitle() },
                 { e -> Log.w(TAG, "name", e) }))
@@ -512,7 +525,7 @@ class CollabEditorActivity : AppCompatActivity() {
                 val name = input.text.toString().trim()
                 if (name.isEmpty()) return@setPositiveButton
                 disposable.add(collaborationService
-                    .setName(path.accountId, path.conversationId, documentId, name)
+                    .setName(path.accountId, path.conversationUri, documentId, name)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ documentName = name; showTitle() },
                         { e -> Log.e(TAG, "rename", e) }))
@@ -532,7 +545,7 @@ class CollabEditorActivity : AppCompatActivity() {
 
     private fun showHistory() {
         disposable.add(collaborationService
-            .history(path.accountId, path.conversationId, documentId, HISTORY_LIMIT)
+            .history(path.accountId, path.conversationUri, documentId, HISTORY_LIMIT)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ versions ->
                 if (versions.isEmpty()) {
@@ -554,7 +567,7 @@ class CollabEditorActivity : AppCompatActivity() {
 
     private fun showVersion(version: CollaborativeVersion) {
         disposable.add(collaborationService
-            .stateAt(path.accountId, path.conversationId, documentId, version.commitId)
+            .stateAt(path.accountId, path.conversationUri, documentId, version.commitId)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ state ->
                 callEditor("showVersion", quote(encode(state)))
@@ -581,7 +594,7 @@ class CollabEditorActivity : AppCompatActivity() {
             .subscribeOn(Schedulers.io())
             .flatMap { image ->
                 collaborationService
-                    .addAttachment(path.accountId, path.conversationId, documentId, image.bytes)
+                    .addAttachment(path.accountId, path.conversationUri, documentId, image.bytes)
                     .map { id -> id to image }
             }
             .observeOn(AndroidSchedulers.mainThread())
@@ -728,6 +741,12 @@ class CollabEditorActivity : AppCompatActivity() {
         private val CURSOR_COLORS = intArrayOf(
             0xE53935, 0x1E88E5, 0x43A047, 0xFB8C00, 0x8E24AA, 0x00ACC1, 0xF4511E
         )
+
+        fun intent(
+            context: Context, accountId: String, conversationUri: net.jami.model.Uri,
+            documentId: String,
+            name: String?
+        ) = intent(context, ConversationPath(accountId, conversationUri), documentId, name)
 
         fun intent(context: Context, path: ConversationPath, documentId: String, name: String?) =
             Intent(Intent.ACTION_VIEW, path.toUri(), context, CollabEditorActivity::class.java)
