@@ -191,6 +191,16 @@ function fire(dom, target, type, clientX) {
     target.dispatchEvent(event)
 }
 
+/** A two-finger gesture, spread apart along the x axis. */
+function pinch(dom, target, type, gap) {
+    const event = new dom.window.Event(type, { bubbles: true, cancelable: true })
+    event.touches = [
+        { clientX: 100 - gap / 2, clientY: 60 },
+        { clientX: 100 + gap / 2, clientY: 60 },
+    ]
+    target.dispatchEvent(event)
+}
+
 function drag(dom, handle, from, to) {
     fire(dom, handle, 'pointerdown', from)
     fire(dom, dom.window.document, 'pointermove', to)
@@ -210,7 +220,7 @@ test('dragging an image handle resizes it for everyone', options, async () => {
     // There is no layout here, so the image is told how wide it starts.
     image.getBoundingClientRect = () => rect(0, 200)
 
-    const handle = dom.window.document.querySelector('.jami-image-handle-right')
+    const handle = dom.window.document.querySelector('.jami-image-handle-br')
     assert.ok(handle, 'no resize handle')
 
     drag(dom, handle, 100, 160)
@@ -238,7 +248,7 @@ test('a peer writing during a drag does not send the width elsewhere', options, 
 
     const image = dom.window.document.querySelector('img')
     image.getBoundingClientRect = () => rect(0, 200)
-    const handle = dom.window.document.querySelector('.jami-image-handle-right')
+    const handle = dom.window.document.querySelector('.jami-image-handle-br')
 
     fire(dom, handle, 'pointerdown', 100)
     fire(dom, dom.window.document, 'pointermove', 160)
@@ -269,7 +279,7 @@ test('an abandoned drag leaves the document as it was', options, async () => {
 
     const image = dom.window.document.querySelector('img')
     image.getBoundingClientRect = () => rect(0, 200)
-    const handle = dom.window.document.querySelector('.jami-image-handle-right')
+    const handle = dom.window.document.querySelector('.jami-image-handle-br')
 
     fire(dom, handle, 'pointerdown', 100)
     fire(dom, dom.window.document, 'pointermove', 300)
@@ -389,5 +399,86 @@ test('a restore with no version being read is refused', options, async () => {
     const { host, editor } = await launch()
 
     assert.equal(editor.restoreVersion(), false)
+    assert.deepEqual(host.logs, [])
+})
+
+test('an image can be resized by pinching it', options, async () => {
+    const { dom, host, editor } = await launch()
+
+    const peer = new Y.Doc()
+    editor.insertImage('att-1', 800, 600)
+    for (const update of host.updates) Y.applyUpdate(peer, decode(update))
+    host.updates.length = 0
+
+    const image = dom.window.document.querySelector('img')
+    // There is no layout here, so the picture is told where it is.
+    image.getBoundingClientRect = () => rect(40, 120)
+
+    const root = dom.window.document.querySelector('.ql-editor')
+    pinch(dom, root, 'touchstart', 60)
+    pinch(dom, root, 'touchmove', 120)
+    pinch(dom, root, 'touchend', 120)
+
+    // Fingers twice as far apart, picture twice as wide -- said once, at the
+    // end, not once per finger movement.
+    assert.equal(image.getAttribute('width'), '240')
+    assert.equal(host.updates.length, 1, 'a message per finger movement')
+
+    for (const update of host.updates) Y.applyUpdate(peer, decode(update))
+    assert.deepEqual(peer.getText('content').toDelta(), [
+        { insert: { image: { id: 'att-1', width: 800, height: 600 } },
+          attributes: { w: 240 } },
+    ])
+    assert.deepEqual(host.logs, [])
+})
+
+test('a peer writing during a pinch does not send the width elsewhere',
+    options, async () => {
+    const { dom, host, editor } = await launch()
+
+    const peer = new Y.Doc()
+    editor.insertImage('att-1', 800, 600)
+    for (const update of host.updates) Y.applyUpdate(peer, decode(update))
+    host.updates.length = 0
+
+    const image = dom.window.document.querySelector('img')
+    image.getBoundingClientRect = () => rect(40, 120)
+
+    const root = dom.window.document.querySelector('.ql-editor')
+    pinch(dom, root, 'touchstart', 60)
+    pinch(dom, root, 'touchmove', 120)
+
+    // The fingers are still down when someone else writes above the picture.
+    peer.getText('content').insert(0, 'hello')
+    editor.applyUpdate(Buffer.from(Y.encodeStateAsUpdate(peer)).toString('base64'))
+
+    pinch(dom, root, 'touchend', 120)
+
+    // The width belongs to the picture, wherever the picture has been pushed.
+    for (const update of host.updates) Y.applyUpdate(peer, decode(update))
+    assert.deepEqual(peer.getText('content').toDelta(), [
+        { insert: 'hello' },
+        { insert: { image: { id: 'att-1', width: 800, height: 600 } },
+          attributes: { w: 240 } },
+    ])
+    assert.deepEqual(host.logs, [])
+})
+
+test('a pinch away from any image is left alone', options, async () => {
+    const { dom, host, editor } = await launch()
+    editor.insertImage('att-1', 800, 600)
+    host.updates.length = 0
+
+    const image = dom.window.document.querySelector('img')
+    image.getBoundingClientRect = () => rect(400, 120)
+
+    const root = dom.window.document.querySelector('.ql-editor')
+    pinch(dom, root, 'touchstart', 60)
+    pinch(dom, root, 'touchmove', 200)
+    pinch(dom, root, 'touchend', 200)
+
+    // Pinching the page is not pinching the picture.
+    assert.equal(image.getAttribute('width'), null)
+    assert.deepEqual(host.updates, [])
     assert.deepEqual(host.logs, [])
 })
