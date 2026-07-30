@@ -2,6 +2,11 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val buildFirebase = project.hasProperty("buildFirebase") || gradle.startParameter.taskRequests.toString().contains("Firebase")
 
+val collabEditorDir = layout.projectDirectory.dir("src/collabeditor")
+val collabEditorAssets = layout.buildDirectory.dir("generated/collabeditor").get().asFile
+val npm: String = (project.findProperty("npmCommand") as String?) ?: "npm"
+val node: String = (project.findProperty("nodeCommand") as String?) ?: "node"
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.hilt)
@@ -84,7 +89,57 @@ android {
             version = "4.1.2"
         }
     }
+    sourceSets.getByName("main") {
+        assets.srcDir(collabEditorAssets)
+    }
 }
+
+/*
+ * The collaborative editor's page.
+ *
+ * A shared document is a CRDT, and the replica that turns it into text has to
+ * agree with the one every other Jami client runs, down to the character. The
+ * editor therefore runs the same library the others do, which is a JavaScript
+ * one, bundled here from its sources: the result is a build product, so that
+ * what ships can be traced to what was written.
+ *
+ * Needs node and npm on the PATH. Sources and tests live in src/collabeditor.
+ */
+val installCollabEditor by tasks.registering(Exec::class) {
+    description = "Fetches the editor's JavaScript dependencies."
+    workingDir = collabEditorDir.asFile
+    commandLine(npm, "ci", "--no-audit", "--no-fund")
+    inputs.file(collabEditorDir.file("package.json"))
+    inputs.file(collabEditorDir.file("package-lock.json"))
+    outputs.dir(collabEditorDir.dir("node_modules"))
+}
+
+val buildCollabEditor by tasks.registering(Exec::class) {
+    description = "Bundles the collaborative editor into the application's assets."
+    dependsOn(installCollabEditor)
+    workingDir = collabEditorDir.asFile
+    commandLine(node, "esbuild.mjs", "--outdir", collabEditorAssets.absolutePath)
+    inputs.dir(collabEditorDir.dir("src"))
+    inputs.file(collabEditorDir.file("editor.html"))
+    inputs.file(collabEditorDir.file("esbuild.mjs"))
+    outputs.dir(collabEditorAssets)
+}
+
+val testCollabEditor by tasks.registering(Exec::class) {
+    description = "Runs the editor's document format tests."
+    dependsOn(installCollabEditor)
+    workingDir = collabEditorDir.asFile
+    commandLine(node, "--test", "test/format.test.mjs")
+}
+
+// The Android source set takes a plain directory, so the ordering that a
+// generated one would have carried is stated here instead.
+tasks.named("preBuild") { dependsOn(buildCollabEditor) }
+tasks.matching { it.name.startsWith("merge") && it.name.endsWith("Assets") }
+    .configureEach { dependsOn(buildCollabEditor) }
+// The unit test tasks are per-variant, and are created late.
+tasks.matching { it.name.startsWith("test") && it.name.endsWith("UnitTest") }
+    .configureEach { dependsOn(testCollabEditor) }
 
 configurations {
     all {
