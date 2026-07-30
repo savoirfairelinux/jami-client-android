@@ -116,3 +116,43 @@ body {
 .ql-snow .ql-tooltip {
     display: none !important;
 }
+
+/*
+ * The frame around the selected image, and the handles that resize it.
+ *
+ * It lives in Quill's container, over the text but outside the editable area:
+ * anything inside that area would be part of the document, and would be sent
+ * to everyone else.
+ */
+.jami-image-frame {
+    position: absolute;
+    display: none;
+    pointer-events: none;
+    border: 1px solid var(--jami-accent, #0056b3);
+    box-sizing: border-box;
+    z-index: 3;
+}
+
+.jami-image-frame.is-shown {
+    display: block;
+}
+
+.jami-image-handle {
+    position: absolute;
+    bottom: -11px;
+    width: 22px;
+    height: 22px;
+    margin: 0;
+    border-radius: 50%;
+    background: var(--jami-accent, #0056b3);
+    border: 2px solid #fff;
+    box-sizing: border-box;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+    pointer-events: auto;
+    /* The drag must resize the image, not scroll the page under it. */
+    touch-action: none;
+    cursor: nwse-resize;
+}
+
+.jami-image-handle-left { left: -11px; cursor: nesw-resize; }
+.jami-image-handle-right { right: -11px; }

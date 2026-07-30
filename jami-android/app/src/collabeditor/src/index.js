@@ -37,6 +37,10 @@ const ATTACHMENT_BASE = 'https://appassets.androidplatform.net/attachment/'
 
 const ALLOWED_LINK_SCHEMES = ['http', 'https', 'mailto']
 
+/* The bounds the desktop client applies, so a width set here is one it keeps. */
+const MIN_IMAGE_WIDTH = 24
+const MAX_IMAGE_WIDTH = 4096
+
 /** The Kotlin side, when there is one. Absent when the page is opened in a browser. */
 const host = window.JamiBridge || {
     onReady() {},
@@ -96,6 +100,8 @@ class Editor {
         this.cursors = null
         this.preview = false
         this.lastAwareness = null
+        this.frame = null
+        this.resizing = null
     }
 
     start(options) {
@@ -137,6 +143,8 @@ class Editor {
         this.quill.on('editor-change', (name) => {
             if (name === 'text-change') this.reportSelection()
         })
+
+        this.buildResizeHandles()
 
         host.onReady()
     }
@@ -180,6 +188,7 @@ class Editor {
                 align: typeof formats.align === 'string' ? formats.align : '',
             },
         }))
+        this.placeResizeHandles()
         if (!range) return
         // The desktop client sends the caret and the anchor in UTF-16 units,
         // which is what Quill counts in too, and what the CRDT is indexed by.
@@ -319,7 +328,167 @@ class Editor {
     setImageWidth(width) {
         const found = this.imageAt(this.quill.getSelection())
         if (!found) return
-        this.quill.formatText(found.index, 1, 'width', width > 0 ? width : false, 'user')
+        const w = this.boundWidth(width)
+        this.quill.formatText(found.index, 1, 'width', w > 0 ? w : false, 'user')
+        this.reportSelection()
+    }
+
+    /** No wider than the page it is on, and never too small to grab again. */
+    boundWidth(width) {
+        const w = Math.round(width)
+        if (!(w > 0)) return 0
+        const available = this.textWidth()
+        const max = available > MIN_IMAGE_WIDTH
+            ? Math.min(available, MAX_IMAGE_WIDTH)
+            : MAX_IMAGE_WIDTH
+        return Math.max(MIN_IMAGE_WIDTH, Math.min(w, max))
+    }
+
+    /** The width of the text column, which is as wide as an image may be. */
+    textWidth() {
+        const root = this.quill.root
+        const style = window.getComputedStyle ? window.getComputedStyle(root) : null
+        const padding = style
+            ? (parseFloat(style.paddingLeft) || 0) + (parseFloat(style.paddingRight) || 0)
+            : 0
+        return root.clientWidth - padding
+    }
+
+    /* ---------------------------------------------------------- image sizing */
+
+    /**
+     * Handles for resizing the selected image by dragging.
+     *
+     * They sit in Quill's container rather than in the text, so that they are
+     * not part of the document: anything inside the editable area would be
+     * content, and would travel to everyone else.
+     *
+     * A drag changes what this device draws and nothing more; only the release
+     * writes to the document. A width per pixel moved would be a swarm message
+     * per pixel moved.
+     */
+    buildResizeHandles() {
+        const frame = document.createElement('div')
+        frame.className = 'jami-image-frame'
+        frame.setAttribute('aria-hidden', 'true')
+        for (const side of ['left', 'right']) {
+            const handle = document.createElement('div')
+            handle.className = 'jami-image-handle jami-image-handle-' + side
+            handle.addEventListener('pointerdown', (e) => this.startResize(e, side))
+            frame.appendChild(handle)
+        }
+        this.quill.container.appendChild(frame)
+        this.frame = frame
+
+        const follow = () => this.placeResizeHandles()
+        this.quill.root.addEventListener('scroll', follow)
+        window.addEventListener('resize', follow)
+        // An image that has just finished loading is a different size than the
+        // frame that was drawn around it.
+        this.quill.root.addEventListener('load', follow, true)
+    }
+
+    /** Puts the frame over the selected image, or takes it away. */
+    placeResizeHandles() {
+        if (!this.frame) return
+        const node = this.framedImage()
+        if (!node || this.preview) {
+            this.frame.classList.remove('is-shown')
+            return
+        }
+        const box = node.getBoundingClientRect()
+        const origin = this.quill.container.getBoundingClientRect()
+        this.frame.style.left = (box.left - origin.left) + 'px'
+        this.frame.style.top = (box.top - origin.top) + 'px'
+        this.frame.style.width = box.width + 'px'
+        this.frame.style.height = box.height + 'px'
+        this.frame.classList.add('is-shown')
+    }
+
+    imageNode(index) {
+        const [blot] = this.quill.getLeaf(index + 1)
+        const node = blot && blot.domNode
+        return node && node.tagName === 'IMG' ? node : null
+    }
+
+    /** The image the frame belongs on: the one being dragged, else the selected one. */
+    framedImage() {
+        if (this.resizing) return this.resizing.node
+        const found = this.imageAt(this.quill.getSelection())
+        return found ? this.imageNode(found.index) : null
+    }
+
+    /** Where an image sits now, which an edit above it can have changed. */
+    indexOfImage(node) {
+        const blot = Quill.find(node)
+        return blot ? this.quill.getIndex(blot) : -1
+    }
+
+    startResize(event, side) {
+        const found = this.imageAt(this.quill.getSelection())
+        const node = found ? this.imageNode(found.index) : null
+        if (!node) return
+        event.preventDefault()
+        if (event.target && event.target.setPointerCapture && event.pointerId !== undefined) {
+            try { event.target.setPointerCapture(event.pointerId) } catch (e) { /* not held */ }
+        }
+        this.resizing = {
+            side,
+            node,
+            fromX: event.clientX,
+            fromWidth: node.getBoundingClientRect().width,
+            // What to put back if the drag never ends: a width only this replica
+            // knows about is silent divergence.
+            was: node.getAttribute('width'),
+            width: 0,
+        }
+        const move = (e) => this.duringResize(e)
+        const end = (e) => this.endResize(e, false)
+        const cancel = (e) => this.endResize(e, true)
+        this.resizing.release = () => {
+            document.removeEventListener('pointermove', move)
+            document.removeEventListener('pointerup', end)
+            document.removeEventListener('pointercancel', cancel)
+        }
+        document.addEventListener('pointermove', move)
+        document.addEventListener('pointerup', end)
+        document.addEventListener('pointercancel', cancel)
+    }
+
+    duringResize(event) {
+        const drag = this.resizing
+        if (!drag) return
+        const moved = event.clientX - drag.fromX
+        // Dragging a left handle outwards means leftwards.
+        const wanted = drag.fromWidth + (drag.side === 'right' ? moved : -moved)
+        drag.width = this.boundWidth(wanted)
+        drag.node.setAttribute('width', String(drag.width))
+        this.placeResizeHandles()
+    }
+
+    endResize(event, cancelled) {
+        const drag = this.resizing
+        if (!drag) return
+        drag.release()
+        this.resizing = null
+        // The drag wrote the width straight to the image, where Quill can have
+        // taken it in as an edit of its own; asking for that same width again
+        // would then be asking for nothing, and the others would never hear of
+        // it. Put back what was there and let Quill see that first.
+        if (drag.was) drag.node.setAttribute('width', drag.was)
+        else drag.node.removeAttribute('width')
+        this.quill.update('silent')
+
+        // Where the drag began is not where to write either: a peer editing
+        // above the image moves it while the finger is still down, and the
+        // width would land on whatever took its place. Ask where the image is
+        // now, and make sure the answer is still the same image.
+        const index = this.indexOfImage(drag.node)
+        if (!cancelled && drag.width > 0
+            && index >= 0 && this.imageNode(index) === drag.node) {
+            this.quill.formatText(index, 1, 'width', drag.width, 'user')
+        }
+        this.placeResizeHandles()
         this.reportSelection()
     }
 
