@@ -90,6 +90,13 @@
             tools:text="Version of 3 July at 14:02" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/version_restore"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/collab_version_restore" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/version_leave"
             style="?attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
