@@ -50,6 +50,7 @@ import cx.ring.databinding.DialogSwarmTitleBinding
 import cx.ring.fragments.CallFragment
 import cx.ring.fragments.ContactPickerFragment
 import cx.ring.fragments.ConversationActionsFragment
+import cx.ring.fragments.CollabDocumentsFragment
 import cx.ring.fragments.ConversationGalleryFragment
 import cx.ring.fragments.ConversationMembersFragment
 import cx.ring.utils.*
@@ -518,10 +519,15 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
                             ConversationActionsFragment.newInstance(accountId, conversationId)
                         )
                     } else {
-                        titles = listOf(getString(R.string.details), getString(R.string.tab_files))
+                        titles = listOf(
+                            getString(R.string.details),
+                            getString(R.string.tab_files),
+                            getString(R.string.collab_documents)
+                        )
                         fragments = listOf(
                             ConversationActionsFragment.newInstance(accountId, conversationId),
-                            ConversationGalleryFragment.newInstance(accountId, conversationId)
+                            ConversationGalleryFragment.newInstance(accountId, conversationId),
+                            CollabDocumentsFragment.newInstance(accountId, conversationId)
                         )
                     }
 
@@ -554,12 +560,14 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
                     titles = listOf(
                         getString(R.string.details),
                         getString(R.string.tab_members),
-                        getString(R.string.tab_files)
+                        getString(R.string.tab_files),
+                        getString(R.string.collab_documents)
                     )
                     fragments = listOf(
                         ConversationActionsFragment.newInstance(accountId, conversationId),
                         ConversationMembersFragment.newInstance(accountId, conversationId),
-                        ConversationGalleryFragment.newInstance(accountId, conversationId)
+                        ConversationGalleryFragment.newInstance(accountId, conversationId),
+                        CollabDocumentsFragment.newInstance(accountId, conversationId)
                     )
                 }
             }
