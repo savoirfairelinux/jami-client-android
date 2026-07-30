@@ -39,6 +39,8 @@ const ALLOWED_LINK_SCHEMES = ['http', 'https', 'mailto']
 
 /* The bounds the desktop client applies, so a width set here is one it keeps. */
 const MIN_IMAGE_WIDTH = 24
+/* How far outside a picture a finger still counts as being on it. */
+const PINCH_MARGIN = 24
 const MAX_IMAGE_WIDTH = 4096
 
 /** The Kotlin side, when there is one. Absent when the page is opened in a browser. */
@@ -103,6 +105,7 @@ class Editor {
         this.lastAwareness = null
         this.frame = null
         this.resizing = null
+        this.pinching = null
     }
 
     start(options) {
@@ -372,14 +375,19 @@ class Editor {
         const frame = document.createElement('div')
         frame.className = 'jami-image-frame'
         frame.setAttribute('aria-hidden', 'true')
-        for (const side of ['left', 'right']) {
+        // One at each corner, as on the desktop: whichever way the picture
+        // sits on the page, a finger has one within reach.
+        for (const corner of ['tl', 'tr', 'bl', 'br']) {
             const handle = document.createElement('div')
-            handle.className = 'jami-image-handle jami-image-handle-' + side
+            handle.className = 'jami-image-handle jami-image-handle-' + corner
+            const side = corner.endsWith('r') ? 'right' : 'left'
             handle.addEventListener('pointerdown', (e) => this.startResize(e, side))
             frame.appendChild(handle)
         }
         this.quill.container.appendChild(frame)
         this.frame = frame
+
+        this.bindPinchToResize()
 
         const follow = () => this.placeResizeHandles()
         this.quill.root.addEventListener('scroll', follow)
@@ -404,6 +412,84 @@ class Editor {
         this.frame.style.width = box.width + 'px'
         this.frame.style.height = box.height + 'px'
         this.frame.classList.add('is-shown')
+    }
+
+    /**
+     * Resize an image by pinching it.
+     *
+     * Aiming at a handle asks for precision a finger does not have on a moving
+     * page. Pinching asks for none: the picture itself is the target, and it
+     * is the gesture already used everywhere else to make a picture bigger.
+     *
+     * Nothing is selected on the way: taking the focus here would raise the
+     * keyboard, which would resize the page under the fingers doing the
+     * pinching.
+     */
+    bindPinchToResize() {
+        const root = this.quill.root
+        const spread = (touches) => Math.hypot(
+            touches[0].clientX - touches[1].clientX,
+            touches[0].clientY - touches[1].clientY)
+
+        root.addEventListener('touchstart', (event) => {
+            if (!event.touches || event.touches.length !== 2) return
+            const node = this.imageUnder(event.touches)
+            if (!node) return
+            const index = this.indexOfImage(node)
+            if (index < 0) return
+            event.preventDefault()
+            this.pinching = {
+                node,
+                from: spread(event.touches),
+                fromWidth: node.getBoundingClientRect().width,
+                was: node.getAttribute('width'),
+                width: 0,
+            }
+        }, { passive: false })
+
+        root.addEventListener('touchmove', (event) => {
+            const pinch = this.pinching
+            if (!pinch || !event.touches || event.touches.length !== 2) return
+            if (!(pinch.from > 0)) return
+            event.preventDefault()
+            pinch.width = this.boundWidth(pinch.fromWidth * (spread(event.touches) / pinch.from))
+            pinch.node.setAttribute('width', String(pinch.width))
+            this.placeResizeHandles()
+        }, { passive: false })
+
+        root.addEventListener('touchend', () => this.endPinch(false))
+        root.addEventListener('touchcancel', () => this.endPinch(true))
+    }
+
+    endPinch(cancelled) {
+        const pinch = this.pinching
+        if (!pinch) return
+        this.pinching = null
+        // A pinch takes the same care a drag does: give the picture back the
+        // width the document knows before saying anything, and ask again where
+        // it sits, since a peer can have moved it while the fingers were down.
+        if (pinch.was) pinch.node.setAttribute('width', pinch.was)
+        else pinch.node.removeAttribute('width')
+        this.quill.update('silent')
+
+        const index = this.indexOfImage(pinch.node)
+        if (!cancelled && pinch.width > 0
+            && index >= 0 && this.imageNode(index) === pinch.node) {
+            this.quill.formatText(index, 1, 'width', pinch.width, 'user')
+        }
+        this.placeResizeHandles()
+    }
+
+    /** The image both fingers are on, if they are on the same one. */
+    imageUnder(touches) {
+        for (const node of this.quill.root.querySelectorAll('img')) {
+            const box = node.getBoundingClientRect()
+            const on = (touch) =>
+                touch.clientX >= box.left - PINCH_MARGIN && touch.clientX <= box.right + PINCH_MARGIN
+                && touch.clientY >= box.top - PINCH_MARGIN && touch.clientY <= box.bottom + PINCH_MARGIN
+            if (on(touches[0]) && on(touches[1])) return node
+        }
+        return null
     }
 
     imageNode(index) {
