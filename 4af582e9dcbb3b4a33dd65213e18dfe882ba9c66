@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2eecb40_10a16b1d",
+        "filename": "jami-android/app/build.gradle.kts",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-30T18:09:26Z",
+      "side": 1,
+      "message": "[warning] Line 45: 🟡 `testCollabEditor` only runs `test/format.test.mjs`, so the added `test/bundle.test.mjs` is never executed by Gradle/CI. Use `node --test \"test/*.test.mjs\"` or `npm test` so all collab editor tests are covered.",
+      "revId": "4af582e9dcbb3b4a33dd65213e18dfe882ba9c66",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
