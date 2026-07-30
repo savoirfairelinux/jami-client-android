@@ -25,6 +25,7 @@ import io.reactivex.rxjava3.subjects.Subject
 import net.jami.daemon.Blob
 import net.jami.daemon.JamiService
 import net.jami.model.CollaborativeDocument
+import net.jami.model.Uri
 import net.jami.model.CollaborativeVersion
 import java.util.concurrent.Callable
 import java.util.concurrent.ExecutorService
@@ -39,6 +40,13 @@ import java.util.concurrent.ExecutorService
  *
  * Every daemon call is dispatched on the daemon executor, as the rest of the
  * client does; the returned Rx types carry the answer back.
+ */
+/**
+ * The documents a conversation writes together.
+ *
+ * A conversation is named here by its [Uri] rather than by a string, because
+ * the daemon only ever accepts the bare hexadecimal id: handing it the "swarm:"
+ * form is rejected silently, and both forms are strings.
  */
 class CollaborationService(private val executor: ExecutorService) {
 
@@ -110,22 +118,22 @@ class CollaborationService(private val executor: ExecutorService) {
     val attachmentsAdded: Observable<AttachmentAdded> = attachmentSubject.observeOn(Schedulers.io())
 
     /** Updates for one open document, the form an editor subscribes to. */
-    fun updatesFor(accountId: String, conversationId: String, documentId: String): Observable<ByteArray> =
+    fun updatesFor(accountId: String, conversation: Uri, documentId: String): Observable<ByteArray> =
         documentUpdates
-            .filter { it.accountId == accountId && it.conversationId == conversationId && it.documentId == documentId }
+            .filter { it.accountId == accountId && it.conversationId == conversation.rawRingId && it.documentId == documentId }
             .map { it.update }
 
-    fun awarenessFor(accountId: String, conversationId: String, documentId: String): Observable<AwarenessUpdate> =
+    fun awarenessFor(accountId: String, conversation: Uri, documentId: String): Observable<AwarenessUpdate> =
         awarenessUpdates
-            .filter { it.accountId == accountId && it.conversationId == conversationId && it.documentId == documentId }
+            .filter { it.accountId == accountId && it.conversationId == conversation.rawRingId && it.documentId == documentId }
 
-    fun departuresFor(accountId: String, conversationId: String, documentId: String): Observable<ParticipantLeft> =
+    fun departuresFor(accountId: String, conversation: Uri, documentId: String): Observable<ParticipantLeft> =
         participantsLeft
-            .filter { it.accountId == accountId && it.conversationId == conversationId && it.documentId == documentId }
+            .filter { it.accountId == accountId && it.conversationId == conversation.rawRingId && it.documentId == documentId }
 
-    fun attachmentsFor(accountId: String, conversationId: String, documentId: String): Observable<String> =
+    fun attachmentsFor(accountId: String, conversation: Uri, documentId: String): Observable<String> =
         attachmentsAdded
-            .filter { it.accountId == accountId && it.conversationId == conversationId && it.documentId == documentId }
+            .filter { it.accountId == accountId && it.conversationId == conversation.rawRingId && it.documentId == documentId }
             .map { it.attachmentId }
 
     /**
@@ -134,38 +142,38 @@ class CollaborationService(private val executor: ExecutorService) {
      */
     fun createDocument(
         accountId: String,
-        conversationId: String,
+        conversation: Uri,
         name: String,
         mimeType: String = CollaborativeDocument.MIME_RICH_TEXT,
     ): Single<String> = fromDaemon {
-        JamiService.createCollaborativeDocument(accountId, conversationId, name, mimeType)
+        JamiService.createCollaborativeDocument(accountId, conversation.rawRingId, name, mimeType)
     }
 
     /**
      * Start an editing session and get the whole document as one Y-CRDT update,
      * to seed a fresh replica. Must be paired with [closeDocument].
      */
-    fun openDocument(accountId: String, conversationId: String, documentId: String): Single<ByteArray> =
+    fun openDocument(accountId: String, conversation: Uri, documentId: String): Single<ByteArray> =
         fromDaemon {
-            JamiService.openCollaborativeDocument(accountId, conversationId, documentId).takeBytes()
+            JamiService.openCollaborativeDocument(accountId, conversation.rawRingId, documentId).takeBytes()
         }
 
-    fun closeDocument(accountId: String, conversationId: String, documentId: String): Completable =
-        onDaemon { JamiService.closeCollaborativeDocument(accountId, conversationId, documentId) }
+    fun closeDocument(accountId: String, conversation: Uri, documentId: String): Completable =
+        onDaemon { JamiService.closeCollaborativeDocument(accountId, conversation.rawRingId, documentId) }
 
     /** Broadcast a local edit. The update is a Y-CRDT update, lib0 v1 encoding. */
     fun applyUpdate(
         accountId: String,
-        conversationId: String,
+        conversation: Uri,
         documentId: String,
         update: ByteArray,
     ): Completable = onDaemon {
-        withBlob(update) { JamiService.applyCollaborativeUpdate(accountId, conversationId, documentId, it) }
+        withBlob(update) { JamiService.applyCollaborativeUpdate(accountId, conversation.rawRingId, documentId, it) }
     }
 
-    fun documentState(accountId: String, conversationId: String, documentId: String): Single<ByteArray> =
+    fun documentState(accountId: String, conversation: Uri, documentId: String): Single<ByteArray> =
         fromDaemon {
-            JamiService.collaborativeDocumentState(accountId, conversationId, documentId).takeBytes()
+            JamiService.collaborativeDocumentState(accountId, conversation.rawRingId, documentId).takeBytes()
         }
 
     /**
@@ -174,19 +182,19 @@ class CollaborationService(private val executor: ExecutorService) {
      * `{"p":<caret>,"a":<anchor>}` in UTF-16 code units. An empty state
      * withdraws this device's cursor.
      */
-    fun setAwareness(accountId: String, conversationId: String, documentId: String, state: String): Completable =
-        onDaemon { JamiService.setCollaborativeAwareness(accountId, conversationId, documentId, state) }
+    fun setAwareness(accountId: String, conversation: Uri, documentId: String, state: String): Completable =
+        onDaemon { JamiService.setCollaborativeAwareness(accountId, conversation.rawRingId, documentId, state) }
 
-    fun setName(accountId: String, conversationId: String, documentId: String, name: String): Completable =
-        onDaemon { JamiService.setCollaborativeDocumentName(accountId, conversationId, documentId, name) }
+    fun setName(accountId: String, conversation: Uri, documentId: String, name: String): Completable =
+        onDaemon { JamiService.setCollaborativeDocumentName(accountId, conversation.rawRingId, documentId, name) }
 
-    fun name(accountId: String, conversationId: String, documentId: String): Single<String> =
-        fromDaemon { JamiService.collaborativeDocumentName(accountId, conversationId, documentId) }
+    fun name(accountId: String, conversation: Uri, documentId: String): Single<String> =
+        fromDaemon { JamiService.collaborativeDocumentName(accountId, conversation.rawRingId, documentId) }
 
     /** Every document announced in a conversation, newest first. */
-    fun documents(accountId: String, conversationId: String): Single<List<CollaborativeDocument>> =
+    fun documents(accountId: String, conversation: Uri): Single<List<CollaborativeDocument>> =
         fromDaemon {
-            val vect = JamiService.getCollaborativeDocuments(accountId, conversationId)
+            val vect = JamiService.getCollaborativeDocuments(accountId, conversation.rawRingId)
             try {
                 vect.toNative().mapNotNull { CollaborativeDocument.fromNative(it) }
             } finally {
@@ -200,11 +208,11 @@ class CollaborationService(private val executor: ExecutorService) {
      */
     fun history(
         accountId: String,
-        conversationId: String,
+        conversation: Uri,
         documentId: String,
         max: Int = 0,
     ): Single<List<CollaborativeVersion>> = fromDaemon {
-        val vect = JamiService.getCollaborativeDocumentHistory(accountId, conversationId, documentId, max.toLong())
+        val vect = JamiService.getCollaborativeDocumentHistory(accountId, conversation.rawRingId, documentId, max.toLong())
         try {
             vect.toNative().mapNotNull { CollaborativeVersion.fromNative(it) }
         } finally {
@@ -215,11 +223,11 @@ class CollaborationService(private val executor: ExecutorService) {
     /** The document as it stood at a checkpoint, as a Y-CRDT update. */
     fun stateAt(
         accountId: String,
-        conversationId: String,
+        conversation: Uri,
         documentId: String,
         commitId: String,
     ): Single<ByteArray> = fromDaemon {
-        JamiService.collaborativeDocumentStateAt(accountId, conversationId, documentId, commitId).takeBytes()
+        JamiService.collaborativeDocumentStateAt(accountId, conversation.rawRingId, documentId, commitId).takeBytes()
     }
 
     /**
@@ -228,11 +236,11 @@ class CollaborationService(private val executor: ExecutorService) {
      */
     fun addAttachment(
         accountId: String,
-        conversationId: String,
+        conversation: Uri,
         documentId: String,
         data: ByteArray,
     ): Single<String> = fromDaemon {
-        withBlob(data) { JamiService.addCollaborativeAttachment(accountId, conversationId, documentId, it) }
+        withBlob(data) { JamiService.addCollaborativeAttachment(accountId, conversation.rawRingId, documentId, it) }
     }
 
     /**
@@ -241,11 +249,11 @@ class CollaborationService(private val executor: ExecutorService) {
      */
     fun attachment(
         accountId: String,
-        conversationId: String,
+        conversation: Uri,
         documentId: String,
         attachmentId: String,
     ): Single<ByteArray> = fromDaemon {
-        JamiService.collaborativeAttachment(accountId, conversationId, documentId, attachmentId).takeBytes()
+        JamiService.collaborativeAttachment(accountId, conversation.rawRingId, documentId, attachmentId).takeBytes()
     }
 
     // Called from DaemonService, on the daemon's own thread. The Blob belongs to
