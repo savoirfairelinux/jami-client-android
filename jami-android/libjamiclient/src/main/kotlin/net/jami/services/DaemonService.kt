@@ -29,6 +29,7 @@ class DaemonService(
     private val mHardwareService: HardwareService,
     private val mAccountService: AccountService,
     private val mPeerServicesService: PeerServicesService,
+    private val mCollaborationService: CollaborationService,
 ) {
     // references must be kept to avoid garbage collection while pointers are stored in the daemon.
     private var mHardwareCallback: DaemonVideoCallback? = null
@@ -214,6 +215,37 @@ class DaemonService(
         ) {
             val detailsMap: Map<String, String> = details.toNativeFromUtf8()
             mExecutor.submit { mAccountService.addDeviceStateChanged(accountId, operationId, state, detailsMap) }
+        }
+
+        // Collaborative editing. These fire while a document is open, so they run
+        // straight through instead of queueing on the daemon executor: an update
+        // is only useful once it reaches the editor. The service copies what it
+        // needs out of the Blob before the daemon reclaims it, and hands the
+        // delivery to a scheduler of its own, so no subscriber runs here.
+        override fun collaborativeDocumentUpdate(accountId: String, conversationId: String, documentId: String, update: Blob) {
+            mCollaborationService.documentUpdate(accountId, conversationId, documentId, update)
+        }
+
+        override fun collaborativeAwarenessChanged(
+            accountId: String, conversationId: String, documentId: String,
+            peerId: String, clientId: Long, state: String,
+        ) {
+            mCollaborationService.awarenessChanged(accountId, conversationId, documentId, peerId, clientId, state)
+        }
+
+        override fun collaborativeParticipantLeft(
+            accountId: String, conversationId: String, documentId: String,
+            peerId: String, clientId: Long,
+        ) {
+            mCollaborationService.participantLeft(accountId, conversationId, documentId, peerId, clientId)
+        }
+
+        override fun collaborativeDocumentRenamed(accountId: String, conversationId: String, documentId: String, name: String) {
+            mCollaborationService.documentRenamed(accountId, conversationId, documentId, name)
+        }
+
+        override fun collaborativeAttachmentAdded(accountId: String, conversationId: String, documentId: String, attachmentId: String) {
+            mCollaborationService.attachmentAdded(accountId, conversationId, documentId, attachmentId)
         }
     }
 
