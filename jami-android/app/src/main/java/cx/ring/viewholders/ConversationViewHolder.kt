@@ -213,6 +213,10 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 mPreviewDomain = v.findViewById(R.id.link_preview_domain)
                 primaryClickableView = mMsgTxt
             }
+            MessageType.COLLAB_DOCUMENT -> {
+                mMsgDetailTxtPerm = v.findViewById(R.id.message_time_permanent)
+                primaryClickableView = v.findViewById(R.id.collab_doc_card)
+            }
             MessageType.INCOMING_FILE,
             MessageType.OUTGOING_FILE -> {
                 mFileTitle = v.findViewById(R.id.file_title)

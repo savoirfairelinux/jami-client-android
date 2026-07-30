@@ -857,5 +857,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="collab_image_error">This image could not be added.</string>
     <string name="collab_image_too_large">This image is too large to be added to a document.</string>
     <string name="collab_send_error">Your changes could not be sent.</string>
+    <string name="collab_editable_document">Editable document</string>
 
 </resources>
