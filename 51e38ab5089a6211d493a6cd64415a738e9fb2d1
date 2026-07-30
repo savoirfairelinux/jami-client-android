@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f18d6c7_0a2b3860",
+        "filename": "jami-android/app/src/collabeditor/src/index.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-30T18:09:27Z",
+      "side": 1,
+      "message": "[error] Line 454: 🔴 `drag.index` is captured at pointerdown and reused on pointerup. In a collaborative document, remote edits during the drag can shift the image, so this can apply the width attribute to the wrong character/embed. Resolve the current blot/index from `drag.node` at commit time, verify it is still an `IMG`, then call `formatText` with that current index.",
+      "revId": "51e38ab5089a6211d493a6cd64415a738e9fb2d1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
