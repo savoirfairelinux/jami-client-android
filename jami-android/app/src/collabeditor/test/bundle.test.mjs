@@ -29,25 +29,34 @@ import { quillToJami } from '../src/jamiformat.js'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const bundle = resolve(here, '../build/collab/editor.js')
+const page = resolve(here, '../build/collab/editor.html')
 
 /** Stands in for the Kotlin side of the bridge. */
 function makeHost() {
-    return {
+    let announce
+    const host = {
         updates: [],
         awareness: [],
         selections: [],
         logs: [],
         ready: false,
-        onReady() { this.ready = true },
+        // Resolves when the page says it is ready, which is what the
+        // application waits for before it asks the daemon for the document.
+        started: new Promise((resolve) => { announce = resolve }),
+        onReady() { this.ready = true; announce() },
         onUpdate(base64) { this.updates.push(base64) },
         onAwareness(state) { this.awareness.push(state) },
         onSelection(json) { this.selections.push(json) },
         onLog(message) { this.logs.push(message) },
     }
+    return host
 }
 
 function launch() {
-    const dom = new JSDOM('<!DOCTYPE html><body><div id="editor"></div></body>', {
+    // The page the application loads, not a stand-in for it: an editor that
+    // builds itself into an element the shipped HTML does not have is exactly
+    // the kind of blank screen this is here to catch.
+    const dom = new JSDOM(readFileSync(page, 'utf8'), {
         pretendToBeVisual: true,
         runScripts: 'outside-only',
     })
@@ -61,16 +70,40 @@ function launch() {
 
     const host = makeHost()
     dom.window.JamiBridge = host
+    // Nothing here starts the editor: the page does that itself, and an editor
+    // waiting to be started is an editor the application waits for for ever.
     dom.window.eval(readFileSync(bundle, 'utf8'))
-    dom.window.JamiEditor.start({})
-    return { dom, host, editor: dom.window.JamiEditor }
+    // The page boots when the document is parsed, so this waits for the same
+    // signal the application waits for rather than assuming it has happened.
+    return withTimeout(
+        host.started.then(() => ({ dom, host, editor: dom.window.JamiEditor })), host)
 }
 
-const built = existsSync(bundle)
+/** Fails with the page's own log rather than a bare timeout. */
+function withTimeout(promise, host) {
+    let timer
+    const expiry = new Promise((_, reject) => {
+        timer = setTimeout(
+            () => reject(new Error('the editor never reported ready: '
+                + (host.logs.join('\n') || 'it said nothing'))), 5000)
+    })
+    return Promise.race([promise, expiry]).finally(() => clearTimeout(timer))
+}
+
+const built = existsSync(bundle) && existsSync(page)
 const options = built ? {} : { skip: 'run "npm run build" first' }
 
-test('the bundle exposes the interface the application calls', options, () => {
-    const { host, editor } = launch()
+test('the editor starts itself and says so', options, async () => {
+    // The application shows a spinner until this arrives, and asks the daemon
+    // for the document only then. Were the page waiting to be started instead,
+    // each side would be waiting for the other.
+    const { host } = await launch()
+    assert.equal(host.ready, true, host.logs.join('\n'))
+    assert.deepEqual(host.logs, [])
+})
+
+test('the bundle exposes the interface the application calls', options, async () => {
+    const { host, editor } = await launch()
     assert.equal(host.ready, true, host.logs.join('\n'))
     for (const name of ['applyUpdate', 'applyAwareness', 'removeCursor', 'toggle',
                         'setHeader', 'setList', 'setAlign', 'setLink', 'clearFormat',
@@ -81,8 +114,8 @@ test('the bundle exposes the interface the application calls', options, () => {
     assert.deepEqual(host.logs, [])
 })
 
-test('a document sent by a peer is displayed', options, () => {
-    const { host, editor } = launch()
+test('a document sent by a peer is displayed', options, async () => {
+    const { host, editor } = await launch()
 
     // What another replica would put on the wire.
     const peer = new Y.Doc()
@@ -102,8 +135,8 @@ test('a document sent by a peer is displayed', options, () => {
     assert.deepEqual(host.logs, [])
 })
 
-test('a local edit is sent out as an update a peer can apply', options, () => {
-    const { host, editor } = launch()
+test('a local edit is sent out as an update a peer can apply', options, async () => {
+    const { host, editor } = await launch()
 
     const peer = new Y.Doc()
     peer.getText('content').applyDelta([{ insert: 'Report' }])
@@ -130,8 +163,8 @@ test('a local edit is sent out as an update a peer can apply', options, () => {
 })
 
 test('an awareness state from a peer is accepted and one from nowhere is not',
-     options, () => {
-    const { host, editor } = launch()
+     options, async () => {
+    const { host, editor } = await launch()
     editor.applyUpdate(Buffer.from(Y.encodeStateAsUpdate(new Y.Doc())).toString('base64'))
 
     editor.applyAwareness('peer1', 1, '{"p":0,"a":0}', 'Alice', '#e53935')
