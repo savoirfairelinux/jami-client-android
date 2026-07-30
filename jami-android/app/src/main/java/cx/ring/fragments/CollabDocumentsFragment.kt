@@ -20,12 +20,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
+import cx.ring.client.CollabDocuments
 import cx.ring.client.CollabEditorActivity
 import cx.ring.databinding.FragCollabDocumentsBinding
 import cx.ring.databinding.ItemCollabDocumentBinding
@@ -94,31 +93,7 @@ class CollabDocumentsFragment : Fragment() {
     }
 
     private fun promptNewDocument() {
-        val context = context ?: return
-        val input = EditText(context).apply {
-            hint = getString(R.string.collab_document_name_hint)
-            setSingleLine()
-        }
-        MaterialAlertDialogBuilder(context)
-            .setTitle(R.string.collab_new_document)
-            .setView(android.widget.FrameLayout(context).apply {
-                val margin = resources.getDimensionPixelSize(R.dimen.padding_large)
-                setPadding(margin, margin / 2, margin, 0)
-                addView(input)
-            })
-            .setPositiveButton(R.string.collab_create) { _, _ ->
-                create(input.text.toString().trim().ifEmpty { getString(R.string.collab_untitled) })
-            }
-            .setNegativeButton(android.R.string.cancel, null)
-            .show()
-    }
-
-    private fun create(name: String) {
-        disposable.add(collaborationService
-            .createDocument(path.accountId, path.conversationUri, name)
-            .observeOn(DeviceUtils.uiScheduler)
-            .subscribe({ documentId -> open(documentId, name) },
-                { e -> Log.e(TAG, "create", e) }))
+        CollabDocuments.promptNew(context ?: return, path, collaborationService, disposable)
     }
 
     private fun open(documentId: String, name: String?) {

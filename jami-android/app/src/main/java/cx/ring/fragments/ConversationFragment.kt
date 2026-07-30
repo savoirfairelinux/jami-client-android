@@ -52,6 +52,7 @@ import androidx.recyclerview.widget.RecyclerView
 import cx.ring.R
 import cx.ring.adapters.ConversationAdapter
 import cx.ring.client.CallActivity
+import cx.ring.client.CollabDocuments
 import cx.ring.client.ConversationDetailsActivity
 import cx.ring.client.ConversationActivity
 import cx.ring.client.ConversationDetailsActivity.Companion.EXIT_REASON
@@ -480,6 +481,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 R.id.conv_send_file -> openFilePicker()
                 R.id.conv_select_media -> openGallery()
                 R.id.conv_share_location -> shareLocation()
+                R.id.conv_new_document -> newCollabDocument()
                 R.id.chat_extensions -> presenter.showExtensionListHandlers()
             }
             false
@@ -487,6 +489,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         popup.menu.findItem(R.id.chat_extensions).isVisible = JamiService.getPluginsEnabled() && !JamiService.getChatHandlers().isEmpty()
         popup.setForceShowIcon(true)
         popup.show()
+    }
+
+    private fun newCollabDocument() {
+        val path = ConversationPath.fromBundle(arguments) ?: return
+        CollabDocuments.promptNew(
+            requireContext(), path, presenter.collaborationService, mCompositeDisposable
+        )
     }
 
     override fun showExtensionListHandlers(accountId: String, contactId: String) {
