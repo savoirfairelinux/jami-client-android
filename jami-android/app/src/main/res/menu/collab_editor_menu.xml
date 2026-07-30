@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (C) 2004-2026 Savoir-faire Linux Inc.
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_collab_history"
+        android:icon="@drawable/baseline_history_16"
+        android:title="@string/collab_history"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_collab_rename"
+        android:title="@string/collab_rename"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_collab_export"
+        android:title="@string/collab_export_pdf"
+        app:showAsAction="never" />
+
+</menu>
