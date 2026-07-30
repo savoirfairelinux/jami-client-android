@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46f115e2_c69c63c1",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/CollabEditorActivity.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-30T18:42:45Z",
+      "side": 1,
+      "message": "[error] Line 648: 🔴 The native version bar is hidden before the WebView confirms `restoreVersion`. If the JS call fails or returns without leaving preview, Android switches back to the format bar while the editor can remain in read-only preview with no visible way back. Move `closeVersionBar()` into the confirmed success/unchanged paths, or explicitly keep/show the version bar on the error path.",
+      "revId": "1b07e608ffe619ff9bacd0340837317d7da1482c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
