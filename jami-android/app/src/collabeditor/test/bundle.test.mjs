@@ -175,3 +175,76 @@ test('an awareness state from a peer is accepted and one from nowhere is not',
     // client's crash.
     assert.deepEqual(host.logs, [])
 })
+
+/* ------------------------------------------------------- resizing an image */
+
+const decode = (base64) => new Uint8Array(Buffer.from(base64, 'base64'))
+
+const rect = (left, width) => ({
+    left, width, right: left + width, top: 0, bottom: 120, height: 120,
+})
+
+/** A pointer event carrying the one thing the editor reads from it. */
+function fire(dom, target, type, clientX) {
+    const event = new dom.window.Event(type, { bubbles: true, cancelable: true })
+    event.clientX = clientX
+    target.dispatchEvent(event)
+}
+
+function drag(dom, handle, from, to) {
+    fire(dom, handle, 'pointerdown', from)
+    fire(dom, dom.window.document, 'pointermove', to)
+    fire(dom, dom.window.document, 'pointerup', to)
+}
+
+test('dragging an image handle resizes it for everyone', options, async () => {
+    const { dom, host, editor } = await launch()
+
+    const peer = new Y.Doc()
+    editor.insertImage('att-1', 800, 600)
+    for (const update of host.updates) Y.applyUpdate(peer, decode(update))
+    host.updates.length = 0
+
+    const image = dom.window.document.querySelector('img')
+    assert.ok(image, 'no image was inserted')
+    // There is no layout here, so the image is told how wide it starts.
+    image.getBoundingClientRect = () => rect(0, 200)
+
+    const handle = dom.window.document.querySelector('.jami-image-handle-right')
+    assert.ok(handle, 'no resize handle')
+
+    drag(dom, handle, 100, 160)
+
+    // Moved 60 to the right, so 60 wider -- and said once, on release, not
+    // once per pixel.
+    assert.equal(image.getAttribute('width'), '260')
+    assert.equal(host.updates.length, 1, 'a message per pixel moved')
+
+    for (const update of host.updates) Y.applyUpdate(peer, decode(update))
+    assert.deepEqual(peer.getText('content').toDelta(), [
+        { insert: { image: { id: 'att-1', width: 800, height: 600 } },
+          attributes: { w: 260 } },
+    ])
+    assert.deepEqual(host.logs, [])
+})
+
+test('an abandoned drag leaves the document as it was', options, async () => {
+    const { dom, host, editor } = await launch()
+    editor.insertImage('att-1', 800, 600)
+    editor.setImageWidth(200)
+    host.updates.length = 0
+
+    const image = dom.window.document.querySelector('img')
+    image.getBoundingClientRect = () => rect(0, 200)
+    const handle = dom.window.document.querySelector('.jami-image-handle-right')
+
+    fire(dom, handle, 'pointerdown', 100)
+    fire(dom, dom.window.document, 'pointermove', 300)
+    // The grab is taken away: no release will ever come.
+    fire(dom, dom.window.document, 'pointercancel', 300)
+
+    // A width only this replica knows about is silent divergence.
+    assert.equal(image.getAttribute('width'), '200')
+    assert.deepEqual(host.updates, [])
+    assert.deepEqual(host.logs, [])
+})
