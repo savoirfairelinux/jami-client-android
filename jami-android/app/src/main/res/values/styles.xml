@@ -521,4 +521,22 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <!-- One button of the editor's formatting bar. -->
+    <style name="CollabFormatButton">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <style name="CollabFormatSeparator">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">24dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:layout_marginEnd">4dp</item>
+        <item name="android:background">?attr/colorOutlineVariant</item>
+    </style>
+
 </resources>

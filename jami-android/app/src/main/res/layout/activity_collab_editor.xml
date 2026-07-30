@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (C) 2004-2026 Savoir-faire Linux Inc.
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?attr/colorSurface"
+    tools:context=".client.CollabEditorActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/baseline_arrow_back_24"
+            app:subtitleTextAppearance="@style/TextAppearance.Material3.LabelSmall"
+            tools:menu="@menu/collab_editor_menu"
+            tools:subtitle="2 people editing"
+            tools:title="Meeting notes" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <WebView
+            android:id="@+id/editor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible" />
+
+        <!-- The document is fetched before it can be shown; an empty editor
+             would otherwise look like an empty document. -->
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true" />
+
+        <TextView
+            android:id="@+id/error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="32dp"
+            android:gravity="center"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:visibility="gone"
+            tools:text="@string/collab_open_error"
+            tools:visibility="visible" />
+
+    </FrameLayout>
+
+    <!-- A checkpoint is shown as it was, and cannot be typed into: an edit made
+         to a past state would have nowhere to go. -->
+    <LinearLayout
+        android:id="@+id/version_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="8dp"
+        android:background="?attr/colorSurfaceVariant"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/version_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAppearance="?attr/textAppearanceBodySmall"
+            tools:text="Version of 3 July at 14:02" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/version_leave"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/collab_version_leave" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/format_bar_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?attr/colorOutlineVariant" />
+
+    <HorizontalScrollView
+        android:id="@+id/format_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorSurface"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp">
+
+            <ImageButton
+                android:id="@+id/format_bold"
+                style="@style/CollabFormatButton"
+                android:contentDescription="@string/collab_format_bold"
+                android:src="@drawable/baseline_format_bold_24" />
+
+            <ImageButton
+                android:id="@+id/format_italic"
+                style="@style/CollabFormatButton"
+                android:contentDescription="@string/collab_format_italic"
+                android:src="@drawable/baseline_format_italic_24" />
+
+            <ImageButton
+                android:id="@+id/format_underline"
+                style="@style/CollabFormatButton"
+                android:contentDescription="@string/collab_format_underline"
+                android:src="@drawable/baseline_format_underlined_24" />
+
+            <ImageButton
+                android:id="@+id/format_strike"
+                style="@style/CollabFormatButton"
+                android:contentDescription="@string/collab_format_strike"
+                android:src="@drawable/baseline_format_strikethrough_24" />
+
+            <View style="@style/CollabFormatSeparator" />
+
+            <ImageButton
+                android:id="@+id/format_h1"
+                style="@style/CollabFormatButton"
+                android:contentDescription="@string/collab_format_h1"
+                android:src="@drawable/baseline_format_h1_24" />
+
+            <ImageButton
+                android:id="@+id/format_h2"
+                style="@style/CollabFormatButton"
+                android:contentDescription="@string/collab_format_h2"
+                android:src="@drawable/baseline_format_h2_24" />
+
+            <ImageButton
+                android:id="@+id/format_h3"
+                style="@style/CollabFormatButton"
+                android:contentDescription="@string/collab_format_h3"
+                android:src="@drawable/baseline_format_h3_24" />
+
+            <View style="@style/CollabFormatSeparator" />
+
+            <ImageButton
+                android:id="@+id/format_bullet"
+                style="@style/CollabFormatButton"
+                android:contentDescription="@string/collab_format_bullet_list"
+                android:src="@drawable/baseline_format_list_bulleted_24" />
+
+            <ImageButton
+                android:id="@+id/format_ordered"
+                style="@style/CollabFormatButton"
+                android:contentDescription="@string/collab_format_ordered_list"
+                android:src="@drawable/baseline_format_list_numbered_24" />
+
+            <View style="@style/CollabFormatSeparator" />
+
+            <ImageButton
+                android:id="@+id/format_align_left"
+                style="@style/CollabFormatButton"
+                android:contentDescription="@string/collab_format_align_left"
+                android:src="@drawable/baseline_format_align_left_24" />
+
+            <ImageButton
+                android:id="@+id/format_align_center"
+                style="@style/CollabFormatButton"
+                android:contentDescription="@string/collab_format_align_center"
+                android:src="@drawable/baseline_format_align_center_24" />
+
+            <ImageButton
+                android:id="@+id/format_align_right"
+                style="@style/CollabFormatButton"
+                android:contentDescription="@string/collab_format_align_right"
+                android:src="@drawable/baseline_format_align_right_24" />
+
+            <ImageButton
+                android:id="@+id/format_align_justify"
+                style="@style/CollabFormatButton"
+                android:contentDescription="@string/collab_format_align_justify"
+                android:src="@drawable/baseline_format_align_justify_24" />
+
+            <View style="@style/CollabFormatSeparator" />
+
+            <ImageButton
+                android:id="@+id/format_link"
+                style="@style/CollabFormatButton"
+                android:contentDescription="@string/collab_format_link"
+                android:src="@drawable/baseline_add_link_24" />
+
+            <ImageButton
+                android:id="@+id/format_image"
+                style="@style/CollabFormatButton"
+                android:contentDescription="@string/collab_format_image"
+                android:src="@drawable/baseline_add_photo_alternate_24" />
+
+            <ImageButton
+                android:id="@+id/format_clear"
+                style="@style/CollabFormatButton"
+                android:contentDescription="@string/collab_format_clear"
+                android:src="@drawable/baseline_format_clear_24" />
+
+            <View style="@style/CollabFormatSeparator" />
+
+            <ImageButton
+                android:id="@+id/format_undo"
+                style="@style/CollabFormatButton"
+                android:contentDescription="@string/collab_undo"
+                android:src="@drawable/baseline_undo_24" />
+
+            <ImageButton
+                android:id="@+id/format_redo"
+                style="@style/CollabFormatButton"
+                android:contentDescription="@string/collab_redo"
+                android:src="@drawable/baseline_redo_24" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+</LinearLayout>

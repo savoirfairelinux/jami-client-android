@@ -829,4 +829,33 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="shared_services_allowed_contacts_hint">Allowed contacts (comma-separated)</string>
     <string name="shared_services_save">Save</string>
 
+    <!-- Collaborative documents -->
+    <string name="collab_documents">Documents</string>
+    <string name="collab_new_document">New document</string>
+    <string name="collab_untitled">Untitled document</string>
+    <string name="collab_document_name_hint">Document name</string>
+    <string name="collab_create">Create</string>
+    <string name="collab_rename">Rename</string>
+    <string name="collab_open_error">This document could not be opened.</string>
+    <string name="collab_no_documents">No document has been written in this conversation yet.</string>
+    <string name="collab_created_by">Created by %1$s</string>
+    <string name="collab_editing_alone">Only you are editing</string>
+    <plurals name="collab_editing_others">
+        <item quantity="one">%1$d other person is editing</item>
+        <item quantity="other">%1$d other people are editing</item>
+    </plurals>
+    <string name="collab_history">Version history</string>
+    <string name="collab_no_history">This document has no saved version yet.</string>
+    <string name="collab_version_leave">Back to the current version</string>
+    <string name="collab_version_shown">Version of %1$s</string>
+    <string name="collab_link_title">Link</string>
+    <string name="collab_link_hint">Address</string>
+    <string name="collab_link_add">Add</string>
+    <string name="collab_link_remove">Remove</string>
+    <string name="collab_export_pdf">Export to PDF</string>
+    <string name="collab_export_error">This document could not be exported.</string>
+    <string name="collab_image_error">This image could not be added.</string>
+    <string name="collab_image_too_large">This image is too large to be added to a document.</string>
+    <string name="collab_send_error">Your changes could not be sent.</string>
+
 </resources>
