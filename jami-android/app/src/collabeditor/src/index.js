@@ -99,6 +99,7 @@ class Editor {
         this.quill = null
         this.cursors = null
         this.preview = false
+        this.previewContents = null
         this.lastAwareness = null
         this.frame = null
         this.resizing = null
@@ -514,9 +515,14 @@ class Editor {
         const past = new Y.Doc()
         Y.applyUpdate(past, fromBase64(base64))
         this.preview = true
+        // Everyone else carries on typing while this user reads. Their changes
+        // must reach the document, and must not be painted over the version
+        // being read, which would take it away mid-sentence.
+        this.binding.paused = true
         this.binding.applyingRemote = true
         try {
-            this.quill.setContents(jamiToQuill(past.getText('content').toDelta(), Delta), 'silent')
+            this.previewContents = jamiToQuill(past.getText('content').toDelta(), Delta)
+            this.quill.setContents(this.previewContents, 'silent')
             this.quill.enable(false)
         } finally {
             this.binding.applyingRemote = false
@@ -527,8 +533,29 @@ class Editor {
     leaveVersion() {
         if (!this.preview) return
         this.preview = false
+        this.previewContents = null
+        this.binding.paused = false
         this.quill.enable(true)
         this.binding.pullFromDocument()
+        this.placeResizeHandles()
+    }
+
+    /**
+     * Make the document say again what it said at the version being read.
+     *
+     * An edit like any other, as on the desktop: it travels the usual way, and
+     * can itself be taken back by restoring a later version. Rewinding the
+     * document instead would be a state only this replica agreed to.
+     */
+    /** Says whether the document was really put back to the version read. */
+    restoreVersion() {
+        if (!this.preview || !this.previewContents) return false
+        const target = this.previewContents
+        this.leaveVersion()
+        const diff = this.quill.getContents().diff(target)
+        if (diff.ops.length === 0) return false
+        this.quill.updateContents(diff, 'user')
+        return true
     }
 }
 
@@ -581,6 +608,7 @@ window.JamiEditor = {
     getText: guard(Editor.prototype.getText),
     showVersion: guard(Editor.prototype.showVersion),
     leaveVersion: guard(Editor.prototype.leaveVersion),
+    restoreVersion: guard(Editor.prototype.restoreVersion),
 }
 
 /*
