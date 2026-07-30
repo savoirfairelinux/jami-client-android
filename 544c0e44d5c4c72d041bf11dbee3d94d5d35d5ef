@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdc83d07_0eb7ea52",
+        "filename": "jami-android/app/src/collabeditor/src/index.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-30T19:15:54Z",
+      "side": 1,
+      "message": "[error] Line 517: 🔴 `showVersion()` can throw after setting `this.preview \u003d true`/`this.binding.paused \u003d true` but before `leaveVersion()` is possible, for example if `jamiToQuill(...)` or `quill.setContents(...)` fails on malformed or unsupported checkpoint content. That leaves the binding paused and future remote document updates no longer repaint the editor. Wrap the whole preview transition in a try/catch/finally that restores `preview`, `previewContents`, `binding.paused`, and `applyingRemote` on failure before rethrowing/logging through the guard.",
+      "revId": "544c0e44d5c4c72d041bf11dbee3d94d5d35d5ef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
