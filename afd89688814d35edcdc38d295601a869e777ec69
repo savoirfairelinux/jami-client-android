@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03ec768e_a0b2d2b3",
+        "filename": "daemon",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-30T18:09:08Z",
+      "side": 1,
+      "message": "[error] Line 1: 🔴 The referenced daemon submodule revision currently has a failed Jenkins build. Please fix the daemon/client integration or update this pointer to a revision that passes CI before merging.",
+      "revId": "afd89688814d35edcdc38d295601a869e777ec69",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
