@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+    ~ Copyright (C) 2004-2026 Savoir-faire Linux Inc.
+    ~
+    ~ This program is free software: you can redistribute it and/or modify
+    ~ it under the terms of the GNU General Public License as published by
+    ~ the Free Software Foundation, either version 3 of the License, or
+    ~ (at your option) any later version.
+    ~
+    ~ This program is distributed in the hope that it will be useful,
+    ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    ~ GNU General Public License for more details.
+    ~
+    ~ You should have received a copy of the GNU General Public License
+    ~ along with this program. If not, see <https://www.gnu.org/licenses/>.
+    -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/padding_medium"
+    android:paddingVertical="@dimen/padding_xsmall">
+
+    <TextView
+        android:id="@+id/message_time_permanent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/conversation_date_padding"
+        android:textColor="@color/textColorSecondary"
+        android:textSize="@dimen/conversation_timestamp_textsize"
+        android:visibility="gone"
+        tools:text="@string/time_just_now"
+        tools:visibility="visible" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/collab_doc_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?selectableItemBackground"
+        app:cardBackgroundColor="?attr/colorSurfaceVariant"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:strokeColor="?attr/colorOutlineVariant"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:contentDescription="@null"
+                app:srcCompat="@drawable/baseline_collab_document_24"
+                app:tint="@color/colorOnSurface" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/collab_doc_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxWidth="260dp"
+                    android:singleLine="true"
+                    android:textColor="@color/colorOnSurface"
+                    android:textSize="@dimen/file_name"
+                    android:textStyle="bold"
+                    tools:text="Notes de réunion" />
+
+                <TextView
+                    android:id="@+id/collab_doc_subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="@dimen/file_size"
+                    tools:text="Document modifiable" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

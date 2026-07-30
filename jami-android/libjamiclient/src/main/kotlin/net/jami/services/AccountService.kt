@@ -1441,6 +1441,16 @@ class AccountService(
                         message["uri"]?.let { u -> hostUri = u }
                     }
             }
+            "application/collab-doc+json" -> {
+                val documentId = message["uri"]
+                if (documentId.isNullOrEmpty())
+                    Interaction(conversation, Interaction.InteractionType.INVALID)
+                else CollabDocument(
+                    author, account.accountId, timestamp, conversation, documentId,
+                    message["displayName"] ?: "", message["mimeType"] ?: "text/html",
+                    !contact.isUser
+                )
+            }
             "application/update-profile" -> Interaction(conversation, Interaction.InteractionType.INVALID)
             else -> Interaction(conversation, Interaction.InteractionType.INVALID)
         }
