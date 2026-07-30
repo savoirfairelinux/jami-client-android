@@ -30,6 +30,7 @@ import android.view.View
 import android.webkit.ConsoleMessage
 import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
+import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
@@ -178,11 +179,13 @@ class CollabEditorActivity : AppCompatActivity() {
     private fun setUpWebView() {
         binding.editor.apply {
             settings.javaScriptEnabled = true
-            // The page is bundled with the application and reaches nothing else,
-            // so nothing needs to be loaded from anywhere.
+            // The page is bundled with the application and reaches nothing else.
+            // What stops it going anywhere is shouldInterceptRequest below,
+            // which answers every request itself; blockNetworkLoads is not used
+            // for that, because it also refuses the requests this application
+            // serves and would leave the editor unable to load itself.
             settings.allowFileAccess = false
             settings.allowContentAccess = false
-            settings.blockNetworkLoads = true
             settings.domStorageEnabled = false
             settings.setSupportZoom(false)
             settings.textZoom = 100
@@ -196,13 +199,21 @@ class CollabEditorActivity : AppCompatActivity() {
                     view: WebView, request: WebResourceRequest
                 ): WebResourceResponse? {
                     val url = request.url
-                    if (url.host != ASSET_DOMAIN) return null
+                    if (url.host != ASSET_DOMAIN) return DENIED
                     val path = url.path.orEmpty()
                     return when {
-                        path.startsWith(ATTACHMENT_PATH) -> serveAttachment(url.lastPathSegment)
-                        path.startsWith(ASSET_PATH) -> serveAsset(path.removePrefix(ASSET_PATH))
-                        else -> null
+                        path.startsWith(ATTACHMENT_PATH) ->
+                            serveAttachment(url.lastPathSegment) ?: DENIED
+                        path.startsWith(ASSET_PATH) ->
+                            serveAsset(path.removePrefix(ASSET_PATH)) ?: DENIED
+                        else -> DENIED
                     }
+                }
+
+                override fun onReceivedError(
+                    view: WebView, request: WebResourceRequest, error: WebResourceError
+                ) {
+                    Log.e(TAG, "editor ${request.url}: ${error.errorCode} ${error.description}")
                 }
 
                 // A document can hold a link to anywhere. Following one inside the
@@ -685,6 +696,15 @@ class CollabEditorActivity : AppCompatActivity() {
 
         // The host WebViewAssetLoader reserves. It resolves to nothing, so a
         // request that escapes interception fails instead of leaving the device.
+        /**
+         * The answer to anything the page asks for that this application does
+         * not serve. Returning null would let the WebView go and fetch it.
+         */
+        private val DENIED: WebResourceResponse
+            get() = WebResourceResponse(
+                "text/plain", "utf-8", 403, "Forbidden", emptyMap(), ByteArray(0).inputStream()
+            )
+
         private const val ASSET_DOMAIN = "appassets.androidplatform.net"
         private const val ATTACHMENT_PATH = "/attachment/"
         private const val ASSET_PATH = "/assets/collab/"
