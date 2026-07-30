@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "497181dc_ff041b32",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1639,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-30T18:09:28Z",
+      "side": 1,
+      "message": "[warning] Line 1639: 🟡 This creates a `documentsRenamed` subscription for every visible/rebound collab document row. In a long conversation that means many identical hot-stream subscribers and repeated filtering work. Prefer observing rename events once at presenter/adapter level and updating the matching interaction/item, or otherwise ensure the subscription is tied to a single row lifecycle with no duplicate subscriptions on rebind.",
+      "revId": "0addfde16b7598f059f3fb30c3d641d40a6d9c4f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6a4d550_31a72082",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1642,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-30T18:09:28Z",
+      "side": 1,
+      "message": "[warning] Line 1642: 🟡 `subscribe { ... }` has no error consumer. In RxJava, an error from `documentsRenamed` will be routed to the global error handler and can crash the app. Add an explicit error handler, or use the existing project pattern for non-fatal stream errors.",
+      "revId": "0addfde16b7598f059f3fb30c3d641d40a6d9c4f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ec21707_b91d22aa",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1441,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-30T18:09:28Z",
+      "side": 1,
+      "message": "[warning] Line 1441: 🟡 The collab document `uri` is accepted as a document id without validation. Since this value comes from conversation content and is later used to open a document repository, validate it against the expected document-id format or canonicalize/reject malformed values before constructing `CollabDocument`.",
+      "revId": "0addfde16b7598f059f3fb30c3d641d40a6d9c4f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
