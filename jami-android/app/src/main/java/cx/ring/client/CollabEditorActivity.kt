@@ -47,6 +47,7 @@ import cx.ring.databinding.ActivityCollabEditorBinding
 import cx.ring.utils.ConversationPath
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -131,6 +132,7 @@ class CollabEditorActivity : AppCompatActivity() {
 
         bindFormatBar()
         binding.versionLeave.setOnClickListener { leaveVersion() }
+        binding.versionRestore.setOnClickListener { restoreVersion() }
         setUpWebView()
 
         // A caret that has stopped moving still has to be reported, so this
@@ -546,19 +548,58 @@ class CollabEditorActivity : AppCompatActivity() {
     private fun showHistory() {
         disposable.add(collaborationService
             .history(path.accountId, path.conversationUri, documentId, HISTORY_LIMIT)
+            .flatMap { versions -> namesFor(versions).map { names -> versions to names } }
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ versions ->
+            .subscribe({ (versions, names) ->
                 if (versions.isEmpty()) {
                     showMessage(R.string.collab_no_history)
                     return@subscribe
                 }
-                val labels = versions.map { describe(it) }.toTypedArray()
+                val labels = versions.map { label(it, names) }.toTypedArray()
                 MaterialAlertDialogBuilder(this)
                     .setTitle(R.string.collab_history)
                     .setItems(labels) { _, which -> showVersion(versions[which]) }
                     .setNegativeButton(android.R.string.cancel, null)
                     .show()
             }, { e -> Log.e(TAG, "history", e) }))
+    }
+
+    /**
+     * The name to show for every author in [versions].
+     *
+     * A checkpoint is written by whoever made the changes it holds, so the
+     * history of a shared document is a history of several people. Without a
+     * name against each entry it reads as one person's, which it is not.
+     *
+     * A profile that does not arrive must not hold the list back: the
+     * identifier is a poor label but a timely one.
+     */
+    private fun namesFor(versions: List<CollaborativeVersion>): Single<Map<String, String>> {
+        val account = accountService.getAccount(path.accountId)
+        val authors = versions.map { it.author }.filter { it.isNotEmpty() }.distinct()
+        if (account == null || authors.isEmpty()) return Single.just(emptyMap())
+        val mine = account.uri
+        val lookups = authors.map { author ->
+            if (author == mine)
+                Single.just(author to getString(R.string.conversation_info_contact_you))
+            else account.getContactFromCache(author).profile
+                .map { profile -> profile.displayName.orEmpty() }
+                .timeout(PROFILE_WAIT, TimeUnit.SECONDS, Observable.just(""))
+                .first("")
+                .map { name -> author to name.ifEmpty { shortId(author) } }
+        }
+        return Single.zip(lookups) { pairs ->
+            @Suppress("UNCHECKED_CAST")
+            pairs.associate { it as Pair<String, String> }
+        }
+    }
+
+    private fun label(version: CollaborativeVersion, names: Map<String, String>): String {
+        val time = describe(version)
+        val who = names[version.author] ?: return time
+        return if (version.deltas > 0)
+            getString(R.string.collab_version_deltas, who, time, version.deltas)
+        else getString(R.string.collab_version_by, who, time)
     }
 
     private fun describe(version: CollaborativeVersion): String =
@@ -581,6 +622,24 @@ class CollabEditorActivity : AppCompatActivity() {
 
     private fun leaveVersion() {
         callEditor("leaveVersion")
+        closeVersionBar()
+    }
+
+    /**
+     * Put the document back to the version being read.
+     *
+     * The editor makes it an ordinary edit, so the others receive it the usual
+     * way and can take it back by restoring a later version. Nothing here
+     * rewinds anything: a document rewound on one device only is a document
+     * two people no longer share.
+     */
+    private fun restoreVersion() {
+        callEditor("restoreVersion")
+        closeVersionBar()
+        showMessage(R.string.collab_version_restored)
+    }
+
+    private fun closeVersionBar() {
         binding.versionBar.isVisible = false
         binding.formatBar.isVisible = true
         binding.formatBarDivider.isVisible = true
@@ -731,6 +790,8 @@ class CollabEditorActivity : AppCompatActivity() {
 
         private const val AWARENESS_INTERVAL_MS = 200L
         private const val HISTORY_LIMIT = 50
+        /** How long a name is worth waiting for before showing an id. */
+        private const val PROFILE_WAIT = 2L
         private const val INACTIVE_ALPHA = 0.55f
 
         // The daemon's own ceiling for one attachment.

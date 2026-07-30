@@ -248,3 +248,88 @@ test('an abandoned drag leaves the document as it was', options, async () => {
     assert.deepEqual(host.updates, [])
     assert.deepEqual(host.logs, [])
 })
+
+/* ------------------------------------------------------ looking at the past */
+
+test('a past checkpoint is shown, and leaving it comes back', options, async () => {
+    const { dom, host, editor } = await launch()
+    const text = () => dom.window.document.querySelector('.ql-editor').textContent.trim()
+
+    // What the daemon answers for an old checkpoint: the whole document as it
+    // stood then, replayed into a throwaway replica.
+    const past = new Y.Doc()
+    past.getText('content').insert(0, 'written by a peer')
+    const atCheckpoint = Buffer.from(Y.encodeStateAsUpdate(past)).toString('base64')
+
+    // Meanwhile the live document has moved on.
+    const live = new Y.Doc()
+    live.getText('content').insert(0, 'written by a peer, and then some more')
+    editor.applyUpdate(Buffer.from(Y.encodeStateAsUpdate(live)).toString('base64'))
+    assert.equal(text(), 'written by a peer, and then some more')
+
+    host.updates.length = 0
+    editor.showVersion(atCheckpoint)
+    assert.equal(text(), 'written by a peer',
+        'the past checkpoint is not what is shown')
+    // Looking at the past says nothing to anyone.
+    assert.deepEqual(host.updates, [])
+
+    editor.leaveVersion()
+    assert.equal(text(), 'written by a peer, and then some more',
+        'leaving the past does not come back to the present')
+    assert.deepEqual(host.updates, [])
+    assert.deepEqual(host.logs, [])
+})
+
+test('a peer typing does not take away the version being read', options, async () => {
+    const { dom, host, editor } = await launch()
+    const text = () => dom.window.document.querySelector('.ql-editor').textContent.trim()
+
+    const live = new Y.Doc()
+    live.getText('content').insert(0, 'first')
+    editor.applyUpdate(Buffer.from(Y.encodeStateAsUpdate(live)).toString('base64'))
+
+    const past = new Y.Doc()
+    past.getText('content').insert(0, 'as it was')
+    editor.showVersion(Buffer.from(Y.encodeStateAsUpdate(past)).toString('base64'))
+    assert.equal(text(), 'as it was')
+
+    // Someone else is still typing while this user reads the past.
+    live.getText('content').insert(5, ' and more')
+    editor.applyUpdate(Buffer.from(Y.encodeStateAsUpdate(live)).toString('base64'))
+
+    assert.equal(text(), 'as it was', 'the version being read was taken away')
+
+    // And the document kept up all along.
+    editor.leaveVersion()
+    assert.equal(text(), 'first and more')
+    assert.deepEqual(host.logs, [])
+})
+
+test('a version can be restored, and everyone gets it', options, async () => {
+    const { dom, host, editor } = await launch()
+    const text = () => dom.window.document.querySelector('.ql-editor').textContent.trim()
+
+    const peer = new Y.Doc()
+    peer.getText('content').applyDelta([{ insert: 'a mistake' }])
+    editor.applyUpdate(Buffer.from(Y.encodeStateAsUpdate(peer)).toString('base64'))
+
+    const past = new Y.Doc()
+    past.getText('content').applyDelta([
+        { insert: 'what it said', attributes: { b: true } },
+    ])
+    editor.showVersion(Buffer.from(Y.encodeStateAsUpdate(past)).toString('base64'))
+    host.updates.length = 0
+
+    editor.restoreVersion()
+
+    assert.equal(text(), 'what it said', 'the document was not restored')
+    assert.ok(host.updates.length > 0, 'the restore was never sent')
+    for (const update of host.updates) Y.applyUpdate(peer, decode(update))
+    // Restoring is an edit like any other: it reaches the others, formatting
+    // and all, and can itself be taken back by restoring a later version.
+    assert.deepEqual(peer.getText('content').toDelta(), [
+        { insert: 'what it said', attributes: { b: true } },
+    ])
+    assert.deepEqual(host.logs, [])
+})
