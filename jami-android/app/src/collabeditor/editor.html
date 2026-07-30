@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!--
+  Copyright (C) 2004-2026 Savoir-faire Linux Inc.
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 3 of the License, or
+  (at your option) any later version.
+-->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <!--
+    The page loads nothing but itself. Everything is bundled next to it, and
+    a document written by a stranger must not be able to reach the network on
+    this device's behalf, nor run anything.
+  -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src https://appassets.androidplatform.net data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+  <link rel="stylesheet" href="editor.css">
+</head>
+<body>
+  <div id="editor"></div>
+  <script src="editor.js"></script>
+</body>
+</html>

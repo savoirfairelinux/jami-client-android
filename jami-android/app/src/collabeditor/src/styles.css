@@ -1,0 +1,118 @@
+/*
+ * The page is a text editor and nothing else: no toolbar, no chrome, no
+ * scrollbars of its own. Everything around the text is drawn by Android, so
+ * that the editor looks like the rest of the application and follows its
+ * theme.
+ *
+ * Colours come from CSS variables the Kotlin side sets on <html> before the
+ * document is opened, which is how the editor follows the light and dark
+ * themes without shipping two stylesheets.
+ */
+
+:root {
+    --jami-text: #1b1b1b;
+    --jami-background: #ffffff;
+    --jami-placeholder: #8a8a8a;
+    --jami-link: #0056b3;
+    --jami-selection: rgba(0, 86, 179, 0.24);
+    --jami-rule: rgba(0, 0, 0, 0.12);
+    --jami-text-size: 16px;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: var(--jami-background);
+    color: var(--jami-text);
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: Roboto, "Noto Sans", system-ui, sans-serif;
+    font-size: var(--jami-text-size);
+}
+
+::selection {
+    background: var(--jami-selection);
+}
+
+#editor {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* Quill draws its own border and padding; the page supplies both. */
+.ql-container.ql-snow {
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+    height: 100%;
+}
+
+.ql-editor {
+    padding: 16px;
+    line-height: 1.5;
+    /* Room to scroll the last line clear of the keyboard. */
+    padding-bottom: 40vh;
+    color: var(--jami-text);
+    caret-color: var(--jami-link);
+}
+
+.ql-editor.ql-blank::before {
+    color: var(--jami-placeholder);
+    font-style: normal;
+    left: 16px;
+    right: 16px;
+}
+
+.ql-editor a {
+    color: var(--jami-link);
+}
+
+/*
+ * Heading sizes are relative to the body text, so that they keep their
+ * proportions when the user changes the system font size. The three levels
+ * match the desktop client's +3/+2/+1 size adjustments.
+ */
+.ql-editor h1 { font-size: 1.75em; margin: 0.6em 0 0.3em; }
+.ql-editor h2 { font-size: 1.4em;  margin: 0.6em 0 0.3em; }
+.ql-editor h3 { font-size: 1.2em;  margin: 0.6em 0 0.3em; }
+
+.ql-editor p { margin: 0 0 0.4em; }
+
+.ql-editor ol, .ql-editor ul {
+    padding-left: 1.2em;
+}
+
+.ql-editor img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    vertical-align: middle;
+}
+
+/* The image being resized, so the handle has something to hold on to. */
+.ql-editor img.jami-selected {
+    outline: 2px solid var(--jami-link);
+    outline-offset: 1px;
+}
+
+/* Remote carets: a peer's name should not cover the text it points at. */
+.ql-cursor-flag {
+    font-family: inherit;
+    font-size: 12px;
+    border-radius: 3px;
+    padding: 1px 4px;
+    white-space: nowrap;
+}
+
+.ql-cursor-caret {
+    width: 2px;
+}
+
+/* The link tooltip is replaced by a native dialog. */
+.ql-snow .ql-tooltip {
+    display: none !important;
+}
