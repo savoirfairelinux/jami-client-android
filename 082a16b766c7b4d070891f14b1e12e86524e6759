@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6ab991f_55ae3338",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/CollabDocuments.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-30T18:09:27Z",
+      "side": 1,
+      "message": "[warning] Line 70: 🟡 The document name is taken from user input without any length limit before being passed to the daemon. Add an InputFilter/validation consistent with daemon limits, or reject overly long names with a user-visible error, to avoid oversized IPC payloads and unusable document names.",
+      "revId": "082a16b766c7b4d070891f14b1e12e86524e6759",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
