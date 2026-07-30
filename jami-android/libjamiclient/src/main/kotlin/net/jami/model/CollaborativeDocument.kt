@@ -39,11 +39,10 @@ data class CollaborativeDocument(
 
         /**
          * Build a document from a COLLAB_DOC commit map, as returned by
-         * `getCollaborativeDocuments`. The daemon spells the document id "uri",
-         * since the map is the announcing commit itself.
+         * `getCollaborativeDocuments`.
          */
         fun fromNative(map: Map<String, String>): CollaborativeDocument? {
-            val id = map["uri"]?.takeIf { it.isNotEmpty() } ?: return null
+            val id = map["id"]?.takeIf { it.isNotEmpty() } ?: return null
             return CollaborativeDocument(
                 id = id,
                 name = map["displayName"].orEmpty(),
