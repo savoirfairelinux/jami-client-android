@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2c9b60b_5cc27c80",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/DaemonService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-30T18:42:45Z",
+      "side": 1,
+      "message": "[warning] Line 222: 🟡 The collaborative callbacks now emit Rx events synchronously on the daemon callback thread. `Subject.onNext()` invokes subscribers inline, so any editor-side work, DB access, or accidental daemon call in a subscriber can block/re-enter the native callback path. Copy transient `Blob` data immediately in the callback, then dispatch the emission onto `mExecutor` or an explicit scheduler before notifying observers.",
+      "revId": "7922aa55c74ba89b0afe4c4111346195c20ddc2b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
