@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09757c45_b46a515e",
+        "filename": "jami-android/app/src/collabeditor/src/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-30T18:42:44Z",
+      "side": 1,
+      "message": "[error] Line 415: 🔴 `event.target.setPointerCapture(...)` captures the pointer on the handle element, but move/up/cancel listeners are registered on `document`. Once capture is active, subsequent pointer events are retargeted to the handle, so the document listeners may not receive `pointermove`/`pointerup`; the drag can get stuck and leave a local-only width until cancellation. Register the move/up/cancel listeners on the captured handle, or avoid pointer capture when listening on `document`.",
+      "revId": "7a24ac129ff642b26199196c85964bfa16139cd0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
