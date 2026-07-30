@@ -13,4 +13,22 @@
     <string name="searchbar_navigation_account">Select account</string>
     <string name="add_conversation_member">Add conversation member</string>
     <string name="qrcode_to_scan">QR code to scan</string>
+    <string name="collab_format_bold">Bold</string>
+    <string name="collab_format_italic">Italic</string>
+    <string name="collab_format_underline">Underline</string>
+    <string name="collab_format_strike">Strikethrough</string>
+    <string name="collab_format_h1">Heading 1</string>
+    <string name="collab_format_h2">Heading 2</string>
+    <string name="collab_format_h3">Heading 3</string>
+    <string name="collab_format_bullet_list">Bulleted list</string>
+    <string name="collab_format_ordered_list">Numbered list</string>
+    <string name="collab_format_align_left">Align left</string>
+    <string name="collab_format_align_center">Centre</string>
+    <string name="collab_format_align_right">Align right</string>
+    <string name="collab_format_align_justify">Justify</string>
+    <string name="collab_format_link">Insert link</string>
+    <string name="collab_format_image">Insert image</string>
+    <string name="collab_format_clear">Clear formatting</string>
+    <string name="collab_undo">Undo</string>
+    <string name="collab_redo">Redo</string>
 </resources>
