@@ -274,7 +274,7 @@ open class Interaction {
     }
 
     enum class InteractionType {
-        INVALID, TEXT, CALL, CONTACT, DATA_TRANSFER;
+        INVALID, TEXT, CALL, CONTACT, DATA_TRANSFER, COLLAB_DOC;
 
         companion object {
             fun fromString(str: String) = try { valueOf(str) } catch (e: Exception) { INVALID }
