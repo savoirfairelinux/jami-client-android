@@ -413,3 +413,25 @@ window.JamiEditor = {
     showVersion: guard(Editor.prototype.showVersion),
     leaveVersion: guard(Editor.prototype.leaveVersion),
 }
+
+/*
+ * The page starts itself.
+ *
+ * Building the editor is the page's own business, and the application has no
+ * say in when it happens: it is waiting to be told the page is ready, which is
+ * the last thing start() does. Leaving the call to the application would have
+ * each side waiting for the other.
+ */
+function boot() {
+    try {
+        editor.start({ placeholder: '' })
+    } catch (e) {
+        host.onLog('editor: start failed: ' + (e && e.stack ? e.stack : e))
+    }
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot)
+} else {
+    boot()
+}
