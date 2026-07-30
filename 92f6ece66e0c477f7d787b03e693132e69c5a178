@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "acd8f87f_3834e8e3",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/CollabEditorActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-30T18:09:27Z",
+      "side": 1,
+      "message": "[error] Line 204: 🔴 The WebView loads `assets/collab/editor.html` plus `editor.js`/`editor.css`, but this patchset does not add those asset files. As-is the screen will fail at runtime with a missing asset and the editor never loads. Add the bundled editor assets or wire this to existing resources.",
+      "revId": "92f6ece66e0c477f7d787b03e693132e69c5a178",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b5d2506_74b77a6b",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/CollabEditorActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-30T18:09:27Z",
+      "side": 1,
+      "message": "[warning] Line 530: 🟡 `readBytes()` loads the entire selected URI into memory before enforcing `MAX_ATTACHMENT_BYTES`, so a very large provider stream can cause excessive memory use or OOM before `ImageTooLarge` is thrown. Read with a bounded buffer and abort once the limit is exceeded.",
+      "revId": "92f6ece66e0c477f7d787b03e693132e69c5a178",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
