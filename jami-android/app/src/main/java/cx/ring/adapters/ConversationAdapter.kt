@@ -58,6 +58,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withC
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
+import cx.ring.client.CollabEditorActivity
 import cx.ring.client.MediaViewerActivity
 import cx.ring.client.MessageEditActivity
 import cx.ring.databinding.MenuConversationBinding
@@ -86,6 +87,7 @@ import net.jami.conversation.ConversationPresenter
 import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
 import net.jami.model.interaction.CallHistory
+import net.jami.model.interaction.CollabDocument
 import net.jami.model.interaction.ContactEvent
 import net.jami.model.interaction.DataTransfer
 import net.jami.model.interaction.Interaction
@@ -307,6 +309,8 @@ class ConversationAdapter(
         val interaction = mInteractions[position]
         return when (interaction.type) {
             Interaction.InteractionType.CONTACT -> MessageType.CONTACT_EVENT.ordinal
+
+            Interaction.InteractionType.COLLAB_DOC -> MessageType.COLLAB_DOCUMENT.ordinal
 
             Interaction.InteractionType.CALL -> {
                 if ((interaction as CallHistory).isGroupCall) {
@@ -633,6 +637,11 @@ class ConversationAdapter(
                     position
             )
             Interaction.InteractionType.CONTACT -> configureForContactEvent(
+                    conversationViewHolder,
+                    interaction,
+                    position
+            )
+            Interaction.InteractionType.COLLAB_DOC -> configureForCollabDocument(
                     conversationViewHolder,
                     interaction,
                     position
@@ -1594,6 +1603,66 @@ class ConversationAdapter(
                 )
             }
             messageBubble.setOnLongClickListener(null)
+        }
+    }
+
+    /**
+     * The announcement of a document the conversation writes together.
+     *
+     * The commit only says a document was created, so the name shown is asked
+     * of the daemon rather than read from the commit: a document renamed since
+     * would otherwise keep its first name here for ever.
+     */
+    private fun configureForCollabDocument(
+        viewHolder: ConversationViewHolder,
+        interaction: Interaction,
+        position: Int
+    ) {
+        val context = viewHolder.itemView.context
+        val document = interaction as CollabDocument
+        val card = viewHolder.itemView.findViewById<View>(R.id.collab_doc_card)
+        val nameView = viewHolder.itemView.findViewById<TextView>(R.id.collab_doc_name)
+        val subtitleView = viewHolder.itemView.findViewById<TextView>(R.id.collab_doc_subtitle)
+
+        viewHolder.mMsgDetailTxtPerm?.apply {
+            if (hasPermanentDateString(document, position)
+                || getPreviousInteractionFromPosition(position) == null) {
+                isVisible = true
+                text = TextUtils.timestampToDate(context, formatter, document.timestamp)
+            } else isVisible = false
+        }
+
+        val fallback = document.name.ifEmpty { context.getString(R.string.collab_untitled) }
+        nameView?.text = fallback
+        subtitleView?.text = context.getString(R.string.collab_editable_document)
+
+        val accountId = document.account
+        val conversationId = document.conversationId
+        if (accountId == null || conversationId == null) {
+            card?.setOnClickListener(null)
+            return
+        }
+
+        val conversationUri = net.jami.model.Uri.fromId(conversationId)
+        val collaboration = presenter.collaborationService
+        viewHolder.compositeDisposable.add(collaboration
+            .name(accountId, conversationUri, document.documentId)
+            .observeOn(DeviceUtils.uiScheduler)
+            .subscribe({ name -> nameView?.text = name.ifEmpty { fallback } },
+                { nameView?.text = fallback }))
+        viewHolder.compositeDisposable.add(collaboration.documentsRenamed
+            .filter {
+                it.accountId == accountId && it.conversationId == conversationId
+                        && it.documentId == document.documentId
+            }
+            .observeOn(DeviceUtils.uiScheduler)
+            .subscribe { nameView?.text = it.name.ifEmpty { fallback } })
+
+        card?.setOnClickListener {
+            context.startActivity(CollabEditorActivity.intent(
+                context, accountId, conversationUri, document.documentId,
+                nameView?.text?.toString()
+            ))
         }
     }
 

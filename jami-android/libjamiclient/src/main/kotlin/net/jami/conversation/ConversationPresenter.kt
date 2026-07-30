@@ -51,6 +51,7 @@ class ConversationPresenter @Inject constructor(
     val conversationFacade: ConversationFacade,
     private val vCardService: VCardService,
     val deviceRuntimeService: DeviceRuntimeService,
+    val collaborationService: CollaborationService,
     private val preferencesService: PreferencesService,
     @param:Named("UiScheduler") private val uiScheduler: Scheduler
 ) : RootPresenter<ConversationView>() {
