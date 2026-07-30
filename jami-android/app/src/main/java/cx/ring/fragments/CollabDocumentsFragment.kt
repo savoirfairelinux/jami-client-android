@@ -85,7 +85,7 @@ class CollabDocumentsFragment : Fragment() {
 
     private fun refresh() {
         disposable.add(collaborationService
-            .documents(path.accountId, path.conversationId)
+            .documents(path.accountId, path.conversationUri)
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe({ documents ->
                 adapter.replace(documents)
@@ -115,7 +115,7 @@ class CollabDocumentsFragment : Fragment() {
 
     private fun create(name: String) {
         disposable.add(collaborationService
-            .createDocument(path.accountId, path.conversationId, name)
+            .createDocument(path.accountId, path.conversationUri, name)
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe({ documentId -> open(documentId, name) },
                 { e -> Log.e(TAG, "create", e) }))
