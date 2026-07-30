@@ -848,6 +848,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="collab_no_history">This document has no saved version yet.</string>
     <string name="collab_version_leave">Back to the current version</string>
     <string name="collab_version_shown">Version of %1$s</string>
+    <string name="collab_version_restore">Restore</string>
+    <string name="collab_version_restored">The document was restored to this version.</string>
+    <string name="collab_version_by">%1$s — %2$s</string>
+    <string name="collab_version_deltas">%1$s — %2$s, %3$d change(s)</string>
     <string name="collab_link_title">Link</string>
     <string name="collab_link_hint">Address</string>
     <string name="collab_link_add">Add</string>
