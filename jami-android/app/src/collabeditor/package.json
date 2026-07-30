@@ -1,0 +1,22 @@
+{
+  "name": "jami-collab-editor",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Collaborative rich text editor embedded in the Jami Android client.",
+  "license": "GPL-3.0-or-later",
+  "type": "module",
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "test": "node --test \"test/*.test.mjs\""
+  },
+  "dependencies": {
+    "quill": "2.0.3",
+    "quill-cursors": "4.0.4",
+    "yjs": "13.6.20"
+  },
+  "devDependencies": {
+    "esbuild": "0.24.2",
+    "jsdom": "^25.0.1",
+    "quill-delta": "5.1.0"
+  }
+}

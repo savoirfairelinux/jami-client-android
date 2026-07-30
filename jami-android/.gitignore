@@ -33,3 +33,7 @@ tests/bin
 /libjamiclient/src/main/java/net/jami/daemon/*
 /build/
 **/google-services.json
+
+# Collaborative editor: fetched dependencies and bundle output.
+app/src/collabeditor/node_modules/
+app/src/collabeditor/build/
