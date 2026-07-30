@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c970adeb_5315eec2",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CollabDocumentsFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-30T18:09:25Z",
+      "side": 1,
+      "message": "[error] Line 97: 🔴 This patch references new string resources such as `collab_document_name_hint`, `collab_new_document`, `collab_create`, `collab_untitled`, `collab_created_by`, and `collab_no_documents`, but the patchset does not add them. This will fail resource generation/build; add the strings to the appropriate `values*/strings.xml` files or reuse existing resource IDs.",
+      "revId": "35aeeb02cfb7b431f73dc2b405212c561d5f271f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6758bbbe_2e0f60f4",
+        "filename": "jami-android/app/src/main/res/layout/item_collab_document.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-30T18:09:25Z",
+      "side": 1,
+      "message": "[error] Line 26: 🔴 This layout references `@drawable/baseline_article_24`, but the patchset does not add that drawable. If it is not already present on master, the build will fail; add the vector drawable or use an existing document icon resource.",
+      "revId": "35aeeb02cfb7b431f73dc2b405212c561d5f271f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
