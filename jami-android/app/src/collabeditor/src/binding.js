@@ -42,9 +42,14 @@ export class JamiQuillBinding {
         this.quill = quill
         this.Delta = Delta
         this.applyingRemote = false
+        // Set while the editor shows something other than the document -- a
+        // past version. The document keeps taking everyone's changes; it is
+        // only the painting of them that waits.
+        this.paused = false
 
         this._onYChange = (event, transaction) => {
             if (transaction.origin === LOCAL_ORIGIN) return
+            if (this.paused) return
             this.pullFromDocument()
         }
         this._onQuillChange = (delta, oldDelta, source) => {
