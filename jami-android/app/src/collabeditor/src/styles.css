@@ -128,7 +128,7 @@ body {
     position: absolute;
     display: none;
     pointer-events: none;
-    border: 1px solid var(--jami-accent, #0056b3);
+    border: 2px solid var(--jami-accent, #0056b3);
     box-sizing: border-box;
     z-index: 3;
 }
@@ -137,22 +137,41 @@ body {
     display: block;
 }
 
+/*
+ * A finger is not a mouse pointer: what is aimed at is the whole first joint,
+ * and what is seen is hidden by the hand doing the aiming. The dot is small
+ * enough not to cover the picture, and the square that catches the touch is
+ * the 48dp Android asks for -- more than twice as wide as the dot.
+ */
 .jami-image-handle {
     position: absolute;
-    bottom: -11px;
+    width: 48px;
+    height: 48px;
+    margin: -24px 0 0 -24px;
+    background: none;
+    border: 0;
+    padding: 0;
+    pointer-events: auto;
+    /* The drag must resize the image, not scroll the page under it. */
+    touch-action: none;
+}
+
+.jami-image-handle::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
     width: 22px;
     height: 22px;
-    margin: 0;
+    margin: -11px 0 0 -11px;
     border-radius: 50%;
     background: var(--jami-accent, #0056b3);
     border: 2px solid #fff;
     box-sizing: border-box;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
-    pointer-events: auto;
-    /* The drag must resize the image, not scroll the page under it. */
-    touch-action: none;
-    cursor: nwse-resize;
 }
 
-.jami-image-handle-left { left: -11px; cursor: nesw-resize; }
-.jami-image-handle-right { right: -11px; }
+.jami-image-handle-tl { left: 0; top: 0; cursor: nwse-resize; }
+.jami-image-handle-tr { left: 100%; top: 0; cursor: nesw-resize; }
+.jami-image-handle-bl { left: 0; top: 100%; cursor: nesw-resize; }
+.jami-image-handle-br { left: 100%; top: 100%; cursor: nwse-resize; }
