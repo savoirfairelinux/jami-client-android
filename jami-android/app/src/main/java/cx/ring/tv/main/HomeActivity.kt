@@ -271,7 +271,11 @@ class HomeActivity : FragmentActivity() {
             preview.surfaceTextureListener = null
             mPreviewView.removeAllViews()
             Schedulers.io().scheduleDirect {
-                camera?.setPreviewCallback(null)
+                try {
+                    camera?.setPreviewCallback(null)
+                } catch (e: Exception) {
+                    Log.w(TAG, "Error removing camera preview", e)
+                }
                 preview.stop()
             }
         }
@@ -285,8 +289,10 @@ class HomeActivity : FragmentActivity() {
         mCamera?.let { camera ->
             mCamera = null
             Schedulers.io().scheduleDirect {
-                camera.setPreviewCallback(null)
-                try { camera.release() } catch (e: Exception) { Log.e(TAG, "onDestroy: error releasing camera", e) }
+                try {
+                    camera.setPreviewCallback(null)
+                    camera.release()
+                } catch (e: Exception) { Log.e(TAG, "onDestroy: error releasing camera", e) }
             }
         }
         mBlurOutputBitmap?.let { blurOutputBitmap ->
