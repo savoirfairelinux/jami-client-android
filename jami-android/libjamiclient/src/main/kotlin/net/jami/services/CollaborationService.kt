@@ -97,6 +97,19 @@ class CollaborationService(private val executor: ExecutorService) {
         val attachmentId: String,
     )
 
+    /** A document is no longer held here. */
+    data class DocumentRemoved(
+        val accountId: String,
+        val conversationId: String,
+        val documentId: String,
+        /**
+         * True when its author retired it for every member, and nothing brings
+         * it back. False when this device alone dropped it: the other members
+         * keep it, and opening it again fetches it back.
+         */
+        val everywhere: Boolean,
+    )
+
     // Serialized: these are fed straight from the daemon's callbacks, which run
     // on whatever thread the daemon happens to be on, and a PublishSubject on
     // its own would let two of them call onNext at once.
@@ -105,6 +118,7 @@ class CollaborationService(private val executor: ExecutorService) {
     private val participantLeftSubject: Subject<ParticipantLeft> = PublishSubject.create<ParticipantLeft>().toSerialized()
     private val renamedSubject: Subject<DocumentRenamed> = PublishSubject.create<DocumentRenamed>().toSerialized()
     private val attachmentSubject: Subject<AttachmentAdded> = PublishSubject.create<AttachmentAdded>().toSerialized()
+    private val removedSubject: Subject<DocumentRemoved> = PublishSubject.create<DocumentRemoved>().toSerialized()
 
     // Handed over off the daemon's thread. onNext() runs subscribers where it
     // stands, and these are called from the daemon's own callbacks: a subscriber
@@ -116,6 +130,7 @@ class CollaborationService(private val executor: ExecutorService) {
     val participantsLeft: Observable<ParticipantLeft> = participantLeftSubject.observeOn(Schedulers.io())
     val documentsRenamed: Observable<DocumentRenamed> = renamedSubject.observeOn(Schedulers.io())
     val attachmentsAdded: Observable<AttachmentAdded> = attachmentSubject.observeOn(Schedulers.io())
+    val documentsRemoved: Observable<DocumentRemoved> = removedSubject.observeOn(Schedulers.io())
 
     /** Updates for one open document, the form an editor subscribes to. */
     fun updatesFor(accountId: String, conversation: Uri, documentId: String): Observable<ByteArray> =
@@ -135,6 +150,15 @@ class CollaborationService(private val executor: ExecutorService) {
         attachmentsAdded
             .filter { it.accountId == accountId && it.conversationId == conversation.rawRingId && it.documentId == documentId }
             .map { it.attachmentId }
+
+    /**
+     * Removals of one document, for a screen showing that document alone.
+     * The value tells the two removals apart.
+     */
+    fun removalsFor(accountId: String, conversation: Uri, documentId: String): Observable<Boolean> =
+        documentsRemoved
+            .filter { it.accountId == accountId && it.conversationId == conversation.rawRingId && it.documentId == documentId }
+            .map { it.everywhere }
 
     /**
      * Announce a new document in a conversation.
@@ -160,6 +184,28 @@ class CollaborationService(private val executor: ExecutorService) {
 
     fun closeDocument(accountId: String, conversation: Uri, documentId: String): Completable =
         onDaemon { JamiService.closeCollaborativeDocument(accountId, conversation.rawRingId, documentId) }
+
+    /**
+     * Retire a document from the conversation, for every member and every
+     * device.
+     *
+     * Only its author can: the removal is an edition of the announcement, and
+     * the swarm takes an edition only from the author of what it edits. The
+     * answer says the removal was committed, not that the members applied it:
+     * [documentsRemoved] reports that, here as everywhere else.
+     */
+    fun removeDocument(accountId: String, conversation: Uri, documentId: String): Single<Boolean> =
+        fromDaemon { JamiService.removeCollaborativeDocument(accountId, conversation.rawRingId, documentId) }
+
+    /**
+     * Drop a document from this device alone, leaving the other members with
+     * it. Any member may, on any document: nothing is said to the conversation.
+     *
+     * The document stays listed, with [CollaborativeDocument.storedLocally]
+     * false, and opening it fetches it back.
+     */
+    fun removeDocumentLocally(accountId: String, conversation: Uri, documentId: String): Single<Boolean> =
+        fromDaemon { JamiService.removeCollaborativeDocumentLocally(accountId, conversation.rawRingId, documentId) }
 
     /** Broadcast a local edit. The update is a Y-CRDT update, lib0 v1 encoding. */
     fun applyUpdate(
@@ -289,6 +335,10 @@ class CollaborationService(private val executor: ExecutorService) {
 
     fun attachmentAdded(accountId: String, conversationId: String, documentId: String, attachmentId: String) {
         attachmentSubject.onNext(AttachmentAdded(accountId, conversationId, documentId, attachmentId))
+    }
+
+    fun documentRemoved(accountId: String, conversationId: String, documentId: String, everywhere: Boolean) {
+        removedSubject.onNext(DocumentRemoved(accountId, conversationId, documentId, everywhere))
     }
 
     private fun <T : Any> fromDaemon(block: Callable<T>): Single<T> =

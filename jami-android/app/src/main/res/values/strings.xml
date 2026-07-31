@@ -865,5 +865,17 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="collab_send_error">Your changes could not be sent.</string>
     <string name="collab_editable_document">Editable document</string>
     <string name="collab_create_error">This document could not be created.</string>
+    <string name="collab_remove">Remove</string>
+    <string name="collab_remove_title">Remove document</string>
+    <string name="collab_remove_message">\"%1$s\" will be removed for every member of this conversation. This cannot be undone.</string>
+    <string name="collab_remove_error">This document could not be removed.</string>
+    <string name="collab_remove_locally_title">Remove from this device</string>
+    <string name="collab_remove_locally_message">\"%1$s\" will be removed from this device only. The other members keep it, and opening it again downloads it back.</string>
+    <string name="collab_remove_locally_error">This document could not be removed from this device.</string>
+    <string name="collab_not_on_this_device">not on this device</string>
+    <string name="collab_document_removed">Document removed</string>
+    <string name="collab_document_removed_message">\"%1$s\" was removed by its author.</string>
+    <string name="collab_document_removed_locally">Document removed from this device</string>
+    <string name="collab_document_removed_locally_message">\"%1$s\" is no longer on this device. Opening it again downloads it back.</string>
 
 </resources>

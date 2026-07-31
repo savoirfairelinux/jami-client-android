@@ -26,6 +26,13 @@ data class CollaborativeDocument(
     val mimeType: String,
     val author: String?,
     val timestamp: Long,
+    /**
+     * Whether this device is holding the document.
+     *
+     * False for one this device removed from itself: it stays announced in the
+     * conversation, and opening it fetches it back.
+     */
+    val storedLocally: Boolean = true,
 ) {
     val isRichText: Boolean
         get() = mimeType == MIME_RICH_TEXT
@@ -50,6 +57,10 @@ data class CollaborativeDocument(
                 mimeType = map["mimeType"]?.takeIf { it.isNotEmpty() } ?: MIME_PLAIN_TEXT,
                 author = map["author"]?.takeIf { it.isNotEmpty() },
                 timestamp = map["timestamp"]?.toLongOrNull() ?: 0L,
+                // Absent from a daemon that predates local removal, and from
+                // every document the daemon does hold: only a removal writes
+                // it, and it writes "false".
+                storedLocally = map["storedLocally"] != "false",
             )
         }
     }
