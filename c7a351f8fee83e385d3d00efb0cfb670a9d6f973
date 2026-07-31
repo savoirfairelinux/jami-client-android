@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49b921dd_6990aa00",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 1537,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-31T17:55:40Z",
+      "side": 1,
+      "message": "[error] Line 1537: 🔴 `ConversationMemberEvent.Unblock` now calls `JamiService.getConversationMembers(...)` synchronously from the member-event callback. If this daemon call blocks or waits on the same service/event thread, receiving an unblock event can stall callback processing or deadlock UI/state updates. Avoid querying the full member list here; use the event payload role if available, or update to `MemberRole.MEMBER` and let the regular conversation/member refresh reconcile the exact role asynchronously.",
+      "revId": "c7a351f8fee83e385d3d00efb0cfb670a9d6f973",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
