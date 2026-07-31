@@ -1528,7 +1528,8 @@ class AccountService(
             subject?.onSuccess(conversation)
             task?.onSuccess(interactions)
             interactions.filterIsInstance<DataTransfer>().forEach {
-                hydrateDataTransfer(accountId, conversationId, it)
+                // History load: refresh the model only, these are not new transfer events.
+                hydrateDataTransfer(accountId, conversationId, it, emitEvent = false)
             }
         } catch (e: Exception) {
             Log.e(TAG, "Exception loading message", e)
@@ -1737,7 +1738,7 @@ class AccountService(
         }}
     }
 
-    private fun hydrateDataTransfer(accountId: String, conversationId: String, transfer: DataTransfer) {
+    private fun hydrateDataTransfer(accountId: String, conversationId: String, transfer: DataTransfer, emitEvent: Boolean = true) {
         val fileId = transfer.fileId?.takeIf(String::isNotEmpty) ?: return
         Single.fromCallable {
             fileTransferInfoProvider.get(accountId, conversationId, fileId)
@@ -1752,7 +1753,7 @@ class AccountService(
                     transfer.applyDaemonInfo(info.path?.let { File(it) }, info.total, info.progress) &&
                         conversation.notifyDataTransferUpdated(transfer)
                 }
-                if (updated)
+                if (updated && emitEvent)
                     dataTransfersProcessor.onNext(transfer)
             }, { error -> Log.w(TAG, "Unable to load data transfer info", error) })
     }
