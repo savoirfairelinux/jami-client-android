@@ -72,6 +72,10 @@ class AddContact {
     val grantPermissionRule: GrantPermissionRule =
         GrantPermissionRule.grant(android.Manifest.permission.POST_NOTIFICATIONS)
 
+    @get:Rule
+    val grantPermissionRuleLocalNetwork: GrantPermissionRule =
+        GrantPermissionRule.grant(android.Manifest.permission.ACCESS_LOCAL_NETWORK)
+
     companion object {
 
         @JvmStatic // Account A will be the one sending the trust request.

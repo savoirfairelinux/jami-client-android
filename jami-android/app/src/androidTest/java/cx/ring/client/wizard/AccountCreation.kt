@@ -76,6 +76,10 @@ class AccountCreation {
     val grantPermissionRuleCamera: GrantPermissionRule =
         GrantPermissionRule.grant(android.Manifest.permission.CAMERA)
 
+    @get:Rule
+    val grantPermissionRuleLocalNetwork: GrantPermissionRule =
+        GrantPermissionRule.grant(android.Manifest.permission.ACCESS_LOCAL_NETWORK)
+
     @Test
     fun a_setup() {
         // Get assets if installed (should be in /data/local/tmp/jami_test_assets).
