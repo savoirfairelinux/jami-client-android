@@ -470,10 +470,13 @@
   <string name="picker_btn">Välj kontakter</string>
   <string name="no_contact_to_add">Du har ingen kontakt att lägga till</string>
   <string name="bottomsheet_contact">Kontakta Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Ta bort medlem</string>
+  <string name="bottomsheet_block">Blockera medlem</string>
+  <string name="bottomsheet_unblock">Avblockera medlem</string>
   <string name="error_open_no_app_found">Ingen app hittades för att hantera den här filen: %1$s</string>
   <string name="swarm_detail_no_document">Du har inga dokument ännu.</string>
   <string name="group_admin">Administratör</string>
+  <string name="group_member_blocked">Blockerad</string>
+  <string name="group_member_invited">Inbjudna</string>
   <string name="share_contact_intent_title">Lägg till den här kontakten på Jami!</string>
   <string name="share_contact_intent_body">Du kan lägga till den här kontakten ”%1$s” på den distribuerade kommunikationsplattformen Jami: %2$s</string>
   <!--JamiId-->

@@ -336,7 +336,10 @@
   <string name="picker_title">Байланыстарды таңдау</string>
   <string name="picker_btn">Байланыстарды таңдау</string>
   <string name="bottomsheet_contact">Jami\n%1$s-мен байланыс</string>
-  <string name="bottomsheet_remove">Қатысушыны алып тастау</string>
+  <string name="bottomsheet_block">Мүшені бұғаттау</string>
+  <string name="bottomsheet_unblock">Мүшенің бұғатын алу</string>
+  <string name="group_member_blocked">Бұғатталған</string>
+  <string name="group_member_invited">шақырылған</string>
   <!--JamiId-->
   <string name="jami_id_validate">Пайдаланушы атауын тіркеу</string>
   <string name="jami_id_choose_username">Пайдаланушы атауын таңдау</string>

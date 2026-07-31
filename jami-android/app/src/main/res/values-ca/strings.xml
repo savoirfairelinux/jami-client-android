@@ -443,6 +443,7 @@
   <string name="bottomSheet_hangup_btn">Finalitza la trucada</string>
   <string name="bottomSheet_mute_microphone_btn">Micròfon</string>
   <string name="bottomSheet_sound_output_btn">Sons</string>
+  <string name="audio_output_mute">Silencia</string>
   <string name="bottomSheet_raiseHand_btn">Aixeca la mà</string>
   <string name="camera_toggle_btn_description">Commuta la càmera</string>
   <string name="camera_flip_btn_description">Canvia la càmera</string>
@@ -469,7 +470,6 @@
   <string name="picker_btn">Seleccionar els contactes</string>
   <string name="no_contact_to_add">No teniu cap contacte per afegir</string>
   <string name="bottomsheet_contact">Contacte amb Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Eliminar membre</string>
   <string name="error_open_no_app_found">No s\'ha trobat cap aplicació per gestionar aquest fitxer: %1$s</string>
   <string name="swarm_detail_no_document">Encara no teniu cap document.</string>
   <string name="group_admin">Administrador</string>

@@ -460,10 +460,13 @@
   <string name="picker_btn">Përzgjidhni kontake</string>
   <string name="no_contact_to_add">S’keni kontakt për shtim</string>
   <string name="bottomsheet_contact">Lidhuni me Jami-n\n%1$s</string>
-  <string name="bottomsheet_remove">Hiqni anëtar</string>
+  <string name="bottomsheet_block">Bllokoni anëtar</string>
+  <string name="bottomsheet_unblock">Zhbllokoje anëtarin</string>
   <string name="error_open_no_app_found">S’u gjet aplikacion për trajtim të kësaj kartele: %1$s</string>
   <string name="swarm_detail_no_document">Ende s’keni dokumente.</string>
   <string name="group_admin">Përgjegjës</string>
+  <string name="group_member_blocked">Bllokuar</string>
+  <string name="group_member_invited">Ftuar</string>
   <string name="share_contact_intent_title">Shtoje këtë kontakt në Jami!</string>
   <string name="share_contact_intent_body">Mund ta shtoni këtë kontakt “%1$s” në platformën e shpërndarë Jami: %2$s</string>
   <!--JamiId-->

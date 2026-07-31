@@ -472,10 +472,13 @@
   <string name="picker_btn">Izberite stike</string>
   <string name="no_contact_to_add">Nimate stikov, ki bi jih lahko dodali</string>
   <string name="bottomsheet_contact">Stop v stik z Jamijem\n%1$s</string>
-  <string name="bottomsheet_remove">Odstrani člana</string>
+  <string name="bottomsheet_block">Blokiraj člana</string>
+  <string name="bottomsheet_unblock">Odblokiraj člana</string>
   <string name="error_open_no_app_found">Ni programa, ki bi znal ravnati z datoteko: %1$s</string>
   <string name="swarm_detail_no_document">Trenutno še nimate dokumentov.</string>
   <string name="group_admin">Skrbnik</string>
+  <string name="group_member_blocked">Blokiran/a</string>
+  <string name="group_member_invited">Povabljeni</string>
   <string name="share_contact_intent_title">Dodaj stik v Jami!</string>
   <string name="share_contact_intent_body">Ta stik %1$s lahko dodate na razpršeno komunikacijsko platformo Jami: %2$s</string>
   <!--JamiId-->

@@ -359,7 +359,10 @@ contact@jami.net</string>
   <string name="picker_title">انتخاب مخاطب</string>
   <string name="picker_btn">انتخاب مخاطب</string>
   <string name="bottomsheet_contact">با Jami\n%1$s تماس بگیرید</string>
-  <string name="bottomsheet_remove">عضو را حذف کنید</string>
+  <string name="bottomsheet_block">مسدود کردن عضو</string>
+  <string name="bottomsheet_unblock">رفع مسدودیت عضو</string>
+  <string name="group_member_blocked">مسدود شد</string>
+  <string name="group_member_invited">دعوت شده</string>
   <!--JamiId-->
   <string name="jami_id_validate">ثبت نام کاربری</string>
   <string name="jami_id_choose_username">یک نام کاربری را انتخاب کنید</string>

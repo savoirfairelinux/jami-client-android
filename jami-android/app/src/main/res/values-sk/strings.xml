@@ -472,10 +472,13 @@
   <string name="picker_btn">Vyberte kontakty</string>
   <string name="no_contact_to_add">Nemáte žiadny kontakt na pridanie</string>
   <string name="bottomsheet_contact">Kontaktujte Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Odstránenie člena</string>
+  <string name="bottomsheet_block">Zablokovať člena</string>
+  <string name="bottomsheet_unblock">Odblokovať člena</string>
   <string name="error_open_no_app_found">Nenašla sa žiadna aplikácia na spracovanie tohto súboru: %1$s</string>
   <string name="swarm_detail_no_document">Zatiaľ nemáte žiadne dokumenty.</string>
   <string name="group_admin">Správca</string>
+  <string name="group_member_blocked">Zablokované</string>
+  <string name="group_member_invited">Pozvaný</string>
   <string name="share_contact_intent_title">Pridajte tento kontakt v Jami!</string>
   <string name="share_contact_intent_body">Tento kontakt „%1$s“ môžete pridať na distribuovanej komunikačnej platforme Jami: %2$s</string>
   <!--JamiId-->

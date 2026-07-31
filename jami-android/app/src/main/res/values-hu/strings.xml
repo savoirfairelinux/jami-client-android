@@ -470,10 +470,13 @@
   <string name="picker_btn">Kapcsolattartók kijelölése</string>
   <string name="no_contact_to_add">Nincsenek hozzáadható kapcsolattartók.</string>
   <string name="bottomsheet_contact">Forduljon a Jamihez\n%1$s</string>
-  <string name="bottomsheet_remove">Tag eltávolítása</string>
+  <string name="bottomsheet_block">Tag letiltása</string>
+  <string name="bottomsheet_unblock">Tag letiltás feloldása</string>
   <string name="error_open_no_app_found">Nem található alkalmazás a fájl kezelésére: %1$s</string>
   <string name="swarm_detail_no_document">Még nincsenek dokumentumai.</string>
   <string name="group_admin">Rendszergazda</string>
+  <string name="group_member_blocked">Letiltva</string>
+  <string name="group_member_invited">Meghívott</string>
   <string name="share_contact_intent_title">Add hozzá ezt a Jami-kapcsolattartót!</string>
   <string name="share_contact_intent_body">Felveheti a(z) „%1$s” kapcsolattartót a Jami elosztott kommunikációs platformon: %2$s</string>
   <!--JamiId-->

@@ -48,8 +48,8 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="account_device_revocation_error_unknown">Unbekannter Fehler.</string>
   <string name="account_password_change">Passwort ändern</string>
   <string name="account_password_set">Passwort festlegen</string>
-  <string name="account_password_summary">Verwalten Sie Ihr Kontopasswort.</string>
-  <string name="account_password_change_wait_message">Kontopasswort wird geändert</string>
+  <string name="account_password_summary">Das Passwort Ihres Kontos verwalten.</string>
+  <string name="account_password_change_wait_message">Passwort des Kontos wird geändert</string>
   <string name="account_biometric_disable">Biometrische Authentifizierung deaktivieren</string>
   <string name="account_biometric_set">Biometrische Authentifizierung aktivieren</string>
   <string name="account_biometric_summary">Biometrische Authentifizierung für Ihr Konto verwalten.</string>
@@ -178,7 +178,7 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="account_device_added_message">Das Jami-Konto wurde auf diesem Gerät erfolgreich eingerichtet.</string>
   <string name="account_device_updated_title">Gerät im Konto aktualisiert</string>
   <string name="account_device_updated_message">Jami-Konto erfolgreich aktualisiert.</string>
-  <string name="account_cannot_be_updated_message">Beim Aktualisieren des Kontos ist ein Fehler aufgetreten. Bitte überprüfen Sie das Kontopasswort.</string>
+  <string name="account_cannot_be_updated_message">Beim Aktualisieren des Kontos ist ein Fehler aufgetreten. Bitte überprüfen Sie das Passwort des Kontos.</string>
   <string name="account_sip_success_title">SIP-Konto registriert</string>
   <string name="account_sip_success_message">SIP-Konto erfolgreich registriert.</string>
   <string name="account_sip_register_anyway">Trotzdem registieren</string>

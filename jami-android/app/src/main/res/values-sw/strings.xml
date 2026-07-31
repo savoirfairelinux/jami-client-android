@@ -336,7 +336,10 @@
   <string name="picker_title">Chagua mawasiliano</string>
   <string name="picker_btn">Chagua mawasiliano</string>
   <string name="bottomsheet_contact">Wasiliana Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Ondoa mshiriki</string>
+  <string name="bottomsheet_block">Zuia mwanachama</string>
+  <string name="bottomsheet_unblock">Ondoa kuzuia mwanachama</string>
+  <string name="group_member_blocked">Imezuiwa</string>
+  <string name="group_member_invited">Mwaliko</string>
   <!--JamiId-->
   <string name="jami_id_validate">Kujiandikisha jina la mtumiaji</string>
   <string name="jami_id_choose_username">Chagua jina la mtumiaji</string>

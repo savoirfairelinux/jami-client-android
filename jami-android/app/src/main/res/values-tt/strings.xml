@@ -165,7 +165,7 @@
   <string name="tab_settings">Калыплар</string>
   <string name="dialog_hint_title">Исем</string>
   <string name="dialog_hint_description">Тәрҗемәсе</string>
-  <string name="bottomsheet_remove">Алып баручыны алып ташлау</string>
+  <string name="group_member_invited">Чакырылганнар</string>
   <!--JamiId-->
   <string name="jami_id_validate">Кулланучы исемен теркәгез</string>
   <string name="jami_id_choose_username">Кулланучы исемен сайлагыз</string>

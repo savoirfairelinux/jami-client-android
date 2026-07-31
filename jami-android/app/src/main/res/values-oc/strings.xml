@@ -316,7 +316,7 @@
   <string name="picker_title">Seleccionar los contactes</string>
   <string name="picker_btn">Seleccionar los contactes</string>
   <string name="bottomsheet_contact">Contactar Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Retirar membre</string>
+  <string name="group_member_invited">Convèsse</string>
   <!--JamiId-->
   <string name="jami_id_validate">Registrar nom d\' utilizaire</string>
   <string name="jami_id_choose_username">Escotar un nom d\' utilizaire</string>

@@ -480,10 +480,13 @@
   <string name="picker_btn">Elegir contactocs</string>
   <string name="no_contact_to_add">No tiene contacto para agregar</string>
   <string name="bottomsheet_contact">Contacta con Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Eliminar miembro</string>
+  <string name="bottomsheet_block">Miembro de bloque</string>
+  <string name="bottomsheet_unblock">Miembro desbloqueado</string>
   <string name="error_open_no_app_found">No se ha encontrado una aplicación para manejar este archivo: %1$s</string>
   <string name="swarm_detail_no_document">Aún no tiene documentos.</string>
   <string name="group_admin">Administración</string>
+  <string name="group_member_blocked">Bloqueado</string>
+  <string name="group_member_invited">Invitado</string>
   <string name="share_contact_intent_title">¡Agrega este contacto en Jami!</string>
   <string name="share_contact_intent_body">Puedes agregar este contacto “%1$s” a la plataforma de comunicación distribuida: %2$s</string>
   <!--JamiId-->
