@@ -54,4 +54,24 @@
 
     </LinearLayout>
 
+    <ImageButton
+        android:id="@+id/remove_locally"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/collab_remove_locally_title"
+        android:src="@drawable/baseline_delete_24"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <ImageButton
+        android:id="@+id/remove_everywhere"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/collab_remove_title"
+        android:src="@drawable/baseline_delete_forever_24"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
 </LinearLayout>

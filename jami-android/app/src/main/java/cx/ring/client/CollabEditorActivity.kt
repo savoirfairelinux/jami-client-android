@@ -93,6 +93,9 @@ class CollabEditorActivity : AppCompatActivity() {
     private var editorReady = false
     private var opened = false
 
+    /** Whether the screen is already saying the document is gone. */
+    private var removalShown = false
+
     /** Updates produced by the page before it was allowed to talk to the daemon. */
     private val pendingLocalUpdates = ArrayList<String>()
 
@@ -422,6 +425,39 @@ class CollabEditorActivity : AppCompatActivity() {
                 documentName = renamed.name
                 showTitle()
             }, { e -> Log.e(TAG, "rename", e) }))
+
+        disposable.add(collaborationService
+            .removalsFor(path.accountId, path.conversationUri, documentId)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ everywhere -> documentRemoved(everywhere) },
+                { e -> Log.e(TAG, "removal", e) }))
+    }
+
+    /**
+     * Says what happened, then closes.
+     *
+     * Closing on its own would make the screen vanish mid-sentence; staying
+     * would leave the user typing into something no longer backed by anything,
+     * where each keystroke is dropped without a word.
+     */
+    private fun documentRemoved(everywhere: Boolean) {
+        if (isFinishing || isDestroyed || removalShown) return
+        // A document can be removed here and then everywhere, and the daemon
+        // may announce either more than once. The dialog cannot be dismissed,
+        // so a second one would sit on top of the first and have to be
+        // acknowledged before the screen it is closing goes away.
+        removalShown = true
+        val named = documentName.ifEmpty { getString(R.string.collab_untitled) }
+        MaterialAlertDialogBuilder(this)
+            .setTitle(if (everywhere) R.string.collab_document_removed
+                else R.string.collab_document_removed_locally)
+            .setMessage(getString(
+                if (everywhere) R.string.collab_document_removed_message
+                else R.string.collab_document_removed_locally_message,
+                named))
+            .setCancelable(false)
+            .setPositiveButton(android.R.string.ok) { _, _ -> finish() }
+            .show()
     }
 
     private fun sendUpdate(base64: String) {
