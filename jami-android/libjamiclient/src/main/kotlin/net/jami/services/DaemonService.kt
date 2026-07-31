@@ -247,6 +247,10 @@ class DaemonService(
         override fun collaborativeAttachmentAdded(accountId: String, conversationId: String, documentId: String, attachmentId: String) {
             mCollaborationService.attachmentAdded(accountId, conversationId, documentId, attachmentId)
         }
+
+        override fun collaborativeDocumentRemoved(accountId: String, conversationId: String, documentId: String, everywhere: Boolean) {
+            mCollaborationService.documentRemoved(accountId, conversationId, documentId, everywhere)
+        }
     }
 
     internal inner class DaemonNetworkServiceCallback : NetworkServiceCallback() {

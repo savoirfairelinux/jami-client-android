@@ -20,9 +20,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.client.CollabDocuments
 import cx.ring.client.CollabEditorActivity
@@ -34,6 +36,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.CollaborativeDocument
 import net.jami.model.Uri
+import net.jami.services.AccountService
 import net.jami.services.CollaborationService
 import net.jami.utils.Log
 import java.text.DateFormat
@@ -47,6 +50,9 @@ class CollabDocumentsFragment : Fragment() {
     @Inject
     lateinit var collaborationService: CollaborationService
 
+    @Inject
+    lateinit var accountService: AccountService
+
     private val disposable = CompositeDisposable()
     private var binding: FragCollabDocumentsBinding? = null
     private lateinit var path: ConversationPath
@@ -55,6 +61,16 @@ class CollabDocumentsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         path = ConversationPath.fromBundle(arguments)!!
+        // Both removals change the list: one takes a document out of it, the
+        // other only marks it as no longer held here. Subscribed once for the
+        // fragment's life, not on every return to the screen.
+        disposable.add(collaborationService.documentsRemoved
+            .filter {
+                it.accountId == path.accountId &&
+                    it.conversationId == path.conversationUri.rawRingId
+            }
+            .observeOn(DeviceUtils.uiScheduler)
+            .subscribe({ refresh() }, { e -> Log.e(TAG, "removals", e) }))
     }
 
     override fun onCreateView(
@@ -122,6 +138,10 @@ class CollabDocumentsFragment : Fragment() {
             holder.binding.root.setOnClickListener {
                 open(document.id, document.name)
             }
+            holder.binding.removeLocally.isVisible = document.storedLocally
+            holder.binding.removeLocally.setOnClickListener { confirmRemoval(document, everywhere = false) }
+            holder.binding.removeEverywhere.isVisible = canRemoveEverywhere(document)
+            holder.binding.removeEverywhere.setOnClickListener { confirmRemoval(document, everywhere = true) }
         }
 
         override fun getItemCount() = documents.size
@@ -130,11 +150,77 @@ class CollabDocumentsFragment : Fragment() {
     private class DocumentHolder(val binding: ItemCollabDocumentBinding) :
         RecyclerView.ViewHolder(binding.root)
 
+    /**
+     * Who wrote it and when, and whether this device still holds it.
+     *
+     * An entry that is no longer held stays open-able: opening it is what brings
+     * it back, so it is told apart rather than dimmed.
+     */
     private fun subtitleOf(document: CollaborativeDocument): String {
         val date = DateFormat.getDateInstance(DateFormat.MEDIUM)
             .format(Date(document.timestamp * 1000))
-        val author = document.author ?: return date
-        return getString(R.string.collab_created_by, shortId(author)) + " · " + date
+        val author = document.author
+        val line = if (author == null) date
+        else getString(R.string.collab_created_by, shortId(author)) + " · " + date
+        if (document.storedLocally) return line
+        return line + " · " + getString(R.string.collab_not_on_this_device)
+    }
+
+    /**
+     * Whether this device may retire a document for every member.
+     *
+     * Only its author may, and the daemon refuses anyone else: offering it to
+     * the others would promise what cannot happen.
+     */
+    private fun canRemoveEverywhere(document: CollaborativeDocument): Boolean {
+        val author = document.author ?: return false
+        val self = accountService.getAccount(path.accountId)?.uri ?: return false
+        return self.isNotEmpty() && author == self
+    }
+
+    /**
+     * The two are asked apart because they are not the same question: one takes
+     * a document away from everybody for good, the other only reclaims what this
+     * device chose to keep.
+     */
+    private fun confirmRemoval(document: CollaborativeDocument, everywhere: Boolean) {
+        val context = context ?: return
+        val named = document.name.ifEmpty { getString(R.string.collab_untitled) }
+        MaterialAlertDialogBuilder(context)
+            .setTitle(if (everywhere) R.string.collab_remove_title else R.string.collab_remove_locally_title)
+            .setMessage(getString(
+                if (everywhere) R.string.collab_remove_message else R.string.collab_remove_locally_message,
+                named))
+            .setPositiveButton(R.string.collab_remove) { _, _ -> remove(document, everywhere) }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    /**
+     * Nothing is dropped from the list here.
+     *
+     * The daemon reports every removal through `documentsRemoved`, this device's
+     * own included, and that one signal is what the list is rebuilt from: what
+     * the author sees is what the peers see.
+     */
+    private fun remove(document: CollaborativeDocument, everywhere: Boolean) {
+        val call = if (everywhere)
+            collaborationService.removeDocument(path.accountId, path.conversationUri, document.id)
+        else
+            collaborationService.removeDocumentLocally(path.accountId, path.conversationUri, document.id)
+        val failure = if (everywhere) R.string.collab_remove_error
+        else R.string.collab_remove_locally_error
+        disposable.add(call
+            .observeOn(DeviceUtils.uiScheduler)
+            .subscribe({ removed -> if (!removed) toast(failure) },
+                { e ->
+                    Log.e(TAG, "remove", e)
+                    toast(failure)
+                }))
+    }
+
+    private fun toast(message: Int) {
+        Toast.makeText(context ?: return, message, Toast.LENGTH_LONG).show()
     }
 
     private fun shortId(peerId: String) =

@@ -422,6 +422,34 @@ class CollabEditorActivity : AppCompatActivity() {
                 documentName = renamed.name
                 showTitle()
             }, { e -> Log.e(TAG, "rename", e) }))
+
+        disposable.add(collaborationService
+            .removalsFor(path.accountId, path.conversationUri, documentId)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ everywhere -> documentRemoved(everywhere) },
+                { e -> Log.e(TAG, "removal", e) }))
+    }
+
+    /**
+     * Says what happened, then closes.
+     *
+     * Closing on its own would make the screen vanish mid-sentence; staying
+     * would leave the user typing into something no longer backed by anything,
+     * where each keystroke is dropped without a word.
+     */
+    private fun documentRemoved(everywhere: Boolean) {
+        if (isFinishing || isDestroyed) return
+        val named = documentName.ifEmpty { getString(R.string.collab_untitled) }
+        MaterialAlertDialogBuilder(this)
+            .setTitle(if (everywhere) R.string.collab_document_removed
+                else R.string.collab_document_removed_locally)
+            .setMessage(getString(
+                if (everywhere) R.string.collab_document_removed_message
+                else R.string.collab_document_removed_locally_message,
+                named))
+            .setCancelable(false)
+            .setPositiveButton(android.R.string.ok) { _, _ -> finish() }
+            .show()
     }
 
     private fun sendUpdate(base64: String) {

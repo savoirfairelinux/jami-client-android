@@ -21,6 +21,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
@@ -1634,7 +1635,26 @@ class ConversationAdapter(
 
         val fallback = document.name.ifEmpty { context.getString(R.string.collab_untitled) }
         nameView?.text = fallback
-        subtitleView?.text = context.getString(R.string.collab_editable_document)
+
+        // An announcement can only ever be edited to retire the document, so an
+        // edited one means the document is gone. Read from the message itself:
+        // this runs for every row that scrolls by, and asking the daemon would
+        // walk the whole conversation log each time.
+        var removed = document.history.size > 1
+        fun showRemoval() {
+            nameView?.apply {
+                paintFlags = if (removed) paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                else paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                alpha = if (removed) DIMMED_ALPHA else 1f
+            }
+            subtitleView?.text = context.getString(
+                if (removed) R.string.collab_document_removed
+                else R.string.collab_editable_document)
+            // A retired announcement opens nothing, so it stops answering taps
+            // rather than answer them with silence.
+            card?.isEnabled = !removed
+        }
+        showRemoval()
 
         val accountId = document.account
         val conversationId = document.conversationId
@@ -1657,8 +1677,20 @@ class ConversationAdapter(
             }
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe { nameView?.text = it.name.ifEmpty { fallback } })
+        viewHolder.compositeDisposable.add(collaboration
+            .removalsFor(accountId, conversationUri, document.documentId)
+            // Only a removal for every member retires the announcement. One that
+            // took the document off this device alone leaves it announced and
+            // leaves this card live: tapping it is what fetches it back.
+            .filter { it }
+            .observeOn(DeviceUtils.uiScheduler)
+            .subscribe {
+                removed = true
+                showRemoval()
+            })
 
         card?.setOnClickListener {
+            if (removed) return@setOnClickListener
             context.startActivity(CollabEditorActivity.intent(
                 context, accountId, conversationUri, document.documentId,
                 nameView?.text?.toString()
@@ -2078,6 +2110,9 @@ class ConversationAdapter(
 
     companion object {
         private val TAG = ConversationAdapter::class.simpleName!!
+
+        /** How far the name of a retired document is faded. */
+        private const val DIMMED_ALPHA = 0.5f
         private val msgBGLayouts = intArrayOf(
             R.drawable.textmsg_bg_out_first,
             R.drawable.textmsg_bg_out_middle,
