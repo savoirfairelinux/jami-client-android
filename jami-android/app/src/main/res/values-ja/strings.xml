@@ -352,7 +352,10 @@
   <string name="picker_title">連絡先を選択</string>
   <string name="picker_btn">連絡先を選択</string>
   <string name="bottomsheet_contact">Jamiに連絡をする\n%1$s</string>
-  <string name="bottomsheet_remove">メンバーを削除</string>
+  <string name="bottomsheet_block">メンバーをブロック</string>
+  <string name="bottomsheet_unblock">メンバーのブロックを解除</string>
+  <string name="group_member_blocked">ブロック済み</string>
+  <string name="group_member_invited">招待された</string>
   <!--JamiId-->
   <string name="jami_id_validate">ユーザー名を登録</string>
   <string name="jami_id_available">このユーザー名は利用可能です。</string>

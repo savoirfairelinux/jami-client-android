@@ -333,6 +333,7 @@
   <string name="bottomSheet_hangup_btn">Τερματισμός κλήσης</string>
   <string name="bottomSheet_mute_microphone_btn">Μικρο</string>
   <string name="bottomSheet_sound_output_btn">Ήχοι</string>
+  <string name="audio_output_mute">Σίγαση</string>
   <string name="bottomSheet_raiseHand_btn">Σηκώστε το χέρι σας</string>
   <string name="camera_flip_btn_description">Εναλλαγή κάμερας</string>
   <string name="add_participant_btn_description">Προσθήκη συμμετέχοντος</string>
@@ -352,7 +353,9 @@
   <string name="picker_title">Επιλέξτε επαφές</string>
   <string name="picker_btn">Επιλέξτε επαφές</string>
   <string name="bottomsheet_contact">Επικοινωνήστε με Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Αφαίρεση μέλος</string>
+  <string name="bottomsheet_block">Αποκλεισμός μέλους</string>
+  <string name="bottomsheet_unblock">Άρση αποκλεισμού μέλους</string>
+  <string name="group_member_invited">Καλεσμένοι</string>
   <!--JamiId-->
   <string name="jami_id_validate">Καταχωρίστε το όνομα χρήστη</string>
   <string name="jami_id_available">Το όνομα χρήστη είναι διαθέσιμο.</string>

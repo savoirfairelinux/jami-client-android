@@ -194,7 +194,10 @@
   <string name="dialog_hint_description">Tuairisc</string>
   <string name="picker_title">Roghnaigh teagmhálacha</string>
   <string name="picker_btn">Roghnaigh teagmhálacha</string>
-  <string name="bottomsheet_remove">Cúlghairm a bhaint</string>
+  <string name="bottomsheet_block">Cuir bac ar bhall</string>
+  <string name="bottomsheet_unblock">Bain bac de bhall</string>
+  <string name="group_member_blocked">Bactha</string>
+  <string name="group_member_invited">Ceiliúradh</string>
   <!--JamiId-->
   <string name="jami_id_validate">Ainm úsáideora a chlárú</string>
   <string name="jami_id_choose_username">Roghnaigh ainm úsáideora</string>

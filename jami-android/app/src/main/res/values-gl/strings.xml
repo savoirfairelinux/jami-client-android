@@ -470,10 +470,13 @@
   <string name="picker_btn">Elexir conctactos</string>
   <string name="no_contact_to_add">Non tes ningún contacto para engadir</string>
   <string name="bottomsheet_contact">Contacta con Jami\n %1$s</string>
-  <string name="bottomsheet_remove">Remover membro</string>
+  <string name="bottomsheet_block">Bloquear membro</string>
+  <string name="bottomsheet_unblock">Desbloquear membro</string>
   <string name="error_open_no_app_found">Non atopamos unha aplicación para abrir o ficheiro: %1$s</string>
   <string name="swarm_detail_no_document">Aínda non tes documentos.</string>
   <string name="group_admin">Administrador</string>
+  <string name="group_member_blocked">Bloqueado</string>
+  <string name="group_member_invited">Convocado</string>
   <string name="share_contact_intent_title">Engade este contacto en Jami!</string>
   <string name="share_contact_intent_body">Podes engadir este contacto «%1$s» na plataforma de comunicación distribuída Jami: %2$s</string>
   <!--JamiId-->

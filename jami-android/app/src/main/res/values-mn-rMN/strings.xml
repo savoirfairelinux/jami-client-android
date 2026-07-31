@@ -315,7 +315,7 @@
   <string name="picker_title">Байрлагуудыг сонго</string>
   <string name="picker_btn">Байрлагуудыг сонго</string>
   <string name="bottomsheet_contact">Jami\n%1$s-тай холбоо барих</string>
-  <string name="bottomsheet_remove">Хөгжлийн гишүүн</string>
+  <string name="group_member_invited">Урилга авсан</string>
   <!--JamiId-->
   <string name="jami_id_validate">Хэрэглэгчийн нэрийг бүртгүүлэх</string>
   <string name="jami_id_choose_username">Хэрэглэгчийн нэрийг сонго</string>

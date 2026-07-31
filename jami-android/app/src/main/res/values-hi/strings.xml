@@ -368,10 +368,13 @@
   <string name="picker_btn">संपर्क चुनें</string>
   <string name="no_contact_to_add">आपके पास जोड़ने के लिए कोई संपर्क नहीं है</string>
   <string name="bottomsheet_contact">Jami\n%1$s से संपर्क करें</string>
-  <string name="bottomsheet_remove">सदस्य हटाएँ</string>
+  <string name="bottomsheet_block">सदस्य को ब्लॉक करें</string>
+  <string name="bottomsheet_unblock">सदस्य को अनब्लॉक करें</string>
   <string name="error_open_no_app_found">%1$s :इस फ़ाइल को संभालने के लिए कोई अनुप्रयोग नहीं मिला</string>
   <string name="swarm_detail_no_document">आपके पास अभी तक कोई दस्तावेज़ नहीं है</string>
   <string name="group_admin">व्यवस्थापक</string>
+  <string name="group_member_blocked">ब्लॉक किया गया</string>
+  <string name="group_member_invited">आमंत्रित किया गया</string>
   <!--JamiId-->
   <string name="jami_id_copy">JamiId कॉपी करें</string>
   <string name="jami_id_share">JamiId शेयर करें</string>

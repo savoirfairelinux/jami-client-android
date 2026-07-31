@@ -206,7 +206,10 @@
   <string name="dialog_hint_description">תיאור</string>
   <string name="picker_title">בחירת אנשי קשר</string>
   <string name="picker_btn">בחירת אנשי קשר</string>
-  <string name="bottomsheet_remove">הסיר חבר</string>
+  <string name="bottomsheet_block">חסום חבר</string>
+  <string name="bottomsheet_unblock">בטל חסימת חבר</string>
+  <string name="group_member_blocked">חסום</string>
+  <string name="group_member_invited">הזמנת</string>
   <!--JamiId-->
   <string name="jami_id_validate">רשום שם משתמש</string>
   <string name="jami_id_choose_username">בחר שם משתמש</string>

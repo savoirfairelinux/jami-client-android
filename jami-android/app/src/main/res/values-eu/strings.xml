@@ -336,7 +336,10 @@
   <string name="picker_title">Kontaktua hautatu</string>
   <string name="picker_btn">Kontaktua hautatu</string>
   <string name="bottomsheet_contact">Jarri harremanetan Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Kendu kideak</string>
+  <string name="bottomsheet_block">Blokeatu kidea</string>
+  <string name="bottomsheet_unblock">Desblokeatu kidea</string>
+  <string name="group_member_blocked">Blokeatuta</string>
+  <string name="group_member_invited">Gonbidatuak</string>
   <!--JamiId-->
   <string name="jami_id_validate">Erabiltzaile izena erregistratzea</string>
   <string name="jami_id_choose_username">Erabiltzaile izena aukeratu</string>

@@ -318,7 +318,6 @@
   <string name="picker_title">Kontakte wählen</string>
   <string name="picker_btn">Kontakte wählen</string>
   <string name="no_contact_to_add">Sie haben keinen Kontakt zum Hinzufügen</string>
-  <string name="bottomsheet_remove">Mitglied entfernen</string>
   <string name="error_open_no_app_found">Keine Anwendung gefunden, um diese Datei zu öffnen: %1$s</string>
   <string name="group_admin">Administrator</string>
   <string name="share_contact_intent_title">Diesen Kontakt zu Jami hinzufügen!</string>

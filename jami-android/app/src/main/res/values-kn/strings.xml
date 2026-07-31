@@ -336,7 +336,10 @@
   <string name="picker_title">ಸಂಪರ್ಕಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
   <string name="picker_btn">ಸಂಪರ್ಕಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
   <string name="bottomsheet_contact">ಜಾಮಿ %1$s ಗಳನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
-  <string name="bottomsheet_remove">ಸದಸ್ಯರನ್ನು ತೆಗೆದುಹಾಕಿ</string>
+  <string name="bottomsheet_block">ಸದಸ್ಯರನ್ನು ನಿರ್ಬಂಧಿಸಿ</string>
+  <string name="bottomsheet_unblock">ಸದಸ್ಯರ ನಿರ್ಬಂಧ ತೆಗೆಯಿರಿ</string>
+  <string name="group_member_blocked">ನಿರ್ಬಂಧಿಸಲಾಗಿದೆ</string>
+  <string name="group_member_invited">ಆಹ್ವಾನಿತರು</string>
   <!--JamiId-->
   <string name="jami_id_validate">ಬಳಕೆದಾರ ಹೆಸರನ್ನು ನೋಂದಾಯಿಸಿ</string>
   <string name="jami_id_choose_username">ಬಳಕೆದಾರ ಹೆಸರನ್ನು ಆರಿಸಿ</string>

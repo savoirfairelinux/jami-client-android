@@ -443,6 +443,7 @@
   <string name="bottomSheet_hangup_btn">Afslut opkald</string>
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Lyder</string>
+  <string name="audio_output_mute">Sluk lyden</string>
   <string name="bottomSheet_raiseHand_btn">Løft hånden.</string>
   <string name="camera_toggle_btn_description">Skift kamera</string>
   <string name="camera_flip_btn_description">Vend kamera</string>
@@ -469,7 +470,7 @@
   <string name="picker_btn">Vælg kontakter</string>
   <string name="no_contact_to_add">Du har ingen kontakt at tilføje</string>
   <string name="bottomsheet_contact">Kontakt Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Fjern medlem</string>
+  <string name="bottomsheet_block">Blokér medlem</string>
   <string name="error_open_no_app_found">Der blev ikke fundet en app til at åbne denne slags fil: %1$s</string>
   <string name="swarm_detail_no_document">Du har endnu ikke nogen dokumenter.</string>
   <string name="group_admin">Administrator</string>

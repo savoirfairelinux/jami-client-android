@@ -470,7 +470,6 @@
   <string name="picker_btn">Fren inermisen</string>
   <string name="no_contact_to_add">Ur tesɛiḍ ara anermis ara ternuḍ</string>
   <string name="bottomsheet_contact">Nermes Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Kkes aɛeggal</string>
   <string name="error_open_no_app_found">Ulac asnas yettwafen akken ad isefrek afaylu-agi: %1$s</string>
   <string name="swarm_detail_no_document">Mazal ur tesɛiḍ ara arraten.</string>
   <string name="group_admin">Anedbal</string>

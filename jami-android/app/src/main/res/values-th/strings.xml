@@ -335,7 +335,10 @@
   <string name="picker_title">เลือกติดต่อ</string>
   <string name="picker_btn">เลือกติดต่อ</string>
   <string name="bottomsheet_contact">ติดต่อ Jami\n%1$s</string>
-  <string name="bottomsheet_remove">ยกสมาชิก</string>
+  <string name="bottomsheet_block">บล็อกสมาชิก</string>
+  <string name="bottomsheet_unblock">เลิกบล็อกสมาชิก</string>
+  <string name="group_member_blocked">ถูกบล็อก</string>
+  <string name="group_member_invited">เรียก</string>
   <!--JamiId-->
   <string name="jami_id_validate">จดทะเบียนชื่อผู้ใช้</string>
   <string name="jami_id_choose_username">เลือกชื่อผู้ใช้งาน</string>

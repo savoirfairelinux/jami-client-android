@@ -425,7 +425,7 @@
   <string name="wizard_username_info">Wählen Sie einen Benutzernamen für Ihr Konto.</string>
   <string name="wizard_username_button">Benutzernamen wählen</string>
   <string name="wizard_username_skip">Wahl eines Benutzernamens überspringen</string>
-  <string name="wizard_password_info">Kontopasswort</string>
+  <string name="wizard_password_info">Passwort des Kontos</string>
   <string name="wizard_password_placeholder">Wählen Sie ein Passwort, um den Kontoschlüssel auf diesem Gerät zu verschlüsseln</string>
   <string name="wizard_password_button">Passwort wählen</string>
   <string name="wizard_password_skip">Konto erstellen</string>
@@ -479,7 +479,8 @@
   <string name="picker_btn">Kontakte wählen</string>
   <string name="no_contact_to_add">Sie haben keinen Kontakt zum Hinzufügen</string>
   <string name="bottomsheet_contact">Kontakt Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Mitglied entfernen</string>
+  <string name="bottomsheet_block">Mitglied blockieren</string>
+  <string name="bottomsheet_unblock">Blockierung des Mitglieds aufheben</string>
   <string name="error_open_no_app_found">Keine Anwendung gefunden, die diese Datei verarbeiten kann: %1$s</string>
   <string name="swarm_detail_no_document">Sie haben noch keine Dokumente.</string>
   <string name="group_admin">Administrator</string>

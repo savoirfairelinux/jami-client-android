@@ -479,10 +479,13 @@
   <string name="picker_btn">Vali kontaktid</string>
   <string name="no_contact_to_add">Sul pole ühtegi lisatavat kontakti</string>
   <string name="bottomsheet_contact">Võta ühendust Jami arendajatega\n%1$s</string>
-  <string name="bottomsheet_remove">Eemalda osaleja</string>
+  <string name="bottomsheet_block">Blokeeri osaleja</string>
+  <string name="bottomsheet_unblock">Lõpeta osaleja blokeerimine</string>
   <string name="error_open_no_app_found">Selle faili avamiseks ei leidu rakendust: %1$s</string>
   <string name="swarm_detail_no_document">Sul pole veel dokumente.</string>
   <string name="group_admin">Peakasutaja</string>
+  <string name="group_member_blocked">Blokeeritud</string>
+  <string name="group_member_invited">Kutsutud</string>
   <string name="share_contact_intent_title">Lisa see kontakt Jamisse!</string>
   <string name="share_contact_intent_body">Sa võid selle kontakti lisada „%1$s“ hajutatud suhtlusvõrgus Jami: %2$s</string>
   <!--JamiId-->

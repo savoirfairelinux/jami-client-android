@@ -368,10 +368,11 @@
   <string name="dialogtitle_description">Taisyti grupės aprašą</string>
   <string name="dialog_hint_title">Pavadinimas</string>
   <string name="dialog_hint_description">Aprašas</string>
-  <string name="bottomsheet_remove">Ištrinti narį</string>
   <string name="error_open_no_app_found">Nerasta programa, galinti apdoroti šį failą: %1$s</string>
   <string name="swarm_detail_no_document">Kol kas neturite jokių dokumentų.</string>
   <string name="group_admin">Administratorius</string>
+  <string name="group_member_blocked">Užblokuota</string>
+  <string name="group_member_invited">Pakviestas</string>
   <!--JamiId-->
   <string name="jami_id_copy">Kopijuoti JamiId</string>
   <string name="jami_id_share">Bendrinti JamiId</string>

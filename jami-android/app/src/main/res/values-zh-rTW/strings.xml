@@ -479,10 +479,13 @@
   <string name="picker_btn">選擇聯繫人</string>
   <string name="no_contact_to_add">您沒有要添加的聯繫人</string>
   <string name="bottomsheet_contact">聯繫Jami\n%1$s</string>
-  <string name="bottomsheet_remove">移除成員</string>
+  <string name="bottomsheet_block">群組成員</string>
+  <string name="bottomsheet_unblock">解封成員</string>
   <string name="error_open_no_app_found">找不到處理此文件的應用程式：%1$s</string>
   <string name="swarm_detail_no_document">你還沒有文件</string>
   <string name="group_admin">管理</string>
+  <string name="group_member_blocked">已封鎖</string>
+  <string name="group_member_invited">已邀請</string>
   <string name="share_contact_intent_title">在Jami上添加此聯繫人！</string>
   <string name="share_contact_intent_body">您可以在Jami分布式通信平台上添加此聯繫人“%1$s”：%2$s</string>
   <!--JamiId-->

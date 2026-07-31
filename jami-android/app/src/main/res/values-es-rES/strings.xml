@@ -329,7 +329,10 @@
   <string name="dialog_hint_title">Título</string>
   <string name="picker_title">Seleccionar contactos</string>
   <string name="picker_btn">Seleccionar contactos</string>
-  <string name="bottomsheet_remove">Eliminar miembro</string>
+  <string name="bottomsheet_block">Miembro bloqueado</string>
+  <string name="bottomsheet_unblock">Miembro desbloqueado</string>
+  <string name="group_member_blocked">Bloqueado</string>
+  <string name="group_member_invited">Invitado</string>
   <!--JamiId-->
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Bienvenido a Jami</string>
