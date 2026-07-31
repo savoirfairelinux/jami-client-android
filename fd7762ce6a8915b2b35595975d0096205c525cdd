@@ -35,6 +35,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5edd0a9e_bea44a24",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Conversation.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-07-31T17:55:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cda9bf2_2fbb9255",
+      "revId": "fd7762ce6a8915b2b35595975d0096205c525cdd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5c56ea6c_59513ca2",
@@ -48,6 +66,24 @@
       "writtenOn": "2026-07-31T16:15:29Z",
       "side": 1,
       "message": "[warning] Line 1547: 🟡 Block/remove events only update the role when the contact is already present. That leaves stale state for contacts absent from `conversation.contacts` but still represented in `roles` or received from daemon state, especially after upgrading from the old behavior where blocked members were removed from the list. Update `roles` even when `findContact(uri)` returns null, or load the cached contact and call the appropriate conversation update path.",
+      "revId": "fd7762ce6a8915b2b35595975d0096205c525cdd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05073f6d_aa7123fe",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1547,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-07-31T17:55:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c56ea6c_59513ca2",
       "revId": "fd7762ce6a8915b2b35595975d0096205c525cdd",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
