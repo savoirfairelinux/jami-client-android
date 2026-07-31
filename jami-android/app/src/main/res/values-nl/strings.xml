@@ -470,10 +470,13 @@
   <string name="picker_btn">Selecteer contacten</string>
   <string name="no_contact_to_add">U hebt geen contact om toe te voegen</string>
   <string name="bottomsheet_contact">Neem contact op met Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Afschaffen van lid</string>
+  <string name="bottomsheet_block">Lid blokkeren</string>
+  <string name="bottomsheet_unblock">Lid deblokkeren</string>
   <string name="error_open_no_app_found">Geen applicatie gevonden om dit bestand te verwerken: %1$s</string>
   <string name="swarm_detail_no_document">U hebt nog geen documenten.</string>
   <string name="group_admin">Beheerder</string>
+  <string name="group_member_blocked">Geblokkeerd</string>
+  <string name="group_member_invited">Uitgenodigd</string>
   <string name="share_contact_intent_title">Voeg dit contact toe op Jami!</string>
   <string name="share_contact_intent_body">U kunt dit contact “%1$s” toevoegen op het gedistribueerde communicatieplatform Jami: %2$s</string>
   <!--JamiId-->

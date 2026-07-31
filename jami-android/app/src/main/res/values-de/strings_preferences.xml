@@ -7,7 +7,7 @@
   <string name="pref_category_privacy">Privatsphäre</string>
   <string name="pref_category_diagnostic">Diagnose</string>
   <string name="pref_category_appearance">Erscheinungsbild</string>
-  <string name="pref_category_connectivity">Konnektivität</string>
+  <string name="pref_category_connectivity">Verbindung</string>
   <string name="pref_category_extensions">Erweiterungen</string>
   <string name="pref_category_video_settings">Erweiterte Videoeinstellungen</string>
   <string name="pref_mobileData_title">Mobile Daten</string>
@@ -21,9 +21,9 @@
   <string name="pref_hwEncode_title">Beschleunigte Codierung aktivieren</string>
   <string name="pref_hwEncode_summary">Experimentelle Funktionen</string>
   <string name="pref_videoBitrate_title">Videobitrate</string>
-  <string name="pref_videoBitrate_summary">Standard-Videobitrate für ausgehendes Video auswählen (KB/s)</string>
+  <string name="pref_videoBitrate_summary">Standardvideobitrate für ausgehende Videos auswählen (kB/s)</string>
   <string name="pref_videoResolution_title">Videoauflösung</string>
-  <string name="pref_videoResolution_summary">Standardauflösung für ausgehende Videos auswählen</string>
+  <string name="pref_videoResolution_summary">Standardvideoauflösung für ausgehende Videos</string>
   <string name="pref_systemContacts_title">Systemkontakte verwenden</string>
   <string name="pref_systemContacts_summary">Systemkontakte verwenden, um Anruferdetails anzuzeigen</string>
   <string name="pref_systemDialer_title">Systemanrufe über Jami tätigen</string>
@@ -34,7 +34,7 @@
   <string name="pref_clearHistory_summary">Verlauf aller Unterhaltungen löschen. Diese Aktion kann nicht rückgängig gemacht werden.</string>
   <string name="pref_notification_title">Benachrichtigungsanzeige</string>
   <string name="pref_notification_summary">Sichtbarkeit von App-Benachrichtigungen auf dem Sperrbildschirm festlegen.</string>
-  <string name="pref_connectivity_title">Konnektivitätsmodus</string>
+  <string name="pref_connectivity_title">Verbindungsmodus</string>
   <string name="pref_connectivity_summary">Auswählen, wie Jami mit dem verteilten System verbunden werden soll, um Anrufe und Nachrichten zu empfangen.</string>
   <string name="pref_blackList_title">Blockierungsliste</string>
   <string name="pref_blackList_summary">Überprüfen Sie Ihre Blockierungsliste.</string>

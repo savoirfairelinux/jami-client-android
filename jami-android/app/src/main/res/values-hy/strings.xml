@@ -336,7 +336,10 @@
   <string name="picker_title">Ընտրեք կոնտակտները</string>
   <string name="picker_btn">Ընտրեք կոնտակտները</string>
   <string name="bottomsheet_contact">Հաղորդակցիր Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Հեռացնել անդամ</string>
+  <string name="bottomsheet_block">Արգելափակել անդամին</string>
+  <string name="bottomsheet_unblock">Ապաարգելափակել անդամին</string>
+  <string name="group_member_blocked">Արգելափակված</string>
+  <string name="group_member_invited">հրավիրված</string>
   <!--JamiId-->
   <string name="jami_id_validate">Գրանցել օգտվողի անունը</string>
   <string name="jami_id_choose_username">Ընտրեք օգտատերու անուն</string>

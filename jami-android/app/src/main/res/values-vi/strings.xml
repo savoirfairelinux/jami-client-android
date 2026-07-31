@@ -291,8 +291,11 @@
   <string name="picker_title">Chọn liên hệ</string>
   <string name="picker_btn">Chọn liên hệ</string>
   <string name="no_contact_to_add">Chưa có liên hệ nào</string>
-  <string name="bottomsheet_remove">Xóa thành viên</string>
+  <string name="bottomsheet_block">Chặn thành viên</string>
+  <string name="bottomsheet_unblock">Bỏ chặn thành viên</string>
   <string name="swarm_detail_no_document">Chưa có tài liệu nào</string>
+  <string name="group_member_blocked">Đã chặn</string>
+  <string name="group_member_invited">Được mời</string>
   <!--JamiId-->
   <string name="jami_id_validate">Đăng ký tên người dùng</string>
   <string name="jami_id_available">Tên người dùng này khả dụng.</string>

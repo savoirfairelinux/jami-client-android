@@ -314,7 +314,7 @@
   <string name="picker_title">સંપર્કો પસંદ કરો</string>
   <string name="picker_btn">સંપર્કો પસંદ કરો</string>
   <string name="bottomsheet_contact">જમી\n%1$s સાથે સંપર્ક કરો</string>
-  <string name="bottomsheet_remove">સભ્ય દૂર કરો</string>
+  <string name="group_member_invited">આમંત્રિત</string>
   <!--JamiId-->
   <string name="jami_id_validate">વપરાશકર્તા નામ નોંધણી</string>
   <string name="jami_id_choose_username">વપરાશકર્તા નામ પસંદ કરો</string>

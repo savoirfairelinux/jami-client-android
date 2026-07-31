@@ -314,7 +314,7 @@
   <string name="picker_title">संपर्क निवडा</string>
   <string name="picker_btn">संपर्क निवडा</string>
   <string name="bottomsheet_contact">Jami\n%1$s शी संपर्क साधा</string>
-  <string name="bottomsheet_remove">सदस्य काढा</string>
+  <string name="group_member_invited">आमंत्रित केले</string>
   <!--JamiId-->
   <string name="jami_id_validate">नोंदणी वापरकर्तानाव</string>
   <string name="jami_id_choose_username">एक वापरकर्तानाव निवडा</string>

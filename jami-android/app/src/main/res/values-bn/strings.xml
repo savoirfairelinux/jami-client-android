@@ -318,6 +318,7 @@
   <string name="bottomSheet_hangup_btn">কল শেষ</string>
   <string name="bottomSheet_mute_microphone_btn">মাইক্রো</string>
   <string name="bottomSheet_sound_output_btn">শব্দ</string>
+  <string name="audio_output_mute">নীরব</string>
   <string name="bottomSheet_raiseHand_btn">হাত বাড়াও</string>
   <string name="camera_flip_btn_description">ফ্লিপ ক্যামেরা</string>
   <string name="add_participant_btn_description">অংশগ্রহণকারী যোগ করুন</string>
@@ -335,7 +336,6 @@
   <string name="picker_title">পরিচিতি নির্বাচন করুন</string>
   <string name="picker_btn">পরিচিতি নির্বাচন করুন</string>
   <string name="bottomsheet_contact">জ্যামি %1$s এর সাথে যোগাযোগ করুন</string>
-  <string name="bottomsheet_remove">সদস্য অপসারণ</string>
   <string name="error_open_no_app_found">এই ফাইলটি সামলানোর জন্য কোন আপ্লিকেশন পাওয়া যাইনি: 1%1$s</string>
   <!--JamiId-->
   <string name="jami_id_validate">ব্যবহারকারীর নাম নিবন্ধন</string>

@@ -427,8 +427,11 @@
   <string name="picker_title">കോൺടാക്റ്റുകൾ തിരഞ്ഞെടുക്കുക</string>
   <string name="picker_btn">കോൺടാക്റ്റുകൾ തിരഞ്ഞെടുക്കുക</string>
   <string name="bottomsheet_contact">ജാമി %1$s നെ ബന്ധപ്പെടുക</string>
-  <string name="bottomsheet_remove">അംഗത്തെ നീക്കം ചെയ്യുക</string>
+  <string name="bottomsheet_block">അംഗത്തെ തടയുക</string>
+  <string name="bottomsheet_unblock">അംഗത്തിനുള്ള തടസം മാറ്റുക</string>
   <string name="group_admin">അഡ്മിൻ</string>
+  <string name="group_member_blocked">തടഞ്ഞു</string>
+  <string name="group_member_invited">ക്ഷണിച്ചവർ</string>
   <!--JamiId-->
   <string name="jami_id_validate">ഉപയോക്തൃനാമം രജിസ്റ്റർ ചെയ്യുക</string>
   <string name="jami_id_choose_username">ഒരു ഉപയോക്തൃനാമം തിരഞ്ഞെടുക്കുക</string>

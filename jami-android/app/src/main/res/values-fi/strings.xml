@@ -479,10 +479,13 @@
   <string name="picker_btn">Valitse henkilöt</string>
   <string name="no_contact_to_add">Sinulla ei ole henkilöä lisättävänä</string>
   <string name="bottomsheet_contact">Jami yhteystiedot\n%1$s</string>
-  <string name="bottomsheet_remove">Poista jäsen</string>
+  <string name="bottomsheet_block">Estä jäsen</string>
+  <string name="bottomsheet_unblock">Poista jäsenen esto</string>
   <string name="error_open_no_app_found">Ei löytynyt sopivaa sovellusta tiedostolle: %1$s</string>
   <string name="swarm_detail_no_document">Sinulla ei ole vielä asiakirjoja.</string>
   <string name="group_admin">Ylläpitäjät</string>
+  <string name="group_member_blocked">Estetty</string>
+  <string name="group_member_invited">Kutsuttu</string>
   <string name="share_contact_intent_title">Lisää tämä henkilö Jamiin!</string>
   <string name="share_contact_intent_body">Voit lisätä tämän henkilön \"%1$s\" Jamin viestintäalustaan: %2$s</string>
   <!--JamiId-->

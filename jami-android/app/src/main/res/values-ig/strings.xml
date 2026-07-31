@@ -195,7 +195,10 @@
   <string name="dialog_hint_description">Nkọwa</string>
   <string name="picker_title">Họrọ kọntaktị</string>
   <string name="picker_btn">Họrọ kọntaktị</string>
-  <string name="bottomsheet_remove">Wepụ onye so</string>
+  <string name="bottomsheet_block">Gbochie onye òtù</string>
+  <string name="bottomsheet_unblock">Wepụ mgbochi onye òtù</string>
+  <string name="group_member_blocked">Egbochiri</string>
+  <string name="group_member_invited">A Kpọọrọ Ha</string>
   <!--JamiId-->
   <string name="jami_id_validate">Debanye aha njirimara</string>
   <string name="jami_id_choose_username">Họrọ aha njirimara</string>

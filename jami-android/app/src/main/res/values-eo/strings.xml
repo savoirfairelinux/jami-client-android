@@ -315,7 +315,7 @@
   <string name="picker_title">Elektu kontaktojn</string>
   <string name="picker_btn">Elektu kontaktojn</string>
   <string name="bottomsheet_contact">Kontaktu Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Forigu la membro</string>
+  <string name="group_member_invited">Invitita</string>
   <!--JamiId-->
   <string name="jami_id_validate">Registru uzantnomon</string>
   <string name="jami_id_choose_username">Elektu uzantnomon</string>

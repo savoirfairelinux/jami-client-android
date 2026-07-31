@@ -471,10 +471,11 @@
   <string name="picker_btn">Izaberi kontakte</string>
   <string name="no_contact_to_add">Nemate kontakt za dodavanje</string>
   <string name="bottomsheet_contact">Kontaktiraj Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Уваљивање члана</string>
   <string name="error_open_no_app_found">Nije pronađena nijedna aplikacija za obradu ove datoteke: %1$s</string>
   <string name="swarm_detail_no_document">Još nemate dokumenta.</string>
   <string name="group_admin">Admin</string>
+  <string name="group_member_blocked">Blokiran</string>
+  <string name="group_member_invited">Pozvani</string>
   <string name="share_contact_intent_title">Dodajte ovaj kontakt na Jami!</string>
   <string name="share_contact_intent_body">Možete dodati ovaj kontakt „%1$s“ na Jami distribuiranoj komunikacijskoj platformi: %2$s</string>
   <!--JamiId-->

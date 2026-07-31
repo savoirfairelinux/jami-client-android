@@ -470,10 +470,13 @@
   <string name="picker_btn">Kişi seç</string>
   <string name="no_contact_to_add">Eklenebilir hiçbir kişi yok</string>
   <string name="bottomsheet_contact">Jami kişisi\n%1$s</string>
-  <string name="bottomsheet_remove">Üyeyi kaldır</string>
+  <string name="bottomsheet_block">Üyeyi engelle</string>
+  <string name="bottomsheet_unblock">Üyenin engelini kaldır</string>
   <string name="error_open_no_app_found">Bu dosyayı işleyecek uygulama bulunamadı: %1$s</string>
   <string name="swarm_detail_no_document">Henüz belge yok.</string>
   <string name="group_admin">Yönetici</string>
+  <string name="group_member_blocked">Engellendi</string>
+  <string name="group_member_invited">- davet edildi.</string>
   <string name="share_contact_intent_title">Bu kişiyi Jami\'ye ekle!</string>
   <string name="share_contact_intent_body">Bu kişiyi “%1$s” Jami dağıtılmış iletişim platformuna ekleyebilirsin: %2$s</string>
   <!--JamiId-->

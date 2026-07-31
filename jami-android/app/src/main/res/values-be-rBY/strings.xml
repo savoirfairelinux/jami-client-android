@@ -194,7 +194,6 @@
   <string name="dialog_hint_description">Апісанне</string>
   <string name="picker_title">Выберыце кантакты</string>
   <string name="picker_btn">Выберыце кантакты</string>
-  <string name="bottomsheet_remove">Выключыць члена</string>
   <!--JamiId-->
   <string name="jami_id_validate">Запіс імя карыстальніка</string>
   <string name="jami_id_choose_username">Выберыце імя карыстальніка</string>

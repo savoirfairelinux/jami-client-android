@@ -337,7 +337,10 @@
   <string name="picker_title">Изберете контакти</string>
   <string name="picker_btn">Изберете контакти</string>
   <string name="bottomsheet_contact">Свържете се с Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Извадете член</string>
+  <string name="bottomsheet_block">Блокиране на член</string>
+  <string name="bottomsheet_unblock">Премахване на блокирането на член</string>
+  <string name="group_member_blocked">Блокирано</string>
+  <string name="group_member_invited">Поканени</string>
   <!--JamiId-->
   <string name="jami_id_validate">Регистрирайте потребителско име</string>
   <string name="jami_id_choose_username">Изберете потребителско име</string>
