@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8365772_6976486d",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/CollabEditorActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-31T01:52:51Z",
+      "side": 1,
+      "message": "[error] Line 439: 🔴 `documentRemoved()` shows a new non-cancelable dialog for every removal event without tracking whether one is already displayed. If the same document emits both a local and an everywhere removal, or the daemon replays/duplicates the signal, the activity can stack dialogs and require multiple OK presses before closing. Keep a nullable dialog reference or boolean guard, and ignore subsequent removal events once the closing dialog is shown.",
+      "revId": "c60a66cd7e1d53a8d65485f317ff6d4248abc02c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7af1a70_c96feeb1",
+        "filename": "jami-android/app/src/main/res/layout/item_collab_document.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-07-31T01:52:51Z",
+      "side": 1,
+      "message": "[warning] Line 56: 🟡 The new trailing action buttons are added inside the horizontal `LinearLayout` after a child with `layout_width\u003d\"0dp\"` and `layout_weight\u003d\"1\"`, but neither button has a tint/theme style. Depending on the drawable defaults and theme, the icons can render inconsistently compared with other Material icon buttons. Apply the existing icon button style/tint used elsewhere in the app, or explicitly set `android:tint`/`app:tint` to the themed control color for both buttons.",
+      "revId": "c60a66cd7e1d53a8d65485f317ff6d4248abc02c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
