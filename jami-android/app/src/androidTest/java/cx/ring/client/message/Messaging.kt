@@ -38,6 +38,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.rule.GrantPermissionRule
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import cx.ring.AccountUtils
 import cx.ring.R
@@ -90,6 +91,11 @@ class Messaging {
     @JvmField
     @Rule
     val mActivityScenarioRule = ActivityScenarioRule(HomeActivity::class.java)
+
+
+    @get:Rule
+    val grantPermissionRuleLocalNetwork: GrantPermissionRule =
+        GrantPermissionRule.grant(android.Manifest.permission.ACCESS_LOCAL_NETWORK)
 
     @Before
     fun setup() {

@@ -84,6 +84,10 @@ class AccountSettings {
     val grantPermissionRuleNotification: GrantPermissionRule =
         GrantPermissionRule.grant(android.Manifest.permission.POST_NOTIFICATIONS)
 
+    @get:Rule
+    val grantPermissionRuleLocalNetwork: GrantPermissionRule =
+        GrantPermissionRule.grant(android.Manifest.permission.ACCESS_LOCAL_NETWORK)
+
     companion object {
         @JvmStatic
         private var accountCreated = false
