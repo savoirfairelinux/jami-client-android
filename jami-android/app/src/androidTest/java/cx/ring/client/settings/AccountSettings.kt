@@ -658,7 +658,8 @@ class AccountSettings {
             .respondWith(Instrumentation.ActivityResult(Activity.RESULT_OK, Intent().setData(uri)))
 
         // Click on `Connect from backup`
-        onView(withId(R.id.ring_import_account)).perform(click())
+        waitForView(withId(R.id.ring_import_account))
+            .perform(waitUntil(isDisplayed()), click())
 
         // Stop recording intents
         Intents.release()
