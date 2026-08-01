@@ -170,8 +170,11 @@ abstract class JamiApplication : Application() {
                 ringerModeChanged((getSystemService(AUDIO_SERVICE) as AudioManager).ringerMode)
                 registerReceiver(ringerModeListener, RINGER_FILTER)
 
-                // load accounts from Daemon
-                mAccountService.loadAccountsFromDaemon(mPreferencesService.hasNetworkConnected())
+                // Load accounts, then replay the current network state in case Android's
+                // initial connectivity callback arrived before the daemon was ready.
+                val isConnected = mPreferencesService.hasNetworkConnected()
+                mAccountService.loadAccountsFromDaemon(isConnected)
+                hardwareService.connectivityChanged(isConnected)
                 // Sync embedded HTTP servers
                 (mExposedServicesService as? AndroidExposedServicesService)?.syncAllAccounts()
                 // Recover tunnels the daemon kept alive across a process restart
