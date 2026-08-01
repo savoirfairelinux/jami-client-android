@@ -1,0 +1,40 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2234d2f1_f6e3d274",
+        "filename": "jami-android/app/src/collabeditor/src/export.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-08-01T03:03:05Z",
+      "side": 1,
+      "message": "Fixed in patch set 5, by taking the fallback out rather than improving it: the\nexport now stops if `crypto.getRandomValues` is not there.\n\nThe fallback was never going to run -- `getRandomValues` is in every WKWebView\nand in Android\u0027s since long before the oldest version we build for, and it is\nnot one of the APIs a non-secure origin loses. So what it really was is a\nquieter way to fail: the one case it existed for is the case where the name\nstops being unguessable, and it would have gone on exporting without saying so.\n\nA test holds it: with `crypto` taken away, `attachmentScheme()` throws.",
+      "parentUuid": "1a7484fe_0e38112a",
+      "revId": "e9c24e8fd0f85b524eedf91821003f38d81bf34c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78664a95_24818f50",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/CollabEditorActivity.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-08-01T03:03:05Z",
+      "side": 1,
+      "message": "Right, and it is worse than a mask -- there is no failure it was there for.\nA picture this device does not hold is not an error: the daemon answers with an\nempty blob, which is what the missing-picture path already reads. So the only\nthing `onErrorReturnItem` could ever catch was something genuinely wrong, and\nit turned that into \"1 picture never arrived\" -- telling the reader their file\nis short of a picture when it is the export that broke.\n\nTaken out in patch set 5, on both clients (iOS had the same `catchAndReturn`).\nA failure now reaches the subscriber, which already says the export failed, and\na picture that never arrived still comes back empty, from the daemon.\n\nThe other half stands: the bytes are the document\u0027s own pictures, already held\nin the WebView, and an export that quietly stopped at a cap would be worse than\none that is large.",
+      "parentUuid": "19704daa_34c27da0",
+      "revId": "e9c24e8fd0f85b524eedf91821003f38d81bf34c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
