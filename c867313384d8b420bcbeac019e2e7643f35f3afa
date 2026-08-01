@@ -1,0 +1,40 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f82ff1da_93ecd484",
+        "filename": "jami-android/app/src/collabeditor/src/export.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-08-01T02:59:01Z",
+      "side": 1,
+      "message": "Right -- `+` and `1. ` were not covered, and a peer writes prose, not\nstructure. Fixed in patch set 4: the start of a line is now escaped for\n`#\u003e-+\u003d~` and for a number followed by a dot or a bracket. Only the start of a\nline, a marker in the middle of a sentence opening nothing and a backslash\nthere being read as one.\n\nCovered by a test, which also checks that `step 1. then 2) then + and -` comes\nback out as it was written.",
+      "parentUuid": "76c231c7_5fa8d0e3",
+      "revId": "c867313384d8b420bcbeac019e2e7643f35f3afa",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2932f917_5d0e8f15",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/CollabEditorActivity.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-08-01T02:59:01Z",
+      "side": 1,
+      "message": "The second half is the real one, and worse than it looks: `embed` replaced\none name at a time, so a document was copied once per picture, each copy\nalready carrying every picture put in before it. Ten pictures meant ten copies\nof the whole thing. Fixed in patch set 4 -- one pass, each name found by the\nset the page reported, longest first.\n\nGetting that right took two tries, so it is held by tests now (five of them on\nthe iOS side, where the same code lives): an id can begin with another, and\nmarkdown closes a picture with a bracket that `encodeURIComponent` leaves\nalone, so a name cannot be read as running up to the first character an id\ncould not hold.\n\nThe first half I have left: the bytes are the document\u0027s own pictures, which\nthe editor is already holding in the WebView, and an export that silently\nstopped at a cap would be worse than one that is large.",
+      "parentUuid": "47d8ba2d_38d68524",
+      "revId": "c867313384d8b420bcbeac019e2e7643f35f3afa",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
