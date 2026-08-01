@@ -17,6 +17,23 @@
       "parentUuid": "4a499f44_3db4df6e",
       "revId": "c2fe6928a4afd166d4ccde36b865aaaf02163c09",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0faf7b2_e7d8ed06",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/CollabEditorActivity.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-08-01T03:04:29Z",
+      "side": 1,
+      "message": "[warning] Line 983: 🟡 Deleting every previous export before sharing the new one can invalidate a content URI that another target app has not opened yet. Use a unique per-export file/directory and clean old cache entries by age or on a later startup instead of removing all files synchronously before each share.",
+      "revId": "c2fe6928a4afd166d4ccde36b865aaaf02163c09",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
