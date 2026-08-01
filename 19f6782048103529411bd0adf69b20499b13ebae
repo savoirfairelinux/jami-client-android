@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a7484fe_0e38112a",
+        "filename": "jami-android/app/src/collabeditor/src/export.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-08-01T02:29:33Z",
+      "side": 1,
+      "message": "[warning] Line 50: 🟡 The placeholder scheme falls back to `Math.random()` when `crypto.getRandomValues` is unavailable, but the scheme is relied on as unguessable to prevent peer-authored text from being replaced with attachment bytes. Fail the export or get a nonce from native code instead of using a non-cryptographic RNG.",
+      "revId": "19f6782048103529411bd0adf69b20499b13ebae",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "fb87bd4f_7210ec6a",
@@ -33,6 +50,23 @@
       "side": 1,
       "message": "Reproduced: `[here](http://a.b/x(y) z)` closes the destination at the first\nparenthesis. Fixed in patch set 2 -- `markdownUrl()` turns control characters\ninto spaces, trims, and switches to the angle-bracket form as soon as there is\na space, a parenthesis or an angle bracket, percent-encoding the brackets that\nwould close it. Covered by a test.",
       "parentUuid": "61fbbc3e_c62f019f",
+      "revId": "19f6782048103529411bd0adf69b20499b13ebae",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19704daa_34c27da0",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/CollabEditorActivity.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-08-01T02:29:33Z",
+      "side": 1,
+      "message": "[warning] Line 877: 🟡 `onErrorReturnItem(ByteArray(0))` treats every attachment fetch failure as a missing/not-yet-arrived image. Unexpected backend, permission, or storage errors will be silently converted into an incomplete export path; only map the specific “not available” case to empty bytes and surface other failures as export errors.",
       "revId": "19f6782048103529411bd0adf69b20499b13ebae",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
