@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76c231c7_5fa8d0e3",
+        "filename": "jami-android/app/src/collabeditor/src/export.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-08-01T02:26:51Z",
+      "side": 1,
+      "message": "[warning] Line 205: 🟡 Plain paragraph text that starts with an ordered-list marker such as `1. ` or a `+` bullet is not escaped, so Markdown exports can turn peer-controlled prose into list structure. Extend the start-of-line escaping to cover CommonMark list starts before serializing.",
+      "revId": "3af1459c8949c7c5141c115748f733c623b03f74",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47d8ba2d_38d68524",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/CollabEditorActivity.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-08-01T02:26:51Z",
+      "side": 1,
+      "message": "[warning] Line 863: 🟡 Export loads every referenced attachment concurrently and then embeds all bytes into one in-memory string. A document with many large images can consume hundreds of MB and repeatedly copy the export text; cap total export size/count or fetch/embed incrementally when writing the file.",
+      "revId": "3af1459c8949c7c5141c115748f733c623b03f74",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
