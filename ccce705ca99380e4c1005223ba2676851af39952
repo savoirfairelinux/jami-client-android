@@ -34,6 +34,24 @@
       "message": "[warning] Line 1037: 🟡 `directory.mkdirs()` is not checked before writing the file. If cache directory creation fails, the subsequent `writeText` failure is reported generically, but a pre-existing non-directory path or partial creation can also leave cleanup/share behavior inconsistent. Check `mkdirs()`/`isDirectory` and fail explicitly before constructing the export file.",
       "revId": "ccce705ca99380e4c1005223ba2676851af39952",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d66dab43_566d1fc7",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/CollabEditorActivity.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-08-01T03:10:29Z",
+      "side": 1,
+      "message": "It is checked, by the thing that would fail.\n\nIf `mkdirs()` does not make the directory, `writeText` throws, the `catch`\naround the whole of `exportFile` logs it and returns null, and `share` says the\nexport failed. Testing the return value would report the same failure from a\nline earlier, which is not more explicit, only earlier.\n\nThe two consequences do not follow either. Nothing is left half done: when\n`exportFile` returns null nothing is shared, and the directory it would have\nswept it never reached. And the path is `cacheDir/tmp/collab-export/` followed\nby a fresh UUID -- a file already sitting at a name drawn at random is not a\ncase this can be written against.",
+      "parentUuid": "212f93f4_3fcb4baf",
+      "revId": "ccce705ca99380e4c1005223ba2676851af39952",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
