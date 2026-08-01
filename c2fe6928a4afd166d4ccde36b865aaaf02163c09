@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60f794c0_bd3cb2a2",
+        "filename": "jami-android/app/src/collabeditor/src/export.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-08-01T03:04:19Z",
+      "side": 1,
+      "message": "Right, and it was the worst of the two: neither put in nor taken out.\n\nFixed in patch set 6 -- a run whose image has no id, or an id that is not a\nnon-empty string, is dropped in the same filter as one whose bytes never\narrived. Silently, in its case: there is nothing to ask the user about, since\nthere is nothing the application could go and fetch.\n\nLeft in, it did not even reach the missing-picture path -- it was not in\n`attachments`, so if it was the only picture in the document the export took\nthe shortcut and shared the text with the raw placeholder in it.\n\nA test covers `{}`, `{ id: \u0027\u0027 }`, `{ id: 42 }` and `{ id: null }`: no\n`jami-attachment-` in the output, no `\u003cimg\u003e`, and the text around it intact.",
+      "parentUuid": "4a499f44_3db4df6e",
+      "revId": "c2fe6928a4afd166d4ccde36b865aaaf02163c09",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
