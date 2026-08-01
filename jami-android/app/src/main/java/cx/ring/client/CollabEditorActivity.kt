@@ -44,6 +44,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.application.JamiApplication
 import cx.ring.databinding.ActivityCollabEditorBinding
+import cx.ring.utils.ContentUri
 import cx.ring.utils.ConversationPath
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -56,6 +57,7 @@ import net.jami.model.CollaborativeVersion
 import net.jami.services.AccountService
 import net.jami.services.CollaborationService
 import net.jami.utils.Log
+import java.io.File
 import java.text.DateFormat
 import java.util.Date
 import java.util.concurrent.TimeUnit
@@ -156,10 +158,19 @@ class CollabEditorActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        // A past version is read over the document itself, which is what would
+        // be written: offering the action here would export something other
+        // than what is on screen.
+        menu.findItem(R.id.menu_collab_export)?.isVisible =
+            !::binding.isInitialized || !binding.versionBar.isVisible
+        return super.onPrepareOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.menu_collab_rename -> { promptRename(); true }
         R.id.menu_collab_history -> { showHistory(); true }
-        R.id.menu_collab_export -> { exportToPdf(); true }
+        R.id.menu_collab_export -> { showExportMenu(); true }
         else -> super.onOptionsItemSelected(item)
     }
 
@@ -661,6 +672,7 @@ class CollabEditorActivity : AppCompatActivity() {
             .subscribe({ state ->
                 callEditor("showVersion", quote(encode(state)))
                 binding.versionBar.isVisible = true
+                invalidateOptionsMenu()
                 binding.formatBar.isVisible = false
                 binding.formatBarDivider.isVisible = false
                 binding.versionLabel.text =
@@ -702,6 +714,7 @@ class CollabEditorActivity : AppCompatActivity() {
 
     private fun closeVersionBar() {
         binding.versionBar.isVisible = false
+        invalidateOptionsMenu()
         binding.formatBar.isVisible = true
         binding.formatBarDivider.isVisible = true
     }
@@ -743,6 +756,233 @@ class CollabEditorActivity : AppCompatActivity() {
     }
 
     /* ----------------------------------------------------------------- export */
+
+    /**
+     * A format the page can write, and the file it is written to.
+     */
+    private data class ExportFormat(val name: String, val extension: String, val label: Int)
+
+    /** The document as the page wrote it, and what it left for the application. */
+    private data class WrittenDocument(
+        val text: String,
+        val attachments: List<String>,
+        /** What the pictures are named under, this time. */
+        val scheme: String,
+    )
+
+    /**
+     * Hand a copy of the document out.
+     *
+     * A document lives inside Jami, and the pictures in it live further in
+     * still: they are attachments of the conversation, named by an id that
+     * means nothing to any other reader. Exporting is therefore two things --
+     * the page writes the document out in a format someone else's software
+     * reads, and the bytes of every picture are put in where it named one.
+     *
+     * PDF is not written this way: the system renders the page itself,
+     * pictures and all, through the print dialog.
+     */
+    private fun showExportMenu() {
+        val labels = arrayOf(getString(R.string.collab_export_pdf)) +
+                exportFormats.map { getString(it.label) }
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.collab_export)
+            .setItems(labels) { _, which ->
+                if (which == 0) exportToPdf() else export(exportFormats[which - 1])
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun export(format: ExportFormat, without: List<String> = emptyList()) {
+        writeDocument(format, without) { written ->
+            if (written.attachments.isEmpty()) {
+                share(written.text, format)
+                return@writeDocument
+            }
+            disposable.add(attachments(written.attachments)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ bytes ->
+                    val absent = written.attachments.filter { bytes[it]?.isEmpty() != false }
+                    if (absent.isEmpty()) {
+                        share(embed(bytes, written.text, written.scheme), format)
+                    } else {
+                        // Written again without them: a picture left as an
+                        // address no reader can follow is a hole in a file
+                        // that is supposed to stand on its own.
+                        confirmMissingPictures(absent.size) { export(format, absent) }
+                    }
+                }, { e ->
+                    Log.e(TAG, "export", e)
+                    showMessage(R.string.collab_export_error)
+                }))
+        }
+    }
+
+    /**
+     * Ask the page for the document, and for the pictures it left to be put in.
+     */
+    private fun writeDocument(
+        format: ExportFormat,
+        without: List<String>,
+        use: (WrittenDocument) -> Unit,
+    ) {
+        val dropped = org.json.JSONArray(without).toString()
+        askEditor("exportAs", quote(format.name), quote(documentName), dropped) { answer ->
+            val written = try {
+                if (answer.isNullOrEmpty() || answer == "null") null
+                else org.json.JSONObject(answer)
+            } catch (e: Exception) {
+                Log.e(TAG, "export", e)
+                null
+            }
+            val scheme = written?.optString("scheme")
+            if (written == null || scheme.isNullOrEmpty()) {
+                showMessage(R.string.collab_export_error)
+                return@askEditor
+            }
+            val named = written.optJSONArray("attachments")
+            use(WrittenDocument(
+                written.optString("text"),
+                (0 until (named?.length() ?: 0)).map { named!!.getString(it) },
+                scheme))
+        }
+    }
+
+    /**
+     * The bytes of several attachments at once.
+     *
+     * One this device does not hold answers with nothing rather than failing:
+     * a single picture that never arrived must not take the whole export with
+     * it.
+     */
+    private fun attachments(attachmentIds: List<String>): Single<Map<String, ByteArray>> =
+        Single.zip(attachmentIds.map { attachmentId ->
+            collaborationService
+                .attachment(path.accountId, path.conversationUri, documentId, attachmentId)
+                .onErrorReturnItem(ByteArray(0))
+                .map { attachmentId to it }
+        }) { fetched -> fetched.associate { @Suppress("UNCHECKED_CAST") (it as Pair<String, ByteArray>) } }
+
+    /**
+     * The bytes of each picture, in place of the address the page named it by.
+     *
+     * @param scheme what the page named its pictures under this time. It draws
+     *        it afresh for every export, so that a peer writing out what looks
+     *        like a picture's name cannot have these bytes put in their place.
+     */
+    private fun embed(bytes: Map<String, ByteArray>, text: String, scheme: String): String {
+        // In one pass, the base64 of a picture running to several times its
+        // size: substituting one picture at a time would copy the whole
+        // document, every picture already put in with it, once per picture.
+        val pictures = HashMap<String, String>(bytes.size)
+        val names = ArrayList<String>(bytes.size)
+        for ((attachmentId, data) in bytes) {
+            val name = encoded(attachmentId)
+            names.add(name)
+            if (data.isEmpty()) continue
+            pictures[name] = "data:${guessMimeType(data)};base64,${encode(data)}"
+        }
+        val parts = text.split(scheme)
+        if (parts.size == 1 || names.isEmpty()) return text
+        // What follows a name is not something a name cannot hold: an id is
+        // written with encodeURIComponent, which leaves brackets alone, and
+        // markdown closes a picture with one. So the names say where they end,
+        // longest first, one id being able to open another.
+        names.sortByDescending { it.length }
+        val written = StringBuilder(text.length)
+        written.append(parts[0])
+        for (part in parts.drop(1)) {
+            val name = names.firstOrNull { part.startsWith(it) }
+            val picture = if (name == null) null else pictures[name]
+            if (picture == null) {
+                // A picture whose bytes never came keeps its name: the document
+                // is asked for again without it rather than left pointing
+                // nowhere.
+                written.append(scheme).append(part)
+                continue
+            }
+            written.append(picture)
+            written.append(part, name!!.length, part.length)
+        }
+        return written.toString()
+    }
+
+    /**
+     * A picture's name as the page wrote it, being `encodeURIComponent` of its
+     * attachment id.
+     */
+    private fun encoded(attachmentId: String): String {
+        val unreserved = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.!~*'()"
+        val escaped = StringBuilder()
+        for (byte in attachmentId.toByteArray(Charsets.UTF_8)) {
+            val char = byte.toInt().toChar()
+            if (unreserved.indexOf(char) >= 0) escaped.append(char)
+            else escaped.append(String.format("%%%02X", byte.toInt() and 0xFF))
+        }
+        return escaped.toString()
+    }
+
+    private fun confirmMissingPictures(count: Int, export: () -> Unit) {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.collab_export)
+            .setMessage(resources.getQuantityString(
+                R.plurals.collab_export_missing_images, count, count))
+            .setPositiveButton(R.string.collab_export_anyway) { _, _ -> export() }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    /**
+     * Handed over rather than saved: where a copy of a document belongs is the
+     * user's business, and the chooser is where every answer to that is.
+     */
+    private fun share(text: String, format: ExportFormat) {
+        val file = exportFile(text, format.extension)
+        if (file == null) {
+            showMessage(R.string.collab_export_error)
+            return
+        }
+        try {
+            val uri = ContentUri.getUriForFile(this, file)
+            startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).apply {
+                putExtra(Intent.EXTRA_STREAM, uri)
+                type = MIME_TYPES[format.extension] ?: "text/plain"
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }, null))
+        } catch (e: Exception) {
+            Log.e(TAG, "export", e)
+            showMessage(R.string.collab_export_error)
+        }
+    }
+
+    /**
+     * The exported document as a file to hand over, named after the document so
+     * the user recognises it in whichever application receives it.
+     */
+    private fun exportFile(text: String, extension: String): File? = try {
+        // Under the directory the file provider serves, the copy being read by
+        // an application this one does not know the lifetime of.
+        val directory = File(File(cacheDir, "tmp"), "collab-export")
+        directory.mkdirs()
+        directory.listFiles()?.forEach { it.delete() }
+        val file = File(directory, exportFileName(extension))
+        file.writeText(text)
+        file
+    } catch (e: Exception) {
+        Log.e(TAG, "export", e)
+        null
+    }
+
+    /** The document's name, made into something a file system will take. */
+    private fun exportFileName(extension: String): String {
+        var name = documentName
+            .map { if (it.isISOControl() || it in "/\\:*?\"<>|") ' ' else it }
+            .joinToString("")
+            .trim()
+        if (name.isEmpty()) name = getString(R.string.collab_untitled)
+        return "${name.take(80).trim()}.$extension"
+    }
 
     private fun exportToPdf() {
         val name = documentName.ifEmpty { getString(R.string.collab_untitled) }
@@ -859,6 +1099,18 @@ class CollabEditorActivity : AppCompatActivity() {
         private const val MAX_ATTACHMENT_BYTES = 16 * 1024 * 1024
 
         private val OPENABLE_SCHEMES = setOf("http", "https", "mailto")
+
+        private val exportFormats = listOf(
+            ExportFormat("html", "html", R.string.collab_export_html),
+            ExportFormat("md", "md", R.string.collab_export_markdown),
+            ExportFormat("txt", "txt", R.string.collab_export_text),
+        )
+
+        private val MIME_TYPES = mapOf(
+            "html" to "text/html",
+            "md" to "text/markdown",
+            "txt" to "text/plain",
+        )
 
         private val CURSOR_COLORS = intArrayOf(
             0xE53935, 0x1E88E5, 0x43A047, 0xFB8C00, 0x8E24AA, 0x00ACC1, 0xF4511E
