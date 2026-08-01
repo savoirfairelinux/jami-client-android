@@ -19,6 +19,23 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a499f44_3db4df6e",
+        "filename": "jami-android/app/src/collabeditor/src/export.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-08-01T03:00:19Z",
+      "side": 1,
+      "message": "[warning] Line 293: 🟡 Image embeds with a missing or empty id are still serialized as `scheme + \u0027\u0027`, but they are not added to `attachments`, so Android will share an export containing an unresolved `jami-attachment-...:` URL. Drop image runs without a non-empty string id before assigning `src`, or treat them as unavailable and omit them consistently.",
+      "revId": "c867313384d8b420bcbeac019e2e7643f35f3afa",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "2932f917_5d0e8f15",
