@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77b7133c_cd4c7d5e",
+        "filename": "jami-android/app/src/collabeditor/src/export.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-08-01T00:41:33Z",
+      "side": 1,
+      "message": "[error] Line 53: 🔴 Link attributes come from peer-authored document content and are exported verbatim. A `javascript:`, `data:`, or otherwise unsafe URL will be written into HTML/Markdown exports; validate with the same allowed schemes used by the app (`http`, `https`, `mailto`) and drop or neutralize unsupported links before serializing.",
+      "revId": "e56226bb09fa2f05d314ff64718eadf7a67e72aa",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61fbbc3e_c62f019f",
+        "filename": "jami-android/app/src/collabeditor/src/export.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-08-01T00:41:33Z",
+      "side": 1,
+      "message": "[warning] Line 208: 🟡 Markdown link destinations are not escaped. A URL containing `)` or whitespace/newlines can break out of the link destination and inject arbitrary Markdown into the exported file; percent-encode or angle-bracket/escape destinations after scheme validation.",
+      "revId": "e56226bb09fa2f05d314ff64718eadf7a67e72aa",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
