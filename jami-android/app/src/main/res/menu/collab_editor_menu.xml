@@ -23,7 +23,7 @@
 
     <item
         android:id="@+id/menu_collab_export"
-        android:title="@string/collab_export_pdf"
+        android:title="@string/collab_export"
         app:showAsAction="never" />
 
 </menu>

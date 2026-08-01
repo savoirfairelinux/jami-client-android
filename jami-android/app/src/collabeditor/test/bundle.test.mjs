@@ -108,7 +108,7 @@ test('the bundle exposes the interface the application calls', options, async ()
     for (const name of ['applyUpdate', 'applyAwareness', 'removeCursor', 'toggle',
                         'setHeader', 'setList', 'setAlign', 'setLink', 'clearFormat',
                         'undo', 'redo', 'insertImage', 'setImageWidth', 'setEditable',
-                        'getHtml', 'getText', 'showVersion', 'leaveVersion']) {
+                        'exportAs', 'showVersion', 'leaveVersion']) {
         assert.equal(typeof editor[name], 'function', `missing ${name}`)
     }
     assert.deepEqual(host.logs, [])
@@ -128,8 +128,8 @@ test('a document sent by a peer is displayed', options, async () => {
     ]), Delta).ops)
     editor.applyUpdate(Buffer.from(Y.encodeStateAsUpdate(peer)).toString('base64'))
 
-    assert.equal(editor.getText(), 'Title\nA strong word.\n')
-    const html = editor.getHtml()
+    assert.equal(editor.exportAs('txt').text, 'Title\nA strong word.\n')
+    const html = editor.exportAs('html').text
     assert.match(html, /<h1>Title<\/h1>/)
     assert.match(html, /<strong>strong<\/strong>/)
     assert.deepEqual(host.logs, [])
@@ -480,5 +480,32 @@ test('a pinch away from any image is left alone', options, async () => {
     // Pinching the page is not pinching the picture.
     assert.equal(image.getAttribute('width'), null)
     assert.deepEqual(host.updates, [])
+    assert.deepEqual(host.logs, [])
+})
+
+test('an address a peer wrote is not the one that is exported', options, async () => {
+    const { dom, host, editor } = await launch()
+
+    for (const href of ['javascript:alert(1)', 'JaVaScRiPt:alert(2)',
+                        'data:text/html,<script>x</script>', 'vbscript:msgbox']) {
+        // Written straight into the document, the way a replica that does not
+        // run this code would: our own writer refuses these schemes, so going
+        // through it would be testing what we send rather than what we accept.
+        const peer = new Y.Doc()
+        peer.getText('content').applyDelta([
+            { insert: 'click', attributes: { link: href } },
+        ])
+        editor.applyUpdate(Buffer.from(Y.encodeStateAsUpdate(peer)).toString('base64'))
+
+        // The editor is what refuses it, when it builds the line; the export
+        // reads the document back from there, so the address it writes out is
+        // the one that was displayed, never the one that was sent.
+        assert.equal(dom.window.document.querySelector('.ql-editor a')
+                     .getAttribute('href'), 'about:blank')
+        for (const format of ['html', 'md']) {
+            assert.doesNotMatch(editor.exportAs(format, 'T', []).text,
+                                /javascript:|vbscript:|data:text/i, format)
+        }
+    }
     assert.deepEqual(host.logs, [])
 })
