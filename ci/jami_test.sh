@@ -24,6 +24,12 @@ if [ -z "$ANDROID_SDK_ROOT" ]; then
     exit 1
 fi
 
+ADB_PATH="$ANDROID_SDK_ROOT/platform-tools/adb"
+if [ ! -x "$ADB_PATH" ]; then
+    echo "Error: adb executable does not exist at the specified location: $ADB_PATH"
+    exit 1
+fi
+
 SCRIPT_DIRECTORY=$(dirname "$0")
 TEST_ASSETS_DIRECTORY_PATH=$SCRIPT_DIRECTORY/test_assets/
 APK_PATH=$SCRIPT_DIRECTORY/../jami-android/app/build/outputs/apk/noPush/debug/app-noPush-debug.apk
@@ -42,7 +48,10 @@ if [ ! -f "$TEST_APK_PATH" ]; then
 fi
 
 # Install test assets on emulator (images, videos, audios, files, ...)
-sh adb push $TEST_ASSETS_DIRECTORY_PATH "/data/local/tmp/jami_test_assets"
+if ! "$ADB_PATH" push "$TEST_ASSETS_DIRECTORY_PATH" "/data/local/tmp/jami_test_assets"; then
+    echo "Error: failed to install test assets on the emulator."
+    exit 1
+fi
 
 # Launch test execution
 "$JAVA_HOME"/bin/java -jar "$SPOON_RUNNER_PATH" --apk "$APK_PATH" --test-apk "$TEST_APK_PATH" --sdk "$ANDROID_SDK_ROOT" --fail-on-failure
