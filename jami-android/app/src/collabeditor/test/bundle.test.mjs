@@ -108,7 +108,7 @@ test('the bundle exposes the interface the application calls', options, async ()
     for (const name of ['applyUpdate', 'applyAwareness', 'removeCursor', 'toggle',
                         'setHeader', 'setList', 'setAlign', 'setLink', 'clearFormat',
                         'undo', 'redo', 'insertImage', 'setImageWidth', 'setEditable',
-                        'getHtml', 'getText', 'showVersion', 'leaveVersion']) {
+                        'exportAs', 'showVersion', 'leaveVersion']) {
         assert.equal(typeof editor[name], 'function', `missing ${name}`)
     }
     assert.deepEqual(host.logs, [])
@@ -128,8 +128,8 @@ test('a document sent by a peer is displayed', options, async () => {
     ]), Delta).ops)
     editor.applyUpdate(Buffer.from(Y.encodeStateAsUpdate(peer)).toString('base64'))
 
-    assert.equal(editor.getText(), 'Title\nA strong word.\n')
-    const html = editor.getHtml()
+    assert.equal(editor.exportAs('txt').text, 'Title\nA strong word.\n')
+    const html = editor.exportAs('html').text
     assert.match(html, /<h1>Title<\/h1>/)
     assert.match(html, /<strong>strong<\/strong>/)
     assert.deepEqual(host.logs, [])

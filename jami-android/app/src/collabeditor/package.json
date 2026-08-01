@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "build": "node esbuild.mjs",
-    "test": "node --test \"test/*.test.mjs\""
+    "test": "node esbuild.mjs && node --test \"test/*.test.mjs\""
   },
   "dependencies": {
     "quill": "2.0.3",
