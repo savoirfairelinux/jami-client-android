@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a177b8a_9a827081",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CollabDocumentsFragment.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-08-01T02:25:59Z",
+      "side": 1,
+      "message": "[error] Line 159: 🔴 `canRemoveEverywhere()` compares `document.author` to `accountService.getAccount(path.accountId)?.uri` verbatim. If the daemon reports the author as the raw Jami ID while the account URI includes a scheme/prefix, authors will not see the remove-for-everyone action even though the daemon allows it. Normalize both identities to the same representation used elsewhere for conversation/member comparisons before comparing.",
+      "revId": "3057510d2de4c8dcd52d2632d64551e23f9e9063",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
