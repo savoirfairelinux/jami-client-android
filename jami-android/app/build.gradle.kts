@@ -126,10 +126,13 @@ val buildCollabEditor by tasks.registering(Exec::class) {
 }
 
 val testCollabEditor by tasks.registering(Exec::class) {
-    description = "Runs the editor's document format tests."
+    description = "Runs the editor's tests."
     dependsOn(installCollabEditor)
     workingDir = collabEditorDir.asFile
-    commandLine(node, "--test", "test/format.test.mjs")
+    // The suite is the one named in package.json, and not a list repeated
+    // here: a test file added to the editor is a test file the build runs.
+    // It bundles first, some of the tests being on the bundle itself.
+    commandLine(npm, "test")
 }
 
 // The Android source set takes a plain directory, so the ordering that a
