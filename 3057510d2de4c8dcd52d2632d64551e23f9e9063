@@ -38,6 +38,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "80f4b2bb_3b4eeb8b",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CollabDocumentsFragment.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-08-01T02:59:15Z",
+      "side": 1,
+      "message": "Both sides are the raw id, and the daemon compares them the same way.\n\nThe author of a document is the author of the commit that announced it:\n`conversationrepository.cpp:2626` sets `message[\"author\"] \u003d commit.authorId`,\nwhich is the member uri, and the daemon itself tests it against its own with\n`c.at(\"author\") !\u003d userId_` (`conversation.cpp:614`) -- no normalizing there\neither.\n\nOn this side `Account.uri` is `getUri(false)`, which for a Jami account is\n`username` with nothing in front of it (`Account.kt:498`); `username` comes\nfrom the daemon, where `config().username` is `info.accountId`\n(`jamiaccount.cpp:1428`), the same 40 hex characters.\n\nTried on a tablet against the desktop client: the author is offered the\nremoval for everyone, the other member is not, which is also what the daemon\nallows -- `editMessage()` is what refuses anyone else, so offering it more\nwidely would promise something that cannot happen.",
+      "parentUuid": "2a177b8a_9a827081",
+      "revId": "3057510d2de4c8dcd52d2632d64551e23f9e9063",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "7fce1327_5e9cf1f1",
         "filename": "jami-android/app/src/main/res/layout/item_collab_document.xml",
         "patchSetId": 2
