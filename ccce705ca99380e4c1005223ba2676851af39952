@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a641f7f_82188cde",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/CollabEditorActivity.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-08-01T03:09:35Z",
+      "side": 1,
+      "message": "Right, and already fixed in patch set 7 -- the same point was raised on the iOS\nside and both were done together.\n\nEach export now goes into a directory of its own, so nothing written for one\nshare touches another. Nothing here is told when the receiving application has\nfinished reading, so the old ones are swept by age at the next export, an hour\nbeing longer than a share sheet stays open and the cache being the system\u0027s to\nempty in any case.",
+      "parentUuid": "b0faf7b2_e7d8ed06",
+      "revId": "ccce705ca99380e4c1005223ba2676851af39952",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
