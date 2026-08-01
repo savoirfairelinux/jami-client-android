@@ -858,7 +858,16 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="collab_link_hint">Address</string>
     <string name="collab_link_add">Add</string>
     <string name="collab_link_remove">Remove</string>
+    <string name="collab_export">Export a local copy</string>
     <string name="collab_export_pdf">Export to PDF</string>
+    <string name="collab_export_html">Export to HTML</string>
+    <string name="collab_export_markdown">Export to Markdown</string>
+    <string name="collab_export_text">Export to plain text</string>
+    <plurals name="collab_export_missing_images">
+        <item quantity="one">%1$d picture in this document has not arrived yet, and will be left out of the exported file.</item>
+        <item quantity="other">%1$d pictures in this document have not arrived yet, and will be left out of the exported file.</item>
+    </plurals>
+    <string name="collab_export_anyway">Export anyway</string>
     <string name="collab_export_error">This document could not be exported.</string>
     <string name="collab_image_error">This image could not be added.</string>
     <string name="collab_image_too_large">This image is too large to be added to a document.</string>

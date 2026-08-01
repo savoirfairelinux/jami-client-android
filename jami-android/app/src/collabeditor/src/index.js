@@ -25,6 +25,7 @@ import 'quill/dist/quill.snow.css'
 import './styles.css'
 
 import { JamiQuillBinding } from './binding.js'
+import { exportDocument } from './export.js'
 import { jamiToQuill } from './jamiformat.js'
 
 const Delta = Quill.import('delta')
@@ -585,12 +586,17 @@ class Editor {
 
     /* ---------------------------------------------------------------- reading */
 
-    getHtml() {
-        return this.quill.getSemanticHTML()
-    }
-
-    getText() {
-        return this.quill.getText()
+    /**
+     * The document written out in a format Jami is not the only reader of.
+     *
+     * The pictures are named rather than carried: their bytes are the
+     * application's to put in, and it is the live document that is written,
+     * a past version being something the application does not offer to export.
+     *
+     * @param without ids of pictures the application could not supply.
+     */
+    exportAs(format, title, without) {
+        return exportDocument(this.quill.getContents(), format, title, without)
     }
 
     /**
@@ -690,8 +696,7 @@ window.JamiEditor = {
     insertImage: guard(Editor.prototype.insertImage),
     setImageWidth: guard(Editor.prototype.setImageWidth),
     setEditable: guard(Editor.prototype.setEditable),
-    getHtml: guard(Editor.prototype.getHtml),
-    getText: guard(Editor.prototype.getText),
+    exportAs: guard(Editor.prototype.exportAs),
     showVersion: guard(Editor.prototype.showVersion),
     leaveVersion: guard(Editor.prototype.leaveVersion),
     restoreVersion: guard(Editor.prototype.restoreVersion),
