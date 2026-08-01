@@ -1,6 +1,24 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb0e0e47_2eb15e5c",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/CollabEditorActivity.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-08-01T02:28:45Z",
+      "side": 1,
+      "message": "Agreed, and it does happen: a document can be dropped here and then retired\nfor everyone. Fixed in patch set 2 with a `removalShown` flag. The dialog is\nnot cancelable, so a second one would sit on top of the first and have to be\nacknowledged before the screen it is closing goes away.",
+      "parentUuid": "b8365772_6976486d",
+      "revId": "3057510d2de4c8dcd52d2632d64551e23f9e9063",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2a177b8a_9a827081",
@@ -14,6 +32,24 @@
       "writtenOn": "2026-08-01T02:25:59Z",
       "side": 1,
       "message": "[error] Line 159: 🔴 `canRemoveEverywhere()` compares `document.author` to `accountService.getAccount(path.accountId)?.uri` verbatim. If the daemon reports the author as the raw Jami ID while the account URI includes a scheme/prefix, authors will not see the remove-for-everyone action even though the daemon allows it. Normalize both identities to the same representation used elsewhere for conversation/member comparisons before comparing.",
+      "revId": "3057510d2de4c8dcd52d2632d64551e23f9e9063",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fce1327_5e9cf1f1",
+        "filename": "jami-android/app/src/main/res/layout/item_collab_document.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-08-01T02:28:45Z",
+      "side": 1,
+      "message": "The tint is carried by the drawables: `baseline_delete_24.xml` and\n`baseline_delete_forever_24.xml` both declare\n`android:tint\u003d\"?attr/colorControlNormal\"`, so both icons follow the theme like\nevery other icon drawn from them. Setting it on the buttons as well would be a\nsecond place to keep in step.",
+      "parentUuid": "e7af1a70_c96feeb1",
       "revId": "3057510d2de4c8dcd52d2632d64551e23f9e9063",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
