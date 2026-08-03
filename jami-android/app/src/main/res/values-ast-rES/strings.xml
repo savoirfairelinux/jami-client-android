@@ -314,6 +314,7 @@
   <string name="picker_title">Seleccionar contactos</string>
   <string name="picker_btn">Seleccionar contactos</string>
   <string name="bottomsheet_contact">Contactar con Jami\n%1$s</string>
+  <string name="group_member_invited">Convidaos</string>
   <!--JamiId-->
   <string name="jami_id_validate">Registrar nome d\' usuariu</string>
   <string name="jami_id_choose_username">Escueye un nome d\' usuariu</string>
