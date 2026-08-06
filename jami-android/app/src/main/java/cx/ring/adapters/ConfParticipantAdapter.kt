@@ -28,7 +28,6 @@ import cx.ring.fragments.CallFragment
 import cx.ring.views.AvatarDrawable
 import cx.ring.views.ParticipantView
 import net.jami.model.Conference.ParticipantInfo
-import java.util.*
 
 class ConfParticipantAdapter(
     private var calls: List<ParticipantInfo>,
@@ -115,8 +114,6 @@ class ConfParticipantAdapter(
         }
     }
 
-    override fun getItemId(position: Int): Long = calls[position].hashCode().toLong()
-
     override fun getItemCount(): Int = calls.size
 
     fun updateFromCalls(contacts: List<ParticipantInfo>) {
@@ -128,12 +125,19 @@ class ConfParticipantAdapter(
             override fun getNewListSize(): Int = contacts.size
 
             override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-                oldCalls[oldItemPosition].hashCode() == contacts[newItemPosition].hashCode()
+                oldCalls[oldItemPosition].hasSameIdentity(contacts[newItemPosition])
 
             override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
                 false
         }).dispatchUpdatesTo(this)
     }
+
+    private fun ParticipantInfo.hasSameIdentity(other: ParticipantInfo): Boolean =
+        contact.contact.uri == other.contact.contact.uri &&
+                device == other.device &&
+                sinkId == other.sinkId &&
+                call?.id == other.call?.id &&
+                pending == other.pending
 
     enum class ParticipantAction {
         ShowDetails, Mute, Extend, Hangup
