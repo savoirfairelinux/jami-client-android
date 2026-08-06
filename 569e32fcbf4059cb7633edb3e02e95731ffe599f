@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c54a28e_0373e966",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConfParticipantAdapter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-08-06T03:01:01Z",
+      "side": 1,
+      "message": "[warning] Line 132: 🟡 `pending` looks like mutable participant state, not identity. Including it in `areItemsTheSame` means the same participant is treated as removed/inserted when pending changes, which keeps identity unstable and can cause unnecessary rebinding/animations. Prefer excluding `pending` from `hasSameIdentity` and let it be handled by content comparison.",
+      "revId": "569e32fcbf4059cb7633edb3e02e95731ffe599f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
