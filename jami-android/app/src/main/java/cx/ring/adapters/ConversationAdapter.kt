@@ -50,7 +50,6 @@ import androidx.core.view.isVisible
 import androidx.core.view.setPadding
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
-import androidx.vectordrawable.graphics.drawable.Animatable2Compat
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -681,6 +680,9 @@ class ConversationAdapter(
         }
         holder.mMsgTxt?.setOnLongClickListener(null)
         holder.mItem?.setOnClickListener(null)
+        // Stop the typing indicator animation: an AnimatedVectorDrawable keeps requesting frames
+        // until stopped explicitly. The cast makes this a no-op for the other drawables mIcon holds.
+        (holder.mIcon?.drawable as? AnimatedVectorDrawableCompat)?.stop()
         holder.compositeDisposable.clear()
     }
 
@@ -1340,18 +1342,21 @@ class ConversationAdapter(
             )
         }
         viewHolder.mTypingIndicatorLayout?.layoutParams = layoutParams
-        //Start the animation.
-        AnimatedVectorDrawableCompat.create(
-            viewHolder.itemView.context, R.drawable.typing_indicator_animation
-        )?.let { anim ->
-            viewHolder.mIcon?.setImageDrawable(anim)
-            anim.registerAnimationCallback(object : Animatable2Compat.AnimationCallback() {
-                override fun onAnimationEnd(drawable: Drawable) {
-                    anim.start()
-                }
-            })
+        // Reuse the drawable already set on the icon rather than creating one per bind, so at most
+        // one animator exists per view holder instead of one per typing indicator ever shown.
+        //
+        // No restart-on-end callback: two of the three targets in typing_indicator_animation.xml
+        // (bounce2, bounce3) already declare repeatCount="infinite", so the set does not end on its
+        // own, and a callback that calls start() again keeps the drawable animating for the life of
+        // the process. An AnimatedVectorDrawable is only stopped by an explicit stop() -- recycling
+        // the row, detaching the view or backgrounding the app do not stop it -- so such animators
+        // accumulate and keep requesting Choreographer frames while the app is not visible.
+        val anim = viewHolder.mIcon?.drawable as? AnimatedVectorDrawableCompat
+            ?: AnimatedVectorDrawableCompat.create(
+                viewHolder.itemView.context, R.drawable.typing_indicator_animation
+            )?.also { viewHolder.mIcon?.setImageDrawable(it) }
+        if (anim != null && !anim.isRunning)
             anim.start()
-        }
     }
 
     /**
