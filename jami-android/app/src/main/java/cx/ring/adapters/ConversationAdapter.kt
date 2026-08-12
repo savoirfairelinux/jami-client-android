@@ -183,9 +183,8 @@ class ConversationAdapter(
         }
     }
 
-    fun getMessageFromPosition(position: Int): Interaction? {
-        return if (position < mInteractions.size) mInteractions[position] else null
-    }
+    fun getMessageFromPosition(position: Int): Interaction? =
+        if (position < mInteractions.size && position >= 0) mInteractions[position] else null
 
     fun add(e: Interaction): Boolean {
         if (e.isSwarm) {
