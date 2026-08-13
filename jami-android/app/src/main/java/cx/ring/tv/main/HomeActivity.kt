@@ -185,6 +185,15 @@ class HomeActivity : FragmentActivity() {
             onBackInvokedDispatcher.registerOnBackInvokedCallback(1) { onBackPressed() }
         JamiApplication.instance?.startDaemon(this)
         setContentView(R.layout.tv_activity_home)
+        // Add MainFragment programmatically instead of using a <fragment> tag in the
+        // layout, to avoid InflateException crashes on some Android TV devices
+        // (Fragment cx.ring.tv.main.MainFragment did not create a view).
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .setReorderingAllowed(true)
+                .add(R.id.main_browse_fragment, MainFragment::class.java, null)
+                .commit()
+        }
         mBackgroundManager = BackgroundManager.getInstance(this).apply { attach(window) }
         mPreviewView = findViewById(R.id.previewView)
         mBlurImage = findViewById(R.id.blur)

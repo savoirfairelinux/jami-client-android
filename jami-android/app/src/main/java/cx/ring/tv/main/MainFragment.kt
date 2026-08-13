@@ -68,7 +68,6 @@ import java.io.FileOutputStream
 
 @AndroidEntryPoint
 class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
-    private val mSpinnerFragment: SpinnerFragment = SpinnerFragment()
     private var cardRowAdapter: ArrayObjectAdapter? = null
     private var contactRequestRowAdapter: ArrayObjectAdapter? = null
     private var mTitleView: CustomTitleView? = null
@@ -143,16 +142,23 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
     }
 
     override fun showLoading(show: Boolean) {
+        // The FragmentManager owns and restores the spinner across process death,
+        // so looking it up by tag always returns the correct (current) instance.
+        val spinner = parentFragmentManager.findFragmentByTag(SPINNER_TAG)
         if (show) {
-            parentFragmentManager.beginTransaction()
-                .setReorderingAllowed(true)
-                .replace(R.id.main_browse_fragment, mSpinnerFragment)
-                .commitAllowingStateLoss()
+            if (spinner == null) {
+                parentFragmentManager.beginTransaction()
+                    .setReorderingAllowed(true)
+                    .add(R.id.main_browse_fragment, SpinnerFragment::class.java, null, SPINNER_TAG)
+                    .commitAllowingStateLoss()
+            }
         } else {
-            parentFragmentManager.beginTransaction()
-                .setReorderingAllowed(true)
-                .remove(mSpinnerFragment)
-                .commitAllowingStateLoss()
+            if (spinner != null) {
+                parentFragmentManager.beginTransaction()
+                    .setReorderingAllowed(true)
+                    .remove(spinner)
+                    .commitAllowingStateLoss()
+            }
         }
     }
 
@@ -377,6 +383,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
 
     companion object {
         private val TAG = MainFragment::class.simpleName!!
+        private const val SPINNER_TAG = "spinner"
 
         // Sections headers ids
         private const val HEADER_CONTACTS: Long = 0
