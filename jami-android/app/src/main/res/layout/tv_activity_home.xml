@@ -22,14 +22,12 @@
         android:layout_height="match_parent"
         android:background="@color/tv_transparent"/>
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/main_browse_fragment"
-        android:name="cx.ring.tv.main.MainFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="cx.ring.tv.main.HomeActivity"
-        tools:deviceIds="tv"
-        tools:ignore="MergeRootFrame" />
+        tools:deviceIds="tv" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
