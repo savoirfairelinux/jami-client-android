@@ -51,10 +51,12 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
         val isExpiration = remoteMessage.data.containsKey("exp")
         val wakeup = if (isExpiration) PushWakeup(false, false) else classifyWakeup(remoteMessage)
         val isCallWakeup = wakeup.isCall
-        val isMessageWakeup = wakeup.isMessage
+        // A typeless connection request drives the same async daemon work as a message push
+        // (proxy reconnect + DHT fetch + ICE), so it must keep the wake lock and the FGS.
+        val isMessageWakeup = wakeup.isMessage || wakeup.isConnection
         val app = JamiApplication.instance as? JamiApplicationFirebase
         val appInForeground = app?.isForeground ?: false
-        Log.d(TAG, "push call=$isCallWakeup message=$isMessageWakeup exp=$isExpiration foreground=$appInForeground priority=${remoteMessage.priority}/${remoteMessage.originalPriority}")
+        Log.d(TAG, "push call=$isCallWakeup message=$isMessageWakeup conn=${wakeup.isConnection} exp=$isExpiration foreground=$appInForeground priority=${remoteMessage.priority}/${remoteMessage.originalPriority}")
 
         // Start FGS for calls and messages when backgrounded: both trigger an async daemon
         // fetch (proxy reconnect + DHT/swarm pull).
@@ -127,6 +129,7 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
         val scope = "${remoteMessage.data["to"] ?: ""}:${remoteMessage.data["key"] ?: ""}"
         var newCall = false
         var newMessage = false
+        var newConnection = false
         pushTypes.splitToSequence(',').forEachIndexed { i, rawType ->
             val type = rawType.trim().lowercase(Locale.ROOT)
             val isCall = type == "audiocall" || type == "videocall"
@@ -136,7 +139,11 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
                     || type == "application/invite"
                     || type.startsWith("application/invite+")
                     || type == "sync"
-            if (!isCall && !isMessage) return@forEachIndexed
+            // An empty type comes from a peer whose daemon does not advertise a connection
+            // type. The value is still a peer connection request needing a DHT fetch and an
+            // ICE negotiation, so it must stay actionable instead of being dropped as noise.
+            val isConnection = type.isEmpty()
+            if (!isCall && !isMessage && !isConnection) return@forEachIndexed
             val id = ids.getOrNull(i)?.trim()
             val isNew = if (id.isNullOrEmpty()) {
                 true // No id to deduplicate on: fail open, a missed call is worse than a redundant restore.
@@ -148,12 +155,17 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
             if (isNew) {
                 if (isCall) newCall = true
                 if (isMessage) newMessage = true
+                if (isConnection) newConnection = true
             }
         }
-        return PushWakeup(newCall, newMessage)
+        return PushWakeup(newCall, newMessage, newConnection)
     }
 
-    private data class PushWakeup(val isCall: Boolean, val isMessage: Boolean)
+    private data class PushWakeup(
+        val isCall: Boolean,
+        val isMessage: Boolean,
+        val isConnection: Boolean = false
+    )
 
     override fun onNewToken(refreshedToken: String) {
         Log.w(TAG, "onNewToken $refreshedToken")
