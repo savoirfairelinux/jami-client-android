@@ -44,6 +44,7 @@ import cx.ring.linkpreview.LinkPreview
 import cx.ring.services.AndroidExposedServicesService
 import cx.ring.services.CallServiceImpl.Companion.CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY
 import cx.ring.utils.AndroidFileUtils
+import cx.ring.utils.BackgroundRestrictions
 import cx.ring.views.AvatarFactory
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
@@ -222,6 +223,17 @@ abstract class JamiApplication : Application() {
         super.onCreate()
         instance = this
         LinkPreview.init(this)
+
+        // System background restrictions are invisible to the user, yet they keep a delivered
+        // push notification from ever opening a connection. Record them so that bug reports
+        // carry the information instead of only showing calls that never arrive.
+        Schedulers.computation().scheduleDirect {
+            val status = BackgroundRestrictions.status(this)
+            if (status.networkRestricted)
+                Log.w(TAG, "Background network access is restricted by the system: $status")
+            else
+                Log.d(TAG, "Background restrictions: $status")
+        }
 
         // Launch logging if previously set up by user (info is stored in shared preferences).
         // Subscribe on it (first element) to initialize pipe construction.

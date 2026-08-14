@@ -761,6 +761,12 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="link_device_error_bad_password">Please check credentials and try again.</string>
     <string name="test_push">Test Push</string>
 
+    <!--  Background reachability diagnostic  -->
+    <string name="background_restrictions_title">Background reachability</string>
+    <string name="background_restrictions_ok">No system restriction detected.</string>
+    <string name="background_restrictions_warning">The system is denying background network access. Calls and messages may not arrive while Jami runs in background.</string>
+    <string name="background_restrictions_action">Allow background activity</string>
+
     <!--  Accessibility  -->
     <string name="step_title_create_username">Create username</string>
     <string name="step_title_set_password">Set password</string>

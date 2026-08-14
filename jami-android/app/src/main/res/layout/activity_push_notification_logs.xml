@@ -85,6 +85,56 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                 tools:text="Unknown: " />
         </com.google.android.material.chip.ChipGroup>
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/restrictionCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    style="@style/TextAppearance.Material3.LabelLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/background_restrictions_title" />
+
+                <TextView
+                    android:id="@+id/restrictionStatus"
+                    style="@style/TextAppearance.Material3.BodySmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    tools:text="@string/background_restrictions_warning" />
+
+                <TextView
+                    android:id="@+id/restrictionDetail"
+                    style="@style/TextAppearance.Material3.BodySmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textIsSelectable="true"
+                    tools:text="standbyBucket=RARE" />
+
+                <Button
+                    android:id="@+id/restrictionActionButton"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/background_restrictions_action" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/logRecyclerView"
             android:layout_width="match_parent"

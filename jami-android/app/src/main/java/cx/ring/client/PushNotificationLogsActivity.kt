@@ -17,6 +17,7 @@
 package cx.ring.client
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -35,6 +36,7 @@ import cx.ring.client.LogsActivity.LogAdapter
 import cx.ring.client.LogsActivity.LogMessage
 import cx.ring.databinding.ActivityPushNotificationLogsBinding
 import cx.ring.utils.AndroidFileUtils
+import cx.ring.utils.BackgroundRestrictions
 import cx.ring.utils.ContentUri
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -59,6 +61,7 @@ class PushNotificationLogsActivity : AppCompatActivity() {
     private var disposable: Disposable? = null
     private lateinit var logAdapter: LogAdapter
     private lateinit var logFile: File
+    private var defaultStatusColor: ColorStateList? = null
     private var fileSaver: ActivityResultLauncher<String> = registerForActivityResult(ActivityResultContracts
         .CreateDocument("text/plain")) { result: Uri? ->
         if (result != null) {
@@ -91,6 +94,14 @@ class PushNotificationLogsActivity : AppCompatActivity() {
         binding.logRecyclerView.adapter = logAdapter
         binding.logRecyclerView.layoutManager = LinearLayoutManager(this)
 
+        defaultStatusColor = binding.restrictionStatus.textColors
+        binding.restrictionActionButton.setOnClickListener {
+            if (BackgroundRestrictions.isIgnoringBatteryOptimizations(this))
+                BackgroundRestrictions.openApplicationSettings(this)
+            else
+                BackgroundRestrictions.requestIgnoreBatteryOptimizations(this)
+        }
+
         updateSummary()
         compositeDisposable.add(Observable.interval(3, java.util.concurrent.TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -119,6 +130,31 @@ class PushNotificationLogsActivity : AppCompatActivity() {
         binding.pushNormalCount.text = "Normal: ${mHardwareService.normalPriorityPushCount}"
         binding.pushHighCount.text = "High: ${mHardwareService.highPriorityPushCount}"
         binding.pushUnknownCount.text = "Unknown: ${mHardwareService.unknownPriorityPushCount}"
+    }
+
+    /**
+     * Reports whether the system lets a delivered push notification turn into a peer connection.
+     * A notification that arrives but finds no background network access leaves no trace other
+     * than a connection that never completes, hence this explicit status. Refreshed on resume,
+     * since it only changes when the user comes back from the system settings.
+     */
+    private fun updateRestrictionStatus() {
+        val status = BackgroundRestrictions.status(this)
+        val restricted = status.networkRestricted
+        binding.restrictionStatus.setText(
+            if (restricted) R.string.background_restrictions_warning
+            else R.string.background_restrictions_ok
+        )
+        if (restricted) binding.restrictionStatus.setTextColor(getColor(R.color.colorError))
+        else defaultStatusColor?.let { binding.restrictionStatus.setTextColor(it) }
+        binding.restrictionDetail.text = status.toString()
+        binding.restrictionActionButton.isGone =
+            !restricted && status.ignoringBatteryOptimizations
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateRestrictionStatus()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
