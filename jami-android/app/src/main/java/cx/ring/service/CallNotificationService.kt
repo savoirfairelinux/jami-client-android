@@ -57,7 +57,7 @@ class CallNotificationService : Service() {
                 if (notification == null) {
                     startCallForeground(mNotificationService.serviceNotification as Notification, false)
                     stopForeground(STOP_FOREGROUND_REMOVE)
-                    stopSelf()
+                    stopSelf(startId)
                 } else {
                     startCallForeground(notification, startScreenshare)
                     if (startScreenshare && confId != null)
@@ -66,10 +66,9 @@ class CallNotificationService : Service() {
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to start foreground service", e)
             }
-        } else if (ACTION_STOP == intent.action) {
+        } else if (ACTION_STOP == intent.action && mNotificationService.tryCancelCallNotification()) {
             stopForeground(STOP_FOREGROUND_REMOVE)
-            stopSelf()
-            mNotificationService.cancelCallNotification()
+            stopSelf(startId)
         }
         return START_NOT_STICKY
     }

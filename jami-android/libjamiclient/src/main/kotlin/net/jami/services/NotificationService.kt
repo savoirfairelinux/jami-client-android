@@ -22,7 +22,7 @@ import net.jami.model.interaction.DataTransfer
 
 interface NotificationService {
     fun showCallNotification(notifId: Int): Any?
-    fun cancelCallNotification()
+    fun tryCancelCallNotification(): Boolean
     fun removeCallNotification()
     fun handleCallNotification(conference: Conference, remove: Boolean, startScreenshare: Boolean = false): Completable
     fun preparePendingScreenshare(conference: Conference, callback: () -> Unit)

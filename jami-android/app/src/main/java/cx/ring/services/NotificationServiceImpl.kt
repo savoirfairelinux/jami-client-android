@@ -344,9 +344,12 @@ class NotificationServiceImpl(
         }
 
         val id = conference.id
-        currentCalls.remove(id)
-        if (!remove) {
-            currentCalls[id] = conference
+        // remove+put is how the entry is moved to the end of the LinkedHashMap iteration order.
+        // It must be atomic: the intermediate state is empty, and a concurrent chain reading
+        // currentCalls.isEmpty() there would stop the call foreground service we just started.
+        synchronized(currentCalls) {
+            currentCalls.remove(id)
+            if (!remove) currentCalls[id] = conference
         }
 
         val notificationMaybe = if (!remove) {
@@ -357,11 +360,8 @@ class NotificationServiceImpl(
 
         return notificationMaybe
             .switchIfEmpty(Maybe.defer {
-                if (currentCalls.isNotEmpty()) {
-                    buildCallNotification(currentCalls.values.last())
-                } else {
-                    Maybe.empty()
-                }
+                val latest = synchronized(currentCalls) { currentCalls.values.lastOrNull() }
+                if (latest != null) buildCallNotification(latest) else Maybe.empty()
             })
             .flatMapCompletable { notification ->
                 Log.w(TAG, "showCallNotification $notification")
@@ -377,24 +377,29 @@ class NotificationServiceImpl(
                 }
                 var safeStart: () -> Unit = {}
                 safeStart = {
-                    if (!currentCalls.containsKey(id)) {
-                        callNotifications.remove(nid)
-                        Log.w(TAG, "Skipping call foreground service start: call is no longer active")
-                    } else try {
-                        start()
-                    } catch (e: Exception) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                            if (e is ForegroundServiceStartNotAllowedException) {
-                                pingPush(conference.accountId, safeStart)
+                    // The liveness check and the start request are atomic with the stop decision
+                    // below, so a start and a stop can never be issued for the same service
+                    // concurrently. pingPush() is kept out of the lock as it takes another monitor.
+                    val retryOnPush = synchronized(currentCalls) {
+                        if (!currentCalls.containsKey(id)) {
+                            callNotifications.remove(nid)
+                            Log.w(TAG, "Skipping call foreground service start: call is no longer active")
+                            false
+                        } else try {
+                            start()
+                            false
+                        } catch (e: Exception) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+                                && e is ForegroundServiceStartNotAllowedException) {
+                                true
                             } else {
                                 callNotifications.remove(nid)
                                 Log.w(TAG, "Can't show call notification", e)
+                                false
                             }
-                        } else {
-                            callNotifications.remove(nid)
-                            Log.w(TAG, "Can't show call notification", e)
                         }
                     }
+                    if (retryOnPush) pingPush(conference.accountId, safeStart)
                 }
 
                 val call = conference.call
@@ -419,11 +424,7 @@ class NotificationServiceImpl(
                 }
             }
             .onErrorComplete()
-            .doOnComplete {
-                if (currentCalls.isEmpty()) {
-                    removeCallNotification()
-                }
-            }
+            .doOnComplete { removeCallNotification() }
     }
 
     override fun preparePendingScreenshare(conference: Conference, callback: () -> Unit) {
@@ -514,12 +515,15 @@ class NotificationServiceImpl(
     }
 
     override fun removeCallNotification() {
-        callServiceStarted = false
-        callNotifications.clear()
-        try {
-            mContext.startService(Intent(CallNotificationService.ACTION_STOP, null, mContext, CallNotificationService::class.java))
-        } catch (e: Exception) {
-            Log.w(TAG, "Error stopping service", e)
+        synchronized(currentCalls) {
+            if (currentCalls.isNotEmpty()) return
+            callServiceStarted = false
+            callNotifications.clear()
+            try {
+                mContext.startService(Intent(CallNotificationService.ACTION_STOP, null, mContext, CallNotificationService::class.java))
+            } catch (e: Exception) {
+                Log.w(TAG, "Error stopping service", e)
+            }
         }
     }
 
@@ -1082,11 +1086,16 @@ class NotificationServiceImpl(
         notificationManager.cancel(getIncomingTrustNotificationId(accountID))
     }
 
-    override fun cancelCallNotification() {
-        callServiceStarted = false
-        notificationManager.cancel(NOTIF_CALL_ID)
-        mNotificationBuilders.remove(NOTIF_CALL_ID)
-        callNotifications.clear()
+    override fun tryCancelCallNotification(): Boolean = synchronized(currentCalls) {
+        if (currentCalls.isNotEmpty()) {
+            false
+        } else {
+            callServiceStarted = false
+            notificationManager.cancel(NOTIF_CALL_ID)
+            mNotificationBuilders.remove(NOTIF_CALL_ID)
+            callNotifications.clear()
+            true
+        }
     }
 
     /**\
