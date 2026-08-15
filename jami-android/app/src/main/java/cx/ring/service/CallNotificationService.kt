@@ -45,76 +45,26 @@ class CallNotificationService : Service() {
     @Inject
     lateinit var mNotificationService: NotificationService
 
-    @SuppressLint("ForegroundServiceType")
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
         if (ACTION_START == intent.action) {
             val confId = intent.getStringExtra(NotificationService.KEY_CALL_ID)
             val notification = mNotificationService.showCallNotification(intent.getIntExtra(NotificationService.KEY_NOTIFICATION_ID, -1)) as Notification?
             val startScreenshare = intent.getBooleanExtra(NotificationService.KEY_SCREENSHARE, false)
-            if (notification != null) {
-                try {
-                    if (Build.VERSION.SDK_INT >= 37) {
-                        // API 37+: microphone and camera FGS types require an eligible foreground
-                        // state and crash when starting from a background push wakeup. Omit both —
-                        // RECORD_AUDIO and CAMERA still work via the foreground activity once the
-                        // user answers the call.
-                        val pm = packageManager
-                        val callServiceType =
-                            if (pm.hasPermission(Manifest.permission.FOREGROUND_SERVICE_PHONE_CALL))
-                                ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL else 0
-                        val screenShareType = if (startScreenshare && pm.hasPermission(Manifest.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION))
-                            ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION else 0
-                        startForeground(
-                            NotificationServiceImpl.NOTIF_CALL_ID,
-                            notification,
-                            callServiceType or screenShareType
-                        )
-                        // Since API 34, foreground services
-                        // should not be specified before user grants permission.
-                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                        val pm = packageManager
-                        val cameraServiceType = if (pm.hasPermissions(Manifest.permission.FOREGROUND_SERVICE_CAMERA, Manifest.permission.CAMERA))
-                            ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA else 0
-                        val microphoneServiceType = if (pm.hasPermissions(Manifest.permission.FOREGROUND_SERVICE_MICROPHONE, Manifest.permission.RECORD_AUDIO))
-                            ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE else 0
-                        val callServiceType = if (pm.hasPermission(Manifest.permission.FOREGROUND_SERVICE_PHONE_CALL))
-                            ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL else 0
-                        val screenShareType = if (startScreenshare && pm.hasPermission(Manifest.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION))
-                            ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION else 0
-                        startForeground(
-                            NotificationServiceImpl.NOTIF_CALL_ID,
-                            notification,
-                            callServiceType
-                                    or microphoneServiceType
-                                    or cameraServiceType
-                                    or screenShareType
-                        )
-                        // Since API 30, microphone and camera should be specified for app to use them.
-                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
-                        startForeground(
-                            NotificationServiceImpl.NOTIF_CALL_ID,
-                            notification,
-                            ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL
-                                    or ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE
-                                    or ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA
-                                    or (if (startScreenshare) ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION else 0)
-                        )
-                    // Since API 29, should specify foreground service type.
-                    else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-                        startForeground(
-                            NotificationServiceImpl.NOTIF_CALL_ID,
-                            notification,
-                            ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL
-                                    or ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION
-                        )
-                    else // Before API 29, just start foreground service.
-                        startForeground(NotificationServiceImpl.NOTIF_CALL_ID, notification)
+            try {
+                // We were started with startForegroundService(), so startForeground() must be
+                // called even if the call is already gone, otherwise the system kills the process.
+                if (notification == null) {
+                    startCallForeground(mNotificationService.serviceNotification as Notification, false)
+                    stopForeground(STOP_FOREGROUND_REMOVE)
+                    stopSelf()
+                } else {
+                    startCallForeground(notification, startScreenshare)
                     if (startScreenshare && confId != null)
                         mNotificationService.startPendingScreenshare(confId)
-                } catch (e: Exception) {
-                    Log.e(TAG, "Failed to start foreground service", e)
                 }
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to start foreground service", e)
             }
         } else if (ACTION_STOP == intent.action) {
             stopForeground(STOP_FOREGROUND_REMOVE)
@@ -122,6 +72,66 @@ class CallNotificationService : Service() {
             mNotificationService.cancelCallNotification()
         }
         return START_NOT_STICKY
+    }
+
+    @SuppressLint("ForegroundServiceType")
+    private fun startCallForeground(notification: Notification, startScreenshare: Boolean) {
+        if (Build.VERSION.SDK_INT >= 37) {
+            // API 37+: microphone and camera FGS types require an eligible foreground
+            // state and crash when starting from a background push wakeup. Omit both —
+            // RECORD_AUDIO and CAMERA still work via the foreground activity once the
+            // user answers the call.
+            val pm = packageManager
+            val callServiceType =
+                if (pm.hasPermission(Manifest.permission.FOREGROUND_SERVICE_PHONE_CALL))
+                    ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL else 0
+            val screenShareType = if (startScreenshare && pm.hasPermission(Manifest.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION))
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION else 0
+            startForeground(
+                NotificationServiceImpl.NOTIF_CALL_ID,
+                notification,
+                callServiceType or screenShareType
+            )
+            // Since API 34, foreground services
+            // should not be specified before user grants permission.
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            val pm = packageManager
+            val cameraServiceType = if (pm.hasPermissions(Manifest.permission.FOREGROUND_SERVICE_CAMERA, Manifest.permission.CAMERA))
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA else 0
+            val microphoneServiceType = if (pm.hasPermissions(Manifest.permission.FOREGROUND_SERVICE_MICROPHONE, Manifest.permission.RECORD_AUDIO))
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE else 0
+            val callServiceType = if (pm.hasPermission(Manifest.permission.FOREGROUND_SERVICE_PHONE_CALL))
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL else 0
+            val screenShareType = if (startScreenshare && pm.hasPermission(Manifest.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION))
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION else 0
+            startForeground(
+                NotificationServiceImpl.NOTIF_CALL_ID,
+                notification,
+                callServiceType
+                        or microphoneServiceType
+                        or cameraServiceType
+                        or screenShareType
+            )
+            // Since API 30, microphone and camera should be specified for app to use them.
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
+            startForeground(
+                NotificationServiceImpl.NOTIF_CALL_ID,
+                notification,
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL
+                        or ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE
+                        or ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA
+                        or (if (startScreenshare) ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION else 0)
+            )
+        // Since API 29, should specify foreground service type.
+        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+            startForeground(
+                NotificationServiceImpl.NOTIF_CALL_ID,
+                notification,
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL
+                        or ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION
+            )
+        else // Before API 29, just start foreground service.
+            startForeground(NotificationServiceImpl.NOTIF_CALL_ID, notification)
     }
 
     override fun onBind(intent: Intent): IBinder? = null

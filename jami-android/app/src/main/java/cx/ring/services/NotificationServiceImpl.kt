@@ -155,6 +155,11 @@ class NotificationServiceImpl(
                         .setUsesChronometer(true)
                         .setWhen(conference.timestampStart)
                         .setColor(ContextCompat.getColor(mContext, R.color.color_primary_light))
+                        // A CallStyle notification is rejected (and the whole process killed) if the
+                        // foreground service state is already gone when the system posts it; a full
+                        // screen intent keeps it valid. It is never actually launched because the
+                        // channel is only IMPORTANCE_DEFAULT.
+                        .setFullScreenIntent(viewIntent, false)
                         .setStyle(
                             NotificationCompat.CallStyle.forOngoingCall(caller, PendingIntent.getService(mContext, random.nextInt(),
                                 Intent(DRingService.ACTION_CALL_END)
@@ -208,6 +213,7 @@ class NotificationServiceImpl(
                             .setSound(null)
                             .setVibrate(null)
                             .setColorized(true)
+                            .setFullScreenIntent(viewIntent, false)
                             .setStyle(
                                 NotificationCompat.CallStyle.forOngoingCall(caller, PendingIntent.getService(mContext, random.nextInt(),
                                     Intent(DRingService.ACTION_CALL_END)
