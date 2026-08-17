@@ -10,8 +10,8 @@
   <string name="ring_account_default_name">La cuenta Jami %1$s</string>
   <string name="prompt_alias">Allí foi presentáu\'l so primer llibru.</string>
   <string name="prompt_hostname">Nombre de host</string>
-  <string name="prompt_username">Nombre d\'usuariu</string>
-  <string name="prompt_password">Paez que la contraseña</string>
+  <string name="prompt_username">Nome d\'usuariu</string>
+  <string name="prompt_password">Contraseña</string>
   <string name="action_create">Crear cuenta</string>
   <string name="action_create_short">Crear</string>
   <string name="action_register">El rexistru</string>
@@ -25,13 +25,14 @@
   <string name="help_ring">Una cuenta Jami ye una conexión segura ente persones a través d\'una rede totalmente distribuyida.</string>
   <string name="help_sip_title">Aúna de les páxines siguientes:</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">¿Desaniciar cuenta?</string>
   <string name="account_delete_dialog_message">Esta acción nun puede ser revocada.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nun hai cuenta rexistrada</string>
   <string name="normal_accounts_titles">Cuentas</string>
   <string name="normal_devices_titles">Dispositivos enllazaos</string>
   <string name="account_device_revoke">Dispositivu de revocación</string>
-  <string name="account_device_revocation_success_title">El so ésitu</string>
+  <string name="account_device_revocation_success_title">Ésitu</string>
   <string name="account_device_revocation_success">El dispositivu nun se va dexar.</string>
   <string name="account_device_revocation_unknown_device">Un dispositivu desconocíu.</string>
   <string name="account_device_revocation_error_unknown">Error desconocíu.</string>
@@ -187,6 +188,7 @@
   <string name="rename_device_title">Renombrar a este dispositivu</string>
   <string name="rename_device_button">Dispositivu de renombre</string>
   <string name="account_rename_device_hint">Escueye\'l nome del dispositivu</string>
+  <string name="account_device_name_empty">El nome d\'usuario nun puede tar vacíu</string>
   <string name="account_device_this_indicator">Esta máquina</string>
   <string name="account_disabled_indicator">Dispuestos</string>
   <!--Link a new device-->
