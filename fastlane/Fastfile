@@ -20,8 +20,14 @@ default_platform :android
 
 platform :android do
 
-  desc "Submit a new Build to the Google Play Store"
-  lane :playstore do |options|
+  # Google Play reviews all pending changes of an app as a single batch.
+  # Submitting again while a review is in progress cancels the pending
+  # submission and restarts the review from scratch. Never run a publishing
+  # lane while "Changes in review" is non-empty on the Play Console
+  # publishing overview page.
+
+  desc "Build the signed Play Store bundle"
+  private_lane :build_bundle do |options|
     gradle(
       task: "bundle",
       flavor: "withFirebase",
@@ -35,6 +41,11 @@ platform :android do
         "android.injected.signing.key.password" => options[:keypass],
       }
     )
+  end
+
+  desc "Submit a new Build to the Google Play Store"
+  lane :playstore do |options|
+    build_bundle(options)
 
     upload_to_play_store(
       track: options[:store_track],
@@ -47,19 +58,7 @@ platform :android do
 
   desc "Submit a new Beta Build to the Play Store Beta channel"
   lane :beta do |options|
-    gradle(
-      task: "bundle",
-      flavor: "withFirebase",
-      build_type: "Release",
-      print_command: false,
-      project_dir: 'jami-android',
-      properties: {
-        "android.injected.signing.store.file" => options[:keystore_path],
-        "android.injected.signing.store.password" => options[:storepass],
-        "android.injected.signing.key.alias" => options[:keyalias],
-        "android.injected.signing.key.password" => options[:keypass],
-      }
-    )
+    build_bundle(options)
 
     upload_to_play_store(
       track: "beta",
@@ -70,28 +69,32 @@ platform :android do
     )
   end
 
-  desc "Submit a new Build to the Play Store"
+  desc "Promote the bundle already reviewed on beta to the production channel"
   lane :production do |options|
-    gradle(
-      task: "bundle",
-      flavor: "withFirebase",
-      build_type: "Release",
-      print_command: false,
-      project_dir: 'jami-android',
-      properties: {
-        "android.injected.signing.store.file" => options[:keystore_path],
-        "android.injected.signing.store.password" => options[:storepass],
-        "android.injected.signing.key.alias" => options[:keyalias],
-        "android.injected.signing.key.password" => options[:keypass],
-      }
-    )
+    # Promote the exact artifact Google already reviewed on the beta channel
+    # rather than building and submitting a second, different bundle. A
+    # rebuild produces a new artifact that needs its own full review, which
+    # doubles the number of reviews and makes the two channels overlap.
+    version_code = options[:version_code] ||
+      google_play_track_version_codes(
+        track: "beta",
+        json_key: options[:json_key]
+      ).max
+
+    UI.user_error!("No version code on the beta channel to promote") if version_code.nil?
+    UI.message("Promoting version code #{version_code} from beta to production")
 
     upload_to_play_store(
-      track: "production",
+      track: "beta",
+      track_promote_to: "production",
+      version_code: version_code,
       json_key: options[:json_key],
+      skip_upload_aab: true,
+      skip_upload_apk: true,
       skip_upload_metadata: true,
       skip_upload_images: true,
-      skip_upload_screenshots: true
+      skip_upload_screenshots: true,
+      skip_upload_changelogs: true
     )
   end
 
