@@ -46,8 +46,12 @@ pacman -S cmake ninja automake swig yasm m4 patch autoconf pkgconf
 ##### On macOS:
 
 ```sh
-brew install cmake automake autotools libtool pkg-config yasm swig
+brew install cmake automake autotools libtool pkg-config rustup yasm swig
+"$(brew --prefix rustup)/bin/rustup" default 1.97.1
 ```
+
+The Rust toolchain is required by the yffi collaborative-editing dependency.
+Its Android targets are installed automatically when the dependency is built.
 
 When using brew on macOS, the 'libtoolize' binary might be available as 'glibtoolize'.
 In that case, the following command makes it avaialble to the build system:

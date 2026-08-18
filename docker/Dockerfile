@@ -65,6 +65,9 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
         aarch64-linux-android \
         i686-linux-android \
         x86_64-linux-android && \
+    ln -s /usr/local/cargo/bin/cargo /usr/local/bin/cargo && \
+    ln -s /usr/local/cargo/bin/rustc /usr/local/bin/rustc && \
+    ln -s /usr/local/cargo/bin/rustup /usr/local/bin/rustup && \
     chmod -R go-w /usr/local/rustup /usr/local/cargo
 
 # Swig
