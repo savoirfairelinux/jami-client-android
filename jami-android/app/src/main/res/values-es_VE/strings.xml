@@ -1,12 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="version_section">අනුවාදය</string>
   <!--About dialog-->
   <!--RingActivity-->
   <!--AB menus-->
   <!--Sections-->
-  <string name="menu_item_settings">සැකසුම්</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
   <!--Home Fragment-->
@@ -15,17 +13,15 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <!--Call Fragment-->
-  <string name="action_call_hangup">ඇමතුම අවසන් කරන්න</string>
-  <string name="new_group">නව සමූහය තනන්න</string>
   <!--Text messages-->
-  <string name="time_just_now">මේ දැන්</string>
-  <string name="send_file">ගොනුව යවන්න</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--Post notifications permission-->
-  <string name="permission_dialog_open_settings">පසුතල විවෘත කරන්න</string>
+  <string name="permission_dialog_local_network_title">Permitir acceso a la red local</string>
+  <string name="permission_dialog_local_network_message">Jami necesita acceso a la red local para conectar llamadas directamente a los dispositivos de su red. Sin él, las llamadas pueden usar un relé y tener una calidad inferior.</string>
+  <string name="permission_dialog_local_network_blocked_message">El acceso a la red local está deshabilitado para Jami. Las llamadas a dispositivos en su red pueden usar un relé y tener una calidad inferior. Habilite el acceso a la red local para Jami en la configuración del dispositivo.</string>
   <!--QRCode Scan-->
   <!--Settings-->
   <!--Conversation-->
@@ -36,22 +32,21 @@
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
-  <string name="file_transfer_status_canceled">අවලංගු කළා</string>
   <!--Bottom Navigation-->
   <!--TV-->
   <!--Wizard-->
   <!--Bottom sheet-->
-  <string name="bottomSheet_hangup_btn">ඇමතුම අවසන් කරන්න</string>
-  <string name="screen_share_btn_description">තිරය බෙදා ගන්න</string>
+  <string name="audio_output_mute">Silenciar</string>
   <!--Swarm Details-->
-  <string name="tab_settings">සැකසුම්</string>
+  <string name="bottomsheet_block">Miembro bloqueado</string>
+  <string name="bottomsheet_unblock">Miembro desbloqueado</string>
+  <string name="group_member_blocked">Bloqueado</string>
+  <string name="group_member_invited">Invitado</string>
   <!--JamiId-->
   <!--WelcomeJami-->
   <!--Conversation details-->
   <!--Donation-->
-  <string name="donation_card_not_now">දැන් නොවේ</string>
   <!--Extension-->
-  <string name="export_side_step2_cancel">අවලංගු කරන්න</string>
   <!--Accessibility-->
   <!--Peer services-->
   <!--Exposed/Hosted services-->

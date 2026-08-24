@@ -385,4 +385,5 @@
   <string name="shared_services_policy_hint">Қол жеткізе алатындар</string>
   <string name="shared_services_policy_public">Жалпыға ортақ</string>
   <string name="shared_services_save">Сақтау</string>
+  <!--Collaborative documents-->
 </resources>

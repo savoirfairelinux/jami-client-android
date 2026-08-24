@@ -621,4 +621,5 @@
   <string name="shared_services_policy_specific">Belirli kişiler</string>
   <string name="shared_services_allowed_contacts_hint">İzin verilen kişiler (virgülle ayrılmış)</string>
   <string name="shared_services_save">Kaydet</string>
+  <!--Collaborative documents-->
 </resources>

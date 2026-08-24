@@ -385,4 +385,5 @@
   <string name="shared_services_policy_hint">Dapat diakses oleh</string>
   <string name="shared_services_policy_public">Publik</string>
   <string name="shared_services_save">Simpan</string>
+  <!--Collaborative documents-->
 </resources>

@@ -631,4 +631,5 @@
   <string name="shared_services_policy_specific">Contacte specifice</string>
   <string name="shared_services_allowed_contacts_hint">Contacte permise (separate prin virgulă)</string>
   <string name="shared_services_save">Salvează</string>
+  <!--Collaborative documents-->
 </resources>

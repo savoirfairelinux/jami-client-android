@@ -620,4 +620,5 @@
   <string name="shared_services_policy_specific">특정 연락처</string>
   <string name="shared_services_allowed_contacts_hint">허용된 연락처 (쉼표로 구분)</string>
   <string name="shared_services_save">저장</string>
+  <!--Collaborative documents-->
 </resources>

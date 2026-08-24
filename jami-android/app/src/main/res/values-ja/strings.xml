@@ -417,4 +417,5 @@
   <string name="shared_services_policy_hint">アクセス可能な相手</string>
   <string name="shared_services_policy_public">公開</string>
   <string name="shared_services_save">保存</string>
+  <!--Collaborative documents-->
 </resources>

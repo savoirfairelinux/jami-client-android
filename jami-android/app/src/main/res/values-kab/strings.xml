@@ -617,4 +617,5 @@
   <string name="shared_services_policy_specific">Inermisen usliḍen</string>
   <string name="shared_services_allowed_contacts_hint">Inermisen yettwasiren (mfaṛaqen s tikkest)</string>
   <string name="shared_services_save">Sekles</string>
+  <!--Collaborative documents-->
 </resources>

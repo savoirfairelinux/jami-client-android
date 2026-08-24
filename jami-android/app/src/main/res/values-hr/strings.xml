@@ -388,4 +388,5 @@
   <string name="shared_services_policy_hint">Dostupno za</string>
   <string name="shared_services_policy_public">Javno</string>
   <string name="shared_services_save">Spremi</string>
+  <!--Collaborative documents-->
 </resources>

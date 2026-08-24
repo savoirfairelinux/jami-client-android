@@ -623,4 +623,5 @@
   <string name="shared_services_policy_specific">Określone kontakty</string>
   <string name="shared_services_allowed_contacts_hint">Dozwolone kontakty (oddzielone przecinkami)</string>
   <string name="shared_services_save">Zapisz</string>
+  <!--Collaborative documents-->
 </resources>

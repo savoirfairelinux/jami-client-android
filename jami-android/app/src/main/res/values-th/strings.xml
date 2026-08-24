@@ -384,4 +384,5 @@
   <string name="shared_services_policy_hint">เข้าถึงได้โดย</string>
   <string name="shared_services_policy_public">สาธารณะ</string>
   <string name="shared_services_save">เก็บ</string>
+  <!--Collaborative documents-->
 </resources>

@@ -620,4 +620,5 @@
   <string name="shared_services_policy_specific">Одређени контакти</string>
   <string name="shared_services_allowed_contacts_hint">Дозвољени контакти (раздвојени зарезима)</string>
   <string name="shared_services_save">Сачувај</string>
+  <!--Collaborative documents-->
 </resources>

@@ -625,4 +625,5 @@
   <string name="shared_services_policy_specific">Определенные контакты</string>
   <string name="shared_services_allowed_contacts_hint">Разрешенные контакты (через запятую)</string>
   <string name="shared_services_save">Сохранить</string>
+  <!--Collaborative documents-->
 </resources>

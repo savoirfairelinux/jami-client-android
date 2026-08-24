@@ -389,4 +389,5 @@
   <string name="shared_services_policy_hint">Достъпно за</string>
   <string name="shared_services_policy_public">Публично</string>
   <string name="shared_services_save">Запазване</string>
+  <!--Collaborative documents-->
 </resources>

@@ -621,4 +621,5 @@
   <string name="shared_services_policy_specific">Bestemte kontakter</string>
   <string name="shared_services_allowed_contacts_hint">Tillatte kontakter (kommaseparert)</string>
   <string name="shared_services_save">Lagre</string>
+  <!--Collaborative documents-->
 </resources>

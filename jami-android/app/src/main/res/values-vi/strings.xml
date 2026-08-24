@@ -364,4 +364,5 @@
   <string name="shared_services_policy_hint">Có thể truy cập bởi</string>
   <string name="shared_services_policy_public">Công khai</string>
   <string name="shared_services_save">- Cứu</string>
+  <!--Collaborative documents-->
 </resources>

@@ -385,4 +385,5 @@
   <string name="shared_services_policy_hint">ಪ್ರವೇಶಿಸಬಹುದಾದವರು</string>
   <string name="shared_services_policy_public">ಸಾರ್ವಜನಿಕ</string>
   <string name="shared_services_save">ಉಳಿಸಿ</string>
+  <!--Collaborative documents-->
 </resources>

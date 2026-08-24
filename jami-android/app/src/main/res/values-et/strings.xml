@@ -632,4 +632,5 @@ Kui klõpsid „Kinnita“, siis jätkame kasutajakonto eksportimisega.</string>
   <string name="shared_services_policy_specific">Konkreetsed kontaktid</string>
   <string name="shared_services_allowed_contacts_hint">Lubatud kontaktid (eraldatud komadega)</string>
   <string name="shared_services_save">Salvesta</string>
+  <!--Collaborative documents-->
 </resources>

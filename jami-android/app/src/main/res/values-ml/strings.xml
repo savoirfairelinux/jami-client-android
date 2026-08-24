@@ -480,4 +480,5 @@
   <string name="shared_services_policy_hint">ആക്സസ് ചെയ്യാവുന്നത്</string>
   <string name="shared_services_policy_public">പൊതു</string>
   <string name="shared_services_save">സംരക്ഷിക്കുക</string>
+  <!--Collaborative documents-->
 </resources>

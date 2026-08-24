@@ -621,4 +621,5 @@
   <string name="shared_services_policy_specific">Specifieke contacten</string>
   <string name="shared_services_allowed_contacts_hint">Toegestane contacten (kommagescheiden)</string>
   <string name="shared_services_save">Opslaan</string>
+  <!--Collaborative documents-->
 </resources>

@@ -623,4 +623,5 @@ A fiókexportálási művelet folytatásához kattintson a Megerősítés gombra
   <string name="shared_services_policy_specific">Adott névjegyek</string>
   <string name="shared_services_allowed_contacts_hint">Engedélyezett névjegyek (vesszővel elválasztva)</string>
   <string name="shared_services_save">Mentés</string>
+  <!--Collaborative documents-->
 </resources>

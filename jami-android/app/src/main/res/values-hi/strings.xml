@@ -444,4 +444,5 @@
   <string name="shared_services_policy_hint">इनके द्वारा पहुंच योग्य</string>
   <string name="shared_services_policy_public">सार्वजनिक</string>
   <string name="shared_services_save">सहेजें</string>
+  <!--Collaborative documents-->
 </resources>

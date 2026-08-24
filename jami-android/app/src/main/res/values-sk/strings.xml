@@ -623,4 +623,5 @@
   <string name="shared_services_policy_specific">Konkrétne kontakty</string>
   <string name="shared_services_allowed_contacts_hint">Povolené kontakty (oddelené čiarkami)</string>
   <string name="shared_services_save">Uložiť</string>
+  <!--Collaborative documents-->
 </resources>

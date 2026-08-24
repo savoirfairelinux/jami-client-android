@@ -624,4 +624,5 @@
   <string name="shared_services_policy_specific">Певні контакти</string>
   <string name="shared_services_allowed_contacts_hint">Дозволені контакти (через кому)</string>
   <string name="shared_services_save">Зберігти</string>
+  <!--Collaborative documents-->
 </resources>

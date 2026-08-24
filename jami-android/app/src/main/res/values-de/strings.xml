@@ -484,6 +484,8 @@
   <string name="error_open_no_app_found">Keine Anwendung gefunden, die diese Datei verarbeiten kann: %1$s</string>
   <string name="swarm_detail_no_document">Sie haben noch keine Dokumente.</string>
   <string name="group_admin">Administrator</string>
+  <string name="group_member_blocked">Blockiert</string>
+  <string name="group_member_invited">Eingeladen</string>
   <string name="share_contact_intent_title">Diesen Kontakt zu Jami hinzufügen!</string>
   <string name="share_contact_intent_body">Sie können diesen Kontakt „%1$s“ auf der verteilten Kommunikationsplattform Jami hinzufügen: %2$s</string>
   <!--JamiId-->
@@ -628,4 +630,5 @@
   <string name="shared_services_policy_specific">Bestimmte Kontakte</string>
   <string name="shared_services_allowed_contacts_hint">Zugelassene Kontakte (durch Kommas getrennt)</string>
   <string name="shared_services_save">Speichern</string>
+  <!--Collaborative documents-->
 </resources>

@@ -621,4 +621,5 @@
   <string name="shared_services_policy_specific">Spesifikke kontaktar</string>
   <string name="shared_services_allowed_contacts_hint">Tillatne kontaktar (kommaseparerte)</string>
   <string name="shared_services_save">Ta vare på</string>
+  <!--Collaborative documents-->
 </resources>

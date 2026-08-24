@@ -292,6 +292,7 @@ contact@jami.net</string>
   <string name="menu_message_delete">حذف پیام</string>
   <string name="menu_message_cancel">لغو پیام</string>
   <string name="menu_message_reply">پاسخ</string>
+  <string name="menu_message_cancel_reply">لغو پاسخ</string>
   <string name="menu_delete">حذف</string>
   <string name="pref_darkTheme_title">زمینه تاریک</string>
   <string name="pref_darkTheme_summary">همیشه زمینه تاریک را به جای استفاده از حالت سیستم فعال کن</string>
@@ -365,6 +366,7 @@ contact@jami.net</string>
   <string name="group_member_invited">دعوت شده</string>
   <!--JamiId-->
   <string name="jami_id_validate">ثبت نام کاربری</string>
+  <string name="jami_id_available">نام کاربری در دسترس است.</string>
   <string name="jami_id_choose_username">یک نام کاربری را انتخاب کنید</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">به جمی خوش آمدید</string>
@@ -382,6 +384,7 @@ contact@jami.net</string>
   <string name="donation_setting_description">فعال کردن یادآوری اهدا کردن</string>
   <!--Extension-->
   <string name="export_side_main_title">برون‌برد حساب</string>
+  <string name="import_side_main_title">درون‌برد حساب</string>
   <string name="export_side_step1_error_malformed">شناسه دستگاه جدید ناشناخته است. لطفاً دستورالعمل‌های بالا را دنبال کنید.</string>
   <string name="export_side_step1_code_connect">اتصال</string>
   <string name="export_side_step2_cancel">لغو</string>
@@ -412,4 +415,5 @@ contact@jami.net</string>
   <string name="shared_services_policy_hint">قابل دسترسی توسط</string>
   <string name="shared_services_policy_public">عمومی</string>
   <string name="shared_services_save">ذخیره</string>
+  <!--Collaborative documents-->
 </resources>

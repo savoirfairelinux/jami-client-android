@@ -634,4 +634,5 @@ Veuillez patienter.</string>
   <string name="shared_services_policy_specific">Contacts spécifiques</string>
   <string name="shared_services_allowed_contacts_hint">Contacts autorisés (séparés par des virgules)</string>
   <string name="shared_services_save">Sauvegarder</string>
+  <!--Collaborative documents-->
 </resources>

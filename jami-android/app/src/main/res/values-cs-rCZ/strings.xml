@@ -472,9 +472,13 @@
   <string name="picker_btn">Vybrat kontakt</string>
   <string name="no_contact_to_add">Nemáte žádný kontakt k přidání</string>
   <string name="bottomsheet_contact">Kontaktovat Jami\n %1$s</string>
+  <string name="bottomsheet_block">Zablokovat člena</string>
+  <string name="bottomsheet_unblock">Odblokovat člena</string>
   <string name="error_open_no_app_found">Nebyla nalezena žádná aplikace pro tento soubor: %1$s</string>
   <string name="swarm_detail_no_document">Zatím nemáte žádné dokumenty.</string>
   <string name="group_admin">Správce</string>
+  <string name="group_member_blocked">Blokováno</string>
+  <string name="group_member_invited">Pozvaný</string>
   <string name="share_contact_intent_title">Přidejte tento kontakt v Jami!</string>
   <string name="share_contact_intent_body">Tento kontakt „%1$s“ můžete přidat na distribuované komunikační platformě Jami: %2$s</string>
   <!--JamiId-->
@@ -619,4 +623,5 @@
   <string name="shared_services_policy_specific">Konkrétní kontakty</string>
   <string name="shared_services_allowed_contacts_hint">Povolené kontakty (oddělené čárkami)</string>
   <string name="shared_services_save">Uložit</string>
+  <!--Collaborative documents-->
 </resources>

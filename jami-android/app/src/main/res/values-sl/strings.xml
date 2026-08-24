@@ -624,4 +624,5 @@
   <string name="shared_services_policy_specific">Določeni stiki</string>
   <string name="shared_services_allowed_contacts_hint">Dovoljeni stiki (ločeni z vejicami)</string>
   <string name="shared_services_save">Shrani</string>
+  <!--Collaborative documents-->
 </resources>

@@ -569,4 +569,5 @@
   <string name="shared_services_disconnect_all_confirm">Shkëpute</string>
   <string name="shared_services_type_custom_label">Vetjake</string>
   <string name="shared_services_save">Ruaje</string>
+  <!--Collaborative documents-->
 </resources>

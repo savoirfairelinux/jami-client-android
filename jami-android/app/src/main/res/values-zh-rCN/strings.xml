@@ -629,4 +629,5 @@
   <string name="shared_services_policy_specific">具体联系人</string>
   <string name="shared_services_allowed_contacts_hint">允许的联系人（逗号分隔）</string>
   <string name="shared_services_save">保存</string>
+  <!--Collaborative documents-->
 </resources>

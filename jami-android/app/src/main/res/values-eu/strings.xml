@@ -386,4 +386,5 @@
   <string name="shared_services_policy_hint">Atzigarri honentzat:</string>
   <string name="shared_services_policy_public">Publikoa</string>
   <string name="shared_services_save">Gorde ezazu.</string>
+  <!--Collaborative documents-->
 </resources>

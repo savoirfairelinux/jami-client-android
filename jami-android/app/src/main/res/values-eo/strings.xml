@@ -344,4 +344,5 @@
   <string name="shared_services_type_custom_label">Propra</string>
   <string name="shared_services_choose">Elektu dosieron</string>
   <string name="shared_services_save">Savi</string>
+  <!--Collaborative documents-->
 </resources>

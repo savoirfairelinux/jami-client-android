@@ -622,4 +622,5 @@
   <string name="shared_services_policy_specific">Contatti specifici</string>
   <string name="shared_services_allowed_contacts_hint">Contatti consentiti (separati da virgola)</string>
   <string name="shared_services_save">Salva</string>
+  <!--Collaborative documents-->
 </resources>

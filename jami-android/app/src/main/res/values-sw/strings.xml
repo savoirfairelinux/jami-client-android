@@ -385,4 +385,5 @@
   <string name="shared_services_policy_hint">Inaweza kufikiwa na</string>
   <string name="shared_services_policy_public">Umma</string>
   <string name="shared_services_save">Kuokoa</string>
+  <!--Collaborative documents-->
 </resources>
