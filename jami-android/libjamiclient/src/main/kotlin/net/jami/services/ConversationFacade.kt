@@ -171,11 +171,9 @@ class ConversationFacade(
                 conversation.accountId, conversation.uri.rawRingId, transfer.messageId, transfer.fileId!!
             )
         } else {
-            val file = mDeviceRuntimeService.getConversationPath(conversation.accountId, conversation.uri.rawRingId, transfer.storagePath)
             if (conversation.isSwarm) {
                 mDisposableBag.add(Completable.fromAction {
-                    file.delete()
-                    transfer.bytesProgress = 0
+                    deleteTransferFiles(transfer)
                 }.subscribeOn(Schedulers.io())
                 .subscribe({
                     transfer.transferStatus = TransferStatus.FILE_AVAILABLE
@@ -202,10 +200,8 @@ class ConversationFacade(
                     mAccountService.cancelDataTransfer(conversation.accountId, conversation.uri.rawRingId, element.messageId, element.fileId!!)
                 }
                 // remove the actual file
-                val file = mDeviceRuntimeService.getConversationPath(conversation.accountId, conversation.uri.rawRingId, element.storagePath)
                 mDisposableBag.add(Completable.fromAction {
-                    file.delete()
-                    element.bytesProgress = 0
+                    deleteTransferFiles(element)
                 }.subscribeOn(Schedulers.io())
                  .subscribe({
                      element.transferStatus = TransferStatus.FILE_REMOVED
@@ -219,6 +215,13 @@ class ConversationFacade(
                         Log.e(TAG, "Can't delete message", e)
                     })
         }
+    }
+
+    private fun deleteTransferFiles(transfer: DataTransfer) {
+        val content = transfer.destination?.takeIf(File::isFile) ?: transfer.publicPath
+        content?.delete()
+        transfer.daemonPath?.takeIf { it.absoluteFile != content?.absoluteFile }?.delete()
+        transfer.clearDaemonInfo()
     }
 
     /**
@@ -571,7 +574,8 @@ class ConversationFacade(
         val conversation = mAccountService.getAccount(account)!!.onDataTransferEvent(transfer)
         val status = transfer.transferStatus
         Log.d(TAG, "handleDataTransferEvent $status " + transfer.canAutoAccept(mPreferencesService.getMaxFileAutoAccept(account)))
-        if (status === TransferStatus.TRANSFER_AWAITING_HOST || status === TransferStatus.FILE_AVAILABLE) {
+        if (!transfer.hasExactContent &&
+            (status === TransferStatus.TRANSFER_AWAITING_HOST || status === TransferStatus.FILE_AVAILABLE)) {
             if (transfer.canAutoAccept(mPreferencesService.getMaxFileAutoAccept(account))) {
                 mAccountService.acceptFileTransfer(conversation, transfer.fileId!!, transfer)
                 return

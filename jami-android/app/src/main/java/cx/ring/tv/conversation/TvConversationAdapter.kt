@@ -71,7 +71,6 @@ import net.jami.model.interaction.DataTransfer
 import net.jami.model.interaction.Interaction
 import net.jami.model.interaction.Interaction.InteractionStatus
 import net.jami.model.interaction.Interaction.TransferStatus
-import net.jami.model.interaction.TextMessage
 import net.jami.utils.StringUtils.isOnlyEmoji
 import java.io.File
 import java.text.DateFormat
@@ -218,6 +217,10 @@ class TvConversationAdapter(
 
             Interaction.InteractionType.DATA_TRANSFER -> {
                 val file = interaction as DataTransfer
+                if (file.transferStatus == TransferStatus.FILE_REMOVED) {
+                    return if (interaction.isIncoming) MessageType.INCOMING_TEXT_MESSAGE.ordinal
+                    else MessageType.OUTGOING_TEXT_MESSAGE.ordinal
+                }
                 val out = if (interaction.isIncoming) 0 else 4
                 if (file.isComplete) {
                     when {
@@ -620,8 +623,9 @@ class TvConversationAdapter(
                 // Set the tint of the file background
                 if (file.isOutgoing) viewHolder.mFileInfoLayout?.background?.setTint(convColor)
                 // Show the download button
-                when (status) {
-                    TransferStatus.FILE_AVAILABLE, TransferStatus.TRANSFER_AWAITING_HOST -> {
+                when {
+                    !file.hasExactContent && (status == TransferStatus.FILE_AVAILABLE ||
+                        status == TransferStatus.TRANSFER_AWAITING_HOST || status.isError) -> {
                         viewHolder.mFileDownloadButton?.let {
                             it.visibility = View.VISIBLE
                             it.setOnClickListener { presenter.acceptFile(file) }
@@ -657,14 +661,13 @@ class TvConversationAdapter(
         interaction: Interaction,
         position: Int
     ) {
-        val textMessage = interaction as TextMessage
         val context = convViewHolder.itemView.context
-        val contact = textMessage.contact ?: return
+        val contact = interaction.contact ?: return
         val account = interaction.account ?: return
-        val isDeleted = textMessage.body.isNullOrEmpty()
-        val message = textMessage.body?.trim() ?: ""
+        val isDeleted = interaction.body.isNullOrEmpty() || interaction.transferStatus == TransferStatus.FILE_REMOVED
+        val message = interaction.body?.trim() ?: ""
         val longPressView = convViewHolder.itemView
-        val isTimeShown = hasPermanentTimeString(textMessage, position)
+        val isTimeShown = hasPermanentTimeString(interaction, position)
         val msgSequenceType = getMsgSequencing(position, isTimeShown)
         val msgTxt = convViewHolder.mMsgTxt ?: return
         val answerLayout = convViewHolder.mAnswerLayout
@@ -692,7 +695,7 @@ class TvConversationAdapter(
             inflater.inflate(R.menu.conversation_item_actions_messages_tv, menu)
             if (interaction.status === InteractionStatus.SENDING) {
                 menu.removeItem(R.id.conv_action_delete)
-            } else if (textMessage.isIncoming) {
+            } else if (interaction.isIncoming) {
                 menu.removeItem(R.id.conv_action_delete)
                 menu.removeItem(R.id.conv_action_cancel_message)
             } else {
@@ -714,9 +717,9 @@ class TvConversationAdapter(
         // Manage background.
         // Standard message, incoming or outgoing and first, single or last.
         val resIndex =
-            msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
+            msgSequenceType.ordinal + (if (interaction.isIncoming) 1 else 0) * 4
         msgTxt.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
-        if (convColor != 0 && !textMessage.isIncoming) {
+        if (convColor != 0 && !interaction.isIncoming) {
             msgTxt.background.setTint(convColor)
         }
         // Manage classic message
@@ -763,7 +766,7 @@ class TvConversationAdapter(
         }
         // Manage deleted message.
         if (isDeleted) {
-            if (textMessage.isIncoming) {
+            if (interaction.isIncoming) {
                 convViewHolder.compositeDisposable.add(
                     presenter.contactService
                         .observeContact(account, contact, false)
@@ -783,7 +786,7 @@ class TvConversationAdapter(
             }
             // Hide the link preview
             answerLayout?.visibility = View.GONE
-            if (convColor != 0 && !textMessage.isIncoming) {
+            if (convColor != 0 && !interaction.isIncoming) {
                 msgTxt.background.setTint(convColor)
             }
             msgTxt.textSize = 14f
@@ -797,7 +800,7 @@ class TvConversationAdapter(
             msgTxt.setPadding(0, 0, 0, 0)
         }
         if (isTimeShown) {
-            convViewHolder.compositeDisposable.add(timestampText(context, textMessage.timestamp).subscribe {
+            convViewHolder.compositeDisposable.add(timestampText(context, interaction.timestamp).subscribe {
                 convViewHolder.mMsgDetailTxtPerm?.text = it
             })
             convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
@@ -805,7 +808,7 @@ class TvConversationAdapter(
             convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
             val isExpanded = position == expandedItemPosition
             if (isExpanded) {
-                convViewHolder.compositeDisposable.add(timestampText(context, textMessage.timestamp).subscribe {
+                convViewHolder.compositeDisposable.add(timestampText(context, interaction.timestamp).subscribe {
                     convViewHolder.mMsgDetailTxt?.text = it
                 })
             }
