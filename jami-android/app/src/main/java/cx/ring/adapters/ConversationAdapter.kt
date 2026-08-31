@@ -1295,8 +1295,9 @@ class ConversationAdapter(
                 // Set the tint of the file background
                 if (file.isOutgoing) viewHolder.mFileInfoLayout?.background?.setTint(convColor)
                 // Show the download button
-                when (status) {
-                    TransferStatus.TRANSFER_AWAITING_HOST, TransferStatus.FILE_AVAILABLE -> {
+                when {
+                    !file.hasExactContent && (status == TransferStatus.TRANSFER_AWAITING_HOST ||
+                        status == TransferStatus.FILE_AVAILABLE || status.isError) -> {
                         viewHolder.mFileDownloadButton?.let {
                             it.visibility = View.VISIBLE
                             it.setOnClickListener { presenter.acceptFile(file) }
