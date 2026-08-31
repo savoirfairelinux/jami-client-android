@@ -1748,13 +1748,30 @@ class AccountService(
         }}
     }
 
-    private fun hydrateDataTransfer(accountId: String, conversationId: String, transfer: DataTransfer, emitEvent: Boolean = true) {
+    private fun hydrateDataTransfer(
+        accountId: String,
+        conversationId: String,
+        transfer: DataTransfer,
+        emitEvent: Boolean = true,
+        retryOnUnknown: Boolean = true
+    ) {
         val fileId = transfer.fileId?.takeIf(String::isNotEmpty) ?: return
         Single.fromCallable {
             fileTransferInfoProvider.get(accountId, conversationId, fileId)
         }
             .subscribeOn(Schedulers.io())
             .subscribe({ info ->
+                if (!info.isSuccess) {
+                    Log.w(TAG, "Unable to load data transfer info: native error ${info.error}")
+                    if (retryOnUnknown && info.isRetryable) {
+                        mExecutor.schedule(
+                            { hydrateDataTransfer(accountId, conversationId, transfer, emitEvent, false) },
+                            DATA_TRANSFER_REFRESH_PERIOD,
+                            TimeUnit.MILLISECONDS
+                        )
+                    }
+                    return@subscribe
+                }
                 val account = getAccount(accountId) ?: return@subscribe
                 val conversation = account.getSwarm(conversationId) ?: return@subscribe
                 val updated = synchronized(conversation) {
@@ -1844,9 +1861,11 @@ class AccountService(
             if (!transfer.canTransitionTo(transferStatus))
                 return
             transfer.conversation = conversation
-            info.path?.let { transfer.daemonPath = File(it) }
+            if (info.isSuccess) {
+                info.path?.let { transfer.daemonPath = File(it) }
+                transfer.bytesProgress = info.progress
+            }
             transfer.transferStatus = transferStatus
-            transfer.bytesProgress = info.progress
             if (oldState != transferStatus) {
                 if (transferStatus == TransferStatus.TRANSFER_ONGOING) {
                     DataTransferRefreshTask(account, conversation, transfer)
