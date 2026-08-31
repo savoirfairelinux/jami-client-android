@@ -6,6 +6,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.io.File
+import java.nio.file.Files
 
 class DataTransferTest {
     @Test
@@ -27,17 +28,32 @@ class DataTransferTest {
     }
 
     @Test
-    fun daemonInfoDoesNotDowngradeOngoingTransfer() {
+    fun daemonInfoCompletesEmptyRegularFile() {
+        val file = File.createTempFile("jami-transfer", ".tmp")
+        val transfer = newTransfer().apply {
+            transferStatus = TransferStatus.FILE_AVAILABLE
+        }
+
+        try {
+            assertTrue(transfer.applyDaemonInfo(file, 0, 0))
+            assertEquals(TransferStatus.TRANSFER_FINISHED, transfer.transferStatus)
+        } finally {
+            file.delete()
+        }
+    }
+
+    @Test
+    fun daemonInfoUpdatesOngoingTransferWithoutChangingStatus() {
         val transfer = newTransfer().apply {
             transferStatus = TransferStatus.TRANSFER_ONGOING
             bytesProgress = 8
         }
 
-        assertFalse(transfer.applyDaemonInfo(File("ignored"), 100, 10))
+        assertTrue(transfer.applyDaemonInfo(File("updated"), 100, 10))
         assertEquals(TransferStatus.TRANSFER_ONGOING, transfer.transferStatus)
-        assertEquals(8, transfer.bytesProgress)
-        assertEquals(0, transfer.totalSize)
-        assertEquals(null, transfer.daemonPath)
+        assertEquals(10, transfer.bytesProgress)
+        assertEquals(100, transfer.totalSize)
+        assertEquals(File("updated"), transfer.daemonPath)
     }
 
     @Test
@@ -67,6 +83,87 @@ class DataTransferTest {
         }
 
         assertTrue(transfer.canTransitionTo(TransferStatus.TRANSFER_FINISHED))
+    }
+
+    @Test
+    fun interruptedTransferCanResumeAndFinish() {
+        val transfer = newTransfer().apply {
+            transferStatus = TransferStatus.TRANSFER_UNJOINABLE_PEER
+        }
+
+        assertTrue(transfer.canTransitionTo(TransferStatus.TRANSFER_ONGOING))
+        assertTrue(transfer.canTransitionTo(TransferStatus.TRANSFER_FINISHED))
+    }
+
+    @Test
+    fun removedTransferCannotResume() {
+        val transfer = newTransfer().apply {
+            transferStatus = TransferStatus.FILE_REMOVED
+        }
+
+        assertFalse(transfer.canTransitionTo(TransferStatus.TRANSFER_ONGOING))
+    }
+
+    @Test
+    fun invalidDaemonEventIsAnError() {
+        assertEquals(TransferStatus.TRANSFER_ERROR, TransferStatus.fromIntFile(0))
+    }
+
+    @Test
+    fun publicPathOnlyExposesExistingSymlinkTarget() {
+        val directory = Files.createTempDirectory("jami-transfer").toFile()
+        val target = File(directory, "target").apply { writeText("data") }
+        val link = File(directory, "link")
+        val realParent = File(directory, "real-parent").apply { mkdir() }
+        val parentLink = File(directory, "parent-link")
+        Files.createSymbolicLink(parentLink.toPath(), realParent.toPath())
+        val regularThroughParentLink = File(parentLink, "regular").apply { writeText("data") }
+        Files.createSymbolicLink(link.toPath(), target.toPath())
+        val transfer = newTransfer().apply { daemonPath = link }
+
+        try {
+            assertEquals(target.canonicalFile, transfer.publicPath)
+            transfer.daemonPath = target
+            assertEquals(null, transfer.publicPath)
+            transfer.daemonPath = regularThroughParentLink
+            assertEquals(null, transfer.publicPath)
+        } finally {
+            link.delete()
+            regularThroughParentLink.delete()
+            parentLink.delete()
+            realParent.delete()
+            target.delete()
+            directory.delete()
+        }
+    }
+
+    @Test
+    fun clearingDaemonInfoDropsPathAndProgress() {
+        val transfer = newTransfer().apply {
+            daemonPath = File("index")
+            destination = File("destination")
+            bytesProgress = 10
+        }
+
+        transfer.clearDaemonInfo()
+
+        assertEquals(null, transfer.daemonPath)
+        assertEquals(null, transfer.destination)
+        assertEquals(0, transfer.bytesProgress)
+    }
+
+    @Test
+    fun exactContentRequiresAnExistingRecordedFile() {
+        val file = File.createTempFile("jami-transfer", ".tmp")
+        val transfer = newTransfer().apply { destination = file }
+
+        try {
+            assertTrue(transfer.hasExactContent)
+            file.delete()
+            assertFalse(transfer.hasExactContent)
+        } finally {
+            file.delete()
+        }
     }
 
     private fun newTransfer() = DataTransfer(

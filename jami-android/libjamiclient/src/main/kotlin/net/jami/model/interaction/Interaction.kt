@@ -259,7 +259,7 @@ open class Interaction {
 
         companion object {
             fun fromIntFile(n: Int): TransferStatus = when (n) {
-                0 -> INVALID
+                0 -> TRANSFER_ERROR
                 1 -> TRANSFER_CREATED
                 2, 9 -> TRANSFER_ERROR
                 3 -> TRANSFER_AWAITING_PEER
