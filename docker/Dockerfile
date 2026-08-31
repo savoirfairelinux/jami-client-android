@@ -70,6 +70,30 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
     ln -s /usr/local/cargo/bin/rustup /usr/local/bin/rustup && \
     chmod -R go-w /usr/local/rustup /usr/local/cargo
 
+# Node.js toolchain, required to install the dependencies of, bundle, and test
+# the collaborative text editor (app/src/collabeditor) that the Gradle build
+# packages into the application assets. Installed system-wide, and on PATH, so
+# it is reachable by the unprivileged user the build runs as. The distribution
+# packages are deliberately not used: Ubuntu 24.04 ships Node 18, which is too
+# old, as the editor test suite is run through "node --test" with a glob
+# pattern, and glob expansion was only added to the test runner in Node 22. The
+# version is pinned, and the download verified against the checksums published
+# upstream, so that a new Node release cannot silently change the image from one
+# rebuild to the next.
+ARG NODE_VERSION=22.23.2
+ENV PATH="/usr/local/lib/nodejs/node-v${NODE_VERSION}-linux-x64/bin:$PATH"
+RUN NODE_ARCHIVE="node-v${NODE_VERSION}-linux-x64.tar.xz" && \
+    wget -P /tmp https://nodejs.org/dist/v${NODE_VERSION}/${NODE_ARCHIVE} \
+                 https://nodejs.org/dist/v${NODE_VERSION}/SHASUMS256.txt && \
+    (cd /tmp && grep " ${NODE_ARCHIVE}\$" SHASUMS256.txt | sha256sum --check --strict -) && \
+    mkdir -p /usr/local/lib/nodejs && \
+    tar xJf /tmp/${NODE_ARCHIVE} -C /usr/local/lib/nodejs && \
+    ln -s /usr/local/lib/nodejs/node-v${NODE_VERSION}-linux-x64/bin/node /usr/local/bin/node && \
+    ln -s /usr/local/lib/nodejs/node-v${NODE_VERSION}-linux-x64/bin/npm /usr/local/bin/npm && \
+    ln -s /usr/local/lib/nodejs/node-v${NODE_VERSION}-linux-x64/bin/npx /usr/local/bin/npx && \
+    rm -f /tmp/${NODE_ARCHIVE} /tmp/SHASUMS256.txt && \
+    node --version && npm --version
+
 # Swig
 RUN wget -O /tmp/swig.tar.gz https://github.com/swig/swig/archive/v4.4.1.tar.gz && \
     tar xzf  /tmp/swig.tar.gz -C /opt && \
