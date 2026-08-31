@@ -21,6 +21,7 @@ import net.jami.utils.StringUtils
 import java.io.File
 import java.io.IOException
 import java.lang.Exception
+import java.nio.file.Files
 
 class DataTransfer : Interaction {
     var totalSize: Long = 0
@@ -30,6 +31,7 @@ class DataTransfer : Interaction {
     //private final String mPeerId;
     private var mExtension: String? = null
     var fileId: String? = null
+    @Volatile
     var destination: File? = null
     var daemonPath: File? = null
 
@@ -135,14 +137,14 @@ class DataTransfer : Interaction {
 
     @Synchronized
     fun applyDaemonInfo(path: File?, total: Long, progress: Long): Boolean {
-        if (transferStatus != TransferStatus.FILE_AVAILABLE)
+        if (transferStatus == TransferStatus.FILE_REMOVED)
             return false
         var changed = false
         if (path != null && daemonPath != path) {
             daemonPath = path
             changed = true
         }
-        if (total > 0 && totalSize != total) {
+        if (total >= 0 && totalSize != total) {
             totalSize = total
             changed = true
         }
@@ -150,7 +152,8 @@ class DataTransfer : Interaction {
             bytesProgress = progress
             changed = true
         }
-        if (path?.exists() == true && totalSize > 0 && bytesProgress == totalSize) {
+        if (transferStatus == TransferStatus.FILE_AVAILABLE && path?.isFile == true && total >= 0 &&
+            progress == total) {
             transferStatus = TransferStatus.TRANSFER_FINISHED
             changed = true
         }
@@ -159,7 +162,8 @@ class DataTransfer : Interaction {
 
     @Synchronized
     fun canTransitionTo(status: TransferStatus): Boolean =
-        status == transferStatus || (!transferStatus.isOver && transferStatus != TransferStatus.FILE_REMOVED)
+        status == transferStatus || (transferStatus != TransferStatus.TRANSFER_FINISHED &&
+            transferStatus != TransferStatus.FILE_REMOVED)
 
     fun canAutoAccept(maxSize: Int): Boolean {
         return maxSize == UNLIMITED_SIZE || totalSize <= maxSize
@@ -167,10 +171,21 @@ class DataTransfer : Interaction {
 
     val publicPath: File?
         get() = try {
-            daemonPath?.canonicalFile
+            daemonPath?.takeIf { Files.isSymbolicLink(it.toPath()) }
+                ?.canonicalFile?.takeIf(File::isFile)
         } catch (e: IOException) {
             null
         }
+
+    val hasExactContent: Boolean
+        get() = destination?.isFile == true || publicPath != null
+
+    @Synchronized
+    fun clearDaemonInfo() {
+        daemonPath = null
+        destination = null
+        bytesProgress = 0
+    }
 
     companion object {
         private val IMAGE_EXTENSIONS = setOf("jpg", "jpeg", "png", "gif", "webp", "svg", "bmp", "heic", "heif")

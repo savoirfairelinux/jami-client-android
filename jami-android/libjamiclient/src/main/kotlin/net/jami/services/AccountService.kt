@@ -68,6 +68,7 @@ class AccountService(
         val subject: SingleSubject<Conversation>
     )
     private val conversationLoadingTasks = HashMap<Long, ConversationLoad>()
+    private val pendingTransferDestinations = ConcurrentHashMap<Triple<String, String, String>, File>()
     /**
      * @return the current Account from the local cache
      */
@@ -180,7 +181,7 @@ class AccountService(
         }
         .share()
     private val messageSubject: Subject<Interaction> = PublishSubject.create()
-    private val dataTransfersProcessor = PublishProcessor.create<DataTransfer>()
+    private val dataTransfersProcessor = PublishProcessor.create<DataTransfer>().toSerialized()
     val dataTransfers: Flowable<DataTransfer>
         get() = dataTransfersProcessor
     private val incomingRequestsSubject: Subject<TrustRequest> = PublishSubject.create()
@@ -742,6 +743,7 @@ class AccountService(
      */
     fun removeAccount(accountId: String) {
         Log.i(TAG, "removeAccount() $accountId")
+        pendingTransferDestinations.keys.removeIf { it.first == accountId }
         mExecutor.execute {
             // Terminal case: drop any background-restore intent and explicit marker.
             backgroundDeactivatedAccounts.remove(accountId)
@@ -1651,6 +1653,7 @@ class AccountService(
     }
 
     private fun conversationRemovedNow(accountId: String, conversationId: String) {
+        pendingTransferDestinations.keys.removeIf { it.first == accountId && it.second == conversationId }
         val account = getAccount(accountId)
         if (account == null) {
             Log.w(TAG, "conversationRemoved: unable to find account")
@@ -1691,6 +1694,11 @@ class AccountService(
         getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
             val interaction = synchronized(conversation) {
                 val interaction = getInteractionFromSwarmMessage(account, conversation, message)
+                if (interaction is DataTransfer) {
+                    pendingTransferDestinations.remove(Triple(accountId, conversationId, message.id))?.let {
+                        interaction.destination = it
+                    }
+                }
                 conversation.addSwarmElement(interaction, true)
                 interaction
             }
@@ -1698,8 +1706,7 @@ class AccountService(
             if (isIncoming)
                 incomingSwarmMessageSubject.onNext(interaction)
             if (interaction is DataTransfer) {
-                dataTransfersProcessor.onNext(interaction)
-                hydrateDataTransfer(accountId, conversationId, interaction)
+                hydrateDataTransfer(accountId, conversationId, interaction, emitAlways = true)
             }
         }}
     }
@@ -1748,24 +1755,84 @@ class AccountService(
         }}
     }
 
-    private fun hydrateDataTransfer(accountId: String, conversationId: String, transfer: DataTransfer, emitEvent: Boolean = true) {
-        val fileId = transfer.fileId?.takeIf(String::isNotEmpty) ?: return
+    private fun hydrateDataTransfer(
+        accountId: String,
+        conversationId: String,
+        transfer: DataTransfer,
+        emitEvent: Boolean = true,
+        emitAlways: Boolean = false,
+        attempt: Int = 0,
+        expectedStatus: TransferStatus? = null
+    ) {
+        val statusAtStart = expectedStatus ?: synchronized(transfer) { transfer.transferStatus }
+
+        fun emitIfCurrent() {
+            if (!emitEvent)
+                return
+            val conversation = getAccount(accountId)?.getSwarm(conversationId) ?: return
+            val isCurrent = synchronized(conversation) {
+                conversation.getMessage(transfer.messageId ?: return@synchronized false) === transfer &&
+                    synchronized(transfer) { transfer.transferStatus == statusAtStart }
+            }
+            if (isCurrent)
+                dataTransfersProcessor.onNext(transfer)
+        }
+
+        fun retry() {
+            val delay = DATA_TRANSFER_REFRESH_PERIOD * (1L shl attempt)
+            mExecutor.schedule(
+                {
+                    hydrateDataTransfer(
+                        accountId, conversationId, transfer, emitEvent, emitAlways, attempt + 1, statusAtStart
+                    )
+                },
+                delay,
+                TimeUnit.MILLISECONDS
+            )
+        }
+
+        val fileId = transfer.fileId?.takeIf(String::isNotEmpty)
+        if (fileId == null) {
+            if (emitAlways)
+                emitIfCurrent()
+            return
+        }
+        val maxRetries = if (emitAlways) DATA_TRANSFER_INFO_MAX_RETRIES else 1
         Single.fromCallable {
             fileTransferInfoProvider.get(accountId, conversationId, fileId)
         }
             .subscribeOn(Schedulers.io())
             .subscribe({ info ->
+                if (!info.isSuccess) {
+                    Log.w(TAG, "Unable to load data transfer info: native error ${info.error}")
+                    val shouldRetry = attempt < maxRetries && info.isRetryable
+                    if (shouldRetry)
+                        retry()
+                    else if (emitAlways)
+                        emitIfCurrent()
+                    return@subscribe
+                }
                 val account = getAccount(accountId) ?: return@subscribe
                 val conversation = account.getSwarm(conversationId) ?: return@subscribe
-                val updated = synchronized(conversation) {
+                val shouldEmit = synchronized(conversation) {
                     if (conversation.getMessage(transfer.messageId ?: return@synchronized false) !== transfer)
                         return@synchronized false
-                    transfer.applyDaemonInfo(info.path?.let { File(it) }, info.total, info.progress) &&
+                    if (synchronized(transfer) { transfer.transferStatus != statusAtStart })
+                        return@synchronized false
+                    val updated = transfer.applyDaemonInfo(info.path?.let { File(it) }, info.total, info.progress)
+                    if (updated && !emitEvent)
                         conversation.notifyDataTransferUpdated(transfer)
+                    updated || emitAlways
                 }
-                if (updated && emitEvent)
+                if (shouldEmit && emitEvent)
                     dataTransfersProcessor.onNext(transfer)
-            }, { error -> Log.w(TAG, "Unable to load data transfer info", error) })
+            }, { error ->
+                Log.w(TAG, "Unable to load data transfer info", error)
+                if (attempt < maxRetries)
+                    retry()
+                else if (emitAlways)
+                    emitIfCurrent()
+            })
     }
 
     fun sendFile(conversation: Conversation, file: File) {
@@ -1784,9 +1851,10 @@ class AccountService(
     }
 
     fun acceptFileTransfer(conversation: Conversation, fileId: String, transfer: DataTransfer) {
-        if (conversation.isSwarm) {
+        if (conversation.isSwarm && !transfer.hasExactContent) {
             val conversationId = conversation.uri.rawRingId
             val newPath = mDeviceRuntimeService.getNewConversationPath(conversation.accountId, conversationId, transfer.displayName)
+            transfer.destination = newPath
             Log.i(TAG, "downloadFile() id=" + conversation.accountId + ", path=" + conversationId + " " + fileId + " to -> " + newPath.absolutePath)
             JamiService.downloadFile(conversation.accountId, conversationId, transfer.messageId, fileId, newPath.absolutePath)
         }
@@ -1832,32 +1900,40 @@ class AccountService(
     fun dataTransferEvent(account: Account, conversation: Conversation, interactionId: String?, fileId: String, eventCode: Int) {
         val transferStatus = TransferStatus.fromIntFile(eventCode)
         Log.d(TAG, "Data Transfer $interactionId $fileId $transferStatus")
-        val transfer = account.getDataTransfer(fileId) ?: conversation.getMessage(interactionId!!) as DataTransfer? ?: return
+        val senderPath = File(fileId).takeIf(File::isAbsolute)
+        val transfer = account.getDataTransfer(fileId)
+            ?: interactionId?.let { conversation.getMessage(it) as? DataTransfer }
+        if (transfer == null) {
+            if (senderPath != null && interactionId != null)
+                pendingTransferDestinations[Triple(account.accountId, conversation.uri.rawRingId, interactionId)] = senderPath
+            return
+        }
+        if (transfer.isOutgoing && senderPath != null)
+            transfer.destination = senderPath
+        if (transferStatus == TransferStatus.TRANSFER_CREATED && transfer.isOutgoing) {
+            hydrateDataTransfer(account.accountId, conversation.uri.rawRingId, transfer, emitEvent = false)
+            return
+        }
+        val transferFileId = transfer.fileId ?: fileId
         val info = try {
-            fileTransferInfoProvider.get(account.accountId, conversation.uri.rawRingId, fileId)
+            fileTransferInfoProvider.get(account.accountId, conversation.uri.rawRingId, transferFileId)
         } catch (e: Exception) {
             Log.w(TAG, "Unable to load data transfer info", e)
-            return
+            null
         }
         synchronized(transfer) {
             val oldState = transfer.transferStatus
             if (!transfer.canTransitionTo(transferStatus))
                 return
+            if (eventCode == 9)
+                transfer.destination = null
             transfer.conversation = conversation
-            info.path?.let { transfer.daemonPath = File(it) }
+            if (info?.isSuccess == true)
+                transfer.applyDaemonInfo(info.path?.let { File(it) }, info.total, info.progress)
             transfer.transferStatus = transferStatus
-            transfer.bytesProgress = info.progress
             if (oldState != transferStatus) {
-                if (transferStatus == TransferStatus.TRANSFER_ONGOING) {
+                if (transferStatus == TransferStatus.TRANSFER_ONGOING)
                     DataTransferRefreshTask(account, conversation, transfer)
-                } else if (transferStatus.isError) {
-                    if (!transfer.isOutgoing) {
-                        val tmpPath = mDeviceRuntimeService.getTemporaryPath(
-                            conversation.uri.rawRingId, transfer.storagePath
-                        )
-                        tmpPath.delete()
-                    }
-                }
             }
             // Hack to prevent notifications from being sent for data transfer uploads done on
             // images which aren't owned by the local account
@@ -2048,6 +2124,7 @@ class AccountService(
         private val TAG = AccountService::class.java.simpleName
         private const val VCARD_CHUNK_SIZE = 1000
         private const val DATA_TRANSFER_REFRESH_PERIOD: Long = 500
+        private const val DATA_TRANSFER_INFO_MAX_RETRIES = 4
 
         const val ACCOUNT_SCHEME_NONE = ""
         const val ACCOUNT_SCHEME_PASSWORD = "password"
