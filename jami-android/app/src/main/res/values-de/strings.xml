@@ -484,6 +484,8 @@
   <string name="error_open_no_app_found">Keine Anwendung gefunden, die diese Datei verarbeiten kann: %1$s</string>
   <string name="swarm_detail_no_document">Sie haben noch keine Dokumente.</string>
   <string name="group_admin">Administrator</string>
+  <string name="group_member_blocked">Blockiert</string>
+  <string name="group_member_invited">Eingeladen</string>
   <string name="share_contact_intent_title">Diesen Kontakt zu Jami hinzufügen!</string>
   <string name="share_contact_intent_body">Sie können diesen Kontakt „%1$s“ auf der verteilten Kommunikationsplattform Jami hinzufügen: %2$s</string>
   <!--JamiId-->
@@ -628,4 +630,61 @@
   <string name="shared_services_policy_specific">Bestimmte Kontakte</string>
   <string name="shared_services_allowed_contacts_hint">Zugelassene Kontakte (durch Kommas getrennt)</string>
   <string name="shared_services_save">Speichern</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Dokumente</string>
+  <string name="collab_new_document">Neues Dokument</string>
+  <string name="collab_untitled">Unbenanntes Dokument</string>
+  <string name="collab_document_name_hint">Dokumentname</string>
+  <string name="collab_create">Erstellen</string>
+  <string name="collab_rename">Umbenennen</string>
+  <string name="collab_open_error">Dieses Dokument konnte nicht geöffnet werden.</string>
+  <string name="collab_no_documents">In dieser Unterhaltung wurde noch kein Dokument verfasst.</string>
+  <string name="collab_created_by">Erstellt von %1$s</string>
+  <string name="collab_editing_alone">Nur Sie sind bei der Bearbeitung</string>
+  <plurals name="collab_editing_others">
+    <item quantity="one">%1$d andere Person ist bei der Bearbeitung</item>
+    <item quantity="other">%1$d andere Personen sind bei der Bearbeitung</item>
+  </plurals>
+  <string name="collab_history">Versionsverlauf</string>
+  <string name="collab_no_history">Dieses Dokument hat noch keine gespeicherte Version.</string>
+  <string name="collab_version_leave">Zurück zur aktuellen Version</string>
+  <string name="collab_version_shown">Version von %1$s</string>
+  <string name="collab_version_restore">Wiederherstellen</string>
+  <string name="collab_version_restored">Das Dokument wurde auf diese Version zurückgesetzt.</string>
+  <string name="collab_version_unchanged">Diese Version ist das Dokument, das Sie bereits haben.</string>
+  <string name="collab_version_restore_error">Diese Version konnte nicht wiederhergestellt werden.</string>
+  <string name="collab_version_by">%1$s — %2$s</string>
+  <string name="collab_version_deltas">%1$s — %2$s, %3$d Änderung(en)</string>
+  <string name="collab_link_title">Link</string>
+  <string name="collab_link_hint">Adresse</string>
+  <string name="collab_link_add">Hinzufügen</string>
+  <string name="collab_link_remove">Entfernen</string>
+  <string name="collab_export">Lokale Kopie exportieren</string>
+  <string name="collab_export_pdf">Als PDF exportieren</string>
+  <string name="collab_export_html">Als HTML exportieren</string>
+  <string name="collab_export_markdown">Als Markdown exportieren</string>
+  <string name="collab_export_text">Als Nur-Text exportieren</string>
+  <plurals name="collab_export_missing_images">
+    <item quantity="one">%1$d Bild in diesem Dokument ist noch nicht eingetroffen und wird in der exportierten Datei ausgelassen.</item>
+    <item quantity="other">%1$d Bilder in diesem Dokument sind noch nicht eingetroffen und werden in der exportierten Datei ausgelassen.</item>
+  </plurals>
+  <string name="collab_export_anyway">Trotzdem exportieren</string>
+  <string name="collab_export_error">Dieses Dokument konnte nicht exportiert werden.</string>
+  <string name="collab_image_error">Dieses Bild konnte nicht hinzugefügt werden.</string>
+  <string name="collab_image_too_large">Dieses Bild ist zu groß, um einem Dokument hinzugefügt zu werden.</string>
+  <string name="collab_send_error">Ihre Änderungen konnten nicht gesendet werden.</string>
+  <string name="collab_editable_document">Bearbeitbares Dokument</string>
+  <string name="collab_create_error">Dieses Dokument konnte nicht erstellt werden.</string>
+  <string name="collab_remove">Entfernen</string>
+  <string name="collab_remove_title">Dokument entfernen</string>
+  <string name="collab_remove_message">\"%1$s\" wird für alle Mitglieder dieser Unterhaltung entfernt. Dies kann nicht rückgängig gemacht werden.</string>
+  <string name="collab_remove_error">Dieses Dokument konnte nicht entfernt werden.</string>
+  <string name="collab_remove_locally_title">Von diesem Gerät entfernen</string>
+  <string name="collab_remove_locally_message">\"%1$s\" wird nur von diesem Gerät entfernt. Die anderen Mitglieder behalten es, und beim erneuten Öffnen wird es wieder heruntergeladen.</string>
+  <string name="collab_remove_locally_error">Dieses Dokument konnte nicht von diesem Gerät entfernt werden.</string>
+  <string name="collab_not_on_this_device">Nicht auf diesem Gerät</string>
+  <string name="collab_document_removed">Dokument entfernt</string>
+  <string name="collab_document_removed_message">\"%1$s\" wurde von seinem Autor entfernt.</string>
+  <string name="collab_document_removed_locally">Dokument von diesem Gerät entfernt</string>
+  <string name="collab_document_removed_locally_message">\"%1$s\" ist nicht mehr auf diesem Gerät. Beim erneuten Öffnen wird es wieder heruntergeladen.</string>
 </resources>

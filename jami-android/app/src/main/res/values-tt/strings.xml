@@ -191,4 +191,12 @@
   <string name="shared_services_delete">Ачу</string>
   <string name="shared_services_more_options">Күпрәк мөмкинлекләр</string>
   <string name="shared_services_save">Каплагыз</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Документлар</string>
+  <string name="collab_create">Ясау</string>
+  <string name="collab_link_title">Сылтама</string>
+  <string name="collab_link_hint">Адрес</string>
+  <string name="collab_link_add">Өстәргә</string>
+  <string name="collab_link_remove">Ачтыр</string>
+  <string name="collab_remove">Ачтыр</string>
 </resources>

@@ -7,4 +7,9 @@
   <string name="control_play">پخش</string>
   <string name="control_replay">پاسخ</string>
   <string name="control_pause">مکث</string>
+  <string name="collab_format_bold">پررنگ</string>
+  <string name="collab_format_italic">مورب</string>
+  <string name="collab_format_strike">خط زده‌شده</string>
+  <string name="collab_undo">واگرد</string>
+  <string name="collab_redo">اجرای دوباره</string>
 </resources>

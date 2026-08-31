@@ -344,4 +344,12 @@
   <string name="shared_services_more_options">Mai d’opcions</string>
   <string name="shared_services_type_custom_label">Personalitat</string>
   <string name="shared_services_save">Salvar</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Documents</string>
+  <string name="collab_create">Crear</string>
+  <string name="collab_link_title">Link</string>
+  <string name="collab_link_hint">Adreça</string>
+  <string name="collab_link_add">Ajustar</string>
+  <string name="collab_link_remove">Suprimir</string>
+  <string name="collab_remove">Suprimir</string>
 </resources>

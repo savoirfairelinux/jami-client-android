@@ -13,4 +13,9 @@
   <string name="searchbar_navigation_account">Përzgjidhni llogari</string>
   <string name="add_conversation_member">Shtoni anëtar bisede</string>
   <string name="qrcode_to_scan">Kod QR për skanim</string>
+  <string name="collab_format_bold">Të trasha</string>
+  <string name="collab_format_italic">Të pjerrëta</string>
+  <string name="collab_format_strike">Hequrvije</string>
+  <string name="collab_undo">Zhbëje</string>
+  <string name="collab_redo">Ribëje</string>
 </resources>

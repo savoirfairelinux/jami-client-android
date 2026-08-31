@@ -13,4 +13,8 @@
   <string name="searchbar_navigation_account">Account selecteren</string>
   <string name="add_conversation_member">Conversatielid toevoegen</string>
   <string name="qrcode_to_scan">Te scannen QR-code</string>
+  <string name="collab_format_bold">Vet</string>
+  <string name="collab_format_italic">Cursief</string>
+  <string name="collab_format_strike">Doorhalen</string>
+  <string name="collab_undo">Ongedaan maken</string>
 </resources>

@@ -13,4 +13,9 @@
   <string name="searchbar_navigation_account">Vyberte účet</string>
   <string name="add_conversation_member">Přidat člena konverzace</string>
   <string name="qrcode_to_scan">QR kód k naskenování</string>
+  <string name="collab_format_bold">Tučně</string>
+  <string name="collab_format_italic">Kurzíva</string>
+  <string name="collab_format_strike">Přeškrtnutí</string>
+  <string name="collab_undo">Zpět</string>
+  <string name="collab_redo">Znovu</string>
 </resources>

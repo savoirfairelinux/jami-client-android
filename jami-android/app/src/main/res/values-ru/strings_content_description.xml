@@ -13,4 +13,9 @@
   <string name="searchbar_navigation_account">Выберите аккаунт</string>
   <string name="add_conversation_member">Добавить участника беседы</string>
   <string name="qrcode_to_scan">QR-код для сканирования</string>
+  <string name="collab_format_bold">Полужирный</string>
+  <string name="collab_format_italic">Курсив</string>
+  <string name="collab_format_strike">Зачёркивание</string>
+  <string name="collab_undo">Отменить</string>
+  <string name="collab_redo">Повторить</string>
 </resources>

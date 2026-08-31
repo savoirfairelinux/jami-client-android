@@ -7,4 +7,7 @@
   <string name="control_play"> चलाएँ</string>
   <string name="control_pause">विराम</string>
   <string name="searchbar_navigation_account">खाता चुनें</string>
+  <string name="collab_format_bold">बोल्ड</string>
+  <string name="collab_format_italic">इटैलिक</string>
+  <string name="collab_format_strike">स्ट्राइकथ्रू</string>
 </resources>

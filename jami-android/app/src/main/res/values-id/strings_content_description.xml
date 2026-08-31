@@ -6,4 +6,9 @@
   <string name="file_download_button">Unduh</string>
   <string name="control_play">Mainkan</string>
   <string name="control_pause">Jeda</string>
+  <string name="collab_format_bold">Tebal</string>
+  <string name="collab_format_italic">Miring</string>
+  <string name="collab_format_strike">Coretan</string>
+  <string name="collab_undo">Undo</string>
+  <string name="collab_redo">Redo</string>
 </resources>

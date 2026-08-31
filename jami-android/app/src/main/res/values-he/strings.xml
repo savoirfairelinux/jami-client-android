@@ -256,4 +256,12 @@
   <string name="shared_services_policy_hint">נגיש על ידי</string>
   <string name="shared_services_policy_public">ציבורי</string>
   <string name="shared_services_save">שמור</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">מסמכים</string>
+  <string name="collab_create">צור</string>
+  <string name="collab_link_title">קישור</string>
+  <string name="collab_link_hint">כתובת</string>
+  <string name="collab_link_add">הוסף</string>
+  <string name="collab_link_remove">הסר</string>
+  <string name="collab_remove">הסר</string>
 </resources>

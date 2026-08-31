@@ -623,4 +623,12 @@ A fiókexportálási művelet folytatásához kattintson a Megerősítés gombra
   <string name="shared_services_policy_specific">Adott névjegyek</string>
   <string name="shared_services_allowed_contacts_hint">Engedélyezett névjegyek (vesszővel elválasztva)</string>
   <string name="shared_services_save">Mentés</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Dokumentumok</string>
+  <string name="collab_create">Létrehozás</string>
+  <string name="collab_link_title">Kapcsolat</string>
+  <string name="collab_link_hint">Cím</string>
+  <string name="collab_link_add">Hozzáadás</string>
+  <string name="collab_link_remove">Eltávolítás</string>
+  <string name="collab_remove">Eltávolítás</string>
 </resources>

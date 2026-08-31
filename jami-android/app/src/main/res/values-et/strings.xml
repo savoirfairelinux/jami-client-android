@@ -375,7 +375,7 @@
   <string name="no_space_left_on_device">Siin nutiseadmes pole piisavalt andmeruumi</string>
   <string name="title_media_viewer">Meediavaataja</string>
   <string name="menu_file_open">Ava fail</string>
-  <string name="menu_file_download">Laadi faili alla</string>
+  <string name="menu_file_download">Laadi fail alla</string>
   <string name="menu_file_save">Salvesta fail</string>
   <string name="menu_file_delete">Kustuta fail</string>
   <string name="menu_file_share">Jaga faili</string>
@@ -395,9 +395,9 @@
   <string name="navigation_item_account">Kasutajakonto</string>
   <string name="search_results_public_directory">Avalik kataloog</string>
   <!--TV-->
-  <string name="tv_send_audio_dialog_message">Saadame häälsõnumi?</string>
-  <string name="tv_send_image_dialog_message">Saadame pildi?</string>
-  <string name="tv_send_video_dialog_message">Saadame video?</string>
+  <string name="tv_send_audio_dialog_message">Kas saadame häälsõnumi?</string>
+  <string name="tv_send_image_dialog_message">Kas saadame pildi?</string>
+  <string name="tv_send_video_dialog_message">Kas saadame video?</string>
   <string name="tv_media_preview">Eelvaade</string>
   <string name="tv_audio_play">Esita</string>
   <string name="tv_audio_pause">Peata</string>
@@ -632,4 +632,61 @@ Kui klõpsid „Kinnita“, siis jätkame kasutajakonto eksportimisega.</string>
   <string name="shared_services_policy_specific">Konkreetsed kontaktid</string>
   <string name="shared_services_allowed_contacts_hint">Lubatud kontaktid (eraldatud komadega)</string>
   <string name="shared_services_save">Salvesta</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Dokumendid</string>
+  <string name="collab_new_document">Uus dokument</string>
+  <string name="collab_untitled">Ilma nimeta dokument</string>
+  <string name="collab_document_name_hint">Dokumendi nimi</string>
+  <string name="collab_create">Loo</string>
+  <string name="collab_rename">Muuda nime</string>
+  <string name="collab_open_error">Selle dokumendi avamine ei õnnestunud.</string>
+  <string name="collab_no_documents">Siia vestlusesse pole veel lisatud ühtegi dokumenti.</string>
+  <string name="collab_created_by">Looja: %1$s</string>
+  <string name="collab_editing_alone">Ainult sina oled seda muutmas</string>
+  <plurals name="collab_editing_others">
+    <item quantity="one">%1$d muu osaleja on muutmas</item>
+    <item quantity="other">%1$d muud osalejat on muutmas</item>
+  </plurals>
+  <string name="collab_history">Versioonide ajalugu</string>
+  <string name="collab_no_history">Sellel dokumendil pole veel ühtegi salvestatud versiooni.</string>
+  <string name="collab_version_leave">Tagasi viimase versiooni juurde</string>
+  <string name="collab_version_shown">Versioon: %1$s</string>
+  <string name="collab_version_restore">Taasta</string>
+  <string name="collab_version_restored">See dokument on taastatud antud versioonist.</string>
+  <string name="collab_version_unchanged">See versioon on dokument, mis sul juba on olemas.</string>
+  <string name="collab_version_restore_error">Selle versiooni taastamine ei õnnestunud.</string>
+  <string name="collab_version_by">%1$s - %2$s</string>
+  <string name="collab_version_deltas">%1$s - %2$s, %3$d muudatus(t)</string>
+  <string name="collab_link_title">Seo</string>
+  <string name="collab_link_hint">Aadress</string>
+  <string name="collab_link_add">Lisa</string>
+  <string name="collab_link_remove">Eemalda</string>
+  <string name="collab_export">Ekspordi kohalik koopia</string>
+  <string name="collab_export_pdf">Ekspordi PDF-faili</string>
+  <string name="collab_export_html">Ekspordi HTML-faili</string>
+  <string name="collab_export_markdown">Ekspordi Markdown-vormingus faili</string>
+  <string name="collab_export_text">Ekspordi vormindamata tekstifaili</string>
+  <plurals name="collab_export_missing_images">
+    <item quantity="one">%1$d selle dokumendi pilt pole veel kohale jõudnud ning jäävad eksporditavast failist välja.</item>
+    <item quantity="other">%1$d selle dokumendi pilti pole veel kohale jõudnud ning jäävad eksporditavast failist välja.</item>
+  </plurals>
+  <string name="collab_export_anyway">Ekspordi ikkagi</string>
+  <string name="collab_export_error">Selle dokumendi eksportimine ei õnnestunud.</string>
+  <string name="collab_image_error">Selle pildi lisamine ei õnnestunud.</string>
+  <string name="collab_image_too_large">See pilt on dokumendile lisamiseks liiga suur.</string>
+  <string name="collab_send_error">Sinu muudatuste edastamine ei õnnestunud.</string>
+  <string name="collab_editable_document">Muudetav dokument</string>
+  <string name="collab_create_error">Selle dokumendi loomine ei õnnestunud.</string>
+  <string name="collab_remove">Eemalda</string>
+  <string name="collab_remove_title">Eemalda dokument</string>
+  <string name="collab_remove_message">„%1$s“ eemaldatakse selle vestluse iga osaleja juurest. Seda tegevust ei saa tagasi pöörata.</string>
+  <string name="collab_remove_error">Selle dokumendi eemaldamine ei õnnestunud.</string>
+  <string name="collab_remove_locally_title">Eemalda sellest seadmest</string>
+  <string name="collab_remove_locally_message">„%1$s“ eemaldatakse ainult sellest seadmest. Muudele osalejatele jääb ta alles  ja avamisel laaditakse ta uuesti alla.</string>
+  <string name="collab_remove_locally_error">Selle dokumendi eemaldamine antud seadmest ei õnnestunud.</string>
+  <string name="collab_not_on_this_device">pole selles seades</string>
+  <string name="collab_document_removed">Dokument on eemaldatud</string>
+  <string name="collab_document_removed_message">„%1$s“ on autori poolt eemaldatud.</string>
+  <string name="collab_document_removed_locally">Dokument on sellest seadmest eemaldatud.</string>
+  <string name="collab_document_removed_locally_message">„%1$s“ dokumenti enam ei leidu selles seadmes. Tema uuesti avamisel laaditakse ta uuesti alla.</string>
 </resources>

@@ -244,4 +244,12 @@
   <string name="shared_services_policy_hint">Onye nwere ike ịnweta</string>
   <string name="shared_services_policy_public">Ọha</string>
   <string name="shared_services_save">Chekwaa</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Ihe odide</string>
+  <string name="collab_create">Mepụta</string>
+  <string name="collab_link_title">Njikọ</string>
+  <string name="collab_link_hint">Adreesị</string>
+  <string name="collab_link_add">Tinye</string>
+  <string name="collab_link_remove">Wepụ</string>
+  <string name="collab_remove">Wepụ</string>
 </resources>

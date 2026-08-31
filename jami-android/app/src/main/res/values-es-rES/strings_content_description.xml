@@ -6,4 +6,9 @@
   <string name="file_download_button">Descargar</string>
   <string name="control_play">Reproducir</string>
   <string name="control_pause">Pausar</string>
+  <string name="collab_format_bold">Negrita</string>
+  <string name="collab_format_italic">Cursiva</string>
+  <string name="collab_format_strike">Tachado</string>
+  <string name="collab_undo">Deshacer</string>
+  <string name="collab_redo">Rehacer</string>
 </resources>

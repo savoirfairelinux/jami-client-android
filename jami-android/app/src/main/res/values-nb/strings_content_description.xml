@@ -13,4 +13,9 @@
   <string name="searchbar_navigation_account">Velg konto</string>
   <string name="add_conversation_member">Legg til samtalemedlem</string>
   <string name="qrcode_to_scan">QR-kode å skanne</string>
+  <string name="collab_format_bold">Fet</string>
+  <string name="collab_format_italic">Kursiv</string>
+  <string name="collab_format_strike">Gjennomstreking</string>
+  <string name="collab_undo">Angre</string>
+  <string name="collab_redo">Gjør om</string>
 </resources>

@@ -7,4 +7,9 @@
   <string name="control_play">Ludi</string>
   <string name="control_replay">Reludi</string>
   <string name="control_pause">Paŭzi</string>
+  <string name="collab_format_bold">Kuraĝa</string>
+  <string name="collab_format_italic">Italic</string>
+  <string name="collab_format_strike">La trafo</string>
+  <string name="collab_undo">Malfari</string>
+  <string name="collab_redo">Refari</string>
 </resources>
