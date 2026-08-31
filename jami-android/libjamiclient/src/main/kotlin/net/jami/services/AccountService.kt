@@ -1698,8 +1698,11 @@ class AccountService(
             if (isIncoming)
                 incomingSwarmMessageSubject.onNext(interaction)
             if (interaction is DataTransfer) {
-                dataTransfersProcessor.onNext(interaction)
-                hydrateDataTransfer(accountId, conversationId, interaction)
+                // Resolve the local file state before notifying listeners: a transfer whose
+                // content is already on this device (typically a file we just sent) must not
+                // be auto-accepted, as downloading it again would repoint the daemon link to
+                // a new, still empty destination and lose track of the local file.
+                hydrateDataTransfer(accountId, conversationId, interaction, emitAlways = true)
             }
         }}
     }
@@ -1748,24 +1751,46 @@ class AccountService(
         }}
     }
 
-    private fun hydrateDataTransfer(accountId: String, conversationId: String, transfer: DataTransfer, emitEvent: Boolean = true) {
-        val fileId = transfer.fileId?.takeIf(String::isNotEmpty) ?: return
+    /**
+     * Refresh [transfer] with the file information known by the daemon.
+     * @param emitEvent whether listeners should be notified at all.
+     * @param emitAlways notify listeners even when the daemon info brought no change, so that
+     * callers can guarantee the event is delivered only once the local file state is known.
+     */
+    private fun hydrateDataTransfer(
+        accountId: String,
+        conversationId: String,
+        transfer: DataTransfer,
+        emitEvent: Boolean = true,
+        emitAlways: Boolean = false
+    ) {
+        val emit = { if (emitEvent) dataTransfersProcessor.onNext(transfer) }
+        val fileId = transfer.fileId?.takeIf(String::isNotEmpty)
+        if (fileId == null) {
+            if (emitAlways) emit()
+            return
+        }
         Single.fromCallable {
             fileTransferInfoProvider.get(accountId, conversationId, fileId)
         }
             .subscribeOn(Schedulers.io())
             .subscribe({ info ->
-                val account = getAccount(accountId) ?: return@subscribe
-                val conversation = account.getSwarm(conversationId) ?: return@subscribe
+                val conversation = getAccount(accountId)?.getSwarm(conversationId)
+                if (conversation == null) {
+                    if (emitAlways) emit()
+                    return@subscribe
+                }
                 val updated = synchronized(conversation) {
                     if (conversation.getMessage(transfer.messageId ?: return@synchronized false) !== transfer)
                         return@synchronized false
                     transfer.applyDaemonInfo(info.path?.let { File(it) }, info.total, info.progress) &&
                         conversation.notifyDataTransferUpdated(transfer)
                 }
-                if (updated && emitEvent)
-                    dataTransfersProcessor.onNext(transfer)
-            }, { error -> Log.w(TAG, "Unable to load data transfer info", error) })
+                if (updated || emitAlways) emit()
+            }, { error ->
+                Log.w(TAG, "Unable to load data transfer info", error)
+                if (emitAlways) emit()
+            })
     }
 
     fun sendFile(conversation: Conversation, file: File) {
