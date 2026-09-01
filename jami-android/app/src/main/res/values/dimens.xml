@@ -27,17 +27,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <dimen name="contact_bubble_top_padding">16dp</dimen>
     <dimen name="contact_bubble_bottom_margin">48dp</dimen>
 
-    <dimen name="conversation_message_input_radius">24dp</dimen>
-    <dimen name="conversation_message_input_margin">16dp</dimen>
-    <dimen name="conversation_avatar_size">32dp</dimen>
-    <dimen name="conversation_avatar_size_small">16dp</dimen>
-    <dimen name="conversation_message_radius">32dp</dimen>
-    <dimen name="conversation_message_minor_radius">3dp</dimen>
-    <dimen name="conversation_timestamp_textsize">12sp</dimen>
-    <dimen name="conversation_status_icon_size">14dp</dimen>
-    <dimen name="conversation_menu_item_height">40dp</dimen>
-    <dimen name="conversation_file_preview">56dp</dimen>
-
     <dimen name="location_sharing_avatar_size">36dp</dimen>
     <dimen name="location_sharing_minmap_width">260dp</dimen>
     <dimen name="location_sharing_minmap_height">160dp</dimen>
@@ -123,6 +112,17 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <dimen name="welcome_jami_logo_default_size">60dp</dimen>
 
     <!--  ChatView  -->
+    <dimen name="conversation_message_input_radius">24dp</dimen>
+    <dimen name="conversation_message_input_margin">16dp</dimen>
+    <dimen name="conversation_avatar_size">32dp</dimen>
+    <dimen name="conversation_avatar_size_small">16dp</dimen>
+    <dimen name="conversation_message_radius">20dp</dimen>
+    <dimen name="conversation_message_minor_radius">3dp</dimen>
+    <dimen name="conversation_timestamp_textsize">12sp</dimen>
+    <dimen name="conversation_status_icon_size">14dp</dimen>
+    <dimen name="conversation_menu_item_height">40dp</dimen>
+    <dimen name="conversation_file_preview">56dp</dimen>
+
     <dimen name="image_maximum_size">200dp</dimen>
     <dimen name="padding_call_vertical">4dp</dimen>
     <dimen name="text_message_padding">10dp</dimen>
@@ -133,7 +133,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <dimen name="margin_with_avatar">52dp</dimen>
     <dimen name="base_left_conversation_margin">16dp</dimen>
     <dimen name="conditional_left_conversation_margin">12dp</dimen>
-    <dimen name="file_background_radius">5dp</dimen>
+    <dimen name="file_background_radius">10dp</dimen>
     <dimen name="file_background_padding">10dp</dimen>
     <dimen name="file_size">12sp</dimen>
     <dimen name="file_name">16sp</dimen>
