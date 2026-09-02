@@ -44,6 +44,8 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
+import android.graphics.drawable.Animatable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterInside
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -296,6 +298,7 @@ class TvConversationAdapter(
         }
         holder.mMsgTxt?.setOnClickListener(null)
         holder.mMsgTxt?.setOnLongClickListener(null)
+        (holder.mIcon?.drawable as? Animatable)?.stop()
         if (expandedItemPosition == holder.layoutPosition) {
             holder.mMsgDetailTxt?.visibility = View.GONE
             expandedItemPosition = -1
@@ -614,34 +617,43 @@ class TvConversationAdapter(
                             ?.scaleX(if (hasFocus) 1.1f else 1f)
                     }
                 val status = file.transferStatus
-                viewHolder.mIcon?.setImageResource(
-                    if (status.isError) R.drawable.baseline_warning_24
-                    else R.drawable.baseline_attach_file_24
-                )
+                (viewHolder.mIcon?.drawable as? Animatable)?.stop()
                 viewHolder.mFileTitle?.text = file.displayName
                 viewHolder.mFileInfoLayout?.setOnClickListener(null)
                 // Set the tint of the file background
                 if (file.isOutgoing) viewHolder.mFileInfoLayout?.background?.setTint(convColor)
-                // Show the download button
+
                 when {
                     !file.hasExactContent && (status == TransferStatus.FILE_AVAILABLE ||
                         status == TransferStatus.TRANSFER_AWAITING_HOST || status.isError) -> {
-                        viewHolder.mFileDownloadButton?.let {
-                            it.visibility = View.VISIBLE
-                            it.setOnClickListener { presenter.acceptFile(file) }
+                        viewHolder.progress?.hide()
+                        viewHolder.mIcon?.setImageResource(
+                            if (status.isError) R.drawable.baseline_warning_24
+                            else R.drawable.download_24px
+                        )
+                        viewHolder.mFileInfoLayout?.setOnClickListener { presenter.acceptFile(file) }
+                    }
+                    status == TransferStatus.TRANSFER_ONGOING -> {
+                        val anim = (viewHolder.mIcon?.drawable as? AnimatedVectorDrawableCompat)
+                            ?: AnimatedVectorDrawableCompat.create(
+                                context, R.drawable.ic_file_download_anim
+                            )?.also { viewHolder.mIcon?.setImageDrawable(it) }
+                        if (anim != null && !anim.isRunning) {
+                            anim.start()
                         }
+                        viewHolder.progress?.max = (file.totalSize / 1024).toInt()
+                        viewHolder.progress?.setProgress(
+                            (file.bytesProgress / 1024).toInt(), true
+                        )
+                        viewHolder.progress?.show()
+                        viewHolder.mFileInfoLayout?.setOnClickListener(null)
                     }
                     else -> {
-                        viewHolder.mFileDownloadButton?.visibility = View.GONE
-                        if (status == TransferStatus.TRANSFER_ONGOING) {
-                            viewHolder.progress?.max = (file.totalSize / 1024).toInt()
-                            viewHolder.progress?.setProgress(
-                                (file.bytesProgress / 1024).toInt(), true
-                            )
-                            viewHolder.progress?.show()
-                        } else {
-                            viewHolder.progress?.hide()
-                        }
+                        viewHolder.progress?.hide()
+                        viewHolder.mIcon?.setImageResource(
+                            if (status.isError) R.drawable.baseline_warning_24
+                            else R.drawable.baseline_attach_file_24
+                        )
                         viewHolder.mFileInfoLayout?.setOnClickListener { presenter.openFile(file) }
                     }
                 }

@@ -82,9 +82,8 @@
         android:animateLayoutChanges="true"
         android:background="@drawable/filemsg_background_in"
         app:layout_constrainedWidth="true"
-        app:layout_constraintEnd_toStartOf="@id/file_download_button"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@id/photo"
         app:layout_constraintTop_toBottomOf="@id/peer_name">
 
@@ -172,19 +171,6 @@
             tools:text="11:36am" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ImageButton
-        android:id="@+id/file_download_button"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="?selectableItemBackgroundBorderless"
-        android:contentDescription="@string/file_download_button"
-        app:layout_constraintBottom_toBottomOf="@id/fileInfoLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@id/fileInfoLayout"
-        app:layout_constraintTop_toTopOf="@id/fileInfoLayout"
-        app:srcCompat="@drawable/download_24px" />
 
     <TextView
         android:id="@+id/reaction_chip"

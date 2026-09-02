@@ -144,7 +144,6 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     var mFileInfoLayout: ConstraintLayout? = null
     var mFileSize: TextView? = null
     var mFileTitle: TextView? = null
-    var mFileDownloadButton: ImageButton? = null
     var mAudioInfoLayout: LinearLayout? = null
     var mAudioLayout: ViewGroup? = null
     var mAudioWaveform: WaveformView? = null
@@ -224,7 +223,6 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 mLayout = v.findViewById(R.id.file_layout)
                 mFileInfoLayout = v.findViewById(R.id.fileInfoLayout)
                 progress = v.findViewById(R.id.file_download_progress)
-                mFileDownloadButton = v.findViewById(R.id.file_download_button)
                 mMsgDetailTxtPerm = v.findViewById(R.id.message_time_permanent)
                 primaryClickableView = mFileInfoLayout
             }
