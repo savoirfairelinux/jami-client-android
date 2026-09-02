@@ -22,6 +22,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.drawable.Animatable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
@@ -689,9 +690,9 @@ class ConversationAdapter(
         }
         holder.mMsgTxt?.setOnLongClickListener(null)
         holder.mItem?.setOnClickListener(null)
-        // Stop the typing indicator animation: an AnimatedVectorDrawable keeps requesting frames
-        // until stopped explicitly. The cast makes this a no-op for the other drawables mIcon holds.
-        (holder.mIcon?.drawable as? AnimatedVectorDrawableCompat)?.stop()
+        // Stop any running animations (e.g. typing indicator, file download):
+        // an AnimatedVectorDrawable keeps requesting frames until stopped explicitly.
+        (holder.mIcon?.drawable as? Animatable)?.stop()
         holder.compositeDisposable.clear()
     }
 
@@ -1282,52 +1283,62 @@ class ConversationAdapter(
                 }
 
                 val status = file.transferStatus
+                (viewHolder.mIcon?.drawable as? Animatable)?.stop()
                 viewHolder.mIcon?.setPadding(res.getDimensionPixelSize(R.dimen.padding_large))
                 viewHolder.mIcon?.setClipToOutline(true)
                 viewHolder.mIcon?.imageTintList = context.getColorStateList(R.color.file_icon_out)
                 viewHolder.mIcon?.backgroundTintList = context.getColorStateList(if (file.isOutgoing) R.color.file_icon_background_out else R.color.file_icon_background_in)
-                viewHolder.mIcon?.setImageResource(
-                    if (status.isError) R.drawable.baseline_warning_24
-                    else R.drawable.baseline_attach_file_24
-                )
                 viewHolder.mFileTitle?.text = file.displayName
                 viewHolder.mFileInfoLayout?.setOnClickListener(null)
                 // Set the tint of the file background
                 if (file.isOutgoing) viewHolder.mFileInfoLayout?.background?.setTint(convColor)
-                // Show the download button
+
                 when {
                     !file.hasExactContent && (status == TransferStatus.TRANSFER_AWAITING_HOST ||
                         status == TransferStatus.FILE_AVAILABLE || status.isError) -> {
-                        viewHolder.mFileDownloadButton?.let {
-                            it.visibility = View.VISIBLE
-                            it.setOnClickListener { presenter.acceptFile(file) }
+                        viewHolder.progress?.hide()
+                        viewHolder.mIcon?.setImageResource(
+                            if (status.isError) R.drawable.baseline_warning_24
+                            else R.drawable.download_24px
+                        )
+                        viewHolder.mFileInfoLayout?.setOnClickListener { presenter.acceptFile(file) }
+                    }
+
+                    status == TransferStatus.TRANSFER_ONGOING -> {
+                        val anim = (viewHolder.mIcon?.drawable as? AnimatedVectorDrawableCompat)
+                            ?: AnimatedVectorDrawableCompat.create(
+                                context, R.drawable.ic_file_download_anim
+                            )?.also { viewHolder.mIcon?.setImageDrawable(it) }
+                        if (anim != null && !anim.isRunning) {
+                            anim.start()
                         }
+                        viewHolder.progress?.max = (file.totalSize / 1024).toInt()
+                        viewHolder.progress?.setProgress((file.bytesProgress / 1024).toInt(), true)
+                        viewHolder.progress?.show()
+                        viewHolder.mFileInfoLayout?.setOnClickListener(null)
                     }
 
                     else -> {
-                        viewHolder.mFileDownloadButton?.visibility = View.GONE
-                        if (status == TransferStatus.TRANSFER_ONGOING) {
-                            viewHolder.progress?.max = (file.totalSize / 1024).toInt()
-                            viewHolder.progress?.setProgress((file.bytesProgress / 1024).toInt(), true)
-                            viewHolder.progress?.show()
-                        } else {
-                            viewHolder.progress?.hide()
-                            val uri = try { getUriForFile(context, path) } catch (e: Exception) { return }
-                            if (context.contentResolver.getType(uri) == "application/pdf") {
-                                val size = res.getDimensionPixelSize(R.dimen.conversation_file_preview)
-                                viewHolder.compositeDisposable.add(Single
-                                    .fromCallable { BitmapUtils.documentToBitmap(context, uri, size, size)!! }
-                                    .subscribeOn(Schedulers.computation())
-                                    .observeOn(DeviceUtils.uiScheduler)
-                                    .subscribe({ bitmap ->
-                                        viewHolder.mIcon?.setPadding(0)
-                                        viewHolder.mIcon?.imageTintList = null
-                                        viewHolder.mIcon?.backgroundTintList = context.getColorStateList(R.color.white)
-                                        viewHolder.mIcon?.setImageBitmap(bitmap)
-                                    }) {
-                                        Log.w(TAG, "Error loading PDF preview", it)
-                                    })
-                            }
+                        viewHolder.progress?.hide()
+                        viewHolder.mIcon?.setImageResource(
+                            if (status.isError) R.drawable.baseline_warning_24
+                            else R.drawable.baseline_attach_file_24
+                        )
+                        val uri = try { getUriForFile(context, path) } catch (e: Exception) { return }
+                        if (context.contentResolver.getType(uri) == "application/pdf") {
+                            val size = res.getDimensionPixelSize(R.dimen.conversation_file_preview)
+                            viewHolder.compositeDisposable.add(Single
+                                .fromCallable { BitmapUtils.documentToBitmap(context, uri, size, size)!! }
+                                .subscribeOn(Schedulers.computation())
+                                .observeOn(DeviceUtils.uiScheduler)
+                                .subscribe({ bitmap ->
+                                    viewHolder.mIcon?.setPadding(0)
+                                    viewHolder.mIcon?.imageTintList = null
+                                    viewHolder.mIcon?.backgroundTintList = context.getColorStateList(R.color.white)
+                                    viewHolder.mIcon?.setImageBitmap(bitmap)
+                                }) {
+                                    Log.w(TAG, "Error loading PDF preview", it)
+                                })
                         }
                         viewHolder.mFileInfoLayout?.setOnClickListener { presenter.openFile(file) }
                     }

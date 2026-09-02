@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+
+    <target
+        android:name="spinner"
+        android:animation="@animator/rotate_clockwise" />
+
+    <aapt:attr name="android:drawable">
+        <vector
+            android:width="24dp"
+            android:height="24dp"
+            android:viewportWidth="24"
+            android:viewportHeight="24">
+
+            <path
+                android:fillColor="#FFFFFF"
+                android:pathData="M12,17L6.5,11.5L7.91,10.09L11,13.17V6H13V13.17L16.09,10.09L17.5,11.5L12,17Z" />
+
+            <group
+                android:name="spinner"
+                android:pivotX="12"
+                android:pivotY="12">
+                <path
+                    android:pathData="M12,2 A10,10 0 0,1 22,12"
+                    android:strokeWidth="2"
+                    android:strokeColor="#FFFFFF"
+                    android:strokeLineCap="round" />
+                <path
+                    android:pathData="M22,12 A10,10 0 0,1 12,22"
+                    android:strokeWidth="2"
+                    android:strokeColor="#66FFFFFF"
+                    android:strokeLineCap="round" />
+            </group>
+        </vector>
+    </aapt:attr>
+</animated-vector>

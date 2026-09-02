@@ -56,20 +56,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/message_time_permanent">
 
-        <ImageButton
-            android:id="@+id/file_download_button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="?selectableItemBackgroundBorderless"
-            android:contentDescription="@string/file_download_button"
-            app:layout_constraintBottom_toBottomOf="@id/fileInfoLayout"
-            app:layout_constraintEnd_toStartOf="@+id/fileInfoLayout"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/fileInfoLayout"
-            app:srcCompat="@drawable/download_24px" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/fileInfoLayout"
             android:layout_width="wrap_content"
@@ -79,8 +65,7 @@
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="@id/file_download_button"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
@@ -124,6 +109,22 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Title_document.pdf" />
 
+            <androidx.core.widget.ContentLoadingProgressBar
+                android:id="@+id/file_download_progress"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:indeterminate="false"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/file_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="@id/file_title"
+                app:layout_constraintTop_toBottomOf="@id/file_title"
+                tools:max="100"
+                tools:progress="40"
+                tools:visibility="visible" />
+
             <TextView
                 android:id="@+id/file_size"
                 android:layout_width="wrap_content"
@@ -134,7 +135,7 @@
                 android:textColorHighlight="@color/conversation_primary_selection"
                 android:textSize="@dimen/file_size"
                 app:layout_constraintStart_toStartOf="@id/file_title"
-                app:layout_constraintTop_toBottomOf="@id/file_title"
+                app:layout_constraintTop_toBottomOf="@id/file_download_progress"
                 tools:text="1.2 MB" />
 
             <TextView
