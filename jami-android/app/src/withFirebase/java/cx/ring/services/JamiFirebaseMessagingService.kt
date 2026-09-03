@@ -46,15 +46,20 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
             Log.w(TAG, "Can't acquire wake lock", e)
         }
 
-        // Expired-value notification ("exp"): the value already left the DHT. Classified
-        // first, since a stale call value keeps its audioCall/videoCall pt on expiration.
-        val isExpiration = remoteMessage.data.containsKey("exp")
-        val wakeup = if (isExpiration) PushWakeup(false, false) else classifyWakeup(remoteMessage)
+        // The proxy encodes intent in the FCM priority: values published at DHT priority 0
+        // (connection requests, trust requests) go out high; presence announcements, CRLs
+        // and expirations go out normal. Renewal requests ("timeout") are normal too but
+        // need the account back up so the proxy client re-subscribes before expiry.
+        // originalPriority is what the proxy asked for, unaffected by FCM quota downgrades;
+        // an unknown value fails open.
+        val isRenewal = remoteMessage.data.containsKey("timeout")
+        val isActionable = isRenewal || remoteMessage.originalPriority != RemoteMessage.PRIORITY_NORMAL
+        val wakeup = if (isActionable) classifyWakeup(remoteMessage) else PushWakeup(false, false)
         val isCallWakeup = wakeup.isCall
         val isMessageWakeup = wakeup.isMessage
         val app = JamiApplication.instance as? JamiApplicationFirebase
         val appInForeground = app?.isForeground ?: false
-        Log.d(TAG, "push call=$isCallWakeup message=$isMessageWakeup exp=$isExpiration foreground=$appInForeground priority=${remoteMessage.priority}/${remoteMessage.originalPriority}")
+        Log.d(TAG, "push actionable=$isActionable renewal=$isRenewal call=$isCallWakeup message=$isMessageWakeup foreground=$appInForeground priority=${remoteMessage.priority}/${remoteMessage.originalPriority}")
 
         // Start FGS for calls and messages when backgrounded: both trigger an async daemon
         // fetch (proxy reconnect + DHT/swarm pull).
@@ -73,14 +78,10 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
             }
         }
 
-        if (!appInForeground && app != null) {
-            // Single serialized entry point; push-availability, grace window, restore,
-            // reconnect and deactivation re-arm are all evaluated on the main thread.
-            app.onBackgroundPushReceived(
-                isCallPush = isCallWakeup,
-                isMessagePush = isMessageWakeup,
-                isExpiration = isExpiration
-            )
+        if (!appInForeground && app != null && isActionable) {
+            // Single serialized entry point; grace window, restore, reconnect and
+            // deactivation re-arm are all evaluated on the main thread.
+            app.onBackgroundPushReceived(isCallPush = isCallWakeup, isMessagePush = isMessageWakeup)
         }
 
         serviceScope.launch {
@@ -94,11 +95,11 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
                     Log.d(TAG, "scheduling deactivation")
                     app?.scheduleBackgroundDeactivation()
                 }
-                // Non-call, non-message push (noise/expiration): nothing to fetch from the
-                // DHT, so release early instead of burning the 10s timeout. Call and message
-                // pushes keep the lock — both trigger an async daemon fetch (proxy reconnect
-                // + DHT/swarm pull) that can take several seconds after this returns.
-                if (!isCallWakeup && !isMessageWakeup) {
+                // Presence/expiration push: nothing to do, so release early instead of
+                // burning the 10s timeout. Actionable pushes keep the lock — they trigger
+                // an async daemon fetch or proxy re-subscribe that can take several
+                // seconds after this returns.
+                if (!isActionable) {
                     try {
                         wakeLock?.let { if (it.isHeld) it.release() }
                     } catch (e: Exception) {
@@ -110,11 +111,10 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     /**
-     * Classifies a DHT proxy wakeup from the "pt" field (the connection request type the
-     * proxy copies in): audioCall/videoCall for calls, application/im-gitmessage-id or
-     * application/invite for swarm messages and invitations, and sync for multi-device
-     * account sync. FCM priority is never used, as regular DHT values are also high
-     * priority. Only value ids never seen by this process count, dropping the catch-up
+     * Classifies an actionable proxy wakeup from the "pt" field (the connection request
+     * type the proxy copies in): audioCall/videoCall for calls, application/im-gitmessage-id
+     * or application/invite for swarm messages and invitations, and sync for multi-device
+     * account sync. Only value ids never seen by this process count, dropping the catch-up
      * re-deliveries the proxy emits on every fresh listener; the dedupe caches are
      * in-memory, so after a restart a stale id classifies once.
      */

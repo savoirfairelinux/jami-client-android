@@ -61,10 +61,6 @@ class JamiApplicationFirebase : JamiApplication() {
     // long sustained pushes can keep accounts active; only the first event records it.
     private val backgroundActiveSince = AtomicLong(0L)
 
-    // elapsedRealtime of the last background deactivation (0 if none). Gates how soon a
-    // non-call push may restore accounts again, breaking the restore/deactivate churn.
-    private val lastBackgroundDeactivation = AtomicLong(0L)
-
     private val deactivateRunnable = Runnable {
         if (isAppVisible()) return@Runnable
         // Push no longer usable: restore accounts and fall back to always-connected behavior.
@@ -94,9 +90,6 @@ class JamiApplicationFirebase : JamiApplication() {
             else -> {
                 Log.d(TAG, "App went to background with push enabled — deactivating accounts"
                         + if (capReached) " (background-active cap reached)" else "")
-                // Open the non-call cooldown only when a real episode concludes; redundant
-                // passes (no episode) must not slide it forward.
-                if (episodeStart != 0L) lastBackgroundDeactivation.set(now)
                 backgroundActiveSince.set(0L)
                 mAccountService.deactivateProxyAccountsForBackground()
             }
@@ -104,22 +97,12 @@ class JamiApplicationFirebase : JamiApplication() {
     }
 
     /**
-     * Handles a push received while backgrounded: opens the grace window, restores accounts
-     * (and reconnects for call/message pushes), then re-arms the deactivation check.
+     * Handles an actionable push received while backgrounded: opens the grace window,
+     * restores accounts (and reconnects for call/message pushes), then re-arms the
+     * deactivation check. The caller filters on FCM priority, so presence and expiration
+     * pushes never get here.
      */
-    fun onBackgroundPushReceived(isCallPush: Boolean, isMessagePush: Boolean, isExpiration: Boolean = false) {
-        // Expired value: already gone from the DHT, nothing to fetch or answer.
-        if (isExpiration) return
-        // Background noise (neither call nor message): gated during the post-deactivation
-        // cooldown to avoid re-feeding the reconnect churn. 0 means no deactivation yet.
-        if (!isCallPush && !isMessagePush) {
-            val lastDeactivation = lastBackgroundDeactivation.get()
-            if (lastDeactivation != 0L
-                && SystemClock.elapsedRealtime() - lastDeactivation < NONCALL_RESTORE_COOLDOWN_MS
-            ) {
-                return
-            }
-        }
+    fun onBackgroundPushReceived(isCallPush: Boolean, isMessagePush: Boolean) {
         // Publish the grace window before cancelling: a deactivateRunnable already running
         // reads these atomics, and any deactivation it queues runs FIFO after the restore below.
         val now = SystemClock.elapsedRealtime()
@@ -129,15 +112,10 @@ class JamiApplicationFirebase : JamiApplication() {
         backgroundActiveSince.compareAndSet(0L, now)
         backgroundHandler.removeCallbacks(deactivateRunnable)
         backgroundHandler.post {
-            // Call pushes always restore/reconnect; non-call pushes keep the push-availability
-            // gate so a stale delivery after push was disabled cannot reactivate accounts.
-            if (isCallPush
-                || (mPreferencesService.settings.enablePushNotifications && pushToken != null)
-            ) {
-                mAccountService.restoreProxyAccountsAfterBackground()
-                // Full DHT/SIP reconnect to rebuild sockets torn down in doze.
-                if (isCallPush || isMessagePush) hardwareService.connectivityChanged(true)
-            }
+            // No-op unless a background deactivation actually recorded accounts to restore.
+            mAccountService.restoreProxyAccountsAfterBackground()
+            // Full DHT/SIP reconnect to rebuild sockets torn down in doze.
+            if (isCallPush || isMessagePush) hardwareService.connectivityChanged(true)
             backgroundHandler.removeCallbacks(deactivateRunnable)
             backgroundHandler.postDelayed(deactivateRunnable, BACKGROUND_DEACTIVATION_DELAY_MS)
         }
@@ -256,8 +234,6 @@ class JamiApplicationFirebase : JamiApplication() {
         private const val CALL_PUSH_GRACE_MS = 60_000L
         // Upper bound for one continuous background-active episode under sustained pushes.
         private const val MAX_BACKGROUND_ACTIVE_MS = 10 * 60_000L
-        // Minimum time deactivated before a non-call push may restore accounts again.
-        private const val NONCALL_RESTORE_COOLDOWN_MS = 3 * 60_000L
         private val TAG = JamiApplicationFirebase::class.simpleName
     }
 }
