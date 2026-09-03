@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ac69506_ed84f895",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-03T13:10:56Z",
+      "side": 1,
+      "message": "[warning] Line 372: 🟡 Pressing Back (and, on cancelable dialogs, tapping outside) on either custom notification-permission dialog bypasses both the negative-button callback and the settings-result callback, so `checkBatteryOptimization()` is never called. Since `notifPermissionPromptShown` remains true for this Activity, the exemption prompt is skipped for that session and the chain can stall repeatedly for users who dismiss this way. Treat cancellation like Later for both branches, for example with an `OnCancelListener` guarded against the positive-button flow.",
+      "revId": "96ae661c49ebcc05e41e2e465a02e066a52a7f9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
