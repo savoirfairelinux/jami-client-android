@@ -17,6 +17,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Push is delegated to a UnifiedPush distributor instead of FCM, so the
+         exemption is needed when the distributor is itself suspended by Doze. -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
     <application
         android:name=".application.JamiApplicationUnifiedPush"
         tools:ignore="UnusedAttribute">
