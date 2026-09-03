@@ -18,6 +18,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="ImpliedTouchscreenHardware,MissingLeanbackLauncher,MissingLeanbackSupport">
 
+    <!-- This build has no push service, so Doze breaks incoming calls unless
+         the user exempts Jami from battery optimizations. -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
     <application
         android:name=".application.JamiApplicationNoPush"
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute" />

@@ -16,6 +16,7 @@
  */
 package cx.ring.client.wizard
 
+import cx.ring.SkipBatteryOptimizationPromptRule
 import android.app.Activity
 import android.app.Instrumentation
 import android.content.Intent
@@ -64,7 +65,10 @@ import java.io.File
 @RunWith(AndroidJUnit4::class)
 class AccountCreation {
 
-    @Rule
+    @get:Rule(order = 0)
+    val skipBatteryOptimizationPromptRule = SkipBatteryOptimizationPromptRule()
+
+    @Rule(order = 1)
     @JvmField
     var mActivityScenarioRule = ActivityScenarioRule(HomeActivity::class.java)
 

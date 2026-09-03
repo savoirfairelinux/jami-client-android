@@ -16,6 +16,7 @@
  */
 package cx.ring.client.message
 
+import cx.ring.SkipBatteryOptimizationPromptRule
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
@@ -89,7 +90,10 @@ class Messaging {
     }
 
     @JvmField
-    @Rule
+    @get:Rule(order = 0)
+    val skipBatteryOptimizationPromptRule = SkipBatteryOptimizationPromptRule()
+
+    @Rule(order = 1)
     val mActivityScenarioRule = ActivityScenarioRule(HomeActivity::class.java)
 
 

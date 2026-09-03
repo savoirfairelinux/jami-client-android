@@ -332,6 +332,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="permission_dialog_local_network_title">Allow local network access</string>
     <string name="permission_dialog_local_network_message">Jami needs local network access to connect calls directly to devices on your network. Without it, calls may use a relay and have lower quality.</string>
     <string name="permission_dialog_local_network_blocked_message">Local network access is disabled for Jami. Calls to devices on your network may use a relay and have lower quality. Please enable local network access for Jami in the device settings.</string>
+    <string name="permission_dialog_battery_optimization_title">Allow Jami to run in the background</string>
+    <string name="permission_dialog_battery_optimization_message">Battery optimization suspends Jami while the device is idle, which delays or misses incoming calls. Allowing Jami to run in the background keeps it reachable.</string>
     <string name="permission_dialog_open_settings">Open settings</string>
     <string name="permission_dialog_later">Later</string>
 
