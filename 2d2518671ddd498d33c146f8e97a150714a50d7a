@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0c11758_7e4fdc69",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-03T10:44:19Z",
+      "side": 1,
+      "message": "[warning] Line 375: 🟡 The new continuation only runs for the `Later` action. In the blocked notification branch, `Open settings` starts `ACTION_APPLICATION_DETAILS_SETTINGS` directly and never calls `checkBatteryOptimization()`; returning to this `singleTask` activity does not rerun `onCreate`, so eligible builds can finish the notification flow without ever seeing the battery prompt. Launch notification settings through an activity-result callback and continue with `checkBatteryOptimization()` when it returns (or add an equivalent guarded resume path).",
+      "revId": "2d2518671ddd498d33c146f8e97a150714a50d7a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5e9da08_0c7f848b",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-03T10:44:19Z",
+      "side": 1,
+      "message": "[error] Line 411: 🔴 Choosing `Later` does not persist `PREF_BATTERY_OPT_ASKED` (and back/outside cancellation is also unhandled). `batteryOptimizationPromptShown` only survives this Activity instance, so after process death or a later launch `checkBatteryOptimization()` sees the preference as false and shows the prompt again, violating the one-time requirement. Persist the asked flag on every dismissal path, including dialog cancellation, or record it when the prompt is shown.",
+      "revId": "2d2518671ddd498d33c146f8e97a150714a50d7a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
