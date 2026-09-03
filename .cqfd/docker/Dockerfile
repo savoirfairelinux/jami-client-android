@@ -48,6 +48,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     zip \
     && locale-gen $LANG $LC_ALL && update-locale $LANG $LC_ALL
 
+RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g node-gyp node-addon-api
+ENV NODE_PATH=/usr/lib/node_modules
+
 # Rust toolchain, required to build the yffi (Y-CRDT) contrib package used by
 # the collaborative editing feature. Installed system-wide, and on PATH, so it
 # is reachable by the unprivileged user the build runs as. The version is
@@ -59,12 +64,12 @@ ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo
 ENV PATH="/usr/local/cargo/bin:$PATH"
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
-        | sh -s -- -y --profile minimal --default-toolchain ${RUST_VERSION} && \
+    | sh -s -- -y --profile minimal --default-toolchain ${RUST_VERSION} && \
     rustup target add \
-        armv7-linux-androideabi \
-        aarch64-linux-android \
-        i686-linux-android \
-        x86_64-linux-android && \
+    armv7-linux-androideabi \
+    aarch64-linux-android \
+    i686-linux-android \
+    x86_64-linux-android && \
     ln -s /usr/local/cargo/bin/cargo /usr/local/bin/cargo && \
     ln -s /usr/local/cargo/bin/rustc /usr/local/bin/rustc && \
     ln -s /usr/local/cargo/bin/rustup /usr/local/bin/rustup && \
