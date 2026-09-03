@@ -18,6 +18,7 @@ package cx.ring.client
 
 import androidx.core.content.IntentSanitizer
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.ComponentName
 import android.content.Context
@@ -29,6 +30,7 @@ import android.content.res.Configuration
 import android.net.Uri as AndroidUri
 import android.os.Build
 import android.os.Bundle
+import android.os.PowerManager
 import android.provider.Settings
 import android.util.Log
 import android.view.View
@@ -143,6 +145,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
 
     private var localNetworkPermissionPromptShown = false
     private var notifPermissionPromptShown = false
+    private var batteryOptimizationPromptShown = false
 
     private val localNetworkPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
@@ -157,6 +160,26 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             getSharedPreferences(PREFS_NOTIF_PERM, Context.MODE_PRIVATE)
                 .edit().putBoolean(PREF_NOTIF_PERM_ASKED, true).apply()
             Log.d(TAG, "POST_NOTIFICATIONS result: $granted")
+            checkBatteryOptimization()
+        }
+
+    private val batteryOptimizationLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            val pm = getSystemService(Context.POWER_SERVICE) as PowerManager
+            Log.d(TAG, "Battery optimization exemption: ${pm.isIgnoringBatteryOptimizations(packageName)}")
+        }
+
+    // HomeActivity is singleTask, so returning from the settings screen does not
+    // rerun onCreate and the prompt chain would stop there. Launch for a result
+    // instead, and carry on with the next prompt when the user comes back.
+    private val localNetworkSettingsLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            checkPostNotificationsPermission()
+        }
+
+    private val notificationSettingsLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            checkBatteryOptimization()
         }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -166,6 +189,8 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             savedInstanceState?.getBoolean(STATE_LOCAL_NETWORK_PROMPT_SHOWN) ?: false
         notifPermissionPromptShown =
             savedInstanceState?.getBoolean(STATE_NOTIF_PROMPT_SHOWN) ?: false
+        batteryOptimizationPromptShown =
+            savedInstanceState?.getBoolean(STATE_BATTERY_OPT_PROMPT_SHOWN) ?: false
 
         JamiApplication.instance?.startDaemon(this)
 
@@ -302,10 +327,10 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                     }
                     .setPositiveButton(R.string.permission_dialog_open_settings) { _, _ ->
                         try {
-                            startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                                .setData(AndroidUri.fromParts("package", packageName, null)))
+                            localNetworkSettingsLauncher.launch(appDetailsSettingsIntent())
                         } catch (e: Exception) {
                             Log.w(TAG, "Cannot open app settings", e)
+                            checkPostNotificationsPermission()
                         }
                     }
                     .show()
@@ -314,12 +339,18 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
     }
 
     private fun checkPostNotificationsPermission() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            checkBatteryOptimization()
+            return
+        }
         if (notifPermissionPromptShown) return
         val granted = ContextCompat.checkSelfPermission(
             this, Manifest.permission.POST_NOTIFICATIONS
         ) == PackageManager.PERMISSION_GRANTED
-        if (granted) return
+        if (granted) {
+            checkBatteryOptimization()
+            return
+        }
 
         val prefs: SharedPreferences = getSharedPreferences(PREFS_NOTIF_PERM, Context.MODE_PRIVATE)
         val askedOnce = prefs.getBoolean(PREF_NOTIF_PERM_ASKED, false)
@@ -338,7 +369,9 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                 MaterialAlertDialogBuilder(this)
                     .setTitle(R.string.permission_dialog_post_notifications_title)
                     .setMessage(R.string.permission_dialog_post_notifications_message)
-                    .setNegativeButton(R.string.permission_dialog_later, null)
+                    .setNegativeButton(R.string.permission_dialog_later) { _, _ ->
+                        checkBatteryOptimization()
+                    }
                     .setPositiveButton(android.R.string.ok) { _, _ ->
                         postNotificationsPermissionLauncher
                             .launch(Manifest.permission.POST_NOTIFICATIONS)
@@ -350,16 +383,74 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                 MaterialAlertDialogBuilder(this)
                     .setTitle(R.string.permission_dialog_post_notifications_title)
                     .setMessage(R.string.permission_dialog_post_notifications_blocked_message)
-                    .setNegativeButton(R.string.permission_dialog_later, null)
+                    .setNegativeButton(R.string.permission_dialog_later) { _, _ ->
+                        checkBatteryOptimization()
+                    }
                     .setPositiveButton(R.string.permission_dialog_open_settings) { _, _ ->
                         try {
-                            startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                                .setData(AndroidUri.fromParts("package", packageName, null)))
+                            notificationSettingsLauncher.launch(appDetailsSettingsIntent())
                         } catch (e: Exception) {
                             Log.w(TAG, "Cannot open app settings", e)
+                            checkBatteryOptimization()
                         }
                     }
                     .show()
+            }
+        }
+    }
+
+    /**
+     * Builds without a Google push service stay reachable only while their
+     * connection survives Doze, so offer the user the battery optimization
+     * exemption. Flavors that rely on FCM leave the flag false: Google Play
+     * does not accept the permission when high priority messages are usable.
+     */
+    private fun checkBatteryOptimization() {
+        if (!resources.getBoolean(R.bool.battery_optimization_exemption_requestable)) return
+        if (batteryOptimizationPromptShown) return
+
+        val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+        if (powerManager.isIgnoringBatteryOptimizations(packageName)) return
+
+        val prefs: SharedPreferences = getSharedPreferences(PREFS_BATTERY_OPT, Context.MODE_PRIVATE)
+        if (prefs.getBoolean(PREF_BATTERY_OPT_ASKED, false)) return
+
+        batteryOptimizationPromptShown = true
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.permission_dialog_battery_optimization_title)
+            .setMessage(R.string.permission_dialog_battery_optimization_message)
+            .setNegativeButton(R.string.permission_dialog_later, null)
+            .setPositiveButton(android.R.string.ok) { _, _ -> requestBatteryOptimizationExemption() }
+            .setOnDismissListener {
+                // Every way out counts as having asked, a cancellation with back
+                // or a tap outside included. The session flag alone is lost with
+                // the process, which would bring the prompt back on next launch.
+                prefs.edit().putBoolean(PREF_BATTERY_OPT_ASKED, true).apply()
+            }
+            .show()
+    }
+
+    private fun appDetailsSettingsIntent(): Intent =
+        Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+            .setData(AndroidUri.fromParts("package", packageName, null))
+
+    // BatteryLife: only reached by flavors that declare the permission, which
+    // Google Play accepts because they cannot fall back on FCM.
+    @SuppressLint("BatteryLife")
+    private fun requestBatteryOptimizationExemption() {
+        try {
+            batteryOptimizationLauncher.launch(
+                Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
+                    .setData(AndroidUri.fromParts("package", packageName, null))
+            )
+        } catch (e: Exception) {
+            Log.w(TAG, "Cannot request battery optimization exemption", e)
+            try {
+                batteryOptimizationLauncher.launch(
+                    Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
+                )
+            } catch (e2: Exception) {
+                Log.w(TAG, "Cannot open battery optimization settings", e2)
             }
         }
     }
@@ -368,6 +459,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         super.onSaveInstanceState(outState)
         outState.putBoolean(STATE_LOCAL_NETWORK_PROMPT_SHOWN, localNetworkPermissionPromptShown)
         outState.putBoolean(STATE_NOTIF_PROMPT_SHOWN, notifPermissionPromptShown)
+        outState.putBoolean(STATE_BATTERY_OPT_PROMPT_SHOWN, batteryOptimizationPromptShown)
     }
 
     override fun onDestroy() {
@@ -784,6 +876,9 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         private const val PREFS_NOTIF_PERM = "notif_permission"
         private const val PREF_NOTIF_PERM_ASKED = "asked_once"
         private const val STATE_NOTIF_PROMPT_SHOWN = "notif_permission_prompt_shown"
+        private const val PREFS_BATTERY_OPT = "battery_optimization"
+        private const val PREF_BATTERY_OPT_ASKED = "asked_once"
+        private const val STATE_BATTERY_OPT_PROMPT_SHOWN = "battery_optimization_prompt_shown"
         private const val CONVERSATIONS_CATEGORY = "conversations"
         val shareIntentSanitizer = IntentSanitizer.Builder()
             .allowAction(Intent.ACTION_SEND)
