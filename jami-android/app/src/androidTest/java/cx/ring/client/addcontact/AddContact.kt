@@ -16,6 +16,7 @@
  */
 package cx.ring.client.addcontact
 
+import cx.ring.SkipBatteryOptimizationPromptRule
 import org.hamcrest.Matchers.allOf
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
@@ -64,7 +65,10 @@ import org.junit.runners.MethodSorters
 @RunWith(AndroidJUnit4::class)
 class AddContact {
 
-    @Rule
+    @get:Rule(order = 0)
+    val skipBatteryOptimizationPromptRule = SkipBatteryOptimizationPromptRule()
+
+    @Rule(order = 1)
     @JvmField
     var mActivityScenarioRule = ActivityScenarioRule(HomeActivity::class.java)
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+    Whether the build may ask the user for an exemption from battery
+    optimizations, using ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS.
+
+    Google Play only accepts the REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+    permission for calling apps that cannot rely on FCM high priority
+    messages, so this stays false by default and is overridden by the
+    noPush and withUnifiedPush flavors.
+    -->
+    <bool name="battery_optimization_exemption_requestable">false</bool>
+
+</resources>
