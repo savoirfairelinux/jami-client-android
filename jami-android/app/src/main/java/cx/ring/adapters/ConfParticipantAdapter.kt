@@ -28,7 +28,6 @@ import cx.ring.fragments.CallFragment
 import cx.ring.views.AvatarDrawable
 import cx.ring.views.ParticipantView
 import net.jami.model.Conference.ParticipantInfo
-import java.util.*
 
 class ConfParticipantAdapter(
     private var calls: List<ParticipantInfo>,
@@ -115,8 +114,6 @@ class ConfParticipantAdapter(
         }
     }
 
-    override fun getItemId(position: Int): Long = calls[position].hashCode().toLong()
-
     override fun getItemCount(): Int = calls.size
 
     fun updateFromCalls(contacts: List<ParticipantInfo>) {
@@ -128,12 +125,32 @@ class ConfParticipantAdapter(
             override fun getNewListSize(): Int = contacts.size
 
             override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-                oldCalls[oldItemPosition].hashCode() == contacts[newItemPosition].hashCode()
+                oldCalls[oldItemPosition].hasSameIdentity(contacts[newItemPosition])
 
             override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
                 false
         }).dispatchUpdatesTo(this)
     }
+
+    /**
+     * A participant is identified by the fields that can tell two rows of a
+     * single list apart, because no immutable unique identifier is available.
+     *
+     * `sinkId` is the daemon's stream ID and is required: the conference info
+     * holds one entry per media stream, so a participant sharing a screen
+     * alongside their camera produces two rows with the same URI, device and
+     * call, distinguished only by their stream.
+     *
+     * `pending` is required for the same reason: the displayed list
+     * concatenates conference participants with the calls still being placed,
+     * so the same contact may briefly appear once from each source.
+     */
+    private fun ParticipantInfo.hasSameIdentity(other: ParticipantInfo): Boolean =
+        contact.contact.uri == other.contact.contact.uri &&
+                device == other.device &&
+                sinkId == other.sinkId &&
+                call?.id == other.call?.id &&
+                pending == other.pending
 
     enum class ParticipantAction {
         ShowDetails, Mute, Extend, Hangup
