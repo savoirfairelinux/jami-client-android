@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e3cc92c_4dc85a7d",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConfParticipantAdapter.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-09-04T18:20:02Z",
+      "side": 1,
+      "message": "I checked this against the daemon and `sinkId` is load-bearing rather than decorative, so I documented it instead of removing it.\n\nThe conference info carries one entry per media stream, not per participant: Conference::updateConferenceInfo loops over the source infos and emits a ParticipantInfo for each, with `participant.sinkId \u003d info.streamId` (conference.cpp:156 and :214). On the client side CallService.onConferenceInfoUpdated resolves the call with `conference.findCallByContact(contactUri)`, which returns the same call for every stream of that contact.\n\nSo a participant sharing a screen alongside their camera yields two rows with identical URI, device and call ID, differing only in `sinkId`. Dropping it would make `areItemsTheSame` return true for two distinct rows of the same list, which is the DiffUtil contract violation this patch is meant to remove, only moved from stable IDs into the diff callback.\n\nThe daemon takes the same view: `operator\u003d\u003d(const ParticipantInfo\u0026, const ParticipantInfo\u0026)` in conference.h:138 compares `uri`, `device` and `sinkId` together.\n\nOn the cost of a sink change: `areContentsTheSame` returns false unconditionally, so every surviving row is rebound on every update regardless. The only difference is a remove/insert animation instead of a change animation, and these holders carry no user-editable state, so nothing is lost. That seemed a fair price for keeping identity correct when a participant has several streams.\n\nPatch set 3 records this reasoning in a comment above the helper.",
+      "parentUuid": "8bec9474_66d785c8",
+      "revId": "1243692d210a1eab5e585281bd44ddb6b408d31a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
