@@ -17,6 +17,23 @@
       "parentUuid": "3c54a28e_0373e966",
       "revId": "a493ba98cbbc85e3bac0f3937cb57e581ac4de46",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8bec9474_66d785c8",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConfParticipantAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-04T18:12:30Z",
+      "side": 1,
+      "message": "[warning] Line 139: 🟡 `sinkId` identifies the video/rendering sink, not the participant itself, and can be recreated while the same call remains active. Including it in `areItemsTheSame` makes DiffUtil remove and reinsert the row on a sink change, losing RecyclerView state and causing avoidable animations. Compare only participant/call identity fields, or document why a sink change is intended to create a new row.",
+      "revId": "a493ba98cbbc85e3bac0f3937cb57e581ac4de46",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
