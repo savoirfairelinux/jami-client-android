@@ -958,7 +958,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     }
                 }
             }).apply {
-                setHasStableIds(true)
                 confAdapter = this
                 binding.confControlGroup.adapter = this
             }
