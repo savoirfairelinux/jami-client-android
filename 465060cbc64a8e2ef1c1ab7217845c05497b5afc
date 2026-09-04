@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11a8da83_1d70cc5a",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-04T12:14:40Z",
+      "side": 1,
+      "message": "[error] Line 448: 🔴 `packageName` is always Jami\u0027s package, but the UnifiedPush network connection is maintained by the separately installed distributor. `ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS` only allowlists the package in its `package:` URI, so accepting this prompt leaves the distributor subject to Doze and does not prevent missed overnight calls. Have the selected distributor request its own exemption/provide distributor-specific onboarding, or remove `withUnifiedPush` from this Jami exemption flow.",
+      "revId": "465060cbc64a8e2ef1c1ab7217845c05497b5afc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
