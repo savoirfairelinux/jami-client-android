@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "686551c3_0c656390",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConfParticipantAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-09-04T18:09:26Z",
+      "side": 1,
+      "message": "I looked into this and kept `pending`, for two reasons.\n\nFirst, on rebinding: `areContentsTheSame` returns `false` unconditionally, so every surviving row is rebound on every update no matter what `areItemsTheSame` answers. Loosening identity would therefore not save any bind calls; it would only change remove/insert animations into change animations.\n\nSecond, and the reason I would rather keep it: the list handed to the adapter is a concatenation of two independent sources. In CallPresenter.addConferenceParticipant the pending entry is built with `pending \u003d true` and pushed with `Conference.addPending`, and the presenter combines them as `p + pending`. It is removed via `doOnEvent` after a one second delay, while the participant is added to the conference in the subscribe body, so a contact can legitimately appear once from each source for a short window. `pending` is what keeps those two rows distinct, and DiffUtil requires `areItemsTheSame` to be a true identity within a single list.\n\nOn the wording \"mutable participant state\": `ParticipantInfo` exposes `pending` as a `val` on a class whose fields are all read-only, and a transition builds a new instance rather than mutating one. The instability being fixed here is that the *stable ID* changed for a row; identity in DiffUtil has no such immutability requirement across updates.\n\nI have added a comment above the helper to record why those fields are the identity. Happy to drop `pending` if you still prefer it, but I did not want to widen the identity to two concurrent rows without flagging it.",
+      "parentUuid": "3c54a28e_0373e966",
+      "revId": "a493ba98cbbc85e3bac0f3937cb57e581ac4de46",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
