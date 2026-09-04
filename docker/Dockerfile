@@ -74,6 +74,12 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
     ln -s /usr/local/cargo/bin/rustc /usr/local/bin/rustc && \
     ln -s /usr/local/cargo/bin/rustup /usr/local/bin/rustup && \
     chmod -R go-w /usr/local/rustup /usr/local/cargo
+# Cargo writes its registry cache and lock file under CARGO_HOME, so it cannot
+# stay on the read-only toolchain install above. The build runs as whatever uid
+# the host hands over (cqfd passes the host uid, which has no user in this
+# image), so a chown cannot work either: point CARGO_HOME at a world-writable
+# location instead. The toolchain is still found through RUSTUP_HOME and PATH.
+ENV CARGO_HOME=/tmp/cargo-home
 
 # Node.js toolchain, required to install the dependencies of, bundle, and test
 # the collaborative text editor (app/src/collabeditor) that the Gradle build
@@ -167,11 +173,6 @@ ARG HOST_UID
 ARG HOST_GID
 RUN groupadd -g $HOST_GID jenkins && \
     useradd --no-log-init --system --uid $HOST_UID --gid jenkins jenkins --create-home
-
-# Cargo writes its registry cache under CARGO_HOME, so the toolchain has to be
-# writable by the build user. Hand it over to that user rather than making it
-# world-writable, which would let any process in the image replace cargo/rustc.
-RUN chown -R jenkins:jenkins /usr/local/rustup /usr/local/cargo
 
 # Define environment variables.
 ENV JAVA_HOME=/opt/java/openjdk/
