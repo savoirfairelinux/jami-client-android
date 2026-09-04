@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9617c519_8000068e",
+        "filename": ".cqfd/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-04T22:25:34Z",
+      "side": 1,
+      "message": "[warning] Line 83: 🟡 `/tmp/cargo-home` is not created or permissioned by the image; Cargo creates it on first use with the invoking UID\u0027s normal directory mode. If a container is reused under another host UID, that UID can no longer write the existing Cargo registry tree, so this is not reliably usable by any build UID. Either provision isolated per-build Cargo homes or explicitly support the container-reuse case with a writable layout for the whole tree.",
+      "revId": "6fdd7deffa967bd8422c6115b38d6bde7e9c66bf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c316448d_1d0590e9",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-04T22:25:34Z",
+      "side": 1,
+      "message": "[warning] Line 83: 🟡 `/tmp/cargo-home` is not created or permissioned by the image; Cargo creates it on first use with the invoking UID\u0027s normal directory mode. If a container is reused under another host UID, that UID can no longer write the existing Cargo registry tree, so this is not reliably usable by any build UID. Either provision isolated per-build Cargo homes or explicitly support the container-reuse case with a writable layout for the whole tree.",
+      "revId": "6fdd7deffa967bd8422c6115b38d6bde7e9c66bf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
