@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7a6d4f8_f5a6b0a7",
+        "filename": "jami-android/app/src/androidTest/java/cx/ring/client/message/Messaging.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-04T12:35:47Z",
+      "side": 1,
+      "message": "[error] Line 93: 🔴 The existing `@JvmField` annotation is now attached to `skipBatteryOptimizationPromptRule` because the new `@get:Rule` was inserted between it and `mActivityScenarioRule`. Consequently, `mActivityScenarioRule` no longer has the public field exposure used by JUnit\u0027s rule discovery (and the skip rule\u0027s getter annotation is also incompatible with that placement), so this instrumentation test can fail before running. Move `@JvmField` back onto `mActivityScenarioRule` and leave the skip rule as a getter-annotated rule, or otherwise ensure both rules are discoverable with the intended order.",
+      "revId": "d1151cf6f9c1af6fdc439890d3673b705b400deb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
