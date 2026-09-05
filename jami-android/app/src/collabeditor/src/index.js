@@ -126,6 +126,17 @@ class Editor {
             },
         })
         this.cursors = this.quill.getModule('cursors')
+        // Quill holds every DOM mutation back while the keyboard composes a word
+        // (compositionstart to compositionend), so peers would see this editor
+        // type a word at a time. Ask the keyboard to commit each character instead
+        // of composing: Chromium turns autocomplete=off on the focused editable into
+        // TYPE_TEXT_FLAG_NO_SUGGESTIONS and autocorrect=off drops AUTO_CORRECT
+        // (ImeUtils.computeEditorInfo); keyboards differ in which one they honour,
+        // Samsung's stops predicting on the latter. Peers then see every keystroke,
+        // at the price of predictive text in the document.
+        this.quill.root.setAttribute('autocomplete', 'off')
+        this.quill.root.setAttribute('autocorrect', 'off')
+        this.quill.root.setAttribute('spellcheck', 'false')
 
         this.ydoc = new Y.Doc()
         // The branch name the daemon and the desktop client agree on.
