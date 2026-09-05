@@ -163,8 +163,8 @@ class LinkDeviceImportSideActivity : AppCompatActivity(),
         }
     }
 
-    override fun onAuthentication(password: String) =
-        importSideViewModel.onAuthentication(password)
+    override fun onAuthentication(password: String, syncAttachments: Boolean) =
+        importSideViewModel.onAuthentication(password, syncAttachments)
 
     override fun onExit(returnCode: Int) {
         finish(returnCode)
