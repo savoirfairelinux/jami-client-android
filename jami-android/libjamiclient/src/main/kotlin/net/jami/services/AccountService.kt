@@ -207,6 +207,11 @@ class AccountService(
     private val conversationSearches: MutableMap<Long, Subject<ConversationSearchResult>> = ConcurrentHashMap()
     private val loadingTasks: MutableMap<Long, SingleSubject<List<Interaction>>> = ConcurrentHashMap()
 
+    // Accounts whose conversations, once ready, get every attachment downloaded (device import).
+    private val attachmentSyncAccounts: MutableSet<String> = ConcurrentHashMap.newKeySet()
+    private val attachmentDownloads = AttachmentDownloadQueue()
+    private var attachmentDownloadsPump: ScheduledFuture<*>? = null
+
     class UserSearchResult(val accountId: String, val query: String, val state: Int = 0, val results: List<Contact> = emptyList())
 
     private val registeredNameSubject: Subject<RegisteredName> = PublishSubject.create()
@@ -531,6 +536,53 @@ class AccountService(
             val conversation = account.getSwarm(conversationId) ?: return
             conversationSearches[id]?.onNext(ConversationSearchResult(messages.map { getInteraction(account, conversation, it) }))
         }
+    }
+
+    /**
+     * Download every attachment, whatever its size, of each conversation of the
+     * account that becomes ready while enabled (e.g. the conversations cloned from
+     * another device after an account import).
+     */
+    fun setSyncAttachments(accountId: String, enabled: Boolean) {
+        if (enabled) attachmentSyncAccounts.add(accountId) else attachmentSyncAccounts.remove(accountId)
+    }
+
+    /** @return whether the transfer is a paced attachment download of [setSyncAttachments], not a new incoming file */
+    fun isSyncingAttachment(accountId: String, fileId: String?): Boolean =
+        fileId != null && accountId in attachmentSyncAccounts && attachmentDownloads.isInFlight(fileId)
+
+    private fun syncAttachments(account: Account, conversation: Conversation) {
+        searchConversation(account.accountId, conversation.uri, type = "application/data-transfer+json")
+            .subscribe({ result ->
+                for (interaction in result.results) {
+                    val transfer = interaction as? DataTransfer ?: continue
+                    // The daemon clears the fileId of deleted attachments.
+                    val fileId = transfer.fileId?.takeIf(String::isNotEmpty) ?: continue
+                    val messageId = transfer.messageId ?: continue
+                    attachmentDownloads.enqueue(AttachmentDownloadQueue.Attachment(
+                        account.accountId, conversation.uri.rawRingId, messageId, fileId, transfer.displayName))
+                }
+                mExecutor.execute { pumpAttachmentDownloads() }
+            }, { e -> Log.w(TAG, "Unable to list the attachments of ${conversation.uri.rawRingId}", e) })
+    }
+
+    /** Runs on [mExecutor]: polls the in-flight downloads, starts the next ones and reschedules itself while needed. */
+    private fun pumpAttachmentDownloads() {
+        val now = System.nanoTime()
+        for (attachment in attachmentDownloads.inFlight()) {
+            val info = fileTransferInfoProvider.get(attachment.accountId, attachment.conversationId, attachment.fileId)
+            attachmentDownloads.update(attachment.fileId, info.progress, info.total, now)
+        }
+        for (attachment in attachmentDownloads.start(now)) {
+            val destination = mDeviceRuntimeService.getNewConversationPath(
+                attachment.accountId, attachment.conversationId, attachment.displayName)
+            Log.i(TAG, "syncAttachments: downloading ${attachment.fileId} to ${destination.absolutePath}")
+            JamiService.downloadFile(
+                attachment.accountId, attachment.conversationId, attachment.messageId, attachment.fileId, destination.absolutePath)
+        }
+        attachmentDownloadsPump?.cancel(false)
+        attachmentDownloadsPump = if (attachmentDownloads.isIdle) null
+            else mExecutor.schedule({ pumpAttachmentDownloads() }, 1, TimeUnit.SECONDS)
     }
 
     fun sendConversationMessage(accountId: String, conversationUri: Uri, txt: String, replyTo: String?, flag: Int = 0) {
@@ -1644,6 +1696,8 @@ class AccountService(
         }
         account.conversationStarted(conversation, if (setMode) mode else null)
         loadMore(conversation, 2)
+        if (accountId in attachmentSyncAccounts)
+            syncAttachments(account, conversation)
     }
 
     fun conversationRemoved(accountId: String, conversationId: String) {

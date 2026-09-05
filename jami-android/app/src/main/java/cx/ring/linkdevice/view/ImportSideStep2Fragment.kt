@@ -38,7 +38,7 @@ class ImportSideStep2Fragment : Fragment() {
     private val callback get() = _callback!!
 
     interface OnAuthenticationCallback {
-        fun onAuthentication(password: String)
+        fun onAuthentication(password: String, syncAttachments: Boolean)
     }
 
     override fun onAttach(context: Context) {
@@ -60,7 +60,7 @@ class ImportSideStep2Fragment : Fragment() {
         binding.connect.setOnClickListener {
             Log.i(TAG, "Connect button clicked.")
             showLoading()
-            callback.onAuthentication(binding.password.text.toString())
+            callback.onAuthentication(binding.password.text.toString(), binding.syncAttachments.isChecked)
         }
     }
 
@@ -70,6 +70,7 @@ class ImportSideStep2Fragment : Fragment() {
         binding.passwordContainer.visibility = View.GONE
         binding.unlockingContainer.visibility = View.GONE
         binding.identityContainer.visibility = View.GONE
+        binding.syncAttachments.visibility = View.GONE
         binding.connect.visibility = View.GONE
     }
 
@@ -90,6 +91,7 @@ class ImportSideStep2Fragment : Fragment() {
 
         binding.unlockingContainer.visibility = View.GONE
         binding.identityContainer.visibility = View.VISIBLE
+        binding.syncAttachments.visibility = View.VISIBLE
         binding.connect.visibility = View.VISIBLE
         binding.registeredName.isGone = registeredName.isNullOrEmpty()
         binding.actionRequired.visibility = View.GONE
@@ -111,6 +113,7 @@ class ImportSideStep2Fragment : Fragment() {
         binding.actionRequired.visibility = View.INVISIBLE
         binding.passwordContainer.visibility = View.INVISIBLE
         binding.unlockingContainer.visibility = View.VISIBLE
+        binding.syncAttachments.visibility = View.GONE
         binding.connect.visibility = View.GONE
     }
 
