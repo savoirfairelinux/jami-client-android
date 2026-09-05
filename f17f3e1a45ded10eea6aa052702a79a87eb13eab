@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff577094_00ff8699",
+        "filename": "jami-android/app/src/collabeditor/src/index.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-05T16:56:55Z",
+      "side": 1,
+      "message": "[warning] Line 137: 🟡 These HTML/IME hints are advisory, so they do not guarantee that every keyboard will stop using composition; keyboards that ignore `TYPE_TEXT_FLAG_NO_SUGGESTIONS` and `AUTO_CORRECT` can still hold changes until `compositionend`, leaving peers seeing whole words. If per-keystroke propagation is a hard requirement, add a composition-update fallback (or explicitly test and constrain supported keyboards) rather than relying only on these attributes.",
+      "revId": "f17f3e1a45ded10eea6aa052702a79a87eb13eab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
