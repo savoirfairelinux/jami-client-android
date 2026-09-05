@@ -1032,7 +1032,10 @@ class CollabEditorActivity : AppCompatActivity() {
     /* ----------------------------------------------------------------- pieces */
 
     private fun showTitle() {
-        binding.toolbar.title = documentName.ifEmpty { getString(R.string.collab_untitled) }
+        // Through the action bar, not the toolbar: once onCreate() returns,
+        // AppCompat writes the activity's label over a toolbar title it did not
+        // set itself, and the document would be called "Jami" until renamed.
+        supportActionBar?.title = documentName.ifEmpty { getString(R.string.collab_untitled) }
     }
 
     private fun showParticipants() {
