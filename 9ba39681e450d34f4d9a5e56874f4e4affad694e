@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e1c7cb9_52da1c2a",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-05T21:44:56Z",
+      "side": 1,
+      "message": "[warning] Line 579: 🟡 Every search result is enqueued without checking whether the attachment is already present. Completed IDs are removed from `AttachmentDownloadQueue.isKnown`, so a repeated `conversationReady`/search re-enqueues the same transfer and downloads it again (the newly assigned destination is not necessarily present on the search-result object either). Resolve the existing message/destination and skip `hasExactContent`, or retain a completed marker for the import synchronization session.",
+      "revId": "9ba39681e450d34f4d9a5e56874f4e4affad694e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a10a7d62_b79d0c45",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-05T21:44:56Z",
+      "side": 1,
+      "message": "[warning] Line 628: 🟡 `getNewConversationPath` avoids only paths that already exist, but this pump starts up to three downloads in one pass before any native request is guaranteed to create its destination. Same-named attachments can therefore receive the same path and overwrite/corrupt one another. Reserve each chosen path in the queue (or create it exclusively) before issuing the native requests.",
+      "revId": "9ba39681e450d34f4d9a5e56874f4e4affad694e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13b7a42f_afa88123",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 1765,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-05T21:44:56Z",
+      "side": 1,
+      "message": "[warning] Line 1765: 🟡 `attachmentSyncAccounts` is only cleared when the account is removed. Once the import checkbox is enabled, every later `conversationReadyNow`—including a newly created conversation or a conversation becoming ready after import—silently downloads all of its attachments. Scope this flag to the import operation and clear it when that synchronization is complete, or expose it as an explicit persistent account-wide setting if that is the intended behavior.",
+      "revId": "9ba39681e450d34f4d9a5e56874f4e4affad694e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb228950_442fa8f8",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 2031,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-05T21:44:56Z",
+      "side": 1,
+      "message": "[error] Line 2031: 🔴 `propagated` only means `PublishProcessor.onNext` accepted the item; `ConversationFacade` consumes `dataTransfers` asynchronously through `observeOn(...).onBackpressureLatest()`. A terminal event can be dropped while the consumer is busy (or after it is disposed), so this branch skips `attachmentTransferOver` and the daemon request remains pending/suppressed forever. Settle the queue from the daemon event independently and keep a separate suppression marker until the facade handles the event, or make terminal delivery lossless.",
+      "revId": "9ba39681e450d34f4d9a5e56874f4e4affad694e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
