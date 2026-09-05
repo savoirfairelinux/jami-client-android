@@ -104,8 +104,11 @@ class ImportSideViewModel @Inject constructor(
         }
     }
 
-    fun onAuthentication(password: String = "") {
+    fun onAuthentication(password: String = "", syncAttachments: Boolean = false) {
         _tempAccount?.accountId?.apply {
+            // Set before the import so that the conversations cloned from the source
+            // device get their attachments downloaded as soon as they are ready.
+            accountService.setSyncAttachments(this, syncAttachments)
             accountService.provideAccountAuthentication(this, password)
         }
     }

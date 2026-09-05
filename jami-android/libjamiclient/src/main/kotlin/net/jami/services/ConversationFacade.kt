@@ -573,6 +573,13 @@ class ConversationFacade(
         val account = transfer.account!!
         val conversation = mAccountService.getAccount(account)!!.onDataTransferEvent(transfer)
         val status = transfer.transferStatus
+        // Attachments synchronized after a device import are old messages: no notification
+        // for them, up to and including the event that reports the file as received.
+        if (mAccountService.isSyncingAttachment(transfer.fileId)) {
+            if (status == TransferStatus.TRANSFER_FINISHED)
+                mAccountService.attachmentSynced(transfer.fileId!!)
+            return
+        }
         Log.d(TAG, "handleDataTransferEvent $status " + transfer.canAutoAccept(mPreferencesService.getMaxFileAutoAccept(account)))
         if (!transfer.hasExactContent &&
             (status === TransferStatus.TRANSFER_AWAITING_HOST || status === TransferStatus.FILE_AVAILABLE)) {

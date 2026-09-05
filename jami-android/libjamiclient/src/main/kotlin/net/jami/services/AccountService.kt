@@ -207,6 +207,14 @@ class AccountService(
     private val conversationSearches: MutableMap<Long, Subject<ConversationSearchResult>> = ConcurrentHashMap()
     private val loadingTasks: MutableMap<Long, SingleSubject<List<Interaction>>> = ConcurrentHashMap()
 
+    // Accounts whose conversations, once ready, get every attachment downloaded (device import).
+    private val attachmentSyncAccounts: MutableSet<String> = ConcurrentHashMap.newKeySet()
+    private val attachmentDownloads = AttachmentDownloadQueue()
+    private var attachmentDownloadsPump: ScheduledFuture<*>? = null
+    // Files started by the attachment sync, kept until the daemon reports them finished:
+    // their transfer events are old messages catching up, not new incoming files.
+    private val syncedAttachmentFileIds: MutableSet<String> = ConcurrentHashMap.newKeySet()
+
     class UserSearchResult(val accountId: String, val query: String, val state: Int = 0, val results: List<Contact> = emptyList())
 
     private val registeredNameSubject: Subject<RegisteredName> = PublishSubject.create()
@@ -533,6 +541,105 @@ class AccountService(
         }
     }
 
+    /**
+     * Download every attachment, whatever its size, of each conversation of the
+     * account that becomes ready while enabled (e.g. the conversations cloned from
+     * another device after an account import).
+     */
+    fun setSyncAttachments(accountId: String, enabled: Boolean) {
+        if (enabled) attachmentSyncAccounts.add(accountId) else attachmentSyncAccounts.remove(accountId)
+    }
+
+    /** @return whether the transfer is an attachment download of [setSyncAttachments], not a new incoming file */
+    fun isSyncingAttachment(fileId: String?): Boolean = fileId != null && fileId in syncedAttachmentFileIds
+
+    /** The synchronized attachment is there: its later transfer events are the user's business again. */
+    fun attachmentSynced(fileId: String) {
+        syncedAttachmentFileIds.remove(fileId)
+    }
+
+    private fun syncAttachments(account: Account, conversation: Conversation) {
+        searchConversation(account.accountId, conversation.uri, type = "application/data-transfer+json")
+            .subscribe({ result ->
+                for (interaction in result.results) {
+                    val transfer = interaction as? DataTransfer ?: continue
+                    // The daemon clears the fileId of deleted attachments.
+                    val fileId = transfer.fileId?.takeIf(String::isNotEmpty) ?: continue
+                    val messageId = transfer.messageId ?: continue
+                    attachmentDownloads.enqueue(AttachmentDownloadQueue.Attachment(
+                        account.accountId, conversation.uri.rawRingId, messageId, fileId,
+                        attachmentFileName(transfer.displayName, fileId)))
+                }
+                mExecutor.execute { pumpAttachmentDownloads() }
+            }, { e -> Log.w(TAG, "Unable to list the attachments of ${conversation.uri.rawRingId}", e) })
+    }
+
+    /** The display name comes from a remote message: keep only a base name that stays in the conversation directory. */
+    private fun attachmentFileName(displayName: String, fileId: String): String =
+        File(displayName).name.takeUnless { it.isEmpty() || it == "." || it == ".." } ?: fileId
+
+    /** Runs on [mExecutor]: polls the in-flight downloads, starts the next ones and reschedules itself while needed. */
+    private fun pumpAttachmentDownloads() {
+        try {
+            val now = System.nanoTime()
+            for (attachment in attachmentDownloads.inFlight()) {
+                val info = try {
+                    fileTransferInfoProvider.get(attachment.accountId, attachment.conversationId, attachment.fileId)
+                } catch (e: Exception) {
+                    Log.w(TAG, "syncAttachments: unable to get the transfer info of ${attachment.fileId}", e)
+                    null
+                }
+                if (info == null || !info.isSuccess) {
+                    // The transfer is gone (canceled, expired, removed): free its slot.
+                    attachmentDownloads.finish(attachment.fileId)
+                    continue
+                }
+                attachmentDownloads.update(attachment.fileId, info.progress, info.total, now)
+            }
+            for (attachment in attachmentDownloads.start(now)) {
+                try {
+                    startAttachmentDownload(attachment)
+                } catch (e: Exception) {
+                    Log.w(TAG, "syncAttachments: unable to download ${attachment.fileId}", e)
+                    attachmentDownloads.finish(attachment.fileId)
+                }
+            }
+        } finally {
+            attachmentDownloadsPump?.cancel(false)
+            attachmentDownloadsPump = if (attachmentDownloads.isIdle) null
+                else mExecutor.schedule({ pumpAttachmentDownloads() }, 1, TimeUnit.SECONDS)
+        }
+    }
+
+    private fun startAttachmentDownload(attachment: AttachmentDownloadQueue.Attachment) {
+        val destination = mDeviceRuntimeService.getNewConversationPath(
+            attachment.accountId, attachment.conversationId, attachment.displayName)
+        val conversationDir = destination.parentFile?.canonicalFile
+        if (conversationDir == null || destination.canonicalFile.parentFile != conversationDir) {
+            Log.w(TAG, "syncAttachments: refusing to download ${attachment.fileId} outside of the conversation")
+            attachmentDownloads.finish(attachment.fileId)
+            return
+        }
+        // Same bookkeeping as acceptFileTransfer: the message knows its destination
+        // whether it is already loaded or loaded later from the history.
+        val key = Triple(attachment.accountId, attachment.conversationId, attachment.messageId)
+        val transfer = getAccount(attachment.accountId)?.getSwarm(attachment.conversationId)
+            ?.getMessage(attachment.messageId) as? DataTransfer
+        if (transfer != null) transfer.destination = destination else pendingTransferDestinations[key] = destination
+        syncedAttachmentFileIds.add(attachment.fileId)
+        Log.i(TAG, "syncAttachments: downloading ${attachment.fileId} to ${destination.absolutePath}")
+        JamiService.downloadFile(
+            attachment.accountId, attachment.conversationId, attachment.messageId, attachment.fileId, destination.absolutePath)
+    }
+
+    /** Terminal transfer event of a synchronized attachment: free its slot whatever its progress. */
+    private fun attachmentTransferOver(fileId: String) {
+        if (fileId in syncedAttachmentFileIds && !attachmentDownloads.isIdle) {
+            attachmentDownloads.finish(fileId)
+            mExecutor.execute { pumpAttachmentDownloads() }
+        }
+    }
+
     fun sendConversationMessage(accountId: String, conversationUri: Uri, txt: String, replyTo: String?, flag: Int = 0) {
         mExecutor.execute {
             Log.w(TAG, "sendConversationMessage ${conversationUri.rawRingId} $txt $replyTo $flag")
@@ -744,6 +851,7 @@ class AccountService(
     fun removeAccount(accountId: String) {
         Log.i(TAG, "removeAccount() $accountId")
         pendingTransferDestinations.keys.removeIf { it.first == accountId }
+        attachmentSyncAccounts.remove(accountId)
         mExecutor.execute {
             // Terminal case: drop any background-restore intent and explicit marker.
             backgroundDeactivatedAccounts.remove(accountId)
@@ -1540,6 +1648,11 @@ class AccountService(
             subject?.onSuccess(conversation)
             task?.onSuccess(interactions)
             interactions.filterIsInstance<DataTransfer>().forEach {
+                it.messageId?.let { messageId ->
+                    pendingTransferDestinations.remove(Triple(accountId, conversationId, messageId))?.let { destination ->
+                        it.destination = destination
+                    }
+                }
                 // History load: refresh the model only, these are not new transfer events.
                 hydrateDataTransfer(accountId, conversationId, it, emitEvent = false)
             }
@@ -1644,6 +1757,8 @@ class AccountService(
         }
         account.conversationStarted(conversation, if (setMode) mode else null)
         loadMore(conversation, 2)
+        if (accountId in attachmentSyncAccounts)
+            syncAttachments(account, conversation)
     }
 
     fun conversationRemoved(accountId: String, conversationId: String) {
@@ -1900,6 +2015,8 @@ class AccountService(
     fun dataTransferEvent(account: Account, conversation: Conversation, interactionId: String?, fileId: String, eventCode: Int) {
         val transferStatus = TransferStatus.fromIntFile(eventCode)
         Log.d(TAG, "Data Transfer $interactionId $fileId $transferStatus")
+        if (transferStatus.isOver)
+            attachmentTransferOver(fileId)
         val senderPath = File(fileId).takeIf(File::isAbsolute)
         val transfer = account.getDataTransfer(fileId)
             ?: interactionId?.let { conversation.getMessage(it) as? DataTransfer }
