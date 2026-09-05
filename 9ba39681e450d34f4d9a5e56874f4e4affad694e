@@ -35,6 +35,42 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2a9f2d0_61df9509",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-09-05T22:14:13Z",
+      "side": 1,
+      "message": "Done. There is no separate marker anymore; a failed downloadFile() call requeues the attachment (AttachmentDownloadQueue.requeue, MAX_ATTEMPTS \u003d 3), which takes it out of the requested state.",
+      "parentUuid": "cf5e5f92_8e629b6a",
+      "revId": "9ba39681e450d34f4d9a5e56874f4e4affad694e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81d941dd_776635ba",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-09-05T22:14:13Z",
+      "side": 1,
+      "message": "Done. removeAccount() calls attachmentDownloads.discardAccount(accountId) and conversationRemovedNow() calls discardConversation(); a late search result for an account no longer syncing is ignored. Covered by discardsConversationAndAccount.",
+      "parentUuid": "adb01622_ab9f2e71",
+      "revId": "9ba39681e450d34f4d9a5e56874f4e4affad694e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "13b7a42f_afa88123",
@@ -65,6 +101,24 @@
       "writtenOn": "2026-09-05T21:44:56Z",
       "side": 1,
       "message": "[error] Line 2031: 🔴 `propagated` only means `PublishProcessor.onNext` accepted the item; `ConversationFacade` consumes `dataTransfers` asynchronously through `observeOn(...).onBackpressureLatest()`. A terminal event can be dropped while the consumer is busy (or after it is disposed), so this branch skips `attachmentTransferOver` and the daemon request remains pending/suppressed forever. Settle the queue from the daemon event independently and keep a separate suppression marker until the facade handles the event, or make terminal delivery lossless.",
+      "revId": "9ba39681e450d34f4d9a5e56874f4e4affad694e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3af2fa2c_c2bb227a",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/ConversationFacade.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-09-05T22:14:13Z",
+      "side": 1,
+      "message": "Done, with a nuance. The suppression marker is now the queue\u0027s own \"requested\" state (in flight or pending), so there is no separate set to leak. The facade settles it after its check for every isOver status via attachmentTransferOver(): TRANSFER_FINISHED and TRANSFER_ERROR (invalid_pathname/unsupported, where the daemon drops the request) end it; TRANSFER_UNJOINABLE_PEER/TRANSFER_TIMEOUT_EXPIRED (closed_by_host/peer, unjoinable, timeout, where the daemon keeps the request and retries) move it to pending, so the later retry and its FINISHED event stay silent for this old message. Events that do not reach the facade are settled by AccountService itself (dispatchDataTransferEvent reports whether it propagated). A user cancel (cancelDataTransfer) and the removal of the conversation or account drop the entry.",
+      "parentUuid": "571c8e04_4a6aad34",
       "revId": "9ba39681e450d34f4d9a5e56874f4e4affad694e",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
