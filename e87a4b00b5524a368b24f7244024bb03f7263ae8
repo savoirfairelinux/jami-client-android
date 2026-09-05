@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc19d84e_84f385aa",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-05T20:42:14Z",
+      "side": 1,
+      "message": "[error] Line 573: 🔴 `fileTransferInfoProvider.get` is JNI-backed and the existing transfer hydration path explicitly catches failures from this provider. Here an exception escapes the scheduled runnable, terminates `attachmentDownloadsPump`, and can leave the remaining queue permanently unstarted because no later search is guaranteed. Catch/log per attachment and keep the pump alive (or reuse the existing retry/error handling).",
+      "revId": "e87a4b00b5524a368b24f7244024bb03f7263ae8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98390e6d_49cc328f",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-05T20:42:14Z",
+      "side": 1,
+      "message": "[warning] Line 577: 🟡 The selected unique path is not assigned to the corresponding `DataTransfer.destination`, unlike the normal `acceptFileTransfer` path. When two messages have the same filename, this method chooses `1_name`/`2_name`, but later UI/path resolution still falls back to `displayName` and may report the file as unavailable or point at the wrong file. Resolve the conversation message and set its destination, or carry the destination through the queue until the interaction is hydrated.",
+      "revId": "e87a4b00b5524a368b24f7244024bb03f7263ae8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9f8d537_0191abfb",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-05T20:42:14Z",
+      "side": 1,
+      "message": "[error] Line 578: 🔴 `displayName` comes from a remote conversation message and is passed directly to `getNewConversationPath`; Android\u0027s implementation ultimately constructs `File(conversationDir, name)`. A name containing `../` or an absolute path can therefore escape the conversation directory, and the default-enabled checkbox makes this an automatic write on import. Sanitize to a basename and verify the canonical destination remains under the intended directory before starting the download.",
+      "revId": "e87a4b00b5524a368b24f7244024bb03f7263ae8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f02197e5_269c6baf",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/ConversationFacade.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-05T20:42:14Z",
+      "side": 1,
+      "message": "[warning] Line 577: 🟡 Notification suppression is tied only to `inFlight`. The pump removes an entry as soon as polling observes completion, or after the 10-second stall timeout, while the daemon\u0027s terminal/retry event can arrive afterward; that event then falls through to the normal notification/auto-accept path. Keep a suppression marker until the terminal transfer event (and clear it there) so old imported attachments remain silent.",
+      "revId": "e87a4b00b5524a368b24f7244024bb03f7263ae8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
