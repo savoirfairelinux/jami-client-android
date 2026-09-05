@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf5e5f92_8e629b6a",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-05T21:05:38Z",
+      "side": 1,
+      "message": "[warning] Line 629: 🟡 The suppression marker is added before `JamiService.downloadFile`. If that call throws, the caller catches the exception and releases the queue slot, but no terminal event will arrive to remove this marker; the ID then remains suppressed indefinitely. Remove the marker on the failure path (or add it only after the request is accepted).",
+      "revId": "c9bf53ebe1317b46ac647d2b4abcf51ccb54f0e6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adb01622_ab9f2e71",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-05T21:05:38Z",
+      "side": 1,
+      "message": "[warning] Line 854: 🟡 Removing the account only disables future synchronization; queued and in-flight entries in the process-wide `attachmentDownloads` queue, plus their suppression markers, are retained. The pump can therefore continue calling `downloadFile` for an account that was deleted and may write stale imported files if the account ID is reused. Purge this account\u0027s queued/in-flight work and related file IDs during removal.",
+      "revId": "c9bf53ebe1317b46ac647d2b4abcf51ccb54f0e6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "571c8e04_4a6aad34",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/ConversationFacade.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-05T21:05:38Z",
+      "side": 1,
+      "message": "[error] Line 579: 🔴 This only clears `syncedAttachmentFileIds` for `TRANSFER_FINISHED`, but `TransferStatus.isOver` also includes cancellation, timeout, and other error states. Those terminal events are suppressed here and leave the file ID in the set forever, so later events for the same transfer remain hidden and the set leaks. Clear the suppression marker for every terminal status (or use the same `isOver` predicate used by `AccountService`).",
+      "revId": "c9bf53ebe1317b46ac647d2b4abcf51ccb54f0e6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
