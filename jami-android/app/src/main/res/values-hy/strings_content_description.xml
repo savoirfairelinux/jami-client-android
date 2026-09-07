@@ -6,4 +6,7 @@
   <string name="file_download_button">Ներբեռնել</string>
   <string name="control_play">Խաղալ</string>
   <string name="control_pause">Պահանջ</string>
+  <string name="collab_format_bold">Թավ</string>
+  <string name="collab_format_italic">Շեղ</string>
+  <string name="collab_format_strike">Վրագծում</string>
 </resources>

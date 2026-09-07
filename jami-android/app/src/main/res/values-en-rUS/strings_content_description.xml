@@ -2,4 +2,6 @@
 <resources>
   <!--Strings for xml content description of images-->
   <string name="control_play">Play</string>
+  <string name="collab_format_bold">Bold</string>
+  <string name="collab_format_italic">Italic</string>
 </resources>

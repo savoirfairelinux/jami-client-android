@@ -6,4 +6,7 @@
   <string name="control_play">Phát</string>
   <string name="control_pause">Tạm dừng</string>
   <string name="searchbar_navigation_account">Chọn tài khoản</string>
+  <string name="collab_format_bold">Đậm</string>
+  <string name="collab_format_italic">Nghiêng</string>
+  <string name="collab_format_strike">Gạch ngang</string>
 </resources>

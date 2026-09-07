@@ -8,4 +8,9 @@
   <string name="control_replay">إعادة</string>
   <string name="control_pause">إيقاف مؤقت</string>
   <string name="searchbar_navigation_account">اختيار حساب</string>
+  <string name="collab_format_bold">غامق</string>
+  <string name="collab_format_italic">مائل</string>
+  <string name="collab_format_strike">يتوسطه خط</string>
+  <string name="collab_undo">تراجع</string>
+  <string name="collab_redo">إعادة مرة اخرى</string>
 </resources>

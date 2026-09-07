@@ -386,4 +386,12 @@
   <string name="shared_services_policy_hint">Atzigarri honentzat:</string>
   <string name="shared_services_policy_public">Publikoa</string>
   <string name="shared_services_save">Gorde ezazu.</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Dokumentuak</string>
+  <string name="collab_create">Sortu</string>
+  <string name="collab_link_title">Esteka</string>
+  <string name="collab_link_hint">Helbidea</string>
+  <string name="collab_link_add">Gehitu</string>
+  <string name="collab_link_remove">Kendu</string>
+  <string name="collab_remove">Kendu</string>
 </resources>

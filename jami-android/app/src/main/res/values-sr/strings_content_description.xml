@@ -13,4 +13,7 @@
   <string name="searchbar_navigation_account">Izaberi nalog</string>
   <string name="add_conversation_member">Dodajte člana konverzacije</string>
   <string name="qrcode_to_scan">QR kod za skeniranje</string>
+  <string name="collab_format_bold">Podebljano</string>
+  <string name="collab_format_italic">Kurziv</string>
+  <string name="collab_format_strike">Precrtano</string>
 </resources>

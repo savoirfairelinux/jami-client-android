@@ -6,4 +6,7 @@
   <string name="file_download_button">ডাউনলোড</string>
   <string name="control_play">খেলুন</string>
   <string name="control_pause">বিরতি</string>
+  <string name="collab_format_bold">গাঢ়</string>
+  <string name="collab_format_italic">ইটালিক</string>
+  <string name="collab_format_strike">রেখান্বিত</string>
 </resources>

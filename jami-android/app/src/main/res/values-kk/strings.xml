@@ -385,4 +385,12 @@
   <string name="shared_services_policy_hint">Қол жеткізе алатындар</string>
   <string name="shared_services_policy_public">Жалпыға ортақ</string>
   <string name="shared_services_save">Сақтау</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Құжаттар</string>
+  <string name="collab_create">Жарату</string>
+  <string name="collab_link_title">Тізім</string>
+  <string name="collab_link_hint">Адрес</string>
+  <string name="collab_link_add">Қосылу</string>
+  <string name="collab_link_remove">Алып тастау</string>
+  <string name="collab_remove">Алып тастау</string>
 </resources>

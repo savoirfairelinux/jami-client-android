@@ -439,4 +439,12 @@
   <string name="shared_services_directory_required">Pasirinkite katalogą</string>
   <string name="shared_services_policy_contacts">Mano adresatai</string>
   <string name="shared_services_save">Įrašyti</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Dokumentai</string>
+  <string name="collab_create">Sukurti</string>
+  <string name="collab_link_title">Susieti</string>
+  <string name="collab_link_hint">Adresas</string>
+  <string name="collab_link_add">Pridėti</string>
+  <string name="collab_link_remove">Šalinti</string>
+  <string name="collab_remove">Šalinti</string>
 </resources>

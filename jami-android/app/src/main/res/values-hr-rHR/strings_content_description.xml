@@ -5,4 +5,9 @@
   <string name="control_play">izvodi</string>
   <string name="control_replay">Odgovori</string>
   <string name="control_pause">Pauza</string>
+  <string name="collab_format_bold">Podebljano</string>
+  <string name="collab_format_italic">Kurziv</string>
+  <string name="collab_format_strike">Precrtaj</string>
+  <string name="collab_undo">Natrag</string>
+  <string name="collab_redo">Naprijed</string>
 </resources>

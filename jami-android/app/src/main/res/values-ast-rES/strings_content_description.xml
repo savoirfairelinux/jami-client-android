@@ -6,4 +6,7 @@
   <string name="file_download_button">Descargar</string>
   <string name="control_play">Xugar</string>
   <string name="control_pause">Pausa</string>
+  <string name="collab_format_bold">El so nome ye \"Crucifiestu\".</string>
+  <string name="collab_format_italic">La letra de la letra</string>
+  <string name="collab_format_strike">La llucha foi un ésitu.</string>
 </resources>

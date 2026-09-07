@@ -6,4 +6,7 @@
   <string name="file_download_button">Хөгжүүлнэ</string>
   <string name="control_play">Уурхай тогло</string>
   <string name="control_pause">Хаашаа</string>
+  <string name="collab_format_bold">Тод</string>
+  <string name="collab_format_italic">Налуу</string>
+  <string name="collab_format_strike">Дээрээс нь дарсан</string>
 </resources>

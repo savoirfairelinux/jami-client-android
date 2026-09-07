@@ -8,4 +8,8 @@
   <string name="control_replay">Απάντηση</string>
   <string name="control_pause">Παύση</string>
   <string name="searchbar_navigation_account">Επιλογή λογαριασμού</string>
+  <string name="collab_format_bold"> Έντονα</string>
+  <string name="collab_format_italic">Πλάγια</string>
+  <string name="collab_format_strike">Διακριτή διαγραφή</string>
+  <string name="collab_undo">Αναίρεση</string>
 </resources>
