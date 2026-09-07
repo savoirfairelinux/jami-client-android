@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b1eaa84_332d9891",
+        "filename": "jami-android/libjamiclient/src/test/java/net/jami/model/AccountStartConversationTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-07T14:40:39Z",
+      "side": 1,
+      "message": "[warning] Line 50: 🟡 This regression test reimplements both service paths and takes the same `synchronized(conversation)` lock inside the helpers, so it will still pass if `AccountService.startConversation()` loses the new lock. It also hardcodes `InvitesOnly` instead of exercising the `conversationInfos()` mode fallback. Drive the actual service logic through a fakeable daemon boundary, or extract the shared model operation, and force the two paths to rendezvous inside the critical section so the test detects removal of the synchronization and mode regressions.",
+      "revId": "d352d2ea7eda88f5ba416b99f8659018dbc2a4e8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
