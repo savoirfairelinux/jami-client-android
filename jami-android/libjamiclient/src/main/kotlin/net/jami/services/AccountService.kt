@@ -447,7 +447,12 @@ class AccountService(
         getAccountSingle(accountId).map { account ->
             Log.w(TAG, "startConversation")
             val id = JamiService.startConversation(accountId)
-            val conversation = account.getSwarm(id)!!
+            // ConversationReady is now dispatched asynchronously by ConversationCallbackDispatcher,
+            // so the swarm may not be registered yet: create it here, conversationReadyNow reuses it.
+            val conversation = account.getSwarm(id) ?: run {
+                val info = JamiService.conversationInfos(accountId, id).toNativeFromUtf8()
+                account.newSwarm(id, Conversation.Mode.entries[info["mode"]!!.toInt()])
+            }
             for (member in initialMembers) {
                 Log.w(TAG, "addConversationMember $member")
                 JamiService.addConversationMember(accountId, id, member)
