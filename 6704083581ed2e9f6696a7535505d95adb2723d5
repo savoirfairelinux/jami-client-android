@@ -16,6 +16,23 @@
       "message": "[warning] Line 454: 🟡 This fallback can run concurrently with the queued `conversationReadyNow` callback: both paths populate the same `Conversation`, while `startConversation` continues mutating its unsynchronized `contacts` list and `roles` map. Because the callback runs on the computation scheduler and this Single runs on `scheduler`, member additions can be lost, duplicated, or race with `ArrayList`/`HashMap` updates. Serialize the initial-member setup with the conversation-ready path (or make the conversation model updates synchronized) and add a regression test that forces this ordering.",
       "revId": "6704083581ed2e9f6696a7535505d95adb2723d5",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53058025_6271cfa4",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-09-07T14:35:44Z",
+      "side": 1,
+      "message": "Done in patch set 2: the JamiService.addConversationMember() calls stay outside the lock (they trigger conversationMemberEvent, which takes the same lock on the dispatcher thread), the model updates are done under synchronized(conversation). Regression test: AccountStartConversationTest (start-before-ready, ready-before-start, 500 concurrent interleavings).",
+      "revId": "6704083581ed2e9f6696a7535505d95adb2723d5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
