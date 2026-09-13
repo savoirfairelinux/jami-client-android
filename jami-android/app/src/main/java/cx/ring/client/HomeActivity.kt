@@ -32,6 +32,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.activity.OnBackPressedCallback
@@ -766,9 +767,13 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
     override fun onContactPicked(accountId: String, contacts: Set<Contact>) {
         mDisposable.add(mConversationFacade.createConversation(accountId, contacts)
             .observeOn(DeviceUtils.uiScheduler)
-            .subscribe { conversation: Conversation ->
+            .subscribe({ conversation: Conversation ->
                 startConversation(conversation.accountId, conversation.uri)
-            })
+            }, { e ->
+                // Without a handler here, a failed creation takes the application down with it.
+                Log.e(TAG, "Error creating conversation", e)
+                Toast.makeText(this, R.string.conversation_creation_error, Toast.LENGTH_SHORT).show()
+            }))
     }
 
     companion object {

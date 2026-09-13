@@ -41,6 +41,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="website_chooser_title">View website using…</string>
     <string name="license">This software is provided \"as is\", without warranty of any kind. For details, see <u>GNU General Public License version 3 or later</u></string>
     <string name="description">Jami is free software for universal communication which respects the freedoms and privacy of its users.</string>
+    <string name="conversation_creation_error">Unable to create the conversation</string>
     <string name="credits">Credits</string>
     <string name="pip_title">Jami Conference</string>
 
