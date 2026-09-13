@@ -43,19 +43,130 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/background_appbar_gradient"
-            android:orientation="vertical"
-            app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed">
+            android:orientation="vertical">
 
-            <!-- Search bar to search for a swarm or for new contacts -->
-            <com.google.android.material.search.SearchBar
-                android:id="@+id/search_bar"
+            <View
+                android:id="@+id/top_actions_divider_top"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:alpha="0.55"
+                android:background="?attr/colorOutlineVariant" />
+
+            <!-- Account, active Channel and search actions -->
+            <LinearLayout
+                android:id="@+id/top_actions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/searchbar_color"
-                android:hint="@string/searchbar_hint"
-                app:autoShowKeyboard="true"
-                app:navigationContentDescription="@string/searchbar_navigation_account"
-                app:navigationIcon="@android:color/transparent" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="16dp"
+                android:paddingEnd="8dp">
+
+                <cx.ring.views.AvatarView
+                    android:id="@+id/search_bar"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:clickable="true"
+                    android:contentDescription="@string/searchbar_navigation_account"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackgroundBorderless" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/search_button"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="45dp"
+                    android:layout_height="48dp"
+                    android:insetLeft="0dp"
+                    android:insetRight="0dp"
+                    android:minWidth="0dp"
+                    android:contentDescription="@string/searchbar_hint"
+                    app:icon="@drawable/top_search_24"
+                    app:iconSize="29dp"
+                    app:iconTint="?attr/colorOnSurface" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/new_group_button"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="12dp"
+                    android:insetLeft="0dp"
+                    android:insetRight="0dp"
+                    android:minWidth="0dp"
+                    android:padding="0dp"
+                    android:contentDescription="@string/new_group"
+                    app:icon="@drawable/top_group_add_24"
+                    app:iconSize="29dp"
+                    app:iconTint="?attr/colorOnSurface" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/channel_selector"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:ellipsize="end"
+                    android:maxWidth="220dp"
+                    android:maxLines="1"
+                    android:minWidth="0dp"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="0dp"
+                    android:textAllCaps="false"
+                    android:gravity="start|center_vertical"
+                    android:contentDescription="@string/channels_select"
+                    android:insetLeft="0dp"
+                    android:insetRight="0dp"
+                    android:textColor="?attr/colorOnSurface"
+                    app:icon="@drawable/top_channel_24"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconSize="29dp"
+                    app:iconTint="?attr/colorOnSurface"
+                    tools:text="All" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/channel_send"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="40dp"
+                    android:layout_height="48dp"
+                    android:insetLeft="0dp"
+                    android:insetRight="0dp"
+                    android:minWidth="0dp"
+                    android:padding="0dp"
+                    android:contentDescription="@string/channels_send_to_channel"
+                    app:icon="@drawable/top_broadcast_24"
+                    app:iconSize="29dp"
+                    app:iconTint="?attr/colorOnSurface" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/menu_overflow"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="40dp"
+                    android:layout_height="48dp"
+                    android:insetLeft="0dp"
+                    android:insetRight="0dp"
+                    android:minWidth="0dp"
+                    android:padding="0dp"
+                    android:contentDescription="@string/shared_services_more_options"
+                    app:icon="@drawable/top_more_24"
+                    app:iconSize="29dp"
+                    app:iconTint="?attr/colorOnSurface" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/top_actions_divider_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:alpha="0.55"
+                android:background="?attr/colorOutlineVariant" />
 
             <!-- Donation card -->
             <include
@@ -135,21 +246,5 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         </LinearLayout>
 
     </com.google.android.material.search.SearchView>
-
-    <!-- Floating button to start a new conversation -->
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        style="?attr/extendedFloatingActionButtonSmallStyle"
-        android:id="@+id/new_swarm_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="8dp"
-        android:backgroundTint="@color/fab_background_color"
-        android:outlineProvider="none"
-        android:text="@string/start_conversation"
-        app:icon="@drawable/baseline_chat_24"
-        app:layout_anchorGravity="bottom|center_horizontal"
-        app:pressedTranslationZ="12dp"
-        app:materialThemeOverlay="@style/ThemeOverlay.Material3Expressive.FloatingActionButton.Primary" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -23,9 +23,11 @@ import android.util.Log
 import android.view.*
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.adapters.SmartListAdapter
+import cx.ring.channels.ChannelRepository
 import cx.ring.client.CallActivity
 import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragSmartlistBinding
@@ -36,20 +38,31 @@ import cx.ring.utils.TextUtils.copyAndShow
 import cx.ring.viewholders.SmartListViewHolder.SmartListListeners
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import net.jami.model.Contact
 import net.jami.model.Conversation
 import net.jami.model.Conversation.ConversationActionCallback
 import net.jami.model.Uri
 import net.jami.services.ConversationFacade
+import net.jami.services.ContactService
+import net.jami.services.AccountService
 import net.jami.smartlist.SmartListPresenter
 import net.jami.smartlist.SmartListView
 import androidx.core.net.toUri
+import androidx.core.view.isVisible
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>(),
     SmartListListeners, ConversationActionCallback, SmartListView {
+    private val groupsOnly by lazy { arguments?.getBoolean(ARG_GROUPS_ONLY) == true }
+    private var lastList: Triple<ConversationFacade.ConversationList, ConversationFacade, CompositeDisposable>? = null
     private var mSmartListAdapter: SmartListAdapter? = null
     private var binding: FragSmartlistBinding? = null
+    @Inject
+    lateinit var contactService: ContactService
+    @Inject
+    lateinit var accountService: AccountService
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragSmartlistBinding.inflate(inflater, container, false).apply {
@@ -94,6 +107,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     }
 
     override fun displayNoConversationMessage() {
+        binding?.placeholderText?.setText(R.string.conversation_placeholder)
         binding?.placeholder?.visibility = View.VISIBLE
     }
 
@@ -143,18 +157,58 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         conversationFacade: ConversationFacade,
         parentDisposable: CompositeDisposable
     ) {
+        lastList = Triple(conversations, conversationFacade, parentDisposable)
+        val activeChannel = ChannelRepository(
+            requireContext(), accountService.currentAccount?.accountId
+        ).activeChannel()
         binding?.apply {
+            // Only show conversations of the active channel; the Groups view shows its groups only.
+            // Groups are gathered at the top, each part keeping its order of last interaction.
+            val filteredConversations = conversations.conversations
+                .filter { activeChannel.contains(it) }
+                .let { list -> if (groupsOnly) list.filter { it.isSwarmGroup() } else list }
+            val visibleList = sectionedList(filteredConversations)
+            val visibleConversations = visibleList.conversations
+            // The presenter only knows about the full list: show our own placeholder when the
+            // channel filter leaves nothing to display.
+            val filteredOut = visibleConversations.isEmpty() && conversations.searchResult.result.isEmpty()
+            placeholderText.setText(if (groupsOnly) R.string.channels_no_groups else R.string.channels_no_conversations)
+            placeholder.isVisible = filteredOut
             if (confsList.adapter == null) {
                 confsList.adapter = SmartListAdapter(
-                        conversations, this@SmartListFragment, conversationFacade, parentDisposable
+                        visibleList, this@SmartListFragment, conversationFacade, parentDisposable
                 ).apply { mSmartListAdapter = this }
 
                 confsList.setHasFixedSize(true)
             } else {
-                mSmartListAdapter?.update(conversations)
+                mSmartListAdapter?.update(visibleList)
             }
             confsList.visibility = View.VISIBLE
         }
+    }
+
+    private fun sectionedList(conversations: List<Conversation>): ConversationFacade.ConversationList {
+        val (groups, direct) = conversations.partition { it.isSwarmGroup() }
+        val ordered = groups + direct
+        val headers = buildList {
+            if (groups.isNotEmpty())
+                add(
+                    ConversationFacade.ConversationList.SectionHeader(
+                        0, net.jami.smartlist.ConversationItemViewModel.Title.Groups
+                    )
+                )
+            if (direct.isNotEmpty())
+                add(
+                    ConversationFacade.ConversationList.SectionHeader(
+                        groups.size + if (groups.isNotEmpty()) 1 else 0,
+                        net.jami.smartlist.ConversationItemViewModel.Title.Conversations
+                    )
+                )
+        }
+        return ConversationFacade.ConversationList(
+            conversations = ordered,
+            sectionHeaders = headers
+        )
     }
 
     private fun goToConversation(accountId: String, conversationUri: Uri) {
@@ -199,7 +253,8 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                     R.array.swarm_group_action_icons
                 ) { which ->
                     when (which) {
-                        0 -> presenter.removeConversation(item)
+                        0 -> addToChannel(item)
+                        1 -> presenter.removeConversation(item)
                     }
                 }.show(childFragmentManager, "SmartListFragment")
             } else {
@@ -208,10 +263,11 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                     R.array.swarm_one_to_one_action_icons
                 ) { which ->
                     when (which) {
-                        0 -> presenter.copyNumber(item)
-                        1 -> presenter.clearConversation(item)
-                        2 -> presenter.removeConversation(item)
-                        3 -> presenter.blockContact(item)
+                        0 -> addToChannel(item)
+                        1 -> presenter.copyNumber(item)
+                        2 -> presenter.clearConversation(item)
+                        3 -> presenter.removeConversation(item)
+                        4 -> presenter.blockContact(item)
                     }
                 }.show(childFragmentManager, "SmartListFragment")
             }
@@ -225,13 +281,70 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                     ActionHelper.ACTION_CLEAR -> presenter.clearConversation(item)
                     ActionHelper.ACTION_DELETE -> presenter.removeConversation(item)
                     ActionHelper.ACTION_BLOCK -> presenter.blockContact(item)
+                    ActionHelper.ACTION_ADD_TO_CHANNEL -> addToChannel(item)
                 }
             }.show(childFragmentManager, "SmartListFragment")
         }
     }
 
+    private fun addToChannel(conversation: Conversation) {
+        // A group is placed in channels as itself; a one-to-one conversation follows its contact.
+        if (conversation.isSwarmGroup()) {
+            chooseChannels(conversation.uri.rawUriString, group = true)
+            return
+        }
+        contactService.getLoadedConversation(conversation)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ viewModel ->
+                val contact = viewModel.getContact()?.contact ?: return@subscribe
+                chooseChannels(contact.uri.rawUriString, group = false)
+            }, { error ->
+                Log.e(TAG, "Unable to load contact for channel assignment", error)
+                Snackbar.make(requireView(), error.message ?: "Unable to add to a Channel", Snackbar.LENGTH_LONG).show()
+            })
+    }
+
+    /**
+     * Membership is a choice among the channels, and a conversation may be in several: ticking
+     * a channel puts it there, unticking takes it out. "All" holds everything and is not a choice.
+     */
+    private fun chooseChannels(id: String, group: Boolean) {
+        val context = requireContext()
+        val repository = ChannelRepository(context, accountService.currentAccount?.accountId)
+        val channels = repository.load().filterNot { it.isAllContacts }
+        val checked = BooleanArray(channels.size) { index ->
+            id in if (group) channels[index].groups else channels[index].members
+        }
+        MaterialAlertDialogBuilder(context)
+            .setTitle(R.string.channels_membership)
+            .setMultiChoiceItems(channels.map { it.name }.toTypedArray(), checked) { _, which, isChecked ->
+                checked[which] = isChecked
+            }
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                val selected = channels.filterIndexed { index, _ -> checked[index] }.map { it.name }.toSet()
+                repository.save(repository.load().map { channel ->
+                    if (channel.isAllContacts) channel
+                    else {
+                        val holding = (if (group) channel.groups else channel.members).toMutableSet().apply {
+                            if (channel.name in selected) add(id) else remove(id)
+                        }
+                        if (group) channel.copy(groups = holding) else channel.copy(members = holding)
+                    }
+                })
+                Snackbar.make(requireView(), R.string.channels_updated, Snackbar.LENGTH_SHORT).show()
+                lastList?.let { (list, facade, disposable) -> updateList(list, facade, disposable) }
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
     companion object {
         val TAG = SmartListFragment::class.simpleName!!
+        private const val ARG_GROUPS_ONLY = "groups_only"
+
+        fun newInstance(groupsOnly: Boolean) = SmartListFragment().apply {
+            arguments = Bundle().apply { putBoolean(ARG_GROUPS_ONLY, groupsOnly) }
+        }
     }
 
 }

@@ -351,6 +351,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:theme="@style/AppTheme.Fullscreen"
             android:windowSoftInputMode="adjustResize" />
 
+        <activity
+            android:name=".client.BroadcastActivity"
+            android:configChanges="screenSize|screenLayout|smallestScreenSize|orientation"
+            android:exported="false"
+            android:parentActivityName=".client.HomeActivity"
+            android:theme="@style/AppTheme.Fullscreen"
+            android:windowSoftInputMode="adjustResize" />
+
         <service
             android:name=".service.DRingService"
             android:exported="false"

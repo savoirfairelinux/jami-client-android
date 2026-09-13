@@ -34,6 +34,12 @@ class SmartListDiffUtil(
         return newItem.uri == oldItem.uri
     }
 
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-        mNewList[newItemPosition] === mOldList[oldItemPosition]
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        val oldItem = mOldList[oldItemPosition]
+        val newItem = mNewList[newItemPosition]
+        if (oldItem == null || newItem == null)
+            return oldItem === newItem &&
+                mOldList.getHeader(oldItemPosition) == mNewList.getHeader(newItemPosition)
+        return newItem === oldItem
+    }
 }

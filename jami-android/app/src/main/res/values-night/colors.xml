@@ -73,4 +73,6 @@
     <color name="file_time_text_in">#99FFFFFF</color>
     <color name="conversation_reply_background">#33000000</color>
 
+    <color name="conversation_group_background">#1F64B5F6</color>
+    <color name="conversation_group_icon">#8C64B5F6</color>
 </resources>
