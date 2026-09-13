@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b05fa139_2fa6e44e",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-13T20:31:04Z",
+      "side": 1,
+      "message": "[warning] Line 63: 🟡 Section headers are represented as `null` by `ConversationList`, and `SmartListDiffUtil.areContentsTheSame` compares those nulls as identical. When a filtered list changes from only direct conversations to groups plus conversations (or vice versa), the header at position 0 changes from `Conversations` to `Groups` but DiffUtil will not rebind it, leaving a stale title. Compare header titles in the diff or force header rebinds when section metadata changes.",
+      "revId": "cdf5b59080152a08ac0b08985ce98ca531ab416d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09a7ef05_938ad0a3",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/ConversationFacade.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-13T20:31:04Z",
+      "side": 1,
+      "message": "[error] Line 166: 🔴 `moveFile` returns `false` when the source cannot be moved (for example, a full/unwritable destination), but the result is ignored and `sendFileAwait` is still called with a nonexistent destination. If the native call returns without throwing, the broadcast completes and shows `channels_message_sent` even though no attachment was enqueued. Check the return value and return a `Completable.error(...)` (and clean up any partial destination) before calling the daemon.",
+      "revId": "cdf5b59080152a08ac0b08985ce98ca531ab416d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
