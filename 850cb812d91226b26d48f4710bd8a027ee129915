@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc4edf44_43b64d91",
+        "filename": "jami-android/app/src/main/java/cx/ring/channels/ChannelRepository.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-13T18:07:35Z",
+      "side": 1,
+      "message": "[warning] Line 42: 🟡 Channel state is stored in one process-wide SharedPreferences namespace even though the conversation list and broadcasts are account-specific. Switching accounts reuses the previous account\u0027s memberships and active channel; matching contact URIs can then filter or broadcast to the wrong account\u0027s conversations. Namespace channel/active keys by account ID (and migrate existing data).",
+      "revId": "850cb812d91226b26d48f4710bd8a027ee129915",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc5ab758_8fa497a1",
+        "filename": "jami-android/app/src/main/java/cx/ring/channels/ChannelRepository.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-13T18:07:35Z",
+      "side": 1,
+      "message": "[warning] Line 93: 🟡 The migration rewrites legacy channel names when loading the channel list, but it does not migrate `KEY_ACTIVE`. If the stored active value is `Friend`, `Real Friend`, or `Contact(s)`, it no longer matches the migrated channel name and silently falls back to the first channel (`All`). Normalize or rewrite the active name during migration.",
+      "revId": "850cb812d91226b26d48f4710bd8a027ee129915",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d813621_6b260e20",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/BroadcastFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-13T18:07:35Z",
+      "side": 1,
+      "message": "[warning] Line 136: 🟡 `createImageFile()` can throw when the cache/storage is unavailable, but this camera path has no error handling. A camera tap can consequently crash the broadcast activity before sending anything. Catch the file/URI setup failure and surface the existing camera/file error state instead.",
+      "revId": "850cb812d91226b26d48f4710bd8a027ee129915",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3b84cb7_0fb53608",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/BroadcastFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-13T18:07:35Z",
+      "side": 1,
+      "message": "[warning] Line 188: 🟡 The same `CompositeDisposable` owns the in-flight broadcast and is cleared in `onStop()`. Leaving the activity therefore cancels a partially completed broadcast after the input has already been cleared, with no error or retry indication; recipients receive only a prefix of the message. Keep send jobs independent of view-lifecycle subscriptions or persist/resume the operation and report cancellation explicitly.",
+      "revId": "850cb812d91226b26d48f4710bd8a027ee129915",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b54e7d2_fec44a91",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/BroadcastFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-13T18:07:35Z",
+      "side": 1,
+      "message": "[error] Line 210: 🔴 `ConversationFacade.sendFile()` is a no-op for non-swarm conversations and returns `Completable.complete()` without sending anything. Channels can contain legacy/non-swarm one-to-one conversations, so this path reports success while silently skipping those recipients (and leaves each temporary copy behind). Use the existing direct-conversation file-transfer path or explicitly fail unsupported targets; do not show a successful broadcast for an unsent attachment.",
+      "revId": "850cb812d91226b26d48f4710bd8a027ee129915",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ab40a62_2f50630b",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/BroadcastFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-13T18:07:35Z",
+      "side": 1,
+      "message": "[error] Line 264: 🔴 This does not guarantee the required 15-deliveries/second bound: the interval runs independently of `concatMapCompletable`, so ticks can accumulate while a send is in progress and queued deliveries can then run back-to-back. `1000L / 15L` also truncates to 66 ms, exceeding the stated rate, and each selected attachment starts a separate pacing stream. Serialize all deliveries through one queue and pace after each completion using a non-truncated interval.",
+      "revId": "850cb812d91226b26d48f4710bd8a027ee129915",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5349823_bd2db1e7",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ChannelFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-13T18:07:35Z",
+      "side": 1,
+      "message": "[error] Line 253: 🔴 `renderMembers()` is a no-op, and no member list, channel selection listener, message button, or group button is ever added to the view. The management screen therefore renders only channel names plus “Add channel”; the declared member-management, group-creation, broadcast, and open-conversation actions are unreachable. Build the selected-channel member/action UI here (or remove this screen and route to a working implementation) before exposing Manage Channels.",
+      "revId": "850cb812d91226b26d48f4710bd8a027ee129915",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3de46e96_9ffe9cc0",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/SmartListFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-13T18:07:35Z",
+      "side": 1,
+      "message": "[warning] Line 165: 🟡 `sortedByDescending { it.isSwarmGroup() }` only moves groups to the top; it does not add the requested Groups/Conversations separator or a sticky header. Mixed channel lists are therefore unlabeled, and the new UX contract is incomplete. Add section items/decoration (while preserving the existing group-only filter).",
+      "revId": "850cb812d91226b26d48f4710bd8a027ee129915",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
