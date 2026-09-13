@@ -3,11 +3,13 @@ package net.jami.services
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.CompletableSource
 import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.processors.FlowableProcessor
 import io.reactivex.rxjava3.processors.PublishProcessor
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.CompletableSubject
+import io.reactivex.rxjava3.subjects.SingleSubject
 import net.jami.utils.Log
 
 internal class ConversationCallbackDispatcher(
@@ -60,6 +62,23 @@ internal class ConversationCallbackDispatcher(
             route.started = true
             tasks.onNext(Task(Key(conversation, route.generation), route.ready, false, action))
         }
+    }
+
+    /** Runs [action] after every callback already dispatched for this conversation. */
+    fun <T : Any> submit(accountId: String, conversationId: String, action: () -> T): Single<T> {
+        val result = SingleSubject.create<T>()
+        synchronized(routingLock) {
+            if (isDisposed)
+                return Single.error(IllegalStateException("Dispatcher is disposed"))
+            dispatch(accountId, conversationId) {
+                try {
+                    result.onSuccess(action())
+                } catch (e: Throwable) {
+                    result.onError(e)
+                }
+            }
+        }
+        return result
     }
 
     fun dispatchAndClose(accountId: String, conversationId: String, action: () -> Unit) {

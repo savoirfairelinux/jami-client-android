@@ -93,6 +93,57 @@ class ConversationCallbackDispatcherTest {
     }
 
     @Test
+    fun submitRunsAfterEarlierCallbacksForSameConversation() {
+        val releaseFirst = CountDownLatch(1)
+        val calls = Collections.synchronizedList(mutableListOf<Int>())
+
+        dispatcher.dispatch("account", "conversation") {
+            releaseFirst.await(5, TimeUnit.SECONDS)
+            calls.add(1)
+        }
+        val result = dispatcher.submit("account", "conversation") {
+            calls.add(2)
+            "done"
+        }.test()
+
+        assertFalse(result.await(200, TimeUnit.MILLISECONDS))
+        releaseFirst.countDown()
+
+        assertTrue(result.await(5, TimeUnit.SECONDS))
+        result.assertValue("done")
+        assertEquals(listOf(1, 2), calls)
+    }
+
+    @Test
+    fun submitPropagatesFailure() {
+        val errors = Collections.synchronizedList(mutableListOf<Throwable>())
+        dispatcher.dispose()
+        dispatcher = ConversationCallbackDispatcher(Schedulers.from(executor), errors::add)
+        val completed = CountDownLatch(1)
+
+        val result = dispatcher.submit("account", "conversation") {
+            throw IllegalStateException("expected")
+        }.test()
+        dispatcher.dispatch("account", "conversation") {
+            completed.countDown()
+        }
+
+        assertTrue(result.await(5, TimeUnit.SECONDS))
+        result.assertError(IllegalStateException::class.java)
+        assertTrue(completed.await(5, TimeUnit.SECONDS))
+        assertTrue(errors.isEmpty())
+    }
+
+    @Test
+    fun submitOnDisposedDispatcherFails() {
+        dispatcher.dispose()
+
+        dispatcher.submit("account", "conversation") { "unreachable" }
+            .test()
+            .assertError(IllegalStateException::class.java)
+    }
+
+    @Test
     fun closedConversationKeyCanBeRecreated() {
         val closed = CountDownLatch(1)
         val recreated = CountDownLatch(1)

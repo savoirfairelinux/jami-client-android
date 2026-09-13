@@ -444,18 +444,23 @@ class AccountService(
     }
 
     fun startConversation(accountId: String, initialMembers: Collection<String>): Single<Conversation> =
-        getAccountSingle(accountId).map { account ->
+        getAccountSingle(accountId).flatMap { account ->
             Log.w(TAG, "startConversation")
             val id = JamiService.startConversation(accountId)
-            val conversation = account.getSwarm(id)!!
-            for (member in initialMembers) {
-                Log.w(TAG, "addConversationMember $member")
-                JamiService.addConversationMember(accountId, id, member)
-                conversation.addContact(account.getContactFromCache(member), MemberRole.INVITED)
+            if (id.isEmpty())
+                return@flatMap Single.error(IllegalStateException("Daemon failed to create conversation"))
+            // conversationReady was routed for this id before startConversation returned;
+            // the route is FIFO, so this runs once conversationReadyNow has registered it.
+            conversationCallbacks.submit(accountId, id) {
+                val conversation = account.getSwarm(id)
+                    ?: throw IllegalStateException("Conversation $id was not registered")
+                for (member in initialMembers) {
+                    Log.w(TAG, "addConversationMember $member")
+                    JamiService.addConversationMember(accountId, id, member)
+                    conversation.addContact(account.getContactFromCache(member), MemberRole.INVITED)
+                }
+                conversation
             }
-            account.conversationStarted(conversation)
-            Log.w(TAG, "loadConversationMessages")
-            conversation
         }.subscribeOn(scheduler)
 
     fun removeConversation(accountId: String, conversationUri: Uri): Completable =
