@@ -56,7 +56,7 @@ class ConversationItemViewModel(
     val isEnded = conversation.isEnded
 
     enum class Title {
-        None, Conversations, PublicDirectory
+        None, Groups, Conversations, PublicDirectory
     }
 
     val uriTitle: String

@@ -17,25 +17,30 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 -->
 <resources>
     <string-array name="conversation_actions">
+        <item>@string/channels_membership</item>
         <item>@string/conversation_action_copy_peer_number</item>
         <item>@string/conversation_action_history_clear</item>
         <item>@string/delete_contact</item>
         <item>@string/conversation_action_block_this</item>
     </string-array>
     <string-array name="swarm_one_to_one_actions">
+        <item>@string/channels_membership</item>
         <item>@string/conversation_action_copy_peer_number</item>
         <item>@string/remove_conversation</item>
         <item>@string/delete_contact</item>
         <item>@string/conversation_action_block_this</item>
     </string-array>
     <string-array name="swarm_group_actions">
+        <item>@string/channels_membership</item>
         <item>@string/swarm_group_action_leave</item>
     </string-array>
     <array name="swarm_group_action_icons">
+        <item>@drawable/baseline_public_24</item>
         <item>@drawable/baseline_delete_24</item>
     </array>
 
     <array name="conversation_action_icons">
+        <item>@drawable/baseline_public_24</item>
         <item>@drawable/outline_copy_24</item>
         <item>@drawable/baseline_clear_all_24</item>
         <item>@drawable/baseline_androidtv_deletecontact</item>
@@ -43,6 +48,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     </array>
 
     <array name="swarm_one_to_one_action_icons">
+        <item>@drawable/baseline_public_24</item>
         <item>@drawable/outline_copy_24</item>
         <item>@drawable/baseline_delete_24</item>
         <item>@drawable/baseline_androidtv_deletecontact</item>

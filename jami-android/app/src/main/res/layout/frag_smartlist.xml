@@ -43,6 +43,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             android:contentDescription="@string/conversation_placeholder" />
 
         <TextView
+            android:id="@+id/placeholder_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
