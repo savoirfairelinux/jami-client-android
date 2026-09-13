@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f4d2d6c_2dbfaac0",
+        "filename": "jami-android/app/src/main/java/cx/ring/channels/ChannelRepository.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-13T19:04:59Z",
+      "side": 1,
+      "message": "[error] Line 49: 🔴 `LEGACY_MIGRATED_KEY` is global even though the channel data keys are account-scoped. A caller can construct this repository while `currentAccount` is null, causing `load()` to write legacy data to `channels_default` and set this flag; when the real account is later loaded, its repository sees no legacy data and silently creates defaults. Defer migration until a real account ID is available and store/mark migration per account, including the active selection.",
+      "revId": "a755872ff006754d136d277fc4e8787563cfecd5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c86a410b_2de0caa2",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/BroadcastFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-13T19:04:59Z",
+      "side": 1,
+      "message": "[warning] Line 184: 🟡 A canceled or failed `TakePicture` result (`saved \u003d\u003d false`) is silently discarded, and the pre-created `pendingPhoto` remains on disk; permission denial is also silent. Delete the temporary file and surface `taking_picture_error` (or a permission-specific message) for every non-success result so camera failures are explicit.",
+      "revId": "a755872ff006754d136d277fc4e8787563cfecd5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d08bd03_25dbd6c4",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/BroadcastFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-13T19:04:59Z",
+      "side": 1,
+      "message": "[warning] Line 202: 🟡 Multiple selected URIs are cached concurrently using `getFilename`-derived paths, so two different files with the same basename share one `File`. The jobs can overwrite each other, and the first job\u0027s `doFinally` can delete the file needed by the second. Give each attachment a unique temporary copy and delete only that job\u0027s copy after delivery.",
+      "revId": "a755872ff006754d136d277fc4e8787563cfecd5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "873d42d0_c3bb0393",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/BroadcastFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-13T19:04:59Z",
+      "side": 1,
+      "message": "[error] Line 291: 🔴 `sendPaced` only serializes completion of this `Completable`, but swarm `ConversationFacade.sendTextMessage` returns `Completable.complete()` immediately after queuing `AccountService.sendConversationMessage` on its executor. The next delivery can therefore be queued before the previous daemon send runs, and the success/rate-limit behavior does not represent actual delivery. Expose/await transport completion and failure, or serialize the executor work itself; the same issue applies to file sends at line 266.",
+      "revId": "a755872ff006754d136d277fc4e8787563cfecd5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67b550d2_5d447dae",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/BroadcastFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-13T19:04:59Z",
+      "side": 1,
+      "message": "[error] Line 310: 🔴 The channel is resolved from `accountService.currentAccount` in `onCreateView`, but targets are later resolved from the live `currentAccountSubject`. If the current account changes while this screen is open (or is still initializing at view creation), one account\u0027s channel membership can be applied to another account\u0027s conversations and send messages/files under the wrong account. Capture the account ID with the channel and use an account-pinned conversation list, rejecting a changed/unavailable account.",
+      "revId": "a755872ff006754d136d277fc4e8787563cfecd5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
