@@ -128,8 +128,7 @@ class ConversationFacade(
 
     fun sendTextMessage(c: Conversation, to: Uri, txt: String, replyTo: String? = null): Completable {
         if (c.isSwarm) {
-            mAccountService.sendConversationMessage(c.accountId, c.uri, txt, replyTo)
-            return Completable.complete()
+            return mAccountService.sendConversationMessageAwait(c.accountId, c.uri, txt, replyTo)
         }
         return mCallService.sendAccountTextMessage(c.accountId, to.rawUriString, txt)
             .map { id: Long ->
@@ -157,12 +156,15 @@ class ConversationFacade(
         if (!file.exists() || !file.canRead()) {
             return Completable.error(IllegalArgumentException("file not found or not readable"))
         }
-        if (conversation.isSwarm) {
-            val destPath = mDeviceRuntimeService.getNewConversationPath(conversation.accountId, conversation.uri.rawRingId, file.name)
-            moveFile(file, destPath)
-            mAccountService.sendFile(conversation, destPath)
-        }
-        return Completable.complete()
+        if (!conversation.isSwarm)
+            return Completable.error(
+                UnsupportedOperationException("File transfer is not supported for legacy conversations")
+            )
+        val destPath = mDeviceRuntimeService.getNewConversationPath(
+            conversation.accountId, conversation.uri.rawRingId, file.name
+        )
+        moveFile(file, destPath)
+        return mAccountService.sendFileAwait(conversation, destPath)
     }
 
     fun deleteConversationFile(conversation: Conversation, transfer: DataTransfer) {
@@ -396,25 +398,42 @@ class ConversationFacade(
         }
     }
 
-    data class ConversationList(val conversations: List<Conversation> = emptyList(), val searchResult: SearchResult = SearchResult.EMPTY_RESULT, val latestQuery: String = "") {
+    data class ConversationList(
+        val conversations: List<Conversation> = emptyList(),
+        val searchResult: SearchResult = SearchResult.EMPTY_RESULT,
+        val latestQuery: String = "",
+        val sectionHeaders: List<SectionHeader> = emptyList(),
+    ) {
+        data class SectionHeader(
+            val position: Int,
+            val title: ConversationItemViewModel.Title,
+        )
+
         fun isEmpty(): Boolean = conversations.isEmpty() && searchResult.result.isEmpty()
 
         fun getCombinedSize(): Int {
-            if (searchResult.result.isEmpty()) return conversations.size
-            if (conversations.isEmpty()) return searchResult.result.size + 1
-            return conversations.size + searchResult.result.size + 2
+            val baseSize = if (searchResult.result.isEmpty()) conversations.size
+            else if (conversations.isEmpty()) searchResult.result.size + 1
+            else conversations.size + searchResult.result.size + 2
+            return baseSize + sectionHeaders.size
         }
 
         operator fun get(index: Int): Conversation? {
-            return if (searchResult.result.isEmpty()) conversations.getOrNull(index)
-            else if (conversations.isEmpty() || index < searchResult.result.size + 1) searchResult.result.getOrNull(index - 1)
-            else conversations.getOrNull(index - searchResult.result.size - 2)
+            if (sectionHeaders.any { it.position == index }) return null
+            val baseIndex = index - sectionHeaders.count { it.position < index }
+            return if (searchResult.result.isEmpty()) conversations.getOrNull(baseIndex)
+            else if (conversations.isEmpty() || baseIndex < searchResult.result.size + 1)
+                searchResult.result.getOrNull(baseIndex - 1)
+            else conversations.getOrNull(baseIndex - searchResult.result.size - 2)
         }
 
         fun getHeader(index: Int): ConversationItemViewModel.Title {
+            sectionHeaders.firstOrNull { it.position == index }?.let { return it.title }
+            val baseIndex = index - sectionHeaders.count { it.position < index }
             return if (searchResult.result.isEmpty()) ConversationItemViewModel.Title.None
-            else if (index == 0) ConversationItemViewModel.Title.PublicDirectory
-            else if (conversations.isNotEmpty() && index == searchResult.result.size + 1) ConversationItemViewModel.Title.Conversations
+            else if (baseIndex == 0) ConversationItemViewModel.Title.PublicDirectory
+            else if (conversations.isNotEmpty() && baseIndex == searchResult.result.size + 1)
+                ConversationItemViewModel.Title.Conversations
             else ConversationItemViewModel.Title.None
         }
     }

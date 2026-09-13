@@ -27,6 +27,7 @@ import cx.ring.viewholders.SmartListViewHolder.SmartListListeners
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Conversation
 import net.jami.services.ConversationFacade
+import net.jami.smartlist.ConversationItemViewModel
 
 class SmartListAdapter(
     conversations: ConversationFacade.ConversationList?,
@@ -58,10 +59,8 @@ class SmartListAdapter(
         else SmartListViewHolder(ItemSmartlistHeaderBinding.inflate(layoutInflater, parent, false), disposable)
     }
 
-    override fun getItemViewType(position: Int): Int = when(position) {
-        searchHeaderIndex, convHeaderIndex -> 1
-        else -> 0
-    }
+    override fun getItemViewType(position: Int): Int =
+        if (conversations.getHeader(position) != ConversationItemViewModel.Title.None) 1 else 0
 
     override fun onViewRecycled(holder: SmartListViewHolder) {
         super.onViewRecycled(holder)

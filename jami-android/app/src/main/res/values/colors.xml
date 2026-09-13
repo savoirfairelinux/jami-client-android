@@ -43,6 +43,9 @@
 
     <color name="transparent_light">#AAFFFFFF</color>
     <color name="transparent_grey">#AACCCCCC</color>
+    <!-- A group row is tinted, just enough to be told from a one-to-one conversation. -->
+    <color name="conversation_group_background">#142196F3</color>
+    <color name="conversation_group_icon">#6B2196F3</color>
     <color name="transparent_dark_grey">#88424242</color>
 
     <color name="background_status_optional">#9fd0e8</color>

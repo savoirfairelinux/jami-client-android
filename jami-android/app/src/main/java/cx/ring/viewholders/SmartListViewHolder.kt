@@ -58,6 +58,7 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
 
     fun bindHeader(title: ConversationItemViewModel.Title) {
         headerBinding?.headerTitle?.setText(when(title) {
+            ConversationItemViewModel.Title.Groups -> R.string.groups_tab
             ConversationItemViewModel.Title.Conversations -> R.string.navigation_item_conversation
             else -> R.string.search_results_public_directory
         })
@@ -84,6 +85,13 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
                 clickListener.onItemLongClick(conversation)
                 true
             }
+            // Rows are recycled: the tint is set on every bind, not only on the group ones.
+            val isGroup = conversation.isSwarmGroup()
+            itemView.setBackgroundResource(
+                if (isGroup) R.drawable.background_item_smartlist_group
+                else R.drawable.background_item_smartlist
+            )
+            binding.groupIndicator.isVisible = isGroup
 
             compositeDisposable.add(conversation.currentStateObservable
                 .observeOn(DeviceUtils.uiScheduler)

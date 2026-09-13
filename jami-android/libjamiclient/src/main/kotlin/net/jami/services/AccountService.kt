@@ -540,6 +540,17 @@ class AccountService(
         }
     }
 
+    fun sendConversationMessageAwait(
+        accountId: String,
+        conversationUri: Uri,
+        txt: String,
+        replyTo: String? = null,
+        flag: Int = 0,
+    ): Completable = Completable.fromAction {
+        Log.w(TAG, "sendConversationMessage ${conversationUri.rawRingId} $txt $replyTo $flag")
+        JamiService.sendMessage(accountId, conversationUri.rawRingId, txt, replyTo ?: "", flag)
+    }.subscribeOn(Schedulers.from(mExecutor))
+
     fun deleteConversationMessage(accountId: String, conversationUri: Uri, messageId: String) {
         sendConversationMessage(accountId, conversationUri, "", messageId, 1)
     }
@@ -1838,6 +1849,17 @@ class AccountService(
     fun sendFile(conversation: Conversation, file: File) {
         mExecutor.execute { JamiService.sendFile(conversation.accountId, conversation.uri.rawRingId,file.absolutePath, file.name, "") }
     }
+
+    fun sendFileAwait(conversation: Conversation, file: File): Completable =
+        Completable.fromAction {
+            JamiService.sendFile(
+                conversation.accountId,
+                conversation.uri.rawRingId,
+                file.absolutePath,
+                file.name,
+                ""
+            )
+        }.subscribeOn(Schedulers.from(mExecutor))
 
     fun acceptFileTransfer(accountId: String, conversationUri: Uri, messageId: String?, fileId: String) {
         getAccount(accountId)?.let { account -> account.getByUri(conversationUri)?.let { conversation ->
