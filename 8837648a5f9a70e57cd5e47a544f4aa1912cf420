@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "030ae297_7cad6d20",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/CallServiceImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-13T23:40:52Z",
+      "side": 1,
+      "message": "[error] Line 206: 🔴 `SHOW_UI` intentionally keeps the request in `incomingCallRequests`, but `complete()` changes it to `RESOLVED`; therefore a later terminal-call cancellation cannot trigger `result.doOnDispose { cancel() }`. If the call ends before Telecom invokes answer/reject, the map entry and cached `AndroidCall`/`CallConnection` remain retained indefinitely. Tie terminal-call/connection disposal to resolved pending requests while still allowing answer/reject callbacks before termination.",
+      "revId": "8837648a5f9a70e57cd5e47a544f4aa1912cf420",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9906f214_59445e05",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/ConversationFacade.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-13T23:40:52Z",
+      "side": 1,
+      "message": "[error] Line 638: 🔴 `handleCallNotification(conference, true)` is evaluated eagerly before `notification()` can handle its failure. An exception during account/conversation lookup aborts `onCallStateChange` before the history `andThen` is attached, so the call history is lost even though the queue continues. Defer or catch notification construction while preserving the pre-removal metadata, so history still runs when notification setup fails.",
+      "revId": "8837648a5f9a70e57cd5e47a544f4aa1912cf420",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1cd84ae9_a0bc95d7",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/PendingIncomingCall.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-13T23:40:52Z",
+      "side": 1,
+      "message": "[error] Line 47: 🔴 Both terminal-state paths can cancel the request without completing `subject`. If a Telecom callback races with the terminal call event while `request.result` is subscribed, that subscriber can remain pending until the 30-second notification timeout, and a connection already bound in the second path is not released here. Complete the subject with a rejected result (or otherwise dispose the pending wait) when cancellation wins, and release any transferred connection.",
+      "revId": "8837648a5f9a70e57cd5e47a544f4aa1912cf420",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
