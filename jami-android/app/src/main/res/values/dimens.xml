@@ -162,4 +162,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
     <!--  Account Details  -->
     <dimen name="account_details_group_margin">8dp</dimen>
+    <dimen name="channel_bar_height">56dp</dimen>
+    <dimen name="channel_bar_list_margin">8dp</dimen>
+    <dimen name="inline_search_height">280dp</dimen>
+    <dimen name="inline_search_row_height">72dp</dimen>
 </resources>

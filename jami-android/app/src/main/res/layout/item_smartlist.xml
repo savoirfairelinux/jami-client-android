@@ -35,11 +35,26 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         tools:uri="@tools:sample/us_phones"
         tools:avatar="@tools:sample/avatars" />
 
+    <!-- Tells a group from a one-to-one conversation, in the same blue as its background. -->
+    <ImageView
+        android:id="@+id/group_indicator"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="8dp"
+        android:contentDescription="@string/groups_tab"
+        android:src="@drawable/baseline_group_24"
+        android:tint="@color/conversation_group_icon"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
     <RelativeLayout
         android:id="@+id/conv_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:layout_toStartOf="@id/group_indicator"
         android:layout_toEndOf="@+id/photo">
 
         <TextView
