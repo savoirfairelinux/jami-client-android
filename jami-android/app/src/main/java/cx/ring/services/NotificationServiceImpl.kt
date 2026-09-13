@@ -321,7 +321,9 @@ class NotificationServiceImpl(
                 .flatMapCompletable { result ->
                     Log.w(TAG, "Telecom API: requestIncomingCall result ${result.allowed}")
                     if (result.allowed) {
-                        result.setCall(call)
+                        // Telecom results are already bound before publication; fallback results
+                        // still need to resolve the absence of a system connection.
+                        if (result !is CallServiceImpl.AndroidCall) result.setCall(call)
                         manageCallNotification(conference, remove, startScreenshare)
                     } else
                         Completable.complete()
@@ -423,7 +425,10 @@ class NotificationServiceImpl(
                     Completable.fromAction { safeStart() }
                 }
             }
-            .onErrorComplete()
+            .onErrorComplete { error ->
+                Log.e(TAG, "Error managing call notification for $id", error)
+                true
+            }
             .doOnComplete { removeCallNotification() }
     }
 

@@ -756,10 +756,9 @@ abstract class CallService(
 
     fun conferenceCreated(accountId: String, conversationId: String, confId: String) {
         Log.d(TAG, "conference created: $confId $conversationId")
-        val conf = conferences.getOrPut(confId) { Conference(accountId, confId).apply {
-            if (conversationId.isNotEmpty())
-                this.conversationId = conversationId
-        } }
+        val conf = conferences.getOrPut(confId) { Conference(accountId, confId) }
+        if (conversationId.isNotEmpty())
+            conf.conversationId = conversationId
         val participants = JamiService.getParticipantList(accountId, confId)
         val map = JamiService.getConferenceDetails(accountId, confId)
         conf.setState(map["STATE"]!!)
@@ -847,7 +846,7 @@ abstract class CallService(
             }
 
             conferenceSubject.onNext(conf)
-            if (removed && conf.participants.size == 1) {
+            if (removed && conf.canCollapseToSimpleCall) {
                 // Remove the obsolete conference so later stale events can't recreate it.
                 conferences.remove(confId)
                 val call = conf.participants[0]
