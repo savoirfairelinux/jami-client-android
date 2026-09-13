@@ -21,13 +21,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.accessibility.AccessibilityManager
 import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import android.widget.PopupMenu
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
@@ -49,13 +50,17 @@ import androidx.transition.TransitionManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.Behavior.DragCallback
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import cx.ring.R
 import cx.ring.account.AccountWizardActivity
 import cx.ring.adapters.SmartListAdapter
+import cx.ring.channels.Channel
+import cx.ring.channels.ChannelRepository
 import cx.ring.client.AccountAdapter
+import cx.ring.client.BroadcastActivity
 import cx.ring.client.HomeActivity
 import cx.ring.mvp.BaseSupportFragment
-import cx.ring.utils.BitmapUtils
 import cx.ring.utils.DeviceUtils
 import cx.ring.viewholders.SmartListViewHolder
 import cx.ring.views.AvatarDrawable
@@ -83,6 +88,8 @@ import net.jami.services.NotificationService
 class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     SearchView.OnQueryTextListener, HomeView {
 
+    private var accountSettingsEnabled = true
+    private var groupsOnly = false
     private var mBinding: FragHomeBinding? = null
     private var mSmartListFragment: SmartListFragment? = null
     private val mDisposable = CompositeDisposable()
@@ -114,11 +121,19 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         }
     }
 
+    /** The Channel management screen is a detail view: back returns to the conversations. */
+    private val channelsBackPressedCallback = object : OnBackPressedCallback(false) {
+        override fun handleOnBackPressed() {
+            showConversations()
+        }
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         requireActivity().onBackPressedDispatcher.let {
             it.addCallback(this, conversationBackPressedCallback)
             it.addCallback(this, searchBackPressedCallback)
+            it.addCallback(this, channelsBackPressedCallback)
         }
     }
 
@@ -130,12 +145,21 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
         qrCode.setOnClickListener { goToQRFragment() }
         newSwarm.setOnClickListener { startNewSwarm() }
+        channelSelector.setOnClickListener { showChannelMenu(it) }
+        searchButton.setOnClickListener { expandSearchActionView() }
+        moreButton.setOnClickListener { showMoreMenu(it) }
+        newGroupButton.setOnClickListener { startNewSwarm() }
+        channelSend.setOnClickListener { askChannelMessage() }
+        channelRepository.activeChannel().let { channel ->
+            channelSelector.text = channel.name
+            channelSend.isVisible = !channel.isAllContacts
+        }
 
         // SearchBar is composed of:
         // - Account selection (navigation)
         // - Search bar (search for swarms or for new contacts)
         // - Menu (for settings, about jami)
-        searchBar.setNavigationOnClickListener { // Account selection
+        searchBar.setOnClickListener { // Account selection
             mDisposable.add(mAccountService.observableAccountList.firstElement().subscribe { accounts ->
                 MaterialAlertDialogBuilder(requireContext())
                     .setTitle(getString(R.string.account_selection))
@@ -150,7 +174,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
                             startActivity(Intent(activity, AccountWizardActivity::class.java))
                         else if (mAccountService.currentAccount != accounts[index]) {
                             // Disable account settings menu option when account is loading
-                            searchBar.menu.findItem(R.id.menu_account_settings).isEnabled = false
+                            accountSettingsEnabled = false
                             mAccountService.currentAccount = accounts[index]
                         }
                     }.show()
@@ -160,29 +184,8 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             querySubject.onNext(it.toString())
         }
 
-        // Inflate Menu and connect it
-        searchBar.inflateMenu(R.menu.smartlist_menu)
-        searchBar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.menu_account_settings -> (activity as? HomeActivity)?.goToAccountSettings()
-
-                R.id.menu_advanced_settings -> (activity as? HomeActivity)?.goToAdvancedSettings()
-
-                R.id.menu_about -> (activity as? HomeActivity)?.goToAbout()
-
-                R.id.menu_donate -> openJamiDonateWebPage(requireContext())
-            }
-            true
-        }
-
         // Update padding of the list depending on the AppBarLayout height
-        appBar.addOnLayoutChangeListener { _, _, top, _, bottom, _, _, _, _ ->
-            mSmartListFragment?.getRecyclerView()?.setPadding(
-                    0,
-                    appBar.height - DeviceUtils.getStatusBarHeight(requireContext()),
-                    0, 0
-            )
-        }
+        appBar.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> applyListPadding() }
 
         // Make the appBarLayout not going under the status bar.
         appBar.statusBarForeground = MaterialShapeDrawable.createWithElevationOverlay(requireContext())
@@ -222,8 +225,6 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             }
 
             if (newState === TransitionState.HIDDEN) { // Hidden
-                // Hide floating button to avoid weird animation
-                newSwarmFab.isVisible = true
 
                 searchDisposable?.dispose()
                 querySubject.onNext("")
@@ -233,13 +234,9 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
                 searchView.toolbar.navigationIcon = AppCompatResources.getDrawable(
                     requireContext(), R.drawable.baseline_arrow_back_24
                 )
-                newSwarmFab.isVisible = false
                 startSearch()
             }
         }
-
-        // Setup floating button.
-        newSwarmFab.setOnClickListener { expandSearchActionView() }
 
         // Setup donation card
         donationCard.donationCard.visibility = View.GONE
@@ -326,7 +323,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
         // Transitions to animate the changes
         // Make the search bar slide down
-        TransitionManager.beginDelayedTransition(binding.searchBar, Slide())
+        TransitionManager.beginDelayedTransition(binding.topActions, Slide())
         // Make the invitation card expand.
         TransitionManager.beginDelayedTransition(
             binding.invitationCard.invitationGroup,
@@ -352,7 +349,6 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         binding.searchBar.isVisible = false
         binding.invitationCard.invitationSummary.isVisible = false
         binding.fragmentContainer.isVisible = false
-        binding.newSwarmFab.isVisible = false
 
         // Display pending list.
         binding.invitationCard.pendingListGroup.isVisible = true
@@ -371,7 +367,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         // Animate back to search
         // Make the search bar slide up
         TransitionManager.beginDelayedTransition(
-            binding.searchBar,
+            binding.topActions,
             Slide().setInterpolator(DecelerateInterpolator())
         )
         // Make the invitation card collapse.
@@ -404,7 +400,6 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         binding.donationCard.donationCard.isVisible = presenter.donationCardIsVisible
         binding.searchBar.isVisible = true
         binding.invitationCard.invitationSummary.isVisible = true
-        binding.newSwarmFab.isVisible = true
         binding.fragmentContainer.isVisible = true
 
         // Hide pending list.
@@ -412,19 +407,6 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
         // Disable back press.
         conversationBackPressedCallback.isEnabled = false
-    }
-
-    // Will hide the floating button when scrolling down and show it when scrolling up.
-    private val fabScrollListener = object : RecyclerView.OnScrollListener() {
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            val canScrollUp = recyclerView.canScrollVertically(-1)
-            val isExtended = mBinding!!.newSwarmFab.isExtended
-            if (dy > 0 && isExtended) { // Going down
-                mBinding!!.newSwarmFab.shrink()
-            } else if ((dy < 0 || !canScrollUp) && !isExtended) { // Going up
-                mBinding!!.newSwarmFab.extend()
-            }
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -446,22 +428,31 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             adjustLayoutForAccessibility(isEnabled)
         }
 
-        mSmartListFragment = mBinding!!.fragmentContainer.getFragment()
+        attachSmartList(mBinding!!.fragmentContainer.getFragment())
 
         disableAppBarScroll()
+    }
 
-        // Subscribe on fragmentContainer to add scroll listener on the recycler view.
-        mSmartListFragment?.viewLifecycleOwnerLiveData?.observe(viewLifecycleOwner) {
-            it.lifecycle.addObserver(object : DefaultLifecycleObserver {
+    /** Track the displayed list fragment to keep the list paddings in step with the chrome. */
+    private fun attachSmartList(fragment: SmartListFragment?) {
+        mSmartListFragment = fragment
+        fragment?.viewLifecycleOwnerLiveData?.observe(viewLifecycleOwner) { owner ->
+            owner?.lifecycle?.addObserver(object : DefaultLifecycleObserver {
                 override fun onCreate(owner: LifecycleOwner) {
-                    mSmartListFragment?.getRecyclerView()?.addOnScrollListener(fabScrollListener)
-                }
-
-                override fun onDestroy(owner: LifecycleOwner) {
-                    mSmartListFragment?.getRecyclerView()?.removeOnScrollListener(fabScrollListener)
+                    applyListPadding()
                 }
             })
         }
+    }
+
+    /** Keep the list clear of the app bar, or of the status bar when the app bar is hidden. */
+    private fun applyListPadding() {
+        val binding = mBinding ?: return
+        val statusBar = DeviceUtils.getStatusBarHeight(requireContext())
+        val top = if (binding.appBar.isVisible) binding.appBar.height - statusBar
+            else statusBar + resources.getDimensionPixelSize(R.dimen.channel_bar_list_margin)
+        mSmartListFragment?.getRecyclerView()?.setPadding(
+            0, top, 0, resources.getDimensionPixelSize(R.dimen.channel_bar_list_margin))
     }
 
     override fun onDestroyView() {
@@ -482,7 +473,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe {
                 mBinding?.newSwarm?.isVisible = !it.isSip
-                mBinding?.searchBar?.menu?.findItem(R.id.menu_account_settings)?.isEnabled = true
+                accountSettingsEnabled = true
             }
         )
 
@@ -516,21 +507,15 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe { profile ->
                 val binding = mBinding ?: return@subscribe
-                binding.searchBar.navigationIcon =
-                    BitmapUtils.withPadding(
-                        AvatarDrawable.build(
-                            binding.root.context,
-                            profile.first,
-                            profile.second,
-                            true,
-                            profile.first.presenceStatus
-                        ),
-                        TypedValue.applyDimension(
-                            TypedValue.COMPLEX_UNIT_DIP,
-                            6f,
-                            resources.displayMetrics
-                        ).toInt()
+                binding.searchBar.setAvatar(
+                    AvatarDrawable.build(
+                        binding.root.context,
+                        profile.first,
+                        profile.second,
+                        true,
+                        profile.first.presenceStatus
                     )
+                )
                 binding.searchView.toolbar.navigationIcon = AppCompatResources.getDrawable(
                     binding.root.context, R.drawable.baseline_arrow_back_24
                 )
@@ -558,6 +543,113 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
                 )
         mBinding?.appBarContainer?.layoutParams = params
         recyclerView.clipToPadding = enabled
+    }
+
+    private val channelRepository by lazy { ChannelRepository(requireContext()) }
+
+    fun updateChannelBar() {
+        val channel = channelRepository.activeChannel()
+        mBinding?.channelSelector?.text = channel.name
+        // "All" holds every contact: broadcasting to it is not an action the bar offers.
+        mBinding?.channelSend?.isVisible = !channel.isAllContacts
+    }
+
+    private fun showMoreMenu(anchor: View) {
+        PopupMenu(requireContext(), anchor).apply {
+            inflate(R.menu.smartlist_menu)
+            menu.findItem(R.id.menu_account_settings).isEnabled = accountSettingsEnabled
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.menu_account_settings -> (activity as? HomeActivity)?.goToAccountSettings()
+                    R.id.menu_advanced_settings -> (activity as? HomeActivity)?.goToAdvancedSettings()
+                    R.id.menu_about -> (activity as? HomeActivity)?.goToAbout()
+                    R.id.menu_donate -> openJamiDonateWebPage(requireContext())
+                }
+                true
+            }
+            show()
+        }
+    }
+
+    private fun showChannelMenu(anchor: View) {
+        val channels = channelRepository.load()
+        val active = channelRepository.activeChannelName
+        PopupMenu(requireContext(), anchor).apply {
+            channels.forEachIndexed { index, channel ->
+                menu.add(0, index, index, channel.name).apply {
+                    isCheckable = true
+                    isChecked = channel.name == active
+                }
+            }
+            menu.setGroupCheckable(0, true, true)
+            // The Groups view is a filter on the active channel, so it belongs to its menu.
+            menu.add(1, MENU_GROUPS, channels.size, R.string.groups_tab).apply {
+                isCheckable = true
+                isChecked = groupsOnly
+            }
+            menu.add(1, MENU_MANAGE, channels.size + 1, R.string.channels_manage)
+            setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    MENU_MANAGE -> showChannels()
+                    MENU_GROUPS -> if (groupsOnly) showConversations() else showGroups()
+                    else -> {
+                        channelRepository.activeChannelName = channels[item.itemId].name
+                        updateChannelBar()
+                        if (groupsOnly) showGroups() else showConversations()
+                    }
+                }
+                true
+            }
+            show()
+        }
+    }
+
+    private fun showChannels() {
+        mBinding?.apply {
+            if (searchView.isShowing) searchView.hide()
+            appBar.isVisible = false
+        }
+        childFragmentManager.beginTransaction()
+            .setReorderingAllowed(true)
+            .replace(R.id.fragment_container, ChannelFragment(), ChannelFragment::class.java.simpleName)
+            .commit()
+        mSmartListFragment = null
+        channelsBackPressedCallback.isEnabled = true
+    }
+
+    private fun showConversations() {
+        groupsOnly = false
+        mBinding?.apply {
+            appBar.isVisible = true
+        }
+        val fragment = SmartListFragment.newInstance(false)
+        childFragmentManager.beginTransaction()
+            .setReorderingAllowed(true)
+            .replace(R.id.fragment_container, fragment, SmartListFragment::class.java.simpleName)
+            .commit()
+        attachSmartList(fragment)
+        channelsBackPressedCallback.isEnabled = false
+    }
+
+    private fun showGroups() {
+        groupsOnly = true
+        mBinding?.apply {
+            if (searchView.isShowing) searchView.hide()
+            appBar.isVisible = true
+        }
+        val fragment = SmartListFragment.newInstance(true)
+        childFragmentManager.beginTransaction()
+            .setReorderingAllowed(true)
+            .replace(R.id.fragment_container, fragment, SmartListFragment::class.java.simpleName)
+            .commit()
+        attachSmartList(fragment)
+        channelsBackPressedCallback.isEnabled = false
+    }
+
+    /** Writing to a channel is writing to its members: the screen is the one used to write. */
+    private fun askChannelMessage() {
+        startActivity(Intent(requireContext(), BroadcastActivity::class.java)
+            .putExtra(BroadcastFragment.KEY_CHANNEL, channelRepository.activeChannel().name))
     }
 
     /**
@@ -654,6 +746,8 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     }
 
     companion object {
+        private const val MENU_MANAGE = 1000
+        private const val MENU_GROUPS = 1001
         private val TAG = HomeFragment::class.simpleName!!
     }
 

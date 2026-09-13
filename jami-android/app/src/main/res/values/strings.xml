@@ -41,6 +41,35 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="website_chooser_title">View website using…</string>
     <string name="license">This software is provided \"as is\", without warranty of any kind. For details, see <u>GNU General Public License version 3 or later</u></string>
     <string name="description">Jami is free software for universal communication which respects the freedoms and privacy of its users.</string>
+    <string name="channels_tab">Channels</string>
+    <string name="channels_title">Your Channels</string>
+    <string name="channels_empty">No contacts in this channel.</string>
+    <string name="channels_members_count">%1$s · %2$d members</string>
+    <string name="channels_add">Add channel</string>
+    <string name="channels_edit">Edit channel</string>
+    <string name="channels_delete">Delete</string>
+    <string name="channels_delete_confirmation">Delete the Channel “%1$s”?</string>
+    <string name="channels_name_hint">Channel name</string>
+    <string name="channels_send_message">Message all</string>
+    <string name="channels_message_hint">Message</string>
+    <string name="channels_message_sent">Message sent to channel members</string>
+    <string name="channels_create_group">Create group</string>
+    <string name="channels_membership">Channels</string>
+    <string name="channels_updated">Channels updated</string>
+    <string name="conversation_creation_error">Unable to create the conversation</string>
+    <string name="conversations">Conversations</string>
+    <string name="groups_tab">Groups</string>
+    <string name="channels_active">Channel: %1$s</string>
+    <string name="channels_select">Select Channel</string>
+    <plurals name="channels_recipients">
+        <item quantity="one">%d recipient</item>
+        <item quantity="other">%d recipients</item>
+    </plurals>
+    <string name="channels_manage">Manage Channels</string>
+    <string name="channels_send_to_channel">Send a message to the channel</string>
+    <string name="channels_no_members">This channel has no members</string>
+    <string name="channels_no_groups">No groups in this channel yet</string>
+    <string name="channels_no_conversations">No conversations in this channel yet</string>
     <string name="credits">Credits</string>
     <string name="pip_title">Jami Conference</string>
 
