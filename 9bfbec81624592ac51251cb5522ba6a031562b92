@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38c1350e_33b4a2cc",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/CallServiceImpl.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-14T10:29:41Z",
+      "side": 1,
+      "message": "[error] Line 188: 🔴 The UUID prevents stale callbacks from resolving a retry, but this now permits multiple live Telecom requests for the same `Call`: every later RINGING/media update can create another `PendingIncomingCall` and call `addNewIncomingCall` even while a SHOW_UI request remains resolved in this map. Both connections bind to the same native call, while `Call.systemConnection` retains only the first, producing duplicate Telecom UI and an un-routed connection retained until termination. Reuse an existing live request for the call (or explicitly supersede and dispose it) while keeping per-generation keys for late callbacks.",
+      "revId": "9bfbec81624592ac51251cb5522ba6a031562b92",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "310871df_a8f6c470",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/CallService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-14T10:29:41Z",
+      "side": 1,
+      "message": "[error] Line 851: 🔴 This still collapses a hosted/swarm conference when `conferenceChanged` is delivered before `conferenceCreated`: the `getOrPut` conference has both `conversationId \u003d\u003d null` and `hostCall \u003d\u003d null`, so the one-participant update satisfies `canCollapseToSimpleCall`, removes the conference, and detaches the last call before the creation event can restore its metadata. The later creation then builds a new conference and loses the original hosted identity/host binding. Defer this collapse until creation metadata is known, or preserve an explicit hosted/pending marker from the update path; add a regression test for changed-before-created ordering.",
+      "revId": "9bfbec81624592ac51251cb5522ba6a031562b92",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
