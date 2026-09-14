@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad153b8f_6f78abbc",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationActionsFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-09-14T11:45:04Z",
+      "side": 1,
+      "message": "Fixed in PS4 (208af4e25). ConversationActionsState now snapshots the resolved target, canonical account contact status, mode and action visibility before distinctUntilChanged. The fragment has one complete renderer for Block/Unblock text, delete/remove buttons, details/preferences panels, identity and conversation type. It observes account.blockedContactsUpdates as well as contact/mode/account replacement, so changes on the same mutable Contact are not missed. Username resolution is switched with the state and cannot re-show stale blocked panels. Nine production-state tests cover unresolved-\u003eblocked-\u003eunblocked, requests, legacy/SIP, mode and username/account changes.",
+      "parentUuid": "8afd262e_6160bab0",
+      "revId": "2abb0927d6c0cca32e3e90775515ddf26df5da0c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1d600523_32ae489a",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-09-14T11:29:04Z",
       "side": 1,
       "message": "[error] Line 731: 🔴 This null branch only logs, but callers such as `ContactRequestsPresenter.blockContact` immediately discard the request after starting this asynchronous operation. If `startConversation` resolves without a unique external contact or fails to load it, the request is discarded without creating a ban. Return success/failure from the blocking operation (or pass the already-resolved target through it) and discard the request only after the ban succeeds.",
+      "revId": "2abb0927d6c0cca32e3e90775515ddf26df5da0c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b44525f_aec51ebc",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/ConversationFacade.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-09-14T11:45:04Z",
+      "side": 1,
+      "message": "Fixed in PS4. blockConversation returns a Completable and errors on failed/unresolved target selection. AccountService.blockContact validates on the daemon executor, invokes removeContact and confirms getContactDetails()[\"banned\"] \u003d\u003d \"true\" because the native mutation returns void. blockAndDiscardRequest chains discard only after this confirmed completion. All invitation callers (presenter, conversation, detail screen, Home, notification service and TV) now use this ordering; views/notifications close only on success, and failures preserve the request. Dialogs may pass the already-resolved pinned URI. Nine ContactBlockOperation regressions cover delayed resolution, resolution failure, native rejection/no-op, invalid/self targets, account invalidation, exceptions and accepted-operation disposal.",
+      "parentUuid": "1d600523_32ae489a",
       "revId": "2abb0927d6c0cca32e3e90775515ddf26df5da0c",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
