@@ -96,6 +96,7 @@ class AccountService(
     private var mHasRingAccount = false
     private val accountsSubject = BehaviorSubject.create<List<Account>>()
     private val observableAccounts: Subject<Account> = PublishSubject.create()
+    private val accountMetadataChanges = PublishSubject.create<String>().toSerialized()
 
     private val activeCallsSubject: Subject<ConversationActiveCalls> =
         PublishSubject.create()
@@ -411,6 +412,45 @@ class AccountService(
 
     val observableAccountList: Observable<List<Account>>
         get() = accountsSubject
+
+    fun getAccountMetadata(accountId: String): Map<String, String> =
+        JamiService.getAccountMetadata(accountId).toNativeFromUtf8()
+
+    fun observeAccountMetadata(accountId: String): Observable<Map<String, String>> =
+        getAccountSingle(accountId).flatMapObservable { account ->
+            account.loaded.andThen(Observable.defer {
+                accountMetadataChanges
+                    .filter { it == accountId }
+                    .map { getAccountMetadata(accountId) }
+                    .startWithItem(getAccountMetadata(accountId))
+            }.subscribeOn(scheduler))
+        }.distinctUntilChanged()
+
+    fun updateAccountMetadata(
+        accountId: String,
+        updates: (Map<String, String>) -> Map<String, String>,
+        onlyIfAbsent: Boolean = false
+    ): Completable =
+        Completable.fromAction {
+            check(getAccount(accountId)?.isJami == true) { "Channel account is unavailable" }
+            val changes = updates(getAccountMetadata(accountId))
+            if (changes.isNotEmpty()) {
+                val values = StringMap().apply {
+                    changes.forEach { (key, value) -> setUnicode(key, value) }
+                }
+                check(JamiService.setAccountMetadata(accountId, values, onlyIfAbsent)) {
+                    "Unable to persist account metadata"
+                }
+                accountMetadataChanges.onNext(accountId)
+            }
+        }.subscribeOn(scheduler)
+            .doOnError { error -> Log.e(TAG, "Unable to update account metadata for $accountId", error) }
+            .cache()
+
+    fun accountMetadataChanged(accountId: String) {
+        // Read the latest durable snapshot in the observer, not an older queued callback payload.
+        accountMetadataChanges.onNext(accountId)
+    }
 
     fun getObservableAccountUpdates(accountId: String): Observable<Account> =
         observableAccounts.filter { acc -> acc.accountId == accountId }

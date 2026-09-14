@@ -54,7 +54,14 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="channels_message_hint">Message</string>
     <string name="channels_message_sent">Message sent to channel members</string>
     <string name="channels_file_requires_swarm">File broadcast is unavailable for a legacy one-to-one conversation.</string>
-    <string name="channels_account_changed">The active account changed; reopen the Channel to send.</string>
+    <string name="channels_account_changed">The Channel account is unavailable or changed; reopen the Channel with the original account.</string>
+    <string name="channels_deleted">This Channel no longer exists.</string>
+    <string name="channels_loading">Loading Channel…</string>
+    <string name="channels_load_error">Unable to load this Channel.</string>
+    <string name="channels_update_error">Unable to update Channels.</string>
+    <string name="channels_send_error">Unable to send to this Channel.</string>
+    <string name="channels_name_required">Enter a Channel name.</string>
+    <string name="channels_name_exists">A Channel already has this name.</string>
     <string name="channels_create_group">Create group</string>
     <string name="channels_membership">Channels</string>
     <string name="channels_updated">Channels updated</string>

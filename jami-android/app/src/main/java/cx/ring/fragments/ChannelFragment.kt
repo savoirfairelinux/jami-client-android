@@ -12,6 +12,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -31,10 +32,15 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.channels.Channel
 import cx.ring.channels.ChannelRepository
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.subjects.PublishSubject
 import net.jami.services.AccountService
 import javax.inject.Inject
 
@@ -44,10 +50,33 @@ class ChannelFragment : Fragment() {
 
     private lateinit var repository: ChannelRepository
     private lateinit var channelBar: LinearLayout
+    private lateinit var addButton: MaterialButton
+    private var accountId: String? = null
+    private var accountInvalid = false
+    private var channelsLoaded = false
+    private var updatingNames = false
     private var channels = emptyList<Channel>()
+    private val rows = linkedMapOf<String, LinearLayout>()
+    private val pendingNames = mutableMapOf<String, String>()
+    private val disposables = CompositeDisposable()
+    private val writes = PublishSubject.create<Completable>()
+
+    override fun onCreate(state: Bundle?) {
+        super.onCreate(state)
+        accountId = if (state != null) state.getString(KEY_ACCOUNT)
+            else accountService.currentAccount?.accountId
+        repository = ChannelRepository(requireContext(), accountService, accountId)
+        // Keep accepted edits ordered and let them finish even after this screen closes.
+        writes.concatMapCompletable { it.onErrorComplete() }
+            .subscribe({}, { error -> Log.e(TAG, "Channel update queue stopped", error) })
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(KEY_ACCOUNT, accountId)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
-        repository = ChannelRepository(requireContext(), accountService.currentAccount?.accountId)
         val root = LinearLayout(requireContext()).apply {
             orientation = LinearLayout.VERTICAL
             clipToPadding = false
@@ -95,41 +124,82 @@ class ChannelFragment : Fragment() {
         root.addView(header, 0, LinearLayout.LayoutParams(-1, dp(56)))
         // Manage Channels is intentionally a channel-only screen. Members and bulk actions
         // belong to the selected Channel screen, not to this management list.
-        refreshChannels()
+        addButton = MaterialButton(requireContext()).apply {
+            text = getString(R.string.channels_add)
+            contentDescription = getString(R.string.channels_add)
+            isEnabled = false
+            setOnClickListener { addChannel() }
+        }
+        channelBar.addView(addButton, LinearLayout.LayoutParams(-1, dp(56)))
         return root
     }
 
-    private fun refreshChannels() {
-        channels = repository.load()
-        renderChannelButtons()
+    override fun onStart() {
+        super.onStart()
+        disposables.add(accountService.currentAccountSubject
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ account ->
+                if (account.accountId != accountId) {
+                    accountInvalid = true
+                    updateActions()
+                    showError(IllegalStateException(getString(R.string.channels_account_changed)))
+                }
+            }, { error -> showError(error) }))
+        disposables.add(repository.observe()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ snapshot ->
+                channelsLoaded = true
+                reconcileChannels(snapshot)
+            }, { error ->
+                channelsLoaded = false
+                updateActions()
+                showError(error)
+            }))
     }
 
-    private fun saveChannels(newChannels: List<Channel>) {
-        channels = newChannels
-        repository.save(channels)
-        if (repository.activeChannelName !in channels.map { it.name })
-            repository.activeChannelName = channels.first().name
-        (parentFragment as? HomeFragment)?.updateChannelBar()
-        renderChannelButtons()
+    override fun onStop() {
+        disposables.clear()
+        super.onStop()
     }
 
-    private fun renderChannelButtons() {
-        channelBar.removeAllViews()
-        channels.forEachIndexed { index, channel ->
-            channelBar.addView(
-                channelRow(index, channel),
-                LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(8) }
-            )
+    override fun onDestroyView() {
+        disposables.clear()
+        rows.clear()
+        channelsLoaded = false
+        super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        writes.onComplete()
+        super.onDestroy()
+    }
+
+    private fun reconcileChannels(snapshot: List<Channel>) {
+        channels = snapshot
+        val ids = channels.map { it.id }.toSet()
+        rows.keys.filterNot { it in ids }.forEach { id ->
+            rows.remove(id)?.let { row ->
+                if (row.hasFocus()) hideKeyboard(row)
+                channelBar.removeView(row)
+            }
+            pendingNames.remove(id)
         }
-        channelBar.addView(MaterialButton(requireContext()).apply {
-            text = getString(R.string.channels_add)
-            contentDescription = getString(R.string.channels_add)
-            setOnClickListener { editChannel(null) }
-        }, LinearLayout.LayoutParams(-1, dp(56)))
+        channels.forEach { channel ->
+            val row = rows.getOrPut(channel.id) {
+                channelRow(channel).also {
+                    channelBar.addView(it, channelBar.childCount - 1,
+                        LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(8) })
+                }
+            }
+            val name = row.getChildAt(0) as EditText
+            if (!name.hasFocus() && channel.id !in pendingNames)
+                updateName(name, channel.name)
+        }
+        updateActions()
     }
 
     /** A channel is renamed in place; "All" is the only one that can be neither edited nor deleted. */
-    private fun channelRow(index: Int, channel: Channel): View {
+    private fun channelRow(channel: Channel): LinearLayout {
         val editable = !channel.isAllContacts
         val row = LinearLayout(requireContext()).apply {
             orientation = LinearLayout.HORIZONTAL
@@ -150,9 +220,16 @@ class ChannelFragment : Fragment() {
                     true
                 }
             }
-            // The name is the field itself: what is typed is the channel's name, as soon as
-            // it is a name the other channels do not already carry.
-            if (editable) addTextChangedListener { renameChannel(index, it.toString()) }
+            if (editable) {
+                addTextChangedListener {
+                    if (!updatingNames) renameChannel(channel.id, this, it.toString())
+                }
+                setOnFocusChangeListener { _, focused ->
+                    if (!focused && channel.id !in pendingNames) {
+                        channels.firstOrNull { it.id == channel.id }?.let { updateName(this, it.name) }
+                    }
+                }
+            }
         }
         row.addView(name, LinearLayout.LayoutParams(0, dp(56), 1f))
         if (editable) {
@@ -161,34 +238,37 @@ class ChannelFragment : Fragment() {
                 imageTintList = ColorStateList.valueOf(onSurfaceColor())
                 contentDescription = getString(R.string.channels_delete)
                 setBackgroundColor(Color.TRANSPARENT)
-                setOnClickListener { confirmDelete(index) }
+                setOnClickListener { confirmDelete(channel.id) }
             }, LinearLayout.LayoutParams(dp(48), dp(48)))
         }
         return row
     }
 
-    private fun renameChannel(index: Int, newName: String) {
-        val current = channels.getOrNull(index) ?: return
-        val name = newName.trim()
-        if (name == current.name) return
-        // An empty or already used name is not a name: keep the previous one until it is.
-        if (name.isEmpty() || channels.filterIndexed { i, _ -> i != index }.any { it.name == name })
+    private fun renameChannel(id: String, input: EditText, newName: String) {
+        if (!canEdit()) return
+        val current = channels.firstOrNull { it.id == id } ?: run {
+            showError(IllegalStateException(getString(R.string.channels_deleted)))
             return
-        val wasActive = repository.activeChannelName == current.name
-        channels = channels.mapIndexed { i, c -> if (i == index) c.copy(name = name) else c }
-        repository.save(channels)
-        if (wasActive) repository.activeChannelName = name
-        (parentFragment as? HomeFragment)?.updateChannelBar()
+        }
+        val name = newName.trim()
+        input.error = nameError(id, name)
+        if (input.error != null || name == (pendingNames[id] ?: current.name)) return
+        pendingNames[id] = name
+        submit(repository.rename(id, name), onFinished = {
+            if (pendingNames[id] == name) pendingNames.remove(id)
+        })
     }
 
-    private fun confirmDelete(index: Int) {
-        val channel = channels.getOrNull(index) ?: return
+    private fun confirmDelete(id: String) {
+        if (!canEdit()) return
+        val channel = channels.firstOrNull { it.id == id } ?: return
+        val root = view
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.channels_delete)
             .setMessage(getString(R.string.channels_delete_confirmation, channel.name))
             .setNegativeButton(android.R.string.cancel, null)
             .setPositiveButton(android.R.string.ok) { _, _ ->
-                saveChannels(channels.filterIndexed { i, _ -> i != index })
+                if (view === root && canEdit()) submit(repository.delete(id))
             }
             .show()
     }
@@ -206,41 +286,95 @@ class ChannelFragment : Fragment() {
         else value.data
     }
 
-    private fun editChannel(channel: Channel?) {
-        if (channel?.isAllContacts == true) return
+    private fun addChannel() {
+        if (!canEdit()) return
+        val root = view
         val input = EditText(requireContext()).apply {
-            setText(channel?.name.orEmpty())
             hint = getString(R.string.channels_name_hint)
         }
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(if (channel == null) R.string.channels_add else R.string.channels_edit)
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.channels_add)
             .setView(input)
-            .setPositiveButton(android.R.string.ok) { _, _ ->
-                val name = input.text.toString().trim()
-                if (name.isEmpty() || channels.any { it.name == name && it != channel }) return@setPositiveButton
-                if (channel != null && repository.activeChannelName == channel.name)
-                    repository.activeChannelName = name
-                saveChannels(
-                    if (channel == null) channels + Channel(name, emptySet())
-                    else channels.map { if (it == channel) it.copy(name = name) else it }
-                )
-            }
+            .setPositiveButton(android.R.string.ok, null)
             .setNegativeButton(android.R.string.cancel, null)
-            .apply {
-                if (channel != null && !channel.isAllContacts) {
-                    setNeutralButton(R.string.channels_delete) { _, _ ->
-                        MaterialAlertDialogBuilder(requireContext())
-                            .setTitle(R.string.channels_delete)
-                            .setMessage(getString(R.string.channels_delete_confirmation, channel.name))
-                            .setNegativeButton(android.R.string.cancel, null)
-                            .setPositiveButton(android.R.string.ok) { _, _ ->
-                                saveChannels(channels.filterNot { it == channel })
-                            }
-                            .show()
-                    }
-                }
-            }.show()
+            .show()
+        dialog.getButton(android.content.DialogInterface.BUTTON_POSITIVE).setOnClickListener {
+            if (view !== root || !canEdit()) {
+                dialog.dismiss()
+                return@setOnClickListener
+            }
+            val name = input.text.toString().trim()
+            input.error = nameError(null, name)
+            if (input.error == null) {
+                submit(repository.create(name))
+                dialog.dismiss()
+            }
+        }
+    }
+
+    private fun nameError(id: String?, name: String): String? = when {
+        name.isEmpty() -> getString(R.string.channels_name_required)
+        channels.any { it.id != id && (pendingNames[it.id] ?: it.name) == name } ->
+            getString(R.string.channels_name_exists)
+        else -> null
+    }
+
+    private fun updateName(input: EditText, name: String) {
+        if (input.text.toString() == name) return
+        updatingNames = true
+        try {
+            input.setText(name)
+            input.error = null
+        } finally {
+            updatingNames = false
+        }
+    }
+
+    private fun updateActions() {
+        val enabled = channelsLoaded && !accountInvalid &&
+            accountService.currentAccount?.let { it.accountId == accountId } == true
+        addButton.isEnabled = enabled
+        rows.forEach { (id, row) ->
+            val editable = enabled && channels.any { it.id == id && !it.isAllContacts }
+            for (index in 0 until row.childCount) row.getChildAt(index).isEnabled = editable
+        }
+    }
+
+    private fun canEdit(): Boolean {
+        val account = accountService.currentAccount
+        if (!accountInvalid && channelsLoaded && account != null && account.accountId == accountId)
+            return true
+        showError(IllegalStateException(getString(
+            if (!channelsLoaded) R.string.channels_loading else R.string.channels_account_changed)))
+        return false
+    }
+
+    private fun submit(operation: Completable, onFinished: () -> Unit = {}) {
+        val root = view ?: return
+        writes.onNext(operation.observeOn(AndroidSchedulers.mainThread())
+            .doOnComplete {
+                onFinished()
+                if (view === root && !accountInvalid) reconcileChannels(repository.load())
+            }
+            .doOnError { error ->
+                onFinished()
+                Log.e(TAG, "Unable to update Channels", error)
+                if (view === root && !accountInvalid) showError(error)
+            })
+    }
+
+    private fun showError(error: Throwable) {
+        Log.e(TAG, "Unable to update Channels", error)
+        view?.let {
+            Snackbar.make(it, error.message ?: getString(R.string.channels_update_error),
+                Snackbar.LENGTH_LONG).show()
+        }
     }
 
     private fun dp(value: Int) = (value * resources.displayMetrics.density).toInt()
+
+    companion object {
+        private const val KEY_ACCOUNT = "channel_account"
+        private const val TAG = "ChannelFragment"
+    }
 }

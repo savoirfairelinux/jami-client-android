@@ -1,162 +1,173 @@
 /*
- *  Copyright (C) 2004-2025 Savoir-faire Linux Inc.
+ * Copyright (C) 2004-2026 Savoir-faire Linux Inc.
  *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  */
 package cx.ring.channels
 
 import android.content.Context
-import net.jami.model.Conversation
-import org.json.JSONArray
+import android.content.SharedPreferences
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
+import net.jami.model.ChannelMetadata
+import net.jami.services.AccountService
+import net.jami.utils.Log
 import org.json.JSONObject
 
-data class Channel(
-    val name: String,
-    val members: Set<String>,
-    val builtIn: Boolean = false,
-    /** Conversation URIs of the groups created from this channel. */
-    val groups: Set<String> = emptySet(),
+typealias Channel = net.jami.model.Channel
+
+class ChannelRepository(
+    context: Context,
+    private val accountService: AccountService,
+    private val accountId: String?
 ) {
-    /** The built-in "All" channel implicitly contains every contact. */
-    val isAllContacts get() = builtIn && name == ChannelRepository.ALL_CHANNEL
-
-    fun containsContact(uri: String) = isAllContacts || uri in members
-
-    /**
-     * A group belongs to the channels it was put in, and to no other; a one-to-one conversation
-     * belongs where its contact does. "All" holds every conversation.
-     */
-    fun contains(conversation: Conversation): Boolean {
-        if (isAllContacts) return true
-        if (conversation.isSwarmGroup()) return conversation.uri.rawUriString in groups
-        val others = conversation.contacts.filter { !it.isUser }
-        if (others.isEmpty()) return false
-        return others.all { it.uri.rawUriString in members }
-    }
-}
-
-class ChannelRepository(context: Context, accountId: String? = null) {
     private val preferences = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
-    private val accountKey = accountId?.takeIf { it.isNotBlank() }
-    private val keySuffix = accountKey ?: DEFAULT_ACCOUNT
-    private val channelsKey = "$KEY_CHANNELS_PREFIX$keySuffix"
-    private val activeKey = "$KEY_ACTIVE_PREFIX$keySuffix"
-    private val legacyMigratedKey = "$LEGACY_MIGRATED_PREFIX$keySuffix"
+    private val activeKey = "active_id_$accountId"
+    private val migratedKey = "sync_migrated_$accountId"
+    private val localMetadataKey = "sip_metadata_$accountId"
 
     fun load(): List<Channel> {
-        val accountStored = preferences.getString(channelsKey, null)
-        // Legacy data is migrated only after a real account is known. A temporary repository
-        // created while accounts are loading must never claim the legacy data for "default".
-        val migrateLegacy = accountKey != null &&
-            !preferences.getBoolean(legacyMigratedKey, false)
-        val legacyStored = if (migrateLegacy)
-            preferences.getString(LEGACY_CHANNELS_KEY, null)
-        else null
-        val stored = accountStored ?: legacyStored
-        if (stored == null) {
-            val defaults = DEFAULT_CHANNELS.map { Channel(it, emptySet(), true) }
-            save(defaults)
-            return defaults
-        }
-        val parsed = JSONArray(stored).let { array ->
-            (0 until array.length()).map { index ->
-                val item = array.getJSONObject(index)
-                val builtIn = item.optBoolean("builtIn")
-                val name = item.getString("name")
-                Channel(
-                    // Migrate names used by the first prototype to the product names.
-                    if (builtIn) migrateName(name) else name,
-                    item.optJSONArray("members").toStringSet(),
-                    builtIn,
-                    item.optJSONArray("groups").toStringSet(),
-                )
+        if (accountService.getAccount(accountId) == null) return ChannelMetadata.defaults
+        val metadata = readMetadata()
+        val legacy = if (preferences.getBoolean(migratedKey, false)) null
+            else preferences.getString("channels_$accountId", null)
+        return ChannelMetadata.channels(if (legacy == null) metadata else
+            metadata + ChannelMetadata.migrate(ChannelMetadata.legacyChannels(legacy), metadata))
+    }
+
+    fun observe(): Observable<List<Channel>> {
+        val id = accountId ?: return Observable.just(ChannelMetadata.defaults)
+        val localChanges = Observable.create<Unit> { emitter ->
+            val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+                if (key == activeKey || key == localMetadataKey) emitter.onNext(Unit)
             }
+            preferences.registerOnSharedPreferenceChangeListener(listener)
+            emitter.setCancellable { preferences.unregisterOnSharedPreferenceChangeListener(listener) }
         }
-        val channels = parsed.ifEmpty { DEFAULT_CHANNELS.map { Channel(it, emptySet(), true) } }
-        if (accountStored == null || channels != parsed)
-            save(channels)
-        if (legacyStored != null) {
-            val migration = preferences.edit()
-                .putBoolean(legacyMigratedKey, true)
-                .remove(LEGACY_CHANNELS_KEY)
-                .remove(LEGACY_ACTIVE_KEY)
-            if (accountStored == null)
-                migration.putString(
-                    activeKey,
-                    migrateName(preferences.getString(LEGACY_ACTIVE_KEY, null))
-                )
-            migration.apply()
-        }
-        return channels
+        return accountService.getAccountSingle(id).flatMapObservable { account ->
+            account.loaded.andThen(migrate()).andThen(
+                if (account.isJami)
+                    Observable.merge(accountService.observeAccountMetadata(id).map { Unit }, localChanges)
+                else localChanges.startWithItem(Unit)
+            )
+        }.map { load() }
     }
 
-    fun save(channels: List<Channel>) {
-        val array = JSONArray()
-        channels.forEach { channel ->
-            array.put(JSONObject().apply {
-                put("name", channel.name)
-                put("builtIn", channel.builtIn)
-                put("members", JSONArray(channel.members.toList()))
-                put("groups", JSONArray(channel.groups.toList()))
-            })
-        }
-        preferences.edit().putString(channelsKey, array.toString()).apply()
-    }
-
-    var activeChannelName: String
+    var activeChannelId: String
         get() {
-            val raw = preferences.getString(activeKey, null)
-                ?: if (accountKey != null && !preferences.getBoolean(legacyMigratedKey, false))
-                    preferences.getString(LEGACY_ACTIVE_KEY, null)
-                else null
             val channels = load()
-            val active = migrateName(raw)
-                .takeIf { name -> channels.any { it.name == name } }
-                ?: channels.firstOrNull()?.name
-                ?: ALL_CHANNEL
-            if (preferences.getString(activeKey, null) != active)
-                preferences.edit().putString(activeKey, active).apply()
-            return active
+            val stored = preferences.getString(activeKey, null)
+            val legacyName = ChannelMetadata.migrateName(preferences.getString("active_$accountId", null))
+            return channels.firstOrNull { it.id == stored }?.id
+                ?: if (stored == null) channels.firstOrNull { it.name == legacyName }?.id ?: ChannelMetadata.ALL_ID
+                else ChannelMetadata.ALL_ID
         }
-        set(value) = preferences.edit().putString(activeKey, value).apply()
+        set(value) {
+            requireNotNull(accountService.getAccount(accountId)) { "Channel account is unavailable" }
+            require(load().any { it.id == value }) { "Channel no longer exists" }
+            preferences.edit().putString(activeKey, value).apply()
+        }
+
+    val activeChannelName: String get() = activeChannel().name
 
     fun activeChannel(): Channel {
         val channels = load()
-        return channels.firstOrNull { it.name == activeChannelName } ?: channels.first()
+        return channels.firstOrNull { it.id == activeChannelId } ?: ChannelMetadata.defaults.first()
     }
 
-    fun addGroup(channelName: String, conversationUri: String) {
-        save(load().map { if (it.name == channelName) it.copy(groups = it.groups + conversationUri) else it })
+    fun create(name: String): Completable = mutate { ChannelMetadata.create(it, name) }
+
+    fun rename(channelId: String, name: String): Completable =
+        mutate { ChannelMetadata.rename(it, channelId, name) }
+
+    fun delete(channelId: String): Completable =
+        mutate { ChannelMetadata.delete(it, channelId) }
+
+    fun setMemberships(uri: String, group: Boolean, changes: Map<String, Boolean>): Completable =
+        mutate { ChannelMetadata.setMemberships(it, uri, group, changes) }
+
+    fun addGroup(channelId: String, conversationUri: String): Completable =
+        setMemberships(conversationUri, true, mapOf(channelId to true))
+
+    private fun mutate(updates: (Map<String, String>) -> Map<String, String>): Completable =
+        migrate().andThen(update(updates))
+            .doOnError { error -> Log.e("ChannelRepository", "Unable to update Channels", error) }
+            .cache()
+
+    private fun readMetadata(): Map<String, String> {
+        val account = requireNotNull(accountService.getAccount(accountId)) { "Channel account is unavailable" }
+        if (account.isJami) return accountService.getAccountMetadata(account.accountId)
+        val stored = preferences.getString(localMetadataKey, null) ?: return emptyMap()
+        return JSONObject(stored).let { json ->
+            json.keys().asSequence().associateWith { json.getString(it) }
+        }
     }
+
+    private fun update(
+        updates: (Map<String, String>) -> Map<String, String>,
+        onlyIfAbsent: Boolean = false
+    ): Completable =
+        Completable.defer {
+            val account = requireNotNull(accountService.getAccount(accountId)) { "Channel account is unavailable" }
+            if (account.isJami) accountService.updateAccountMetadata(account.accountId, updates, onlyIfAbsent)
+            else Completable.fromAction {
+                // SIP accounts have no Jami linked devices; preserve their existing local Channels.
+                synchronized(preferences) {
+                    val current = readMetadata()
+                    val changed = updates(current).filterKeys { !onlyIfAbsent || it !in current }
+                    if (changed.isNotEmpty()) check(preferences.edit()
+                        .putString(localMetadataKey, JSONObject(current + changed).toString()).commit()) {
+                        "Unable to persist Channels"
+                    }
+                }
+            }.subscribeOn(Schedulers.io())
+        }.cache()
+
+    private fun migrate(): Completable = Completable.defer {
+        require(!accountId.isNullOrBlank()) { "Channel account is unavailable" }
+        if (preferences.getBoolean(migratedKey, false)) return@defer Completable.complete()
+        update({ current ->
+            val legacy = synchronized(preferences) {
+                preferences.getString("channels_$accountId", null) ?: run {
+                    val stored = preferences.getString("channels", null)
+                    val owner = preferences.getString(LEGACY_OWNER, null)
+                    if (stored == null || (owner != null && owner != accountId)) null
+                    else {
+                        // Claim old unscoped data durably for one real account, even if import fails.
+                        check(preferences.edit().putString(LEGACY_OWNER, accountId).commit()) {
+                            "Unable to claim legacy Channels"
+                        }
+                        stored
+                    }
+                }
+            }
+            if (legacy == null) emptyMap()
+            else ChannelMetadata.migrate(ChannelMetadata.legacyChannels(legacy), current)
+        }, onlyIfAbsent = true).andThen(Completable.fromAction {
+            synchronized(preferences) {
+                val active = preferences.getString("active_$accountId", null)
+                    ?: if (preferences.getString(LEGACY_OWNER, null) == accountId)
+                        preferences.getString("active", null) else null
+                val migratedActive = load().firstOrNull { it.name == ChannelMetadata.migrateName(active) }?.id
+                    ?: ChannelMetadata.ALL_ID
+                val editor = preferences.edit().putBoolean(migratedKey, true).remove("channels_$accountId")
+                if (!preferences.contains(activeKey)) editor.putString(activeKey, migratedActive)
+                if (preferences.getString(LEGACY_OWNER, null) == accountId) {
+                    editor.remove("channels").remove("active")
+                }
+                check(editor.commit()) { "Unable to complete Channel migration" }
+            }
+        })
+    }.cache()
 
     companion object {
         private const val PREFERENCES = "jami_channels"
-        private const val KEY_CHANNELS_PREFIX = "channels_"
-        private const val KEY_ACTIVE_PREFIX = "active_"
-        private const val LEGACY_CHANNELS_KEY = "channels"
-        private const val LEGACY_ACTIVE_KEY = "active"
-        private const val LEGACY_MIGRATED_PREFIX = "legacy_migrated_"
-        private const val DEFAULT_ACCOUNT = "default"
-        const val ALL_CHANNEL = "All"
-        private const val LEGACY_ALL_CONTACTS = "Contact"
-        private const val LEGACY_CONTACTS = "Contacts"
-        private const val LEGACY_FRIEND = "Friend"
-        private const val LEGACY_REAL_FRIEND = "Real Friend"
-        val DEFAULT_CHANNELS = listOf(ALL_CHANNEL, "Friends", "Real Friends", "Family", "Colleague")
-
-        private fun migrateName(name: String?): String =
-            when (name) {
-                LEGACY_ALL_CONTACTS, LEGACY_CONTACTS -> ALL_CHANNEL
-                LEGACY_FRIEND -> "Friends"
-                LEGACY_REAL_FRIEND -> "Real Friends"
-                null -> ALL_CHANNEL
-                else -> name
-            }
-
-        private fun JSONArray?.toStringSet(): Set<String> =
-            if (this == null) emptySet() else (0 until length()).map { getString(it) }.toSet()
+        private const val LEGACY_OWNER = "legacy_owner_account"
+        const val ALL_CHANNEL = ChannelMetadata.ALL_NAME
+        val DEFAULT_CHANNELS = ChannelMetadata.defaults.map { it.name }
     }
 }
