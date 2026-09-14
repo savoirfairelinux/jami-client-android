@@ -21,7 +21,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -40,10 +39,11 @@ import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import cx.ring.utils.TextUtils.copyAndShow
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import net.jami.model.Contact
 import net.jami.model.Conversation
+import net.jami.model.ConversationActionsState
+import net.jami.model.ConversationActionsState.BlockAction
+import net.jami.model.ConversationActionsState.DeleteAction
 import net.jami.model.Uri
 import net.jami.services.AccountService
 import net.jami.services.ConversationFacade
@@ -69,7 +69,7 @@ class ConversationActionsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View = FragConversationActionsBinding.inflate(inflater, container, false).apply {
-
+        binding = this
         val path = ConversationPath.fromBundle(arguments)!!
         val conversation = mConversationFacade
             .startConversation(path.accountId, path.conversationUri)
@@ -180,251 +180,170 @@ class ConversationActionsFragment : Fragment() {
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe { muteSwitch.isChecked = !it })
 
-        // Setup card with
-        //  - conversation type (such as "Private swarm")
-        //  - conversation id (such as swarm:1234)"
-        // The real conversation mode is hidden in TrustRequest when it's a request.
-        val conversationMode =
-            if (conversation.mode.blockingFirst() == Conversation.Mode.Request)
-                conversation.request!!.mode
-            else conversation.mode.blockingFirst()
+        var actionsState = ConversationActionsState.from(
+            conversation, mAccountService.getAccount(path.accountId)
+        )
+        mDisposableBag.add(ConversationActionsState.observe(
+            conversation, mAccountService.observableAccountList
+        )
+            .observeOn(DeviceUtils.uiScheduler)
+            .subscribe({ state ->
+                actionsState = state
+                renderActions(state)
+            }, { error -> Log.e(TAG, "Unable to update conversation actions", error) }))
 
-        if (conversationMode == Conversation.Mode.OneToOne || conversation.isLegacy()) {
-            mDisposableBag.add(
-                conversation.contactUpdates
-                    // Filter out the user.
-                    .map { contacts -> contacts.filterNot { it.isUser } }
-                    .filter(List<Contact>::isNotEmpty)
-                    .map { it.first() }
-                    .flatMapSingle { contact ->
-                        contact.username?.map { username -> Pair(username, contact.uri) }
-                            ?: Single.just(Pair("", contact.uri))
-                    }.observeOn(DeviceUtils.uiScheduler)
-                    .subscribe { (registeredName, identifier) ->
-                        userNamePanel.isVisible = registeredName.isNotEmpty()
-                        userName.text = registeredName
-                        this.identifier.text = identifier.uri
-                        secureP2pConnection.setOnClickListener {
-                            startActivity(Intent(Intent.ACTION_VIEW, ConversationPath.toUri(
-                                conversation.accountId,
-                                identifier.rawRingId
-                            )).setClass(requireContext(), CertificateViewerActivity::class.java))
-                        }
-                        shareButton.setOnClickListener {
-                            shareContact(registeredName.ifEmpty { identifier.uri })
-                        }
-                        qrCode.setOnClickListener { showContactQRCode(identifier) }
-                    }
-            )
-            conversationDelete.setOnClickListener {
-                if (conversation.isLegacy())
-                    ActionHelper.launchAddContactAction(
-                        context = requireContext(),
-                        accountId = mAccountService.currentAccount!!.accountId,
-                        contact = conversation.contact!!
-                    ) { accountId: String, contactUri: Uri ->
-                        mAccountService.addContact(accountId, contactUri.uri)
-                        val resultIntent = Intent()
-                            .putExtra(EXIT_REASON, ExitReason.CONTACT_ADDED.toString())
-                        requireActivity().setResult(Activity.RESULT_OK, resultIntent)
-                        requireActivity().finish()
-                    }
-                else if (conversation.mode.blockingFirst() == Conversation.Mode.Request)
-                    mDisposableBag.add(ActionHelper.launchAcceptInvitation(
-                        context = requireContext(),
-                        conversation = conversation
-                    ) {
-                        mConversationFacade.acceptRequest(it)
-                        val resultIntent = Intent()
-                            .putExtra(EXIT_REASON, ExitReason.INVITATION_ACCEPTED.toString())
-                        requireActivity().setResult(Activity.RESULT_OK, resultIntent)
-                        requireActivity().finish()
-                    })
-                else
-                    ActionHelper.launchDeleteSwarmOneToOneAction(
-                        context = requireContext(),
-                        accountId = mAccountService.currentAccount!!.accountId,
-                        uri = conversation.uri,
-                        callback = { accountId: String, conversationUri: Uri ->
-                            mConversationFacade.removeConversation(accountId, conversationUri)
-                                .subscribe().apply { mDisposableBag.add(this) }
-                            val resultIntent = Intent()
-                                .putExtra(EXIT_REASON, ExitReason.CONTACT_DELETED.toString())
-                            requireActivity().setResult(Activity.RESULT_OK, resultIntent)
-                            requireActivity().finish()
-                        })
-            }
-
-            descriptionPanel.isVisible = false  // Disable description edit for 1-to-1 conversation
-            blockContact.setOnClickListener {
-                if(conversation.mode.blockingFirst()==Conversation.Mode.Request)
-                    mDisposableBag.add(ActionHelper.launchBlockContactAction(
-                        context = requireContext(),
-                        accountId = mAccountService.currentAccount!!.accountId,
-                        contact = conversation.contact!!
-                    ) { accountId: String, _: Uri ->
-                        mConversationFacade.blockConversation(accountId, conversation.uri)
-                        mConversationFacade.discardRequest(accountId, conversation.uri)
-                        val resultIntent = Intent()
-                            .putExtra(EXIT_REASON, ExitReason.CONTACT_BLOCKED.toString())
-                        requireActivity().setResult(Activity.RESULT_OK, resultIntent)
-                        requireActivity().finish()
-                    })
-                else if (conversation.contact!!.isBlocked)
-                    mDisposableBag.add(ActionHelper.launchUnblockContactAction(
-                        context = requireContext(),
-                        accountId = mAccountService.currentAccount!!.accountId,
-                        contact = conversation.contact!!
-                    ) { accountId: String, contactUri: Uri ->
-                        mAccountService.addContact(accountId, contactUri.uri)
-                        val resultIntent = Intent()
-                            .putExtra(EXIT_REASON, ExitReason.CONTACT_UNBLOCKED.toString())
-                        requireActivity().setResult(Activity.RESULT_OK, resultIntent)
-                        requireActivity().finish()
-                    })
-                else
-                    mDisposableBag.add(ActionHelper.launchBlockContactAction(
-                        context = requireContext(),
-                        accountId = mAccountService.currentAccount!!.accountId,
-                        contact = conversation.contact!!
-                    ) { accountId: String, contactUri: Uri ->
-                        mAccountService.removeContact(accountId, contactUri.uri, true)
-                        val resultIntent = Intent()
-                            .putExtra(EXIT_REASON, ExitReason.CONTACT_BLOCKED.toString())
-                        requireActivity().setResult(Activity.RESULT_OK, resultIntent)
-                        requireActivity().finish()
-                    })
-            }
-
-            conversationRemove.setOnClickListener {
-                ActionHelper.launchClearAction(
-                    context = requireContext(),
-                    accountId = mAccountService.currentAccount!!.accountId,
-                    uri = conversation.uri,
-                    callback = { accountId: String, conversationUri: Uri ->
-                        mConversationFacade.removeConversation(accountId, conversationUri, true)
-                            .subscribe().apply { mDisposableBag.add(this) }
-                        val resultIntent = Intent()
-                            .putExtra(EXIT_REASON, ExitReason.CONVERSATION_LEFT.toString())
-                        requireActivity().setResult(Activity.RESULT_OK, resultIntent)
-                        requireActivity().finish()
-                    })
-            }
-
-            // Hide details not useful for blocked contact
-            if (conversation.contact!!.isBlocked) {
-                conversationDelete.isVisible = false
-                conversationRemove.isVisible = false
-                blockContact.text = resources.getString(R.string.conversation_action_unblock_this)
-                conversationDetailsPanel.visibility = View.GONE
-                conversationActionsPanel.visibility = View.GONE
-            }
-
-            // Also going there for SIP account
-            if (conversation.isLegacy()) {
-                blockContact.isVisible = false
-                conversationRemove.isVisible = false
-                conversationActionsPanel.visibility = View.GONE
-                conversationDetailsPanel.visibility = View.GONE
-                conversationDelete.isVisible = !mAccountService.currentAccount!!.isSip
-                conversationDelete.text = resources.getString(R.string.ab_action_contact_add)
-            } else if (conversation.mode.blockingFirst() == Conversation.Mode.Request) {
-                conversationDelete.text = resources.getString(R.string.accept_invitation)
-                conversationActionsPanel.visibility = View.GONE
-                conversationRemove.isVisible = false
-            } else {
-                conversationDelete.text = resources.getString(R.string.delete_contact)
-            }
-        } else {    // If conversation mode is not one to one
-            privateConversationPanel.isVisible = false
-            userNamePanel.isVisible = false
-            conversationDelete.text = resources.getString(R.string.leave_conversation)
-            conversationDelete.setOnClickListener {
-                if (conversation.mode.blockingFirst() == Conversation.Mode.Request)
-                    mDisposableBag.add(ActionHelper.launchAcceptInvitation(
-                        context = requireContext(),
-                        conversation = conversation
-                    ) {
-                        mConversationFacade.acceptRequest(it)
-                        val resultIntent = Intent()
-                            .putExtra(EXIT_REASON, ExitReason.INVITATION_ACCEPTED.toString())
-                        requireActivity().setResult(Activity.RESULT_OK, resultIntent)
-                        requireActivity().finish()
-                    })
-                else
-                    ActionHelper.launchDeleteSwarmGroupAction(
-                        context = requireContext(),
-                        accountId = mAccountService.currentAccount!!.accountId,
-                        uri = conversation.uri,
-                        callback = { accountId: String, conversationUri: Uri ->
-                            mConversationFacade.removeConversation(accountId, conversationUri)
-                                .subscribe().apply { mDisposableBag.add(this) }
-                            val resultIntent = Intent()
-                                .putExtra(EXIT_REASON, ExitReason.CONVERSATION_LEFT.toString())
-                            requireActivity().setResult(Activity.RESULT_OK, resultIntent)
-                            requireActivity().finish()
-                        })
-            }
-
-            if (conversation.mode.blockingFirst() == Conversation.Mode.Request) {
-                conversationDelete.text = resources.getString(R.string.accept_invitation)
-                conversationActionsPanel.visibility = View.GONE
-            }
-
-            blockContact.isVisible = false
-            conversationRemove.isVisible = false
+        secureP2pConnection.setOnClickListener {
+            val identifier = actionsState.contactUri ?: return@setOnClickListener
+            startActivity(Intent(Intent.ACTION_VIEW, ConversationPath.toUri(
+                conversation.accountId,
+                identifier.rawRingId
+            )).setClass(requireContext(), CertificateViewerActivity::class.java))
+        }
+        shareButton.setOnClickListener {
+            val identifier = actionsState.contactUri ?: return@setOnClickListener
+            shareContact(actionsState.registeredName.ifEmpty { identifier.uri })
+        }
+        qrCode.setOnClickListener {
+            actionsState.contactUri?.let { showContactQRCode(it) }
         }
 
-        @StringRes val infoString =
-            if (conversation.isSwarm) {
-                if (conversationMode == Conversation.Mode.OneToOne)
-                    R.string.conversation_type_private
-                else {
-                    R.string.conversation_type_group
+        conversationDelete.setOnClickListener {
+            if (!actionsState.showDelete) return@setOnClickListener
+            when (actionsState.deleteAction) {
+                DeleteAction.ADD_CONTACT -> {
+                    val contact = conversation.contact ?: return@setOnClickListener
+                    ActionHelper.launchAddContactAction(
+                        context = requireContext(),
+                        accountId = path.accountId,
+                        contact = contact
+                    ) { accountId: String, contactUri: Uri ->
+                        mAccountService.addContact(accountId, contactUri.uri)
+                        finishWithResult(ExitReason.CONTACT_ADDED)
+                    }
                 }
-            } else R.string.conversation_type_contact
+                DeleteAction.ACCEPT_INVITATION ->
+                    mDisposableBag.add(ActionHelper.launchAcceptInvitation(
+                        context = requireContext(),
+                        conversation = conversation
+                    ) {
+                        mConversationFacade.acceptRequest(it)
+                        finishWithResult(ExitReason.INVITATION_ACCEPTED)
+                    })
+                DeleteAction.DELETE_CONTACT ->
+                    ActionHelper.launchDeleteSwarmOneToOneAction(
+                        context = requireContext(),
+                        accountId = path.accountId,
+                        uri = conversation.uri,
+                        callback = { accountId: String, conversationUri: Uri ->
+                            mConversationFacade.removeConversation(accountId, conversationUri)
+                                .subscribe().apply { mDisposableBag.add(this) }
+                            finishWithResult(ExitReason.CONTACT_DELETED)
+                        })
+                DeleteAction.LEAVE_CONVERSATION ->
+                    ActionHelper.launchDeleteSwarmGroupAction(
+                        context = requireContext(),
+                        accountId = path.accountId,
+                        uri = conversation.uri,
+                        callback = { accountId: String, conversationUri: Uri ->
+                            mConversationFacade.removeConversation(accountId, conversationUri)
+                                .subscribe().apply { mDisposableBag.add(this) }
+                            finishWithResult(ExitReason.CONVERSATION_LEFT)
+                        })
+            }
+        }
 
-        conversationType.setText(infoString)
+        blockContact.setOnClickListener {
+            val contact = mAccountService.getBlockableContact(conversation)
+            if (contact == null || actionsState.blockAction == BlockAction.NONE) {
+                ActionHelper.showBlockContactRefused(requireContext())
+                return@setOnClickListener
+            }
+            val accountId = conversation.accountId
+            if (actionsState.blockAction == BlockAction.UNBLOCK) {
+                mDisposableBag.add(ActionHelper.launchUnblockContactAction(
+                    context = requireContext(),
+                    accountId = accountId,
+                    contact = contact
+                ) { accountId: String, contactUri: Uri ->
+                    mAccountService.addContact(accountId, contactUri.uri)
+                    finishWithResult(ExitReason.CONTACT_UNBLOCKED)
+                })
+            } else {
+                val request = actionsState.deleteAction == DeleteAction.ACCEPT_INVITATION
+                mDisposableBag.add(ActionHelper.launchBlockContactAction(
+                    context = requireContext(),
+                    accountId = accountId,
+                    contact = contact,
+                    accountService = mAccountService
+                ) { accountId: String, contactUri: Uri ->
+                    val operation = if (request)
+                        mConversationFacade.blockAndDiscardRequest(accountId, conversation.uri, contactUri)
+                    else mAccountService.blockContact(accountId, contactUri)
+                    mDisposableBag.add(operation
+                        .observeOn(DeviceUtils.uiScheduler)
+                        .subscribe({
+                            if (binding === this)
+                                finishWithResult(ExitReason.CONTACT_BLOCKED)
+                        }, { error ->
+                            Log.e(TAG, "Unable to block contact", error)
+                            if (binding === this)
+                                Toast.makeText(requireContext(), R.string.generic_error, Toast.LENGTH_LONG).show()
+                        }))
+                })
+            }
+        }
 
-//        val callUri: Uri
-//        if (conversationMode == Conversation.Mode.OneToOne) {
-//            callUri = conversation.contact!!.uri
-//
-//        } else {
-//            callUri = conversation.uri
-//        }
-
-//            if (!conversation.isSwarm) {
-//                // Setup clear history action
-//                adapter.actions.add(
-//                    ContactAction(
-//                        R.drawable.baseline_clear_all_24,
-//                        getText(R.string.conversation_action_history_clear)
-//                    ) {
-//                        MaterialAlertDialogBuilder(requireContext())
-//                            .setTitle(R.string.clear_history_dialog_title)
-//                            .setMessage(R.string.clear_history_dialog_message)
-//                            .setPositiveButton(R.string.conversation_action_history_clear) { _: DialogInterface?, _: Int ->
-//                                // Clear history and display a snack-bar to display success.
-//                                mConversationFacade.clearHistory(conversation.accountId, callUri).subscribe()
-//                                Snackbar.make(
-//                                    root, R.string.clear_history_completed, Snackbar.LENGTH_LONG
-//                                ).show()
-//                            }
-//                            .setNegativeButton(android.R.string.cancel, null)
-//                            .create()
-//                            .show()
-//                    }
-//                )
-//            }
-
-        binding = this
+        conversationRemove.setOnClickListener {
+            if (!actionsState.showRemove) return@setOnClickListener
+            ActionHelper.launchClearAction(
+                context = requireContext(),
+                accountId = path.accountId,
+                uri = conversation.uri,
+                callback = { accountId: String, conversationUri: Uri ->
+                    mConversationFacade.removeConversation(accountId, conversationUri, true)
+                        .subscribe().apply { mDisposableBag.add(this) }
+                    finishWithResult(ExitReason.CONVERSATION_LEFT)
+                })
+        }
+        renderActions(actionsState)
     }.root
 
-    override fun onDestroy() {
+    private fun FragConversationActionsBinding.renderActions(state: ConversationActionsState) {
+        privateConversationPanel.isVisible = state.showPrivate
+        userNamePanel.isVisible = state.showUsername
+        userName.text = state.registeredName
+        identifier.text = state.contactUri?.uri.orEmpty()
+        secureP2pConnection.isClickable = state.contactUri != null
+        descriptionPanel.isVisible = state.showDescription
+        conversationDetailsPanel.isVisible = state.showDetails
+        conversationActionsPanel.isVisible = state.showActions
+        conversationDelete.isVisible = state.showDelete
+        conversationRemove.isVisible = state.showRemove
+        blockContact.isVisible = state.blockAction != BlockAction.NONE
+        blockContact.setText(if (state.blockAction == BlockAction.UNBLOCK)
+            R.string.conversation_action_unblock_this else R.string.conversation_action_block_this)
+        conversationDelete.setText(when (state.deleteAction) {
+            DeleteAction.ADD_CONTACT -> R.string.ab_action_contact_add
+            DeleteAction.ACCEPT_INVITATION -> R.string.accept_invitation
+            DeleteAction.DELETE_CONTACT -> R.string.delete_contact
+            DeleteAction.LEAVE_CONVERSATION -> R.string.leave_conversation
+        })
+        conversationType.setText(when (state.type) {
+            ConversationActionsState.Type.CONTACT -> R.string.conversation_type_contact
+            ConversationActionsState.Type.PRIVATE -> R.string.conversation_type_private
+            ConversationActionsState.Type.GROUP -> R.string.conversation_type_group
+        })
+    }
+
+    private fun finishWithResult(reason: ExitReason) {
+        requireActivity().setResult(Activity.RESULT_OK, Intent().putExtra(EXIT_REASON, reason.toString()))
+        requireActivity().finish()
+    }
+
+    override fun onDestroyView() {
         binding = null
-        mDisposableBag.dispose()
-        super.onDestroy()
+        mDisposableBag.clear()
+        super.onDestroyView()
     }
 
     private fun shareContact(displayName: String) {

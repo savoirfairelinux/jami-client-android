@@ -724,20 +724,28 @@ class ConversationFacade(
         }
     }
 
-    fun blockConversation(accountId: String, conversationUri: Uri) {
-        if (conversationUri.isSwarm) {
-            mDisposableBag.add(
-                startConversation(accountId, conversationUri).subscribe({ v: Conversation ->
-                    try {
-                        val contact = v.contact
-                        mAccountService.removeContact(accountId, contact!!.uri.rawRingId, true)
-                    } catch (e: Exception) {
-                        mAccountService.removeConversation(accountId, conversationUri)
+    fun getBlockableContact(conversation: Conversation): Contact? =
+        mAccountService.getBlockableContact(conversation)
+
+    fun blockConversation(accountId: String, conversationUri: Uri): Completable =
+        Completable.defer {
+            if (conversationUri.isSwarm) {
+                startConversation(accountId, conversationUri).flatMapCompletable { conversation ->
+                    val target = requireNotNull(mAccountService.getBlockableContact(conversation)) {
+                        "Conversation has no resolved external contact"
                     }
-                }, { e: Throwable -> Log.e(TAG, "Error blocking conversation", e) })
-            )
-        } else mAccountService.removeContact(accountId, conversationUri.rawRingId, true)
-    }
+                    mAccountService.blockContact(accountId, target.uri)
+                }
+            } else mAccountService.blockContact(accountId, conversationUri)
+        }
+
+    fun blockAndDiscardRequest(accountId: String, conversationUri: Uri, pinnedTarget: Uri? = null): Completable =
+        ContactBlockOperation.afterSuccess(
+            if (pinnedTarget == null) blockConversation(accountId, conversationUri)
+            else mAccountService.blockContact(accountId, pinnedTarget)
+        ) { discardRequest(accountId, conversationUri) }
+            .doOnError { error -> Log.e(TAG, "Unable to block invitation; preserving request", error) }
+            .cache()
 
     fun createConversation(accountId: String, currentSelection: Collection<Contact>): Single<Conversation> {
         val contactIds = currentSelection.map { contact -> contact.primaryNumber }

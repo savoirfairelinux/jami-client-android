@@ -49,8 +49,10 @@ class ContactRequestsPresenter @Inject internal constructor(
     }
 
     fun blockContact(item: Conversation) {
-        conversationFacade.blockConversation(item.accountId, item.uri)
-        conversationFacade.discardRequest(item.accountId, item.uri)
+        mCompositeDisposable.add(conversationFacade.blockAndDiscardRequest(item.accountId, item.uri)
+            .subscribe({}, { error ->
+                net.jami.utils.Log.e("ContactRequestsPresenter", "Unable to block invitation", error)
+            }))
     }
 
     fun copyNumber(item: Conversation) {

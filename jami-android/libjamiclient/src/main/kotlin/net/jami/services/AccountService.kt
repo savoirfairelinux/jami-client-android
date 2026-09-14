@@ -1083,8 +1083,34 @@ class AccountService(
      * Remove an existing contact for the account Id on the Daemon
      */
     fun removeContact(accountId: String, uri: String, block: Boolean) {
+        if (block && !canBlockContact(accountId, Uri.fromString(uri))) {
+            Log.w(TAG, "Refusing to block own identity or an unresolved contact for account $accountId")
+            return
+        }
         Log.i(TAG, "removeContact() $accountId $uri block:$block")
         mExecutor.execute { JamiService.removeContact(accountId, uri, block) }
+    }
+
+    fun canBlockContact(accountId: String, uri: Uri): Boolean {
+        val account = getAccount(accountId) ?: return false
+        return ContactBlockingPolicy.canBlock(account.username, uri, account.isJami)
+    }
+
+    private val contactBlockOperation = ContactBlockOperation(
+        ::canBlockContact,
+        { accountId, target -> JamiService.removeContact(accountId, target.rawRingId, true) },
+        { accountId, target -> JamiService.getContactDetails(accountId, target.rawRingId)["banned"] == "true" }
+    )
+
+    fun blockContact(accountId: String, target: Uri): Completable =
+        contactBlockOperation.block(accountId, target)
+            .subscribeOn(scheduler)
+            .doOnError { error -> Log.e(TAG, "Unable to block contact for account $accountId", error) }
+            .cache()
+
+    fun getBlockableContact(conversation: Conversation): Contact? {
+        val account = getAccount(conversation.accountId) ?: return null
+        return ContactBlockingPolicy.target(conversation, account.username, account.isJami)
     }
 
     fun findRegistrationByName(account: String, nameserver: String, name: String): Single<RegisteredName> =

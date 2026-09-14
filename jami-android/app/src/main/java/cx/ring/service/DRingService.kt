@@ -271,7 +271,8 @@ class DRingService : Service() {
 
     private fun handleTrustRequestAction(uri: Uri?, action: String) {
         ConversationPath.fromUri(uri)?.let { path ->
-            mNotificationService.cancelTrustRequestNotification(path.accountId)
+            if (action != ACTION_TRUST_REQUEST_BLOCK)
+                mNotificationService.cancelTrustRequestNotification(path.accountId)
             when (action) {
                 ACTION_TRUST_REQUEST_ACCEPT -> mConversationFacade.startConversation(path.accountId, path.conversationUri).subscribe({ request ->
                     mConversationFacade.acceptRequest(request)
@@ -280,8 +281,10 @@ class DRingService : Service() {
                 }
                 ACTION_TRUST_REQUEST_REFUSE -> mConversationFacade.discardRequest(path.accountId, path.conversationUri)
                 ACTION_TRUST_REQUEST_BLOCK -> {
-                    mConversationFacade.blockConversation(path.accountId, path.conversationUri)
-                    mConversationFacade.discardRequest(path.accountId, path.conversationUri)
+                    mDisposableBag.add(mConversationFacade.blockAndDiscardRequest(path.accountId, path.conversationUri)
+                        .subscribe({
+                            mNotificationService.cancelTrustRequestNotification(path.accountId)
+                        }, { error -> Log.e(TAG, "Unable to block invitation", error) }))
                 }
                 else -> {}
             }

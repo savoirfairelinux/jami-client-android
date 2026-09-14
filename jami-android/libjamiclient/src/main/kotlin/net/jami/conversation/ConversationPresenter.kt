@@ -424,10 +424,15 @@ class ConversationPresenter @Inject constructor(
 
     fun onBlockIncomingContactRequest() {
         mConversation?.let { conversation ->
-            conversationFacade.blockConversation(conversation.accountId, conversation.uri)
-            conversationFacade.discardRequest(conversation.accountId, conversation.uri)
+            mCompositeDisposable.add(
+                conversationFacade.blockAndDiscardRequest(conversation.accountId, conversation.uri)
+                    .observeOn(uiScheduler)
+                    .subscribe({ view?.goToHome() }, { error ->
+                        Log.e(TAG, "Unable to block invitation", error)
+                        view?.displayErrorToast(Error.GENERIC_ERROR)
+                    })
+            )
         }
-        view?.goToHome()
     }
 
     fun onRefuseIncomingContactRequest() {

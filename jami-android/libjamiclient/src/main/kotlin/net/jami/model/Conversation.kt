@@ -777,9 +777,12 @@ class Conversation(
     fun isSyncing() = mode.blockingFirst() == Mode.Syncing
 
     /** Tells if the conversation is a swarm:group. No matter how many participants. */
-    fun isSwarmGroup() = isSwarm && mode.blockingFirst().let {
-        if (it == Mode.Request) request?.mode != Mode.OneToOne
-        else it != Mode.OneToOne
+    fun isSwarmGroup() = isSwarm && mode.blockingFirst().let { current ->
+        val effective = if (current == Mode.Request || current == Mode.Syncing)
+            request?.mode ?: requestMode
+        else current
+        // Syncing is a loading state, not evidence that a conversation is a group.
+        effective?.isGroup == true
     }
 
     /** Return user. Maybe be null. */

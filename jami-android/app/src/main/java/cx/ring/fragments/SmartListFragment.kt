@@ -155,7 +155,8 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         presenter.addDisposable(ActionHelper.launchBlockContactAction(
             context = requireContext(),
             accountId = accountId,
-            contact = contact
+            contact = contact,
+            accountService = accountService
         ) { _, _ -> presenter.blockContact(accountId, contact) })
 
     override fun copyNumber(uri: Uri) {
@@ -262,19 +263,10 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     }
 
     override fun onItemLongClick(item: Conversation) {
+        val hiddenBlockActions = if (accountService.getBlockableContact(item) == null)
+            setOf(ActionHelper.ACTION_BLOCK) else emptySet()
         if (item.isSwarm) {
-            val currentMode = item.mode.blockingFirst()
-            val effectiveMode = if (currentMode == Conversation.Mode.Syncing) {
-                item.requestMode ?: Conversation.Mode.OneToOne
-            } else {
-                currentMode
-            }
-
-            val isGroup = effectiveMode == Conversation.Mode.AdminInvitesOnly ||
-                    effectiveMode == Conversation.Mode.InvitesOnly ||
-                    effectiveMode == Conversation.Mode.Public
-
-            if (isGroup) {
+            if (item.isSwarmGroup()) {
                 ActionListBottomSheet(
                     R.array.swarm_group_actions,
                     R.array.swarm_group_action_icons
@@ -287,31 +279,39 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
             } else {
                 ActionListBottomSheet(
                     R.array.swarm_one_to_one_actions,
-                    R.array.swarm_one_to_one_action_icons
+                    R.array.swarm_one_to_one_action_icons,
+                    hiddenActionIndices = hiddenBlockActions
                 ) { which ->
                     when (which) {
                         0 -> addToChannel(item)
                         1 -> presenter.copyNumber(item)
                         2 -> presenter.clearConversation(item)
                         3 -> presenter.removeConversation(item)
-                        4 -> presenter.blockContact(item)
+                        ActionHelper.ACTION_BLOCK -> blockContact(item)
                     }
                 }.show(childFragmentManager, "SmartListFragment")
             }
         } else {
             ActionListBottomSheet(
                 R.array.conversation_actions,
-                R.array.conversation_action_icons
+                R.array.conversation_action_icons,
+                hiddenActionIndices = hiddenBlockActions
             ) { which ->
                 when (which) {
                     ActionHelper.ACTION_COPY -> presenter.copyNumber(item)
                     ActionHelper.ACTION_CLEAR -> presenter.clearConversation(item)
                     ActionHelper.ACTION_DELETE -> presenter.removeConversation(item)
-                    ActionHelper.ACTION_BLOCK -> presenter.blockContact(item)
+                    ActionHelper.ACTION_BLOCK -> blockContact(item)
                     ActionHelper.ACTION_ADD_TO_CHANNEL -> addToChannel(item)
                 }
             }.show(childFragmentManager, "SmartListFragment")
         }
+    }
+
+    private fun blockContact(conversation: Conversation) {
+        val contact = accountService.getBlockableContact(conversation)
+        if (contact == null) ActionHelper.showBlockContactRefused(requireContext())
+        else displayBlockDialog(conversation.accountId, contact)
     }
 
     private fun addToChannel(conversation: Conversation) {

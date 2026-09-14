@@ -34,6 +34,7 @@ import cx.ring.R
 class ActionListBottomSheet(
     @ArrayRes private val arrayResId: Int = 0,
     @ArrayRes private val iconArrayResId: Int = 0,
+    private val hiddenActionIndices: Set<Int> = emptySet(),
     private val onActionSelected: ((Int) -> Unit)? = null
 ) : BottomSheetDialogFragment() {
 
@@ -61,6 +62,7 @@ class ActionListBottomSheet(
     }
     private inner class ActionAdapter : RecyclerView.Adapter<ActionViewHolder>() {
         private val actions: Array<String> = if (arrayResId != 0) resources.getStringArray(arrayResId) else emptyArray()
+        private val visibleIndices = actions.indices.filterNot { it in hiddenActionIndices }
         private val iconIds: IntArray = if (iconArrayResId != 0) {
             val ta = resources.obtainTypedArray(iconArrayResId)
             val ids = IntArray(ta.length()) { i -> ta.getResourceId(i, 0) }
@@ -77,11 +79,12 @@ class ActionListBottomSheet(
         }
 
         override fun onBindViewHolder(holder: ActionViewHolder, position: Int) {
-            val iconId = if (position < iconIds.size) iconIds[position] else 0
-            holder.bind(actions[position], iconId, position)
+            val actionIndex = visibleIndices[position]
+            val iconId = iconIds.getOrElse(actionIndex) { 0 }
+            holder.bind(actions[actionIndex], iconId, actionIndex)
         }
 
-        override fun getItemCount(): Int = actions.size
+        override fun getItemCount(): Int = visibleIndices.size
     }
 
     private inner class ActionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

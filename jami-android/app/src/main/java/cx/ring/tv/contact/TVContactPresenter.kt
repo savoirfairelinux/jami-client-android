@@ -113,8 +113,10 @@ class TVContactPresenter @Inject constructor(
     }
 
     fun blockTrustRequest() {
-        mConversationService.blockConversation(mAccountId!!, mUri!!)
-        mConversationService.discardRequest(mAccountId!!, mUri!!)
-        view?.finishView()
+        mCompositeDisposable.add(mConversationService.blockAndDiscardRequest(mAccountId!!, mUri!!)
+            .observeOn(mUiScheduler)
+            .subscribe({ view?.finishView() }, { error ->
+                net.jami.utils.Log.e("TVContactPresenter", "Unable to block invitation", error)
+            }))
     }
 }

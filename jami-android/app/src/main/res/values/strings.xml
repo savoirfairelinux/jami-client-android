@@ -419,6 +419,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="clip_contact_uri">Contact address</string>
     <string name="clip_message">Message content</string>
     <string name="block_contact_dialog_title">Block %1$s?</string>
+    <string name="block_contact_unavailable">This contact cannot be blocked. Its identity is unavailable or belongs to your account.</string>
     <string name="block_contact_dialog_message">%1$s won\'t be able to contact you until you unblock it.</string>
     <string name="block_contact_completed">%1$s was blocked.</string>
     <string name="unblock_contact_dialog_title">Unblock %1$s?</string>
