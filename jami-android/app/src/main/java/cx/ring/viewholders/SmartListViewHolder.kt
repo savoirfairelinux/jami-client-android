@@ -124,12 +124,20 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
                     }
                 })
 
-            val showPresence = !conversation.isSwarmGroup() // Don't show presence for swarm groups.
             compositeDisposable
-                .add(conversationFacade.observeConversation(conversation, showPresence)
+                .add(conversation.mode
+                .map { conversation.isSwarmGroup() }
+                .distinctUntilChanged()
+                .switchMap { group -> conversationFacade.observeConversation(conversation, !group) }
                 .onErrorComplete()
                 .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { conversationItemViewModel ->
+                    // The same Conversation object changes mode when its repository finishes cloning.
+                    itemView.setBackgroundResource(
+                        if (conversationItemViewModel.isGroup()) R.drawable.background_item_smartlist_group
+                        else R.drawable.background_item_smartlist
+                    )
+                    binding.groupIndicator.isVisible = conversationItemViewModel.isGroup()
                     binding.convParticipant.text = conversationItemViewModel.title
                     if (binding.photo.setAvatar(AvatarDrawable.Builder()
                         .withViewModel(conversationItemViewModel)

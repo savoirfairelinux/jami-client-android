@@ -24,6 +24,7 @@ import net.jami.model.Uri
 import net.jami.mvp.RootPresenter
 import net.jami.services.AccountService
 import net.jami.services.ConversationFacade
+import net.jami.utils.Log
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
@@ -79,8 +80,14 @@ class SmartListPresenter @Inject constructor(
         }
     }
 
-    fun blockContact(conversation: Conversation) =
-        view?.displayBlockDialog(conversation.accountId, conversation.contact!!)
+    fun blockContact(conversation: Conversation) {
+        val contact = mAccountService.getBlockableContact(conversation)
+        if (contact == null) {
+            Log.w("SmartListPresenter", "Refusing to block a conversation without an external contact")
+            return
+        }
+        view?.displayBlockDialog(conversation.accountId, contact)
+    }
 
     fun blockContact(accountId: String, contact: Contact) =
         mAccountService.removeContact(accountId, contact.uri.uri, true)

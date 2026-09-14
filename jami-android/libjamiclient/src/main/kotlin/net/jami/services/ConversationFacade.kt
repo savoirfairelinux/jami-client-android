@@ -724,15 +724,18 @@ class ConversationFacade(
         }
     }
 
+    fun getBlockableContact(conversation: Conversation): Contact? =
+        mAccountService.getBlockableContact(conversation)
+
     fun blockConversation(accountId: String, conversationUri: Uri) {
         if (conversationUri.isSwarm) {
             mDisposableBag.add(
                 startConversation(accountId, conversationUri).subscribe({ v: Conversation ->
-                    try {
-                        val contact = v.contact
-                        mAccountService.removeContact(accountId, contact!!.uri.rawRingId, true)
-                    } catch (e: Exception) {
-                        mAccountService.removeConversation(accountId, conversationUri)
+                    val contact = mAccountService.getBlockableContact(v)
+                    if (contact == null) {
+                        Log.w(TAG, "Refusing to block a conversation without an external contact")
+                    } else {
+                        mAccountService.removeContact(accountId, contact.uri.rawRingId, true)
                     }
                 }, { e: Throwable -> Log.e(TAG, "Error blocking conversation", e) })
             )
