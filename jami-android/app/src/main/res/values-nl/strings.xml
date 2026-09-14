@@ -621,4 +621,12 @@
   <string name="shared_services_policy_specific">Specifieke contacten</string>
   <string name="shared_services_allowed_contacts_hint">Toegestane contacten (kommagescheiden)</string>
   <string name="shared_services_save">Opslaan</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Documenten</string>
+  <string name="collab_create">Aanmaken</string>
+  <string name="collab_link_title">Koppelen</string>
+  <string name="collab_link_hint">Adres</string>
+  <string name="collab_link_add">Voeg toe</string>
+  <string name="collab_link_remove">Verwijderen</string>
+  <string name="collab_remove">Verwijderen</string>
 </resources>

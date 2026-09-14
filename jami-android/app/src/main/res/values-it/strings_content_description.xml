@@ -13,4 +13,9 @@
   <string name="searchbar_navigation_account">Seleziona account</string>
   <string name="add_conversation_member">Aggiungi un membro alla conversazione</string>
   <string name="qrcode_to_scan">Codice QR da scansionare</string>
+  <string name="collab_format_bold">Grassetto</string>
+  <string name="collab_format_italic">Corsivo</string>
+  <string name="collab_format_strike">Barrato</string>
+  <string name="collab_undo">Annulla</string>
+  <string name="collab_redo">Rifare</string>
 </resources>

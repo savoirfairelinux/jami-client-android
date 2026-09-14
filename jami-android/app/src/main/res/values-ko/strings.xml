@@ -620,4 +620,12 @@
   <string name="shared_services_policy_specific">특정 연락처</string>
   <string name="shared_services_allowed_contacts_hint">허용된 연락처 (쉼표로 구분)</string>
   <string name="shared_services_save">저장</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">문서</string>
+  <string name="collab_create">생성하기</string>
+  <string name="collab_link_title">연결</string>
+  <string name="collab_link_hint">주소</string>
+  <string name="collab_link_add">추가</string>
+  <string name="collab_link_remove">제거</string>
+  <string name="collab_remove">제거</string>
 </resources>

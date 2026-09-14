@@ -13,4 +13,7 @@
   <string name="searchbar_navigation_account">계정 선택</string>
   <string name="add_conversation_member">대화 구성원 추가</string>
   <string name="qrcode_to_scan">스캔할 QR 코드</string>
+  <string name="collab_format_bold">굵게</string>
+  <string name="collab_format_italic">기울임꼴</string>
+  <string name="collab_format_strike">취소선</string>
 </resources>

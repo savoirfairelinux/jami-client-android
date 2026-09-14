@@ -13,4 +13,9 @@
   <string name="searchbar_navigation_account">Hesap seç</string>
   <string name="add_conversation_member">Görüşme üyesi ekle</string>
   <string name="qrcode_to_scan">Taranacak QR kodu</string>
+  <string name="collab_format_bold">Kalın</string>
+  <string name="collab_format_italic">İtalik</string>
+  <string name="collab_format_strike">Üstü çizili</string>
+  <string name="collab_undo">Geri Al</string>
+  <string name="collab_redo">Geri Al</string>
 </resources>

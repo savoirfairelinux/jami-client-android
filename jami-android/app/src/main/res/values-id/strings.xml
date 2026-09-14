@@ -385,4 +385,12 @@
   <string name="shared_services_policy_hint">Dapat diakses oleh</string>
   <string name="shared_services_policy_public">Publik</string>
   <string name="shared_services_save">Simpan</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Dokumen</string>
+  <string name="collab_create">Buat</string>
+  <string name="collab_link_title">Tautan</string>
+  <string name="collab_link_hint">Alamat</string>
+  <string name="collab_link_add">Tambah</string>
+  <string name="collab_link_remove">Hapus</string>
+  <string name="collab_remove">Hapus</string>
 </resources>

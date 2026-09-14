@@ -13,4 +13,9 @@
   <string name="searchbar_navigation_account">Wybierz konto</string>
   <string name="add_conversation_member">Dodaj członka konwersacji</string>
   <string name="qrcode_to_scan">Kod QR do zeskanowania</string>
+  <string name="collab_format_bold">Pogrubiony</string>
+  <string name="collab_format_italic">Kursywa</string>
+  <string name="collab_format_strike">Przekreślenie</string>
+  <string name="collab_undo">Cofnij</string>
+  <string name="collab_redo">Ponow</string>
 </resources>

@@ -13,4 +13,7 @@
   <string name="searchbar_navigation_account">Seleccionar conta</string>
   <string name="add_conversation_member">Engadir un membro á conversa</string>
   <string name="qrcode_to_scan">Código QR para escanear</string>
+  <string name="collab_format_bold">Negra</string>
+  <string name="collab_format_italic">Cursiva</string>
+  <string name="collab_format_strike">Riscado</string>
 </resources>

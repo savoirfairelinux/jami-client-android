@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings for xml content description of images-->
+  <string name="collab_format_bold">Bold</string>
+  <string name="collab_format_italic">Italic</string>
+</resources>

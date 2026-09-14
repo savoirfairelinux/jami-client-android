@@ -341,4 +341,12 @@
   <string name="shared_services_more_options">थप विकल्पहरू</string>
   <string name="shared_services_type_custom_label">अनुकूलन</string>
   <string name="shared_services_save">बचत गर्नुहोस्</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">कागजातहरू</string>
+  <string name="collab_create">सिर्जना गर्नुहोस्</string>
+  <string name="collab_link_title">लिंक</string>
+  <string name="collab_link_hint">ठेगाना</string>
+  <string name="collab_link_add">थप्नुहोस्</string>
+  <string name="collab_link_remove">हटाउनु</string>
+  <string name="collab_remove">हटाउनु</string>
 </resources>

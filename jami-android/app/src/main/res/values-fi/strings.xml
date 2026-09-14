@@ -1,18 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="submit_issue_title">Ilmoita ongelma</string>
-  <string name="submit_issue_action_description"><u>Ilmoita uusi ongelma</u></string>
+  <string name="submit_issue_title">Ilmoita ongelmasta</string>
+  <string name="submit_issue_action_description"><u>Ilmoita uudesta ongelmasta</u></string>
   <string name="section_license">Lisenssi</string>
   <string name="switch_conversation">Vaihda keskustelua</string>
-  <string name="delete_conversation_confirmation">Haluatko poistaa tämän keskustelun?</string>
-  <string name="acc_profile_photo_capture">Ota valokuva</string>
-  <string name="view_switch_camera">Vaihda kamera</string>
+  <string name="delete_conversation_confirmation">Oletko varma, että haluat poistaa tämän keskustelun?</string>
+  <string name="acc_profile_photo_capture">Ota kuva</string>
+  <string name="view_switch_camera">Vaihda kameraa</string>
   <string name="sponsor_section">Jami on vapaa ohjelmisto, jota kehittää ja tukee</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Osallistu</string>
   <string name="version_section">Versio</string>
-  <string name="no_browser_app_installed">Selainta ei löytynyt. Asenna selain ja katso tämä sivu uudelleen.</string>
+  <string name="no_browser_app_installed">Selainta ei löytynyt. Asenna jokin selain avataksesi tämän sivun.</string>
   <string name="website_chooser_title">Katso verkkosivu käyttäen...</string>
   <string name="license">Tämä ohjelmisto toimitetaan \"sellaisenaan\" ilman minkäänlaista takuuta. Katso lisätietoja <u>GNU General Public License versio 3 tai uudempi</u></string>
   <string name="description">Jami on ilmainen viestintäalusta, joka kunnioittaa käyttäjiensä vapauksia ja yksityisyyttä.</string>
@@ -21,14 +21,14 @@
   <string name="call_service_description">Tämä palvelu on välttämätön puhelusi pitämiseksi etualalla. Se toimii vain puheluiden aikana.</string>
   <string name="data_transfer_service_description">Tämä palvelu on välttämätön ilmoitusten näyttämiseksi tiedostosiirron aikana. Se toimii vain tiedostojen siirtämisen aikana.</string>
   <!--About dialog-->
-  <string name="thank_note">Haluamme kiittää meidän avustajia, joiden vuosien ponnistelut ovat tehneet tästä ohjelmistosta sellaisen kuin se on.</string>
+  <string name="thank_note">Haluamme kiittää avustajiamme, joiden vuosien ponnistelut ovat tehneet tästä ohjelmistosta sellaisen kuin se on.</string>
   <string name="developers">Kehittäjät</string>
   <string name="media">Media</string>
   <string name="community_management">Yhteisön hallinnointi</string>
-  <string name="special_thanks">Erityiset kiitokset</string>
-  <string name="end_note">Luettelo ihmisistä, jotka ovat investoineet aikaa merkittävästi Jamiin. Kaikki, jotka haluavat päästä listalle, tulee ottaa yhteyttä Jami-tiimiin contact@jami.net</string>
+  <string name="special_thanks">Erityiskiitokset</string>
+  <string name="end_note">Luettelo ihmisistä, jotka ovat käyttäneet aikaansa merkittävästi Jamiin. Kaikkien, jotka haluavat päästä listalle, tulee ottaa yhteyttä Jami-tiimiin contact@jami.net.</string>
   <!--RingActivity-->
-  <string name="error_no_network">Ei yhteyttä verkkoon</string>
+  <string name="error_no_network">Ei verkkoyhteyttä</string>
   <string name="error_account_offline">Tili on offline-tilassa</string>
   <!--AB menus-->
   <string name="ab_action_chat">Tekstiviestit</string>
@@ -41,7 +41,7 @@
   <string name="menu_item_account_settings">Tiliasetukset</string>
   <string name="menu_item_extension_list">Laajennusten asetukset</string>
   <string name="menu_item_share">Jaa tunnukseni</string>
-  <string name="menu_item_about">Tietoja Jami\'sta</string>
+  <string name="menu_item_about">Tietoja Jamista</string>
   <string name="video_setting_title">Videoasetukset</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Valitse numero</string>
@@ -58,14 +58,14 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Vastaamaton puhelu</string>
+  <string name="notif_missed_incoming_call">Vastaamaton saapuva puhelu</string>
   <string name="notif_missed_outgoing_call">Vastaamaton lähtevä puhelu</string>
   <string name="notif_incoming_call_title">Saapuva puhelu %1$s</string>
   <string name="notif_incoming_call">Saapuva puhelu</string>
   <string name="notif_outgoing_call_title">Lähtevä puhelu %1$s</string>
   <string name="notif_outgoing_call">Lähtevä puhelu</string>
-  <string name="notif_current_call_title">Puhelu... %1$s</string>
-  <string name="notif_current_call">Meneillään puhelu</string>
+  <string name="notif_current_call_title">Puhelu %1$s</string>
+  <string name="notif_current_call">Meneillään oleva puhelu</string>
   <string name="notif_channel_call_in_progress">Puhelu käynnissä</string>
   <string name="notif_channel_calls">Puhelut</string>
   <string name="notif_channel_missed_calls">Vastaamattomat puhelut</string>
@@ -75,14 +75,14 @@
   <string name="notif_channel_file_transfer">Tiedostonsiirto</string>
   <string name="notif_channel_sync">Tietojen synkronointi</string>
   <string name="notif_channel_background_service">Taustapalvelu</string>
-  <string name="notif_channel_background_service_descr">Sallii puheluiden ja viestien vastaanotto milloin tahansa.</string>
+  <string name="notif_channel_background_service_descr">Sallii puheluiden ja viestien vastaanottamisen milloin tahansa.</string>
   <string name="notif_group_calls">Puhelut</string>
   <string name="notif_inprogress_group_call">Puhelu käynnissä</string>
-  <string name="notif_background_service">Jami toimii taustalla</string>
+  <string name="notif_background_service">Jami toimii nyt taustalla</string>
   <string name="notif_mark_as_read">Merkitse luetuksi</string>
   <string name="notif_dismiss">Hylkää</string>
   <string name="notif_reply">Vastaa</string>
-  <string name="notif_incoming_file_transfer_title">Tuleva tiedosto käyttäjältä %1$s</string>
+  <string name="notif_incoming_file_transfer_title">Saapuva tiedosto käyttäjältä %1$s</string>
   <string name="notif_outgoing_file_transfer_title">Lähetetään tiedostoa käyttäjälle %1$s</string>
   <string name="notif_incoming_picture">Kuva käyttäjältä %1$s</string>
   <string name="notif_sync_title">Synkronoidaan tietoja...</string>
@@ -90,7 +90,7 @@
   <string name="notif_channel_reconnect">Synkronointi taustalla</string>
   <string name="notif_reconnect_title">Jami synkronoi…</string>
   <string name="location_share_contact">%1$s jakaa sijainnin kanssasi</string>
-  <string name="notif_location_multi_title">Sijainnin jako %1$d kontaktien kanssa</string>
+  <string name="notif_location_multi_title">Sijainnin jako kontaktien %1$d kanssa</string>
   <string name="notif_location_remaining">%1$d minuuttia jäljellä</string>
   <string name="notif_location_action_stop">Lopeta sijainnin jakaminen</string>
   <string name="location_share_action_start">Aloita jakaminen</string>
@@ -101,29 +101,29 @@
   <string name="action_call_hangup">Lopeta puhelu</string>
   <string name="action_call_resume">Jatka</string>
   <string name="action_call_maximize">Suurenna</string>
-  <string name="action_call_minimize">Supista</string>
+  <string name="action_call_minimize">Pienennä</string>
   <string name="action_call_mute">Mykistä</string>
   <string name="action_call_unmute">Poista mykistys</string>
-  <string name="ongoing_call">Meneillään puhelu</string>
+  <string name="ongoing_call">Meneillään oleva puhelu</string>
   <string name="hist_in_call">Saapuva puhelu %1$s</string>
   <string name="hist_out_call">Lähtevä puhelu %1$s</string>
   <string name="call_duration">Kesto %s</string>
   <string name="call_on_hold">Puhelu pidossa</string>
-  <string name="start_error_title">Jamia ei voi käynnistää</string>
+  <string name="start_error_title">Jamin käynnistys epäonnistui</string>
   <string name="action_call_accept">Hyväksy puhelu</string>
   <string name="action_call_accept_audio">Hyväksy äänellä</string>
   <string name="action_call_accept_video">Hyväksy videolla</string>
   <string name="action_call_hold_accept">Hyväksy saapuva puhelu äänellä ja pidä nykyinen puhelu</string>
   <string name="switch_to_audio">Poista video</string>
-  <string name="switch_to_video">Video käyttöön</string>
+  <string name="switch_to_video">Ota video käyttöön</string>
   <string name="action_call_hold_accept_video">Hyväksy saapuva puhelu videolla ja pidä nykyinen puhelu</string>
   <string name="action_call_end_accept">Hyväksy saapuva puhelu ja lopeta nykyinen puhelu</string>
   <string name="action_call_decline">Hylkää</string>
   <string name="action_call_mic_mute">Mykistä mikrofoni</string>
   <string name="action_load_extension">Lataa laajennus</string>
-  <string name="ab_action_speakerphone">Kytke kaiutin</string>
-  <string name="ab_action_contact_add">Lisää kontakteihin</string>
-  <string name="ab_action_contact_add_question">Lisätäänkö kontakteihin?</string>
+  <string name="ab_action_speakerphone">Laita kaiutin päälle</string>
+  <string name="ab_action_contact_add">Lisää yhteystietoihin</string>
+  <string name="ab_action_contact_add_question">Lisätäänkö yhteystietoihin?</string>
   <string name="ab_action_audio_call">Aloita äänipuhelu</string>
   <string name="ab_action_video_call">Aloita videopuhelu</string>
   <string name="ab_action_change_screen_orientation">Muuta näytön suuntaa</string>
@@ -142,37 +142,37 @@
   <string name="message_failed">Epäonnistui</string>
   <string name="time_just_now">Juuri nyt</string>
   <string name="send_file">Lähetä tiedosto</string>
-  <string name="select_media">Avaa valokuvat</string>
+  <string name="select_media">Avaa kuvagalleria</string>
   <string name="hist_file_sent">Tiedosto lähetetty</string>
   <string name="hist_file_received">Tiedosto vastaanotettu</string>
   <string name="conversation_send_audio">Tallenna ääniviesti</string>
   <string name="conversation_send_video">Tallenna videoviesti</string>
   <string name="conversation_share_location">Jaa sijainti</string>
-  <string name="ongoing_group_call">Meneillään puhelu</string>
+  <string name="ongoing_group_call">Meneillään oleva puhelu</string>
   <string name="started_call">Puhelu alkoi</string>
   <string name="in_reply_to">Vastauksena</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kameran käyttöoikeus</string>
-  <string name="permission_dialog_camera_message">Videopuhelu vaatii toimiakseen oikeuden kameraan. Ota käyttöön laitteen asetuksissa, jotta voit käyttää ominaisuutta.</string>
-  <string name="camera_error">Virhe kameran käynnistyksessä.</string>
+  <string name="permission_dialog_camera_message">Videopuhelu vaatii toimiakseen oikeuden käyttää kamera. Salli kameran käyttö laitteen asetuksissa, jotta voit käyttää tätä ominaisuutta.</string>
+  <string name="camera_error">Kameran käynnistys epäonnistui.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Virhe</string>
   <string name="ringtone_error_format_not_supported">Tätä tiedostomuotoa ei tueta.</string>
   <string name="ringtone_error_size_too_big">Tiedosto on liian suuri. Maksimi on %1$dkt.</string>
   <string name="ringtone_custom_prompt">Aseta oma soittoääni</string>
   <string name="ringtone_custom_label">Oma</string>
-  <string name="ringtone_jami_tones">Jami soittoäänet</string>
+  <string name="ringtone_jami_tones">Jamin soittoäänet</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami vaatii toimiakseen oikeuden “Lukea yhteystietoja”. Ota käyttöön laitteen asetuksissa, jotta voit käyttää ominaisuutta.</string>
+  <string name="permission_dialog_read_contacts_message">Jami vaatii toimiakseen oikeuden lukea yhteystietoja. Salli yhteystietojen lukeminen laitteen asetuksissa, jotta voit käyttää tätä ominaisuutta.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami vaatii toimiakseen oikeudet “Kirjoittaa puhelulokia”. Ota käyttöön laitteen asetuksissa, jotta voit käyttää ominaisuutta.</string>
+  <string name="permission_dialog_write_call_log_message">Jami vaatii toimiakseen oikeuden puhelulokin kirjoittamiseen. Salli puhelulokin kirjoittaminen laitteen asetuksissa, jotta voit käyttää tätä ominaisuutta.</string>
   <!--Post notifications permission-->
   <string name="permission_dialog_post_notifications_title">Salli ilmoitukset</string>
-  <string name="permission_dialog_post_notifications_message">Jami tarvitsee luvan ilmoittaakseen sinulle saapuvista puheluista ja viesteistä, vaikka sovellus olisi taustalla. Ilman sitä puheluista ei tule hälytystä.</string>
-  <string name="permission_dialog_post_notifications_blocked_message">Jamin ilmoitukset on poistettu käytöstä. Ilman niitä et näe saapuvia puheluita ja viestejä. Ota Jamin ilmoitukset käyttöön laitteen asetuksista.</string>
+  <string name="permission_dialog_post_notifications_message">Jami tarvitsee luvan lähettää ilmoituksia sinulle saapuvista puheluista ja viesteistä, vaikka sovellus olisi vain taustalla. Ilman sitä saatat tietämättäsi ohittaa puhelut.</string>
+  <string name="permission_dialog_post_notifications_blocked_message">Jamin ilmoitukset on poistettu käytöstä. Ilman niitä et näe saapuvia puheluita ja viestejä. Ota Jamin ilmoitukset käyttöön laitteen asetuksissa.</string>
   <string name="permission_dialog_local_network_title">Salli paikallisverkon käyttö</string>
-  <string name="permission_dialog_local_network_message">Jami tarvitsee lähiverkon käyttöoikeuden yhdistääkseen puhelut suoraan verkossasi oleviin laitteisiin. Ilman sitä puhelut saattavat käyttää välityspalvelinta ja laatu voi olla heikompi.</string>
-  <string name="permission_dialog_local_network_blocked_message">Jamin lähiverkon käyttö on poistettu käytöstä. Puhelut verkossasi oleviin laitteisiin käyttää välityspalvelinta ja laatu voi olla heikompi. Ota lähiverkon käyttö käyttöön Jamille laitteen asetuksista.</string>
+  <string name="permission_dialog_local_network_message">Jami tarvitsee lähiverkon käyttöoikeuden yhdistääkseen puhelut suoraan verkossasi oleviin laitteisiin. Ilman sitä puhelut saattavat käyttää välityspalvelinta, ja laatu voi olla heikompi.</string>
+  <string name="permission_dialog_local_network_blocked_message">Lähiverkon käyttö on estetty Jamilta. Puhelut verkossasi oleviin laitteisiin käyttävät välityspalvelinta, minkä vuoksi laatu voi olla heikompi. Salli lähiverkon käyttö laitteen asetuksissa.</string>
   <string name="permission_dialog_open_settings">Avaa asetukset</string>
   <string name="permission_dialog_later">Myöhemmin</string>
   <!--QRCode Scan-->
@@ -630,4 +630,61 @@
   <string name="shared_services_policy_specific">Tietyt henkilöt</string>
   <string name="shared_services_allowed_contacts_hint">Sallitut henkilöt (pilkulla erotettuna)</string>
   <string name="shared_services_save">Tallenna</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Asiakirjat</string>
+  <string name="collab_new_document">Uusi asiakirja</string>
+  <string name="collab_untitled">Nimetön asiakirja</string>
+  <string name="collab_document_name_hint">Asiakirjan nimi</string>
+  <string name="collab_create">Luo</string>
+  <string name="collab_rename">Nimeä</string>
+  <string name="collab_open_error">Asiakirjaa ei voitu avata.</string>
+  <string name="collab_no_documents">Keskustelussa ei vielä ole kirjoitettu yhtään asiakirjaa.</string>
+  <string name="collab_created_by">Luonut %1$s</string>
+  <string name="collab_editing_alone">Vain sinä voit muokata</string>
+  <plurals name="collab_editing_others">
+    <item quantity="one">%1$d muuta muokkasi</item>
+    <item quantity="other">%1$d muu muokkasi</item>
+  </plurals>
+  <string name="collab_history">Versiohistoria</string>
+  <string name="collab_no_history">Asiakirjasta ei ole vielä tallennettua versiota.</string>
+  <string name="collab_version_leave">Takaisin nykyiseen versioon</string>
+  <string name="collab_version_shown">%1$s-versio</string>
+  <string name="collab_version_restore">Palauta</string>
+  <string name="collab_version_restored">Asiakirja palautettiin tähän versioon.</string>
+  <string name="collab_version_unchanged">Tämä versio on se asiakirja, joka sinulla jo on.</string>
+  <string name="collab_version_restore_error">Tätä versiota ei voitu palauttaa.</string>
+  <string name="collab_version_by">%1$s — %2$s</string>
+  <string name="collab_version_deltas">%1$s — %2$s, %3$d (muutosta)</string>
+  <string name="collab_link_title">Linkki</string>
+  <string name="collab_link_hint">Osoite</string>
+  <string name="collab_link_add">Lisää</string>
+  <string name="collab_link_remove">Poista</string>
+  <string name="collab_export">Vie kopio</string>
+  <string name="collab_export_pdf">Vie pdf…</string>
+  <string name="collab_export_html">Vie html…</string>
+  <string name="collab_export_markdown">Vie markdown…</string>
+  <string name="collab_export_text">Vie teksti…</string>
+  <plurals name="collab_export_missing_images">
+    <item quantity="one">%1$d kuva ei ole vielä latautunut asiakirjaan, se viedään tyhjään laatikkoon.</item>
+    <item quantity="other">%1$d kuvaa ei ole vielä latautunut asiakirjaan,  ne viedään tyhjiin laatikoihin.</item>
+  </plurals>
+  <string name="collab_export_anyway">Vie silti</string>
+  <string name="collab_export_error">Asiakirjaa ei voitu viedä.</string>
+  <string name="collab_image_error">Kuvaa ei voitu lisätä.</string>
+  <string name="collab_image_too_large">Kuva on liian suuri lisättäväksi asiakirjaan.</string>
+  <string name="collab_send_error">Muutoksia ei voitu lähettää.</string>
+  <string name="collab_editable_document">Muokattava asiakirja</string>
+  <string name="collab_create_error">Asiakirjaa ei voitu luoda.</string>
+  <string name="collab_remove">Poista</string>
+  <string name="collab_remove_title">Poista asiakirja</string>
+  <string name="collab_remove_message">\"%1$s\" poistetaan kaikilta keskustelun jäseniltä. Tätä ei voi perua.</string>
+  <string name="collab_remove_error">Asiakirjaa ei voitu poistaa.</string>
+  <string name="collab_remove_locally_title">Poista tästä laitteesta</string>
+  <string name="collab_remove_locally_message">\"%1$s\" poistetaan vain tästä laitteesta. Ei koske muita jäseniä ja sen avaaminen lataa sen takaisin.</string>
+  <string name="collab_remove_locally_error">Asiakirjaa ei voitu poistaa tältä laitteelta.</string>
+  <string name="collab_not_on_this_device">ei tällä laitteella</string>
+  <string name="collab_document_removed">Asiakirja poistettu</string>
+  <string name="collab_document_removed_message">\"%1$s\" poistettiin tekijän toimesta.</string>
+  <string name="collab_document_removed_locally">Asiakirja poistettiin tästä laitteesta</string>
+  <string name="collab_document_removed_locally_message">Tiedosto \"%1$s\" ei ole enää tällä laitteella. Sen avaaminen lataa sen takaisin.</string>
 </resources>

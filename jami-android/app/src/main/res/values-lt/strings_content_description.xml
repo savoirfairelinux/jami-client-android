@@ -13,4 +13,9 @@
   <string name="searchbar_navigation_account">Pasirinkite paskyrą</string>
   <string name="add_conversation_member">Pridėti pokalbio narį</string>
   <string name="qrcode_to_scan">QR kodas nuskaitymui</string>
+  <string name="collab_format_bold">Paryškintasis</string>
+  <string name="collab_format_italic">Pasvirasis</string>
+  <string name="collab_format_strike">Perbrauktas</string>
+  <string name="collab_undo">Atšaukti</string>
+  <string name="collab_redo">Grąžinti</string>
 </resources>

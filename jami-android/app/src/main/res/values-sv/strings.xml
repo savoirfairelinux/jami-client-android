@@ -621,4 +621,12 @@
   <string name="shared_services_policy_specific">Specifika kontakter</string>
   <string name="shared_services_allowed_contacts_hint">Tillåtna kontakter (kommaseparerade)</string>
   <string name="shared_services_save">Spara</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Dokument</string>
+  <string name="collab_create">Skapa</string>
+  <string name="collab_link_title">Länka</string>
+  <string name="collab_link_hint">Adress</string>
+  <string name="collab_link_add">Lägg till</string>
+  <string name="collab_link_remove">Ta bort</string>
+  <string name="collab_remove">Ta bort</string>
 </resources>
