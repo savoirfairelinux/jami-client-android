@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf521ed6_f4a6eec4",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationActionsFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-14T03:17:58Z",
+      "side": 1,
+      "message": "[warning] Line 264: 🟡 This subscription only updates `blockContact.isVisible`; it does not refresh the label or the blocked-contact details/action panels. If the conversation initially has no resolved contact and later imports a blocked contact, the button becomes visible with the default “block” label, while its click path performs an unblock and the blocked panels remain visible. Reapply the complete blocked/unblocked UI state whenever `getBlockableContact(conversation)` changes, not just visibility.",
+      "revId": "170618e8498c7f1d16b8ed48fcfcf8d83ac9f902",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b838d4f_23d6bffe",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/SmartListFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-14T03:17:58Z",
+      "side": 1,
+      "message": "[error] Line 267: 🔴 The menu classification still ignores `conversation.request?.mode` for `Syncing` items and falls back to `requestMode`/`OneToOne`, while `Conversation.isSwarmGroup()` now intentionally treats a known request mode as authoritative. A syncing group import with only `request.mode \u003d\u003d InvitesOnly` is therefore shown the one-to-one action list (including copy/clear/block) instead of the group list. Reuse `item.isSwarmGroup()` (or the same effective-mode helper) here so the menu, indicator, and deletion behavior agree.",
+      "revId": "170618e8498c7f1d16b8ed48fcfcf8d83ac9f902",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
