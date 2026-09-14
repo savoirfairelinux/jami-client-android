@@ -91,6 +91,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     private var accountSettingsEnabled = true
     private var groupsOnly = false
     private var mBinding: FragHomeBinding? = null
+    private var displayedChannel: Pair<String, Channel>? = null
     private var mSmartListFragment: SmartListFragment? = null
     private val mDisposable = CompositeDisposable()
     private var mSearchView: SearchView? = null
@@ -150,10 +151,10 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         menuOverflow.setOnClickListener { showMoreMenu(it) }
         newGroupButton.setOnClickListener { startNewSwarm() }
         channelSend.setOnClickListener { askChannelMessage() }
-        channelRepository().activeChannel().let { channel ->
-            channelSelector.text = channel.name
-            channelSend.isVisible = !channel.isAllContacts
-        }
+        displayedChannel = null
+        channelSelector.setText(R.string.channels_loading)
+        channelSelector.isEnabled = false
+        channelSend.isVisible = false
 
         // SearchBar is composed of:
         // - Account selection (navigation)
@@ -428,7 +429,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             adjustLayoutForAccessibility(isEnabled)
         }
 
-        attachSmartList(mBinding!!.fragmentContainer.getFragment())
+        attachSmartList(childFragmentManager.findFragmentById(R.id.fragment_container) as? SmartListFragment)
 
         disableAppBarScroll()
     }
@@ -461,7 +462,8 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         pendingAdapter = null
         searchAdapter = null
         mBinding = null
-        mDisposable.dispose()
+        displayedChannel = null
+        mDisposable.clear()
     }
 
     override fun onStart() {
@@ -474,9 +476,32 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             .subscribe {
                 mBinding?.newSwarm?.isVisible = !it.isSip
                 accountSettingsEnabled = true
-                updateChannelBar()
+                resetChannelBar()
             }
         )
+
+        val context = requireContext().applicationContext
+        mDisposable.add(mAccountService.currentAccountSubject
+            .distinctUntilChanged { previous, next -> previous.accountId == next.accountId }
+            .switchMap { account ->
+                val repository = ChannelRepository(context, mAccountService, account.accountId)
+                repository.observe()
+                    .map { channels ->
+                        account.accountId to (channels.firstOrNull { it.id == repository.activeChannelId }
+                            ?: channels.first { it.isAllContacts })
+                    }
+                    .distinctUntilChanged()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnError { error -> showChannelLoadError(error) }
+                    .onErrorResumeNext { _: Throwable -> Observable.empty() }
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ (accountId, channel) ->
+                if (mAccountService.currentAccount?.accountId == accountId) {
+                    updateChannelBar(channel)
+                    mSmartListFragment?.refreshChannelFilter(accountId)
+                }
+            }, { error -> showChannelLoadError(error) }))
 
         // Subscribe on invitation pending list to show a badge counter
         mDisposable.add(mAccountService
@@ -547,13 +572,42 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     }
 
     private fun channelRepository() =
-        ChannelRepository(requireContext(), mAccountService.currentAccount?.accountId)
+        ChannelRepository(requireContext(), mAccountService, mAccountService.currentAccount?.accountId)
 
-    fun updateChannelBar() {
-        val channel = channelRepository().activeChannel()
-        mBinding?.channelSelector?.text = channel.name
+    fun updateChannelBar(channel: Channel? = null) {
+        val activeChannel = try {
+            channel ?: channelRepository().activeChannel()
+        } catch (error: IllegalStateException) {
+            showChannelLoadError(error)
+            return
+        }
+        displayedChannel = mAccountService.currentAccount?.accountId?.let { it to activeChannel }
+        mBinding?.channelSelector?.text = activeChannel.name
+        mBinding?.channelSelector?.isEnabled = true
         // "All" holds every contact: broadcasting to it is not an action the bar offers.
-        mBinding?.channelSend?.isVisible = !channel.isAllContacts
+        mBinding?.channelSend?.isVisible = !activeChannel.isAllContacts
+    }
+
+    private fun resetChannelBar(message: Int = R.string.channels_loading) {
+        displayedChannel = null
+        mBinding?.apply {
+            channelSelector.setText(message)
+            channelSelector.isEnabled = false
+            channelSend.isVisible = false
+        }
+    }
+
+    private fun showChannelLoadError(error: Throwable) {
+        resetChannelBar(R.string.channels_load_error)
+        showChannelError(error)
+    }
+
+    private fun showChannelError(error: Throwable) {
+        Log.e(TAG, "Unable to update Channels", error)
+        mBinding?.let {
+            Snackbar.make(it.root, error.message ?: getString(R.string.channels_update_error),
+                Snackbar.LENGTH_LONG).show()
+        }
     }
 
     private fun showMoreMenu(anchor: View) {
@@ -574,14 +628,19 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     }
 
     private fun showChannelMenu(anchor: View) {
+        val accountId = mAccountService.currentAccount?.accountId ?: return
         val repository = channelRepository()
-        val channels = repository.load()
-        val active = repository.activeChannelName
+        val (channels, active) = try {
+            repository.load() to repository.activeChannelId
+        } catch (error: IllegalStateException) {
+            showChannelLoadError(error)
+            return
+        }
         PopupMenu(requireContext(), anchor).apply {
             channels.forEachIndexed { index, channel ->
                 menu.add(0, index, index, channel.name).apply {
                     isCheckable = true
-                    isChecked = channel.name == active
+                    isChecked = channel.id == active
                 }
             }
             menu.setGroupCheckable(0, true, true)
@@ -592,13 +651,22 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             }
             menu.add(1, MENU_MANAGE, channels.size + 1, R.string.channels_manage)
             setOnMenuItemClickListener { item ->
+                if (mAccountService.currentAccount?.accountId != accountId) {
+                    showChannelError(IllegalStateException(getString(R.string.channels_account_changed)))
+                    return@setOnMenuItemClickListener true
+                }
                 when (item.itemId) {
                     MENU_MANAGE -> showChannels()
                     MENU_GROUPS -> if (groupsOnly) showConversations() else showGroups()
                     else -> {
-                        repository.activeChannelName = channels[item.itemId].name
-                        updateChannelBar()
-                        if (groupsOnly) showGroups() else showConversations()
+                        try {
+                            repository.activeChannelId = channels[item.itemId].id
+                            updateChannelBar()
+                        } catch (error: IllegalArgumentException) {
+                            showChannelError(error)
+                        } catch (error: IllegalStateException) {
+                            showChannelLoadError(error)
+                        }
                     }
                 }
                 true
@@ -651,9 +719,16 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
     /** Writing to a channel is writing to its members: the screen is the one used to write. */
     private fun askChannelMessage() {
+        val (accountId, channel) = displayedChannel ?: return
+        if (channel.isAllContacts) return
+        if (mAccountService.currentAccount?.accountId != accountId) {
+            showChannelError(IllegalStateException(getString(R.string.channels_account_changed)))
+            return
+        }
+        // Keep the ID the button represented, even if a remote deletion just selected All.
         startActivity(Intent(requireContext(), BroadcastActivity::class.java)
-            .putExtra(BroadcastFragment.KEY_CHANNEL, channelRepository().activeChannel().name)
-            .putExtra(BroadcastFragment.KEY_ACCOUNT, mAccountService.currentAccount?.accountId))
+            .putExtra(BroadcastFragment.KEY_CHANNEL_ID, channel.id)
+            .putExtra(BroadcastFragment.KEY_ACCOUNT, accountId))
     }
 
     /**

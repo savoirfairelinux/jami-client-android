@@ -21,17 +21,26 @@ import dagger.hilt.android.AndroidEntryPoint
 class BroadcastActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val channel = intent?.getStringExtra(BroadcastFragment.KEY_CHANNEL)
+        val channelId = intent?.getStringExtra(BroadcastFragment.KEY_CHANNEL_ID)
+        val legacyName = intent?.getStringExtra(BroadcastFragment.KEY_CHANNEL)
         val accountId = intent?.getStringExtra(BroadcastFragment.KEY_ACCOUNT)
-        if (channel.isNullOrEmpty() || accountId.isNullOrEmpty()) {
+        if ((channelId.isNullOrEmpty() && legacyName.isNullOrEmpty()) || accountId.isNullOrEmpty()) {
             finish()
             return
         }
         JamiApplication.instance?.startDaemon(this)
         setContentView(ActivityConversationBinding.inflate(layoutInflater).root)
-        if (savedInstanceState == null)
+        if (savedInstanceState == null) {
+            val fragment = if (channelId != null) BroadcastFragment.newInstance(channelId, accountId)
+                else BroadcastFragment().apply {
+                    arguments = Bundle().apply {
+                        putString(BroadcastFragment.KEY_CHANNEL, legacyName)
+                        putString(BroadcastFragment.KEY_ACCOUNT, accountId)
+                    }
+                }
             supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frame, BroadcastFragment.newInstance(channel, accountId), null)
+                .replace(R.id.main_frame, fragment, null)
                 .commitNow()
+        }
     }
 }
