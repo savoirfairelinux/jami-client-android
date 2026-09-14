@@ -49,6 +49,10 @@ class ContactRequestsPresenter @Inject internal constructor(
     }
 
     fun blockContact(item: Conversation) {
+        if (conversationFacade.getBlockableContact(item) == null) {
+            net.jami.utils.Log.w("ContactRequestsPresenter", "Refusing to block an unresolved or self invitation")
+            return
+        }
         conversationFacade.blockConversation(item.accountId, item.uri)
         conversationFacade.discardRequest(item.accountId, item.uri)
     }
