@@ -20,6 +20,7 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.telecom.DisconnectCause
+import android.telecom.Connection
 import android.telecom.TelecomManager
 import android.telecom.VideoProfile
 import android.util.Log
@@ -31,6 +32,7 @@ import cx.ring.service.CallRequestResult
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.subjects.SingleSubject
 import net.jami.model.Call
 import net.jami.model.Media
@@ -40,6 +42,7 @@ import net.jami.services.CallService
 import net.jami.services.ContactService
 import net.jami.services.DeviceRuntimeService
 import net.jami.services.NotificationService
+import net.jami.services.IncomingCallRequests
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ScheduledExecutorService
 
@@ -50,9 +53,14 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
 ): CallService(executor, contactService, accountService, deviceRuntimeService) {
 
     private val pendingCallRequests = ConcurrentHashMap<String, SingleSubject<SystemCall>>()
-    private val incomingCallRequests = ConcurrentHashMap<String, Pair<Call, SingleSubject<SystemCall>>>()
+    private val incomingCallRequests = IncomingCallRequests(callsUpdates)
 
     class AndroidCall(val connection: CallConnection?) : SystemCall(connection != null) {
+        override val termination: Completable
+            get() = connection?.connectionState
+                ?.takeUntil { it == Connection.STATE_DISCONNECTED }
+                ?.ignoreElements() ?: Completable.complete()
+
         override fun setCall(call: Call?) {
             // Telecom API is a Android 9 new feature.
             if (Build.VERSION.SDK_INT >= CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY) {
@@ -168,17 +176,13 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
                     call.contact?.uri?.rawUriString
                 )
 
-                val key = call.id!!
-                val subject = SingleSubject.create<SystemCall>()
-
-                // Place call request
-                incomingCallRequests[key] = Pair(call, subject)
                 try {
-                    Log.w(TAG, "Telecom API: new incoming call request for $key")
-                    telecomManager.addNewIncomingCall(accountHandle, extras)
-                    return subject
+                    return incomingCallRequests.request(call) { generation ->
+                        extras.putString(KEY_INCOMING_CALL_REQUEST, generation)
+                        Log.w(TAG, "Telecom API: new incoming call request for ${call.id}")
+                        telecomManager.addNewIncomingCall(accountHandle, extras)
+                    }
                 } catch (e: SecurityException) {
-                    incomingCallRequests.remove(key)
                     Log.e(TAG, "A Telecom API error occurred while placing the call.", e)
                 }
             }
@@ -192,16 +196,15 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
         val accountId = extras.getString(ConversationPath.KEY_ACCOUNT_ID) ?: return
         val callId = extras.getString(NotificationService.KEY_CALL_ID) ?: return
         Log.w(TAG, "Telecom API: incoming call request for $callId has result $connection $result")
-        val call = if (result == CallRequestResult.SHOW_UI) incomingCallRequests[callId]?.second else incomingCallRequests.remove(callId)?.second
-        if (call == null) {
+        val key = extras.getString(KEY_INCOMING_CALL_REQUEST)
+        val request = if (key == null) null else incomingCallRequests[key]
+        val systemCall = if (connection != null && result != CallRequestResult.REJECTED)
+            AndroidCall(connection) else SystemCall(false)
+        if (request == null || !request.complete(systemCall, result != CallRequestResult.SHOW_UI)) {
             Log.e(TAG, "Telecom API: incoming call request for $callId has no pending request")
             connection?.dispose()
             return
         }
-        call.onSuccess(if (connection != null && result != CallRequestResult.REJECTED)
-            AndroidCall(connection)
-        else
-            SystemCall(false))
 
         if (connection == null || result == CallRequestResult.REJECTED)
             refuse(accountId, callId)
@@ -212,6 +215,7 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
     }
 
     companion object {
+        private const val KEY_INCOMING_CALL_REQUEST = "incomingCallRequest"
         const val CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY : Int = Build.VERSION_CODES.P
     }
 }

@@ -59,6 +59,8 @@ class Conference(val accountId: String, val id: String) {
     private val mParticipantRecordingSet: MutableSet<Contact> = HashSet()
     private val mParticipantRecording: Subject<Set<Contact>> = BehaviorSubject.createDefault(emptySet())
     private var mConfState: CallStatus? = null
+    @Volatile private var creationReceived = false
+    internal var collapsePending = false
     private val mParticipants: ArrayList<Call> = ArrayList()
     private val mParticipantsSubject: Subject<List<Call>> = BehaviorSubject.createDefault(mParticipants)
 
@@ -116,8 +118,24 @@ class Conference(val accountId: String, val id: String) {
     val isSimpleCall: Boolean
         get() = mParticipants.size == 1 && id == mParticipants[0].id
 
+    internal val canCollapseToSimpleCall: Boolean
+        // Hosted conferences must retain their identity and hostCall until ConferenceRemoved.
+        get() = creationReceived && mParticipants.size == 1 && conversationId == null && hostCall == null
+
     /** If not null, this conference is a swarm call */
     var conversationId: String? = null
+
+    internal fun initialize(conversationId: String, participants: Collection<Call>) {
+        if (conversationId.isNotEmpty())
+            this.conversationId = conversationId
+        for (participant in participants) {
+            participant.confId = id
+            if (mParticipants.none { it.id == participant.id })
+                addParticipant(participant)
+        }
+        // An earlier Changed callback does not tell us whether this is a hosted/swarm call.
+        creationReceived = true
+    }
 
     fun setState(state: String) {
         val prev = mConfState

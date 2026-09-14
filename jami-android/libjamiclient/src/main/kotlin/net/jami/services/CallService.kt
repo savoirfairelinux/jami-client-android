@@ -220,6 +220,8 @@ abstract class CallService(
 
     /** Use a system API, if available, to request to start a call. */
     open class SystemCall(val allowed: Boolean) {
+        open val termination: Completable get() = Completable.never()
+
         open fun setCall(call: Call?) {
             call?.setSystemConnection(null)
         }
@@ -756,19 +758,12 @@ abstract class CallService(
 
     fun conferenceCreated(accountId: String, conversationId: String, confId: String) {
         Log.d(TAG, "conference created: $confId $conversationId")
-        val conf = conferences.getOrPut(confId) { Conference(accountId, confId).apply {
-            if (conversationId.isNotEmpty())
-                this.conversationId = conversationId
-        } }
+        val conf = conferences.getOrPut(confId) { Conference(accountId, confId) }
         val participants = JamiService.getParticipantList(accountId, confId)
         val map = JamiService.getConferenceDetails(accountId, confId)
         conf.setState(map["STATE"]!!)
+        conf.initialize(conversationId, participants.mapNotNull { calls[it] })
         for (callId in participants) {
-            calls[callId]?.let { call ->
-                Log.d(TAG, "conferenceCreated: adding participant $callId ${call.contact}")
-                call.confId = confId
-                conf.addParticipant(call)
-            }
             conferences.remove(callId)
         }
         if (conversationId.isNotEmpty())
@@ -782,6 +777,15 @@ abstract class CallService(
             callSubject.onNext(it)
         }
         conferenceSubject.onNext(conf)
+        collapseConferenceIfReady(conf)
+    }
+
+    private fun collapseConferenceIfReady(conf: Conference) {
+        if (!conf.collapsePending || !conf.canCollapseToSimpleCall) return
+        conferences.remove(conf.id)
+        val call = conf.participants[0]
+        call.confId = null
+        addConference(call)
     }
 
     fun conferenceRemoved(accountId: String, confId: String) {
@@ -847,13 +851,8 @@ abstract class CallService(
             }
 
             conferenceSubject.onNext(conf)
-            if (removed && conf.participants.size == 1) {
-                // Remove the obsolete conference so later stale events can't recreate it.
-                conferences.remove(confId)
-                val call = conf.participants[0]
-                call.confId = null
-                addConference(call)
-            }
+            if (removed && conf.participants.size == 1) conf.collapsePending = true
+            collapseConferenceIfReady(conf)
         } catch (e: Exception) {
             Log.w(TAG, "exception in conferenceChanged", e)
         }

@@ -70,6 +70,7 @@ class Call(
     private val systemConnectionSubject: SingleSubject<CallService.SystemCall> =
         SingleSubject.create()
     val systemConnection: Single<CallService.SystemCall> get() = systemConnectionSubject
+    val resolvedSystemConnection: CallService.SystemCall? get() = systemConnectionSubject.value
 
     fun setSystemConnection(value: CallService.SystemCall?) {
         Log.i(TAG, "Telecom API: setSystemConnection $value")
