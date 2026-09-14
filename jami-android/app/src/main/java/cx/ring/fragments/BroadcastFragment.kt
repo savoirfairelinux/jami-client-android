@@ -67,8 +67,13 @@ class BroadcastFragment : Fragment() {
     private val broadcastQueue = PublishSubject.create<BroadcastJob>()
     private var binding: FragConversationBinding? = null
     private var pendingPhoto: File? = null
-    private lateinit var channel: Channel
+    private var channel: Channel? = null
+    private var channelId: String? = null
+    private lateinit var repository: ChannelRepository
     private lateinit var channelAccountId: String
+    private var recipientsLoaded = false
+    private var recipientCount = 0
+    private var sendingText = false
 
     private data class BroadcastJob(
         val operation: () -> Completable,
@@ -78,6 +83,9 @@ class BroadcastFragment : Fragment() {
 
     override fun onCreate(state: Bundle?) {
         super.onCreate(state)
+        channelAccountId = arguments?.getString(KEY_ACCOUNT).orEmpty()
+        channelId = state?.getString(KEY_CHANNEL_ID) ?: arguments?.getString(KEY_CHANNEL_ID)
+        repository = ChannelRepository(requireContext(), accountService, channelAccountId)
         broadcastDisposables.add(
             broadcastQueue
                 .concatMapCompletable { job ->
@@ -92,19 +100,19 @@ class BroadcastFragment : Fragment() {
         )
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        channelId?.let { outState.putString(KEY_CHANNEL_ID, it) }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, state: Bundle?,
     ): View = FragConversationBinding.inflate(inflater, container, false).apply {
         binding = this
-        val name = arguments?.getString(KEY_CHANNEL).orEmpty()
-        channelAccountId = requireNotNull(arguments?.getString(KEY_ACCOUNT))
-        val repository = ChannelRepository(requireContext(), channelAccountId)
-        channel = repository.load().firstOrNull { it.name == name }
-            ?: repository.activeChannel()
-
         toolbar.title = null
         toolbar.menu.clear()
-        contactTitle.text = channel.name
+        contactTitle.text = channel?.name ?: arguments?.getString(KEY_CHANNEL).orEmpty()
+        contactSubtitle.setText(R.string.channels_loading)
         conversationAvatar.setImageResource(R.drawable.baseline_public_24)
         toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)
         toolbar.setNavigationOnClickListener { requireActivity().finish() }
@@ -143,6 +151,7 @@ class BroadcastFragment : Fragment() {
             btnTakePicture.isVisible = empty
         }
         msgSend.setOnClickListener { broadcast() }
+        updateSendActions()
     }.root
 
     private fun showAttachMenu(anchor: View) {
@@ -245,14 +254,48 @@ class BroadcastFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        // The subtitle says who will receive it, which is what the channel holds right now.
-        disposables.add(conversationFacade.getConversationList(conversationFacade.currentAccountSubject)
-            .map { list -> list.conversations.count { channel.contains(it) } }
+        recipientsLoaded = false
+        binding?.contactSubtitle?.setText(R.string.channels_loading)
+        updateSendActions()
+        val account = loadedChannelAccount().toObservable()
+        // Both the definition and the recipient list belong to the originating account.
+        disposables.add(Observable.combineLatest(
+            repository.observe(),
+            conversationFacade.getConversationList(account),
+            accountService.currentAccountSubject
+        ) { channels, list, current -> Triple(channels, list, current) }
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ count ->
-                binding?.contactSubtitle?.text =
-                    resources.getQuantityString(R.plurals.channels_recipients, count, count)
-            }, { error -> Log.e(TAG, "Unable to count channel members", error) }))
+            .subscribe({ (channels, list, current) ->
+                // Only old saved arguments carry a name. Resolve it once, never as a fallback
+                // for an ID that has since been deleted or renamed.
+                if (channelId == null) {
+                    val legacyName = arguments?.getString(KEY_CHANNEL)
+                    channelId = channels.firstOrNull { it.name == legacyName }?.id.orEmpty()
+                    arguments?.putString(KEY_CHANNEL_ID, channelId)
+                }
+                channel = channels.firstOrNull { it.id == channelId }
+                recipientsLoaded = true
+                recipientCount = list.conversations.count {
+                    it.accountId == channelAccountId && channel?.contains(it) == true
+                }
+                binding?.apply {
+                    channel?.let { contactTitle.text = it.name }
+                    contactSubtitle.text = when {
+                        current.accountId != channelAccountId ->
+                            getString(R.string.channels_account_changed)
+                        channel == null -> getString(R.string.channels_deleted)
+                        recipientCount == 0 -> getString(R.string.channels_no_members)
+                        else -> resources.getQuantityString(
+                            R.plurals.channels_recipients, recipientCount, recipientCount)
+                    }
+                }
+                updateSendActions()
+            }, { error ->
+                recipientsLoaded = false
+                binding?.contactSubtitle?.setText(R.string.channels_load_error)
+                updateSendActions()
+                showBroadcastError(error)
+            }))
     }
 
     override fun onStop() {
@@ -315,7 +358,8 @@ class BroadcastFragment : Fragment() {
         val text = binding?.msgInputTxt?.text?.toString()?.trim().orEmpty()
         if (text.isEmpty()) return
         binding?.msgInputTxt?.setText("")
-        binding?.msgSend?.isEnabled = false
+        sendingText = true
+        updateSendActions()
 
         broadcastQueue.onNext(
             BroadcastJob(
@@ -327,11 +371,13 @@ class BroadcastFragment : Fragment() {
                     }
                 },
                 onSuccess = {
-                    binding?.msgSend?.isEnabled = true
+                    sendingText = false
+                    updateSendActions()
                     showBroadcastSuccess()
                 },
                 onError = { error ->
-                    binding?.msgSend?.isEnabled = true
+                    sendingText = false
+                    updateSendActions()
                     binding?.msgInputTxt?.setText(text)
                     showBroadcastError(error)
                 }
@@ -341,16 +387,49 @@ class BroadcastFragment : Fragment() {
 
     /** The conversations the channel holds: its contacts and its groups. */
     private fun targets(): Single<List<Conversation>> =
-        if (accountService.currentAccount?.accountId != channelAccountId) {
-            Single.error(IllegalStateException(getString(R.string.channels_account_changed)))
-        } else conversationFacade.getConversationList(
-            accountService.getAccountSingle(channelAccountId).toObservable()
-        )
-            .firstOrError()
-            .map { list ->
-                list.conversations.filter { channel.contains(it) }
-                    .ifEmpty { throw IllegalStateException(getString(R.string.channels_no_members)) }
-            }
+        Single.defer {
+            checkAccount()
+            val id = channelId ?: throw IllegalStateException(getString(R.string.channels_loading))
+            val account = loadedChannelAccount().toObservable()
+            repository.observe().firstOrError()
+                .flatMap { snapshot ->
+                    check(snapshot.any { it.id == id }) { getString(R.string.channels_deleted) }
+                    conversationFacade.getConversationList(account).firstOrError()
+                }
+                .map { list ->
+                    checkAccount()
+                    val latest = repository.load().firstOrNull { it.id == id }
+                        ?: throw IllegalStateException(getString(R.string.channels_deleted))
+                    list.conversations.filter { it.accountId == channelAccountId && latest.contains(it) }
+                        .ifEmpty { throw IllegalStateException(getString(R.string.channels_no_members)) }
+                }
+        }
+
+    private fun loadedChannelAccount() = conversationFacade.currentAccountSubject
+        .firstOrError()
+        .map { account ->
+            // Wait for history loading, then freeze this account instead of following switches.
+            check(account.accountId == channelAccountId) { getString(R.string.channels_account_changed) }
+            account
+        }
+
+    private fun checkAccount() {
+        val account = accountService.currentAccount
+        check(account?.accountId == channelAccountId) {
+            getString(R.string.channels_account_changed)
+        }
+    }
+
+    private fun updateSendActions() {
+        val account = accountService.currentAccount
+        val enabled = recipientsLoaded && channel != null && recipientCount > 0 &&
+            account?.accountId == channelAccountId
+        binding?.apply {
+            msgSend.isEnabled = enabled && !sendingText
+            btnMenu.isEnabled = enabled
+            btnTakePicture.isEnabled = enabled
+        }
+    }
 
     private fun showBroadcastSuccess() {
         binding?.let {
@@ -359,11 +438,11 @@ class BroadcastFragment : Fragment() {
     }
 
     private fun showBroadcastError(error: Throwable) {
-        Log.e(TAG, "Unable to broadcast to ${channel.name}", error)
+        Log.e(TAG, "Unable to broadcast to Channel $channelId", error)
         binding?.let {
             Snackbar.make(
                 it.root,
-                error.message ?: "Unable to send broadcast",
+                error.message ?: getString(R.string.channels_send_error),
                 Snackbar.LENGTH_LONG
             ).show()
         }
@@ -384,15 +463,16 @@ class BroadcastFragment : Fragment() {
     companion object {
         private val TAG = BroadcastFragment::class.simpleName!!
         const val KEY_CHANNEL = "channel"
+        const val KEY_CHANNEL_ID = "channel_id"
         const val KEY_ACCOUNT = "account"
         private const val MENU_MEDIA = 1
         private const val MENU_FILE = 2
         private const val MAX_MESSAGES_PER_SECOND = 15L
         private const val MIN_INTERVAL_MS = 1000L / MAX_MESSAGES_PER_SECOND + 1L
 
-        fun newInstance(channelName: String, accountId: String) = BroadcastFragment().apply {
+        fun newInstance(channelId: String, accountId: String) = BroadcastFragment().apply {
             arguments = Bundle().apply {
-                putString(KEY_CHANNEL, channelName)
+                putString(KEY_CHANNEL_ID, channelId)
                 putString(KEY_ACCOUNT, accountId)
             }
         }

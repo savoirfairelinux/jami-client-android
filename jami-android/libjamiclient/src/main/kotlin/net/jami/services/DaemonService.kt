@@ -112,6 +112,10 @@ class DaemonService(
             mExecutor.submit { mAccountService.accountDetailsChanged(account_id, jdetails) }
         }
 
+        override fun accountMetadataChanged(accountId: String, metadata: StringMap) {
+            mExecutor.execute { mAccountService.accountMetadataChanged(accountId) }
+        }
+
         override fun activeCallsChanged(
             accountId: String,
             conversationId: String,

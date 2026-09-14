@@ -57,6 +57,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     SmartListListeners, ConversationActionCallback, SmartListView {
     private val groupsOnly by lazy { arguments?.getBoolean(ARG_GROUPS_ONLY) == true }
     private var lastList: Triple<ConversationFacade.ConversationList, ConversationFacade, CompositeDisposable>? = null
+    private val channelDisposables = CompositeDisposable()
     private var mSmartListAdapter: SmartListAdapter? = null
     private var binding: FragSmartlistBinding? = null
     @Inject
@@ -73,8 +74,22 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     fun getRecyclerView(): RecyclerView? = binding?.confsList
 
     override fun onDestroyView() {
+        channelDisposables.clear()
+        lastList = null
+        mSmartListAdapter = null
         super.onDestroyView()
         binding = null
+    }
+
+    override fun onStop() {
+        channelDisposables.clear()
+        super.onStop()
+    }
+
+    /** Home owns the account-switched Channel subscription; only re-filter the existing list. */
+    fun refreshChannelFilter(accountId: String) {
+        if (accountService.currentAccount?.accountId != accountId) return
+        lastList?.let { (list, facade, disposable) -> updateList(list, facade, disposable) }
     }
 
     override fun setLoading(loading: Boolean) {
@@ -148,6 +163,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     }
 
     override fun hideList() {
+        lastList = null
         binding!!.confsList.visibility = View.GONE
         mSmartListAdapter?.update(ConversationFacade.ConversationList())
     }
@@ -158,14 +174,25 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         parentDisposable: CompositeDisposable
     ) {
         lastList = Triple(conversations, conversationFacade, parentDisposable)
-        val activeChannel = ChannelRepository(
-            requireContext(), accountService.currentAccount?.accountId
-        ).activeChannel()
+        val accountId = accountService.currentAccount?.accountId
+        val activeChannel = try {
+            ChannelRepository(requireContext(), accountService, accountId).activeChannel()
+        } catch (error: IllegalStateException) {
+            mSmartListAdapter?.update(ConversationFacade.ConversationList())
+            binding?.apply {
+                confsList.isVisible = false
+                loadingIndicator.isVisible = false
+                placeholderText.setText(R.string.channels_load_error)
+                placeholder.isVisible = true
+            }
+            showChannelError(error)
+            return
+        }
         binding?.apply {
             // Only show conversations of the active channel; the Groups view shows its groups only.
             // Groups are gathered at the top, each part keeping its order of last interaction.
             val filteredConversations = conversations.conversations
-                .filter { activeChannel.contains(it) }
+                .filter { it.accountId == accountId && activeChannel.contains(it) }
                 .let { list -> if (groupsOnly) list.filter { it.isSwarmGroup() } else list }
             val visibleList = sectionedList(filteredConversations)
             val visibleConversations = visibleList.conversations
@@ -288,54 +315,86 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     }
 
     private fun addToChannel(conversation: Conversation) {
+        val accountId = conversation.accountId
+        if (!canEditChannels(accountId)) return
         // A group is placed in channels as itself; a one-to-one conversation follows its contact.
         if (conversation.isSwarmGroup()) {
-            chooseChannels(conversation.uri.rawUriString, group = true)
+            chooseChannels(accountId, conversation.uri.rawUriString, group = true)
             return
         }
-        contactService.getLoadedConversation(conversation)
+        channelDisposables.add(contactService.getLoadedConversation(conversation)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ viewModel ->
-                val contact = viewModel.getContact()?.contact ?: return@subscribe
-                chooseChannels(contact.uri.rawUriString, group = false)
+                val contact = viewModel.getContact()?.contact
+                if (contact == null) {
+                    showChannelError(IllegalStateException(getString(R.string.channels_update_error)))
+                    return@subscribe
+                }
+                chooseChannels(accountId, contact.uri.rawUriString, group = false)
             }, { error ->
-                Log.e(TAG, "Unable to load contact for channel assignment", error)
-                Snackbar.make(requireView(), error.message ?: "Unable to add to a Channel", Snackbar.LENGTH_LONG).show()
-            })
+                showChannelError(error)
+            }))
     }
 
     /**
      * Membership is a choice among the channels, and a conversation may be in several: ticking
      * a channel puts it there, unticking takes it out. "All" holds everything and is not a choice.
      */
-    private fun chooseChannels(id: String, group: Boolean) {
+    private fun chooseChannels(accountId: String, id: String, group: Boolean) {
+        if (binding == null || !canEditChannels(accountId)) return
         val context = requireContext()
-        val repository = ChannelRepository(context, accountService.currentAccount?.accountId)
-        val channels = repository.load().filterNot { it.isAllContacts }
-        val checked = BooleanArray(channels.size) { index ->
-            id in if (group) channels[index].groups else channels[index].members
-        }
-        MaterialAlertDialogBuilder(context)
-            .setTitle(R.string.channels_membership)
-            .setMultiChoiceItems(channels.map { it.name }.toTypedArray(), checked) { _, which, isChecked ->
-                checked[which] = isChecked
-            }
-            .setPositiveButton(android.R.string.ok) { _, _ ->
-                val selected = channels.filterIndexed { index, _ -> checked[index] }.map { it.name }.toSet()
-                repository.save(repository.load().map { channel ->
-                    if (channel.isAllContacts) channel
-                    else {
-                        val holding = (if (group) channel.groups else channel.members).toMutableSet().apply {
-                            if (channel.name in selected) add(id) else remove(id)
-                        }
-                        if (group) channel.copy(groups = holding) else channel.copy(members = holding)
+        val repository = ChannelRepository(context, accountService, accountId)
+        channelDisposables.add(repository.observe().firstOrError()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ snapshot ->
+                val root = binding?.root ?: return@subscribe
+                if (!canEditChannels(accountId)) return@subscribe
+                val channels = snapshot.filterNot { it.isAllContacts }
+                val initial = BooleanArray(channels.size) { index ->
+                    id in if (group) channels[index].groups else channels[index].members
+                }
+                val checked = initial.copyOf()
+                MaterialAlertDialogBuilder(context)
+                    .setTitle(R.string.channels_membership)
+                    .setMultiChoiceItems(channels.map { it.name }.toTypedArray(), checked) { _, which, isChecked ->
+                        checked[which] = isChecked
                     }
-                })
-                Snackbar.make(requireView(), R.string.channels_updated, Snackbar.LENGTH_SHORT).show()
-                lastList?.let { (list, facade, disposable) -> updateList(list, facade, disposable) }
-            }
-            .setNegativeButton(android.R.string.cancel, null)
-            .show()
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
+                        if (binding?.root !== root || !canEditChannels(accountId))
+                            return@setPositiveButton
+                        val changes = channels.indices.filter { initial[it] != checked[it] }
+                            .associate { channels[it].id to checked[it] }
+                        if (changes.isEmpty()) return@setPositiveButton
+                        // Accepted writes outlive the dialog/view; callbacks never touch a replaced view.
+                        repository.setMemberships(id, group, changes)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe({
+                                if (binding?.root === root && accountService.currentAccount?.accountId == accountId)
+                                    Snackbar.make(root, R.string.channels_updated, Snackbar.LENGTH_SHORT).show()
+                            }, { error ->
+                                Log.e(TAG, "Unable to update Channel memberships", error)
+                                if (binding?.root === root && accountService.currentAccount?.accountId == accountId)
+                                    showChannelError(error)
+                            })
+                    }
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show()
+            }, { error -> showChannelError(error) }))
+    }
+
+    private fun canEditChannels(accountId: String): Boolean {
+        val account = accountService.currentAccount
+        if (account?.accountId == accountId) return true
+        showChannelError(IllegalStateException(getString(R.string.channels_account_changed)))
+        return false
+    }
+
+    private fun showChannelError(error: Throwable) {
+        Log.e(TAG, "Unable to update Channels", error)
+        binding?.let {
+            Snackbar.make(it.root, error.message ?: getString(R.string.channels_update_error),
+                Snackbar.LENGTH_LONG).show()
+        }
     }
 
     companion object {
