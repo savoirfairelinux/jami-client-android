@@ -46,6 +46,7 @@ class ConversationFacade(
     private val mPreferencesService: PreferencesService
 ) {
     private val mDisposableBag = CompositeDisposable()
+    private val mCallNotificationProcessor = CallNotificationProcessor(mCallService.callsUpdates)
     val currentAccountSubject: Observable<Account> = mAccountService.currentAccountSubject
             .switchMapSingle { account: Account -> loadSmartlist(account) }
 
@@ -624,15 +625,21 @@ class ConversationFacade(
         }
         var notificationCompletable: Completable = Completable.complete()
         if (incomingCall) {
-            notificationCompletable = mNotificationService.handleCallNotification(conference!!, false)
+            notificationCompletable = mCallNotificationProcessor.notification(call, false) {
+                mNotificationService.handleCallNotification(conference!!, false)
+            }
             mHardwareService.setPreviewSettings()
         } else if (newState === CallStatus.CURRENT || newState === CallStatus.RINGING) {
-            notificationCompletable = mNotificationService.handleCallNotification(conference!!, false)
+            notificationCompletable = mCallNotificationProcessor.notification(call, false) {
+                mNotificationService.handleCallNotification(conference!!, false)
+            }
         } else if (newState.isOver) {
-            notificationCompletable = if (conference != null)
-                mNotificationService.handleCallNotification(conference, true)
-            else {
-                Completable.fromAction { mNotificationService.removeCallNotification() }
+            // Prepare removal before removing the participant and its notification metadata.
+            notificationCompletable = mCallNotificationProcessor.prepareRemoval(call) {
+                if (conference != null)
+                    mNotificationService.handleCallNotification(conference, true)
+                else
+                    Completable.fromAction { mNotificationService.removeCallNotification() }
             }
             mHardwareService.closeAudioState()
             val now = System.currentTimeMillis()
@@ -731,10 +738,8 @@ class ConversationFacade(
     }
 
     init {
-        mDisposableBag.add(mCallService.callsUpdates
-            //.toFlowable(BackpressureStrategy.LATEST)
-            .concatMapCompletable(this::onCallStateChange)
-            .subscribe())
+        mDisposableBag.add(mCallNotificationProcessor.process(this::onCallStateChange)
+            .subscribe({}, { error -> Log.e(TAG, "Call updates stream failed", error) }))
 
         /*mDisposableBag.add(mCallService.getConnectionUpdates()
                     .subscribe(mNotificationService::onConnectionUpdate));*/

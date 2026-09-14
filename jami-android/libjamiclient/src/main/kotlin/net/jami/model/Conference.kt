@@ -116,6 +116,10 @@ class Conference(val accountId: String, val id: String) {
     val isSimpleCall: Boolean
         get() = mParticipants.size == 1 && id == mParticipants[0].id
 
+    internal val canCollapseToSimpleCall: Boolean
+        // Hosted conferences must retain their identity and hostCall until ConferenceRemoved.
+        get() = mParticipants.size == 1 && conversationId == null && hostCall == null
+
     /** If not null, this conference is a swarm call */
     var conversationId: String? = null
 

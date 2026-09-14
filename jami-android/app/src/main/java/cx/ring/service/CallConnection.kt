@@ -163,7 +163,10 @@ class CallConnection(
         }
     val disposable = CompositeDisposable()
 
+    private val disposed = java.util.concurrent.atomic.AtomicBoolean()
+
     fun dispose() {
+        if (!disposed.compareAndSet(false, true)) return
         connectionStateSubject.onComplete()
         disposable.dispose()
         destroy()
