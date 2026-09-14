@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca7479cc_adcc572d",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/CallServiceImpl.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-09-14T10:59:16Z",
+      "side": 1,
+      "message": "Fixed in PS3 with the shared IncomingCallRequests registry. Requests are indexed atomically by (account, native call ID), with a separate generation index for callbacks; repeated or concurrent RINGING/media updates reuse pending or SHOW_UI results and do not invoke addNewIncomingCall again. The already bound SystemCall is reused even in the interval between answer and CURRENT. Cancellation removes both indexes without letting an old generation affect a retry; shared waiters only abandon a pending request when the final subscriber disposes. Added 12 direct registry tests covering repeated/concurrent updates, shared cancellation, answer-before-CURRENT, early/late callbacks, retries, account isolation and termination.",
+      "parentUuid": "38c1350e_33b4a2cc",
+      "revId": "9bfbec81624592ac51251cb5522ba6a031562b92",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "310871df_a8f6c470",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-09-14T10:29:41Z",
       "side": 1,
       "message": "[error] Line 851: 🔴 This still collapses a hosted/swarm conference when `conferenceChanged` is delivered before `conferenceCreated`: the `getOrPut` conference has both `conversationId \u003d\u003d null` and `hostCall \u003d\u003d null`, so the one-participant update satisfies `canCollapseToSimpleCall`, removes the conference, and detaches the last call before the creation event can restore its metadata. The later creation then builds a new conference and loses the original hosted identity/host binding. Defer this collapse until creation metadata is known, or preserve an explicit hosted/pending marker from the update path; add a regression test for changed-before-created ordering.",
+      "revId": "9bfbec81624592ac51251cb5522ba6a031562b92",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "339f6c93_4b29dc53",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/CallService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-09-14T10:59:16Z",
+      "side": 1,
+      "message": "Fixed in PS3. A newly observed Conference starts with creationReceived\u003dfalse, so absent conversationId/hostCall cannot be interpreted as ordinary-call metadata. A one-participant reduction records collapsePending; both Changed and Created use the same collapse helper, which proceeds only after creation metadata is known and the conference is neither swarm nor hosted. Late Created initializes the existing object and deduplicates participants already supplied by Changed. Added regressions for Changed(two)-\u003eChanged(one)-\u003eCreated(swarm), pending ordinary conference becoming eligible only after Created, repeated Created and preservation of the same host/remaining call.",
+      "parentUuid": "310871df_a8f6c470",
       "revId": "9bfbec81624592ac51251cb5522ba6a031562b92",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
