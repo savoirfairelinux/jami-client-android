@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfcd9bd4_8666bc28",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationActionsFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-09-14T11:45:04Z",
+      "side": 1,
+      "message": "Fixed in PS4 (208af4e25). ConversationActionsState now snapshots the resolved target, canonical account contact status, mode and action visibility before distinctUntilChanged. The fragment has one complete renderer for Block/Unblock text, delete/remove buttons, details/preferences panels, identity and conversation type. It observes account.blockedContactsUpdates as well as contact/mode/account replacement, so changes on the same mutable Contact are not missed. Username resolution is switched with the state and cannot re-show stale blocked panels. Nine production-state tests cover unresolved-\u003eblocked-\u003eunblocked, requests, legacy/SIP, mode and username/account changes.",
+      "parentUuid": "cf521ed6_f4a6eec4",
+      "revId": "170618e8498c7f1d16b8ed48fcfcf8d83ac9f902",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3b838d4f_23d6bffe",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-09-14T03:17:58Z",
       "side": 1,
       "message": "[error] Line 267: 🔴 The menu classification still ignores `conversation.request?.mode` for `Syncing` items and falls back to `requestMode`/`OneToOne`, while `Conversation.isSwarmGroup()` now intentionally treats a known request mode as authoritative. A syncing group import with only `request.mode \u003d\u003d InvitesOnly` is therefore shown the one-to-one action list (including copy/clear/block) instead of the group list. Reuse `item.isSwarmGroup()` (or the same effective-mode helper) here so the menu, indicator, and deletion behavior agree.",
+      "revId": "170618e8498c7f1d16b8ed48fcfcf8d83ac9f902",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eed0c153_99d36078",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/SmartListFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-09-14T11:45:04Z",
+      "side": 1,
+      "message": "Fixed in PS4. onItemLongClick now directly uses item.isSwarmGroup(); the duplicated Syncing/requestMode fallback is removed. Menu classification therefore uses the same authoritative request mode as the indicator and deletion behavior, while hidden Block indices keep their original meanings. The syncing/request group transition is covered by the action-state regression.",
+      "parentUuid": "3b838d4f_23d6bffe",
       "revId": "170618e8498c7f1d16b8ed48fcfcf8d83ac9f902",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
