@@ -80,6 +80,7 @@ import com.google.android.material.search.SearchView.TransitionState
 import com.google.android.material.shape.MaterialShapeDrawable
 import cx.ring.databinding.FragHomeBinding
 import cx.ring.utils.ActionHelper.openJamiDonateWebPage
+import cx.ring.utils.ActionHelper.showBlockContactRefused
 import io.reactivex.rxjava3.disposables.Disposable
 import net.jami.model.Uri
 import net.jami.services.NotificationService
@@ -279,18 +280,25 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
     private fun displayConversationRequestDialog(conversation: Conversation) {
         val request = conversation.request ?: return
-        if (request.mode == Conversation.Mode.OneToOne)
+        if (request.mode == Conversation.Mode.OneToOne) {
+            val accountId = conversation.accountId
+            val target = mAccountService.getBlockableContact(conversation)?.uri
+            val actions = resources.getStringArray(R.array.swarm_request_one_to_one_actions)
+            val visibleIndices = actions.indices.filter { it != 2 || target != null }
             MaterialAlertDialogBuilder(requireContext())
-                .setItems(R.array.swarm_request_one_to_one_actions) { _, which ->
-                    when (which) {
+                .setItems(visibleIndices.map { actions[it] }.toTypedArray()) { _, which ->
+                    when (visibleIndices[which]) {
                         0 -> mConversationFacade.acceptRequest(conversation)
                         1 -> mConversationFacade
                             .discardRequest(conversation.accountId, conversation.uri)
-                        2 -> mConversationFacade
-                            .blockConversation(conversation.accountId, conversation.uri)
+                        2 -> {
+                            if (target != null && mAccountService.canBlockContact(accountId, target))
+                                mAccountService.removeContact(accountId, target.rawRingId, true)
+                            else showBlockContactRefused(requireContext())
+                        }
                     }
                 }.show()
-        else
+        } else
             MaterialAlertDialogBuilder(requireContext())
                 .setItems(R.array.swarm_request_group_actions) { _, which ->
                     when (which) {

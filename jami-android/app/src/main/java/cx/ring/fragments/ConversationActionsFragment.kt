@@ -40,6 +40,7 @@ import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import cx.ring.utils.TextUtils.copyAndShow
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Contact
@@ -256,25 +257,43 @@ class ConversationActionsFragment : Fragment() {
             }
 
             descriptionPanel.isVisible = false  // Disable description edit for 1-to-1 conversation
+            blockContact.isVisible = false
+            mDisposableBag.add(Observable.combineLatest(
+                conversation.contactUpdates,
+                conversation.mode,
+                mAccountService.observableAccountList
+            ) { _, _, _ -> Unit }
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe {
+                    blockContact.isVisible = !conversation.isLegacy() &&
+                        mAccountService.getBlockableContact(conversation) != null
+                })
             blockContact.setOnClickListener {
+                val contact = mAccountService.getBlockableContact(conversation)
+                if (contact == null) {
+                    ActionHelper.showBlockContactRefused(requireContext())
+                    return@setOnClickListener
+                }
+                val accountId = conversation.accountId
                 if(conversation.mode.blockingFirst()==Conversation.Mode.Request)
                     mDisposableBag.add(ActionHelper.launchBlockContactAction(
                         context = requireContext(),
-                        accountId = mAccountService.currentAccount!!.accountId,
-                        contact = conversation.contact!!
-                    ) { accountId: String, _: Uri ->
-                        mConversationFacade.blockConversation(accountId, conversation.uri)
+                        accountId = accountId,
+                        contact = contact,
+                        accountService = mAccountService
+                    ) { accountId: String, contactUri: Uri ->
+                        mAccountService.removeContact(accountId, contactUri.rawRingId, true)
                         mConversationFacade.discardRequest(accountId, conversation.uri)
                         val resultIntent = Intent()
                             .putExtra(EXIT_REASON, ExitReason.CONTACT_BLOCKED.toString())
                         requireActivity().setResult(Activity.RESULT_OK, resultIntent)
                         requireActivity().finish()
                     })
-                else if (conversation.contact!!.isBlocked)
+                else if (contact.isBlocked)
                     mDisposableBag.add(ActionHelper.launchUnblockContactAction(
                         context = requireContext(),
-                        accountId = mAccountService.currentAccount!!.accountId,
-                        contact = conversation.contact!!
+                        accountId = accountId,
+                        contact = contact
                     ) { accountId: String, contactUri: Uri ->
                         mAccountService.addContact(accountId, contactUri.uri)
                         val resultIntent = Intent()
@@ -285,8 +304,9 @@ class ConversationActionsFragment : Fragment() {
                 else
                     mDisposableBag.add(ActionHelper.launchBlockContactAction(
                         context = requireContext(),
-                        accountId = mAccountService.currentAccount!!.accountId,
-                        contact = conversation.contact!!
+                        accountId = accountId,
+                        contact = contact,
+                        accountService = mAccountService
                     ) { accountId: String, contactUri: Uri ->
                         mAccountService.removeContact(accountId, contactUri.uri, true)
                         val resultIntent = Intent()
@@ -312,7 +332,7 @@ class ConversationActionsFragment : Fragment() {
             }
 
             // Hide details not useful for blocked contact
-            if (conversation.contact!!.isBlocked) {
+            if (mAccountService.getBlockableContact(conversation)?.isBlocked == true) {
                 conversationDelete.isVisible = false
                 conversationRemove.isVisible = false
                 blockContact.text = resources.getString(R.string.conversation_action_unblock_this)

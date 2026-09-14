@@ -45,6 +45,7 @@ import net.jami.model.Contact
 import net.jami.model.Conversation
 import net.jami.model.Conversation.ConversationActionCallback
 import net.jami.model.Uri
+import net.jami.services.AccountService
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.roundToInt
@@ -217,20 +218,39 @@ object ActionHelper {
         context: Context,
         accountId: String,
         contact: Contact,
+        accountService: AccountService,
         callback: (accountId: String, uri: Uri) -> Unit,
-    ): Disposable =
-        (contact.username ?: Single.just(""))
-            .map { name -> name.takeIf { it.isNotEmpty() } ?: contact.uri.uri }
-            .onErrorReturn { contact.uri.uri }
+    ): Disposable {
+        val uri = contact.uri
+        if (!accountService.canBlockContact(accountId, uri)) {
+            showBlockContactRefused(context)
+            return Disposable.empty()
+        }
+        return (contact.username ?: Single.just(""))
+            .map { name -> name.takeIf { it.isNotEmpty() } ?: uri.uri }
+            .onErrorReturn { uri.uri }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { displayName ->
+                if (!accountService.canBlockContact(accountId, uri)) {
+                    showBlockContactRefused(context)
+                    return@subscribe
+                }
                 MaterialAlertDialogBuilder(context)
                     .setTitle(context.getString(R.string.block_contact_dialog_title, displayName))
                     .setMessage(context.getString(R.string.block_contact_dialog_message, displayName))
-                    .setPositiveButton(android.R.string.ok) { _, _ -> callback(accountId, contact.uri) }
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
+                        if (accountService.canBlockContact(accountId, uri)) callback(accountId, uri)
+                        else showBlockContactRefused(context)
+                    }
                     .setNegativeButton(android.R.string.cancel) { _, _ -> }.show()
             }
+    }
+
+    fun showBlockContactRefused(context: Context) {
+        Log.w(TAG, "Refusing to block own account or an unresolved contact")
+        Toast.makeText(context, R.string.block_contact_unavailable, Toast.LENGTH_LONG).show()
+    }
 
     fun launchAcceptInvitation(
         context: Context,
