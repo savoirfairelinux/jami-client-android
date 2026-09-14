@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "82f0f191_2638edeb",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/CallServiceImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-09-14T10:22:21Z",
+      "side": 1,
+      "message": "Fixed in PS2. PendingIncomingCall now registers directly on raw call updates before invoking Telecom and retains a separate connection-termination subscription after SHOW_UI. Terminal call states or connection disconnect/disposal remove resolved requests and release their connection; answer/reject releases the request and subscriptions without destroying an accepted ongoing call. CallConnection.dispose is idempotent for overlapping terminal paths. Tests cover resolved SHOW_UI termination, disposal without a call event, normal answer/reject, and account/call isolation.",
+      "parentUuid": "030ae297_7cad6d20",
+      "revId": "8837648a5f9a70e57cd5e47a544f4aa1912cf420",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9906f214_59445e05",
@@ -35,6 +53,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f76cedcc_acc25dbc",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/ConversationFacade.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-09-14T10:22:21Z",
+      "side": 1,
+      "message": "Fixed in PS2 with CallNotificationProcessor.prepareRemoval. Notification metadata is still prepared before the participant is removed, but construction exceptions become a failed Completable handled inside notification(), after history and cleanup have been attached. Regression tests exercise the actual eager preparation helper: construction throws, state cleanup/history still run, and the next call is processed; successful preparation captures pre-removal metadata without executing notification work early.",
+      "parentUuid": "9906f214_59445e05",
+      "revId": "8837648a5f9a70e57cd5e47a544f4aa1912cf420",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1cd84ae9_a0bc95d7",
@@ -48,6 +84,24 @@
       "writtenOn": "2026-09-13T23:40:52Z",
       "side": 1,
       "message": "[error] Line 47: 🔴 Both terminal-state paths can cancel the request without completing `subject`. If a Telecom callback races with the terminal call event while `request.result` is subscribed, that subscriber can remain pending until the 30-second notification timeout, and a connection already bound in the second path is not released here. Complete the subject with a rejected result (or otherwise dispose the pending wait) when cancellation wins, and release any transferred connection.",
+      "revId": "8837648a5f9a70e57cd5e47a544f4aa1912cf420",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "963b7e53_4def8f34",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/PendingIncomingCall.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-09-14T10:22:21Z",
+      "side": 1,
+      "message": "Fixed in PS2. Cancellation settles pending subjects immediately with CALL_DISALLOWED_VAL, including both terminal-state branches and a raw terminal event before the callback. A connection whose binding raced with termination is released after setCall finishes (rather than disposing a half-bound connection), with idempotent Telecom cleanup. Added direct subscriber assertions for terminal-before-callback, terminal-during-binding and reentrant termination, plus 100 concurrent callback/termination races. Late cached allowed results are also gated by the current call state before constructing a notification.",
+      "parentUuid": "1cd84ae9_a0bc95d7",
       "revId": "8837648a5f9a70e57cd5e47a544f4aa1912cf420",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
