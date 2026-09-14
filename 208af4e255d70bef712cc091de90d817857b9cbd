@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a0fda6a_a8a260f0",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/contact/TVContactPresenter.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-14T11:50:25Z",
+      "side": 1,
+      "message": "[warning] Line 116: 🟡 This is still reachable from `TVContactFragment`, which unconditionally adds `ACTION_BLOCK` for every request, including requests whose sender is unresolved or is the account itself. The new blocking service correctly rejects those targets, but this presenter only logs the error at lines 118-120, leaving the user with a visible block action that does nothing and no refusal/error feedback. Resolve/check `getBlockableContact` before constructing the TV action list (or surface the same refusal UI) and keep the request intact on failure.",
+      "revId": "208af4e255d70bef712cc091de90d817857b9cbd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
