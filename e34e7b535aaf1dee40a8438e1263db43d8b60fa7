@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "204406cb_924495a1",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/CallService.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-14T11:17:07Z",
+      "side": 1,
+      "message": "[error] Line 820: 🔴 After `collapseConferenceIfReady` removes a conference, a late `conferenceChanged`/`conferenceCreated` for the same ID can enter this `getOrPut` and recreate a fresh `Conference` with `creationReceived \u003d\u003d false` and `collapsePending \u003d\u003d false`. That phantom conference will not collapse and can resurrect stale conference UI until another removal event. Keep a tombstone/ignore stale callbacks for collapsed IDs, or carry the collapse/creation metadata across recreation; add a late-callback-after-collapse regression test.",
+      "revId": "e34e7b535aaf1dee40a8438e1263db43d8b60fa7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23f5d5b5_5673c95e",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/IncomingCallRequests.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-14T11:17:07Z",
+      "side": 1,
+      "message": "[error] Line 27: 🔴 The cached `Call.resolvedSystemConnection` is never invalidated when a resolved Telecom connection terminates or is rejected. After `PendingIncomingCall` removes its generation, a later RINGING/retry returns this disposed `AndroidCall` instead of creating a new request; notification setup then waits on a completed connection and no new Telecom UI is created. Clear/invalidate the call\u0027s cached connection on termination, or only reuse it while its live registry entry remains valid, and add a retry-after-connection-termination test.",
+      "revId": "e34e7b535aaf1dee40a8438e1263db43d8b60fa7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
