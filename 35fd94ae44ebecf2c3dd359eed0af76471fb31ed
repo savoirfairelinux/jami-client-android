@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca733159_350fce8c",
+        "filename": "jami-android/app/src/main/java/cx/ring/channels/ChannelRepository.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-14T10:53:11Z",
+      "side": 1,
+      "message": "[warning] Line 34: 🟡 Returning the default Channels when the account is unavailable hides an account/storage failure and makes the UI treat the unavailable account as the valid `All` Channel. Propagate the failure (or expose an explicit unavailable state) so filters and active-selection reads stay disabled rather than silently showing defaults.",
+      "revId": "35fd94ae44ebecf2c3dd359eed0af76471fb31ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "550505d0_96a8df6c",
+        "filename": "jami-android/app/src/main/java/cx/ring/channels/ChannelRepository.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-14T10:53:11Z",
+      "side": 1,
+      "message": "[warning] Line 72: 🟡 The local active selection is persisted with `apply()`, so a disk-write failure is neither detectable nor surfaced. Use a checked `commit()` on the existing persistence path, or otherwise report the failure, since this value controls the device-local filter and selection.",
+      "revId": "35fd94ae44ebecf2c3dd359eed0af76471fb31ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11e9fc37_27d31297",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ChannelFragment.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-14T10:53:11Z",
+      "side": 1,
+      "message": "[warning] Line 225: 🟡 Every valid text change enqueues a synchronized metadata write, so typing a name can generate dozens of daemon/network updates and remote intermediate names; the queue also prevents cancellation after the user changes their mind. Debounce or submit only after editing/focus loss while retaining the final-value validation.",
+      "revId": "35fd94ae44ebecf2c3dd359eed0af76471fb31ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "131671b2_ec4aaa79",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/ChannelMetadata.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-14T10:53:11Z",
+      "side": 1,
+      "message": "[error] Line 149: 🔴 A malformed synced membership key makes the entire Channel snapshot fail: `Base64.getUrlDecoder().decode(...)` throws, and callers such as the Home/SmartList filters can terminate or crash instead of ignoring one bad record. Account-private metadata can be produced by another linked device, so validate/skip malformed encoded members (with an explicit log) and add a regression test for invalid keys.",
+      "revId": "35fd94ae44ebecf2c3dd359eed0af76471fb31ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
