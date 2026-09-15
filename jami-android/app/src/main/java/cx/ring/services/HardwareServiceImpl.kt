@@ -659,9 +659,8 @@ class HardwareServiceImpl(
                 false,
                 onOpened = {
                     handleExtensionMediaHandler(conf?.id)
-                    if (pendingStartCodec.remove(videoParams.id)) {
-                        cameraService.startCodec(videoParams)
-                    }
+                    if (pendingStartCodec.contains(videoParams.id))
+                        startPendingCodec(videoParams)
                 }
             )
         }
@@ -670,7 +669,6 @@ class HardwareServiceImpl(
     override fun cameraCleanup() {
         val camId = mPreviewCamId ?: return
         val params = cameraService.getParams(camId) ?: return
-        if (params.camera == null && params.cameraSession == null) return
 
         pendingStartCodec.remove(camId)
         cameraService.closeCamera(camId)
@@ -728,6 +726,12 @@ class HardwareServiceImpl(
         }
     }
 
+    private fun startPendingCodec(videoParams: VideoParams) {
+        cameraService.startCodec(videoParams) {
+            pendingStartCodec.remove(videoParams.id)
+        }
+    }
+
     override fun startCapture(camId: String?) {
         val cam = camId ?: cameraService.switchInput(true) ?: return
         Log.i(TAG, "startCapture > camId: $camId, cam: $cam, mIsChooseExtension: $mIsChooseExtension")
@@ -776,17 +780,14 @@ class HardwareServiceImpl(
                 }
             )
         } else {
-            val sessionReady = videoParams.camera != null && videoParams.cameraSession != null
-            if (sessionReady) {
-                cameraService.startCodec(videoParams)
-            } else {
-                pendingStartCodec.add(cam)
-            }
+            pendingStartCodec.add(cam)
+            startPendingCodec(videoParams)
         }
     }
 
     override fun stopCapture(camId: String) {
         shouldCapture.remove(camId)
+        pendingStartCodec.remove(camId)
         cameraService.closeCamera(camId)
         cameraEvents.onNext(VideoEvent(camId, started = false))
         // Apply a resolution change that was deferred during the capture, now
