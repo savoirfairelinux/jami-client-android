@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1e41f2d_51e9e7c1",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-15T20:08:00Z",
+      "side": 1,
+      "message": "[error] Line 475: 🔴 The output callback does not verify that its `codec` is still the current `videoParams.mediaCodec`. During a close/reopen, queued output from the old encoder can run after the new encoder has reset `codecData` and `encodedPacketBuffer`, causing stale frames/configuration to be sent into the new stream and shared state to be overwritten. Capture the codec/generation for the callback and drop stale output before processing it, still releasing that output buffer.",
+      "revId": "054e63c48ae18e5ed8acd6d1378c30c84eeb9018",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99f15e16_b42b886c",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-15T20:08:00Z",
+      "side": 1,
+      "message": "[error] Line 883: 🔴 This resets `codecStarted` only when the new encoder succeeds. If `openEncoder()` fails and the code falls back to `ImageReader`, the previous `mediaCodec` and its `codecStarted` state can remain in `VideoParams`. `startCodec()` then sees and starts/reuses that stale codec even though the capture request targets the fallback surface, which can stall video. Clear the old codec state on the fallback path (with identity-safe teardown of the old codec).",
+      "revId": "054e63c48ae18e5ed8acd6d1378c30c84eeb9018",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "157dec0b_51f23d5b",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-15T20:08:00Z",
+      "side": 1,
+      "message": "[error] Line 937: 🔴 If `onDisconnected` or `onError` is delivered before `onOpened`, `videoParams.camera` is still null, so this `isCurrent` check is false and `listener.onError()` is skipped. That leaves `isCapturing`/`pendingStartCodec` set and the encoder/surfaces may remain allocated, with no recovery path. Use the open-attempt generation (or explicitly track the pending camera) to handle failures before `onOpened`, while still rejecting stale attempts.",
+      "revId": "054e63c48ae18e5ed8acd6d1378c30c84eeb9018",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
