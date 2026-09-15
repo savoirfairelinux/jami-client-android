@@ -65,7 +65,7 @@ class SettingsFragment :
     GenericView<SettingsViewModel>,
     AppBarStateListener {
     enum class ConnectivityType {
-        LOCAL_NODE, GOOGLE_SERVICES, UNIFIED_PUSH, CUSTOM
+        LOCAL_NODE, GOOGLE_SERVICES, UNIFIED_PUSH, HUAWEI_SERVICES, CUSTOM
     }
     private var binding: FragSettingsBinding? = null
     private var currentSettings: Settings? = null
@@ -253,11 +253,26 @@ class SettingsFragment :
                     description = getString(R.string.connectivity_unified_push_description)
                 )
             )
+            "withHmsPush" -> listOf(
+                ConnectivityOption(
+                    mode = ConnectivityType.LOCAL_NODE,
+                    iconResId = R.drawable.connectivity_mode_dht_24,
+                    title = getString(R.string.connectivity_local_node_title),
+                    description = getString(R.string.connectivity_local_node_description)
+                ),
+                ConnectivityOption(
+                    mode = ConnectivityType.HUAWEI_SERVICES,
+                    iconResId = R.drawable.connectivity_mode_firebase_24,
+                    title = getString(R.string.connectivity_huawei_services_title),
+                    description = getString(R.string.connectivity_huawei_services_description)
+                )
+            )
             else -> emptyList()
         }
 
         val isPushCompatible = BuildConfig.FLAVOR == "withFirebase"
                 || BuildConfig.FLAVOR == "withUnifiedPush"
+                || BuildConfig.FLAVOR == "withHmsPush"
         // Verify if the user has selected a valid combination of settings:
         // - If the user wants to enable push notifications, the build must support it (Firebase or
         //   Unified Push), or the 'enablePermanentService' option must be enabled.
@@ -297,6 +312,11 @@ class SettingsFragment :
                     enablePermanentService = false
                 )
 
+                ConnectivityType.HUAWEI_SERVICES -> currentSettings?.copy(
+                    enablePushNotifications = true,
+                    enablePermanentService = false
+                )
+
                 else -> currentSettings
             }
             presenter.saveSettings(currentSettings!!)
@@ -323,6 +343,7 @@ class SettingsFragment :
                 when (BuildConfig.FLAVOR) {
                     "withFirebase" -> ConnectivityType.GOOGLE_SERVICES
                     "withUnifiedPush" -> ConnectivityType.UNIFIED_PUSH
+                    "withHmsPush" -> ConnectivityType.HUAWEI_SERVICES
                     else -> ConnectivityType.CUSTOM
                 }
             }

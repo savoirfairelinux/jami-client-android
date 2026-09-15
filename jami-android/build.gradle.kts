@@ -13,5 +13,7 @@ allprojects {
         maven { url = uri("https://maven.google.com") }
         mavenCentral()
         maven { url = uri("https://jitpack.io") }
+        // Huawei Mobile Services, only resolved by the withHmsPush flavor.
+        maven { url = uri("https://developer.huawei.com/repo/") }
     }
 }

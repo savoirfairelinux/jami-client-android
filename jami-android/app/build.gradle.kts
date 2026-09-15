@@ -72,6 +72,15 @@ android {
         create("withUnifiedPush") {
             dimension = "push"
         }
+        create("withHmsPush") {
+            dimension = "push"
+            // Provided at build time (-PhmsAppId=... or gradle.properties) rather than
+            // through agconnect-services.json, so the repository carries no credential
+            // file and the build works without a Huawei account.
+            val hmsAppId = (project.findProperty("hmsAppId") as String?) ?: ""
+            manifestPlaceholders["hmsAppId"] = hmsAppId
+            buildConfigField("String", "HMS_APP_ID", "\"$hmsAppId\"")
+        }
     }
     signingConfigs {
         create("config") {
@@ -236,6 +245,8 @@ dependencies {
         exclude(group= "com.google.protobuf", module= "protobuf-java")
     }
     "withUnifiedPushImplementation"(libs.unifiedpush.connector.ui)
+
+    "withHmsPushImplementation"(libs.hms.push)
 
     implementation(libs.nanohttpd)
     implementation(libs.androidx.documentfile)
