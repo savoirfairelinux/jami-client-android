@@ -153,6 +153,7 @@ configurations {
 dependencies {
     implementation(project(":libjamiclient"))
     implementation(libs.kotlin.stdlib)
+    testImplementation(libs.junit)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
