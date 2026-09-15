@@ -684,7 +684,13 @@ class HardwareServiceImpl(
     ) {
         val conf = mCameraPreviewCall.get()
         videoParams.isCapturing = true
+        val operationGeneration = videoParams.operationGeneration.incrementAndGet()
         mUiScheduler.scheduleDirect {
+            if (!videoParams.isCapturing ||
+                videoParams.operationGeneration.get() != operationGeneration
+            ) {
+                return@scheduleDirect
+            }
             cameraService.openCamera(videoParams, previewSurface,
                 object : CameraListener {
                     override fun onOpened() {
@@ -700,7 +706,8 @@ class HardwareServiceImpl(
                 mPreferenceService.resolution,
                 mPreferenceService.bitrate,
                 codecStart,
-                videoPreview
+                videoPreview,
+                operationGeneration
             )
         }
         cameraEvents.onNext(VideoEvent(videoParams.id,
