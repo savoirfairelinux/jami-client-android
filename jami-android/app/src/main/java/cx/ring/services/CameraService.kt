@@ -259,6 +259,7 @@ class CameraService internal constructor(c: Context) {
         var projection: MediaProjection? = null
         var display: VirtualDisplay? = null
         var mediaCodec: MediaCodec? = null
+        var imageReader: ImageReader? = null
         // SPS and PPS NALs (Config Data).
         var codecData: ByteBuffer? = null
         var encodedPacketBuffer: ByteBuffer? = null
@@ -269,6 +270,8 @@ class CameraService internal constructor(c: Context) {
         var captureSurface: Surface? = null
         val cameraGeneration = AtomicLong()
         val sessionGeneration = AtomicLong()
+        val operationGeneration = AtomicLong()
+        var codecStartInProgress = false
 
         fun getAndroidCodec() = when (val codec = codec) {
             "H264" -> MediaFormat.MIMETYPE_VIDEO_AVC
@@ -365,8 +368,40 @@ class CameraService internal constructor(c: Context) {
         fun onError()
     }
 
+    private fun releaseCapturePipeline(params: VideoParams) {
+        params.mediaCodec?.let { codec ->
+            try {
+                if (params.codecStarted)
+                    codec.signalEndOfInputStream()
+            } catch (e: Exception) {
+                Log.w(TAG, "Failed to stop codec input", e)
+            }
+            try {
+                codec.release()
+            } catch (e: Exception) {
+                Log.w(TAG, "Failed to release codec", e)
+            }
+        }
+        if (params.imageReader != null)
+            params.imageReader?.close()
+        else
+            params.captureSurface?.release()
+        params.previewSurface?.release()
+        params.mediaCodec = null
+        params.imageReader = null
+        params.captureSurface = null
+        params.previewSurface = null
+        params.codecStarted = false
+        params.codecStartInProgress = false
+        params.codecData = null
+        params.encodedPacketBuffer = null
+    }
+
     fun closeCamera(camId: String) {
-        mParams[camId]?.let { params ->
+        val params = mParams[camId] ?: return
+        params.isCapturing = false
+        params.operationGeneration.incrementAndGet()
+        videoHandler.post {
             params.cameraGeneration.incrementAndGet()
             params.sessionGeneration.incrementAndGet()
             params.cameraSession?.let { session ->
@@ -391,6 +426,8 @@ class CameraService internal constructor(c: Context) {
                 camera.close()
                 params.camera = null
             }
+            if (camId != VideoDevices.SCREEN_SHARING)
+                releaseCapturePipeline(params)
             params.projection?.let { mediaProjection ->
                 // delay the media projection stop call to avoid destroying the screen capture
                 // for cases where media sources in the daemon are re-initialized
@@ -403,7 +440,6 @@ class CameraService internal constructor(c: Context) {
                             }
                         }
             }
-            params.isCapturing = false
         }
     }
 
@@ -639,21 +675,25 @@ class CameraService internal constructor(c: Context) {
         surface: TextureView,
         metrics: DisplayMetrics
     ): Boolean {
+        var ownedCodec: MediaCodec? = null
+        var ownedDisplay: VirtualDisplay? = null
         mediaProjection.registerCallback(object : MediaProjection.Callback() {
             override fun onStop() {
-                params.mediaCodec?.let { codec ->
-                    codec.signalEndOfInputStream()
-                    codec.stop()
-                    codec.release()
-                    params.mediaCodec = null
+                ownedDisplay?.release()
+                if (params.projection === mediaProjection) {
+                    if (params.mediaCodec === ownedCodec)
+                        params.mediaCodec = null
+                    if (params.display === ownedDisplay)
+                        params.display = null
+                    params.projection = null
+                    params.codecStarted = false
                 }
-                params.display?.release()
-                params.display = null
-                params.codecStarted = false
             }
         }, videoHandler)
         val r = createVirtualDisplay(params, mediaProjection, surface, metrics)
         if (r != null) {
+            ownedCodec = r.first
+            ownedDisplay = r.second
             // be sure to stop any existing projection in case its stop is still delayed
             projectionDisposable?.dispose()
             params.projection?.stop()
@@ -724,20 +764,27 @@ class CameraService internal constructor(c: Context) {
                     return
                 }
                 handled = true
-                if (startMediaCodecIfNeeded(params, expectedCodec))
+                if (startMediaCodecIfNeeded(params, expectedCodec)) {
+                    params.codecStartInProgress = false
                     onStarted()
+                } else {
+                    params.codecStartInProgress = false
+                }
             }
         }
     }
 
     fun startCodec(params: VideoParams, onStarted: () -> Unit = {}) {
         handler.post {
+            if (params.codecStartInProgress)
+                return@post
             val session = params.cameraSession ?: return@post
             val camera = params.camera ?: return@post
             val captureSurface = params.captureSurface ?: return@post
             val previewSurface = params.previewSurface ?: return@post
             val codec = params.mediaCodec
             val generation = params.sessionGeneration.get()
+            params.codecStartInProgress = true
 
             try {
                 session.stopRepeating()
@@ -752,9 +799,12 @@ class CameraService internal constructor(c: Context) {
                     codec?.let { createCodecStartCallback(params, it, generation, onStarted) },
                     handler
                 )
-                if (codec == null)
+                if (codec == null) {
+                    params.codecStartInProgress = false
                     onStarted()
+                }
             } catch (e: Exception) {
+                params.codecStartInProgress = false
                 Log.e(TAG, "Failed to restart repeating request", e)
             }
         }
@@ -779,6 +829,7 @@ class CameraService internal constructor(c: Context) {
 
             videoParams.cameraSession?.close()
             videoParams.cameraSession = null
+            videoParams.codecStartInProgress = false
             val generation = videoParams.sessionGeneration.incrementAndGet()
 
             val request = buildCaptureRequest(
@@ -848,27 +899,87 @@ class CameraService internal constructor(c: Context) {
         resolution: Int,
         bitrate: Int,
         codecStart: Boolean,
-        videoPreview: Boolean
+        videoPreview: Boolean,
+        operationGeneration: Long
     ) {
-        //previewCamera?.close()
-        val handler = videoHandler
+        var previewSurface: Surface? = null
         try {
-            val view =  surface as AutoFitTextureView
+            if (!videoParams.isCapturing ||
+                videoParams.operationGeneration.get() != operationGeneration
+            ) {
+                return
+            }
+            val view = surface as AutoFitTextureView
             val flip = videoParams.rotation % 180 != 0
             val cc = manager!!.getCameraCharacteristics(videoParams.id)
             val fpsRange = chooseOptimalFpsRange(cc.get(CameraCharacteristics.CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES))
             val streamConfigs = cc.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
             val previewSize = chooseOptimalSize(
                 streamConfigs?.getOutputSizes(SurfaceHolder::class.java),
-                if (flip) view.height else view.width, if (flip) view.width else view.height,
-                videoParams.size.width, videoParams.size.height,
+                if (flip) view.height else view.width,
+                if (flip) view.width else view.height,
+                videoParams.size.width,
+                videoParams.size.height,
                 videoParams.size
             )
-            Log.d(TAG, "Selected preview size: " + previewSize + ", fps range: " + fpsRange + " rate: " + videoParams.rate)
+            Log.d(TAG, "Selected preview size: $previewSize, fps range: $fpsRange rate: ${videoParams.rate}")
             view.setAspectRatio(previewSize.height, previewSize.width)
             val texture = view.surfaceTexture ?: throw IllegalStateException()
             texture.setDefaultBufferSize(previewSize.width, previewSize.height)
-            val previewSurface = Surface(texture)
+            val preparedSurface = Surface(texture)
+            previewSurface = preparedSurface
+            videoHandler.post {
+                openCameraOnHandler(
+                    videoParams,
+                    preparedSurface,
+                    listener,
+                    hw_accel,
+                    resolution,
+                    bitrate,
+                    codecStart,
+                    videoPreview,
+                    operationGeneration,
+                    fpsRange
+                )
+            }
+        } catch (e: SecurityException) {
+            Log.e(TAG, "Security exception while setting preview parameters", e)
+            previewSurface?.release()
+            if (videoParams.operationGeneration.get() == operationGeneration)
+                listener.onError()
+        } catch (e: Exception) {
+            Log.e(TAG, "Exception while setting preview parameters", e)
+            previewSurface?.release()
+            if (videoParams.operationGeneration.get() == operationGeneration)
+                listener.onError()
+        }
+    }
+
+    private fun openCameraOnHandler(
+        videoParams: VideoParams,
+        previewSurface: Surface,
+        listener: CameraListener,
+        hw_accel: Boolean,
+        resolution: Int,
+        bitrate: Int,
+        codecStart: Boolean,
+        videoPreview: Boolean,
+        operationGeneration: Long,
+        fpsRange: Range<Int>
+    ) {
+        val handler = videoHandler
+        try {
+            if (!videoParams.isCapturing ||
+                videoParams.operationGeneration.get() != operationGeneration
+            ) {
+                previewSurface.release()
+                return
+            }
+            videoParams.cameraSession?.close()
+            videoParams.cameraSession = null
+            videoParams.sessionGeneration.incrementAndGet()
+            releaseCapturePipeline(videoParams)
+            videoParams.previewSurface = previewSurface
             var tmpReader: ImageReader? = null
             var codec: Pair<MediaCodec?, Surface?> = Pair(null, null)
             var captureSurface: Surface? = null
@@ -880,6 +991,7 @@ class CameraService internal constructor(c: Context) {
 
                 if (codec.second != null) {
                     videoParams.mediaCodec = codec.first
+                    videoParams.imageReader = null
                     videoParams.codecStarted = false
                 } else {
                     tmpReader = ImageReader.newInstance(
@@ -903,6 +1015,14 @@ class CameraService internal constructor(c: Context) {
                 }
                 captureSurface = codec.second ?: tmpReader?.surface
             }
+            videoParams.captureSurface = captureSurface
+            videoParams.imageReader = tmpReader
+            if (!videoParams.isCapturing ||
+                videoParams.operationGeneration.get() != operationGeneration
+            ) {
+                releaseCapturePipeline(videoParams)
+                return
+            }
             val camera = videoParams.camera
             if (videoParams.isCapturing && camera != null) {
                 createCameraSession(camera, previewSurface, captureSurface, codec.first,
@@ -911,15 +1031,16 @@ class CameraService internal constructor(c: Context) {
                 val cameraGeneration = videoParams.cameraGeneration.incrementAndGet()
                 manager.openCamera(videoParams.id, object : CameraDevice.StateCallback() {
                     override fun onOpened(camera: CameraDevice) {
-                        if (videoParams.cameraGeneration.get() != cameraGeneration) {
+                        if (videoParams.cameraGeneration.get() != cameraGeneration ||
+                            videoParams.operationGeneration.get() != operationGeneration ||
+                            !videoParams.isCapturing
+                        ) {
                             camera.close()
                             return
                         }
                         try {
                             Log.w(TAG, "onOpened " + videoParams.id)
-                            //previewCamera = camera
                             videoParams.camera = camera
-                            texture.setDefaultBufferSize(previewSize.width, previewSize.height)
                             createCameraSession(camera, previewSurface, captureSurface,
                                 codec.first, listener, fpsRange, videoParams, codecStart)
                         } catch (e: Exception) {
@@ -935,9 +1056,13 @@ class CameraService internal constructor(c: Context) {
                     override fun onDisconnected(camera: CameraDevice) {
                         Log.w(TAG, "onDisconnected")
                         val isCurrent = videoParams.cameraGeneration.get() == cameraGeneration &&
-                            videoParams.camera === camera
+                            videoParams.isCapturing &&
+                            (videoParams.camera === camera ||
+                                videoParams.camera == null &&
+                                videoParams.operationGeneration.get() == operationGeneration)
                         camera.close()
                         if (isCurrent) {
+                            releaseCapturePipeline(videoParams)
                             listener.onError()
                         }
                     }
@@ -945,9 +1070,13 @@ class CameraService internal constructor(c: Context) {
                     override fun onError(camera: CameraDevice, error: Int) {
                         Log.w(TAG, "onError: $error")
                         val isCurrent = videoParams.cameraGeneration.get() == cameraGeneration &&
-                            videoParams.camera === camera
+                            videoParams.isCapturing &&
+                            (videoParams.camera === camera ||
+                                videoParams.camera == null &&
+                                videoParams.operationGeneration.get() == operationGeneration)
                         camera.close()
                         if (isCurrent) {
+                            releaseCapturePipeline(videoParams)
                             listener.onError()
                         }
                     }
@@ -959,21 +1088,8 @@ class CameraService internal constructor(c: Context) {
                                 videoParams.camera = null
                                 videoParams.cameraSession = null
                                 videoParams.sessionGeneration.incrementAndGet()
+                                releaseCapturePipeline(videoParams)
                             }
-                            codec.first?.let { mediaCodec ->
-                                if (videoParams.mediaCodec === mediaCodec && videoParams.codecStarted)
-                                    mediaCodec.signalEndOfInputStream()
-                                mediaCodec.release()
-                                if (videoParams.mediaCodec === mediaCodec) {
-                                    videoParams.mediaCodec = null
-                                    videoParams.codecStarted = false
-                                    videoParams.codecData = null
-                                    videoParams.encodedPacketBuffer = null
-                                }
-                            }
-                            codec?.second?.release()
-                            tmpReader?.close()
-                            previewSurface.release()
                         } catch (e: Exception) {
                             Log.w(TAG, "Error stopping codec", e)
                         }
@@ -982,8 +1098,16 @@ class CameraService internal constructor(c: Context) {
             }
         } catch (e: SecurityException) {
             Log.e(TAG, "Security exception while settings preview parameters", e)
+            if (videoParams.operationGeneration.get() == operationGeneration) {
+                releaseCapturePipeline(videoParams)
+                listener.onError()
+            }
         } catch (e: Exception) {
             Log.e(TAG, "Exception while settings preview parameters", e)
+            if (videoParams.operationGeneration.get() == operationGeneration) {
+                releaseCapturePipeline(videoParams)
+                listener.onError()
+            }
         }
     }
 
