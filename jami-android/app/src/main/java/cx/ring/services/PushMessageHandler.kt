@@ -1,0 +1,190 @@
+/*
+ *  Copyright (C) 2004-2026 Savoir-faire Linux Inc.
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+package cx.ring.services
+
+import android.app.Service
+import android.content.Context
+import android.content.Intent
+import android.os.Handler
+import android.os.Looper
+import android.os.PowerManager
+import android.util.Log
+import cx.ring.application.JamiApplication
+import cx.ring.application.JamiApplicationPush
+import cx.ring.service.PushForegroundService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import java.util.Locale
+
+/**
+ * Push handling shared by the vendor-relay flavors (FCM, HMS). The payload the DHT proxy
+ * sends is the same whatever relay carries it, so the wakeup classification and the wake
+ * lock / foreground service dance belong here rather than in each SDK service.
+ */
+object PushMessageHandler {
+
+    /**
+     * Processes one push. [priority] and [originalPriority] are on the [JamiApplicationPush]
+     * scale. Runs on the calling SDK's service thread; [scope] carries the daemon handoff.
+     */
+    fun handlePush(
+        service: Service,
+        from: String,
+        data: Map<String, String>,
+        priority: Int,
+        originalPriority: Int,
+        scope: CoroutineScope,
+    ) {
+        // Some devices block during call negotiation without a wake lock. The 10s timeout
+        // is a safety net only: the lock is released as soon as the push is processed.
+        var wakeLock: PowerManager.WakeLock? = null
+        try {
+            val pm = service.getSystemService(Context.POWER_SERVICE) as PowerManager
+            wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "wake:push").apply {
+                setReferenceCounted(false)
+                acquire((10 * 1000).toLong())
+            }
+        } catch (e: Exception) {
+            Log.w(TAG, "Can't acquire wake lock", e)
+        }
+
+        // The proxy encodes intent in the relay priority: values published at DHT priority 0
+        // (connection requests, trust requests) go out high; presence announcements, CRLs
+        // and expirations go out normal. Renewal requests ("timeout") are normal too but
+        // need the account back up so the proxy client re-subscribes before expiry.
+        // originalPriority is what the proxy asked for, unaffected by relay quota
+        // downgrades; an unknown value fails open.
+        val isRenewal = data.containsKey("timeout")
+        val isActionable = isRenewal || originalPriority != JamiApplicationPush.PUSH_PRIORITY_NORMAL
+        val wakeup = if (isActionable) classifyWakeup(data) else PushWakeup(false, false)
+        val isCallWakeup = wakeup.isCall
+        val isMessageWakeup = wakeup.isMessage
+        val app = JamiApplication.instance as? JamiApplicationPush
+        val appInForeground = app?.isForeground ?: false
+        Log.d(TAG, "push actionable=$isActionable renewal=$isRenewal call=$isCallWakeup message=$isMessageWakeup foreground=$appInForeground priority=$priority/$originalPriority")
+
+        // Start FGS for calls and messages when backgrounded: both trigger an async daemon
+        // fetch (proxy reconnect + DHT/swarm pull).
+        val needsFgs = (isCallWakeup || isMessageWakeup)
+                && priority == JamiApplicationPush.PUSH_PRIORITY_HIGH
+                && !appInForeground
+        if (needsFgs) {
+            try {
+                Handler(Looper.getMainLooper()).post {
+                    try {
+                        service.startForegroundService(Intent(service, PushForegroundService::class.java))
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Failed to start foreground service on main thread", e)
+                    }
+                }
+            } catch (e: Exception) {
+                Log.w(TAG, "Failed to start foreground service for push notification", e)
+            }
+        }
+
+        if (!appInForeground && app != null && isActionable) {
+            // Single serialized entry point; grace window, restore, reconnect and
+            // deactivation re-arm are all evaluated on the main thread.
+            app.onBackgroundPushReceived(isCallPush = isCallWakeup, isMessagePush = isMessageWakeup)
+        }
+
+        scope.launch {
+            try {
+                app?.onMessageReceived(from, data, priority)
+            } catch (e: Exception) {
+                Log.e(TAG, "Error in processing message", e)
+            } finally {
+                // Re-arm deactivation so accounts restored above are not left active.
+                if (!appInForeground) {
+                    Log.d(TAG, "scheduling deactivation")
+                    app?.scheduleBackgroundDeactivation()
+                }
+                // Presence/expiration push: nothing to do, so release early instead of
+                // burning the 10s timeout. Actionable pushes keep the lock — they trigger
+                // an async daemon fetch or proxy re-subscribe that can take several
+                // seconds after this returns.
+                if (!isActionable) {
+                    try {
+                        wakeLock?.let { if (it.isHeld) it.release() }
+                    } catch (e: Exception) {
+                        Log.w(TAG, "Can't release wake lock", e)
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Classifies an actionable proxy wakeup from the "pt" field (the connection request
+     * type the proxy copies in): audioCall/videoCall for calls, application/im-gitmessage-id
+     * or application/invite for swarm messages and invitations, and sync for multi-device
+     * account sync. Only value ids never seen by this process count, dropping the catch-up
+     * re-deliveries the proxy emits on every fresh listener; the dedupe caches are
+     * in-memory, so after a restart a stale id classifies once.
+     */
+    private fun classifyWakeup(data: Map<String, String>): PushWakeup {
+        val pushTypes = data["pt"] ?: return PushWakeup(false, false)
+        val ids = data["ids"]?.split(',') ?: emptyList()
+        // Scope the dedupe key by destination client id and DHT key: value ids are random
+        // 64-bit values, unique in practice but not across keys. Missing fields degrade to
+        // coarser scoping, never to dropping a wakeup.
+        val dedupeScope = "${data["to"] ?: ""}:${data["key"] ?: ""}"
+        var newCall = false
+        var newMessage = false
+        pushTypes.splitToSequence(',').forEachIndexed { i, rawType ->
+            val type = rawType.trim().lowercase(Locale.ROOT)
+            val isCall = type == "audiocall" || type == "videocall"
+            // Exact type or explicit separator only, so unrelated future types cannot match.
+            val isMessage = type == "application/im-gitmessage-id"
+                    || type.startsWith("application/im-gitmessage-id/")
+                    || type == "application/invite"
+                    || type.startsWith("application/invite+")
+                    || type == "sync"
+            if (!isCall && !isMessage) return@forEachIndexed
+            val id = ids.getOrNull(i)?.trim()
+            val isNew = if (id.isNullOrEmpty()) {
+                true // No id to deduplicate on: fail open, a missed call is worse than a redundant restore.
+            } else {
+                // Per-kind caches so message volume cannot evict call dedupe state.
+                val seen = if (isCall) seenCallIds else seenMessageIds
+                synchronized(seen) { seen.put("$dedupeScope:$id", Unit) == null }
+            }
+            if (isNew) {
+                if (isCall) newCall = true
+                if (isMessage) newMessage = true
+            }
+        }
+        return PushWakeup(newCall, newMessage)
+    }
+
+    private data class PushWakeup(val isCall: Boolean, val isMessage: Boolean)
+
+    private const val TAG = "PushMessageHandler"
+
+    // Value ids already handled by this process, to drop proxy catch-up re-deliveries.
+    // Two bounded LRU caches so frequent message ids cannot evict call dedupe state.
+    private const val SEEN_CALL_IDS_MAX = 256
+    private const val SEEN_MESSAGE_IDS_MAX = 2048
+    private val seenCallIds = object : LinkedHashMap<String, Unit>(64, 0.75f, true) {
+        override fun removeEldestEntry(eldest: MutableMap.MutableEntry<String, Unit>) =
+            size > SEEN_CALL_IDS_MAX
+    }
+    private val seenMessageIds = object : LinkedHashMap<String, Unit>(256, 0.75f, true) {
+        override fun removeEldestEntry(eldest: MutableMap.MutableEntry<String, Unit>) =
+            size > SEEN_MESSAGE_IDS_MAX
+    }
+}
