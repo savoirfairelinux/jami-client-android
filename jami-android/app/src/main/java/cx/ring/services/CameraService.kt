@@ -56,6 +56,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import java.util.concurrent.Executor
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicLong
 import kotlin.math.abs
 
 class CameraService internal constructor(c: Context) {
@@ -260,11 +261,14 @@ class CameraService internal constructor(c: Context) {
         var mediaCodec: MediaCodec? = null
         // SPS and PPS NALs (Config Data).
         var codecData: ByteBuffer? = null
+        var encodedPacketBuffer: ByteBuffer? = null
         var codecStarted: Boolean = false
         var forceKeyFrame: Boolean = false
         var cameraSession: CameraCaptureSession? = null
         var previewSurface: Surface? = null
         var captureSurface: Surface? = null
+        val cameraGeneration = AtomicLong()
+        val sessionGeneration = AtomicLong()
 
         fun getAndroidCodec() = when (val codec = codec) {
             "H264" -> MediaFormat.MIMETYPE_VIDEO_AVC
@@ -363,6 +367,8 @@ class CameraService internal constructor(c: Context) {
 
     fun closeCamera(camId: String) {
         mParams[camId]?.let { params ->
+            params.cameraGeneration.incrementAndGet()
+            params.sessionGeneration.incrementAndGet()
             params.cameraSession?.let { session ->
                 try {
                     session.stopRepeating()
@@ -413,6 +419,8 @@ class CameraService internal constructor(c: Context) {
                 if (resolution >= 720) 192 * 8 * 1024 else 100 * 8 * 1024
         else bitrate * 8 * 1024
         val frameRate = videoParams.rate//30 // 30 fps
+        videoParams.codecData = null
+        videoParams.encodedPacketBuffer = null
         val format = MediaFormat.createVideoFormat(mimeType, videoParams.size.width, videoParams.size.height).apply {
             setInteger(MediaFormat.KEY_MAX_INPUT_SIZE, 0)
             setInteger(MediaFormat.KEY_BIT_RATE, bitrateValue)
@@ -440,53 +448,67 @@ class CameraService internal constructor(c: Context) {
                 override fun onOutputBufferAvailable(codec: MediaCodec, index: Int, info: MediaCodec.BufferInfo) {
                     try {
                         if (info.flags and MediaCodec.BUFFER_FLAG_END_OF_STREAM == 0) {
+                            val buffer = codec.getOutputBuffer(index)
+                            if (buffer == null) {
+                                Log.e(TAG, "MediaCodec returned no output buffer")
+                                return
+                            }
+                            if (info.offset < 0 ||
+                                info.size < 0 ||
+                                info.offset > buffer.capacity() - info.size
+                            ) {
+                                Log.e(TAG, "MediaCodec returned an invalid output buffer range")
+                                return
+                            }
                             // Get and cache the codec data (SPS/PPS NALs)
                             val isConfigFrame = info.flags and MediaCodec.BUFFER_FLAG_CODEC_CONFIG != 0
-                            val buffer = codec.getOutputBuffer(index)
                             if (isConfigFrame) {
-                                buffer?.let { outputBuffer ->
-                                    outputBuffer.position(info.offset)
-                                    outputBuffer.limit(info.offset + info.size)
-                                    videoParams.codecData = ByteBuffer.allocateDirect(info.size).apply {
-                                        put(outputBuffer)
-                                        rewind()
-                                    }
-                                    Log.i(TAG, "Cache new codec data (SPS/PPS, …)")
+                                buffer.position(info.offset)
+                                buffer.limit(info.offset + info.size)
+                                videoParams.codecData = ByteBuffer.allocateDirect(info.size).apply {
+                                    put(buffer)
+                                    rewind()
                                 }
+                                Log.i(TAG, "Cache new codec data (SPS/PPS, …)")
                             } else {
                                 val isKeyFrame = info.flags and MediaCodec.BUFFER_FLAG_KEY_FRAME != 0
-                                // If it's a key-frame, send the cached SPS/PPS NALs prior to
-                                // sending key-frame.
-                                if (isKeyFrame || videoParams.forceKeyFrame) {
+                                val shouldPrependCodecData = isKeyFrame || videoParams.forceKeyFrame
+                                if (shouldPrependCodecData) {
                                     videoParams.forceKeyFrame = false
-                                    videoParams.codecData?.let { data ->
-                                        JamiService.captureVideoPacket(
-                                            videoParams.inputUri,
-                                            data,
-                                            data.capacity(),
-                                            0,
-                                            false,
-                                            info.presentationTimeUs,
-                                            videoParams.rotation
-                                        )
-                                    }
                                 }
 
-                                // Send the encoded frame
+                                val packet = if (shouldPrependCodecData) {
+                                    videoParams.codecData?.let { codecData ->
+                                        prependCodecData(
+                                            codecData,
+                                            buffer,
+                                            info.offset,
+                                            info.size,
+                                            videoParams.encodedPacketBuffer
+                                        ).also { videoParams.encodedPacketBuffer = it }
+                                    }
+                                } else {
+                                    null
+                                }
                                 JamiService.captureVideoPacket(
                                     videoParams.inputUri,
-                                    buffer,
-                                    info.size,
-                                    info.offset,
+                                    packet ?: buffer,
+                                    packet?.remaining() ?: info.size,
+                                    if (packet == null) info.offset else 0,
                                     isKeyFrame,
                                     info.presentationTimeUs,
                                     videoParams.rotation
                                 )
                             }
-                            codec.releaseOutputBuffer(index, false)
                         }
                     } catch (e: IllegalStateException) {
                         Log.e(TAG, "MediaCodec is unable to process buffer", e)
+                    } finally {
+                        try {
+                            codec.releaseOutputBuffer(index, false)
+                        } catch (e: IllegalStateException) {
+                            Log.e(TAG, "MediaCodec is unable to release output buffer", e)
+                        }
                     }
                 }
 
@@ -663,43 +685,77 @@ class CameraService internal constructor(c: Context) {
     }
 
 
-    private fun startMediaCodecIfNeeded(params: VideoParams) {
-        val codec = params.mediaCodec ?: return
-        if (!params.codecStarted) {
-            try {
-                params.forceKeyFrame = true
-                codec.start()
-                params.codecStarted = true
-            } catch (e: Exception) {
-                Log.e(TAG, "Failed to start codec", e)
+    private fun startMediaCodecIfNeeded(params: VideoParams, codec: MediaCodec): Boolean {
+        if (params.mediaCodec !== codec)
+            return false
+        if (params.codecStarted)
+            return true
+        return try {
+            params.forceKeyFrame = true
+            codec.start()
+            params.codecStarted = true
+            true
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to start codec", e)
+            false
+        }
+    }
+
+    private fun createCodecStartCallback(
+        params: VideoParams,
+        expectedCodec: MediaCodec,
+        generation: Long,
+        onStarted: () -> Unit = {}
+    ): CaptureCallback {
+        return object : CaptureCallback() {
+            private var handled = false
+
+            override fun onCaptureStarted(
+                session: CameraCaptureSession,
+                request: CaptureRequest,
+                timestamp: Long,
+                frameNumber: Long
+            ) {
+                if (handled ||
+                    params.sessionGeneration.get() != generation ||
+                    params.cameraSession !== session ||
+                    params.mediaCodec !== expectedCodec
+                ) {
+                    return
+                }
+                handled = true
+                if (startMediaCodecIfNeeded(params, expectedCodec))
+                    onStarted()
             }
         }
     }
 
+    fun startCodec(params: VideoParams, onStarted: () -> Unit = {}) {
+        handler.post {
+            val session = params.cameraSession ?: return@post
+            val camera = params.camera ?: return@post
+            val captureSurface = params.captureSurface ?: return@post
+            val previewSurface = params.previewSurface ?: return@post
+            val codec = params.mediaCodec
+            val generation = params.sessionGeneration.get()
 
-    fun startCodec(params: VideoParams) {
-        startMediaCodecIfNeeded(params)
+            try {
+                session.stopRepeating()
 
-        val session = params.cameraSession
-        val camera = params.camera
-        val captureSurface = params.captureSurface
-        val previewSurface = params.previewSurface
+                val cc = manager!!.getCameraCharacteristics(params.id)
+                val availableFpsRanges = cc.get(CameraCharacteristics.CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES)
+                val fpsRange = chooseOptimalFpsRange(availableFpsRanges)
 
-
-        if (session != null && camera != null && captureSurface != null && previewSurface != null) {
-            handler.post {
-                try {
-                    session.stopRepeating()
-
-                    val cc = manager!!.getCameraCharacteristics(params.id)
-                    val availableFpsRanges = cc.get(CameraCharacteristics.CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES)
-                    val fpsRange = chooseOptimalFpsRange(availableFpsRanges)
-
-                    val request = buildCaptureRequest(camera, previewSurface, captureSurface, fpsRange)
-                    session.setRepeatingRequest(request, null, handler)
-                } catch (e: Exception) {
-                    Log.e(TAG, "Failed to restart repeating request", e)
-                }
+                val request = buildCaptureRequest(camera, previewSurface, captureSurface, fpsRange)
+                session.setRepeatingRequest(
+                    request,
+                    codec?.let { createCodecStartCallback(params, it, generation, onStarted) },
+                    handler
+                )
+                if (codec == null)
+                    onStarted()
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to restart repeating request", e)
             }
         }
     }
@@ -723,6 +779,7 @@ class CameraService internal constructor(c: Context) {
 
             videoParams.cameraSession?.close()
             videoParams.cameraSession = null
+            val generation = videoParams.sessionGeneration.incrementAndGet()
 
             val request = buildCaptureRequest(
                 camera,
@@ -731,35 +788,43 @@ class CameraService internal constructor(c: Context) {
                 fpsRange
             )
 
-            val captureCallback = if (codecStart && codec != null)
-                object : CaptureCallback() {
-                    override fun onCaptureStarted(
-                        session: CameraCaptureSession,
-                        request: CaptureRequest,
-                        timestamp: Long,
-                        frameNumber: Long
-                    ) {
-                        if (frameNumber != 0L) return
-                        startMediaCodecIfNeeded(videoParams)
-                    }
-                }
-            else null
-
             val sessionCallback = object : CameraCaptureSession.StateCallback() {
                 override fun onConfigured(session: CameraCaptureSession) {
+                    if (videoParams.sessionGeneration.get() != generation ||
+                        videoParams.camera !== camera
+                    ) {
+                        session.close()
+                        return
+                    }
                     videoParams.cameraSession = session
-                    listener.onOpened()
                     try {
-                        session.setRepeatingRequest(request, captureCallback, handler)
+                        session.setRepeatingRequest(
+                            request,
+                            if (codecStart && codec != null)
+                                createCodecStartCallback(videoParams, codec, generation)
+                            else
+                                null,
+                            handler
+                        )
+                        listener.onOpened()
                     } catch (e: Exception) {
                         Log.e(TAG, "Failed to set repeating request", e)
-                        camera.close()
+                        if (videoParams.sessionGeneration.get() == generation &&
+                            videoParams.cameraSession === session
+                        ) {
+                            videoParams.sessionGeneration.incrementAndGet()
+                            videoParams.cameraSession = null
+                            session.close()
+                            camera.close()
+                            listener.onError()
+                        }
                     }
                 }
 
                 override fun onConfigureFailed(session: CameraCaptureSession) {
                     Log.w(TAG, "Session configuration failed")
-                    listener.onError()
+                    if (videoParams.sessionGeneration.get() == generation)
+                        listener.onError()
                 }
             }
 
@@ -815,6 +880,7 @@ class CameraService internal constructor(c: Context) {
 
                 if (codec.second != null) {
                     videoParams.mediaCodec = codec.first
+                    videoParams.codecStarted = false
                 } else {
                     tmpReader = ImageReader.newInstance(
                         videoParams.size.width,
@@ -842,8 +908,13 @@ class CameraService internal constructor(c: Context) {
                 createCameraSession(camera, previewSurface, captureSurface, codec.first,
                     listener, fpsRange, videoParams, codecStart)
             } else {
+                val cameraGeneration = videoParams.cameraGeneration.incrementAndGet()
                 manager.openCamera(videoParams.id, object : CameraDevice.StateCallback() {
                     override fun onOpened(camera: CameraDevice) {
+                        if (videoParams.cameraGeneration.get() != cameraGeneration) {
+                            camera.close()
+                            return
+                        }
                         try {
                             Log.w(TAG, "onOpened " + videoParams.id)
                             //previewCamera = camera
@@ -853,30 +924,52 @@ class CameraService internal constructor(c: Context) {
                                 codec.first, listener, fpsRange, videoParams, codecStart)
                         } catch (e: Exception) {
                             Log.w(TAG, "onOpened error:", e)
+                            if (videoParams.cameraGeneration.get() == cameraGeneration &&
+                                videoParams.camera === camera
+                            ) {
+                                listener.onError()
+                            }
                         }
                     }
 
                     override fun onDisconnected(camera: CameraDevice) {
                         Log.w(TAG, "onDisconnected")
+                        val isCurrent = videoParams.cameraGeneration.get() == cameraGeneration &&
+                            videoParams.camera === camera
                         camera.close()
-                        listener.onError()
+                        if (isCurrent) {
+                            listener.onError()
+                        }
                     }
 
                     override fun onError(camera: CameraDevice, error: Int) {
                         Log.w(TAG, "onError: $error")
+                        val isCurrent = videoParams.cameraGeneration.get() == cameraGeneration &&
+                            videoParams.camera === camera
                         camera.close()
-                        listener.onError()
+                        if (isCurrent) {
+                            listener.onError()
+                        }
                     }
 
                     override fun onClosed(camera: CameraDevice) {
                         Log.w(TAG, "onClosed")
                         try {
-                            videoParams.mediaCodec?.let { mediaCodec ->
-                                if (videoParams.codecStarted)
+                            if (videoParams.camera === camera) {
+                                videoParams.camera = null
+                                videoParams.cameraSession = null
+                                videoParams.sessionGeneration.incrementAndGet()
+                            }
+                            codec.first?.let { mediaCodec ->
+                                if (videoParams.mediaCodec === mediaCodec && videoParams.codecStarted)
                                     mediaCodec.signalEndOfInputStream()
                                 mediaCodec.release()
-                                videoParams.mediaCodec = null
-                                videoParams.codecStarted = false
+                                if (videoParams.mediaCodec === mediaCodec) {
+                                    videoParams.mediaCodec = null
+                                    videoParams.codecStarted = false
+                                    videoParams.codecData = null
+                                    videoParams.encodedPacketBuffer = null
+                                }
                             }
                             codec?.second?.release()
                             tmpReader?.close()
