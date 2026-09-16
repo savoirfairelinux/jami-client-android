@@ -651,11 +651,12 @@ class HardwareServiceImpl(
                 true
             )
         } else {
+            val resumeCapture = shouldCapture.contains(videoParams.id)
             openCameraPreview(
                 videoParams,
                 surface as? TextureView,
                 useHardwareCodec,
-                false,
+                resumeCapture,
                 false,
                 onOpened = {
                     handleExtensionMediaHandler(conf?.id)
