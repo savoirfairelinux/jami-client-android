@@ -1029,7 +1029,7 @@ class CameraService internal constructor(c: Context) {
                     listener, fpsRange, videoParams, codecStart)
             } else {
                 val cameraGeneration = videoParams.cameraGeneration.incrementAndGet()
-                manager.openCamera(videoParams.id, object : CameraDevice.StateCallback() {
+                manager?.openCamera(videoParams.id, object : CameraDevice.StateCallback() {
                     override fun onOpened(camera: CameraDevice) {
                         if (videoParams.cameraGeneration.get() != cameraGeneration ||
                             videoParams.operationGeneration.get() != operationGeneration ||
