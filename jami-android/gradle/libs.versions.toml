@@ -50,6 +50,7 @@ protoc = "4.33.2"
 nanohttpd = "2.3.1"
 javaxInject = "1"
 junit4 = "4.13.2"
+mockito = "5.20.0"
 gson = "2.14.0"
 
 [libraries]
@@ -111,6 +112,7 @@ unifiedpush-connector = { group = "org.unifiedpush.android", name = "connector",
 unifiedpush-connector-ui = { group = "org.unifiedpush.android", name = "connector-ui", version.ref = "unifiedPushUi" }
 javax-inject = { group = "javax.inject", name = "javax.inject", version.ref = "javaxInject" }
 junit = { group = "junit", name = "junit", version.ref = "junit4" }
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 androidx-documentfile = { group = "androidx.documentfile", name = "documentfile", version = "1.0.1" }
 nanohttpd = { group = "org.nanohttpd", name = "nanohttpd", version.ref = "nanohttpd" }

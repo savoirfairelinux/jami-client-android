@@ -22,6 +22,7 @@ dependencies {
 
     // Required -- JUnit 4 framework
     testImplementation(libs.junit)
+    testImplementation(libs.mockito.core)
     // RxJava
     implementation(libs.rxjava)
     // gson
