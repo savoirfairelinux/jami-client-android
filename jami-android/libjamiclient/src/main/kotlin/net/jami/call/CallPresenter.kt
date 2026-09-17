@@ -59,6 +59,7 @@ class CallPresenter @Inject constructor(
     private var currentSurfaceId: String? = null
     private var currentExtensionSurfaceId: String? = null
     private var timeUpdateTask: Disposable? = null
+    private var cameraMuteStateBeforeScreenShare: Boolean? = null
     fun isSpeakerphoneOn(): Boolean = mHardwareService.isSpeakerphoneOn()
     var isMicrophoneMuted: Boolean = false
     var wantVideo = false
@@ -701,17 +702,30 @@ class CallPresenter @Inject constructor(
 
     fun switchOnOffScreenShare() {
         val conference = mConference ?: return
-        val camId = mHardwareService.changeCamera(true)
-        if(conference.hasActiveScreenSharing())
-            mCallService.replaceVideoMedia(conference, "camera://$camId", true)
-        else
+        val call = conference.firstCall ?: conference.hostCall ?: return
+        if (call.hasActiveScreenSharing()) {
+            val camId = mHardwareService.changeCamera(true)
+            val cameraMuted = cameraMuteStateBeforeScreenShare ?: true
+            mCallService.replaceVideoMedia(conference, "camera://$camId", cameraMuted)
+            cameraMuteStateBeforeScreenShare = null
+        } else {
             view?.startScreenCapture()
+        }
     }
 
     fun startScreenShare(resultCode: Int, data: Any): Boolean {
         val conference = mConference ?: return false
         mNotificationService.preparePendingScreenshare(conference) {
             val mediaProjection = view?.getMediaProjection(resultCode, data) ?: return@preparePendingScreenshare
+            val call = conference.firstCall ?: conference.hostCall ?: return@preparePendingScreenshare
+            if (cameraMuteStateBeforeScreenShare == null) {
+                cameraMuteStateBeforeScreenShare = call.mediaList
+                    .firstOrNull {
+                        it.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO &&
+                                it.source != "camera://desktop"
+                    }
+                    ?.let { !it.isEnabled || it.isMuted } ?: true
+            }
             mHardwareService.setPendingScreenShareProjection(mediaProjection)
             mCallService.replaceVideoMedia(conference, "camera://desktop", false)
         }
