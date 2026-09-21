@@ -6,4 +6,7 @@
   <string name="file_download_button">ดาวน์โหลด</string>
   <string name="control_play">เล่น</string>
   <string name="control_pause">หยุด</string>
+  <string name="collab_format_bold">ตัวหนา</string>
+  <string name="collab_format_italic">ตัวเอียง</string>
+  <string name="collab_format_strike">ขีดทับ</string>
 </resources>

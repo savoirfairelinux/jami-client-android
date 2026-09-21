@@ -569,4 +569,12 @@
   <string name="shared_services_disconnect_all_confirm">Shkëpute</string>
   <string name="shared_services_type_custom_label">Vetjake</string>
   <string name="shared_services_save">Ruaje</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Dokumente</string>
+  <string name="collab_create">Krijoje</string>
+  <string name="collab_link_title">Lidhje</string>
+  <string name="collab_link_hint">Adresë</string>
+  <string name="collab_link_add">Shtoje</string>
+  <string name="collab_link_remove">Hiqe</string>
+  <string name="collab_remove">Hiqe</string>
 </resources>

@@ -13,4 +13,7 @@
   <string name="searchbar_navigation_account">Изабери налог</string>
   <string name="add_conversation_member">Додајте члана конверзације</string>
   <string name="qrcode_to_scan">QR код за скенирање</string>
+  <string name="collab_format_bold">Подебљано</string>
+  <string name="collab_format_italic">Курзив</string>
+  <string name="collab_format_strike">Прецртано</string>
 </resources>

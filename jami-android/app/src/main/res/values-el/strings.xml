@@ -355,6 +355,7 @@
   <string name="bottomsheet_contact">Επικοινωνήστε με Jami\n%1$s</string>
   <string name="bottomsheet_block">Αποκλεισμός μέλους</string>
   <string name="bottomsheet_unblock">Άρση αποκλεισμού μέλους</string>
+  <string name="group_member_blocked">Αποκλεισμένο</string>
   <string name="group_member_invited">Καλεσμένοι</string>
   <!--JamiId-->
   <string name="jami_id_validate">Καταχωρίστε το όνομα χρήστη</string>
@@ -417,4 +418,12 @@
   <string name="shared_services_policy_hint">Προσβάσιμο από</string>
   <string name="shared_services_policy_public">Δημόσιο</string>
   <string name="shared_services_save">Αποθήκευση</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Έγγραφα</string>
+  <string name="collab_create">Δημιουργία</string>
+  <string name="collab_link_title">Σύνδεσμος</string>
+  <string name="collab_link_hint">Διεύθυνση</string>
+  <string name="collab_link_add">Προσθήκη</string>
+  <string name="collab_link_remove">Απομακρύνετε</string>
+  <string name="collab_remove">Απομακρύνετε</string>
 </resources>

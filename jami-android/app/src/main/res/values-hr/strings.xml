@@ -388,4 +388,12 @@
   <string name="shared_services_policy_hint">Dostupno za</string>
   <string name="shared_services_policy_public">Javno</string>
   <string name="shared_services_save">Spremi</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Dokumenti</string>
+  <string name="collab_create">Stvori</string>
+  <string name="collab_link_title">Poveznica</string>
+  <string name="collab_link_hint">Adresa</string>
+  <string name="collab_link_add">Dodavanje</string>
+  <string name="collab_link_remove">Ukloni</string>
+  <string name="collab_remove">Ukloni</string>
 </resources>

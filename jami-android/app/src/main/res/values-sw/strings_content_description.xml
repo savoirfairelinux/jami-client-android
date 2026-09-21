@@ -6,4 +6,7 @@
   <string name="file_download_button">Pakua</string>
   <string name="control_play">Kucheza</string>
   <string name="control_pause">Kupumzika</string>
+  <string name="collab_format_bold">Ujasiri</string>
+  <string name="collab_format_italic">Kiswahili</string>
+  <string name="collab_format_strike">Kuvunja</string>
 </resources>

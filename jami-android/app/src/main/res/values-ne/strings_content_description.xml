@@ -6,4 +6,7 @@
   <string name="file_download_button">डाउनलोड</string>
   <string name="control_play">खेल</string>
   <string name="control_pause">विराम</string>
+  <string name="collab_format_bold">बाक्लो</string>
+  <string name="collab_format_italic">तेर्सो</string>
+  <string name="collab_format_strike">स्ट्राइकथ्रू</string>
 </resources>

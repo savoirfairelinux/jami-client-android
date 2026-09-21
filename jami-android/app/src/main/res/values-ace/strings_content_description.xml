@@ -3,4 +3,7 @@
   <!--Strings for xml content description of images-->
   <string name="dial_numeric_pad">ديالڤاد عددي</string>
   <string name="contact_unblock">ڤڠاجرن</string>
+  <string name="collab_format_bold">جريمه</string>
+  <string name="collab_format_italic">ڤڠاجرن</string>
+  <string name="collab_format_strike">ڤڠاجرن</string>
 </resources>

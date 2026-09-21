@@ -471,9 +471,12 @@
   <string name="no_contact_to_add">Du har ingen kontakt at tilføje</string>
   <string name="bottomsheet_contact">Kontakt Jami\n%1$s</string>
   <string name="bottomsheet_block">Blokér medlem</string>
+  <string name="bottomsheet_unblock">Fjern blokering af medlem</string>
   <string name="error_open_no_app_found">Der blev ikke fundet en app til at åbne denne slags fil: %1$s</string>
   <string name="swarm_detail_no_document">Du har endnu ikke nogen dokumenter.</string>
   <string name="group_admin">Administrator</string>
+  <string name="group_member_blocked">Blokeret</string>
+  <string name="group_member_invited">Indbydes</string>
   <string name="share_contact_intent_title">Føj denne kontakt til Jami!</string>
   <string name="share_contact_intent_body">Du kan tilføje denne kontakt “%1$s” på Jamis distribuerede kommunikationsplatform: %2$s</string>
   <!--JamiId-->
@@ -618,4 +621,12 @@
   <string name="shared_services_policy_specific">Bestemte kontakter</string>
   <string name="shared_services_allowed_contacts_hint">Tilladte kontakter (kommasepareret)</string>
   <string name="shared_services_save">Gem</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Dokumenter</string>
+  <string name="collab_create">Opret</string>
+  <string name="collab_link_title">Tilknyt</string>
+  <string name="collab_link_hint">Adresse</string>
+  <string name="collab_link_add">Tilføj</string>
+  <string name="collab_link_remove">Fjern</string>
+  <string name="collab_remove">Fjern</string>
 </resources>

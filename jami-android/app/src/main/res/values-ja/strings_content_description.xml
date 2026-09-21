@@ -8,4 +8,9 @@
   <string name="control_replay">再生</string>
   <string name="control_pause">一時停止</string>
   <string name="searchbar_navigation_account">アカウントを選択</string>
+  <string name="collab_format_bold">太字</string>
+  <string name="collab_format_italic">斜体</string>
+  <string name="collab_format_strike">取り消し線</string>
+  <string name="collab_undo">取り消し</string>
+  <string name="collab_redo">やり直し</string>
 </resources>

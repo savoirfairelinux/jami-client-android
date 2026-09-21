@@ -417,4 +417,12 @@
   <string name="shared_services_policy_hint">アクセス可能な相手</string>
   <string name="shared_services_policy_public">公開</string>
   <string name="shared_services_save">保存</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">文書</string>
+  <string name="collab_create">作成</string>
+  <string name="collab_link_title">リンク</string>
+  <string name="collab_link_hint">アドレス</string>
+  <string name="collab_link_add">追加</string>
+  <string name="collab_link_remove">削除</string>
+  <string name="collab_remove">削除</string>
 </resources>

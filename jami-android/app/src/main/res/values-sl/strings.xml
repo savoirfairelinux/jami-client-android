@@ -624,4 +624,12 @@
   <string name="shared_services_policy_specific">Določeni stiki</string>
   <string name="shared_services_allowed_contacts_hint">Dovoljeni stiki (ločeni z vejicami)</string>
   <string name="shared_services_save">Shrani</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Dokumenti</string>
+  <string name="collab_create">Ustvari</string>
+  <string name="collab_link_title">Poveži</string>
+  <string name="collab_link_hint">Naslov</string>
+  <string name="collab_link_add">Dodaj</string>
+  <string name="collab_link_remove">Odstrani</string>
+  <string name="collab_remove">Odstrani</string>
 </resources>

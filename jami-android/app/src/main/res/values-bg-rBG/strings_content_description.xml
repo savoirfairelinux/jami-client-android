@@ -7,4 +7,9 @@
   <string name="control_play">Пускане</string>
   <string name="control_replay">Повторение</string>
   <string name="control_pause">Пауза</string>
+  <string name="collab_format_bold">Получер</string>
+  <string name="collab_format_italic">Курсив</string>
+  <string name="collab_format_strike">Зачеркване</string>
+  <string name="collab_undo">Отмяна</string>
+  <string name="collab_redo">Повторение</string>
 </resources>

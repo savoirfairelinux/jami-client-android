@@ -625,4 +625,12 @@
   <string name="shared_services_policy_specific">Определенные контакты</string>
   <string name="shared_services_allowed_contacts_hint">Разрешенные контакты (через запятую)</string>
   <string name="shared_services_save">Сохранить</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Документы</string>
+  <string name="collab_create">Создать</string>
+  <string name="collab_link_title">Ссылка</string>
+  <string name="collab_link_hint">Адрес</string>
+  <string name="collab_link_add">Добавить</string>
+  <string name="collab_link_remove">Убрать</string>
+  <string name="collab_remove">Убрать</string>
 </resources>

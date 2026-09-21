@@ -621,4 +621,12 @@
   <string name="shared_services_policy_specific">Contactos específicos</string>
   <string name="shared_services_allowed_contacts_hint">Contactos permitidos (separados por comas)</string>
   <string name="shared_services_save">Salvar</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Documentos</string>
+  <string name="collab_create">Crear</string>
+  <string name="collab_link_title">Ligar</string>
+  <string name="collab_link_hint">Enderezo</string>
+  <string name="collab_link_add">Engadir</string>
+  <string name="collab_link_remove">Retirada</string>
+  <string name="collab_remove">Retirada</string>
 </resources>

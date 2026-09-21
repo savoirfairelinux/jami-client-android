@@ -621,4 +621,12 @@
   <string name="shared_services_policy_specific">Belirli kişiler</string>
   <string name="shared_services_allowed_contacts_hint">İzin verilen kişiler (virgülle ayrılmış)</string>
   <string name="shared_services_save">Kaydet</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Belgeler</string>
+  <string name="collab_create">Oluştur</string>
+  <string name="collab_link_title">Bağlantı</string>
+  <string name="collab_link_hint">Yer</string>
+  <string name="collab_link_add">Ekle</string>
+  <string name="collab_link_remove">Kaldır</string>
+  <string name="collab_remove">Kaldır</string>
 </resources>

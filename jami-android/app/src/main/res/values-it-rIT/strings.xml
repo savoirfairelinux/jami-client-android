@@ -622,4 +622,12 @@
   <string name="shared_services_policy_specific">Contatti specifici</string>
   <string name="shared_services_allowed_contacts_hint">Contatti consentiti (separati da virgola)</string>
   <string name="shared_services_save">Salva</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Documenti</string>
+  <string name="collab_create">Crea</string>
+  <string name="collab_link_title">Associa</string>
+  <string name="collab_link_hint">Indirizzo</string>
+  <string name="collab_link_add">Aggiungi</string>
+  <string name="collab_link_remove">Rimuovi</string>
+  <string name="collab_remove">Rimuovi</string>
 </resources>

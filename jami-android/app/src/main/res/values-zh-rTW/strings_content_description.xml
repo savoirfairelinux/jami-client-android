@@ -1,16 +1,34 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
-  <string name="contact_quick_call_description">快速呼叫</string>
-  <string name="contact_picture_description">联系人图片</string>
-  <string name="dial_numeric_pad">電話按鍵鍵盤</string>
-  <string name="contact_unblock">取消封鎖</string>
-  <string name="video_extensions">视频扩展</string>
+  <string name="contact_quick_call_description">快速通話</string>
+  <string name="contact_picture_description">聯絡人圖片</string>
+  <string name="dial_numeric_pad">數字撥號鍵盤</string>
+  <string name="contact_unblock">解除封鎖</string>
+  <string name="video_extensions">視訊擴充程式</string>
   <string name="file_download_button">下載</string>
   <string name="control_play">播放</string>
-  <string name="control_replay">重放</string>
+  <string name="control_replay">重播</string>
   <string name="control_pause">暫停</string>
-  <string name="searchbar_navigation_account">选择帐户</string>
-  <string name="add_conversation_member">添加对话成员</string>
-  <string name="qrcode_to_scan">二维码，请扫描</string>
+  <string name="searchbar_navigation_account">選擇帳號</string>
+  <string name="add_conversation_member">添加交談成員</string>
+  <string name="qrcode_to_scan">二維條碼進行掃描</string>
+  <string name="collab_format_bold">粗體</string>
+  <string name="collab_format_italic">斜體</string>
+  <string name="collab_format_underline">底線</string>
+  <string name="collab_format_strike">刪除線</string>
+  <string name="collab_format_h1">標題1</string>
+  <string name="collab_format_h2">標題2</string>
+  <string name="collab_format_h3">標題3</string>
+  <string name="collab_format_bullet_list">項目符號清單</string>
+  <string name="collab_format_ordered_list">項目編號清單</string>
+  <string name="collab_format_align_left">靠左對齊</string>
+  <string name="collab_format_align_center">居中對齊</string>
+  <string name="collab_format_align_right">靠右對齊</string>
+  <string name="collab_format_align_justify">兩端對齊</string>
+  <string name="collab_format_link">插入連結</string>
+  <string name="collab_format_image">插入圖片</string>
+  <string name="collab_format_clear">清除格式</string>
+  <string name="collab_undo">取消動作</string>
+  <string name="collab_redo">再次動作</string>
 </resources>
