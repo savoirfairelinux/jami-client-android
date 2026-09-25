@@ -79,6 +79,15 @@ cd jami-client-android/jami-android
 ./gradlew assembleDebug
 ```
 
+### Call continuity across networks
+
+During a one-to-one call between compatible Jami clients, switching between
+Wi-Fi and cellular data triggers a SIP/ICE reconnection without ending the
+call. Media can pause during the transition; if the new route is not ready
+within 20 seconds, the call ends. Both participants need a client that
+supports this feature. Calls with older clients still end when the old
+connection is lost.
+
 ### Troubleshoot
 
 Jami Android doesn't use the system's `pkg-config`; it builds its own version with custom parameters to support cross-compilation. However, after cleaning the project, `pkg-config` may not be rebuilt, which could result in falling back to the system's version, leading to errors when attempting to locate shared libraries.

@@ -122,6 +122,11 @@ abstract class HardwareService(
         mExecutor.execute { JamiService.connectivityChanged() }
     }
 
+    fun networkInterfaceChanged() {
+        Log.i(TAG, "networkInterfaceChanged()")
+        mExecutor.execute { JamiService.networkInterfaceChanged() }
+    }
+
     fun switchInput(accountId:String, callId: String, uri: String) {
         Log.i(TAG, "switchInput() $uri")
         mExecutor.execute { JamiService.switchInput(accountId, callId, uri) }
