@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4f73aff_3fe96308",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 943
+      },
+      "writtenOn": "2026-09-25T12:56:07Z",
+      "side": 1,
+      "message": "Could a similar mechanism also be implemented for desktop apps—for example, when switching from LAN to Wi-Fi or from Wi-Fi 1 to Wi-Fi 2? (For Android, this would also apply to switching from Wi-Fi 1 to Wi-Fi 2, or when changing SIM cards, switching LTE from SIM 1 to SIM 2 and vice versa.) On some laptops, switching between Wi-Fi, LTE, and LAN would also be possible.\n\nAlso: if a peer becomes blocked during such a transition, the operation normally aborts immediately. Does this patch change that behavior?\n\nDoes this patch also need to take spontaneous network changes during local calls into account—for example, when the network\u0027s IP address remains the same under certain circumstances? In particular, is it possible for the network interface to change while the device keeps the same local IP address? If so, would the patch detect such a network change even though the IP address itself has not changed?\n\nIs it also taken into account if someone enables, disables, or changes connection settings such as TURN during an ongoing call?\n\nCould there also be issues if different participants are using different Jami versions, i.e. some versions include the network-switch handling while others do not? And does the patch take into account call-type changes during an ongoing session—for example, switching from a video call to an audio call or to a conference call and vice versa, especially if the audio and video devices are being changed at the same time?\n\nThere are still video artifacts (see this issue – link: https://git.jami.net/savoirfairelinux/jami-client-android/-/work_items/1355#note_49723 ). These probably aren\u0027t directly related to the connection, but could this patch indirectly cause the behavior to deteriorate further?",
+      "revId": "c43b55c405ee70d39a403686736d87f9c1dd7adb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
