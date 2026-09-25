@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6315e535_3183d86d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-09-25T15:59:35Z",
+      "side": 1,
+      "message": "Thanks! I answered in detail on the daemon change, which implements the recovery: https://review.jami.net/c/jami-daemon/+/36288\n\nFor this Android part: the client follows the default network (registerDefaultNetworkCallback), so Wi-Fi 1 -\u003e Wi-Fi 2, Wi-Fi \u003c-\u003e LTE and SIM 1 \u003c-\u003e SIM 2 all trigger a recovery, even when the local address stays the same, as does any address change on the current network. TURN settings are read again when the call recovers, but changing them during a call does not trigger a recovery by itself.\n\nThe blocked peer and media change cases you pointed out are fixed in the daemon (patch set 3 of 36288).",
+      "parentUuid": "e4f73aff_3fe96308",
+      "revId": "c43b55c405ee70d39a403686736d87f9c1dd7adb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "31feb33a_f004dc7c",
@@ -35,6 +53,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e0ad2bf_6e838b92",
+        "filename": "jami-android/app/src/main/java/cx/ring/service/DRingService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-09-25T15:59:35Z",
+      "side": 1,
+      "message": "minSdk is 26 (app/build.gradle.kts), so this overload is always available.",
+      "parentUuid": "31feb33a_f004dc7c",
+      "revId": "c43b55c405ee70d39a403686736d87f9c1dd7adb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0859718f_65eeb2b7",
@@ -48,6 +84,24 @@
       "writtenOn": "2026-09-25T14:40:18Z",
       "side": 1,
       "message": "[warning] Line 126: 🟡 Connectivity recovery is triggered only from `onLinkPropertiesChanged`, while `onAvailable` no longer marks the daemon/account as connected. On some devices, `onLinkPropertiesChanged` can be delayed or not emitted immediately after availability, which risks keeping the 20s deactivation timer active despite network recovery. Consider cancelling pending deactivation in `onAvailable` (or explicitly re-checking active network state there) and keep `networkInterfaceChanged()` in `onLinkPropertiesChanged` for address updates.",
+      "revId": "c43b55c405ee70d39a403686736d87f9c1dd7adb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7ae4c49_56911cd6",
+        "filename": "jami-android/app/src/main/java/cx/ring/service/DRingService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-09-25T15:59:35Z",
+      "side": 1,
+      "message": "Done in patch set 2: onAvailable() now cancels the pending deactivation.",
+      "parentUuid": "0859718f_65eeb2b7",
       "revId": "c43b55c405ee70d39a403686736d87f9c1dd7adb",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
