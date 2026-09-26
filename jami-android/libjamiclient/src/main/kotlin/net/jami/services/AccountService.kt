@@ -615,8 +615,8 @@ class AccountService(
      * Sets the activation state of all the accounts in the Daemon.
      * This preserves the original contract: proxy-enabled accounts are kept active
      * regardless of the requested state, as they rely on the proxy for connectivity.
-     * Use deactivateProxyAccountsForBackground()/restoreProxyAccountsAfterBackground()
-     * for battery-saving background optimization.
+     * Proxy accounts parked by deactivateProxyAccountsForBackground() are left alone:
+     * only restoreProxyAccountsAfterBackground() (push or foreground) brings them back.
      */
     fun setAccountsActive(active: Boolean) {
         mExecutor.execute {
@@ -629,6 +629,12 @@ class AccountService(
                     if (!a.isDhtProxyEnabled) explicitlyDeactivatedAccounts.add(a.accountId)
             }
             for (a in mAccountList) {
+                // Restarting a parked account here (doze and connectivity transitions) creates
+                // a new proxy client, hence a new push session, while doze blocks the network:
+                // the proxy keeps pushing with the old session, and the daemon drops those
+                // pushes (IgnoredWrongSession), incoming calls included.
+                if (a.isDhtProxyEnabled && a.accountId in backgroundDeactivatedAccounts)
+                    continue
                 JamiService.setAccountActive(a.accountId, active || a.isDhtProxyEnabled)
             }
         }
