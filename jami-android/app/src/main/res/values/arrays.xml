@@ -84,6 +84,16 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         <item>1440p Quad HD</item>
         <item>4K Ultra HD</item>
     </string-array>
+    <string-array name="conference_resolution_entries">
+        <item>720p HD</item>
+        <item>1080p Full HD</item>
+        <item>1440p Quad HD</item>
+    </string-array>
+    <string-array name="conference_resolution_values">
+        <item>1280x720</item>
+        <item>1920x1080</item>
+        <item>2560x1440</item>
+    </string-array>
     <string-array name="video_resolutions">
         <item>480</item>
         <item>720</item>
