@@ -184,6 +184,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="menu_item_about">About Jami</string>
 
     <string name="video_setting_title">Video Settings</string>
+    <string name="pref_conference_resolution_title">Conference video resolution</string>
+    <string name="pref_conference_resolution_summary">Selected: %1$s. Applies to new conferences hosted from this device.</string>
 
     <!-- Dialing Fragment -->
     <string name="dial_number">Dial number</string>
