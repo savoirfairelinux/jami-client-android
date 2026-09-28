@@ -3,4 +3,7 @@
   <!--Strings for xml content description of images-->
   <string name="dial_numeric_pad">Cluicheí uimhir</string>
   <string name="contact_unblock">Fág an blocaíocht</string>
+  <string name="collab_format_bold">Trom</string>
+  <string name="collab_format_italic">Iodálach</string>
+  <string name="collab_format_strike">Líne tríd</string>
 </resources>

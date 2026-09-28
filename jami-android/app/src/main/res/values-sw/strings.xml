@@ -385,4 +385,12 @@
   <string name="shared_services_policy_hint">Inaweza kufikiwa na</string>
   <string name="shared_services_policy_public">Umma</string>
   <string name="shared_services_save">Kuokoa</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Hati</string>
+  <string name="collab_create">Kujenga</string>
+  <string name="collab_link_title">Kiungo</string>
+  <string name="collab_link_hint">Anwani</string>
+  <string name="collab_link_add">Ongeza</string>
+  <string name="collab_link_remove">Ondoa</string>
+  <string name="collab_remove">Ondoa</string>
 </resources>

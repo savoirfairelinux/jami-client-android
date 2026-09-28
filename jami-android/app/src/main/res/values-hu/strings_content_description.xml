@@ -13,4 +13,9 @@
   <string name="searchbar_navigation_account">Fiók kijelölése</string>
   <string name="add_conversation_member">Beszélgetési tag hozzáadása</string>
   <string name="qrcode_to_scan">QR-kód a beolvasáshoz</string>
+  <string name="collab_format_bold">Félkövér</string>
+  <string name="collab_format_italic">Dőlt</string>
+  <string name="collab_format_strike">Áthúzott</string>
+  <string name="collab_undo">Visszavonás</string>
+  <string name="collab_redo">Ismét</string>
 </resources>

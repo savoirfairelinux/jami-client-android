@@ -623,4 +623,12 @@
   <string name="shared_services_policy_specific">Konkrétne kontakty</string>
   <string name="shared_services_allowed_contacts_hint">Povolené kontakty (oddelené čiarkami)</string>
   <string name="shared_services_save">Uložiť</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Dokumenty</string>
+  <string name="collab_create">Vytvoriť</string>
+  <string name="collab_link_title">Prepojiť</string>
+  <string name="collab_link_hint">Adresa</string>
+  <string name="collab_link_add">Pridať</string>
+  <string name="collab_link_remove">Odstrániť</string>
+  <string name="collab_remove">Odstrániť</string>
 </resources>

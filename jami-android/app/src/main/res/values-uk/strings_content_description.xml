@@ -13,4 +13,9 @@
   <string name="searchbar_navigation_account">Вибрати обліковий запис</string>
   <string name="add_conversation_member">Додати учасника розмови</string>
   <string name="qrcode_to_scan">QR-код для сканування</string>
+  <string name="collab_format_bold">Жирний</string>
+  <string name="collab_format_italic">Курсив</string>
+  <string name="collab_format_strike">Закреслений</string>
+  <string name="collab_undo">Відмінити</string>
+  <string name="collab_redo">Відмінити</string>
 </resources>

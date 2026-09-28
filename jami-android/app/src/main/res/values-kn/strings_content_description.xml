@@ -6,4 +6,7 @@
   <string name="file_download_button">ಡೌನ್ಲೋಡ್ ಮಾಡಿ</string>
   <string name="control_play">ಆಟವಾಡಿ</string>
   <string name="control_pause">ವಿರಾಮ</string>
+  <string name="collab_format_bold">ದಟ್ಟ</string>
+  <string name="collab_format_italic">ಓರೆಯಾದ</string>
+  <string name="collab_format_strike">ಹೊಡೆದುಹಾಕು</string>
 </resources>

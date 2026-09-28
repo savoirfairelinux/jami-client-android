@@ -431,4 +431,12 @@
   <string name="shared_services_policy_specific">Bestemte kontakter</string>
   <string name="shared_services_allowed_contacts_hint">Tillatte kontakter (kommaseparert)</string>
   <string name="shared_services_save">Lagre</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Dokumenter</string>
+  <string name="collab_create">Opprett</string>
+  <string name="collab_link_title">Lenk</string>
+  <string name="collab_link_hint">Adresse</string>
+  <string name="collab_link_add">Legg til</string>
+  <string name="collab_link_remove">Slett</string>
+  <string name="collab_remove">Slett</string>
 </resources>

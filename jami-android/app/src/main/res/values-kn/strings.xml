@@ -385,4 +385,12 @@
   <string name="shared_services_policy_hint">ಪ್ರವೇಶಿಸಬಹುದಾದವರು</string>
   <string name="shared_services_policy_public">ಸಾರ್ವಜನಿಕ</string>
   <string name="shared_services_save">ಉಳಿಸಿ</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">ದಾಖಲೆಗಳು</string>
+  <string name="collab_create">ರಚಿಸಿ</string>
+  <string name="collab_link_title">ಲಿಂಕ್</string>
+  <string name="collab_link_hint">ವಿಳಾಸ</string>
+  <string name="collab_link_add">ಸೇರಿಸಿ</string>
+  <string name="collab_link_remove">ತೆಗೆದುಹಾಕಿ</string>
+  <string name="collab_remove">ತೆಗೆದುಹಾಕಿ</string>
 </resources>

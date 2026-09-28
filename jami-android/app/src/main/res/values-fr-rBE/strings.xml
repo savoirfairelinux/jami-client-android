@@ -634,4 +634,15 @@ Veuillez patienter.</string>
   <string name="shared_services_policy_specific">Contacts spécifiques</string>
   <string name="shared_services_allowed_contacts_hint">Contacts autorisés (séparés par des virgules)</string>
   <string name="shared_services_save">Sauvegarder</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Documents</string>
+  <string name="collab_untitled">Document sans titre</string>
+  <string name="collab_create">Créer</string>
+  <string name="collab_link_title">Lier</string>
+  <string name="collab_link_hint">Adresse</string>
+  <string name="collab_link_add">Ajouter</string>
+  <string name="collab_link_remove">Supprimer</string>
+  <string name="collab_remove">Supprimer</string>
+  <string name="collab_remove_title">Supprimer le document</string>
+  <string name="collab_remove_locally_title">Supprimer de cet appareil</string>
 </resources>

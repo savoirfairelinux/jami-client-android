@@ -620,4 +620,12 @@
   <string name="shared_services_policy_specific">Određeni kontakti</string>
   <string name="shared_services_allowed_contacts_hint">Dozvoljeni kontakti (razdvojeni zarezima)</string>
   <string name="shared_services_save">Sačuvaj</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Dokumenta</string>
+  <string name="collab_create">Napravi</string>
+  <string name="collab_link_title">Veza</string>
+  <string name="collab_link_hint">Адреса</string>
+  <string name="collab_link_add">Dodaj</string>
+  <string name="collab_link_remove">Ukloni</string>
+  <string name="collab_remove">Ukloni</string>
 </resources>

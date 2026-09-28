@@ -341,4 +341,12 @@
   <string name="shared_services_more_options">વધુ વિકલ્પો</string>
   <string name="shared_services_type_custom_label">કસ્ટમ</string>
   <string name="shared_services_save">સાચવો</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">દસ્તાવેજો</string>
+  <string name="collab_create">બનાવો</string>
+  <string name="collab_link_title">લિંક</string>
+  <string name="collab_link_hint">સરનામું</string>
+  <string name="collab_link_add">ઉમેરો</string>
+  <string name="collab_link_remove">દૂર કરો</string>
+  <string name="collab_remove">દૂર કરો</string>
 </resources>
