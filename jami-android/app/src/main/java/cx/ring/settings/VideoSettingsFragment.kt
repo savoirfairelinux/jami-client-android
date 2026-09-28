@@ -20,12 +20,14 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import cx.ring.R
 import cx.ring.interfaces.AppBarStateListener
 import cx.ring.services.SharedPreferencesServiceImpl
 import dagger.hilt.android.AndroidEntryPoint
+import net.jami.daemon.JamiService
 import net.jami.services.HardwareService
 import javax.inject.Inject
 
@@ -59,6 +61,17 @@ class VideoSettingsFragment : PreferenceFragmentCompat() {
                     true
                 }
         }
+
+        findPreference<ListPreference>("conference_resolution")?.apply {
+            value = JamiService.getConferenceResolution()
+            updateConferenceResolutionSummary(this, value)
+            onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
+                val resolution = newValue as String
+                JamiService.setConferenceResolution(resolution)
+                updateConferenceResolutionSummary(this, resolution)
+                true
+            }
+        }
     }
 
     override fun onResume() {
@@ -85,5 +98,10 @@ class VideoSettingsFragment : PreferenceFragmentCompat() {
             resolutionPref.setIcon(if(resolution == null || resolution == "480")
                 R.drawable.baseline_videocam_24 else R.drawable.baseline_hd_24)
         }
+    }
+
+    private fun updateConferenceResolutionSummary(preference: ListPreference, resolution: String) {
+        val label = preference.entries.getOrNull(preference.findIndexOfValue(resolution)) ?: resolution
+        preference.summary = getString(R.string.pref_conference_resolution_summary, label)
     }
 }
