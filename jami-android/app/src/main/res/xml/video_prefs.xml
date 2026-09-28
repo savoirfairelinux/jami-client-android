@@ -26,4 +26,12 @@
         android:summary="@string/pref_videoResolution_summary"
         android:title="@string/pref_videoResolution_title" />
 
+    <ListPreference
+        android:entries="@array/conference_resolution_entries"
+        android:entryValues="@array/conference_resolution_values"
+        android:icon="@drawable/baseline_hd_24"
+        android:key="conference_resolution"
+        android:persistent="false"
+        android:title="@string/pref_conference_resolution_title" />
+
 </PreferenceScreen>
