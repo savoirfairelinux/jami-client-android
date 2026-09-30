@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a7ab7b8_372cdfdb",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/PushNotificationLogsActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-30T15:05:15Z",
+      "side": 1,
+      "message": "[warning] Line 163: 🟡 The action button can remain visible even when no restriction is detected (`restricted \u003d\u003d false`) if battery optimization is not currently ignored. That contradicts the stated behavior of surfacing/remediating *active* restrictions and may nudge users to request an exemption unnecessarily. Consider hiding the button whenever `restricted` is false, and only show it when there is a restriction to lift.",
+      "revId": "84bcb37df219301a111af5175489a469371861af",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66d06f83_dc917e22",
+        "filename": "jami-android/app/src/main/java/cx/ring/utils/BackgroundRestrictions.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-09-30T15:05:15Z",
+      "side": 1,
+      "message": "[warning] Line 146: 🟡 `startActivity()` is called with a generic `Context` but no `FLAG_ACTIVITY_NEW_TASK`. If these helpers are ever invoked from a non-`Activity` context (easy to do given the current signature), this can throw at runtime. Either require an `Activity` parameter or add `Intent.FLAG_ACTIVITY_NEW_TASK` when `context !is Activity`.",
+      "revId": "84bcb37df219301a111af5175489a469371861af",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
