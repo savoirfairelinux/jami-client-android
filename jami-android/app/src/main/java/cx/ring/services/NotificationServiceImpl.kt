@@ -404,7 +404,7 @@ class NotificationServiceImpl(
 
                 val call = conference.call
                 if (call != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    call.systemConnection
+                    call.notificationSystemConnection
                         .flatMapCompletable { systemCall ->
                             val connection = (systemCall as? CallServiceImpl.AndroidCall)?.connection
                             if (connection == null) {
