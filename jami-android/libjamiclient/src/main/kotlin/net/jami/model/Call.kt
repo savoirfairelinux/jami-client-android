@@ -70,6 +70,12 @@ class Call(
     private val systemConnectionSubject: SingleSubject<CallService.SystemCall> =
         SingleSubject.create()
     val systemConnection: Single<CallService.SystemCall> get() = systemConnectionSubject
+    // Auto-answered calls may become active without a Telecom connection.
+    val notificationSystemConnection: Single<CallService.SystemCall>
+        get() = if (callStatus.isOnGoing && !systemConnectionSubject.hasValue() && !systemConnectionSubject.hasThrowable())
+            CallService.CALL_ALLOWED
+        else
+            systemConnection
 
     fun setSystemConnection(value: CallService.SystemCall?) {
         Log.i(TAG, "Telecom API: setSystemConnection $value")
