@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c8738a8_a8cfb947",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Call.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-01T18:35:08Z",
+      "side": 1,
+      "message": "[warning] Line 74: 🟡 `notificationSystemConnection` decides fallback from a one-time snapshot of `callStatus`. If a subscriber starts while status is not ongoing (e.g., `RINGING`) and the call later transitions to `CURRENT` without Telecom attaching, this `Single` still waits on `systemConnectionSubject` and can keep the notification pipeline blocked. Build this as a reactive fallback that also listens for the call becoming ongoing (or re-evaluates on state transitions), so the stream can unblock when status changes.",
+      "revId": "22f206f954b2f7c1adc47dc397506429e532d1ea",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
