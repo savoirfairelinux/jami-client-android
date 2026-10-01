@@ -118,6 +118,10 @@ class Conference(val accountId: String, val id: String) {
     val canDowngradeToCall: Boolean
         get() = mParticipants.size == 1 && conversationId == null && hostCall == null
 
+    fun isDowngradeOf(previous: Conference): Boolean =
+        id != previous.id && isSimpleCall && previous.canDowngradeToCall &&
+            firstCall === previous.firstCall
+
     /** If not null, this conference is a swarm call */
     var conversationId: String? = null
 
