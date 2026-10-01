@@ -202,7 +202,7 @@ abstract class CallService(
                     conferenceEntity.conference = conf
                     return@filter true
                 }
-                if (conferenceEntity.conference.participants.size == 1 && conf.participants.size == 1 && conferenceEntity.conference.call == conf.call && conf.call!!.id == conf.id) {
+                if (conf.isDowngradeOf(conferenceEntity.conference)) {
                     Log.w(TAG, "Switching tracked conference (down) to " + conf.id)
                     conferenceEntity.conference = conf
                     return@filter true
