@@ -35,7 +35,8 @@
  * and each format is a way of writing those down.
  */
 
-import { normalizeBlock } from './jamiformat.js'
+import { DOCUMENT_FONTS } from './fonts.js'
+import { normalizeBlock, sizeToJami } from './jamiformat.js'
 
 /**
  * What an unresolved picture is written as, for the application to replace.
@@ -73,6 +74,12 @@ function inlineOf(attrs) {
             out[key] = true
         }
     }
+    // A font is written as the family the clients ship under its id: one they
+    // do not ship has no family to name. A size is kept as the points it is.
+    const font = DOCUMENT_FONTS.find((f) => f.id === attrs.font)
+    if (font) out.font = font.family
+    const size = sizeToJami(attrs.size)
+    if (size) out.size = size
     return out
 }
 
@@ -146,6 +153,11 @@ function htmlRun(run) {
     if (attrs.italic) out = `<em>${out}</em>`
     if (attrs.underline) out = `<u>${out}</u>`
     if (attrs.strike) out = `<s>${out}</s>`
+    const style = [
+        attrs.font ? `font-family: '${attrs.font}'` : '',
+        attrs.size ? `font-size: ${attrs.size}pt` : '',
+    ].filter(Boolean).join('; ')
+    if (style) out = `<span style="${style}">${out}</span>`
     if (attrs.link) out = `<a href="${escapeHtml(attrs.link)}">${out}</a>`
     return out
 }

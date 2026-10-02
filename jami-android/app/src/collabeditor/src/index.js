@@ -26,7 +26,8 @@ import './styles.css'
 
 import { JamiQuillBinding } from './binding.js'
 import { exportDocument } from './export.js'
-import { jamiToQuill } from './jamiformat.js'
+import { DOCUMENT_FONTS, fontCss } from './fonts.js'
+import { jamiToQuill, sizeToJami, MIN_FONT_SIZE, MAX_FONT_SIZE } from './jamiformat.js'
 
 const Delta = Quill.import('delta')
 const REMOTE_ORIGIN = 'jami-remote'
@@ -92,6 +93,34 @@ class JamiImage extends Image {
 Quill.register(JamiImage, true)
 Quill.register('modules/cursors', QuillCursors)
 
+/* ------------------------------------------------------- fonts and sizes */
+
+const Parchment = Quill.import('parchment')
+
+/*
+ * A font is the id of one of the fonts every client ships, drawn through a
+ * class. Any id is taken in, not only those in fonts.js: one this editor does
+ * not ship is drawn in its own font, but stays on the text for the clients
+ * that have it. What may be an id at all is checked on the way in.
+ */
+Quill.register(new Parchment.ClassAttributor('font', 'ql-font', { scope: Parchment.Scope.INLINE }), true)
+
+/*
+ * A size is a number of points, the unit the desktop client counts in, drawn
+ * as such. The document bounds it; there is no list it has to be one of.
+ */
+Quill.register(new Parchment.StyleAttributor('size', 'font-size', { scope: Parchment.Scope.INLINE }), true)
+
+/** The characters of @p delta, an embed counting as the one unit it is. */
+function textOf(delta) {
+    return delta.ops.map((op) => (typeof op.insert === 'string' ? op.insert : '\uFFFC')).join('')
+}
+
+const isWordCharacter = (c) => c !== undefined && /[\p{L}\p{N}]/u.test(c)
+
+/* The formats a stretch of characters can carry, which clearing takes away. */
+const CHARACTER_FORMATS = ['bold', 'italic', 'underline', 'strike', 'link', 'font', 'size']
+
 /* ------------------------------------------------------------------ editor */
 
 class Editor {
@@ -111,6 +140,11 @@ class Editor {
 
     start(options) {
         const opts = options || {}
+        // The faces of the fonts a document may name, served next to the page.
+        const faces = document.createElement('style')
+        faces.textContent = fontCss()
+        document.head.appendChild(faces)
+
         this.quill = new Quill('#editor', {
             theme: 'snow',
             placeholder: opts.placeholder || '',
@@ -151,6 +185,9 @@ class Editor {
 
         this.buildResizeHandles()
 
+        // The toolbar shows what the text is set in from the start, the size of
+        // text that has none of its own included.
+        this.reportSelection()
         host.onReady()
     }
 
@@ -191,7 +228,11 @@ class Editor {
                 header: typeof formats.header === 'number' ? formats.header : 0,
                 list: typeof formats.list === 'string' ? formats.list : '',
                 align: typeof formats.align === 'string' ? formats.align : '',
+                font: typeof formats.font === 'string' ? formats.font : '',
+                // 0 for text with no size of its own, which is at defaultSize.
+                size: sizeToJami(formats.size) || 0,
             },
+            defaultSize: this.defaultSize(),
         }))
         this.placeResizeHandles()
         if (!range) return
@@ -249,6 +290,62 @@ class Editor {
         this.format('header', formats.header === level ? false : level)
     }
 
+    /** Sets the selection in the font @p id, or back in the editor's own when it is empty. */
+    setFont(id) {
+        // Only a font this editor ships can be chosen here: anything else would
+        // be drawn in some other typeface by whoever chose it.
+        if (id && !DOCUMENT_FONTS.some((font) => font.id === id)) return
+        this.applyCharacterFormat('font', id || false)
+    }
+
+    /** Sets the selection at @p points, or back at the default size when it is 0. */
+    setSize(points) {
+        const size = Number(points)
+        if (size !== 0 && !(size >= MIN_FONT_SIZE && size <= MAX_FONT_SIZE)) return
+        this.applyCharacterFormat('size', size > 0 ? `${size}pt` : false)
+    }
+
+    /** The fonts a document may name, for the toolbar to offer: [{id, family, file}]. */
+    fonts() {
+        return JSON.stringify(DOCUMENT_FONTS)
+    }
+
+    /**
+     * A font or a size goes to the selection; with nothing selected, to the
+     * word the caret is inside, as on the desktop and in a word processor;
+     * and otherwise to what is typed next.
+     */
+    applyCharacterFormat(name, value) {
+        const range = this.quill.getSelection()
+        const word = range && range.length === 0 ? this.wordAround(range.index) : null
+        if (range && range.length > 0) {
+            this.quill.formatText(range.index, range.length, name, value, 'user')
+        } else if (word) {
+            this.quill.formatText(word.index, word.length, name, value, 'user')
+        } else {
+            this.format(name, value)
+            return
+        }
+        this.reportSelection()
+    }
+
+    /** The word the caret at @p index is inside: a letter or a digit on each side of it. */
+    wordAround(index) {
+        const text = textOf(this.quill.getContents())
+        if (!isWordCharacter(text[index - 1]) || !isWordCharacter(text[index])) return null
+        let start = index
+        let end = index
+        while (start > 0 && isWordCharacter(text[start - 1])) start--
+        while (end < text.length && isWordCharacter(text[end])) end++
+        return { index: start, length: end - start }
+    }
+
+    /** The size, in points, of text that has none of its own. */
+    defaultSize() {
+        const px = parseFloat(window.getComputedStyle(this.quill.root).fontSize)
+        return px > 0 ? Math.round(px * 0.75) : 0
+    }
+
     setList(style) {
         const formats = this.quill.getFormat() || {}
         this.format('list', formats.list === style ? false : style)
@@ -290,7 +387,13 @@ class Editor {
     clearFormat() {
         const range = this.quill.getSelection()
         if (!range) return
-        this.quill.removeFormat(range.index, range.length, 'user')
+        if (range.length === 0) {
+            // Nothing selected: what there is to clear is the formatting chosen
+            // for what is typed next, which a removal over no text leaves be.
+            for (const name of CHARACTER_FORMATS) this.quill.format(name, false, 'user')
+        } else {
+            this.quill.removeFormat(range.index, range.length, 'user')
+        }
         this.reportSelection()
     }
 
@@ -687,6 +790,9 @@ window.JamiEditor = {
     removeCursor: guard(Editor.prototype.removeCursor),
     toggle: guard(Editor.prototype.toggle),
     setHeader: guard(Editor.prototype.setHeader),
+    setFont: guard(Editor.prototype.setFont),
+    setSize: guard(Editor.prototype.setSize),
+    fonts: guard(Editor.prototype.fonts),
     setList: guard(Editor.prototype.setList),
     setAlign: guard(Editor.prototype.setAlign),
     setLink: guard(Editor.prototype.setLink),

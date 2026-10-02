@@ -64,6 +64,43 @@ const INLINE_TO_JAMI = {
 const LIST_STYLES = ['bullet', 'ordered']
 const ALIGN_STYLES = ['center', 'right', 'justify']
 
+/*
+ * Every attribute this editor reads and writes.
+ *
+ * The binding reconciles whole documents, and an attribute this editor cannot
+ * draw is one its side of the reconciliation lacks: let through, an edit made
+ * here would take it out of the document, for every participant. So the
+ * reconciliation is only ever allowed to change these, and whatever a newer
+ * client writes stays where it put it.
+ */
+const DOCUMENT_ATTRIBUTES = ['b', 'i', 'u', 's', 'link', 'w', 'font', 'size', 'header', 'list', 'align']
+
+/*
+ * A font is the id of one of the fonts the clients ship, a size a number of
+ * points: what the desktop client accepts, and nothing else. A peer's update
+ * can say anything, and whatever is kept is sent again with every character
+ * typed into it.
+ */
+const FONT_ID = /^[a-z0-9-]{1,64}$/
+const MIN_FONT_SIZE = 1
+const MAX_FONT_SIZE = 400
+
+function fontId(v) {
+    return typeof v === 'string' && FONT_ID.test(v) ? v : null
+}
+
+/** The size the document holds, as Quill draws it: "18pt", or null. */
+function sizeToQuill(v) {
+    return typeof v === 'number' && v >= MIN_FONT_SIZE && v <= MAX_FONT_SIZE ? `${v}pt` : null
+}
+
+/** Quill's "18pt" as the number the document holds, or null. */
+function sizeToJami(v) {
+    if (typeof v !== 'string' || !/^\d+(\.\d+)?pt$/.test(v)) return null
+    const size = parseFloat(v)
+    return size >= MIN_FONT_SIZE && size <= MAX_FONT_SIZE ? size : null
+}
+
 /** Only what a Jami document is allowed to say about a paragraph. */
 function normalizeBlock(attrs) {
     const out = {}
@@ -102,6 +139,10 @@ function inlineToQuill(attrs) {
             out[quill] = true
         }
     }
+    const font = fontId(attrs.font)
+    if (font) out.font = font
+    const size = sizeToQuill(attrs.size)
+    if (size) out.size = size
     return out
 }
 
@@ -120,6 +161,10 @@ function inlineToJami(attrs) {
             out[jami] = true
         }
     }
+    const font = fontId(attrs.font)
+    if (font) out.font = font
+    const size = sizeToJami(attrs.size)
+    if (size) out.size = size
     return out
 }
 
@@ -216,4 +261,20 @@ export function quillToJami(delta, Delta) {
     return out
 }
 
-export { inlineToJami, inlineToQuill, normalizeBlock }
+/**
+ * @p delta with nothing in it but what this editor may change: the text, and
+ * the attributes it knows. See DOCUMENT_ATTRIBUTES.
+ */
+export function withoutUnknownAttributes(delta, Delta) {
+    return new Delta(delta.ops.map((op) => {
+        if (!op.attributes) return op
+        const { attributes, ...rest } = op
+        const known = {}
+        for (const key of DOCUMENT_ATTRIBUTES) {
+            if (key in attributes) known[key] = attributes[key]
+        }
+        return Object.keys(known).length > 0 ? { ...rest, attributes: known } : rest
+    }))
+}
+
+export { inlineToJami, inlineToQuill, normalizeBlock, sizeToJami, MIN_FONT_SIZE, MAX_FONT_SIZE }

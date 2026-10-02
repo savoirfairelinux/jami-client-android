@@ -271,13 +271,27 @@ class CollabEditorActivity : AppCompatActivity() {
      * is not.
      */
     private fun serveAsset(name: String): WebResourceResponse? {
-        val mimeType = EDITOR_FILES[name] ?: return null
+        val mimeType = EDITOR_FILES[name] ?: fontMimeType(name) ?: return null
         return try {
-            WebResourceResponse(mimeType, "utf-8", assets.open(EDITOR_ASSET_DIR + name))
+            WebResourceResponse(mimeType, if (mimeType.startsWith("text/")) "utf-8" else null,
+                assets.open(EDITOR_ASSET_DIR + name))
         } catch (e: java.io.IOException) {
             Log.e(TAG, "asset $name", e)
             null
         }
+    }
+
+    /**
+     * The fonts a document may name, which the page loads from next to itself.
+     * Only a font file the editor ships answers: the name comes from a request
+     * a document can cause, and must not reach any other file.
+     */
+    private fun fontMimeType(name: String): String? =
+        if (FONT_FILE.matches(name) && name.removePrefix(FONT_DIR) in editorFontFiles) FONT_MIME_TYPE
+        else null
+
+    private val editorFontFiles: Set<String> by lazy {
+        assets.list(EDITOR_ASSET_DIR + FONT_DIR.removeSuffix("/"))?.toSet() ?: emptySet()
     }
 
     /**
@@ -1129,6 +1143,10 @@ class CollabEditorActivity : AppCompatActivity() {
             "editor.js" to "text/javascript",
             "editor.css" to "text/css",
         )
+
+        private const val FONT_DIR = "fonts/"
+        private const val FONT_MIME_TYPE = "font/ttf"
+        private val FONT_FILE = Regex("fonts/[A-Za-z]+-(Regular|Bold|Italic|BoldItalic)\\.ttf")
 
         private const val AWARENESS_INTERVAL_MS = 200L
         private const val HISTORY_LIMIT = 50

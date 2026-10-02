@@ -240,3 +240,32 @@ test('an empty paragraph is kept, being part of how the document reads', () => {
     assert.match(write([{ insert: 'a\n\nb\n' }], 'html'), /<p>a<\/p>\n<p><br><\/p>\n<p>b<\/p>/)
     assert.equal(write([{ insert: 'a\n\nb\n' }], 'txt'), 'a\n\nb\n')
 })
+
+test('html keeps the font and the size the text is set in', () => {
+    // As the desktop client's export does: a font is written as the family
+    // the clients ship under its id, a size in the points the document holds.
+    const html = write([
+        { insert: 'Report', attributes: { font: 'liberation-serif', size: '18pt' } },
+        { insert: ' and ' },
+        { insert: 'more', attributes: { font: 'roboto', bold: true } },
+        { insert: '\n' },
+    ], 'html')
+    assert.match(html, /<span style="font-family: 'Liberation Serif'; font-size: 18pt">Report<\/span> and /)
+    assert.match(html, /<span style="font-family: 'Roboto'"><strong>more<\/strong><\/span>/)
+})
+
+test('a font no client ships, or a size no document may have, is not written', () => {
+    const html = write([
+        { insert: 'a', attributes: { font: 'some-future-font' } },
+        { insert: 'b', attributes: { size: '100000pt' } },
+        { insert: 'c', attributes: { size: 'huge' } },
+        { insert: '\n' },
+    ], 'html')
+    assert.match(html, /<p>abc<\/p>/)
+})
+
+test('markdown and plain text leave fonts and sizes out', () => {
+    const ops = [{ insert: 'Report', attributes: { font: 'roboto', size: '18pt' } }, { insert: '\n' }]
+    assert.equal(write(ops, 'md'), 'Report\n')
+    assert.equal(write(ops, 'txt'), 'Report\n')
+})

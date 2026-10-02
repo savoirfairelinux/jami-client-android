@@ -120,6 +120,7 @@ val buildCollabEditor by tasks.registering(Exec::class) {
     workingDir = collabEditorDir.asFile
     commandLine(node, "esbuild.mjs", "--outdir", collabEditorAssets.absolutePath)
     inputs.dir(collabEditorDir.dir("src"))
+    inputs.dir(collabEditorDir.dir("fonts"))
     inputs.file(collabEditorDir.file("editor.html"))
     inputs.file(collabEditorDir.file("esbuild.mjs"))
     outputs.dir(collabEditorAssets)
