@@ -126,6 +126,29 @@
             android:paddingStart="4dp"
             android:paddingEnd="4dp">
 
+            <!--
+              The kind of paragraph, the typeface and its size come first, as on
+              the desktop. Each opens a menu of what it can be set to.
+            -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/format_heading"
+                style="@style/CollabFormatChooser"
+                android:contentDescription="@string/collab_format_paragraph_style"
+                android:text="@string/collab_format_normal_text" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/format_font"
+                style="@style/CollabFormatChooser"
+                android:contentDescription="@string/collab_format_font"
+                android:text="@string/collab_format_default_font" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/format_size"
+                style="@style/CollabFormatChooser"
+                android:contentDescription="@string/collab_format_size" />
+
+            <View style="@style/CollabFormatSeparator" />
+
             <ImageButton
                 android:id="@+id/format_bold"
                 style="@style/CollabFormatButton"
@@ -152,25 +175,12 @@
 
             <View style="@style/CollabFormatSeparator" />
 
+            <!-- Shows the alignment of the paragraph under the caret. -->
             <ImageButton
-                android:id="@+id/format_h1"
+                android:id="@+id/format_align"
                 style="@style/CollabFormatButton"
-                android:contentDescription="@string/collab_format_h1"
-                android:src="@drawable/baseline_format_h1_24" />
-
-            <ImageButton
-                android:id="@+id/format_h2"
-                style="@style/CollabFormatButton"
-                android:contentDescription="@string/collab_format_h2"
-                android:src="@drawable/baseline_format_h2_24" />
-
-            <ImageButton
-                android:id="@+id/format_h3"
-                style="@style/CollabFormatButton"
-                android:contentDescription="@string/collab_format_h3"
-                android:src="@drawable/baseline_format_h3_24" />
-
-            <View style="@style/CollabFormatSeparator" />
+                android:contentDescription="@string/collab_format_alignment"
+                android:src="@drawable/baseline_format_align_left_24" />
 
             <ImageButton
                 android:id="@+id/format_bullet"
@@ -183,32 +193,6 @@
                 style="@style/CollabFormatButton"
                 android:contentDescription="@string/collab_format_ordered_list"
                 android:src="@drawable/baseline_format_list_numbered_24" />
-
-            <View style="@style/CollabFormatSeparator" />
-
-            <ImageButton
-                android:id="@+id/format_align_left"
-                style="@style/CollabFormatButton"
-                android:contentDescription="@string/collab_format_align_left"
-                android:src="@drawable/baseline_format_align_left_24" />
-
-            <ImageButton
-                android:id="@+id/format_align_center"
-                style="@style/CollabFormatButton"
-                android:contentDescription="@string/collab_format_align_center"
-                android:src="@drawable/baseline_format_align_center_24" />
-
-            <ImageButton
-                android:id="@+id/format_align_right"
-                style="@style/CollabFormatButton"
-                android:contentDescription="@string/collab_format_align_right"
-                android:src="@drawable/baseline_format_align_right_24" />
-
-            <ImageButton
-                android:id="@+id/format_align_justify"
-                style="@style/CollabFormatButton"
-                android:contentDescription="@string/collab_format_align_justify"
-                android:src="@drawable/baseline_format_align_justify_24" />
 
             <View style="@style/CollabFormatSeparator" />
 

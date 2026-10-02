@@ -19,10 +19,16 @@ package cx.ring.client
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.print.PrintAttributes
 import android.print.PrintManager
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.RelativeSizeSpan
+import android.text.style.TypefaceSpan
 import android.util.Base64
 import android.view.Menu
 import android.view.MenuItem
@@ -40,6 +46,7 @@ import android.widget.ImageButton
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.isVisible
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
@@ -61,6 +68,7 @@ import net.jami.utils.Log
 import java.io.File
 import java.text.DateFormat
 import java.util.Date
+import java.util.Locale
 import java.util.UUID
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -113,6 +121,12 @@ class CollabEditorActivity : AppCompatActivity() {
     private val present = HashSet<String>()
 
     private data class Peer(val displayName: String, val color: Int)
+
+    /** A font a document may name: its id there and its family label. */
+    private data class DocumentFont(val id: String, val family: String)
+
+    /** A paragraph alignment: its value in the document, its name, and its icon. */
+    private data class Alignment(val style: String, val label: Int, val icon: Int)
 
     private val pickImage = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
@@ -319,6 +333,7 @@ class CollabEditorActivity : AppCompatActivity() {
         @JavascriptInterface
         fun onReady() = runOnUiThread {
             editorReady = true
+            loadFonts()
             openDocument()
         }
 
@@ -510,22 +525,19 @@ class CollabEditorActivity : AppCompatActivity() {
     /* --------------------------------------------------------------- toolbar */
 
     private fun bindFormatBar() {
-        fun on(button: ImageButton, action: () -> Unit) =
+        fun on(button: View, action: () -> Unit) =
             button.setOnClickListener { action() }
 
+        on(binding.formatHeading) { chooseHeading() }
+        on(binding.formatFont) { chooseFont() }
+        on(binding.formatSize) { chooseSize() }
         on(binding.formatBold) { callEditor("toggle", quote("bold")) }
         on(binding.formatItalic) { callEditor("toggle", quote("italic")) }
         on(binding.formatUnderline) { callEditor("toggle", quote("underline")) }
         on(binding.formatStrike) { callEditor("toggle", quote("strike")) }
-        on(binding.formatH1) { callEditor("setHeader", "1") }
-        on(binding.formatH2) { callEditor("setHeader", "2") }
-        on(binding.formatH3) { callEditor("setHeader", "3") }
+        on(binding.formatAlign) { chooseAlignment() }
         on(binding.formatBullet) { callEditor("setList", quote("bullet")) }
         on(binding.formatOrdered) { callEditor("setList", quote("ordered")) }
-        on(binding.formatAlignLeft) { callEditor("setAlign", quote("left")) }
-        on(binding.formatAlignCenter) { callEditor("setAlign", quote("center")) }
-        on(binding.formatAlignRight) { callEditor("setAlign", quote("right")) }
-        on(binding.formatAlignJustify) { callEditor("setAlign", quote("justify")) }
         on(binding.formatLink) { promptLink() }
         on(binding.formatImage) {
             pickImage.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
@@ -533,13 +545,14 @@ class CollabEditorActivity : AppCompatActivity() {
         on(binding.formatClear) { callEditor("clearFormat") }
         on(binding.formatUndo) { callEditor("undo") }
         on(binding.formatRedo) { callEditor("redo") }
+        chooserTypeface = binding.formatFont.typeface
+        showFormatChoices()
     }
 
     /** Lights up the buttons that describe the text under the caret. */
     private fun showFormats(json: String) {
-        val formats = runCatching {
-            org.json.JSONObject(json).getJSONObject("formats")
-        }.getOrNull() ?: return
+        val selection = runCatching { org.json.JSONObject(json) }.getOrNull() ?: return
+        val formats = selection.optJSONObject("formats") ?: return
         currentLink = formats.optString("link")
 
         fun mark(button: ImageButton, active: Boolean) {
@@ -551,22 +564,163 @@ class CollabEditorActivity : AppCompatActivity() {
         mark(binding.formatItalic, formats.optBoolean("italic"))
         mark(binding.formatUnderline, formats.optBoolean("underline"))
         mark(binding.formatStrike, formats.optBoolean("strike"))
-        val header = formats.optInt("header")
-        mark(binding.formatH1, header == 1)
-        mark(binding.formatH2, header == 2)
-        mark(binding.formatH3, header == 3)
         val list = formats.optString("list")
         mark(binding.formatBullet, list == "bullet")
         mark(binding.formatOrdered, list == "ordered")
-        val align = formats.optString("align")
-        mark(binding.formatAlignLeft, align.isEmpty())
-        mark(binding.formatAlignCenter, align == "center")
-        mark(binding.formatAlignRight, align == "right")
-        mark(binding.formatAlignJustify, align == "justify")
         mark(binding.formatLink, currentLink.isNotEmpty())
+
+        currentHeader = formats.optInt("header")
+        currentFont = formats.optString("font")
+        currentSize = formats.optDouble("size", 0.0)
+        currentAlign = formats.optString("align")
+        defaultSize = selection.optInt("defaultSize", defaultSize)
+        showFormatChoices()
     }
 
     private var currentLink: String = ""
+
+    /* What the choosers show: the paragraph style, the font, the size and the
+     * alignment of the text under the caret. */
+    private var currentHeader = 0
+    private var currentFont = ""
+    private var currentSize = 0.0
+    private var currentAlign = ""
+    /** The size, in points, of text that has none of its own. */
+    private var defaultSize = 0
+
+    /** The fonts a document may name, as the page offers them. */
+    private var documentFonts: List<DocumentFont> = emptyList()
+    private val fontTypefaces = HashMap<String, Typeface?>()
+    /** The font chooser's own typeface, which names the editor's font and an unavailable one. */
+    private var chooserTypeface: Typeface? = null
+
+    private fun showFormatChoices() {
+        binding.formatHeading.text = getString(HEADINGS[currentHeader.coerceIn(HEADINGS.indices)])
+        val font = documentFonts.find { it.id == currentFont }
+        binding.formatFont.text = when {
+            currentFont.isEmpty() -> getString(R.string.collab_format_default_font)
+            font != null -> font.family
+            // Text a newer client set in a font this one does not know: it is
+            // drawn in the editor's own font, and is not to be passed off as it.
+            else -> getString(R.string.collab_format_unavailable_font)
+        }
+        binding.formatFont.typeface = font?.let { typefaceOf(it) } ?: chooserTypeface
+        val size = if (currentSize > 0) currentSize else defaultSize.toDouble()
+        // Until the page has told its base size, the chooser still says what it is.
+        binding.formatSize.text = if (size > 0) formatSize(size) else getString(R.string.collab_format_default_size)
+        val alignment = ALIGNMENTS.find { it.style == currentAlign } ?: ALIGNMENTS.first()
+        binding.formatAlign.setImageResource(alignment.icon)
+
+        // A chooser is read out as what it chooses and what is chosen.
+        fun describe(view: View, what: Int, value: CharSequence) {
+            view.contentDescription = getString(R.string.collab_format_choice, getString(what), value)
+        }
+        describe(binding.formatHeading, R.string.collab_format_paragraph_style,
+            binding.formatHeading.text)
+        describe(binding.formatFont, R.string.collab_format_font, binding.formatFont.text)
+        describe(binding.formatSize, R.string.collab_format_size, binding.formatSize.text)
+        describe(binding.formatAlign, R.string.collab_format_alignment, getString(alignment.label))
+    }
+
+    /** Asks the page which fonts a document may name. */
+    private fun loadFonts() {
+        askEditor("fonts") { answer ->
+            documentFonts = runCatching {
+                // The function returns the list as JSON text, which the bridge
+                // hands back encoded as a JSON string in turn.
+                val list = org.json.JSONArray(org.json.JSONTokener(answer).nextValue() as String)
+                (0 until list.length()).map { i ->
+                    val font = list.getJSONObject(i)
+                    DocumentFont(font.getString("id"), font.getString("family"))
+                }
+            }.getOrDefault(emptyList())
+            showFormatChoices()
+        }
+    }
+
+    private fun typefaceOf(font: DocumentFont): Typeface? = fontTypefaces.getOrPut(font.id) {
+        Typeface.create(font.id, Typeface.NORMAL)
+    }
+
+    /** @p text, drawn in @p typeface where the menu can show it. */
+    private fun inTypeface(text: String, typeface: Typeface?): CharSequence =
+        if (typeface != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            SpannableString(text).apply {
+                setSpan(TypefaceSpan(typeface), 0, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            }
+        } else {
+            text
+        }
+
+    private fun formatSize(size: Double): String =
+        if (size % 1.0 == 0.0) size.toInt().toString()
+        else String.format(Locale.getDefault(), "%.1f", size)
+
+    /** The menu item of entry @p index of a list shown after a default item, -1 for none. */
+    private fun afterDefault(index: Int) = if (index < 0) -1 else index + 1
+
+    /** Opens a menu of exclusive choices under @p anchor, and reports the one taken. */
+    private fun chooseAmong(
+        anchor: View, items: List<CharSequence>, checked: Int, onChosen: (Int) -> Unit
+    ) {
+        val popup = PopupMenu(this, anchor)
+        items.forEachIndexed { index, title ->
+            popup.menu.add(Menu.NONE, index, index, title).isCheckable = true
+        }
+        popup.menu.setGroupCheckable(Menu.NONE, true, true)
+        popup.menu.findItem(checked)?.isChecked = true
+        popup.setOnMenuItemClickListener { item ->
+            onChosen(item.itemId)
+            true
+        }
+        popup.show()
+    }
+
+    private fun chooseHeading() {
+        // Each style is shown at the size it gives, as on the desktop.
+        val titles = HEADINGS.mapIndexed { level, label ->
+            SpannableString(getString(label)).apply {
+                setSpan(RelativeSizeSpan(HEADING_SCALES[level]), 0, length,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            }
+        }
+        chooseAmong(binding.formatHeading, titles, currentHeader) { level ->
+            callEditor("setHeader", level.toString())
+        }
+    }
+
+    private fun chooseFont() {
+        // The editor's own font first, then every font a document may name,
+        // each shown in itself.
+        val titles = listOf<CharSequence>(getString(R.string.collab_format_default_font)) +
+            documentFonts.map { inTypeface(it.family, typefaceOf(it)) }
+        // Nothing is ticked for a font this client does not know: it is not the
+        // editor's own font either.
+        val checked = if (currentFont.isEmpty()) 0
+            else afterDefault(documentFonts.indexOfFirst { it.id == currentFont })
+        chooseAmong(binding.formatFont, titles, checked) { index ->
+            val id = if (index == 0) "" else documentFonts[index - 1].id
+            callEditor("setFont", quote(id))
+        }
+    }
+
+    private fun chooseSize() {
+        val titles = listOf<CharSequence>(getString(R.string.collab_format_default_size)) +
+            TEXT_SIZES.map { it.toString() }
+        val checked = if (currentSize > 0)
+            afterDefault(TEXT_SIZES.indexOfFirst { it.toDouble() == currentSize })
+            else 0
+        chooseAmong(binding.formatSize, titles, checked) { index ->
+            callEditor("setSize", if (index == 0) "0" else TEXT_SIZES[index - 1].toString())
+        }
+    }
+
+    private fun chooseAlignment() {
+        val checked = ALIGNMENTS.indexOfFirst { it.style == currentAlign }.coerceAtLeast(0)
+        chooseAmong(binding.formatAlign, ALIGNMENTS.map { getString(it.label) }, checked) { index ->
+            callEditor("setAlign", quote(ALIGNMENTS[index].style.ifEmpty { "left" }))
+        }
+    }
 
     private fun promptLink() {
         val input = EditText(this).apply {
@@ -1129,6 +1283,32 @@ class CollabEditorActivity : AppCompatActivity() {
             "editor.html" to "text/html",
             "editor.js" to "text/javascript",
             "editor.css" to "text/css",
+        )
+
+        /** The paragraph styles, from normal text (0) to the third heading level. */
+        private val HEADINGS = intArrayOf(
+            R.string.collab_format_normal_text,
+            R.string.collab_format_h1,
+            R.string.collab_format_h2,
+            R.string.collab_format_h3,
+        ).toList()
+
+        /** How much larger than the text each style is drawn, as in the page's styles. */
+        private val HEADING_SCALES = floatArrayOf(1f, 1.75f, 1.4f, 1.2f)
+
+        /** The sizes offered, in points: those the desktop client offers. */
+        private val TEXT_SIZES = intArrayOf(8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 28, 36, 48, 72)
+
+        /** Left comes first and is the absence of the attribute, as in the document. */
+        private val ALIGNMENTS = listOf(
+            Alignment("", R.string.collab_format_align_left,
+                R.drawable.baseline_format_align_left_24),
+            Alignment("center", R.string.collab_format_align_center,
+                R.drawable.baseline_format_align_center_24),
+            Alignment("right", R.string.collab_format_align_right,
+                R.drawable.baseline_format_align_right_24),
+            Alignment("justify", R.string.collab_format_align_justify,
+                R.drawable.baseline_format_align_justify_24),
         )
 
         private const val AWARENESS_INTERVAL_MS = 200L
