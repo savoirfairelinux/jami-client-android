@@ -29,6 +29,11 @@
     <string name="collab_format_link">Insert link</string>
     <string name="collab_format_image">Insert image</string>
     <string name="collab_format_clear">Clear formatting</string>
+    <string name="collab_format_paragraph_style">Paragraph style</string>
+    <string name="collab_format_font">Font</string>
+    <string name="collab_format_size">Font size</string>
+    <string name="collab_format_alignment">Paragraph alignment</string>
+    <string name="collab_format_choice">%1$s: %2$s</string>
     <string name="collab_undo">Undo</string>
     <string name="collab_redo">Redo</string>
 </resources>
