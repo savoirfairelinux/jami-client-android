@@ -286,8 +286,8 @@ class Editor {
     }
 
     setHeader(level) {
-        const formats = this.quill.getFormat() || {}
-        this.format('header', formats.header === level ? false : level)
+        // A level is chosen from a list, not toggled: normal text is level 0.
+        this.format('header', level >= 1 && level <= 3 ? level : false)
     }
 
     /** Sets the selection in the font @p id, or back in the editor's own when it is empty. */
