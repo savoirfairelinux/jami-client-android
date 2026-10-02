@@ -528,7 +528,7 @@
         <item name="android:padding">12dp</item>
         <item name="android:scaleType">fitCenter</item>
         <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
-        <item name="android:tint">@color/grey_900</item>
+        <item name="android:tint">?attr/colorOnSurface</item>
     </style>
 
     <style name="CollabFormatSeparator">
@@ -538,6 +538,27 @@
         <item name="android:layout_marginStart">4dp</item>
         <item name="android:layout_marginEnd">4dp</item>
         <item name="android:background">?attr/colorOutlineVariant</item>
+    </style>
+
+    <!-- A toolbar button showing what is chosen, and opening a menu to change it. -->
+    <style name="CollabFormatChooser" parent="Widget.Material3.Button.TextButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:maxWidth">160dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">4dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="icon">@drawable/baseline_arrow_drop_down_24</item>
+        <item name="iconGravity">end</item>
+        <item name="iconPadding">0dp</item>
+        <item name="iconTint">?attr/colorOnSurface</item>
     </style>
 
 </resources>

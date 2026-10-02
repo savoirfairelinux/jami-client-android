@@ -862,6 +862,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="collab_link_hint">Address</string>
     <string name="collab_link_add">Add</string>
     <string name="collab_link_remove">Remove</string>
+    <string name="collab_format_normal_text">Normal text</string>
+    <string name="collab_format_default_font">Default font</string>
+    <string name="collab_format_unavailable_font">Unavailable font</string>
+    <string name="collab_format_default_size">Default size</string>
     <string name="collab_export">Export a local copy</string>
     <string name="collab_export_pdf">Export to PDF</string>
     <string name="collab_export_html">Export to HTML</string>
