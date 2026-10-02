@@ -16,7 +16,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA.
  */
 
-import { jamiToQuill, quillToJami } from './jamiformat.js'
+import { jamiToQuill, quillToJami, withoutUnknownAttributes } from './jamiformat.js'
 
 const LOCAL_ORIGIN = 'jami-local'
 
@@ -87,8 +87,10 @@ export class JamiQuillBinding {
     pushToDocument() {
         const current = new this.Delta(this.ytext.toDelta())
         const target = quillToJami(this.quill.getContents(), this.Delta)
-        const diff = current.diff(target)
-        if (diff.ops.length === 0) return
+        // The editor holds only the attributes it knows, so the difference
+        // would also take out every other one; those are left as they are.
+        const diff = withoutUnknownAttributes(current.diff(target), this.Delta)
+        if (diff.ops.every((op) => op.retain !== undefined && !op.attributes)) return
         this.ydoc.transact(() => this.ytext.applyDelta(diff.ops), LOCAL_ORIGIN)
     }
 }

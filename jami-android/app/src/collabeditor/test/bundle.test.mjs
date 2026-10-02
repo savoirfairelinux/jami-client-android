@@ -26,6 +26,7 @@ import * as Y from 'yjs'
 import Delta from 'quill-delta'
 
 import { quillToJami } from '../src/jamiformat.js'
+import { DOCUMENT_FONTS, fontCss } from '../src/fonts.js'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const bundle = resolve(here, '../build/collab/editor.js')
@@ -106,7 +107,8 @@ test('the bundle exposes the interface the application calls', options, async ()
     const { host, editor } = await launch()
     assert.equal(host.ready, true, host.logs.join('\n'))
     for (const name of ['applyUpdate', 'applyAwareness', 'removeCursor', 'toggle',
-                        'setHeader', 'setList', 'setAlign', 'setLink', 'clearFormat',
+                        'setHeader', 'setFont', 'setSize', 'fonts',
+                        'setList', 'setAlign', 'setLink', 'clearFormat',
                         'undo', 'redo', 'insertImage', 'setImageWidth', 'setEditable',
                         'exportAs', 'showVersion', 'leaveVersion']) {
         assert.equal(typeof editor[name], 'function', `missing ${name}`)
@@ -507,5 +509,145 @@ test('an address a peer wrote is not the one that is exported', options, async (
                                 /javascript:|vbscript:|data:text/i, format)
         }
     }
+    assert.deepEqual(host.logs, [])
+})
+
+/* ---------------------------------------------------------- fonts and sizes */
+
+/** What the page holds, as a peer would send it. */
+function sendFromPeer(editor, ops) {
+    const peer = new Y.Doc()
+    peer.getText('content').applyDelta(ops)
+    editor.applyUpdate(Buffer.from(Y.encodeStateAsUpdate(peer)).toString('base64'))
+    return peer
+}
+
+/** Hands every update the page sent out to @p peer. */
+function receive(peer, host) {
+    for (const update of host.updates) Y.applyUpdate(peer, decode(update))
+    host.updates.length = 0
+}
+
+/** Selects [from, to) of the first paragraph, the way a finger would. */
+function select(dom, from, to) {
+    const doc = dom.window.document
+    const text = doc.querySelector('.ql-editor p').firstChild
+    const range = doc.createRange()
+    range.setStart(text, from)
+    range.setEnd(text, to)
+    const selection = dom.window.getSelection()
+    selection.removeAllRanges()
+    selection.addRange(range)
+}
+
+test('an edit made here keeps what this editor does not know of the document', options, async () => {
+    // A newer client may write an attribute this one has never heard of. The
+    // editor reconciles whole documents, and an attribute it cannot draw is
+    // one its side of the reconciliation lacks: left alone, the first edit
+    // made here would take it out of the document for everyone.
+    const { host, editor } = await launch()
+    const peer = sendFromPeer(editor, [{ insert: 'Report', attributes: { colour: '#e53935' } }])
+    host.updates.length = 0
+
+    editor.insertImage('att-1', 800, 600)
+    receive(peer, host)
+
+    assert.deepEqual(peer.getText('content').toDelta(), [
+        { insert: { image: { id: 'att-1', width: 800, height: 600 } } },
+        { insert: 'Report', attributes: { colour: '#e53935' } },
+    ])
+    assert.deepEqual(host.logs, [])
+})
+
+test('a font and a size sent by a peer are drawn', options, async () => {
+    const { dom, host, editor } = await launch()
+    sendFromPeer(editor, [{ insert: 'Report', attributes: { font: 'serif', size: 18 } }])
+
+    const run = dom.window.document.querySelector('.ql-editor .ql-font-serif')
+    assert.ok(run, 'the text is not in the font')
+    assert.equal(run.textContent, 'Report')
+    assert.equal(run.style.fontSize, '18pt')
+    assert.deepEqual(host.logs, [])
+})
+
+test('the font and the size chosen for the selection reach the document', options, async () => {
+    const { dom, host, editor } = await launch()
+    const peer = sendFromPeer(editor, [{ insert: 'Report on fonts' }])
+    host.updates.length = 0
+
+    select(dom, 0, 6)
+    editor.setFont('cursive')
+    editor.setSize(18)
+    receive(peer, host)
+
+    assert.deepEqual(peer.getText('content').toDelta(), [
+        { insert: 'Report', attributes: { font: 'cursive', size: 18 } },
+        { insert: ' on fonts' },
+    ])
+    // ...and the toolbar is told what the selection is now in.
+    const formats = JSON.parse(host.selections.at(-1)).formats
+    assert.equal(formats.font, 'cursive')
+    assert.equal(formats.size, 18)
+    assert.deepEqual(host.logs, [])
+})
+
+test('with nothing selected, a font goes to the word the caret is in', options, async () => {
+    // As on the desktop, and in a word processor.
+    const { dom, host, editor } = await launch()
+    const peer = sendFromPeer(editor, [{ insert: 'Report on fonts' }])
+    host.updates.length = 0
+
+    // Between the two letters of "on".
+    select(dom, 8, 8)
+    editor.setFont('monospace')
+    receive(peer, host)
+
+    assert.deepEqual(peer.getText('content').toDelta(), [
+        { insert: 'Report ' },
+        { insert: 'on', attributes: { font: 'monospace' } },
+        { insert: ' fonts' },
+    ])
+    assert.deepEqual(host.logs, [])
+})
+
+test('the fonts offered use platform families without bundled or downloaded fonts', options, async () => {
+    const { dom, host, editor } = await launch()
+    const fonts = JSON.parse(editor.fonts())
+    assert.deepEqual(fonts.map((font) => font.id), [
+        'sans-serif', 'serif', 'monospace', 'cursive',
+    ])
+    for (const font of DOCUMENT_FONTS) {
+        assert.equal(font.stack, font.id)
+        sendFromPeer(editor, [{ insert: font.family, attributes: { font: font.id } }])
+        const run = dom.window.document.querySelector(`.ql-font-${font.id}`)
+        assert.ok(run)
+        const expected = dom.window.document.createElement('span')
+        expected.style.fontFamily = font.stack
+        assert.equal(dom.window.getComputedStyle(run).fontFamily, expected.style.fontFamily)
+    }
+    assert.doesNotMatch(fontCss(), /@font-face|url\(/)
+    assert.equal(existsSync(resolve(here, '../build/collab/fonts')), false)
+    assert.match(readFileSync(page, 'utf8'), /font-src 'none'/)
+    assert.deepEqual(host.logs, [])
+})
+
+test('clearing the formatting with nothing selected forgets what was chosen for what is typed next',
+     options, async () => {
+    // As on the desktop: a font or a size waiting for the next keystroke is
+    // formatting too, and the only kind there is to clear.
+    const { dom, host, editor } = await launch()
+    sendFromPeer(editor, [{ insert: 'Report ' }])
+
+    select(dom, 7, 7)
+    editor.setFont('cursive')
+    editor.setSize(18)
+    let formats = JSON.parse(host.selections.at(-1)).formats
+    assert.equal(formats.font, 'cursive')
+    assert.equal(formats.size, 18)
+
+    editor.clearFormat()
+    formats = JSON.parse(host.selections.at(-1)).formats
+    assert.equal(formats.font, '')
+    assert.equal(formats.size, 0)
     assert.deepEqual(host.logs, [])
 })
