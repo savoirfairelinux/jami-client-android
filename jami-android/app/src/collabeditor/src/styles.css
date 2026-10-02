@@ -17,6 +17,8 @@
     --jami-selection: rgba(0, 86, 179, 0.24);
     --jami-rule: rgba(0, 0, 0, 0.12);
     --jami-text-size: 16px;
+    /* The editor's own font, which a chosen font falls back on too. */
+    --jami-font-family: Roboto, "Noto Sans", system-ui, sans-serif;
 }
 
 html, body {
@@ -30,7 +32,7 @@ html, body {
 }
 
 body {
-    font-family: Roboto, "Noto Sans", system-ui, sans-serif;
+    font-family: var(--jami-font-family);
     font-size: var(--jami-text-size);
 }
 

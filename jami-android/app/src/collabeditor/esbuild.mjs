@@ -1,5 +1,5 @@
 import { build } from 'esbuild'
-import { mkdirSync, copyFileSync } from 'node:fs'
+import { mkdirSync, copyFileSync, rmSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -14,6 +14,7 @@ const outdir = flag === -1
     : resolve(process.argv[flag + 1], 'collab')
 
 mkdirSync(outdir, { recursive: true })
+rmSync(resolve(outdir, 'fonts'), { recursive: true, force: true })
 
 await build({
     entryPoints: [resolve(here, 'src/index.js')],

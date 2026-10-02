@@ -135,7 +135,7 @@ test('unknown attributes do not travel', () => {
     // Quill has formats the document has no key for. Sending them would make
     // the document say things no other client can read back.
     assert.deepEqual(
-        toJami([{ insert: 'x', attributes: { background: '#ff0000', font: 'monospace' } },
+        toJami([{ insert: 'x', attributes: { background: '#ff0000', color: '#00ff00' } },
                 { insert: '\n' }]),
         [{ insert: 'x' }],
     )
@@ -219,4 +219,43 @@ test('a width Quill wrote as text travels as a number', () => {
 test('a formatting attribute travels as a flag, not as whatever it held', () => {
     const jami = toJami([{ insert: 'x', attributes: { bold: 'true' } }, { insert: '\n' }])
     assert.deepEqual(jami, [{ insert: 'x', attributes: { b: true } }])
+})
+
+test('a font and a size reach Quill as the formats it draws them with', () => {
+    // The desktop client writes a font as the id of one of the fonts every
+    // client ships, and a size as a number of points.
+    assert.deepEqual(toQuill([{ insert: 'abc', attributes: { font: 'liberation-sans', size: 18 } }]), [
+        { insert: 'abc', attributes: { font: 'liberation-sans', size: '18pt' } },
+        { insert: '\n' },
+    ])
+})
+
+test('the font and the size Quill holds are written the way the desktop client reads them', () => {
+    const quill = [
+        { insert: 'abc', attributes: { font: 'roboto', size: '20pt' } },
+        { insert: '\n' },
+    ]
+    // A number, not "20pt": the desktop client reads the size as a JSON number.
+    assert.deepEqual(toJami(quill), [{ insert: 'abc', attributes: { font: 'roboto', size: 20 } }])
+    assert.deepEqual(toQuill(toJami(quill)), quill)
+})
+
+test('a font that is no id and a size no document may have go no further', () => {
+    assert.deepEqual(toQuill([
+        { insert: 'a', attributes: { font: 'Liberation Sans' } },
+        { insert: 'b', attributes: { size: 100000 } },
+        { insert: 'c', attributes: { size: '12' } },
+    ]), [{ insert: 'abc\n' }])
+    assert.deepEqual(toJami([
+        { insert: 'a', attributes: { font: '"><script>' } },
+        { insert: 'b', attributes: { size: 'huge' } },
+        { insert: '\n' },
+    ]), [{ insert: 'ab' }])
+})
+
+test('a font this editor does not ship is carried rather than dropped', () => {
+    // A newer client may offer a font this one lacks: the text is drawn in the
+    // default font here, but keeps naming the font for whoever has it.
+    const jami = [{ insert: 'abc', attributes: { font: 'some-future-font' } }]
+    assert.deepEqual(toJami(toQuill(jami)), jami)
 })

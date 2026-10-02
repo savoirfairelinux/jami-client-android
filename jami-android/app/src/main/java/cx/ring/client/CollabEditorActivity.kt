@@ -273,7 +273,8 @@ class CollabEditorActivity : AppCompatActivity() {
     private fun serveAsset(name: String): WebResourceResponse? {
         val mimeType = EDITOR_FILES[name] ?: return null
         return try {
-            WebResourceResponse(mimeType, "utf-8", assets.open(EDITOR_ASSET_DIR + name))
+            WebResourceResponse(mimeType, if (mimeType.startsWith("text/")) "utf-8" else null,
+                assets.open(EDITOR_ASSET_DIR + name))
         } catch (e: java.io.IOException) {
             Log.e(TAG, "asset $name", e)
             null
