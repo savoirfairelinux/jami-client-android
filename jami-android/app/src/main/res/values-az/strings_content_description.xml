@@ -6,4 +6,7 @@
   <string name="file_download_button">دانلود</string>
   <string name="control_play">اوینایین</string>
   <string name="control_pause">توقف</string>
+  <string name="collab_format_bold">Qalın</string>
+  <string name="collab_format_italic">Kursiv</string>
+  <string name="collab_format_strike">Üstüxətli</string>
 </resources>

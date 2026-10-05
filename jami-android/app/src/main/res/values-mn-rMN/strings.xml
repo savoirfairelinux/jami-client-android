@@ -342,4 +342,12 @@
   <string name="shared_services_more_options">Үүнээс илүү сонголт</string>
   <string name="shared_services_type_custom_label">Хувьцааны</string>
   <string name="shared_services_save">Хөрөөж</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Документ</string>
+  <string name="collab_create">Бүтээгдэхүүнийг бүтээх</string>
+  <string name="collab_link_title">Зэвсэглэл</string>
+  <string name="collab_link_hint">Хатуу хаяг</string>
+  <string name="collab_link_add">Нэвтрүүлэг</string>
+  <string name="collab_link_remove">Уулгах</string>
+  <string name="collab_remove">Уулгах</string>
 </resources>

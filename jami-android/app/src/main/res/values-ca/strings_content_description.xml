@@ -13,4 +13,9 @@
   <string name="searchbar_navigation_account">Selecciona el compte</string>
   <string name="add_conversation_member">Afegeix un membre a la conversa</string>
   <string name="qrcode_to_scan">Codi QR per escanejar</string>
+  <string name="collab_format_bold">Negreta</string>
+  <string name="collab_format_italic">Cursiva</string>
+  <string name="collab_format_strike">Ratllat</string>
+  <string name="collab_undo">Desfés</string>
+  <string name="collab_redo">Refés</string>
 </resources>

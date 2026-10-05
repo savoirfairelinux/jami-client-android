@@ -13,4 +13,9 @@
   <string name="searchbar_navigation_account">Alege contul</string>
   <string name="add_conversation_member">Adaugă un membru la conversație</string>
   <string name="qrcode_to_scan">Cod QR de scanat</string>
+  <string name="collab_format_bold">Gros</string>
+  <string name="collab_format_italic">Înclinat</string>
+  <string name="collab_format_strike">Tăiat</string>
+  <string name="collab_undo">Anulează</string>
+  <string name="collab_redo">Refă</string>
 </resources>

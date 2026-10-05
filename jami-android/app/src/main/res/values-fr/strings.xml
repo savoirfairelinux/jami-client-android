@@ -302,7 +302,7 @@
   <string name="hist_invitation_received">Invitation reçue</string>
   <!--Account summary-->
   <string name="profile">Profil</string>
-  <string name="profile_name">Nom du profile</string>
+  <string name="profile_name">Nom du profil</string>
   <string name="profile_message_warning">Votre profil n\'est partagé qu\'avec vos contacts</string>
   <string name="custom_profile_message_warning">Le profil personnalisé n\'est visible que pour le compte de cet appareil.</string>
   <string name="open_the_gallery">Ouvrir la galerie</string>
@@ -634,4 +634,15 @@ Veuillez patienter.</string>
   <string name="shared_services_policy_specific">Contacts spécifiques</string>
   <string name="shared_services_allowed_contacts_hint">Contacts autorisés (séparés par des virgules)</string>
   <string name="shared_services_save">Sauvegarder</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Documents</string>
+  <string name="collab_untitled">Document sans titre</string>
+  <string name="collab_create">Créer</string>
+  <string name="collab_link_title">Lier</string>
+  <string name="collab_link_hint">Adresse</string>
+  <string name="collab_link_add">Ajouter</string>
+  <string name="collab_link_remove">Enlever</string>
+  <string name="collab_remove">Enlever</string>
+  <string name="collab_remove_title">Supprimer le document</string>
+  <string name="collab_remove_locally_title">Supprimer de cet appareil</string>
 </resources>

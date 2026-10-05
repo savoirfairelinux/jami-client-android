@@ -470,9 +470,13 @@
   <string name="picker_btn">Seleccionar els contactes</string>
   <string name="no_contact_to_add">No teniu cap contacte per afegir</string>
   <string name="bottomsheet_contact">Contacte amb Jami\n%1$s</string>
+  <string name="bottomsheet_block">Bloqueja el membre</string>
+  <string name="bottomsheet_unblock">Desbloqueja el membre</string>
   <string name="error_open_no_app_found">No s\'ha trobat cap aplicació per gestionar aquest fitxer: %1$s</string>
   <string name="swarm_detail_no_document">Encara no teniu cap document.</string>
   <string name="group_admin">Administrador</string>
+  <string name="group_member_blocked">Bloquejat</string>
+  <string name="group_member_invited">Invitats</string>
   <string name="share_contact_intent_title">Afegiu aquest contacte al Jami!</string>
   <string name="share_contact_intent_body">Podeu afegir aquest contacte «%1$s» a la plataforma de comunicació distribuïda Jami: %2$s</string>
   <!--JamiId-->
@@ -617,4 +621,12 @@
   <string name="shared_services_policy_specific">Contactes específics</string>
   <string name="shared_services_allowed_contacts_hint">Contactes permesos (separats per comes)</string>
   <string name="shared_services_save">Desa</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Documents</string>
+  <string name="collab_create">Crear</string>
+  <string name="collab_link_title">Enllaç</string>
+  <string name="collab_link_hint">Adreça</string>
+  <string name="collab_link_add">Afegir</string>
+  <string name="collab_link_remove">Eliminar</string>
+  <string name="collab_remove">Eliminar</string>
 </resources>

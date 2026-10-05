@@ -13,4 +13,9 @@
   <string name="searchbar_navigation_account">Izberite račun</string>
   <string name="add_conversation_member">Dodaj člana pogovora</string>
   <string name="qrcode_to_scan">QR-koda za skeniranje</string>
+  <string name="collab_format_bold">Krepko</string>
+  <string name="collab_format_italic">Ležeče</string>
+  <string name="collab_format_strike">Prečrtano</string>
+  <string name="collab_undo">Razveljavi</string>
+  <string name="collab_redo">Uveljavi</string>
 </resources>

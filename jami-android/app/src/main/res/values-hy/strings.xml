@@ -385,4 +385,12 @@
   <string name="shared_services_policy_hint">Հասանելի է</string>
   <string name="shared_services_policy_public">Հանրային</string>
   <string name="shared_services_save">Փրկել</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Փաստաթղթեր</string>
+  <string name="collab_create">Ստեղծել</string>
+  <string name="collab_link_title">Կապ</string>
+  <string name="collab_link_hint">Գիրք</string>
+  <string name="collab_link_add">Բարձրացնել</string>
+  <string name="collab_link_remove">Հեռացնել</string>
+  <string name="collab_remove">Հեռացնել</string>
 </resources>

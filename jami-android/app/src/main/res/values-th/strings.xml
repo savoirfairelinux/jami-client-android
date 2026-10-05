@@ -384,4 +384,12 @@
   <string name="shared_services_policy_hint">เข้าถึงได้โดย</string>
   <string name="shared_services_policy_public">สาธารณะ</string>
   <string name="shared_services_save">เก็บ</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">เอกสาร</string>
+  <string name="collab_create">สร้าง</string>
+  <string name="collab_link_title">ลิงค์</string>
+  <string name="collab_link_hint">ที่อยู่</string>
+  <string name="collab_link_add">เพิ่ม</string>
+  <string name="collab_link_remove">ยกออก</string>
+  <string name="collab_remove">ยกออก</string>
 </resources>

@@ -6,4 +6,9 @@
   <string name="file_download_button">Deskargatu </string>
   <string name="control_play">Jo</string>
   <string name="control_pause">Pausatu</string>
+  <string name="collab_format_bold">Lodia</string>
+  <string name="collab_format_italic">Etzana</string>
+  <string name="collab_format_strike">Marratua</string>
+  <string name="collab_undo">Desegin</string>
+  <string name="collab_redo">Berregin</string>
 </resources>

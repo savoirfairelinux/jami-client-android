@@ -6,4 +6,7 @@
   <string name="file_download_button">ഡൌൺലോഡ് ചെയ്യുക</string>
   <string name="control_play">കളി</string>
   <string name="control_pause">ഇടവേള</string>
+  <string name="collab_format_bold">സ്പഷ്ട</string>
+  <string name="collab_format_italic">ചരിച്ചെഴുതിയ</string>
+  <string name="collab_format_strike">രൂപഛേദിയായ</string>
 </resources>

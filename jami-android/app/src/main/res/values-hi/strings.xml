@@ -444,4 +444,12 @@
   <string name="shared_services_policy_hint">इनके द्वारा पहुंच योग्य</string>
   <string name="shared_services_policy_public">सार्वजनिक</string>
   <string name="shared_services_save">सहेजें</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">दस्तावेज</string>
+  <string name="collab_create">सृजन</string>
+  <string name="collab_link_title">लिंक</string>
+  <string name="collab_link_hint">पता</string>
+  <string name="collab_link_add">जोड़ें</string>
+  <string name="collab_link_remove">हटाएँ</string>
+  <string name="collab_remove">हटाएँ</string>
 </resources>

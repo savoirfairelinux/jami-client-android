@@ -6,4 +6,8 @@
   <string name="file_download_button">Descargar</string>
   <string name="control_play">Joguèri</string>
   <string name="control_pause">Pausa</string>
+  <string name="collab_format_bold">Bravament</string>
+  <string name="collab_format_italic">L\'italic</string>
+  <string name="collab_format_strike">Raiat</string>
+  <string name="collab_undo">Anullar</string>
 </resources>

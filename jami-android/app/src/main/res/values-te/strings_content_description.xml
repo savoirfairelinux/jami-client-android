@@ -6,4 +6,7 @@
   <string name="file_download_button">డౌన్లోడ్</string>
   <string name="control_play">ఆడటం</string>
   <string name="control_pause">విరామం</string>
+  <string name="collab_format_bold">లావు</string>
+  <string name="collab_format_italic">ఏటవాలు</string>
+  <string name="collab_format_strike">కొట్టివేత</string>
 </resources>

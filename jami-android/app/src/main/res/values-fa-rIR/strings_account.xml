@@ -122,6 +122,7 @@
   <!--restore/backup-->
   <string name="account_new_device_password">برای قفل‌گشایی حساب، گذرواژه اصلی را وارد کنید</string>
   <string name="error_password_char_count">حداقل ۶ نویسه</string>
+  <string name="error_passwords_not_equals">گذرواژه‌ها یکسان نیستند.</string>
   <string name="export_account_wait_title">لطفا صبر کنید…</string>
   <string name="export_account_wait_message">برون‌برد اطلاعات حساب</string>
   <string name="account_export_file">پشتیبان‌گیری حساب</string>
@@ -169,6 +170,7 @@
   <string name="account_enter_username">نام کاربری را وارد کنید</string>
   <!--Name registration-->
   <string name="error_username_empty">یک نام کاربری وارد کنید</string>
+  <string name="username_available">نام کاربری در دسترس است.</string>
   <string name="register_name">ثبت‌نام</string>
   <string name="registered_username">نام کاربری ثبت‌شده</string>
   <string name="register_username">ثبت نام کاربری عمومی</string>
