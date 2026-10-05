@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f1013ae9_a4028bbf",
+        "filename": "jami-android/app/src/main/res/values-ace/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-05T05:06:29Z",
+      "side": 1,
+      "message": "[warning] Line 194: 🟡 `collab_link_remove`/`collab_remove` contain corrupted-looking text (`??`) and do not read as clear destructive actions. These labels are used for irreversible remove flows, so they should be short, unambiguous imperatives equivalent to “Remove/Delete” in Acehnese to prevent user confusion.",
+      "revId": "acb8167aa40aeea18f06cfb818aef8c308629ec2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c8321e71_689a0260",
         "filename": "jami-android/app/src/main/res/values-ast-rES/strings.xml",
         "patchSetId": 1
@@ -31,6 +48,57 @@
       "writtenOn": "2026-10-05T05:05:24Z",
       "side": 1,
       "message": "[warning] 🟡 `navigation_item_conversation` contains escaped HTML (`Conversaciones\u0026lt;br style\u003d\"\"\u0026gt;`) instead of plain label text. This will surface raw markup-like text in UI/accessibility contexts. Replace with a plain localized label (for example, `Conversaciones`).",
+      "revId": "acb8167aa40aeea18f06cfb818aef8c308629ec2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab0cf510_6095112c",
+        "filename": "jami-android/app/src/main/res/values-ast-rES/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-05T05:06:29Z",
+      "side": 1,
+      "message": "[warning] Line 94: 🟡 `notif_incoming_file_transfer_title` was changed to a call-related message (`Llamada entrante de %1$s`), but this key is for incoming file transfer notifications. This causes incorrect notification semantics in the UI; please restore a file-transfer-specific translation for this key.",
+      "revId": "acb8167aa40aeea18f06cfb818aef8c308629ec2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a370920_f5814bb8",
+        "filename": "jami-android/app/src/main/res/values-ast-rES/strings_content_description.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-05T05:06:29Z",
+      "side": 1,
+      "message": "[error] Line 9: 🔴 `collab_format_bold`/`collab_format_italic`/`collab_format_strike` are unrelated sentence fragments instead of control descriptions. These are accessibility labels for editor formatting actions; incorrect strings break screen-reader usability. Replace them with proper action labels equivalent to “Bold”, “Italic”, and “Strikethrough”.",
+      "revId": "acb8167aa40aeea18f06cfb818aef8c308629ec2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f27e099_f5b54f89",
+        "filename": "jami-android/app/src/main/res/values-b+es+419/strings_content_description.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-05T05:06:29Z",
+      "side": 1,
+      "message": "[warning] Line 18: 🟡 Several new accessibility labels are mistranslated for formatting controls (e.g., `collab_format_h1`..`h3` as “Dirección 1..3”, `collab_format_bullet_list` as “Lista de bolos”). Please use terminology matching editor actions (e.g., “Encabezado 1/2/3”, “Lista con viñetas”) so screen-reader output matches actual behavior.",
       "revId": "acb8167aa40aeea18f06cfb818aef8c308629ec2",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
