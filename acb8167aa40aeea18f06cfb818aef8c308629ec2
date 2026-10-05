@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8321e71_689a0260",
+        "filename": "jami-android/app/src/main/res/values-ast-rES/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-05T05:05:24Z",
+      "side": 1,
+      "message": "[warning] 🟡 Several newly added action labels are semantically incorrect for destructive document actions (e.g., `collab_link_remove` / `collab_remove` map to an unrelated sentence). These keys are used for remove/delete UX and should be short imperative verbs (equivalent to “Remove/Delete”) to avoid user confusion and accidental mistakes.",
+      "revId": "acb8167aa40aeea18f06cfb818aef8c308629ec2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90e56900_eccef26f",
+        "filename": "jami-android/app/src/main/res/values-ast-rES/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-05T05:05:24Z",
+      "side": 1,
+      "message": "[warning] 🟡 `navigation_item_conversation` contains escaped HTML (`Conversaciones\u0026lt;br style\u003d\"\"\u0026gt;`) instead of plain label text. This will surface raw markup-like text in UI/accessibility contexts. Replace with a plain localized label (for example, `Conversaciones`).",
+      "revId": "acb8167aa40aeea18f06cfb818aef8c308629ec2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a14f0009_03fd227e",
+        "filename": "jami-android/app/src/main/res/values-es_VE/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-05T05:05:24Z",
+      "side": 1,
+      "message": "[error] 🔴 The resource directory qualifier is invalid (`values-es_VE`). Android expects region qualifiers as `-rXX` (e.g., `values-es-rVE`). With the current folder name, resources may be ignored or fail packaging depending on tooling. Rename both new folders to `values-es-rVE`.",
+      "revId": "acb8167aa40aeea18f06cfb818aef8c308629ec2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
