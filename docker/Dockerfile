@@ -1,4 +1,4 @@
-FROM gradle:jdk17-noble AS build
+FROM gradle:jdk25-resolute AS build
 
 ENV LANG=en_US.utf8
 ENV LC_ALL=en_US.utf8
@@ -38,6 +38,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     m4 \
     nasm \
     ninja-build \
+    meson \
     pkg-config \
     python-is-python3 \
     ruby \
@@ -95,7 +96,7 @@ ARG NODE_VERSION=22.23.2
 ENV PATH="/usr/local/lib/nodejs/node-v${NODE_VERSION}-linux-x64/bin:$PATH"
 RUN NODE_ARCHIVE="node-v${NODE_VERSION}-linux-x64.tar.xz" && \
     wget -P /tmp https://nodejs.org/dist/v${NODE_VERSION}/${NODE_ARCHIVE} \
-                 https://nodejs.org/dist/v${NODE_VERSION}/SHASUMS256.txt && \
+    https://nodejs.org/dist/v${NODE_VERSION}/SHASUMS256.txt && \
     (cd /tmp && grep " ${NODE_ARCHIVE}\$" SHASUMS256.txt | sha256sum --check --strict -) && \
     mkdir -p /usr/local/lib/nodejs && \
     tar xJf /tmp/${NODE_ARCHIVE} -C /usr/local/lib/nodejs && \

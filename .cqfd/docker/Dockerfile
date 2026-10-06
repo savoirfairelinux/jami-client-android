@@ -1,4 +1,4 @@
-FROM gradle:jdk17-noble AS build
+FROM gradle:jdk25-resolute AS build
 
 ENV LANG=en_US.utf8
 ENV LC_ALL=en_US.utf8
@@ -38,6 +38,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     m4 \
     nasm \
     ninja-build \
+    meson \
     pkg-config \
     python-is-python3 \
     ruby \
