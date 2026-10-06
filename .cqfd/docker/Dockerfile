@@ -31,8 +31,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     lib32stdc++6 \
     lib32z1 \
     libpcre2-dev \
-    libpcre3 \
-    libpcre3-dev \
     libtool \
     locales \
     m4 \

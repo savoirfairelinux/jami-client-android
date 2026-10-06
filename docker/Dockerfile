@@ -31,8 +31,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     lib32stdc++6 \
     lib32z1 \
     libpcre2-dev \
-    libpcre3 \
-    libpcre3-dev \
     libtool \
     locales \
     m4 \
@@ -167,13 +165,6 @@ ARG EMULATOR_DEVICE="pixel_6_pro"
 ENV EMULATOR_NAME=$EMULATOR_NAME
 ENV DEVICE_NAME=$EMULATOR_DEVICE
 RUN echo "no" | avdmanager --verbose create avd --force --name "${EMULATOR_NAME}" --device "${EMULATOR_DEVICE}" --package "${EMULATOR_PACKAGE}"
-
-# Create non-root user with identical host uid/gid.
-# It will helps with permissions on shared volumes.
-ARG HOST_UID
-ARG HOST_GID
-RUN groupadd -g $HOST_GID jenkins && \
-    useradd --no-log-init --system --uid $HOST_UID --gid jenkins jenkins --create-home
 
 # Define environment variables.
 ENV JAVA_HOME=/opt/java/openjdk/
