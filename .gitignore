@@ -11,3 +11,4 @@ jami-android/captures/
 .cxx
 .vscode/settings.json
 /jami-android/gradle/gradle-daemon-jvm.properties
+/build/
