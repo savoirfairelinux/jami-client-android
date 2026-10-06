@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e5127cf_1359dbd1",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/CollabEditorActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-06T22:02:31Z",
+      "side": 1,
+      "message": "[warning] Line 619: 🟡 The size chooser text is set to an empty string when no explicit/default size is available (`else \"\"`), which yields an empty spoken value in `collab_format_choice` content description. Use a visible/readable fallback such as `collab_format_default_size` so accessibility output remains meaningful before the first selection update.",
+      "revId": "a391a5574a567e0bb532147ef6ecd342040f57cb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae156746_b961cf99",
+        "filename": "jami-android/app/src/main/res/drawable/baseline_arrow_drop_down_24.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-06T22:02:31Z",
+      "side": 1,
+      "message": "[warning] Line 4: 🟡 `android:tint` is hardcoded to `#000000`, which can regress contrast in dark themes if this drawable is reused outside `CollabFormatChooser` (or if style tint is not applied in some paths). Use a theme attribute tint (for example `?attr/colorOnSurface`) or remove drawable-level tint and rely on view-level tint consistently.",
+      "revId": "a391a5574a567e0bb532147ef6ecd342040f57cb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
