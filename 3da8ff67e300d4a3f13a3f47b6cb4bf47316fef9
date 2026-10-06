@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46709e3f_4202f92b",
+        "filename": "jami-android/app/src/main/java/cx/ring/settings/VideoSettingsFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-06T18:28:23Z",
+      "side": 1,
+      "message": "[warning] Line 66: 🟡 The value coming from `JamiService.getConferenceResolution()` is used directly without constraining it to `conference_resolution_values`. If the daemon returns an unexpected/legacy value, the preference can end up in an invalid state (no selected entry, raw summary text, and inconsistent UX). Normalize to a known value before assigning (e.g., check against `entryValues` and fall back to the first supported preset).",
+      "revId": "3da8ff67e300d4a3f13a3f47b6cb4bf47316fef9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
