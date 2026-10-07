@@ -346,8 +346,7 @@ abstract class JamiApplication : Application() {
         bootstrapDaemon()
         if (!DRingService.isRunning) {
             try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-                        && mPreferencesService.settings.enablePermanentService) {
+                if (mPreferencesService.settings.enablePermanentService) {
                     startForegroundService(Intent(this, DRingService::class.java))
                 } else {
                     startService(Intent(this, DRingService::class.java))
