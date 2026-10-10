@@ -72,7 +72,10 @@ class SyncService : Service() {
                     .build()
             }
             try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+                // Unlike dataSync, remoteMessaging can be started from BOOT_COMPLETED on Android 15+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+                    startForeground(NOTIF_SYNC_SERVICE_ID, notification!!, ServiceInfo.FOREGROUND_SERVICE_TYPE_REMOTE_MESSAGING)
+                else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
                     startForeground(NOTIF_SYNC_SERVICE_ID, notification!!, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
                 else
                     startForeground(NOTIF_SYNC_SERVICE_ID, notification)

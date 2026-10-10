@@ -254,7 +254,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name=".service.SyncService"
             android:description="@string/data_transfer_service_description"
             android:exported="false"
-            android:foregroundServiceType="dataSync" />
+            android:foregroundServiceType="dataSync|remoteMessaging" />
         <service
             android:name=".service.LocationSharingService"
             android:exported="false"
