@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a09c0b4_d5a51dd3",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-12T03:12:56Z",
+      "side": 1,
+      "message": "[warning] Line 176: 🟡 `groupadd -g ... jenkins` / `useradd --uid ... jenkins` will fail if that GID/UID already exists in the base image, which makes this fragile across environments. Handle pre-existing IDs (reuse existing group/user by ID or check first with `getent`) so host mappings don’t intermittently break image builds.",
+      "revId": "df4f79451bbded472242d20911b0d39c67e0acde",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8cfefbe1_3bb03e7f",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-12T03:12:56Z",
+      "side": 1,
+      "message": "[warning] Line 176: 🟡 `HOST_UID/HOST_GID` are expanded unquoted in shell command context; malformed values can break the build and shell metacharacters can alter command execution. Validate both args as numeric (e.g., `case \"$HOST_UID\" in (*[!0-9]*|\u0027\u0027) exit 1;; esac`) and keep expansions quoted where possible to harden the build step.",
+      "revId": "df4f79451bbded472242d20911b0d39c67e0acde",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
