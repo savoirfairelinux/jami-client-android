@@ -166,6 +166,15 @@ ENV EMULATOR_NAME=$EMULATOR_NAME
 ENV DEVICE_NAME=$EMULATOR_DEVICE
 RUN echo "no" | avdmanager --verbose create avd --force --name "${EMULATOR_NAME}" --device "${EMULATOR_DEVICE}" --package "${EMULATOR_PACKAGE}"
 
+# Create a non-root user with the host uid/gid, when given. It helps with
+# permissions on shared volumes, and the CI builds as this user.
+ARG HOST_UID
+ARG HOST_GID
+RUN if [ -n "$HOST_UID" ]; then \
+        groupadd --non-unique -g "${HOST_GID:-$HOST_UID}" jenkins && \
+        useradd --no-log-init --system --non-unique --uid "$HOST_UID" --gid jenkins jenkins --create-home; \
+    fi
+
 # Define environment variables.
 ENV JAVA_HOME=/opt/java/openjdk/
 ENV ANDROID_ABI=x86_64
