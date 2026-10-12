@@ -1861,7 +1861,11 @@ class AccountService(
             val newPath = mDeviceRuntimeService.getNewConversationPath(conversation.accountId, conversationId, transfer.displayName)
             transfer.destination = newPath
             Log.i(TAG, "downloadFile() id=" + conversation.accountId + ", path=" + conversationId + " " + fileId + " to -> " + newPath.absolutePath)
-            JamiService.downloadFile(conversation.accountId, conversationId, transfer.messageId, fileId, newPath.absolutePath)
+            val accountId = conversation.accountId
+            val messageId = transfer.messageId
+            // Callers include the main thread (DRingService), and the daemon may block
+            // on the conversation lock while it reads the repository.
+            mExecutor.execute { JamiService.downloadFile(accountId, conversationId, messageId, fileId, newPath.absolutePath) }
         }
     }
 
