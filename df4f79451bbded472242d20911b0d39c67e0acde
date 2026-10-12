@@ -33,6 +33,42 @@
       "message": "[warning] Line 176: 🟡 `HOST_UID/HOST_GID` are expanded unquoted in shell command context; malformed values can break the build and shell metacharacters can alter command execution. Validate both args as numeric (e.g., `case \"$HOST_UID\" in (*[!0-9]*|\u0027\u0027) exit 1;; esac`) and keep expansions quoted where possible to harden the build step.",
       "revId": "df4f79451bbded472242d20911b0d39c67e0acde",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46f16f91_91bd17ff",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-10-12T03:14:59Z",
+      "side": 1,
+      "message": "Done in patch set 2: the expansions are quoted. groupadd and useradd already refuse an id that is not a number, which fails the build (checked with HOST_UID\u003dabc), and these arguments come from ci/Jenkinsfile.",
+      "parentUuid": "8cfefbe1_3bb03e7f",
+      "revId": "df4f79451bbded472242d20911b0d39c67e0acde",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "afca36f8_73b2dc55",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-10-12T03:14:59Z",
+      "side": 1,
+      "message": "Done in patch set 2: --non-unique lets the jenkins group and user take an id the base image already uses. Checked with 1001, free in gradle:jdk25-resolute, with 1000, the gradle user\u0027s, after which su jenkins works, and without the arguments.",
+      "parentUuid": "7a09c0b4_d5a51dd3",
+      "revId": "df4f79451bbded472242d20911b0d39c67e0acde",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
