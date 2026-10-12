@@ -6,4 +6,8 @@
   <string name="file_download_button">Жүктеу</string>
   <string name="control_play">Ойын</string>
   <string name="control_pause">Тынығу</string>
+  <string name="collab_format_bold">Қалың</string>
+  <string name="collab_format_italic">Көлбеу</string>
+  <string name="collab_format_strike">Сызылған</string>
+  <string name="collab_format_size">Шрифт өлшемі</string>
 </resources>

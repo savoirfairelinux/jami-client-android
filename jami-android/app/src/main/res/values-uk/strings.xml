@@ -624,4 +624,12 @@
   <string name="shared_services_policy_specific">Певні контакти</string>
   <string name="shared_services_allowed_contacts_hint">Дозволені контакти (через кому)</string>
   <string name="shared_services_save">Зберігти</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Документи</string>
+  <string name="collab_create">Створити</string>
+  <string name="collab_link_title">Зв\'язати</string>
+  <string name="collab_link_hint">Адреса</string>
+  <string name="collab_link_add">Додати</string>
+  <string name="collab_link_remove">Видалити</string>
+  <string name="collab_remove">Видалити</string>
 </resources>
