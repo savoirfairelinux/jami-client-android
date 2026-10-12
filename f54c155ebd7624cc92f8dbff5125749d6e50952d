@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "afef9047_055fdec6",
+        "filename": "jami-android/app/src/main/res/values-ast-rES/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-12T05:07:09Z",
+      "side": 1,
+      "message": "[warning] 🟡 `navigation_item_conversation` appears to include escaped HTML markup text (`\u0026lt;br style\u003d\"\"\u0026gt;`) in the user-visible translation. This will render literal markup-like text in UI. Replace with the intended plain localized label (without injected/escaped tag fragments).",
+      "revId": "f54c155ebd7624cc92f8dbff5125749d6e50952d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1df6418a_a87d6e5a",
+        "filename": "jami-android/app/src/main/res/values-ast-rES/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-12T05:07:09Z",
+      "side": 1,
+      "message": "[warning] 🟡 `collab_link_remove` and `collab_remove` were translated to an unrelated sentence (`La so primer apaición...`) rather than a remove/delete action. This is a functional UX regression in collaborative document actions; retranslate both keys to the proper destructive-action meaning.",
+      "revId": "f54c155ebd7624cc92f8dbff5125749d6e50952d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79f2f06a_84bfaaa9",
+        "filename": "jami-android/app/src/main/res/values-ast-rES/strings_content_description.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-12T05:07:09Z",
+      "side": 1,
+      "message": "[warning] 🟡 New accessibility content-description keys (`collab_format_bold`, `collab_format_italic`, `collab_format_strike`) contain unrelated phrases rather than formatting actions. Screen-reader users will hear incorrect controls. Re-translate these keys to accurate action labels.",
+      "revId": "f54c155ebd7624cc92f8dbff5125749d6e50952d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1c28d6b_babe41bb",
+        "filename": "jami-android/app/src/main/res/values-es_VE/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-12T05:07:09Z",
+      "side": 1,
+      "message": "[error] 🔴 The new resource directory qualifier is invalid: `values-es_VE` uses `_`, but Android qualifiers must use `-` (e.g., `values-es-rVE` or BCP-47 form). This risks build/resource-resolution problems and prevents correct locale targeting. Rename both newly added `values-es_VE/*` files under a valid qualifier directory.",
+      "revId": "f54c155ebd7624cc92f8dbff5125749d6e50952d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
