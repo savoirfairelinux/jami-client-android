@@ -15,7 +15,7 @@
     "yjs": "13.6.20"
   },
   "devDependencies": {
-    "esbuild": "0.24.2",
+    "esbuild": "0.28.1",
     "jsdom": "^25.0.1",
     "quill-delta": "5.1.0"
   }
