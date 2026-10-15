@@ -30,7 +30,9 @@ import net.jami.model.Call.CallStatus
 import net.jami.model.Call.Direction
 import net.jami.model.Conference
 import net.jami.model.Conference.ParticipantInfo
+import net.jami.model.ContactViewModel
 import net.jami.model.Media
+import net.jami.model.Profile
 import net.jami.model.Uri
 import net.jami.utils.Log
 import java.util.*
@@ -47,6 +49,7 @@ abstract class CallService(
     // ConcurrentHashMap: mutated by daemon callbacks while hasActiveCalls()/currentConferences()
     // iterate it from another thread, so its iterator must not throw on concurrent edits.
     private val conferences: MutableMap<String, Conference> = ConcurrentHashMap()
+    private val conferenceInfoLoaders = ConcurrentHashMap<String, ConferenceInfoLoader>()
     private val callSubject = PublishSubject.create<Call>()
     private val conferenceSubject = PublishSubject.create<Conference>()
 
@@ -102,36 +105,53 @@ abstract class CallService(
         Log.w(TAG, "onConferenceInfoUpdated $confId $info")
 
         val conference = getConference(confId)
-        var isModerator = false
         if (conference != null) {
-            val newInfo: MutableList<ParticipantInfo> = ArrayList(info.size)
             val account = mAccountService.getAccount(conference.accountId) ?: return
-
-            for (i in info) {
-                val uri = i["uri"]!!
-                val confInfo = if (uri.isEmpty()) {
-                    ParticipantInfo(null, mContactService.getLoadedContact(account.accountId, account.getContactFromCache(Uri.fromId(account.username!!))).blockingGet(), i)
-                } else {
-                    val contactUri = Uri.fromString(uri)
-                    val call = conference.findCallByContact(contactUri)
-                    if (call != null) {
-                        ParticipantInfo(call, mContactService.getLoadedContact(call.account, call.contact!!).blockingGet(), i)
+            val loader = synchronized(conferenceInfoLoaders) {
+                if (conferences[confId] !== conference)
+                    return
+                conferenceInfoLoaders.getOrPut(confId) {
+                    ConferenceInfoLoader(
+                        Schedulers.from(mExecutor),
+                        { newInfo ->
+                            if (conferences[confId] === conference) {
+                                conference.isModerator = newInfo.any { it.contact.contact.isUser && it.isModerator }
+                                conference.setInfo(newInfo)
+                            }
+                        },
+                        { error -> Log.w(TAG, "Unable to load conference info for $confId", error) }
+                    )
+                }
+            }
+            loader.update(Observable.defer {
+                val participants = info.mapNotNull { i ->
+                    val uri = i["uri"]!!
+                    val contactUri = if (uri.isEmpty()) Uri.fromId(account.username!!) else Uri.fromString(uri)
+                    val call = if (uri.isEmpty()) null else conference.findCallByContact(contactUri)
+                    val contact = call?.contact ?: account.getContactFromCache(contactUri)
+                    val placeholder = ParticipantInfo(call, ContactViewModel(contact, Profile.EMPTY_PROFILE), i)
+                    if (placeholder.isEmpty) {
+                        Log.w(TAG, "onConferenceInfoUpdated: ignoring empty entry $i")
+                        null
                     } else {
-                        ParticipantInfo(null, mContactService.getLoadedContact(account.accountId, account.getContactFromCache(contactUri)).blockingGet(), i)
+                        // A name lookup can complete on the daemon thread delivering this callback.
+                        mContactService.observeContact(call?.account ?: account.accountId, contact, false)
+                            .map { ParticipantInfo(call, it, i) }
+                            .doOnError { error ->
+                                Log.w(TAG, "Unable to load conference participant $contactUri", error)
+                            }
+                            .onErrorReturnItem(placeholder)
+                            .startWithItem(placeholder)
                     }
                 }
-                if (confInfo.isEmpty) {
-                    Log.w(TAG, "onConferenceInfoUpdated: ignoring empty entry $i")
-                    continue
+                if (participants.isEmpty()) {
+                    Observable.just(emptyList())
+                } else {
+                    Observable.combineLatest(participants) { values ->
+                        values.map { it as ParticipantInfo }
+                    }
                 }
-                if (confInfo.contact.contact.isUser && confInfo.isModerator) {
-                    isModerator = true
-                }
-                newInfo.add(confInfo)
-            }
-
-            conference.isModerator = isModerator
-            conference.setInfo(newInfo)
+            })
         } else {
             Log.w(TAG, "onConferenceInfoUpdated is unable to find conference $confId")
         }
@@ -587,7 +607,7 @@ abstract class CallService(
                     callSubject.onNext(call)
                     if (call.callStatus === CallStatus.OVER) {
                         calls.remove(call.id)
-                        conferences.remove(call.id)
+                        removeConference(call.id)
                         updateConnectionCount()
                     }
                 }
@@ -754,6 +774,16 @@ abstract class CallService(
 
     fun getConference(id: String): Conference? = conferences[id]
 
+    private fun removeConference(id: String?): Conference? {
+        if (id == null)
+            return null
+        val (conference, loader) = synchronized(conferenceInfoLoaders) {
+            conferences.remove(id) to conferenceInfoLoaders.remove(id)
+        }
+        loader?.dispose()
+        return conference
+    }
+
     fun conferenceCreated(accountId: String, conversationId: String, confId: String) {
         Log.d(TAG, "conference created: $confId $conversationId")
         val conf = conferences.getOrPut(confId) { Conference(accountId, confId) }
@@ -768,7 +798,7 @@ abstract class CallService(
                 call.confId = confId
                 conf.addParticipant(call)
             }
-            conferences.remove(callId)
+            removeConference(callId)
         }
         if (conversationId.isNotEmpty())
             mAccountService.getAccount(accountId)?.let { account ->
@@ -785,7 +815,7 @@ abstract class CallService(
 
     fun conferenceRemoved(accountId: String, confId: String) {
         Log.d(TAG, "conferenceRemoved: $confId")
-        conferences.remove(confId)?.let { conf ->
+        removeConference(confId)?.let { conf ->
             for (call in conf.participants) {
                 call.confId = null
             }
@@ -822,7 +852,7 @@ abstract class CallService(
                         call.confId = confId
                         conf.addParticipant(call)
                     }
-                    conferences.remove(callId)
+                    removeConference(callId)
                 }
             }
 
@@ -848,7 +878,7 @@ abstract class CallService(
             conferenceSubject.onNext(conf)
             if (removed && conf.canDowngradeToCall) {
                 // Remove the obsolete conference so later stale events can't recreate it.
-                conferences.remove(confId)
+                removeConference(confId)
                 val call = conf.participants[0]
                 call.confId = null
                 addConference(call)
