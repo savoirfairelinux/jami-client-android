@@ -134,13 +134,11 @@ class ParticipantsContainerView// adding name, mic etc..
 
             participantInfoOverlay.sink.videoListener = { hasVideo ->
                 participantInfoOverlay.avatar.isVisible = !hasVideo
-                if (!hasVideo) {
-                    participantInfoOverlay.avatar.setImageDrawable(AvatarDrawable.Builder()
-                        .withContact(i.contact)
-                        .withCircleCrop(true)
-                        .build(context))
-                }
             }
+            participantInfoOverlay.avatar.setImageDrawable(AvatarDrawable.Builder()
+                .withContact(i.contact)
+                .withCircleCrop(true)
+                .build(context))
             participantInfoOverlay.avatar.updateLayoutParams {
                 if (i.active) {
                     val size = context.resources.getDimensionPixelSize(R.dimen.call_participant_avatar_size)
