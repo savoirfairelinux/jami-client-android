@@ -410,6 +410,21 @@ class Editor {
     }
 
     /**
+     * The bytes of an attachment have arrived. A peer's update can name an
+     * image before its bytes reach this device, which then draws nothing; the
+     * images still drawing nothing ask again. The address changes so the
+     * WebView does not answer from the failure it remembers; the document
+     * itself, which only knows the id, is untouched.
+     */
+    attachmentAdded(id) {
+        if (!id) return
+        for (const node of this.quill.root.querySelectorAll('img[data-jami-id]')) {
+            if (node.getAttribute('data-jami-id') !== id || node.naturalWidth > 0) continue
+            node.setAttribute('src', ATTACHMENT_BASE + encodeURIComponent(id) + '?arrived=' + Date.now())
+        }
+    }
+
+    /**
      * The image the given selection means: the selected one, or the one the
      * caret sits just after, which is where it is left after an insertion.
      */
@@ -799,6 +814,7 @@ window.JamiEditor = {
     undo: guard(Editor.prototype.undo),
     redo: guard(Editor.prototype.redo),
     insertImage: guard(Editor.prototype.insertImage),
+    attachmentAdded: guard(Editor.prototype.attachmentAdded),
     setImageWidth: guard(Editor.prototype.setImageWidth),
     setEditable: guard(Editor.prototype.setEditable),
     exportAs: guard(Editor.prototype.exportAs),
