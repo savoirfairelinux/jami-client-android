@@ -463,6 +463,14 @@ class CollabEditorActivity : AppCompatActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ everywhere -> documentRemoved(everywhere) },
                 { e -> Log.e(TAG, "removal", e) }))
+
+        // A peer's update can name an image before its bytes arrive: once they
+        // do, the page asks for the image again.
+        disposable.add(collaborationService
+            .attachmentsFor(path.accountId, path.conversationUri, documentId)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ id -> callEditor("attachmentAdded", quote(id)) },
+                { e -> Log.e(TAG, "attachments", e) }))
     }
 
     /**
