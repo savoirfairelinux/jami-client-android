@@ -109,7 +109,7 @@ test('the bundle exposes the interface the application calls', options, async ()
     for (const name of ['applyUpdate', 'applyAwareness', 'removeCursor', 'toggle',
                         'setHeader', 'setFont', 'setSize', 'fonts',
                         'setList', 'setAlign', 'setLink', 'clearFormat',
-                        'undo', 'redo', 'insertImage', 'setImageWidth', 'setEditable',
+                        'undo', 'redo', 'insertImage', 'attachmentAdded', 'setImageWidth', 'setEditable',
                         'exportAs', 'showVersion', 'leaveVersion']) {
         assert.equal(typeof editor[name], 'function', `missing ${name}`)
     }
@@ -161,6 +161,42 @@ test('a local edit is sent out as an update a peer can apply', options, async ()
           attributes: { w: 320 } },
         { insert: 'Report' },
     ])
+    assert.deepEqual(host.logs, [])
+})
+
+test('an image whose bytes arrive after the update naming it is asked for again',
+     options, async () => {
+    const { dom, host, editor } = await launch()
+
+    // A peer's update names two images whose bytes are not on this device yet.
+    const peer = new Y.Doc()
+    peer.getText('content').applyDelta(quillToJami(new Delta([
+        { insert: { image: { id: 'late', width: 800, height: 600 } } },
+        { insert: { image: { id: 'other', width: 10, height: 10 } } },
+        { insert: '\n' },
+    ]), Delta).ops)
+    editor.applyUpdate(Buffer.from(Y.encodeStateAsUpdate(peer)).toString('base64'))
+    const [late, other] = dom.window.document.querySelectorAll('img')
+    assert.ok(late && other, 'the images were not drawn')
+    const lateSrc = late.getAttribute('src')
+    const otherSrc = other.getAttribute('src')
+    host.updates.length = 0
+
+    editor.attachmentAdded('late')
+    // Quill reads the DOM back after a mutation: let it, before looking.
+    await new Promise((resolve) => setTimeout(resolve, 0))
+
+    assert.notEqual(late.getAttribute('src'), lateSrc, 'the image was not asked for again')
+    assert.match(late.getAttribute('src'), /\/attachment\/late\?/)
+    assert.equal(late.getAttribute('data-jami-id'), 'late')
+    assert.equal(other.getAttribute('src'), otherSrc, 'another image was asked for')
+    assert.deepEqual(host.updates, [], 'asking for an image again changed the document')
+
+    // An image already drawn is not asked for again, which would make it flicker.
+    Object.defineProperty(late, 'naturalWidth', { value: 800 })
+    const drawnSrc = late.getAttribute('src')
+    editor.attachmentAdded('late')
+    assert.equal(late.getAttribute('src'), drawnSrc)
     assert.deepEqual(host.logs, [])
 })
 
