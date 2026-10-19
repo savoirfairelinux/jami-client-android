@@ -25,6 +25,8 @@ import android.media.AudioManager
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
+import android.os.Handler
+import android.os.Looper
 import android.system.Os
 import android.telecom.PhoneAccount
 import android.telecom.PhoneAccountHandle
@@ -35,6 +37,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import com.bumptech.glide.Glide
 import cx.ring.BuildConfig
+import cx.ring.backup.JamiBackupAgent
+import cx.ring.backup.PortableSettingsBackup
 import cx.ring.service.ConnectionService
 import cx.ring.R
 import cx.ring.service.DRingService
@@ -54,6 +58,7 @@ import net.jami.daemon.JamiService
 import net.jami.services.*
 import java.io.File
 import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.FutureTask
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
@@ -117,6 +122,16 @@ abstract class JamiApplication : Application() {
 
     open fun activityInit(activityContext: Context) {}
 
+    protected open fun onRuntimeReady() {}
+
+    @Volatile
+    private var runtimeInitialized = false
+    private var runtimeRequested = false
+    val isRuntimeReady: Boolean
+        get() = runtimeInitialized && !JamiBackupAgent.isActive
+
+    private val appInForeground = BehaviorSubject.createDefault(true)
+
     private var mBound = false
     private val mConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, s: IBinder) {
@@ -145,14 +160,16 @@ abstract class JamiApplication : Application() {
     }
 
     fun bootstrapDaemon() {
-        if (daemon.isStarted) {
+        runtimeRequested = true
+        val backupGeneration = JamiBackupAgent.generation
+        if (!prepareRuntime() || daemon.isStarted) {
             return
         }
         Log.d(TAG, "bootstrapDaemon")
         mExecutor.execute {
             try {
                 Log.d(TAG, "bootstrapDaemon: START")
-                if (daemon.isStarted) {
+                if (!JamiBackupAgent.canStartRuntime(backupGeneration) || daemon.isStarted) {
                     return@execute
                 }
                 daemon.startDaemon()
@@ -201,7 +218,12 @@ abstract class JamiApplication : Application() {
                 .build())
     }
 
+    internal fun resumeAfterBackup() {
+        if (runtimeRequested) bootstrapDaemon()
+    }
+
     private fun terminateDaemon() {
+        if (!daemon.isStarted) return
         val stopResult = mExecutor.submit<Boolean> {
             unregisterReceiver(ringerModeListener)
             daemon.stopDaemon()
@@ -221,6 +243,26 @@ abstract class JamiApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        setupActivityListener()
+    }
+
+    fun prepareRuntime(): Boolean {
+        if (JamiBackupAgent.isActive) return false
+        if (Looper.myLooper() != mainLooper) {
+            val preparation = FutureTask { prepareRuntime() }
+            Handler(mainLooper).post(preparation)
+            return preparation.get()
+        }
+        try {
+            if (PortableSettingsBackup.applyPending(this)) {
+                mPreferencesService.reloadSettings()
+                mPreferencesService.loadDarkMode()
+            }
+        } catch (exception: Exception) {
+            Log.e(TAG, "Unable to complete settings restore; runtime startup deferred", exception)
+            return false
+        }
+        if (runtimeInitialized) return true
         LinkPreview.init(this)
 
         // Launch logging if previously set up by user (info is stored in shared preferences).
@@ -262,7 +304,6 @@ abstract class JamiApplication : Application() {
             }
         }
 
-        bootstrapDaemon()
         mPreferencesService.loadDarkMode()
         Completable.fromAction {
             val caRootFile = getString(R.string.ca_root_file)
@@ -282,10 +323,15 @@ abstract class JamiApplication : Application() {
         }
             .subscribeOn(Schedulers.io())
             .subscribe()
-        setupActivityListener()
+        runtimeInitialized = true
+        setupBackgroundServiceListener()
+        onRuntimeReady()
+        return true
     }
 
     fun startDaemon(activityContext: Context) {
+        if (!prepareRuntime()) return
+        bootstrapDaemon()
         if (!DRingService.isRunning) {
             try {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
@@ -303,6 +349,7 @@ abstract class JamiApplication : Application() {
     }
 
     fun bindDaemon() {
+        if (!prepareRuntime()) return
         if (!mBound) {
             try {
                 bindService(Intent(this, DRingService::class.java), mConnection, BIND_AUTO_CREATE or BIND_IMPORTANT or BIND_ABOVE_CLIENT)
@@ -320,10 +367,15 @@ abstract class JamiApplication : Application() {
 
     private fun setupActivityListener() {
         var startedActivityCount = 0
-        val appInForeground = BehaviorSubject.createDefault(true)
 
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
+            override fun onActivityPreCreated(activity: Activity, bundle: Bundle?) {
+                bootstrapDaemon()
+            }
+
             override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
+                bootstrapDaemon()
+                if (!isRuntimeReady) return
                 if (mPreferencesService.settings.isRecordingBlocked) {
                     activity.window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
                 }
@@ -344,7 +396,9 @@ abstract class JamiApplication : Application() {
             override fun onActivitySaveInstanceState(activity: Activity, bundle: Bundle) {}
             override fun onActivityDestroyed(activity: Activity) {}
         })
+    }
 
+    private fun setupBackgroundServiceListener() {
         Observable.combineLatest(
             appInForeground,
             peerServicesService.observeAnyActiveTunnel(),

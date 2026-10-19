@@ -39,6 +39,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import androidx.core.net.toUri
 import cx.ring.application.JamiApplication
+import cx.ring.backup.RuntimeServiceGuard
 
 @RequiresApi(CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY)
 @AndroidEntryPoint
@@ -55,6 +56,7 @@ class ConnectionService : ConnectionService() {
     lateinit var deviceRuntimeService: DeviceRuntimeService
 
     override fun onCreate() {
+        if (!RuntimeServiceGuard.canInitialize(this)) return
         super.onCreate()
         JamiApplication.instance?.startDaemon(this)
     }
@@ -86,6 +88,7 @@ class ConnectionService : ConnectionService() {
     override fun onCreateOutgoingConnection(
         account: PhoneAccountHandle?, request: ConnectionRequest
     ): Connection = try {
+        check(::callService.isInitialized && RuntimeServiceGuard.canInitialize(this)) { "Runtime unavailable during backup or restore" }
         buildConnection(request).apply {
             (callService as CallServiceImpl).onPlaceCallResult(request.address, request.extras, this)
         }
@@ -96,11 +99,15 @@ class ConnectionService : ConnectionService() {
     override fun onCreateOutgoingConnectionFailed(
         account: PhoneAccountHandle?, request: ConnectionRequest
     ) {
+        if (!::callService.isInitialized || !RuntimeServiceGuard.canInitialize(this)) return
         Log.w(TAG, "onCreateOutgoingConnectionFailed $request")
         (callService as CallServiceImpl).onPlaceCallResult(request.address, request.extras, null)
     }
 
     override fun onCreateIncomingConnection(account: PhoneAccountHandle?, request: ConnectionRequest): Connection {
+        if (!::callService.isInitialized || !RuntimeServiceGuard.canInitialize(this)) {
+            return Connection.createFailedConnection(DisconnectCause(DisconnectCause.ERROR))
+        }
         Log.w(TAG, "onCreateIncomingConnection $request")
         return buildConnection(request) { connection, result ->
             (callService as CallServiceImpl).onIncomingCallResult(request.extras, connection, result)
@@ -108,6 +115,7 @@ class ConnectionService : ConnectionService() {
     }
 
     override fun onCreateIncomingConnectionFailed(account: PhoneAccountHandle?, request: ConnectionRequest?) {
+        if (!::callService.isInitialized || !RuntimeServiceGuard.canInitialize(this)) return
         Log.w(TAG, "onCreateIncomingConnectionFailed $request")
         if (request != null) {
             (callService as CallServiceImpl).onIncomingCallResult(request.extras, null)

@@ -61,6 +61,9 @@ android {
         viewBinding = true
         buildConfig = true
     }
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
+    }
     flavorDimensions += "push"
     productFlavors {
         create("noPush") {
@@ -196,6 +199,8 @@ dependencies {
     ksp(libs.hilt.android.compiler)
 
     // Espresso Unit Tests
+    testImplementation(libs.junit)
+    testImplementation(libs.robolectric)
     androidTestImplementation(libs.androidx.test.ext.junit.ktx)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.test.espresso.core)
