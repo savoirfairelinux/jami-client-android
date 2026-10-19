@@ -52,6 +52,10 @@ abstract class PreferencesService(
     val settingsSubject: Observable<Settings>
         get() = mSettingsSubject
 
+    fun reloadSettings() {
+        userSettings = loadSettings().also { mSettingsSubject.onNext(it) }
+    }
+
     abstract fun donationSettings(): Observable<DonationSettings>
 
     abstract fun setDonationSettings(settings: DonationSettings)

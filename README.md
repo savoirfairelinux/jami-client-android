@@ -88,6 +88,51 @@ cd jami-client-android/daemon/extras/tools
 ./bootstrap && make .pkg-config
 ```
 
+## Backup and device transfer
+
+Android cloud backup is disabled by explicit data-extraction rules. Device-to-device
+transfer is allowed on Android 9 and later and includes the daemon configuration,
+account directories, local archives, conversations, locally stored attachments,
+history databases (including SQLite sidecars), profiles, and a versioned snapshot
+of reviewed display and privacy preferences. Within account data, only the device
+identity files (`ring_device.key` and `ring_device.crt`) are excluded. Symbolic links
+are not followed. Push tokens, Android Keystore-bound biometric preferences, logs,
+and other application-local state outside the account directories are not copied.
+
+The daemon must be stopped throughout export, restore, and replay. Backup-agent
+activation and native startup share a lock, and a queued startup from before backup
+is invalidated. If Android binds the agent into a process with a running daemon,
+the transfer fails rather than copying live data or stopping an active session.
+Android 16's restricted-backup-mode opt-out remains enabled; older restricted-mode
+service launches are guarded before Hilt injection. Daemon startup is demand-driven,
+not a side effect of creating the Application for backup or restore.
+
+The backup agent has no Hilt dependency and does not initialize the daemon. Account
+data is streamed directly into Android's backup transport, without first creating
+a second local archive. Restores are staged outside the live data and require a
+versioned completion marker with a matching file count. Only after restore finishes
+are they published for replay before normal runtime startup. Interrupted restores
+and legacy account payloads without the marker are discarded. Replay replaces each
+transferred account directory, so an existing destination device identity cannot
+survive the restore; interrupted replay resumes before the daemon can start.
+
+On first normal startup, the daemon's existing migration flow regenerates the device
+identity from the transferred local account archive. Unprotected archives migrate
+automatically; protected archives require the account password through the existing
+migration UI. The source device's identity remains untouched. Attachments stored
+only outside Jami's private account directories are not included.
+
+New cloud exclusions do not delete historical backups already held by a transport.
+Cross-platform transfers are not enabled.
+
+Focused regression tests live in `PortableSettingsBackupTest` and run with
+`./gradlew :app:testNoPushDebugUnitTest --tests cx.ring.backup.PortableSettingsBackupTest`.
+Before release, also verify the policy with Android's cloud and D2D transports on
+physical devices, including password-protected and unprotected account migration,
+new device IDs, conversation and attachment integrity, interrupted restore/replay,
+and concurrent background wakeups. A process with a running daemon must reject
+account transfer; a cold backup process must complete it without starting the daemon.
+
 ## Update translations
 
 Update translations using the Transifex client (tx) :

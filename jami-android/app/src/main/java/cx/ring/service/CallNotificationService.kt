@@ -27,6 +27,7 @@ import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import cx.ring.services.NotificationServiceImpl
+import cx.ring.backup.RuntimeServiceGuard
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.services.NotificationService
 import javax.inject.Inject
@@ -46,6 +47,9 @@ class CallNotificationService : Service() {
     lateinit var mNotificationService: NotificationService
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+        if (!::mNotificationService.isInitialized || !RuntimeServiceGuard.canInitialize(this)) {
+            return RuntimeServiceGuard.rejectStart(this, startId)
+        }
         super.onStartCommand(intent, flags, startId)
         if (ACTION_START == intent.action) {
             val confId = intent.getStringExtra(NotificationService.KEY_CALL_ID)
@@ -136,12 +140,13 @@ class CallNotificationService : Service() {
     override fun onBind(intent: Intent): IBinder? = null
 
     override fun onCreate() {
+        if (!RuntimeServiceGuard.canInitialize(this)) return
         super.onCreate()
         ActiveServiceMonitor.onServiceStarted()
     }
 
     override fun onDestroy() {
-        ActiveServiceMonitor.onServiceStopped()
+        if (::mNotificationService.isInitialized) ActiveServiceMonitor.onServiceStopped()
         super.onDestroy()
     }
 

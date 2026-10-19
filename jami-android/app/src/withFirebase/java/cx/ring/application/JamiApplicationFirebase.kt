@@ -62,6 +62,7 @@ class JamiApplicationFirebase : JamiApplication() {
     private val backgroundActiveSince = AtomicLong(0L)
 
     private val deactivateRunnable = Runnable {
+        if (!isRuntimeReady) return@Runnable
         if (isAppVisible()) return@Runnable
         // Push no longer usable: restore accounts and fall back to always-connected behavior.
         if (!mPreferencesService.settings.enablePushNotifications || pushToken == null) {
@@ -103,6 +104,8 @@ class JamiApplicationFirebase : JamiApplication() {
      * pushes never get here.
      */
     fun onBackgroundPushReceived(isCallPush: Boolean, isMessagePush: Boolean) {
+        if (!prepareRuntime()) return
+        bootstrapDaemon()
         // Publish the grace window before cancelling: a deactivateRunnable already running
         // reads these atomics, and any deactivation it queues runs FIFO after the restore below.
         val now = SystemClock.elapsedRealtime()
@@ -112,6 +115,7 @@ class JamiApplicationFirebase : JamiApplication() {
         backgroundActiveSince.compareAndSet(0L, now)
         backgroundHandler.removeCallbacks(deactivateRunnable)
         backgroundHandler.post {
+            if (!isRuntimeReady) return@post
             // No-op unless a background deactivation actually recorded accounts to restore.
             mAccountService.restoreProxyAccountsAfterBackground()
             // Full DHT/SIP reconnect to rebuild sockets torn down in doze.
@@ -127,7 +131,9 @@ class JamiApplicationFirebase : JamiApplication() {
      * a call is active or a push grace window is open.
      */
     fun scheduleBackgroundDeactivation(delayMs: Long = BACKGROUND_DEACTIVATION_DELAY_MS) {
+        if (!isRuntimeReady) return
         backgroundHandler.post {
+            if (!isRuntimeReady) return@post
             backgroundHandler.removeCallbacks(deactivateRunnable)
             backgroundHandler.postDelayed(deactivateRunnable, delayMs)
         }
@@ -137,6 +143,7 @@ class JamiApplicationFirebase : JamiApplication() {
         set(token) {
             //Log.d(TAG, "setPushToken: $token");
             field = token
+            if (!isRuntimeReady) return
             if (token != null && mPreferencesService.settings.enablePushNotifications) {
                 mAccountService.setPushNotificationConfig(token.first, token.second, PUSH_PLATFORM)
                 // Keep the account online long enough to re-announce the new token before
@@ -174,8 +181,8 @@ class JamiApplicationFirebase : JamiApplication() {
         }
     }
 
-    override fun onCreate() {
-        super.onCreate()
+    override fun onRuntimeReady() {
+        super.onRuntimeReady()
         hardwareService.startTime = getCurrentTimestamp()
         hardwareService.highPriorityPushCount = 0
         hardwareService.normalPriorityPushCount = 0
@@ -211,6 +218,8 @@ class JamiApplicationFirebase : JamiApplication() {
     }
 
     fun onMessageReceived(remoteMessage: RemoteMessage) {
+        if (!prepareRuntime()) return
+        bootstrapDaemon()
         Log.d(TAG, "onMessageReceived: ${remoteMessage.from} ${remoteMessage.priority} ${remoteMessage.originalPriority}")
         mAccountService.pushNotificationReceived(remoteMessage.from ?: "", remoteMessage.data)
         mNotificationService.processPush()
