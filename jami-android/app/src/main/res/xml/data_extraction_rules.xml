@@ -12,6 +12,7 @@
         <exclude domain="device_sharedpref" path="." />
     </cloud-backup>
     <device-transfer>
-        <include domain="file" path="backup/portable-settings.json" />
+        <include domain="file" path="." />
+        <include domain="root" path="app_config" />
     </device-transfer>
 </data-extraction-rules>
