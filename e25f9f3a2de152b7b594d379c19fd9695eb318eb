@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "659787f0_0af0c1e0",
+        "filename": "jami-android/app/src/main/res/values-ast-rES/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-19T05:05:20Z",
+      "side": 1,
+      "message": "[warning] 🟡 Several newly added destructive-action translations are semantically incorrect (for example `collab_link_remove` / `collab_remove` map to unrelated sentence fragments). For delete/remove actions this can mislead users and increase accidental destructive operations. Re-sync these keys from source text and retranslate with action-consistent verbs.",
+      "revId": "e25f9f3a2de152b7b594d379c19fd9695eb318eb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05129db3_fa1e512d",
+        "filename": "jami-android/app/src/main/res/values-ast-rES/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-19T05:05:20Z",
+      "side": 1,
+      "message": "[warning] 🟡 `navigation_item_conversation` contains literal escaped markup text (`\u0026lt;br style\u003d\"\"\u0026gt;`), so users will see HTML-like garbage in the label. Replace with plain localized text (e.g., just “Conversaciones”) unless the UI explicitly parses styled text from resources (which this key typically does not).",
+      "revId": "e25f9f3a2de152b7b594d379c19fd9695eb318eb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb6d3d91_9ebaa8e3",
+        "filename": "jami-android/app/src/main/res/values-es_VE/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-19T05:05:20Z",
+      "side": 1,
+      "message": "[error] 🔴 Android resource qualifier is invalid: `values-es_VE` uses `_VE`, which is not a valid locale qualifier format for Android resources. This directory will be ignored or fail packaging depending on tooling. Rename to a valid qualifier (typically `values-es-rVE`, or a proper BCP-47 `values-b+es+VE`) and move both new files accordingly.",
+      "revId": "e25f9f3a2de152b7b594d379c19fd9695eb318eb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
