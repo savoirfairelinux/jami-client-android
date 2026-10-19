@@ -133,6 +133,49 @@ new device IDs, conversation and attachment integrity, interrupted restore/repla
 and concurrent background wakeups. A process with a running daemon must reject
 account transfer; a cold backup process must complete it without starting the daemon.
 
+## Android UI tests
+
+Deterministic UI checks run locally with Robolectric on Android 9 and Android 14:
+
+- `AccountCreationTest`: real wizard fragments and registration dialog, with a
+	mocked account service and a controlled RxJava debounce clock. Covers username
+	availability, password validation, optional password controls, and registration
+	submission. The previous valid-username test only checked the loading state;
+	its replacement also checks that a successful lookup enables the next button.
+- `ChangePasswordDialogTest`: short and mismatched passwords, successful submission,
+	password removal, cancellation, keyboard submission, and error correction.
+- `ConversationChooserTest`: color and emoji selection, callback values, dismissal,
+	and cancellation.
+
+These tests use real Android views and lifecycle callbacks, do not initialize the
+native daemon, and need no emulator, network, downloaded images, or ordered test
+state. The Hilt service replacements are confined to the JVM test source set.
+Twelve independent Espresso validation cases have moved to these local tests.
+
+Run the local app suite from the Android project directory. The native-build task
+exclusions avoid the existing Kotlin build dependency on the Android JNI build:
+
+```sh
+cd jami-android
+./gradlew :app:testNoPushDebugUnitTest -Parchs=arm64-v8a \
+	-x ':app:buildCMakeDebug[arm64-v8a]' \
+	-x ':app:configureCMakeDebug[arm64-v8a]'
+```
+
+The equivalent flavor tasks are `:app:testWithFirebaseDebugUnitTest` and
+`:app:testWithUnifiedPushDebugUnitTest`. Add `--tests cx.ring.account.AccountCreationTest`
+to select a single test class. The unit-test tasks also run the collaborative
+editor's JavaScript tests; `-x :app:testCollabEditor` limits the run to JVM tests.
+Use the Android Studio JDK as `JAVA_HOME` when the shell has no suitable JDK.
+
+Espresso remains under `app/src/androidTest` for integration coverage that
+Robolectric cannot replace faithfully: real account creation and archive recovery,
+nameserver registration, contact invitations over DHT, peer message delivery and
+editing, native conversation-setting persistence, camera/gallery integration, and
+biometric enrollment. Run these on a device or emulator with the Android native
+library. The chooser integration scenarios remain because they also verify that
+the selected values reach the conversation, not just that the picker returns them.
+
 ## Update translations
 
 Update translations using the Transifex client (tx) :
