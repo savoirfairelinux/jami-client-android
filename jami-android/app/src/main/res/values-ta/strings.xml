@@ -363,4 +363,12 @@
   <string name="shared_services_more_options">மேலும் விருப்பங்கள்</string>
   <string name="shared_services_type_custom_label">தனிப்பயன்</string>
   <string name="shared_services_save">சேமி</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">ஆவணங்கள்</string>
+  <string name="collab_create">உருவாக்கு</string>
+  <string name="collab_link_title">இணைப்பு</string>
+  <string name="collab_link_hint">முகவரி</string>
+  <string name="collab_link_add">சேர்க்கவும்</string>
+  <string name="collab_link_remove">நீக்கவும்</string>
+  <string name="collab_remove">நீக்கவும்</string>
 </resources>

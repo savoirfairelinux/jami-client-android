@@ -341,4 +341,12 @@
   <string name="shared_services_more_options">കൂടുതൽ ഓപ്ഷനുകൾ</string>
   <string name="shared_services_type_custom_label">Tidak lalai</string>
   <string name="shared_services_save">സംരക്ഷിക്കുക</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">രേഖകൾ</string>
+  <string name="collab_create">സൃഷ്ടിക്കുക</string>
+  <string name="collab_link_title">ലിങ്ക്</string>
+  <string name="collab_link_hint">വിലാസം</string>
+  <string name="collab_link_add">ചേർക്കുക</string>
+  <string name="collab_link_remove">Hapus</string>
+  <string name="collab_remove">Hapus</string>
 </resources>
