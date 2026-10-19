@@ -19,6 +19,7 @@ package cx.ring.services
 import android.app.Notification
 import android.app.Service
 import cx.ring.service.ActiveServiceMonitor
+import cx.ring.backup.RuntimeServiceGuard
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import net.jami.services.NotificationService
@@ -42,6 +43,9 @@ class DataTransferService : Service() {
     private val serviceNotifications: MutableSet<Int> = HashSet()
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        if (!::mNotificationService.isInitialized || !RuntimeServiceGuard.canInitialize(this)) {
+            return RuntimeServiceGuard.rejectStart(this, startId)
+        }
         if (intent == null) {
             stopSelfResult(startId)
             return START_NOT_STICKY
@@ -105,6 +109,7 @@ class DataTransferService : Service() {
     }
 
     override fun onCreate() {
+        if (!RuntimeServiceGuard.canInitialize(this)) return
         Log.d(TAG, "OnCreate(), DataTransferService has been initialized")
         notificationManager = NotificationManagerCompat.from(this)
         ActiveServiceMonitor.onServiceStarted()
@@ -121,7 +126,7 @@ class DataTransferService : Service() {
 
     override fun onDestroy() {
         Log.d(TAG, "OnDestroy(), DataTransferService has been destroyed")
-        ActiveServiceMonitor.onServiceStopped()
+        if (::mNotificationService.isInitialized) ActiveServiceMonitor.onServiceStopped()
         super.onDestroy()
     }
 

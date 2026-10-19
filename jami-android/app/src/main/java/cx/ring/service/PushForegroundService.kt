@@ -9,6 +9,7 @@ import android.os.IBinder
 import android.os.Looper
 import androidx.core.app.NotificationCompat
 import cx.ring.R
+import cx.ring.backup.RuntimeServiceGuard
 import cx.ring.services.NotificationServiceImpl.Companion.NOTIF_CHANNEL_PUSH_SYNC
 
 class PushForegroundService : Service() {
@@ -23,6 +24,7 @@ class PushForegroundService : Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        if (!RuntimeServiceGuard.canInitialize(this)) return RuntimeServiceGuard.rejectStart(this, startId)
         val notification = NotificationCompat.Builder(this, NOTIF_CHANNEL_PUSH_SYNC)
             .setContentTitle(getString(R.string.notif_reconnect_title))
             .setSmallIcon(R.drawable.ic_ring_logo_white)

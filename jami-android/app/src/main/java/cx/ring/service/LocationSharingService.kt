@@ -66,6 +66,7 @@ import java.util.Random
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.math.ceil
+import cx.ring.backup.RuntimeServiceGuard
 
 @AndroidEntryPoint
 class LocationSharingService : Service(), LocationListener {
@@ -100,6 +101,7 @@ class LocationSharingService : Service(), LocationListener {
             .onErrorComplete()
 
     override fun onCreate() {
+        if (!RuntimeServiceGuard.canInitialize(this)) return
         super.onCreate()
         ActiveServiceMonitor.onServiceStarted()
         mLocationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
@@ -134,6 +136,9 @@ class LocationSharingService : Service(), LocationListener {
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+        if (!::mNotificationManager.isInitialized || !RuntimeServiceGuard.canInitialize(this)) {
+            return RuntimeServiceGuard.rejectStart(this, startId)
+        }
         Log.w(TAG, "onStartCommand $intent")
         val action = intent.action
         val path = ConversationPath.fromIntent(intent)
@@ -216,6 +221,7 @@ class LocationSharingService : Service(), LocationListener {
     }
 
     override fun onDestroy() {
+        if (!::mNotificationManager.isInitialized) return
         Log.w(TAG, "onDestroy")
         ActiveServiceMonitor.onServiceStopped()
         mLocationManager?.removeUpdates(this)
@@ -224,7 +230,8 @@ class LocationSharingService : Service(), LocationListener {
         mDisposableBag.dispose()
     }
 
-    override fun onBind(intent: Intent): IBinder = binder
+    override fun onBind(intent: Intent): IBinder? =
+        if (::mNotificationManager.isInitialized && RuntimeServiceGuard.canInitialize(this)) binder else null
 
     override fun onUnbind(intent: Intent): Boolean = true
 

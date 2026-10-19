@@ -26,6 +26,7 @@ import android.os.IBinder
 import android.os.Looper
 import androidx.core.app.NotificationCompat
 import cx.ring.R
+import cx.ring.backup.RuntimeServiceGuard
 import cx.ring.client.HomeActivity
 import cx.ring.services.NotificationServiceImpl.Companion.NOTIF_CHANNEL_PEER_TUNNEL
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,11 +48,15 @@ class PeerTunnelForegroundService : Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onCreate() {
+        if (!RuntimeServiceGuard.canInitialize(this)) return
         super.onCreate()
         ActiveServiceMonitor.onServiceStarted()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        if (!::peerServicesService.isInitialized || !RuntimeServiceGuard.canInitialize(this)) {
+            return RuntimeServiceGuard.rejectStart(this, startId)
+        }
         startForegroundWithNotification()
 
         if (intent?.action == ACTION_STOP_ALL) {
@@ -107,7 +112,7 @@ class PeerTunnelForegroundService : Service() {
     }
 
     override fun onDestroy() {
-        ActiveServiceMonitor.onServiceStopped()
+        if (::peerServicesService.isInitialized) ActiveServiceMonitor.onServiceStopped()
         worker.shutdown()
         super.onDestroy()
     }

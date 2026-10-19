@@ -88,6 +88,32 @@ cd jami-client-android/daemon/extras/tools
 ./bootstrap && make .pkg-config
 ```
 
+## Backup and device transfer
+
+Android cloud backup is disabled by explicit data-extraction rules. Device-to-device
+transfer is allowed on Android 9 and later, but currently includes only a versioned
+snapshot of reviewed display and privacy preferences. Accounts, device identities,
+conversations, attachments, push tokens, biometric credentials, logs, and runtime
+service configuration are not included. Continue using account export/import or
+authenticated device linking to recover or add accounts; this settings transfer is
+not a complete account or conversation backup.
+
+The backup agent has no Hilt or daemon dependency. Restored settings are validated
+and staged outside the live preferences, then committed for idempotent replay before
+normal runtime startup. Interrupted or invalid payloads do not replace live settings,
+and legacy sandbox restore paths are ignored. Android 16's restricted-backup-mode
+opt-out is enabled; older restricted-mode service launches are guarded before Hilt
+injection. Daemon startup is demand-driven, not a side effect of creating the
+Application for backup or restore.
+
+New cloud exclusions do not delete historical backups already held by a transport.
+Full account/history migration and cross-platform transfers are not enabled yet.
+
+Focused regression tests live in `PortableSettingsBackupTest` and run with
+`./gradlew :app:testNoPushDebugUnitTest --tests cx.ring.backup.PortableSettingsBackupTest`.
+Before release, also verify the policy with Android's cloud and D2D transports on
+physical devices, including interrupted restore and concurrent background wakeups.
+
 ## Update translations
 
 Update translations using the Transifex client (tx) :
