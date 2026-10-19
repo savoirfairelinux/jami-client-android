@@ -33,6 +33,8 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        val app = application as? JamiApplicationFirebase ?: return
+        if (!app.prepareRuntime()) return
         // Some devices block during call negotiation without a wake lock. The 10s timeout
         // is a safety net only: the lock is released as soon as the push is processed.
         var wakeLock: PowerManager.WakeLock? = null
@@ -57,8 +59,7 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
         val wakeup = if (isActionable) classifyWakeup(remoteMessage) else PushWakeup(false, false)
         val isCallWakeup = wakeup.isCall
         val isMessageWakeup = wakeup.isMessage
-        val app = JamiApplication.instance as? JamiApplicationFirebase
-        val appInForeground = app?.isForeground ?: false
+        val appInForeground = app.isForeground
         Log.d(TAG, "push actionable=$isActionable renewal=$isRenewal call=$isCallWakeup message=$isMessageWakeup foreground=$appInForeground priority=${remoteMessage.priority}/${remoteMessage.originalPriority}")
 
         // Start FGS for calls and messages when backgrounded: both trigger an async daemon
@@ -78,7 +79,7 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
             }
         }
 
-        if (!appInForeground && app != null && isActionable) {
+        if (!appInForeground && isActionable) {
             // Single serialized entry point; grace window, restore, reconnect and
             // deactivation re-arm are all evaluated on the main thread.
             app.onBackgroundPushReceived(isCallPush = isCallWakeup, isMessagePush = isMessageWakeup)
@@ -86,14 +87,14 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
 
         serviceScope.launch {
             try {
-                app?.onMessageReceived(remoteMessage)
+                app.onMessageReceived(remoteMessage)
             } catch (e: Exception) {
                 Log.e(TAG, "Error in processing message", e)
             } finally {
                 // Re-arm deactivation so accounts restored above are not left active.
                 if (!appInForeground) {
                     Log.d(TAG, "scheduling deactivation")
-                    app?.scheduleBackgroundDeactivation()
+                    app.scheduleBackgroundDeactivation()
                 }
                 // Presence/expiration push: nothing to do, so release early instead of
                 // burning the 10s timeout. Actionable pushes keep the lock — they trigger
