@@ -286,7 +286,11 @@ class AccountService(
         val scheduler = Schedulers.computation()
         toLoad.forEach { account ->
             account.registrationStateObservable
-                .filter { it != AccountConfig.RegistrationState.UNLOADED && it != AccountConfig.RegistrationState.INITIALIZING }
+                .filter {
+                    it != AccountConfig.RegistrationState.UNLOADED &&
+                        it != AccountConfig.RegistrationState.INITIALIZING &&
+                        it != AccountConfig.RegistrationState.ERROR_NEED_MIGRATION
+                }
                 .firstElement()
                 .observeOn(scheduler)
                 .flatMapCompletable { Completable.fromAction { loadAccount(account) } }

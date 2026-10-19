@@ -22,20 +22,18 @@ import android.content.Intent
 import android.text.format.DateUtils
 import android.util.Log
 import androidx.core.content.ContextCompat
-import dagger.hilt.android.AndroidEntryPoint
-import net.jami.services.PreferencesService
-import javax.inject.Inject
+import cx.ring.application.JamiApplication
+import cx.ring.backup.JamiBackupAgent
+import cx.ring.services.SharedPreferencesServiceImpl
 
-@AndroidEntryPoint
 class BootReceiver : BroadcastReceiver() {
-    @Inject
-    lateinit var mPreferencesService: PreferencesService
-
     override fun onReceive(context: Context, intent: Intent) {
+        if (context.applicationContext !is JamiApplication || JamiBackupAgent.isActive) return
         val action = intent.action ?: return
         if (Intent.ACTION_BOOT_COMPLETED == action || Intent.ACTION_REBOOT == action || Intent.ACTION_MY_PACKAGE_REPLACED == action) {
             try {
-                if (mPreferencesService.settings.runOnStartup) {
+                if (context.getSharedPreferences(SharedPreferencesServiceImpl.PREFS_SETTINGS, Context.MODE_PRIVATE)
+                    .getBoolean("on_startup", true)) {
                     try {
                         ContextCompat.startForegroundService(context, Intent(SyncService.ACTION_START)
                                 .setClass(context, SyncService::class.java)

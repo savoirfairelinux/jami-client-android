@@ -33,7 +33,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         <service
             android:name="cx.ring.service.PushForegroundService"
             android:exported="false"
-            android:foregroundServiceType="dataSync|remoteMessaging">
+            android:foregroundServiceType="dataSync|remoteMessaging|shortService">
         </service>
 
     </application>
