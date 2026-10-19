@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <full-backup-content>
-    <include domain="file" path="backup/portable-settings.json" requireFlags="deviceToDeviceTransfer" />
+    <include domain="file" path="." requireFlags="deviceToDeviceTransfer" />
+    <include domain="root" path="app_config" requireFlags="deviceToDeviceTransfer" />
 </full-backup-content>

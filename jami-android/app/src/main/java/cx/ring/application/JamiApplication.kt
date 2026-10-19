@@ -37,6 +37,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import com.bumptech.glide.Glide
 import cx.ring.BuildConfig
+import cx.ring.backup.AccountDataBackup
 import cx.ring.backup.JamiBackupAgent
 import cx.ring.backup.PortableSettingsBackup
 import cx.ring.service.ConnectionService
@@ -129,6 +130,8 @@ abstract class JamiApplication : Application() {
     private var runtimeRequested = false
     val isRuntimeReady: Boolean
         get() = runtimeInitialized && !JamiBackupAgent.isActive
+    internal open val isDaemonRunning: Boolean
+        get() = ::daemon.isInitialized && daemon.isStarted
 
     private val appInForeground = BehaviorSubject.createDefault(true)
 
@@ -169,10 +172,15 @@ abstract class JamiApplication : Application() {
         mExecutor.execute {
             try {
                 Log.d(TAG, "bootstrapDaemon: START")
-                if (!JamiBackupAgent.canStartRuntime(backupGeneration) || daemon.isStarted) {
-                    return@execute
+                val started = synchronized(JamiBackupAgent.runtimeLock) {
+                    if (!JamiBackupAgent.canStartRuntime(backupGeneration) || daemon.isStarted) {
+                        false
+                    } else {
+                        daemon.startDaemon()
+                        true
+                    }
                 }
-                daemon.startDaemon()
+                if (!started) return@execute
 
                 // Check if the camera hardware feature is available.
                 if (mDeviceRuntimeService.hasVideoPermission()) {
@@ -254,12 +262,16 @@ abstract class JamiApplication : Application() {
             return preparation.get()
         }
         try {
+            if (AccountDataBackup.hasPending(this)) {
+                check(!isDaemonRunning) { "Account restore requires a stopped daemon" }
+                AccountDataBackup.applyPending(this)
+            }
             if (PortableSettingsBackup.applyPending(this)) {
                 mPreferencesService.reloadSettings()
                 mPreferencesService.loadDarkMode()
             }
         } catch (exception: Exception) {
-            Log.e(TAG, "Unable to complete settings restore; runtime startup deferred", exception)
+            Log.e(TAG, "Unable to complete device restore; runtime startup deferred", exception)
             return false
         }
         if (runtimeInitialized) return true
