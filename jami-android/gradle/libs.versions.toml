@@ -88,6 +88,7 @@ zxing-android-embedded = { group = "com.journeyapps", name = "zxing-android-embe
 zxing-core = { group = "com.google.zxing", name = "core", version.ref = "zxingCore" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
 dagger = { group = "com.google.dagger", name = "dagger", version.ref = "hilt" }
 dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "hilt" }
 androidx-test-ext-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junit" }
