@@ -24,10 +24,15 @@ import android.text.format.DateUtils
 import android.util.Log
 import androidx.core.content.ContextCompat
 import cx.ring.application.JamiApplication
+import cx.ring.backup.RuntimeServiceGuard
 
 class JamiJobService : JobService() {
     override fun onStartJob(params: JobParameters): Boolean {
         if (params.jobId != JOB_ID) return false
+        if (!RuntimeServiceGuard.canInitialize(this)) {
+            Handler(mainLooper).post { jobFinished(params, true) }
+            return true
+        }
         Log.w(TAG, "onStartJob() $params")
         try {
             try {
@@ -49,6 +54,7 @@ class JamiJobService : JobService() {
     }
 
     override fun onStopJob(params: JobParameters): Boolean {
+        if ((application as? JamiApplication)?.isRuntimeReady != true) return true
         Log.w(TAG, "onStopJob() $params")
         try {
             startService(Intent(SyncService.ACTION_STOP)

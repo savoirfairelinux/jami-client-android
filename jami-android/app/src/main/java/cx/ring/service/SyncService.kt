@@ -29,25 +29,20 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import cx.ring.R
 import cx.ring.application.JamiApplication
+import cx.ring.backup.RuntimeServiceGuard
 import cx.ring.client.HomeActivity
 import cx.ring.services.NotificationServiceImpl
 import cx.ring.utils.ContentUri
-import dagger.hilt.android.AndroidEntryPoint
-import net.jami.services.NotificationService
 import java.util.*
-import javax.inject.Inject
 
-@AndroidEntryPoint
 class SyncService : Service() {
     private val handler = Handler(Looper.getMainLooper())
     private var serviceUsers = 0
     private val mRandom = Random()
     private var notification: Notification? = null
 
-    @Inject
-    lateinit var mNotificationService: NotificationService
-
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+        if (!RuntimeServiceGuard.canInitialize(this)) return RuntimeServiceGuard.rejectStart(this, startId)
         val action = intent.action
         if (ACTION_START == action) {
             if (notification == null) {

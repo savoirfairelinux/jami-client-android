@@ -31,6 +31,7 @@ class JamiApplicationUnifiedPush : JamiApplication() {
         set(token) {
             Log.d(TAG, "setPushToken: $token");
             field = token
+            if (!isRuntimeReady) return
             if (mPreferencesService.settings.enablePushNotifications) {
                 mAccountService.setPushNotificationConfig(token.first, token.second, PUSH_PLATFORM)
             } else {
@@ -66,6 +67,8 @@ class JamiApplicationUnifiedPush : JamiApplication() {
     }
 
     fun onMessage(remoteMessage: Map<String, String>) {
+        if (!prepareRuntime()) return
+        bootstrapDaemon()
         //Log.d(TAG, "onMessage: from:${remoteMessage.from} priority:${remoteMessage.priority} (was ${remoteMessage.originalPriority})")
         mAccountService.pushNotificationReceived("", remoteMessage)
         mNotificationService.processPush()
