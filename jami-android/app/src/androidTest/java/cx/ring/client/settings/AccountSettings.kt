@@ -303,58 +303,6 @@ class AccountSettings {
     }
 
     /**
-     * Test that in invalid username displays an error.
-     * This test doesn't validate the register name.
-     */
-    @Test
-    fun e1_registerName_LessThan3CharactersInvalidUsername() {
-        // Click on register name.
-        onView(withId(R.id.register_name)).perform(click())
-
-        // Type invalid username.
-        onView(withId(R.id.input_username)).perform(replaceText("ab"), closeSoftKeyboard())
-
-        // Verify that the error is displayed.
-        onView(withId(R.id.input_username_txt_box))
-            .perform(waitUntil(hasTextInputLayoutError(R.string.invalid_username)))
-    }
-
-    /**
-     * Test that an already taken username displays an error.
-     * This test doesn't validate the register name.
-     */
-    @Test
-    fun f1_registerName_UsernameAlreadyTaken() {
-        // Click on register name.
-        onView(withId(R.id.register_name)).perform(click())
-
-        // Type already taken username.
-        onView(withId(R.id.input_username)).perform(replaceText("abc"), closeSoftKeyboard())
-
-        // Verify that the error is displayed.
-        onView(withId(R.id.input_username_txt_box))
-            .perform(waitUntil(hasTextInputLayoutError(R.string.username_already_taken)))
-    }
-
-    /**
-     * Test that a valid username doesn't display an error.
-     * This test doesn't validate the register name.
-     */
-    @Test
-    fun g1_registerName_ValidUsername() {
-        // Click on register name.
-        onView(withId(R.id.register_name)).perform(click())
-
-        // Type valid username.
-        val randomUsername = "jamitest_" + System.currentTimeMillis()
-        onView(allOf(withId(R.id.input_username), isDisplayed()))
-            .perform(replaceText(randomUsername), closeSoftKeyboard())
-
-        // Verify that no error is displayed.
-        onView(withId(R.id.input_username_txt_box)).perform(waitUntil((hasTextInputLayoutError(null))))
-    }
-
-    /**
      * Test that a valid username can be registered.
      * This test do validates the register name.
      */
@@ -393,58 +341,6 @@ class AccountSettings {
 
         // Cant see the biometric switch.
         onView(withId(R.id.system_biometric_title)).check(matches(not(isDisplayed())))
-    }
-
-    /**
-     * Test there is an error displayed if the password is less than 6 characters (invalid).
-     */
-    @Test
-    fun j1_setPassword_LessThan6Characters_InvalidPassword() {
-        // Click on the `Account` button.
-        onView(allOf(withId(R.id.settings_account), isDisplayed()))
-            .perform(scrollTo(), click())
-
-        // Click on `Set password` button.
-        onView(withId(R.id.system_change_password_title)).perform(click())
-
-        // Type and recopy invalid password.
-        onView(withId(R.id.new_password_txt)).perform(replaceText("12345"), closeSoftKeyboard())
-        onView(withId(R.id.new_password_repeat_txt)).perform(replaceText("12345"), closeSoftKeyboard())
-
-        // Click on `Set Password`.
-        onView(withId(android.R.id.button1)).perform(click())
-
-        // Check that the error is displayed.
-        onView(withId(R.id.new_password_txt_box))
-            .check(matches(hasTextInputLayoutError(R.string.error_password_char_count)))
-        onView(withId(R.id.new_password_repeat_txt_box))
-            .check(matches(hasTextInputLayoutError(R.string.error_password_char_count)))
-    }
-
-    /**
-     * Test there is an error displayed if the password recopy is different.
-     */
-    @Test
-    fun k1_setPassword_WrongRecopy() {
-        // Click on the `Account` button.
-        onView(allOf(withId(R.id.settings_account), isDisplayed()))
-            .perform(scrollTo(), click())
-
-        // Click on `Set password` button.
-        onView(withId(R.id.system_change_password_title)).perform(click())
-
-        // Type and badly recopy password.
-        onView(withId(R.id.new_password_txt)).perform(replaceText("123456"), closeSoftKeyboard())
-        onView(withId(R.id.new_password_repeat_txt)).perform(replaceText("12345"), closeSoftKeyboard())
-
-        // Click on `Set Password`.
-        onView(withId(android.R.id.button1)).perform(click())
-
-        // Check that the error is displayed.
-        onView(withId(R.id.new_password_txt_box))
-            .check(matches(hasTextInputLayoutError(R.string.error_passwords_not_equals)))
-        onView(withId(R.id.new_password_repeat_txt_box))
-            .check(matches(hasTextInputLayoutError(R.string.error_passwords_not_equals)))
     }
 
     /**

@@ -50,6 +50,7 @@ protoc = "4.33.2"
 nanohttpd = "2.3.1"
 javaxInject = "1"
 junit4 = "4.13.2"
+robolectric = "4.16.1"
 mockito = "5.20.0"
 gson = "2.14.0"
 
@@ -87,6 +88,7 @@ zxing-android-embedded = { group = "com.journeyapps", name = "zxing-android-embe
 zxing-core = { group = "com.google.zxing", name = "core", version.ref = "zxingCore" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
 dagger = { group = "com.google.dagger", name = "dagger", version.ref = "hilt" }
 dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "hilt" }
 androidx-test-ext-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junit" }
@@ -112,6 +114,7 @@ unifiedpush-connector = { group = "org.unifiedpush.android", name = "connector",
 unifiedpush-connector-ui = { group = "org.unifiedpush.android", name = "connector-ui", version.ref = "unifiedPushUi" }
 javax-inject = { group = "javax.inject", name = "javax.inject", version.ref = "javaxInject" }
 junit = { group = "junit", name = "junit", version.ref = "junit4" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 androidx-documentfile = { group = "androidx.documentfile", name = "documentfile", version = "1.0.1" }
