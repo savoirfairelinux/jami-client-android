@@ -73,6 +73,7 @@ import cx.ring.navigation.BoardBottomSheet
 import cx.ring.navigation.CirclesBottomSheet
 import cx.ring.navigation.DocumentsBottomSheet
 import cx.ring.navigation.GroupsBottomSheet
+import cx.ring.navigation.ServicesBottomSheet
 import cx.ring.navigation.TargetPickerBottomSheet
 import cx.ring.utils.BitmapUtils
 import cx.ring.utils.ConversationPath
@@ -629,8 +630,10 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             BoardBottomSheet.newInstance().show(parentFragmentManager, BoardBottomSheet.TAG)
         }
 
-        // 7. Shared services
-        panel.cardFuncServices.setOnClickListener { (activity as? HomeActivity)?.goToAdvancedSettings() }
+        // 7. Shared services offered by the contacts
+        panel.cardFuncServices.setOnClickListener {
+            ServicesBottomSheet.newInstance().show(parentFragmentManager, ServicesBottomSheet.TAG)
+        }
 
         // 8. Location
         panel.cardFuncLocation.setOnClickListener {

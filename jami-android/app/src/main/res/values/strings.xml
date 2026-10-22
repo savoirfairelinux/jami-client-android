@@ -1063,5 +1063,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="documents_empty">No collaborative document yet</string>
     <string name="documents_edit">Edit</string>
     <string name="documents_author_you">you</string>
+    <string name="services_mine">My services</string>
+    <string name="services_offered_by">Offered by %1$s</string>
+    <string name="services_empty">Your contacts offer no services</string>
 
 </resources>
