@@ -149,12 +149,14 @@ class TargetAdapter(
                     onCallTargetClick?.invoke(target, false) ?: onTargetClick(target)
                 }
             } else {
-                // Starting a document there, or writing to it
-                val startsDocument = capability == TargetCapability.CAN_SHARE_DOC
-                binding.targetChatIcon.setImageResource(
-                    if (startsDocument) R.drawable.baseline_article_24 else R.drawable.baseline_chat_24)
-                binding.targetChatIcon.contentDescription = ctx.getString(
-                    if (startsDocument) R.string.collab_new_document else R.string.function_messages)
+                // The function the row leads to, drawn as on the functions panel
+                val (actionIcon, actionName) = when (capability) {
+                    TargetCapability.CAN_SHARE_DOC -> R.drawable.baseline_article_24 to R.string.collab_new_document
+                    TargetCapability.CAN_SHARE_LOCATION -> R.drawable.baseline_my_location_24 to R.string.function_location
+                    else -> R.drawable.baseline_chat_24 to R.string.function_messages
+                }
+                binding.targetChatIcon.setImageResource(actionIcon)
+                binding.targetChatIcon.contentDescription = ctx.getString(actionName)
                 binding.targetChatIcon.setOnClickListener {
                     onTargetClick(target)
                 }
