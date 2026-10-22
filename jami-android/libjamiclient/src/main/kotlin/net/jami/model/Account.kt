@@ -754,7 +754,9 @@ class Account(
                     contactLocations[contact] = ls
                     mLocationSubject.onNext(contactLocations)
                     mLocationStartedSubject.onNext(ContactLocationEntry(contact, conversation, ls))
-                } else if (ls.blockingFirst().timestamp < cl.timestamp) {
+                } else if (ls.blockingFirst().timestamp <= cl.timestamp) {
+                    // A peer that does not move may keep sending the same position:
+                    // it is still sharing it, so its reception date is renewed.
                     (ls as Subject<ContactLocation>).onNext(cl)
                 }
             }
