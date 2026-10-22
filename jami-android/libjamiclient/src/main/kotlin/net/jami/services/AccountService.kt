@@ -141,6 +141,32 @@ class AccountService(
         var longitude = 0.0
 
         override fun toString(): String = "Location{$type $latitude $longitude $date account:$account callId:$callId peer:$peer}"
+
+        companion object {
+            /**
+             * A location message, as peers send it in an "application/geo" payload,
+             * or null if it is not one.
+             */
+            fun parse(account: String, callId: String?, peer: Uri, json: String,
+                      now: Long = System.currentTimeMillis()): Location? {
+                val obj = JsonParser.parseString(json).asJsonObject
+                val type = obj["type"]?.asString
+                // Jami for desktop sends its Stop without a time: date it on reception.
+                val date = obj["time"]?.asLong ?: now
+                return when {
+                    type.equals(Type.Stop.toString(), ignoreCase = true) ->
+                        Location(account, callId, peer, date).apply { this.type = Type.Stop }
+                    (type == null || type.equals(Type.Position.toString(), ignoreCase = true))
+                            && obj.has("lat") && obj.has("long") ->
+                        Location(account, callId, peer, date).apply {
+                            this.type = Type.Position
+                            latitude = obj["lat"].asDouble
+                            longitude = obj["long"].asDouble
+                        }
+                    else -> null
+                }
+            }
+        }
     }
 
     private val incomingMessageSubject: Subject<Message> = PublishSubject.create()
@@ -162,18 +188,8 @@ class AccountService(
         .flatMapMaybe { msg: Message ->
             try {
                 val loc = msg.messages[CallService.MIME_GEOLOCATION] ?: return@flatMapMaybe Maybe.empty<Location>()
-                val obj = JsonParser.parseString(loc).asJsonObject
-                if (obj.size() < 2) return@flatMapMaybe Maybe.empty<Location>()
-                Maybe.just(Location(msg.accountId, msg.callId, Uri.fromId(msg.author), obj["time"].asLong).apply {
-                    val t = obj["type"]
-                    if (t == null || t.asString.equals(Location.Type.Position.toString(), ignoreCase = true)) {
-                        type = Location.Type.Position
-                        latitude = obj["lat"].asDouble
-                        longitude = obj["long"].asDouble
-                    } else if (t.asString.equals(Location.Type.Stop.toString(), ignoreCase = true)) {
-                        type = Location.Type.Stop
-                    }
-                })
+                Location.parse(msg.accountId, msg.callId, Uri.fromId(msg.author), loc)
+                    ?.let { Maybe.just(it) } ?: Maybe.empty()
             } catch (e: Exception) {
                 Log.w(TAG, "Failed to receive geolocation", e)
                 Maybe.empty()
