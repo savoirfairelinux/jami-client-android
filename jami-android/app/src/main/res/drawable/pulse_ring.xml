@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A thin ring around an icon, that Pulse grows and fades. Not tinted: a tinted
+     shape without a fill of its own gets filled. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@android:color/transparent" />
+    <stroke
+        android:width="1.5dp"
+        android:color="@color/location_red" />
+    <corners android:radius="@dimen/account_unread_radius" />
+</shape>

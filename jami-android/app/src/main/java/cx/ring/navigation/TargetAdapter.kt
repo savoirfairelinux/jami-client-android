@@ -16,13 +16,17 @@
  */
 package cx.ring.navigation
 
+import android.animation.Animator
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import cx.ring.R
 import cx.ring.databinding.ItemTargetEntryBinding
 import cx.ring.views.AvatarDrawable
+import cx.ring.views.Pulse
 import net.jami.model.Target
 import net.jami.model.TargetCapability
 
@@ -44,6 +48,7 @@ class TargetAdapter(
     private var currentFilter: TargetFilterType = TargetFilterType.ALL
     private var currentQuery: String = ""
     private var capability: TargetCapability = TargetCapability.CAN_MESSAGE
+    private var sharingContacts: Set<String> = emptySet()
 
     fun setCapability(cap: TargetCapability) {
         capability = cap
@@ -63,6 +68,13 @@ class TargetAdapter(
     fun setQuery(query: String) {
         currentQuery = query
         applyFilter()
+    }
+
+    /** The contacts sending their position, by uri: while locating, they pulse. */
+    fun setSharingContacts(uris: Set<String>) {
+        if (uris == sharingContacts) return
+        sharingContacts = uris
+        notifyDataSetChanged()
     }
 
     private fun applyFilter() {
@@ -98,12 +110,32 @@ class TargetAdapter(
         holder.bind(displayedTargets[position])
     }
 
+    override fun onViewRecycled(holder: TargetViewHolder) {
+        holder.setLive(false)
+    }
+
     inner class TargetViewHolder(
         private val binding: ItemTargetEntryBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
+        private var pulse: Animator? = null
+        private val idleTint = binding.targetChatIcon.imageTintList
+
+        // Its icon turns red and a ring ripples from around it
+        fun setLive(live: Boolean) {
+            if (live == (pulse != null)) return
+            pulse?.cancel()
+            pulse = if (live) Pulse.start(binding.targetPulse, alpha = 1f) else null
+            binding.targetPulse.isVisible = live
+            binding.targetChatIcon.imageTintList = if (live)
+                ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.location_red))
+            else idleTint
+        }
+
         fun bind(target: Target) {
             val ctx = itemView.context
+            setLive(capability == TargetCapability.CAN_SHARE_LOCATION
+                    && target is Target.ContactTarget && target.id in sharingContacts)
 
             // 1. Avatar of the target
             val vm = target.viewModel
@@ -134,7 +166,7 @@ class TargetAdapter(
 
             // 4. Action icons depending on the mode (Call vs Chat)
             val isCallMode = capability == TargetCapability.CAN_CALL
-            binding.targetChatIcon.isVisible = !isCallMode
+            binding.targetAction.isVisible = !isCallMode
             binding.targetVideoCallIcon.isVisible = isCallMode
             binding.targetAudioCallIcon.isVisible = isCallMode
 

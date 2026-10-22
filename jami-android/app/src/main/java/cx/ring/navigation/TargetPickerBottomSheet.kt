@@ -31,6 +31,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Target
 import net.jami.model.TargetCapability
+import net.jami.services.AccountService
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -38,6 +39,9 @@ class TargetPickerBottomSheet : BottomSheetDialogFragment() {
 
     @Inject
     lateinit var targetRepository: TargetRepository
+
+    @Inject
+    lateinit var accountService: AccountService
 
     private var binding: SheetTargetPickerBinding? = null
     private val disposable = CompositeDisposable()
@@ -145,6 +149,14 @@ class TargetPickerBottomSheet : BottomSheetDialogFragment() {
                     updateEmptyState()
                 })
         )
+
+        if (capability == TargetCapability.CAN_SHARE_LOCATION) {
+            disposable.add(accountService.currentAccountSubject
+                .switchMap { it.locationSharers }
+                .map { sharers -> sharers.mapTo(HashSet()) { it.rawUriString } }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(adapter::setSharingContacts))
+        }
     }
 
     private fun updateEmptyState() {

@@ -22,6 +22,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
     android:clickable="true"
+    android:clipChildren="false"
+    android:clipToPadding="false"
     android:focusable="true"
     android:gravity="center_vertical"
     android:orientation="horizontal"
@@ -66,16 +68,33 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         tools:text="Alice" />
 
     <!-- 4. "Chat" icon (Message / Document / etc. mode) -->
-    <ImageView
-        android:id="@+id/target_chat_icon"
+    <FrameLayout
+        android:id="@+id/target_action"
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:padding="8dp"
-        android:background="@drawable/background_unread_counter"
-        android:backgroundTint="?attr/colorPrimaryContainer"
-        android:src="@drawable/baseline_chat_24"
-        app:tint="?attr/colorOnPrimaryContainer"
-        android:contentDescription="@string/function_messages" />
+        android:clipChildren="false">
+
+        <!-- Pulses while the contact sends its position, from around the button
+             rather than from under it, where it would hardly show -->
+        <View
+            android:id="@+id/target_pulse"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_gravity="center"
+            android:background="@drawable/pulse_ring"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/target_chat_icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:background="@drawable/background_unread_counter"
+            android:backgroundTint="?attr/colorPrimaryContainer"
+            android:src="@drawable/baseline_chat_24"
+            app:tint="?attr/colorOnPrimaryContainer"
+            android:contentDescription="@string/function_messages" />
+    </FrameLayout>
 
     <!-- 4b. Video and audio call icons (Call mode) -->
     <ImageView

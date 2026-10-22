@@ -799,6 +799,10 @@ class Account(
     val locationsUpdates: Observable<Map<Contact, Observable<ContactLocation>>>
         get() = mLocationSubject
 
+    /** The contacts sending their position. */
+    val locationSharers: Observable<Set<Uri>>
+        get() = mLocationSubject.map { locations -> locations.keys.mapTo(HashSet()) { it.uri } }
+
     fun getLocationUpdates(conversationUri: Uri): Observable<Observable<ContactLocation>> {
         val conversation = getByUri(conversationUri) ?: return Observable.empty()
         return getLocationUpdates(conversation)

@@ -16,6 +16,7 @@
  */
 package cx.ring.fragments
 
+import android.animation.Animator
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
@@ -80,6 +81,7 @@ import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import cx.ring.viewholders.SmartListViewHolder
 import cx.ring.views.AvatarDrawable
+import cx.ring.views.Pulse
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -792,6 +794,13 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             }
         )
 
+        mDisposable.add(mAccountService.currentAccountSubject
+            .switchMap { it.locationSharers }
+            .map { it.isNotEmpty() }
+            .distinctUntilChanged()
+            .observeOn(DeviceUtils.uiScheduler)
+            .subscribe { showLocationReception(it) })
+
         // Subscribe on invitation pending list to show a badge counter
         mDisposable.add(mAccountService
             .currentAccountSubject
@@ -850,6 +859,18 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     override fun onStop() {
         super.onStop()
         mDisposable.clear()
+        showLocationReception(false)
+    }
+
+    private var locationPulse: Animator? = null
+
+    // The Location function pulses while a contact sends its position.
+    private fun showLocationReception(receiving: Boolean) {
+        locationPulse?.cancel()
+        locationPulse = null
+        val ring = mBinding?.functionsPanel?.locationPulse ?: return
+        ring.isVisible = receiving
+        if (receiving) locationPulse = Pulse.start(ring)
     }
 
     private fun adjustLayoutForAccessibility(enabled: Boolean) {

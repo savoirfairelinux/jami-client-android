@@ -141,4 +141,5 @@
     <color name="donation_card_button_color">#005699</color>
     <color name="donation_card_favorite_color">#FF0045</color>
 
+    <color name="location_red">#EF4444</color>
 </resources>
