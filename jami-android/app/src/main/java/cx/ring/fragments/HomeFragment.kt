@@ -65,11 +65,13 @@ import cx.ring.adapters.SmartListAdapter
 import cx.ring.client.AccountAdapter
 import cx.ring.client.BroadcastActivity
 import cx.ring.client.CallActivity
+import cx.ring.client.CollabDocuments
 import cx.ring.client.HomeActivity
 import cx.ring.databinding.LayoutFunctionsPanelBinding
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.navigation.BoardBottomSheet
 import cx.ring.navigation.CirclesBottomSheet
+import cx.ring.navigation.DocumentsBottomSheet
 import cx.ring.navigation.GroupsBottomSheet
 import cx.ring.navigation.TargetPickerBottomSheet
 import cx.ring.utils.BitmapUtils
@@ -87,6 +89,7 @@ import net.jami.model.Conversation
 import net.jami.model.Target
 import net.jami.model.TargetCapability
 import net.jami.services.AccountService
+import net.jami.services.CollaborationService
 import net.jami.services.ConversationFacade
 import net.jami.smartlist.ConversationItemViewModel
 import java.text.Collator
@@ -130,6 +133,9 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
     @Inject
     lateinit var mConversationFacade: ConversationFacade
+
+    @Inject
+    lateinit var mCollaborationService: CollaborationService
 
     private val searchBackPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
@@ -566,6 +572,10 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         }
 
         setUpFunctionsPanel()
+
+        parentFragmentManager.setFragmentResultListener(DocumentsBottomSheet.REQUEST_NEW_DOCUMENT, viewLifecycleOwner) { _, _ ->
+            pickNewDocumentTarget()
+        }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -596,16 +606,18 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             sheet.show(parentFragmentManager, TargetPickerBottomSheet.TAG)
         }
 
-        // 2. Messages, 4. Shared documents: open the conversation, or broadcast to a Circle
+        // 2. Messages: open the conversation, or broadcast to a Circle
         panel.cardFuncMessages.setOnClickListener {
             pickConversationTarget(TargetCapability.CAN_MESSAGE, R.string.function_messages)
-        }
-        panel.cardFuncDocuments.setOnClickListener {
-            pickConversationTarget(TargetCapability.CAN_SHARE_DOC, R.string.function_documents)
         }
 
         // 3. Contacts
         panel.cardFuncContacts.setOnClickListener { openContactsScreen() }
+
+        // 4. Collaborative documents, from every conversation
+        panel.cardFuncDocuments.setOnClickListener {
+            DocumentsBottomSheet.newInstance().show(parentFragmentManager, DocumentsBottomSheet.TAG)
+        }
 
         // 5. Groups
         panel.cardFuncGroups.setOnClickListener {
@@ -644,6 +656,23 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
                 startActivity(BroadcastActivity.intent(requireContext(), accountId, target.circleId))
             else
                 (requireActivity() as HomeActivity).startConversation(accountId, Uri.fromString(target.id))
+        }
+        sheet.show(parentFragmentManager, TargetPickerBottomSheet.TAG)
+    }
+
+    /**
+     * Starts a document with the contact or in the group the user picks. Done here
+     * rather than in the documents sheet: the creation outlives both sheets.
+     */
+    private fun pickNewDocumentTarget() {
+        val sheet = TargetPickerBottomSheet.newInstance(TargetCapability.CAN_SHARE_DOC, getString(R.string.function_documents))
+        sheet.setOnTargetSelectedListener { target ->
+            val accountId = mAccountService.currentAccount?.accountId ?: return@setOnTargetSelectedListener
+            // A contact is named by its own id: the document goes into the conversation with it
+            val conversationUri = target.viewModel?.uri ?: Uri.fromString(target.id)
+            CollabDocuments.promptNew(
+                requireContext(), ConversationPath(accountId, conversationUri), mCollaborationService, mDisposable
+            )
         }
         sheet.show(parentFragmentManager, TargetPickerBottomSheet.TAG)
     }

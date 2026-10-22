@@ -86,9 +86,9 @@ sealed interface Target {
         override val displayName: String get() = name
         override val secondaryText: String? get() = null
         override val avatarUri: Uri? get() = uri
+        // A document lives in a single conversation: a Circle has none of its own
         override val capabilities: Set<TargetCapability> get() = setOf(
             TargetCapability.CAN_MESSAGE,
-            TargetCapability.CAN_SHARE_DOC,
             TargetCapability.CAN_POST
         )
     }
@@ -104,10 +104,10 @@ sealed interface Target {
         override val displayName: String get() = title
         override val secondaryText: String? get() = description
         override val avatarUri: Uri? get() = uri
+        // Only its owner publishes on a Board: no document is written together there
         override val capabilities: Set<TargetCapability> get() = setOf(
             TargetCapability.CAN_MESSAGE,
-            TargetCapability.CAN_POST,
-            TargetCapability.CAN_SHARE_DOC
+            TargetCapability.CAN_POST
         )
     }
 }

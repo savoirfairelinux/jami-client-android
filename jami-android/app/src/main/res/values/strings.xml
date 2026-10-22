@@ -1059,5 +1059,9 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="target_empty_hint">No recipient available for this action</string>
     <string name="contacts_tab_by_date">By interaction date</string>
     <string name="contacts_tab_alphabetical">Alphabetical (A–Z)</string>
+    <string name="documents_new">+ New</string>
+    <string name="documents_empty">No collaborative document yet</string>
+    <string name="documents_edit">Edit</string>
+    <string name="documents_author_you">you</string>
 
 </resources>

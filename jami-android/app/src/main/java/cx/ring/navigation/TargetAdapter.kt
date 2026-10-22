@@ -149,7 +149,12 @@ class TargetAdapter(
                     onCallTargetClick?.invoke(target, false) ?: onTargetClick(target)
                 }
             } else {
-                binding.targetChatIcon.setImageResource(R.drawable.baseline_chat_24)
+                // Starting a document there, or writing to it
+                val startsDocument = capability == TargetCapability.CAN_SHARE_DOC
+                binding.targetChatIcon.setImageResource(
+                    if (startsDocument) R.drawable.baseline_article_24 else R.drawable.baseline_chat_24)
+                binding.targetChatIcon.contentDescription = ctx.getString(
+                    if (startsDocument) R.string.collab_new_document else R.string.function_messages)
                 binding.targetChatIcon.setOnClickListener {
                     onTargetClick(target)
                 }

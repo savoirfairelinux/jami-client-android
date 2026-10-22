@@ -104,10 +104,14 @@ class TargetPickerBottomSheet : BottomSheetDialogFragment() {
             TargetCapability.CAN_POST -> {
                 b.chipContacts.isVisible = false
             }
+            TargetCapability.CAN_SHARE_DOC -> {
+                // A document is written in one conversation: a contact's or a group's
+                b.chipCircles.isVisible = false
+                b.chipBoards.isVisible = false
+            }
             TargetCapability.CAN_SHARE_LOCATION -> {
                 b.chipBoards.isVisible = false
             }
-            else -> {}
         }
 
         b.recyclerTargets.adapter = adapter
