@@ -110,6 +110,8 @@ class TargetPickerBottomSheet : BottomSheetDialogFragment() {
                 b.chipBoards.isVisible = false
             }
             TargetCapability.CAN_SHARE_LOCATION -> {
+                // A location is shared with a contact or a group
+                b.chipCircles.isVisible = false
                 b.chipBoards.isVisible = false
             }
         }
