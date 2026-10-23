@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b73e5a73_ebb686a1",
+        "filename": "daemon",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-23T21:30:44Z",
+      "side": 1,
+      "message": "[warning] Line 1: 🟡 This patch updates only the submodule pointer, but does not include a short changelog/risk summary for `1c057cc..a39cf18`. Please add a brief release-note style summary (notable behavior changes, security fixes, and any breaking API/ABI changes) in the change description to make security/performance review auditable.",
+      "revId": "2d831621ed360df12661c7095677ae524afba709",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
