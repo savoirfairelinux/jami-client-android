@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd1cfaa5_52115b9b",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-23T19:38:44Z",
+      "side": 1,
+      "message": "[error] Line 718: 🔴 Camera state can still be overwritten during repeated screen-share starts in the pending/transition window. The guard `if (!call.hasActiveScreenSharing())` depends on media-list propagation timing; if a second `startScreenShare` callback runs before the call is marked as screen-sharing, it recomputes and replaces `cameraMuteStateBeforeScreenShare`, violating the intended “preserve original state across repeated starts.” Use the saved-state field itself as the idempotency guard (e.g., only snapshot when `cameraMuteStateBeforeScreenShare \u003d\u003d null`) and clear it only after stop/restore completes.",
+      "revId": "26fb120dddd6f89495c415e16443ebc1c5d634db",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
