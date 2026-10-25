@@ -35,6 +35,42 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9b405da_fa51eccf",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/VCardServiceImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-10-25T18:45:54Z",
+      "side": 1,
+      "message": "Done in PS2: if the photo still exceeds its budget after the loop, it is dropped, so the vCard keeps its name and fits in maxSize. Covered by photoIsDroppedWhenItCannotFit.",
+      "parentUuid": "b48412f0_dd290b5b",
+      "revId": "d933527593d3a7fbe0a4458b19b1bcf35d1a22ee",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d887b29_e598ef1c",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/VCardServiceImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-10-25T18:45:54Z",
+      "side": 1,
+      "message": "Done in PS2: the loop now runs while the longest side is above PHOTO_MIN_SIDE, and each side keeps at least 1 px so that very narrow photos cannot reach a zero side (createScaledBitmap throws). Covered by narrowPhotoFitsInTrustRequest (24x1800, 2x21845 and 21845x2).",
+      "parentUuid": "2d772c29_eb63bbdc",
+      "revId": "d933527593d3a7fbe0a4458b19b1bcf35d1a22ee",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "86a85848_194c9825",
@@ -48,6 +84,24 @@
       "writtenOn": "2026-10-25T00:46:33Z",
       "side": 1,
       "message": "[warning] Line 55: 🟡 `quality` can go below `PHOTO_MIN_QUALITY` because `quality -\u003d 10` allows `58 -\u003e 48`. This contradicts the min-quality guard and causes avoidable quality loss. Clamp with `quality \u003d max(PHOTO_MIN_QUALITY, quality - 10)`.",
+      "revId": "d933527593d3a7fbe0a4458b19b1bcf35d1a22ee",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ae58ec5_8d529a06",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/VCardServiceImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 617
+      },
+      "writtenOn": "2026-10-25T18:45:54Z",
+      "side": 1,
+      "message": "Done in PS2: quality \u003d maxOf(quality - 10, PHOTO_MIN_QUALITY).",
+      "parentUuid": "86a85848_194c9825",
       "revId": "d933527593d3a7fbe0a4458b19b1bcf35d1a22ee",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
