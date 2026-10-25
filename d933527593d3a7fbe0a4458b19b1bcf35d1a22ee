@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d772c29_eb63bbdc",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/VCardServiceImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-25T00:46:33Z",
+      "side": 1,
+      "message": "[warning] Line 54: 🟡 The loop condition checks only `photo.width \u003e PHOTO_MIN_SIDE`; very tall/narrow images may stop resizing even when height is still large and payload remains too big. Base the stop condition on both dimensions (for example `max(width, height) \u003e PHOTO_MIN_SIDE`) to keep behavior robust across aspect ratios.",
+      "revId": "d933527593d3a7fbe0a4458b19b1bcf35d1a22ee",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b48412f0_dd290b5b",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/VCardServiceImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-25T00:46:33Z",
+      "side": 1,
+      "message": "[error] Line 54: 🔴 The resize/compress loop can stop while `jpeg.size` is still above `photoMaxSize` (once the min-side condition is hit), so the resulting trust-request vCard may still exceed `MAX_SIZE_REQUEST` and get its photo dropped by the daemon. Enforce the size contract after the loop: if still oversized, continue shrinking safely or remove the photo before returning.",
+      "revId": "d933527593d3a7fbe0a4458b19b1bcf35d1a22ee",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86a85848_194c9825",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/VCardServiceImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-25T00:46:33Z",
+      "side": 1,
+      "message": "[warning] Line 55: 🟡 `quality` can go below `PHOTO_MIN_QUALITY` because `quality -\u003d 10` allows `58 -\u003e 48`. This contradicts the min-quality guard and causes avoidable quality loss. Clamp with `quality \u003d max(PHOTO_MIN_QUALITY, quality - 10)`.",
+      "revId": "d933527593d3a7fbe0a4458b19b1bcf35d1a22ee",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
