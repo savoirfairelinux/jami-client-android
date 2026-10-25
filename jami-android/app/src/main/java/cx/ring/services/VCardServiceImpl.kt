@@ -22,6 +22,7 @@ import ezvcard.VCard
 import net.jami.utils.VCardUtils
 import android.graphics.Bitmap
 import android.util.Base64
+import androidx.core.graphics.scale
 import cx.ring.utils.BitmapUtils
 import ezvcard.parameter.ImageType
 import ezvcard.property.Photo
@@ -44,13 +45,23 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
             .filter { vcard: VCard -> !VCardUtils.isEmpty(vcard) }
             .map { vcard: VCard ->
                 if (vcard.photos.isNotEmpty()) {
-                    // Reduce photo to fit in maxSize, assuming JPEG compress with ratio of at least 8
-                    val data = vcard.photos[0].data
-                    val photo = BitmapUtils.bytesToBitmap(data, maxSize * 8)
-                    val stream = ByteArrayOutputStream()
-                    photo.compress(Bitmap.CompressFormat.JPEG, 88, stream)
+                    // The photo is sent base64-encoded (a third bigger) with the rest of the vCard,
+                    // which must fit in maxSize: lower its quality first, then its size.
+                    val photoMaxSize = (maxSize - VCARD_FIELDS_MAX_SIZE) * 2 / 3
+                    var photo = BitmapUtils.bytesToBitmap(vcard.photos[0].data, maxSize * 8)
+                    var quality = PHOTO_QUALITY
+                    var jpeg = photo.toJpeg(quality)
+                    while (jpeg.size > photoMaxSize && maxOf(photo.width, photo.height) > PHOTO_MIN_SIDE) {
+                        if (quality > PHOTO_MIN_QUALITY)
+                            quality = maxOf(quality - 10, PHOTO_MIN_QUALITY)
+                        else
+                            photo = photo.scale(maxOf(photo.width * 3 / 4, 1), maxOf(photo.height * 3 / 4, 1))
+                        jpeg = photo.toJpeg(quality)
+                    }
                     vcard.removeProperties(Photo::class.java)
-                    vcard.addPhoto(Photo(stream.toByteArray(), ImageType.JPEG))
+                    // Better no photo than a trust request too big to be delivered
+                    if (jpeg.size <= photoMaxSize)
+                        vcard.addPhoto(Photo(jpeg, ImageType.JPEG))
                 }
                 vcard.removeProperties(RawProperty::class.java)
                 vcard
@@ -79,6 +90,15 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
     override fun base64ToBitmap(base64: String?): Any? = BitmapUtils.base64ToBitmap(base64)
 
     companion object {
+        // Room left in a trust request vCard for its other fields (name, URI...)
+        private const val VCARD_FIELDS_MAX_SIZE = 1024
+        private const val PHOTO_QUALITY = 88
+        private const val PHOTO_MIN_QUALITY = 50
+        private const val PHOTO_MIN_SIDE = 32
+
+        private fun Bitmap.toJpeg(quality: Int): ByteArray =
+            ByteArrayOutputStream().also { compress(Bitmap.CompressFormat.JPEG, quality, it) }.toByteArray()
+
         fun loadProfile(context: Context, account: Account): Observable<Profile> {
             synchronized(account) {
                 var ret = account.loadedProfile
