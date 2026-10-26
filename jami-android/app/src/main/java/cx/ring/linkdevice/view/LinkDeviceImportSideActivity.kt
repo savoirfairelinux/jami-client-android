@@ -207,10 +207,10 @@ class LinkDeviceImportSideActivity : AppCompatActivity(),
 
         val message = when (state) {
             is AddDeviceImportState.Connecting, is AddDeviceImportState.Authenticating ->
-                resources.getString(R.string.link_device_dialog_stop_import_body)
+                resources.getString(R.string.link_device_dialog_stop_import_body_identity)
 
             is AddDeviceImportState.InProgress ->
-                resources.getString(R.string.link_device_dialog_stop_import_body)
+                resources.getString(R.string.link_device_dialog_stop_import_body_identity)
 
             else -> throw UnsupportedOperationException()
         }

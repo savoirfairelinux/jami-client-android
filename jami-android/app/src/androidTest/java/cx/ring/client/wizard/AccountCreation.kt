@@ -97,14 +97,13 @@ class AccountCreation {
     }
 
     /**
-     * Checks if an account can be created by skipping all the steps.
+     * Checks if an identity can be created without filling anything.
      */
     @Test
     fun accountCreation_SkipAllSteps() = createDefaultAccount()
 
     /**
-     * Checks if an account can be created by specifying a username only.
-     * Skip others steps.
+     * Checks if an identity can be created by specifying a username only.
      */
     @Test
     fun accountCreation_SpecifyUsernameOnly() {
@@ -113,97 +112,39 @@ class AccountCreation {
     }
 
     /**
-     * Checks if an account can be created by specifying a password only.
-     * Skip others steps.
-     */
-    @Test
-    fun accountCreation_SpecifyPasswordOnly() {
-        clickCreateAccountBtn()
-
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
-
-        onView(allOf(withId(R.id.ring_password_switch), isDisplayed())).perform(click())
-
-        specifyPassword()
-
-        onView(withId(R.id.create_account_password))
-            .perform(waitUntil(allOf(isDisplayed(), isEnabled())), click())
-
-        skipBiometrics()
-
-        onView(allOf(withId(R.id.skip_create_account), isDisplayed())).perform(click())
-    }
-
-    /**
-     * Checks if an account can be created by specifying a username and a password.
-     */
-    @Test
-    fun accountCreation_SpecifyUsernameAndPassword() {
-        clickCreateAccountBtn()
-
-        val randomUsername = "JamiTest_" + System.currentTimeMillis()
-        onView(allOf(withId(R.id.input_username), isDisplayed()))
-            .perform(replaceText(randomUsername), closeSoftKeyboard())
-
-        onView(withId(R.id.create_account_username))
-            .perform(waitUntil(allOf(isDisplayed(), isEnabled())), click())
-
-        onView(allOf(withId(R.id.ring_password_switch), isDisplayed())).perform(click())
-
-        specifyPassword()
-
-        onView(withId(R.id.create_account_password))
-            .perform(waitUntil(allOf(isDisplayed(), isEnabled())), click())
-
-        skipBiometrics()
-
-        onView(allOf(withId(R.id.skip_create_account), isDisplayed())).perform(click())
-    }
-
-    /**
-     * Checks if an account can be created by specifying a profile name.
-     * Skip others steps.
+     * Checks if an identity can be created by specifying a display name.
      */
     @Test
     fun accountCreation_SpecifyProfileName() {
         clickCreateAccountBtn()
 
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
+        onView(allOf(withId(R.id.display_name), isDisplayed()))
+            .perform(replaceText("Bonjour"), closeSoftKeyboard())
 
-        onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
-
-        onView(allOf(withId(R.id.username), isDisplayed()))
-            .perform(replaceText("Bonjour"))
-
-        onView(allOf(withId(R.id.next_create_account), isDisplayed())).perform(click())
+        clickCreateIdentityBtn()
 
         // Check that we are in the home activity.
         waitForView(withId(R.id.search_bar)).perform(waitUntil(isDisplayed()))
 
-        // Go to account settings. Click on search bar menu.
+        // Go to identity settings. Click on search bar menu.
         onView(withId(R.id.menu_overflow)).perform(click())
 
-        // Click on account settings. Don't know why but doesn't work to select by ID.
-        onView(allOf(withText(R.string.menu_item_account_settings), isDisplayed())).perform(click())
+        // Click on identity settings. Don't know why but doesn't work to select by ID.
+        onView(allOf(withText(R.string.menu_item_identity_settings), isDisplayed())).perform(click())
 
         // Check if name is changed.
         onView(withId(R.id.username)).check(matches(withText("Bonjour")))
     }
 
     /**
-     * Checks if an account can be created by specifying a profile picture (via camera).
-     * Skip others steps.
+     * Checks if an identity can be created by specifying a picture (via camera).
      */
     @Test
     fun accountCreation_SpecifyProfilePictureViaCamera() {
         clickCreateAccountBtn()
 
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
-
-        onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
-
         // Click on camera (should launch a camera intent).
-        onView(withId(R.id.camera)).perform(click())
+        onView(withId(R.id.camera)).perform(scrollTo(), click())
 
         returnPhotoFromProfilePhotoFragment(downloadedImagesUri[0])
 
@@ -212,98 +153,60 @@ class AccountCreation {
         // Check if the image is displayed.
         onView(withId(R.id.profile_photo)).check(matches(withImageUri(downloadedImagesUri[0])))
 
-        onView(allOf(withId(R.id.next_create_account), isDisplayed())).perform(click())
+        clickCreateIdentityBtn()
 
         // Check that we are in the home activity.
         waitForView(withId(R.id.search_bar)).perform(waitUntil(isDisplayed()))
 
         Thread.sleep(3000)
 
-        // Go to account settings. Click on search bar menu.
+        // Go to identity settings. Click on search bar menu.
         onView(withId(R.id.menu_overflow)).perform(click())
 
-        // Click on account settings. Don't know why but doesn't work to select by ID.
-        onView(allOf(withText(R.string.menu_item_account_settings), isDisplayed())).perform(click())
+        // Click on identity settings. Don't know why but doesn't work to select by ID.
+        onView(allOf(withText(R.string.menu_item_identity_settings), isDisplayed())).perform(click())
 
         // Check if picture is changed in profile.
         onView(withId(R.id.user_photo)).check(matches(withImageUri(downloadedImagesUri[0])))
     }
 
-    /** Checks if an account can be created by specifying a profile picture (via camera).
-     * Skip others steps.
+    /**
+     * Checks if an identity can be created by specifying a picture (via gallery).
      */
     @Test
     fun accountCreation_SpecifyProfilePictureViaGallery() {
         clickCreateAccountBtn()
 
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
-
-        onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
-
-        // Start recording intents and subscribe to the callback.
-        Intents.init()
-        try {
-            intending(hasAction(MediaStore.ACTION_PICK_IMAGES))
-                .respondWith(
-                    Instrumentation.ActivityResult(
-                        Activity.RESULT_OK,
-                        Intent().setData(downloadedImagesUri[1])
-                    )
-                )
-
-            // Click on camera (should launch a gallery explorer).
-            onView(withId(R.id.gallery)).perform(click())
-        } finally {
-            Intents.release()
-        }
+        pickPhotoFromGallery(downloadedImagesUri[1])
 
         // Check if the image is displayed.
-         onView(withId(R.id.profile_photo)).check(matches(withImageUri(downloadedImagesUri[1])))
+        onView(withId(R.id.profile_photo)).check(matches(withImageUri(downloadedImagesUri[1])))
 
-        onView(allOf(withId(R.id.next_create_account), isDisplayed())).perform(click())
+        clickCreateIdentityBtn()
 
         // Check that we are in the home activity.
         waitForView(withId(R.id.search_bar)).perform(waitUntil(isDisplayed()))
 
         Thread.sleep(3000)
 
-        // Go to account settings. Click on search bar menu.
+        // Go to identity settings. Click on search bar menu.
         onView(withId(R.id.menu_overflow)).perform(click())
 
-        // Click on account settings. Don't know why but doesn't work to select by ID.
-        onView(allOf(withText(R.string.menu_item_account_settings), isDisplayed())).perform(click())
+        // Click on identity settings. Don't know why but doesn't work to select by ID.
+        onView(allOf(withText(R.string.menu_item_identity_settings), isDisplayed())).perform(click())
 
         // Check if picture is changed in profile.
         onView(withId(R.id.user_photo)).check(matches(withImageUri(downloadedImagesUri[1])))
     }
 
     /**
-     * Checks if a profile picture can be removed.
+     * Checks if a picture can be removed.
      */
     @Test
     fun accountCreation_SpecifyProfilePicture_CanCancel(){
         clickCreateAccountBtn()
 
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
-
-        onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
-
-        // Start recording intents and subscribe to the callback.
-        Intents.init()
-        try {
-            intending(hasAction(MediaStore.ACTION_PICK_IMAGES))
-                .respondWith(
-                    Instrumentation.ActivityResult(
-                        Activity.RESULT_OK,
-                        Intent().setData(downloadedImagesUri[1])
-                    )
-                )
-
-            // Click on camera (should launch a gallery explorer).
-            onView(withId(R.id.gallery)).perform(click())
-        } finally {
-            Intents.release()
-        }
+        pickPhotoFromGallery(downloadedImagesUri[1])
 
         // Click on delete photo.
         onView(allOf(withId(R.id.remove_photo), isDisplayed())).perform(click())
@@ -317,45 +220,41 @@ class AccountCreation {
 
     /**
      * Check what happens when writing an invalid username.
-     * Assert that the create account button is disabled.
+     * Assert that the create identity button is disabled.
      * Assert that the error message is displayed.
      */
     @Test
     fun usernameSelection_LessThan3Characters_InvalidUsername() {
-
         clickCreateAccountBtn()
 
-        onView(withId(R.id.input_username)).perform(replaceText("ab"), closeSoftKeyboard())
+        onView(withId(R.id.input_username)).perform(scrollTo(), replaceText("ab"), closeSoftKeyboard())
 
         onView(withId(R.id.input_username_txt_box))
             .perform(waitUntil(hasTextInputLayoutError(R.string.invalid_username)))
 
-        onView(withId(R.id.create_account_username))
-            .check(matches(allOf(isNotEnabled(), isDisplayed())))
+        onView(withId(R.id.create_identity_btn)).check(matches(isNotEnabled()))
     }
 
     /**
      * Check what happens when writing an already taken username.
-     * Assert that the create account button is disabled.
+     * Assert that the create identity button is disabled.
      * Assert that the error message is displayed.
      */
     @Test
     fun usernameSelection_UsernameAlreadyTaken() {
-
         clickCreateAccountBtn()
 
-        onView(withId(R.id.input_username)).perform(replaceText("abc"), closeSoftKeyboard())
+        onView(withId(R.id.input_username)).perform(scrollTo(), replaceText("abc"), closeSoftKeyboard())
 
         onView(withId(R.id.input_username_txt_box))
             .perform(waitUntil(hasTextInputLayoutError(R.string.username_already_taken)))
 
-        onView(withId(R.id.create_account_username))
-            .check(matches(allOf(isNotEnabled(), isDisplayed())))
+        onView(withId(R.id.create_identity_btn)).check(matches(isNotEnabled()))
     }
 
     /**
      * Check what happens when writing a valid username.
-     * Assert that the create account button is enabled.
+     * Assert that the create identity button is enabled.
      */
     @Test
     fun usernameSelection_ValidUsername() {
@@ -365,93 +264,7 @@ class AccountCreation {
         onView(allOf(withId(R.id.input_username), isDisplayed()))
             .perform(replaceText(randomUsername), closeSoftKeyboard())
 
-        onView(withId(R.id.create_account_username))
-            .check(matches(allOf(isNotEnabled(), isDisplayed())))
-    }
-
-    /**
-     * Check what happens when enabling the password section.
-     * Assert that the password section is displayed.
-     * Assert that the copy password section is enabled.
-     */
-    @Test
-    fun passwordSelection_EnableSection() {
-        clickCreateAccountBtn()
-
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
-
-        onView(allOf(withId(R.id.ring_password_switch), isDisplayed())).perform(click())
-
-        onView(withId(R.id.create_account_password)).check(matches(isDisplayed()))
-
-        onView(withId(R.id.ring_password_repeat_txt_box)).check(matches(isDisplayed()))
-    }
-
-    /**
-     * Check what happens when writing an invalid username.
-     * Assert that the create account button is disabled.
-     * Assert that the error message is displayed.
-     */
-    @Test
-    fun passwordSelection_LessThan6Characters_InvalidPassword() {
-        clickCreateAccountBtn()
-
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
-
-        onView(allOf(withId(R.id.ring_password_switch), isDisplayed())).perform(click())
-
-        onView(allOf(withId(R.id.password), isDisplayed()))
-            .perform(replaceText("test"), closeSoftKeyboard())
-
-        onView(withId(R.id.password_txt_box))
-            .perform(waitUntil(hasTextInputLayoutError(R.string.error_password_char_count)))
-
-        onView(withId(R.id.create_account_password))
-            .check(matches(allOf(isNotEnabled(), isDisplayed())))
-    }
-
-    /**
-     * Check what happens when badly recopying the password.
-     * Assert that the create account button is disabled.
-     * Assert that the error message is displayed.
-     */
-    @Test
-    fun passwordSelection_WrongRecopy() {
-        clickCreateAccountBtn()
-
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
-
-        onView(allOf(withId(R.id.ring_password_switch), isDisplayed())).perform(click())
-
-        onView(allOf(withId(R.id.password), isDisplayed()))
-            .perform(replaceText("123456"), closeSoftKeyboard())
-
-        onView(allOf(withId(R.id.ring_password_repeat), isDisplayed()))
-            .perform(replaceText("12345"), closeSoftKeyboard())
-
-        onView(withId(R.id.ring_password_repeat_txt_box))
-            .perform(waitUntil(hasTextInputLayoutError(R.string.error_passwords_not_equals)))
-
-        onView(withId(R.id.create_account_password))
-            .check(matches(allOf(isNotEnabled(), isDisplayed())))
-    }
-
-    /**
-     * Check what happens when writing a valid password.
-     * Assert that the create account button is enabled.
-     */
-    @Test
-    fun passwordSelection_ValidPassword() {
-        clickCreateAccountBtn()
-
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
-
-        onView(allOf(withId(R.id.ring_password_switch), isDisplayed())).perform(click())
-
-        specifyPassword()
-
-        onView(withId(R.id.create_account_password))
-            .check(matches(allOf(isEnabled(), isDisplayed())))
+        onView(withId(R.id.create_identity_btn)).perform(waitUntil(isEnabled()))
     }
 
     @After
@@ -464,31 +277,36 @@ class AccountCreation {
         waitForView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
     }
 
-    private fun createDefaultAccount() {
-        clickCreateAccountBtn()
-
-        onView(allOf(withId(R.id.skip), isDisplayed())).perform(closeSoftKeyboard(), click())
-
-        onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
-
-        onView(allOf(withId(R.id.skip_create_account), isDisplayed())).perform(click())
+    private fun clickCreateIdentityBtn() {
+        onView(withId(R.id.create_identity_btn))
+            .perform(scrollTo(), waitUntil(allOf(isDisplayed(), isEnabled())), click())
     }
 
+    private fun pickPhotoFromGallery(uri: Uri) {
+        // Start recording intents and subscribe to the callback.
+        Intents.init()
+        try {
+            intending(hasAction(MediaStore.ACTION_PICK_IMAGES))
+                .respondWith(Instrumentation.ActivityResult(Activity.RESULT_OK, Intent().setData(uri)))
 
-    private fun specifyPassword() {
-        onView(allOf(withId(R.id.password), isDisplayed()))
-            .perform(replaceText("123456"), closeSoftKeyboard())
+            // Click on gallery (should launch a gallery explorer).
+            onView(withId(R.id.gallery)).perform(scrollTo(), click())
+        } finally {
+            Intents.release()
+        }
+    }
 
-        onView(allOf(withId(R.id.ring_password_repeat), isDisplayed()))
-            .perform(replaceText("123456"), closeSoftKeyboard())
+    private fun createDefaultAccount() {
+        clickCreateAccountBtn()
+        clickCreateIdentityBtn()
     }
 
     private fun moveToWizard() {
         JamiApplication.instance!!.mAccountService.customNameServer = "https://ns-test.jami.net/"
 
         try {
-            onView(withContentDescription(R.string.searchbar_navigation_account)).perform(click())
-            onView(withText(R.string.add_ring_account_title)).perform(click())
+            onView(withContentDescription(R.string.searchbar_navigation_identity)).perform(click())
+            onView(withText(R.string.add_ring_identity_title)).perform(click())
         } catch (_: Exception) { // Already in the wizard ?
             // Todo: Should check before exception where we are.
         }
@@ -500,14 +318,9 @@ class AccountCreation {
         onView(allOf(withId(R.id.input_username), isDisplayed()))
             .perform(replaceText(username), closeSoftKeyboard())
 
-        onView(withId(R.id.create_account_username))
-            .perform(waitUntil(allOf(isDisplayed(), isEnabled())), click())
+        clickCreateIdentityBtn()
 
-        onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
-
-        onView(allOf(withId(R.id.skip_create_account), isDisplayed())).perform(click())
-
-        Log.d(TAG, "Account created: $username")
+        Log.d(TAG, "Identity created: $username")
     }
 
     private fun returnPhotoFromProfilePhotoFragment(uri: Uri) {

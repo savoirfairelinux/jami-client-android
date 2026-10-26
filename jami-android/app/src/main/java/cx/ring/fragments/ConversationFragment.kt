@@ -1401,7 +1401,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         binding?.apply {
             errorMsgPane.visibility = View.VISIBLE
             errorMsgPane.setOnClickListener(null)
-            errorMsgPane.setText(R.string.error_account_offline)
+            errorMsgPane.setText(R.string.error_identity_offline)
             for (idx in 0 until btnContainer.childCount) {
                 btnContainer.getChildAt(idx).isEnabled = false
             }

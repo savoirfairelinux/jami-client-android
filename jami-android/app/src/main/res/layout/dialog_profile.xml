@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:paddingTop="50dp"
-            android:text="@string/profile_message_warning"
+            android:text="@string/identity_message_warning"
             android:textAlignment="center" />
 
         <androidx.constraintlayout.widget.ConstraintLayout

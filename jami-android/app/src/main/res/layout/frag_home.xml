@@ -54,7 +54,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                 android:backgroundTint="@color/searchbar_color"
                 android:hint="@string/searchbar_hint"
                 app:autoShowKeyboard="true"
-                app:navigationContentDescription="@string/searchbar_navigation_account"
+                app:navigationContentDescription="@string/searchbar_navigation_identity"
                 app:navigationIcon="@android:color/transparent" />
 
             <!-- Donation card -->

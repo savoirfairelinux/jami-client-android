@@ -57,7 +57,7 @@ class ExportSideStep2Fragment : Fragment() {
         binding.cancel.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle(resources.getString(R.string.link_device_dialog_stop_title))
-                .setMessage(resources.getString(R.string.link_device_dialog_stop_export_body))
+                .setMessage(resources.getString(R.string.link_device_dialog_stop_export_body_identity))
                 .setPositiveButton(android.R.string.ok) { _, _ ->
                     Log.i(TAG, "Cancel button clicked.")
                     callback.onIdentityConfirmation(false)
@@ -81,7 +81,7 @@ class ExportSideStep2Fragment : Fragment() {
         binding.progress.visibility = View.INVISIBLE
         binding.locationContainer.visibility = View.VISIBLE
         binding.advice.text =
-            getString(R.string.export_side_step2_advice_ip_only)
+            getString(R.string.export_side_step2_advice_ip_only_identity)
         binding.location.text =
             getString(R.string.export_side_step2_ip_only, ip)
     }

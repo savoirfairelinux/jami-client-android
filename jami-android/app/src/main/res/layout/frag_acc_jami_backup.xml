@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@string/help_password_enter"
+                android:text="@string/help_password_enter_identity"
                 android:textAlignment="center"
                 android:paddingBottom="12dp"
                 android:textStyle="bold" />

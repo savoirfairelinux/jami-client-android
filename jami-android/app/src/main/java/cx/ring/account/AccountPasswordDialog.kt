@@ -56,7 +56,7 @@ class AccountPasswordDialog : DialogFragment() {
         }
         val result = MaterialAlertDialogBuilder(requireContext())
             .setTitle(authReason ?: getString(R.string.account_enter_password))
-            .setMessage(R.string.account_new_device_password)
+            .setMessage(R.string.identity_new_device_password)
             .setView(binding.root)
             .setPositiveButton(android.R.string.ok, null) //Set to null. We override the onclick
             .setNegativeButton(android.R.string.cancel) { dialog: DialogInterface?, whichButton: Int -> dismiss() }

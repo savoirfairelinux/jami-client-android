@@ -17,11 +17,13 @@
 package net.jami.account
 
 import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.PublishSubject
 import net.jami.model.AccountCreationModel
 import net.jami.mvp.RootPresenter
 import net.jami.services.AccountService
 import net.jami.services.AccountService.RegisteredName
+import net.jami.utils.Log
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
@@ -33,7 +35,8 @@ class JamiAccountCreationPresenter @Inject constructor(
     private val contactQuery = PublishSubject.create<String>()
 
     private var accountCreationModel: AccountCreationModel? = null
-    private var isUsernameCorrect = false
+    private var isUsernameCorrect = true
+    private var isPasswordEnabled = false
     private var isPasswordCorrect = true
     private var isConfirmCorrect = true
     private var showLoadingAnimation = true
@@ -43,7 +46,12 @@ class JamiAccountCreationPresenter @Inject constructor(
         super.bindView(view)
         mCompositeDisposable.add(contactQuery
             .debounce(TYPING_DELAY, TimeUnit.MILLISECONDS)
-            .switchMapSingle { query: String -> accountService.findRegistrationByName("", "", query) }
+            .switchMapSingle { query: String ->
+                if (query.isEmpty())
+                    Single.never()
+                else
+                    accountService.findRegistrationByName("", "", query)
+            }
             .observeOn(uiScheduler)
             .subscribe { res: RegisteredName -> onLookupResult(res.query, res.address, res.state) })
     }
@@ -54,6 +62,23 @@ class JamiAccountCreationPresenter @Inject constructor(
             return
         }
         accountCreationModel = model
+        isUsernameCorrect = model.username.isEmpty()
+        checkForms()
+    }
+
+    fun fullNameUpdated(fullName: String) {
+        accountCreationModel?.fullName = fullName.trim()
+    }
+
+    fun photoUpdated(bitmap: Single<Any>) {
+        mCompositeDisposable.add(bitmap
+            .observeOn(uiScheduler)
+            .subscribe({ b: Any -> accountCreationModel?.photo = b })
+            { e: Throwable -> Log.e(TAG, "Can't load image", e) })
+    }
+
+    fun photoRemoved() {
+        accountCreationModel?.photo = null
     }
 
     /**
@@ -63,11 +88,20 @@ class JamiAccountCreationPresenter @Inject constructor(
      */
     fun userNameChanged(userName: String) {
         accountCreationModel?.username = userName
+        if (userName.isEmpty()) {
+            isUsernameCorrect = true
+            showLoadingAnimation = true
+            contactQuery.onNext("")
+            view?.updateUsernameAvailability(JamiAccountCreationView.UsernameAvailabilityStatus.RESET)
+            checkForms()
+            return
+        }
         isUsernameCorrect = false
         if (showLoadingAnimation) {
             view?.updateUsernameAvailability(JamiAccountCreationView.UsernameAvailabilityStatus.LOADING)
             showLoadingAnimation = false
         }
+        checkForms()
         contactQuery.onNext(userName)
     }
 
@@ -75,6 +109,7 @@ class JamiAccountCreationPresenter @Inject constructor(
         accountCreationModel?.let  { model ->
             if (!isChecked) {
                 model.username = ""
+                isUsernameCorrect = true
             }
             checkForms()
         }
@@ -82,20 +117,27 @@ class JamiAccountCreationPresenter @Inject constructor(
 
     fun passwordUnset() {
         accountCreationModel?.password = ""
+        passwordConfirm = ""
+        isPasswordEnabled = false
         isPasswordCorrect = true
         isConfirmCorrect = true
         view?.showInvalidPasswordError(false)
-        view?.enableNextButton(true)
+        view?.showNonMatchingPasswordError(false)
+        checkForms()
     }
 
     fun passwordChanged(password: String, repeat: CharSequence) {
+        isPasswordEnabled = true
         passwordConfirm = repeat
         passwordChanged(password)
     }
 
     fun passwordChanged(password: String) {
         accountCreationModel?.password = password
-        if (password.isNotEmpty() && password.length < PASSWORD_MIN_LENGTH) {
+        if (isPasswordEnabled && password.isEmpty()) {
+            view?.showInvalidPasswordError(false)
+            isPasswordCorrect = false
+        } else if (password.isNotEmpty() && password.length < PASSWORD_MIN_LENGTH) {
             view?.showInvalidPasswordError(true)
             isPasswordCorrect = false
         } else {
@@ -110,7 +152,7 @@ class JamiAccountCreationPresenter @Inject constructor(
                 true
             }
         }
-        view?.enableNextButton(isPasswordCorrect && isConfirmCorrect)
+        checkForms()
     }
 
     fun passwordConfirmChanged(passwordConfirm: String) {
@@ -122,7 +164,7 @@ class JamiAccountCreationPresenter @Inject constructor(
             true
         }
         this.passwordConfirm = passwordConfirm
-        view?.enableNextButton(isPasswordCorrect && isConfirmCorrect)
+        checkForms()
     }
 
     fun createAccount() {
@@ -133,15 +175,14 @@ class JamiAccountCreationPresenter @Inject constructor(
 
     private val isInputValid: Boolean
         get() {
-            val passwordOk = isPasswordCorrect && isConfirmCorrect
-            val usernameOk = accountCreationModel?.username != null || isUsernameCorrect
+            val passwordOk = !isPasswordEnabled || (isPasswordCorrect && isConfirmCorrect)
+            val username = accountCreationModel?.username ?: ""
+            val usernameOk = username.isEmpty() || isUsernameCorrect
             return passwordOk && usernameOk
         }
 
     private fun checkForms() {
-        val valid = isInputValid
-        if (valid && isUsernameCorrect)
-            view?.updateUsernameAvailability(JamiAccountCreationView.UsernameAvailabilityStatus.AVAILABLE)
+        view?.enableNextButton(isInputValid)
     }
 
     private fun onLookupResult(name: String, address: String?, state: AccountService.LookupState) {
@@ -151,9 +192,13 @@ class JamiAccountCreationPresenter @Inject constructor(
         if (view == null) {
             return
         }
+        val currentUsername = accountCreationModel?.username ?: ""
+        if (name != currentUsername) {
+            return
+        }
         if (name.isEmpty()) {
             view.updateUsernameAvailability(JamiAccountCreationView.UsernameAvailabilityStatus.RESET)
-            isUsernameCorrect = false
+            isUsernameCorrect = true
         } else {
             when (state) {
                 AccountService.LookupState.Success -> {
