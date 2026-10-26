@@ -389,4 +389,12 @@
   <string name="shared_services_policy_hint">Достъпно за</string>
   <string name="shared_services_policy_public">Публично</string>
   <string name="shared_services_save">Запазване</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Документи</string>
+  <string name="collab_create">Създаване</string>
+  <string name="collab_link_title">Свързване</string>
+  <string name="collab_link_hint">Адрес</string>
+  <string name="collab_link_add">Добавяне</string>
+  <string name="collab_link_remove">Премахване</string>
+  <string name="collab_remove">Премахване</string>
 </resources>

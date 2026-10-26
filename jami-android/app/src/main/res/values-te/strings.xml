@@ -341,4 +341,12 @@
   <string name="shared_services_more_options">మరిన్ని ఎంపికలు</string>
   <string name="shared_services_type_custom_label">కస్టమ్</string>
   <string name="shared_services_save">సేవ్</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">పత్రాలు</string>
+  <string name="collab_create">సృష్టించు</string>
+  <string name="collab_link_title">లింక్</string>
+  <string name="collab_link_hint">చిరునామా</string>
+  <string name="collab_link_add">జోడించండి</string>
+  <string name="collab_link_remove">తొలగించు</string>
+  <string name="collab_remove">తొలగించు</string>
 </resources>

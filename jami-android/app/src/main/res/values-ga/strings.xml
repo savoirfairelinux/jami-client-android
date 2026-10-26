@@ -243,4 +243,12 @@
   <string name="shared_services_policy_hint">Inrochtana ag</string>
   <string name="shared_services_policy_public">Poiblí</string>
   <string name="shared_services_save">Cinntí</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Dhomhnaill</string>
+  <string name="collab_create">Cruthaigh</string>
+  <string name="collab_link_title">Líon</string>
+  <string name="collab_link_hint">Seoladh</string>
+  <string name="collab_link_add">Cuir leis</string>
+  <string name="collab_link_remove">Cúlghairm</string>
+  <string name="collab_remove">Cúlghairm</string>
 </resources>
