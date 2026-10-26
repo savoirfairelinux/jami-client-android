@@ -350,6 +350,10 @@
   <string name="picker_title">إختيار جهات الاتصال</string>
   <string name="picker_btn">إختيار جهات الاتصال</string>
   <string name="bottomsheet_contact">الاتصال مع Jami\n%1$s</string>
+  <string name="bottomsheet_block">حظر العضو</string>
+  <string name="bottomsheet_unblock">إلغاء حظر العضو</string>
+  <string name="group_member_blocked">محظور</string>
+  <string name="group_member_invited">مدعوة</string>
   <!--JamiId-->
   <string name="jami_id_validate">تسجيل اسم المستخدم</string>
   <string name="jami_id_available">اسم المستخدم متاح.</string>
@@ -413,4 +417,12 @@
   <string name="shared_services_policy_hint">يمكن الوصول إليه بواسطة</string>
   <string name="shared_services_policy_public">عام</string>
   <string name="shared_services_save">سجل</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">الوثائق</string>
+  <string name="collab_create">إنشاء</string>
+  <string name="collab_link_title">ربط</string>
+  <string name="collab_link_hint">العنوان</string>
+  <string name="collab_link_add">إضافة</string>
+  <string name="collab_link_remove">احذف</string>
+  <string name="collab_remove">احذف</string>
 </resources>

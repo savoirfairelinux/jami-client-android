@@ -364,4 +364,12 @@
   <string name="shared_services_policy_hint">Có thể truy cập bởi</string>
   <string name="shared_services_policy_public">Công khai</string>
   <string name="shared_services_save">- Cứu</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Tài liệu</string>
+  <string name="collab_create">Tạo</string>
+  <string name="collab_link_title">Liên kết</string>
+  <string name="collab_link_hint">Địa chỉ</string>
+  <string name="collab_link_add">Thêm</string>
+  <string name="collab_link_remove">Tắt</string>
+  <string name="collab_remove">Tắt</string>
 </resources>

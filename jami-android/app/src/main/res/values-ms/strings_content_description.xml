@@ -7,4 +7,8 @@
   <string name="control_play">Main</string>
   <string name="control_replay">Main ulang</string>
   <string name="control_pause">ഇടവേള</string>
+  <string name="collab_format_bold">Tebal</string>
+  <string name="collab_format_italic">Huruf Condong</string>
+  <string name="collab_format_strike">Garis lorek</string>
+  <string name="collab_format_size">ഫോണ്ട് വലുപ്പം</string>
 </resources>
