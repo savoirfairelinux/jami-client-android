@@ -138,7 +138,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         searchBar.setNavigationOnClickListener { // Account selection
             mDisposable.add(mAccountService.observableAccountList.firstElement().subscribe { accounts ->
                 MaterialAlertDialogBuilder(requireContext())
-                    .setTitle(getString(R.string.account_selection))
+                    .setTitle(getString(R.string.identity_selection))
                     .setAdapter(
                             AccountAdapter(
                                 requireContext(),

@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:contentDescription="@string/profile"
+                android:contentDescription="@string/identity_profile_label"
                 android:padding="8dp" />
         </RelativeLayout>
     </LinearLayout>

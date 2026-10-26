@@ -39,7 +39,7 @@ class ConfirmBiometricDialog : DialogFragment() {
         val result = MaterialAlertDialogBuilder(requireContext())
             .setView(binding!!.root)
             .setTitle(R.string.account_enter_password)
-            .setMessage(R.string.account_new_device_password)
+            .setMessage(R.string.identity_new_device_password)
             .setPositiveButton(android.R.string.ok, null) //Set to null. We override the onclick
             .setNegativeButton(android.R.string.cancel) { dialog: DialogInterface?, whichButton: Int -> dismiss() }
             .create()

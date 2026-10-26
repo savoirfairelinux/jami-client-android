@@ -51,7 +51,7 @@ class ExportSideStep3Fragment : Fragment() {
 
     fun showLoading() {
         Log.i(TAG, "Showing loading...")
-        binding.details.text = getString(R.string.export_side_step3_body_loading)
+        binding.details.text = getString(R.string.export_side_step3_body_loading_identity)
         binding.exit.visibility = View.GONE
         binding.status.visibility = View.GONE
         binding.loading.visibility = View.VISIBLE
@@ -59,7 +59,7 @@ class ExportSideStep3Fragment : Fragment() {
 
     fun showDone() {
         Log.i(TAG, "Showing done.")
-        binding.details.text = getString(R.string.export_side_step3_body_done)
+        binding.details.text = getString(R.string.export_side_step3_body_done_identity)
         binding.status.visibility = View.VISIBLE
         binding.exit.visibility = View.VISIBLE
         binding.loading.visibility = View.GONE

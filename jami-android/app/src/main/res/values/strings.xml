@@ -167,7 +167,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
     <!-- RingActivity -->
     <string name="error_no_network">No network connectivity</string>
-    <string name="error_account_offline">The account is offline</string>
+    <string name="error_identity_offline">The identity is offline</string>
 
     <!-- AB menus -->
     <string name="ab_action_chat">Text messaging</string>
@@ -178,9 +178,9 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="menu_item_account">Manage account</string>
     <string name="menu_item_settings">Settings</string>
     <string name="menu_item_app_settings">App Settings</string>
-    <string name="menu_item_account_settings">Account Settings</string>
+    <string name="menu_item_identity_settings">Identity settings</string>
     <string name="menu_item_extension_list">Extensions Settings</string>
-    <string name="menu_item_share">Share my account</string>
+    <string name="menu_item_share_identity">Share my identity</string>
     <string name="menu_item_about">About Jami</string>
 
     <string name="video_setting_title">Video Settings</string>
@@ -455,11 +455,11 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="prompt_new_password">New password</string>
     <string name="prompt_new_password_optional">New password (optional)</string>
     <string name="prompt_new_password_repeat">Confirm new password</string>
-    <string name="account_create_title">Create Jami account</string>
+    <string name="identity_create_jami_title">Create Jami identity</string>
     <string name="prompt_new_username">Enter new username</string>
     <string name="prompt_hint_username">Username</string>
-    <string name="help_password_choose">Choose a strong password you will remember to protect your Jami account.</string>
-    <string name="help_password_enter">Enter your main Jami account password.</string>
+    <string name="help_password_choose_identity">Choose a strong password you will remember to protect your Jami identity.</string>
+    <string name="help_password_enter_identity">Enter your main Jami identity password.</string>
     <string name="help_server_enter">Enter URL of management server.</string>
     <string name="pin_copied">Authentication code copied to clipboard.</string>
     <string name="copied_clipboard">Copied to clipboard.</string>
@@ -474,10 +474,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="hist_invitation_received">Invitation received</string>
 
     <!-- Account summary -->
-    <string name="profile">Profile</string>
-    <string name="profile_name">Profile name</string>
-    <string name="profile_message_warning">Profile is only shared with contacts</string>
-    <string name="custom_profile_message_warning">The custom profile is only visible to the account on this device</string>
+    <string name="identity_profile_label">Identity</string>
+    <string name="identity_display_name">Display name</string>
+    <string name="identity_message_warning">Your identity details are only shared with contacts</string>
+    <string name="custom_identity_message_warning">This custom profile is only visible to the identity on this device</string>
     <string name="open_the_gallery">Open the gallery</string>
     <string name="take_a_photo">Take photo</string>
     <string name="remove_photo">Remove photo</string>
@@ -486,7 +486,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="no_registered_name">No name registered</string>
     <string name="identity">Identity</string>
     <string name="identifier">Identifier</string>
-    <string name="account">Account</string>
+    <string name="identity_account_label">Identity</string>
     <string name="link_new_device">Link a new device</string>
     <string name="devices_header">Devices</string>
     <string name="devices">Linked devices</string>
@@ -571,7 +571,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <!-- Bottom Navigation -->
     <string name="navigation_item_conversation">Conversations</string>
     <string name="navigation_item_contact_request">Invitations</string>
-    <string name="navigation_item_account">Account</string>
     <string name="search_results_public_directory">Public directory</string>
 
     <!-- TV -->
@@ -603,17 +602,17 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="wizard_status_recommended">Recommended</string>
     <string name="wizard_status_optional">Optional</string>
     <string name="wizard_status_required">Required</string>
-    <string name="wizard_username_info">Choose a username for your account</string>
+    <string name="wizard_username_info_identity">Choose a username for your identity</string>
     <string name="wizard_username_button">Choose Username</string>
     <string name="wizard_username_skip">Skip choosing username</string>
-    <string name="wizard_password_info">Account password</string>
-    <string name="wizard_password_placeholder">Choose a password to encrypt the account key on this device</string>
+    <string name="wizard_password_info_identity">Identity password</string>
+    <string name="wizard_password_placeholder_identity">Choose a password to encrypt the identity key on this device</string>
     <string name="wizard_password_button">Choose password</string>
-    <string name="wizard_password_skip">Create account</string>
-    <string name="wizard_password_switch">Encrypt account with password</string>
+    <string name="wizard_password_skip_identity">Create identity</string>
+    <string name="wizard_password_switch_identity">Encrypt identity with password</string>
     <string name="wizard_password_warning">Note that the password cannot be recovered</string>
-    <string name="wizard_profile_info">Profile is only shared with contacts</string>
-    <string name="wizard_profile_button">Save Profile</string>
+    <string name="wizard_identity_info">Your identity details are only shared with contacts</string>
+    <string name="wizard_identity_button">Save Identity</string>
     <string name="wizard_profile_skip">Skip and do this later</string>
     <string name="fab_path_choose">Choose another file</string>
     <string name="chat_extensions">Chat extensions</string>
@@ -640,7 +639,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="camera_flip_btn_description">Flip camera</string>
     <string name="add_participant_btn_description">Add participant</string>
     <string name="screen_share_btn_description">Share screen</string>
-    <string name="open_account_extension_settings">Open Account Extension Settings</string>
+    <string name="open_identity_extension_settings">Open Identity Extension Settings</string>
     <string name="open_general_extension_settings">Open General Extension Settings</string>
     <string name="uninstall">Uninstall</string>
     <string name="reset">Reset</string>
@@ -711,32 +710,32 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="install_success">Extension %1$s has been installed successfully.</string>
     <string name="install_error">An error occurred while importing the extension.</string>
 
-    <string name="export_side_main_title">Export account</string>
-    <string name="import_side_main_title">Import account</string>
+    <string name="export_side_main_title_identity">Export identity</string>
+    <string name="import_side_main_title_identity">Import identity</string>
 
     <string name="link_device_dialog_stop_title">Do you want to stop linking the device?</string>
-    <string name="link_device_dialog_stop_export_body">Stopping will cancel the export account operation.</string>
-    <string name="link_device_dialog_stop_import_body">Stopping will cancel the import account operation.</string>
+    <string name="link_device_dialog_stop_export_body_identity">Stopping will cancel the export identity operation.</string>
+    <string name="link_device_dialog_stop_import_body_identity">Stopping will cancel the import identity operation.</string>
 
-    <string name="export_side_step1_advice_qr">On the new device, initiate a new account.\nSelect <b>Account > Add Account > Connect from another device</b>\nWhen ready, scan the QR code</string>
+    <string name="export_side_step1_advice_qr_identity">On the new device, initiate a new identity.\nSelect <b>Identity > Add identity > Connect from another device</b>\nWhen ready, scan the QR code</string>
     <string name="export_side_step1_switch_to_code">Or click here to enter the authentication code</string>
     <string name="export_side_step1_switch_to_qr">Or click here to scan the QR code</string>
     <string name="export_side_step1_error_malformed">Unrecognized new device identifier. Please follow the instructions above.</string>
     <string name="export_side_step1_code_connect">Connect</string>
 
-    <string name="export_side_step2_advice">The new device is located here. Is that you?\nTo continue the account export operation, click Confirm.</string>
-    <string name="export_side_step2_advice_ip_only">New device connected at address below. Is that you?\nTo continue exporting the account, click Confirm.</string>
+    <string name="export_side_step2_advice_identity">The new device is located here. Is that you?\nTo continue the identity export operation, click Confirm.</string>
+    <string name="export_side_step2_advice_ip_only_identity">New device connected at address below. Is that you?\nTo continue exporting the identity, click Confirm.</string>
     <string name="export_side_step2_location" translatable="false">%1$s, %2$s, %3$s - %4$s</string>
     <string name="export_side_step2_ip_only">New device IP address: %1$s</string>
     <string name="export_side_step2_cancel">Cancel</string>
     <string name="export_side_step2_confirm">Confirm</string>
-    <string name="export_side_step2_password">The account is password-protected.\nTo continue, authenticate on the new device.</string>
+    <string name="export_side_step2_password_identity">The identity is password-protected.\nTo continue, authenticate on the new device.</string>
 
-    <string name="export_side_step3_body_loading">Export account operation to the new device is in progress. Please wait…</string>
-    <string name="export_side_step3_body_done">The account was imported successfully on the new device.</string>
+    <string name="export_side_step3_body_loading_identity">Export identity operation to the new device is in progress. Please wait…</string>
+    <string name="export_side_step3_body_done_identity">The identity was imported successfully on the new device.</string>
     <string name="export_side_step3_exit">Finish</string>
 
-    <string name="import_side_step1_advice_qr">Initiate the export on the source device.\n<b>Select Account > Account Settings > Link new device</b>\nWhen ready, scan the QR code below.</string>
+    <string name="import_side_step1_advice_qr_identity">Initiate the export on the source device.\n<b>Select Identity > Identity settings > Link new device</b>\nWhen ready, scan the QR code below.</string>
     <string name="import_side_step1_advice_code">Initiate the export on the source device.\n<b>Select Account > Account Settings > Link new device</b>\nWhen ready, enter the code below.</string>
     <string name="import_side_step1_share">Share</string>
     <string name="import_side_step1_switch_to_code">Or click here to display the authentication code</string>
@@ -744,14 +743,15 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="import_side_step1_connecting">Connecting to the source device…</string>
     <string name="import_side_step1_preparing_device">Preparing device…</string>
 
-    <string name="import_side_step2_password_prompt">The account is password-protected.\nUnlock it to continue.</string>
+    <string name="import_side_step2_confirm_title">Confirm identity import</string>
+    <string name="import_side_step2_password_prompt_identity">The identity is password-protected.\nUnlock it to continue.</string>
     <string name="import_side_step2_password_import">Import</string>
-    <string name="import_side_step2_password_unlocking">Unlocking account…</string>
-    <string name="import_side_step2_action_required">Action required. Please confirm account on the source device.</string>
+    <string name="import_side_step2_password_unlocking_identity">Unlocking identity…</string>
+    <string name="import_side_step2_action_required_identity">Action required. Please confirm identity on the source device.</string>
 
-    <string name="import_side_step3_body_loading">The account is being imported on the new device. Please wait…</string>
-    <string name="import_side_step3_body_done">The account was imported successfully.</string>
-    <string name="import_side_step3_go_to_account">Go to the new account</string>
+    <string name="import_side_step3_body_loading_identity">The identity is being imported on the new device. Please wait…</string>
+    <string name="import_side_step3_body_done_identity">The identity was imported successfully.</string>
+    <string name="import_side_step3_go_to_identity">Go to the new identity</string>
     <string name="import_side_step3_exit">Finish</string>
 
     <string name="link_device_share_title">Share authentication code</string>

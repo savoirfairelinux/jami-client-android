@@ -478,8 +478,8 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             return
         }
         mMigrationDialog = MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.account_migration_title_dialog)
-            .setMessage(R.string.account_migration_message_dialog)
+            .setTitle(R.string.identity_migration_title_dialog)
+            .setMessage(R.string.identity_migration_message_dialog)
             .setIcon(R.drawable.baseline_warning_24)
             .setPositiveButton(android.R.string.ok) { _: DialogInterface?, _: Int ->
                 goToAccountSettings()

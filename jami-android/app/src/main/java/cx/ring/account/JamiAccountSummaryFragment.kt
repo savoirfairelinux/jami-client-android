@@ -244,7 +244,7 @@ class JamiAccountSummaryFragment :
             binding.linkNewDevice.visibility = if (account.hasManager()) View.GONE else View.VISIBLE
             mAccountHasPassword = account.hasPassword()
             mBinding!!.accountSwitch.setCheckedSilent(account.isEnabled)
-            binding.accountAliasTxt.text = getString(R.string.profile)
+            binding.accountAliasTxt.text = getString(R.string.identity_profile_label)
             binding.identity.setText(account.username)
             val username = account.registeredName
             val currentRegisteredName = account.registeringUsername
@@ -313,7 +313,7 @@ class JamiAccountSummaryFragment :
         }
 
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.profile)
+            .setTitle(R.string.identity_profile_label)
             .setView(view.root)
             .setNegativeButton(android.R.string.cancel) { dialog, _ -> dialog.cancel() }
             .setPositiveButton(android.R.string.ok) { dialog, which ->
@@ -358,7 +358,7 @@ class JamiAccountSummaryFragment :
         mWaitDialog = MaterialAlertDialogBuilder(requireContext())
             .setView(ItemProgressDialogBinding.inflate(layoutInflater).root)
             .setTitle(R.string.export_account_wait_title)
-            .setMessage(R.string.export_account_wait_message)
+            .setMessage(R.string.export_identity_wait_message)
             .show()
     }
 
@@ -366,7 +366,7 @@ class JamiAccountSummaryFragment :
         mWaitDialog = MaterialAlertDialogBuilder(requireContext())
             .setView(ItemProgressDialogBinding.inflate(layoutInflater).root)
             .setTitle(R.string.export_account_wait_title)
-            .setMessage(R.string.account_password_change_wait_message)
+            .setMessage(R.string.identity_password_change_wait_message)
             .show()
     }
 
@@ -418,7 +418,7 @@ class JamiAccountSummaryFragment :
 
     private fun onBackupAccount() {
         val account = mAccount ?: return
-        BiometricHelper.startAccountAuthentication(this, account, getString(R.string.account_export_file)) { scheme: String, password: String ->
+        BiometricHelper.startAccountAuthentication(this, account, getString(R.string.identity_export_file)) { scheme: String, password: String ->
             onUnlockAccount(scheme, password)
         }
     }

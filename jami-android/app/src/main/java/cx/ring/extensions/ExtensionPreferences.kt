@@ -69,7 +69,7 @@ class ExtensionPreferences : Preference {
             binding.extensionSettingInstall.visibility = View.GONE
         }
         if (mAccountId!!.isEmpty()) {
-            binding.extensionAccountSettingRedirect.setText(R.string.open_account_extension_settings)
+            binding.extensionAccountSettingRedirect.setText(R.string.open_identity_extension_settings)
         } else {
             binding.extensionAccountSettingRedirect.setText(R.string.open_general_extension_settings)
         }
