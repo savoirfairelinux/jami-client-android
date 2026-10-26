@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bce39cc_53dc69b1",
+        "filename": "jami-android/app/src/main/res/values-ast-rES/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T18:23:31Z",
+      "side": 1,
+      "message": "[warning] Line 106: 🟡 `ongoing_call` is translated as `Llamada entrante` (incoming call), which conflicts with the key’s meaning (call in progress). Use wording equivalent to an active/ongoing call to prevent incorrect call-state messaging in notifications/UI.",
+      "revId": "1ac7cb9fb083c1d674c094370093a4be0d94bf78",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d76f743_47c5483f",
+        "filename": "jami-android/app/src/main/res/values-ast-rES/strings_account.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T18:23:31Z",
+      "side": 1,
+      "message": "[warning] Line 191: 🟡 `account_device_name_empty` currently says the username cannot be empty (`El nome d\u0027usuario...`), but this key is shown when naming a device. Please align this with the source meaning (device name) to avoid misleading validation feedback during device rename/link flows.",
+      "revId": "1ac7cb9fb083c1d674c094370093a4be0d94bf78",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
