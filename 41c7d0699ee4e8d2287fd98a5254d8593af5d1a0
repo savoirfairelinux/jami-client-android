@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94a1fd54_f194bedd",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/AccountWizardActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T21:34:58Z",
+      "side": 1,
+      "message": "[warning] Line 188: 🟡 `supportFragmentManager.fragments[0]` relies on fragment list ordering, which is not a stable contract and can break after navigation/back-stack changes. Resolve the active wizard fragment via `findFragmentById(R.id.wizard_container)` (or `primaryNavigationFragment`) before branching, so profile finalization always runs on the currently displayed step.",
+      "revId": "41c7d0699ee4e8d2287fd98a5254d8593af5d1a0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21d1e5cf_a5a8daba",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/CubistView.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T21:34:58Z",
+      "side": 1,
+      "message": "[warning] Line 96: 🟡 Bitmap decoding is happening on the UI rendering path (`getPainting()` is called from `onDraw()` and can allocate/decode large 1080x2400 resources). This can cause first-frame jank and GC pressure on lower-end devices. Decode/cache the bitmaps earlier (e.g., in `onAttachedToWindow`/`onSizeChanged`) or use an async/image-loading path so `onDraw()` only paints already-prepared bitmaps.",
+      "revId": "41c7d0699ee4e8d2287fd98a5254d8593af5d1a0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
