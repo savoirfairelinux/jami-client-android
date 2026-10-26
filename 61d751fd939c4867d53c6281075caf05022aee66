@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0c6d679_1e128697",
+        "filename": "jami-android/app/src/main/res/values-ast-rES/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T18:04:14Z",
+      "side": 1,
+      "message": "[warning] Line 320: 🟡 `navigation_item_conversation` contains an escaped HTML fragment (`\u0026lt;br style\u003d\"\"\u0026gt;`) that will render as literal text instead of a line break in most views. Replace it with plain localized text (or a real newline if multiline is intended).",
+      "revId": "61d751fd939c4867d53c6281075caf05022aee66",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bffca960_2d8f2db8",
+        "filename": "jami-android/app/src/main/res/values-ast-rES/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T18:04:14Z",
+      "side": 1,
+      "message": "[warning] Line 413: 🟡 `collab_link_remove` (and the adjacent `collab_remove`) appears to contain unrelated placeholder/prose text rather than a translation of “Remove”. This creates a broken UX in document actions. Replace both with the proper Asturian equivalent for the remove action.",
+      "revId": "61d751fd939c4867d53c6281075caf05022aee66",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df1c3e1c_0f57fc66",
+        "filename": "jami-android/app/src/main/res/values-es_rVE/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T18:04:14Z",
+      "side": 1,
+      "message": "[error] 🔴 The resource directory name uses an invalid Android locale qualifier (`values-es_rVE`). Android expects region qualifiers as `-rXX` (e.g. `values-es-rVE`), so this locale can be ignored or fail resource processing. Rename the directory (and matching `strings_content_description.xml` directory) to `values-es-rVE`.",
+      "revId": "61d751fd939c4867d53c6281075caf05022aee66",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
