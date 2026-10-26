@@ -99,8 +99,8 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter,
     }
 
     override fun onCreateGuidance(savedInstanceState: Bundle?) = Guidance(
-        getString(R.string.profile),
-        getString(R.string.profile_message_warning),
+        getString(R.string.identity_profile_label),
+        getString(R.string.identity_message_warning),
         "",
         requireContext().getDrawable(R.drawable.ic_contact_picture_fallback)
     )
@@ -109,7 +109,7 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter,
 
     override fun onCreateActions(actions: MutableList<GuidedAction>, savedInstanceState: Bundle?) {
         val context = requireContext()
-        addEditTextAction(context, actions, USER_NAME, R.string.account_edit_profile, R.string.profile_name_hint)
+        addEditTextAction(context, actions, USER_NAME, R.string.identity_edit, R.string.profile_name_hint)
         addAction(context, actions, CAMERA, R.string.take_a_photo)
         addAction(context, actions, GALLERY, R.string.open_the_gallery)
     }
@@ -135,7 +135,7 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter,
         if (action != null && action.id == USER_NAME) {
             if (viewModel.profile.displayName.isNullOrEmpty()) {
                 action.editTitle = ""
-                action.title = getString(R.string.account_edit_profile)
+                action.title = getString(R.string.identity_edit)
             } else {
                 action.editTitle = viewModel.profile.displayName
                 action.title = viewModel.profile.displayName
@@ -143,7 +143,7 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter,
             notifyActionChanged(0)
         }
         if (viewModel.profile.displayName.isNullOrEmpty())
-            guidanceStylist.titleView?.setText(R.string.profile)
+            guidanceStylist.titleView?.setText(R.string.identity_profile_label)
         else guidanceStylist.titleView?.text = viewModel.profile.displayName
         guidanceStylist.iconView?.setImageDrawable(AvatarDrawable.build(requireContext(), viewModel.account, viewModel.profile, true)
             .apply { setInSize(iconSize) })

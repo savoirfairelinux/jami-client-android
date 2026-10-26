@@ -131,7 +131,7 @@ class SIPAccountCreationFragment : BaseSupportFragment<SIPCreationPresenter, SIP
 
     override fun showRegistrationNetworkError() {
         showDialog(getString(R.string.account_no_network_title),
-            getString(R.string.account_no_network_message),
+            getString(R.string.identity_no_network_message),
             getString(android.R.string.ok),
             getString(R.string.account_sip_register_anyway),
             { dialog: DialogInterface?, which: Int -> presenter.removeAccount() }

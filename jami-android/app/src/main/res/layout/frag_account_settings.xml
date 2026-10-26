@@ -70,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:navigationIcon="@drawable/abc_ic_ab_back_material"
-            app:title="@string/menu_item_account_settings"/>
+            app:title="@string/menu_item_identity_settings"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 

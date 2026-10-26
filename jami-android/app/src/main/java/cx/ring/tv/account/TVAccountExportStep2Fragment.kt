@@ -79,7 +79,7 @@ class TVAccountExportStep2Fragment : GuidedStepSupportFragment() {
         Log.d(TAG, "onCreateGuidance: id=$id, name=$name")
 
         return GuidanceStylist.Guidance(
-            getString(R.string.export_side_main_title),
+            getString(R.string.export_side_main_title_identity),
             id,
             null,
             AvatarDrawable.Builder()
@@ -105,7 +105,7 @@ class TVAccountExportStep2Fragment : GuidedStepSupportFragment() {
             actions.add(
                 GuidedAction.Builder(requireContext())
                     .id(ACTION_ID_PASSWORD_NOTICE)
-                    .title(getString(R.string.export_side_step2_password))
+                    .title(getString(R.string.export_side_step2_password_identity))
                     .infoOnly(true)
                     .enabled(false)
                     .focusable(false)
@@ -115,7 +115,7 @@ class TVAccountExportStep2Fragment : GuidedStepSupportFragment() {
             actions.add(
                 GuidedAction.Builder(requireContext())
                     .id(ACTION_ID_PEER_IP)
-                    .title(getString(R.string.export_side_step2_advice_ip_only))
+                    .title(getString(R.string.export_side_step2_advice_ip_only_identity))
                     .description(peerAddress ?: "")
                     .infoOnly(true)
                     .enabled(false)
@@ -191,7 +191,7 @@ class TVAccountExportStep2Fragment : GuidedStepSupportFragment() {
         actions.add(
             GuidedAction.Builder(requireContext())
                 .id(ACTION_ID_PASSWORD_NOTICE)
-                .title(getString(R.string.export_side_step2_password))
+                .title(getString(R.string.export_side_step2_password_identity))
                 .infoOnly(true)
                 .enabled(false)
                 .focusable(false)
@@ -217,7 +217,7 @@ class TVAccountExportStep2Fragment : GuidedStepSupportFragment() {
         actions.add(
             GuidedAction.Builder(requireContext())
                 .id(ACTION_ID_PEER_IP)
-                .title(getString(R.string.export_side_step2_advice_ip_only))
+                .title(getString(R.string.export_side_step2_advice_ip_only_identity))
                 .description(peerAddress ?: "")
                 .infoOnly(true)
                 .enabled(false)

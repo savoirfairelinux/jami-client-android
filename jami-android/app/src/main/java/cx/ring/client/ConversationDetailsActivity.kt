@@ -308,7 +308,7 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
         }
         mProfilePhoto = view.profilePhoto
 
-        if (!isGroup) view.profileMessage.text = getString(R.string.custom_profile_message_warning)
+        if (!isGroup) view.profileMessage.text = getString(R.string.custom_identity_message_warning)
 
         val dialogDisposableBag = CompositeDisposable().apply {
             add(mConversationFacade
@@ -329,7 +329,7 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
         }
 
         MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.profile)
+            .setTitle(R.string.identity_profile_label)
             .setView(view.root)
             .setNegativeButton(android.R.string.cancel) { dialog, _ -> dialog.cancel() }
             .setPositiveButton(android.R.string.ok) { dialog, which ->

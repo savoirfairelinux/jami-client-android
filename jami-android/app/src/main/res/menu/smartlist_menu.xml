@@ -16,7 +16,7 @@
                 android:id="@+id/menu_account_settings"
                 android:enabled="false"
                 android:icon="@drawable/baseline_account_settings_24dp"
-                android:title="@string/menu_item_account_settings"
+                android:title="@string/menu_item_identity_settings"
                 app:iconTint="@color/icon_color"
                 app:showAsAction="ifRoom" />
 

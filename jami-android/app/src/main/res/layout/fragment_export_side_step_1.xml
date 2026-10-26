@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:lineSpacingExtra="8dp"
         android:paddingHorizontal="8dp"
-        android:text="@string/export_side_step1_advice_qr"
+        android:text="@string/export_side_step1_advice_qr_identity"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/inputContainer"
         app:layout_constraintEnd_toEndOf="parent"

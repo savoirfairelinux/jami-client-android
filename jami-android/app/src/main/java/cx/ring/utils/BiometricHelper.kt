@@ -129,9 +129,9 @@ object BiometricHelper {
 
         try {
             val promptInfo = BiometricPrompt.PromptInfo.Builder()
-                .setTitle(context.getText(R.string.account_biometry_auth_title))
+                .setTitle(context.getText(R.string.identity_biometry_auth_title))
                 .setSubtitle(reason)
-                .setNegativeButtonText(context.getText(R.string.account_auth_password))
+                .setNegativeButtonText(context.getText(R.string.identity_auth_password))
                 .setAllowedAuthenticators(ALLOWED_AUTHENTICATORS)
                 .build()
             val cipher = getCipher().apply { init(Cipher.DECRYPT_MODE, secretKey, IvParameterSpec(biometricInfo.iv)) }
@@ -145,7 +145,7 @@ object BiometricHelper {
                     override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                         val decryptedKey: ByteArray? = result.cryptoObject?.cipher?.doFinal(biometricInfo.encryptedKey)
                         Toast.makeText(context.applicationContext,
-                            if (decryptedKey == null) R.string.account_auth_key_error else R.string.account_auth_success, Toast.LENGTH_SHORT).show()
+                            if (decryptedKey == null) R.string.identity_auth_key_error else R.string.account_auth_success, Toast.LENGTH_SHORT).show()
                         callback(decryptedKey)
                     }
 
@@ -232,7 +232,7 @@ object BiometricHelper {
                         callback(bi)
                     }) {
                         Log.e(TAG, "Failed to encrypt account key", it)
-                        Toast.makeText(applicationContext, R.string.account_auth_key_error, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, R.string.identity_auth_key_error, Toast.LENGTH_SHORT).show()
                         callback(null)
                     })
             }
@@ -298,8 +298,8 @@ object BiometricHelper {
                     Log.w(TAG, "New key generated: $newKeyName")
                 }
                 val promptInfo = BiometricPrompt.PromptInfo.Builder()
-                    .setTitle(applicationContext.getText(R.string.account_biometry_enroll_auth_title))
-                    //.setSubtitle(applicationContext.getText(R.string.account_biometry_enroll_message))
+                    .setTitle(applicationContext.getText(R.string.identity_biometry_enroll_auth_title))
+                    //.setSubtitle(applicationContext.getText(R.string.identity_biometry_enroll_message))
                     .setDescription(fragment.getText(R.string.account_biometry_enroll_auth_message))
                     .setNegativeButtonText(fragment.getText(android.R.string.cancel))
                     .setAllowedAuthenticators(ALLOWED_AUTHENTICATORS)
@@ -323,7 +323,7 @@ object BiometricHelper {
             MaterialAlertDialogBuilder(fragment.requireContext(), R.style.BiometricMaterialAlertDialog)
                 .setIcon(R.drawable.fingerprint_24)
                 .setTitle(R.string.account_biometry_enroll_title)
-                .setMessage(R.string.account_biometry_enroll_message)
+                .setMessage(R.string.identity_biometry_enroll_message)
                 .setPositiveButton(R.string.account_biometry_enroll_accept) { _, _ ->
                     mIsBiometric = true
                     start()

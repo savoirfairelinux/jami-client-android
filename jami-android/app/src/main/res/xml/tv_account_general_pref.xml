@@ -29,8 +29,8 @@
 
         <Preference
             android:key="Account.delete"
-            android:title="@string/pref_delete_account_title"
-            android:summary="@string/pref_delete_account_summary"
+            android:title="@string/pref_delete_identity_title"
+            android:summary="@string/pref_delete_identity_summary"
             android:icon="@drawable/baseline_delete_24" />
     </PreferenceCategory>
 

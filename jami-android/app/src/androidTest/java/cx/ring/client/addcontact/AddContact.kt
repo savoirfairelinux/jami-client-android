@@ -381,7 +381,7 @@ class AddContact {
 
         // Click on account settings
         // Don't know why but doesn't work to select by ID.
-        onView(allOf(withText(R.string.menu_item_account_settings), isDisplayed())).perform(click())
+        onView(allOf(withText(R.string.menu_item_identity_settings), isDisplayed())).perform(click())
         onView(allOf(withId(R.id.settings_account), isDisplayed()))
             .perform(scrollTo(), click())
 
@@ -409,7 +409,7 @@ class AddContact {
 
 object AccountNavigationUtils {
     fun moveToAccount(username: String) {
-        onView(ViewMatchers.withContentDescription(R.string.searchbar_navigation_account))
+        onView(ViewMatchers.withContentDescription(R.string.searchbar_navigation_identity))
             .perform(click())
         onView(withText(username.lowercase())).perform(click())
     }

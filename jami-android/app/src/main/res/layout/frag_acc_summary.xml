@@ -37,7 +37,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:navigationIcon="@drawable/abc_ic_ab_back_material"
-        app:title="@string/menu_item_account_settings">
+        app:title="@string/menu_item_identity_settings">
 
         <cx.ring.views.SwitchButton
             android:id="@+id/account_switch"
@@ -77,7 +77,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_marginBottom="12dp"
                     android:layout_alignParentStart="true"
                     style="@style/SettingsHeader"
-                    tools:text="@string/profile" />
+                    tools:text="@string/identity_profile_label" />
 
             </RelativeLayout>
 
@@ -101,7 +101,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:hint="@string/profile_name"
+                    android:hint="@string/identity_display_name"
                     android:textColorHint="@color/settings_submenu_header"
                     app:endIconDrawable="@drawable/baseline_edit_rounded_24"
                     app:endIconMode="custom"
@@ -125,25 +125,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="6dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginBottom="12dp"
-                    android:layout_centerVertical="true"
-                    android:text="@string/navigation_item_account"
-                    android:singleLine="true"
-                    android:maxLines="1"
-                    style="@style/SettingsHeader" />
-
-            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -222,7 +203,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/ring_account_identity"
+                    android:hint="@string/identifier"
                     android:textColorHint="@color/settings_submenu_header"
                     style="?attr/textInputFilledStyle"
                     app:hintEnabled="true"
@@ -393,7 +374,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:drawablePadding="12dp"
-                    android:text="@string/account"
+                    android:text="@string/identity_account_label"
                     app:drawableLeftCompat="@drawable/account_circle_24" />
 
                 <TextView

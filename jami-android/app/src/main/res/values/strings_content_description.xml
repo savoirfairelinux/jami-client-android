@@ -10,7 +10,7 @@
     <string name="control_play">Play</string>
     <string name="control_replay">Replay</string>
     <string name="control_pause">Pause</string>
-    <string name="searchbar_navigation_account">Select account</string>
+    <string name="searchbar_navigation_identity">Select identity</string>
     <string name="add_conversation_member">Add conversation member</string>
     <string name="qrcode_to_scan">QR code to scan</string>
     <string name="collab_format_bold">Bold</string>
