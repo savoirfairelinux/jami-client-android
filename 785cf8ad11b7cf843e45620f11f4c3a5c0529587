@@ -3,6 +3,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bc47618d_7059fdb4",
+        "filename": "jami-android/app/src/main/res/values-ace/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T18:10:18Z",
+      "side": 1,
+      "message": "[error] Line 198: 🔴 `collab_link_remove`/`collab_remove` are not valid remove-action labels (`ڤرنه دڤرچايا?? ي`) and include obvious corruption (`??`). These strings label destructive actions in collaborative documents; unclear text here is unsafe UX. Replace both with a clear Acehnese equivalent of “Remove/Delete”.",
+      "revId": "785cf8ad11b7cf843e45620f11f4c3a5c0529587",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee42d5db_cf0c5528",
+        "filename": "jami-android/app/src/main/res/values-ace/strings_content_description.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T18:10:18Z",
+      "side": 1,
+      "message": "[warning] Line 6: 🟡 Accessibility labels for formatting controls are not action-semantic (`collab_format_bold`, `collab_format_italic`, `collab_format_strike`, `collab_format_size`) and some are duplicated generic terms. Screen-reader users need concise control names matching the function (Bold/Italic/Strikethrough/Font size). Please update these to proper localized control labels.",
+      "revId": "785cf8ad11b7cf843e45620f11f4c3a5c0529587",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dc6ab4e9_7b21a2c1",
         "filename": "jami-android/app/src/main/res/values-ast-rES/strings.xml",
         "patchSetId": 1
@@ -37,6 +71,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "011a8868_2bc8523f",
+        "filename": "jami-android/app/src/main/res/values-ast-rES/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T18:10:18Z",
+      "side": 1,
+      "message": "[error] Line 84: 🔴 `notif_incoming_file_transfer_title` was changed to a call-related text (`Llamada entrante de %1$s`) but this key is used for incoming file-transfer notifications. This mislabels the notification type and can cause users to take the wrong action. Restore a file-transfer wording equivalent to “Incoming file from %1$s”.",
+      "revId": "785cf8ad11b7cf843e45620f11f4c3a5c0529587",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5147d976_28dd6841",
         "filename": "jami-android/app/src/main/res/values-ast-rES/strings_content_description.xml",
         "patchSetId": 1
@@ -48,6 +99,40 @@
       "writtenOn": "2026-10-26T18:08:42Z",
       "side": 1,
       "message": "[warning] 🟡 Accessibility regression: `collab_format_bold`, `collab_format_italic`, and `collab_format_strike` are not action-descriptive (nonsensical phrases), so screen reader users won’t understand formatting controls. Use concise semantic labels equivalent to “Bold”, “Italic”, and “Strikethrough”.",
+      "revId": "785cf8ad11b7cf843e45620f11f4c3a5c0529587",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e65ed3e1_727619d7",
+        "filename": "jami-android/app/src/main/res/values-b+es+419/strings_content_description.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T18:10:18Z",
+      "side": 1,
+      "message": "[warning] Line 20: 🟡 Same semantic regression as `values-es`: `collab_format_h1/h2/h3` use “Dirección …” and `collab_format_bullet_list` uses “Lista de bolos”, which do not describe the formatting actions. Please align with accessible terms for “Heading 1/2/3” and “Bulleted list”.",
+      "revId": "785cf8ad11b7cf843e45620f11f4c3a5c0529587",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa68169e_f79ac654",
+        "filename": "jami-android/app/src/main/res/values-es/strings_content_description.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T18:10:18Z",
+      "side": 1,
+      "message": "[warning] Line 20: 🟡 Several formatting accessibility labels are mistranslated semantically: `collab_format_h1/h2/h3` are “Dirección 1/2/3” and `collab_format_bullet_list` is “Lista de bolos”. These are control names, so wrong semantics degrade accessibility navigation. Use localized equivalents of “Heading 1/2/3” and “Bulleted list”.",
       "revId": "785cf8ad11b7cf843e45620f11f4c3a5c0529587",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
