@@ -13,4 +13,22 @@
   <string name="searchbar_navigation_account">Alege contul</string>
   <string name="add_conversation_member">Adaugă un membru la conversație</string>
   <string name="qrcode_to_scan">Cod QR de scanat</string>
+  <string name="collab_format_bold">Gros</string>
+  <string name="collab_format_italic">Înclinat</string>
+  <string name="collab_format_underline">Subliniere</string>
+  <string name="collab_format_strike">Tăiat</string>
+  <string name="collab_format_h1">Titlul 1</string>
+  <string name="collab_format_h2">Titlul 2</string>
+  <string name="collab_format_h3">Titlul 3</string>
+  <string name="collab_format_bullet_list">Listă punctată</string>
+  <string name="collab_format_ordered_list">Listă numerotată</string>
+  <string name="collab_format_align_left">Aliniat la stânga</string>
+  <string name="collab_format_align_center">Centrat</string>
+  <string name="collab_format_align_right">Aliniat la dreapta</string>
+  <string name="collab_format_align_justify">Aliniat la ambele</string>
+  <string name="collab_format_font">Caractere</string>
+  <string name="collab_format_size">Mărimea literelor</string>
+  <string name="collab_format_choice">%1$s: %2$s</string>
+  <string name="collab_undo">Anulează</string>
+  <string name="collab_redo">Refă</string>
 </resources>

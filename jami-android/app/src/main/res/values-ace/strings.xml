@@ -164,6 +164,7 @@
   <string name="tab_settings">سيٽنگون</string>
   <string name="dialog_hint_title">عنوان</string>
   <string name="dialog_hint_description">ڤرسمباڬان</string>
+  <string name="group_member_invited">دجالنكن</string>
   <!--JamiId-->
   <string name="jami_id_validate">نام ڤڠڬونا</string>
   <string name="jami_id_choose_username">مميليه نام ڤڠڬونا</string>
@@ -188,4 +189,12 @@
   <string name="shared_services_delete">مڠمبيل</string>
   <string name="shared_services_more_options">ڤرليندوڠ لبيه</string>
   <string name="shared_services_save">ڤڠاجين</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">ڤرودوک</string>
+  <string name="collab_create">ڤڠڬونا</string>
+  <string name="collab_link_title">لينك</string>
+  <string name="collab_link_hint">ادريس</string>
+  <string name="collab_link_add">مڠمبيل</string>
+  <string name="collab_link_remove">ڤرنه دڤرچايا?? ي</string>
+  <string name="collab_remove">ڤرنه دڤرچايا?? ي</string>
 </resources>

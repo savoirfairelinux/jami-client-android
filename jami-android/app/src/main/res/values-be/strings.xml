@@ -194,6 +194,10 @@
   <string name="dialog_hint_description">Апісанне</string>
   <string name="picker_title">Выберыце кантакты</string>
   <string name="picker_btn">Выберыце кантакты</string>
+  <string name="bottomsheet_block">Заблакіраваць удзельніка</string>
+  <string name="bottomsheet_unblock">Разблакіраваць удзельніка</string>
+  <string name="group_member_blocked">Заблакіравана</string>
+  <string name="group_member_invited">Запрашана</string>
   <!--JamiId-->
   <string name="jami_id_validate">Запіс імя карыстальніка</string>
   <string name="jami_id_choose_username">Выберыце імя карыстальніка</string>
@@ -239,4 +243,12 @@
   <string name="shared_services_policy_hint">Даступна для</string>
   <string name="shared_services_policy_public">Публічна</string>
   <string name="shared_services_save">Захаваць</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Дакументы</string>
+  <string name="collab_create">Стварэнне</string>
+  <string name="collab_link_title">Звязка</string>
+  <string name="collab_link_hint">Адрас</string>
+  <string name="collab_link_add">Дадаць</string>
+  <string name="collab_link_remove">Выдаліць</string>
+  <string name="collab_remove">Выдаліць</string>
 </resources>
