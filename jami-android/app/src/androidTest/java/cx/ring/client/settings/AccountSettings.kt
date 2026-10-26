@@ -150,7 +150,7 @@ class AccountSettings {
         onView(withId(R.id.menu_overflow)).perform(click())
 
         // Click on account settings. Don't know why but doesn't work to select by ID.
-        onView(allOf(withText(R.string.menu_item_account_settings), isDisplayed())).perform(click())
+        onView(allOf(withText(R.string.menu_item_identity_settings), isDisplayed())).perform(click())
     }
 
     /**
@@ -508,7 +508,7 @@ class AccountSettings {
         // Valid password.
         onView(withId(android.R.id.button1)).perform(click())
 
-        onView(withText(R.string.export_account_wait_message)).check(matches(isDisplayed()))
+        onView(withText(R.string.export_identity_wait_message)).check(matches(isDisplayed()))
 
         // Build URI where to save backup.
         val cache = InstrumentationRegistry.getInstrumentation().targetContext.cacheDir
@@ -523,7 +523,7 @@ class AccountSettings {
             .respondWith(Instrumentation.ActivityResult(Activity.RESULT_OK, Intent().setData(uri)))
 
         // Wait for `exporting backup` to display.
-        onView(withText(R.string.export_account_wait_message))
+        onView(withText(R.string.export_identity_wait_message))
             .inRoot(isDialogWithTitle(R.string.export_account_wait_title))
             .perform(waitUntil(isDisplayed()))
 
@@ -627,8 +627,9 @@ class AccountSettings {
         intending(hasAction(Intent.ACTION_OPEN_DOCUMENT))
             .respondWith(Instrumentation.ActivityResult(Activity.RESULT_OK, Intent().setData(uri)))
 
-        // Click on `Connect from backup`
-        onView(withId(R.id.ring_import_account)).perform(click())
+        // Click on `I am already on Jami`, then `From a backup`
+        onView(withId(R.id.existing_account_btn)).perform(scrollTo(), click())
+        onView(withText(R.string.account_link_from_backup)).perform(click())
 
         // Stop recording intents
         Intents.release()
@@ -657,8 +658,9 @@ class AccountSettings {
         intending(hasAction(Intent.ACTION_OPEN_DOCUMENT))
             .respondWith(Instrumentation.ActivityResult(Activity.RESULT_OK, Intent().setData(uri)))
 
-        // Click on `Connect from backup`
-        onView(withId(R.id.ring_import_account)).perform(click())
+        // Click on `I am already on Jami`, then `From a backup`
+        onView(withId(R.id.existing_account_btn)).perform(scrollTo(), click())
+        onView(withText(R.string.account_link_from_backup)).perform(click())
 
         // Stop recording intents
         Intents.release()

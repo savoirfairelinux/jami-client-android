@@ -66,9 +66,9 @@ class TVJamiAccountCreationFragment : JamiGuidedStepFragment<JamiAccountCreation
     }
 
     override fun onCreateGuidance(savedInstanceState: Bundle?): Guidance {
-        val title = getString(R.string.account_create_title)
+        val title = getString(R.string.identity_create_jami_title)
         val breadcrumb = ""
-        val description = getString(R.string.help_ring)
+        val description = getString(R.string.help_ring_identity)
         val icon = resources.getDrawable(R.drawable.ic_contact_picture_fallback)
         return Guidance(title, description, breadcrumb, icon)
     }
@@ -79,7 +79,7 @@ class TVJamiAccountCreationFragment : JamiGuidedStepFragment<JamiAccountCreation
         addDisabledNonFocusableAction(context, actions, CHECK)
         addPasswordAction(context,actions, PASSWORD, getString(R.string.prompt_new_password_optional), getString(R.string.enter_password))
         addPasswordAction(context, actions,PASSWORD_CONFIRMATION, getString(R.string.prompt_new_password_repeat),getString(R.string.enter_password))
-        addAction(context, actions, CONTINUE, getString(R.string.action_create), "", true)
+        addAction(context, actions, CONTINUE, getString(R.string.action_create_identity), "", true)
     }
 
     override fun onGuidedActionFocused(action: GuidedAction) {

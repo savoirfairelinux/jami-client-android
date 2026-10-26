@@ -194,10 +194,10 @@ class LinkDeviceExportSideActivity : AppCompatActivity(),
 
         val message = when (state) {
             is AddDeviceExportState.Connecting, is AddDeviceExportState.Authenticating ->
-                resources.getString(R.string.link_device_dialog_stop_export_body)
+                resources.getString(R.string.link_device_dialog_stop_export_body_identity)
 
             AddDeviceExportState.InProgress ->
-                resources.getString(R.string.link_device_dialog_stop_export_body)
+                resources.getString(R.string.link_device_dialog_stop_export_body_identity)
 
             else -> throw UnsupportedOperationException()
         }

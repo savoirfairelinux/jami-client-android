@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (C) 2004-2025 Savoir-faire Linux Inc.
+  ~ Copyright (C) 2004-2026 Savoir-faire Linux Inc.
   ~
   ~ This program is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -15,64 +15,238 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with this program. If not, see <https://www.gnu.org/licenses/>.
   -->
-
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/color_primary_dark"
+    android:background="@color/welcome_background"
+    android:clipChildren="false"
     tools:context="cx.ring.account.AccountWizardActivity">
 
-    <cx.ring.views.BoundedRelativeLayout
-        android:layout_width="wrap_content"
+    <cx.ring.views.CubistView
+        android:id="@+id/welcome_painting"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        app:bounded_height="670dp">
+        android:importantForAccessibility="no" />
 
-        <ImageView
-            android:id="@+id/background"
-            android:layout_width="@dimen/wizard_image_background"
-            android:layout_height="@dimen/wizard_image_background"
-            android:layout_centerHorizontal="true"
-            android:layout_alignTop="@id/pager"
-            android:layout_marginTop="-200dp"
-            android:alpha="0.1"
-            android:src="@drawable/baseline_account_circle_white_36"/>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:overScrollMode="never">
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
+        <cx.ring.views.BoundedLinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_margin="@dimen/text_margin"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/color_primary_light"
-            android:gravity="center"
-            android:text="@string/account_creation_ring"
-            android:textStyle="bold"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:paddingTop="48dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="32dp"
+            app:bounded_width="480dp">
 
-        <cx.ring.views.WizardViewPager
-            android:id="@+id/pager"
-            android:layout_width="@dimen/wizard_card_width"
-            android:layout_height="@dimen/wizard_card_height"
-            android:layout_above="@+id/indicator"
-            android:layout_centerHorizontal="true"
-            android:clipChildren="false"
-            android:clipToPadding="false"/>
+            <!-- Header: Back button + Title -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            app:tabBackground="@drawable/tab_selector"
-            android:background="@color/color_primary_dark"
-            app:tabGravity="center"
-            app:tabIndicatorHeight="0dp"/>
+                <ImageButton
+                    android:id="@+id/back_btn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="-8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/abc_action_bar_up_description"
+                    app:srcCompat="@drawable/baseline_arrow_back_24"
+                    app:tint="@color/welcome_ink" />
 
-    </cx.ring.views.BoundedRelativeLayout>
+                <TextView
+                    android:id="@+id/identity_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="bold"
+                    android:text="@string/identity_create_title"
+                    android:textColor="@color/welcome_ink"
+                    android:textSize="24sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/identity_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/identity_create_subtitle"
+                android:textColor="@color/welcome_text"
+                android:textSize="13sp" />
+
+            <!-- Single-panel Identity card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/welcome_card"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/welcome_card_stroke"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <!-- 1. Avatar on the left + Gallery / Camera / Remove in a column on the right -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/profile_photo"
+                            android:layout_width="108dp"
+                            android:layout_height="108dp"
+                            android:contentDescription="@string/open_the_gallery"
+                            tools:src="@drawable/ic_contact_picture_fallback" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/gallery"
+                                style="@style/Welcome.AvatarAction"
+                                android:layout_width="match_parent"
+                                android:layout_height="32dp"
+                                android:text="@string/identity_photo_gallery"
+                                app:icon="@drawable/baseline_insert_photo_24" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/camera"
+                                style="@style/Welcome.AvatarAction"
+                                android:layout_width="match_parent"
+                                android:layout_height="32dp"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/identity_photo_camera"
+                                app:icon="@drawable/baseline_photo_camera_24" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/remove_photo"
+                                style="@style/Welcome.AvatarAction"
+                                android:layout_width="match_parent"
+                                android:layout_height="32dp"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/identity_photo_remove"
+                                android:visibility="gone"
+                                app:icon="@drawable/baseline_cancel_24"
+                                tools:visibility="visible" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- 2. Display name (optional) -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/display_name_box"
+                        style="@style/Welcome.TextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:helperText="@string/identity_display_name_helper"
+                        app:helperTextEnabled="true"
+                        app:startIconDrawable="@drawable/outline_person_24">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/display_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autofillHints="name"
+                            android:fontFamily="sans-serif-medium"
+                            android:hint="@string/identity_display_name_hint"
+                            android:imeOptions="actionNext"
+                            android:inputType="textCapWords"
+                            android:lines="1"
+                            android:maxLines="1"
+                            android:textColor="@color/welcome_ink"
+                            android:textSize="14sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- 3. Username (optional) -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/input_username_txt_box"
+                            style="@style/Welcome.TextInputLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:helperText="@string/identity_username_helper"
+                            app:helperTextEnabled="true"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:startIconDrawable="@drawable/ic_at_sign_24">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/input_username"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:autofillHints="username"
+                                android:fontFamily="sans-serif-medium"
+                                android:hint="@string/identity_username_hint"
+                                android:imeOptions="actionDone"
+                                android:inputType="text"
+                                android:lines="1"
+                                android:maxLines="1"
+                                android:textColor="@color/welcome_ink"
+                                android:textSize="14sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <ProgressBar
+                            android:id="@+id/ring_username_availability_spinner"
+                            style="?android:attr/progressBarStyle"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_marginTop="18dp"
+                            android:layout_marginEnd="14dp"
+                            android:indeterminateTint="@color/welcome_accent"
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toEndOf="@id/input_username_txt_box"
+                            app:layout_constraintTop_toTopOf="@id/input_username_txt_box" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <!-- Primary CTA -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/create_identity_btn"
+                style="@style/Welcome.Cta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/identity_create_cta" />
+
+        </cx.ring.views.BoundedLinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>

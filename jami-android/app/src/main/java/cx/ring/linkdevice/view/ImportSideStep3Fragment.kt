@@ -51,7 +51,7 @@ class ImportSideStep3Fragment : Fragment() {
 
     fun showLoading() {
         Log.i(TAG, "Showing loading...")
-        binding.details.text = getString(R.string.import_side_step3_body_loading)
+        binding.details.text = getString(R.string.import_side_step3_body_loading_identity)
         binding.status.visibility = View.GONE
         binding.loading.visibility = View.VISIBLE
         binding.exit.visibility = View.GONE
@@ -63,11 +63,11 @@ class ImportSideStep3Fragment : Fragment() {
             Log.i(TAG, "Exit button clicked.")
             callback.onExit(0)
         }
-        binding.details.text = getString(R.string.import_side_step3_body_done)
+        binding.details.text = getString(R.string.import_side_step3_body_done_identity)
         binding.status.visibility = View.VISIBLE
         binding.loading.visibility = View.GONE
         binding.exit.visibility = View.VISIBLE
-        binding.exit.text = getString(R.string.import_side_step3_go_to_account)
+        binding.exit.text = getString(R.string.import_side_step3_go_to_identity)
         binding.status.setImageResource(R.drawable.baseline_done_24)
         binding.status.setColorFilter(
             ContextCompat.getColor(

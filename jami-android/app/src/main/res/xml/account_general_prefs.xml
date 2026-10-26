@@ -48,7 +48,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             android:key="Account.delete"
             android:persistent="false"
             android:summary=""
-            android:title="@string/pref_delete_account_title"
+            android:title="@string/sip_delete_account_title"
             />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/account_optionnal_category" >

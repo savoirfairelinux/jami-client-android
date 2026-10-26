@@ -18,17 +18,30 @@ package cx.ring.account
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
+import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.children
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragAccHomeCreateBinding
+import cx.ring.databinding.WelcomeChoiceBinding
+import cx.ring.databinding.WelcomeChoicesBinding
 import cx.ring.fragments.SIPAccountCreationFragment
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.utils.AndroidFileUtils.getCacheFile
@@ -47,6 +60,7 @@ class HomeAccountCreationFragment :
     BaseSupportFragment<HomeAccountCreationPresenter, HomeAccountCreationView>(),
     HomeAccountCreationView {
     private var binding: FragAccHomeCreateBinding? = null
+    private var restoreSystemBars: (() -> Unit)? = null
     private val model: AccountCreationViewModel by activityViewModels()
     private val mCompositeDisposable = CompositeDisposable()
     private val importBackupLauncher: ActivityResultLauncher<Intent> =
@@ -88,15 +102,112 @@ class HomeAccountCreationFragment :
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccHomeCreateBinding.inflate(inflater, container, false).apply {
-            linkDevice.setOnClickListener { presenter.clickOnLinkAccount() }
             ringCreateBtn.setOnClickListener { presenter.clickOnCreateAccount() }
-            accountConnectServer.setOnClickListener { presenter.clickOnConnectAccount() }
-            ringImportAccount.setOnClickListener { presenter.clickOnBackupAccountLink() }
-            sipAddAccount.setOnClickListener { presenter.clickOnCreateSIPAccount() }
+            existingAccountBtn.setOnClickListener {
+                showChoices(R.string.account_already_have,
+                    R.string.account_link_from_device to { presenter.clickOnLinkAccount() },
+                    R.string.account_link_from_backup to { presenter.clickOnBackupAccountLink() },
+                    R.string.account_link_from_organization to { presenter.clickOnConnectAccount() })
+            }
+            advancedBtn.setOnClickListener {
+                showChoices(R.string.account_advanced_show,
+                    R.string.account_add_phone_line to { presenter.clickOnCreateSIPAccount() })
+            }
+            val claims = welcomeClaims.children.filterIsInstance<TextView>().toList()
+            claims.forEach { bracket(it) }
+            // A halo the colour of the page keeps the words legible over the painting.
+            halo(welcomeTitle, 10f)
+            (claims + existingAccountBtn + advancedBtn).forEach { halo(it, 6f) }
+            ViewCompat.setAccessibilityHeading(welcomeTitle, true)
+            welcomePainting.landOn(welcomeTitle)
             binding = this
         }.root
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        restoreSystemBars = paintSystemBars()
+    }
+
+    private fun halo(view: TextView, radiusDp: Float) {
+        view.setShadowLayer(radiusDp * resources.displayMetrics.density, 0f, 0f,
+            ContextCompat.getColor(view.context, R.color.welcome_background))
+    }
+
+    /** Keeps the claim text plain inside its bordered Cubist pill. */
+    private fun bracket(claim: TextView) {
+        claim.contentDescription = claim.text
+    }
+
+    /** Offers the ways in behind a secondary entry, in a bottom sheet. */
+    private fun showChoices(@StringRes title: Int, vararg choices: Pair<Int, () -> Unit>) {
+        val dialog = BottomSheetDialog(requireContext(), R.style.Welcome_Sheet)
+        val inflater = LayoutInflater.from(dialog.context)
+        val sheet = WelcomeChoicesBinding.inflate(inflater)
+        sheet.welcomeChoicesTitle.setText(title)
+        ViewCompat.setAccessibilityHeading(sheet.welcomeChoicesTitle, true)
+        for ((label, action) in choices) {
+            WelcomeChoiceBinding.inflate(inflater, sheet.welcomeChoicesList, true).root.apply {
+                setText(label)
+                setOnClickListener {
+                    dialog.dismiss()
+                    action()
+                }
+            }
+        }
+        dialog.setContentView(sheet.root)
+        dialog.show()
+    }
+
+    /**
+     * Lays the welcome colours under the system bars, and gives the previous
+     * ones back on leaving. Under the navigation bar the wizard pads its
+     * container: the painting goes on there, so the container must not clip it.
+     * With three-button navigation, the system would veil that strip in the
+     * theme's background colour: the veil is lifted while the welcome shows.
+     */
+    @Suppress("DEPRECATION")
+    private fun paintSystemBars(): () -> Unit {
+        val activity = requireActivity()
+        val window = activity.window
+        val color = ContextCompat.getColor(activity, R.color.welcome_background)
+        val luminous = resources.getBoolean(R.bool.welcome_dark)
+        val bars = WindowCompat.getInsetsController(window, window.decorView)
+        val lightStatus = bars.isAppearanceLightStatusBars
+        val lightNavigation = bars.isAppearanceLightNavigationBars
+        val container = activity.findViewById<ViewGroup>(R.id.wizard_container)
+        val containerBackground = container?.background
+        val clipChildren = container?.clipChildren ?: true
+        val clipToPadding = container?.clipToPadding ?: true
+        val statusColor = window.statusBarColor
+        val navigationColor = window.navigationBarColor
+        val veiled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && window.isNavigationBarContrastEnforced
+        bars.isAppearanceLightStatusBars = !luminous
+        bars.isAppearanceLightNavigationBars = !luminous
+        container?.setBackgroundColor(color)
+        container?.clipChildren = false
+        container?.clipToPadding = false
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) window.isNavigationBarContrastEnforced = false
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            window.statusBarColor = color
+            window.navigationBarColor = color
+        }
+        return {
+            bars.isAppearanceLightStatusBars = lightStatus
+            bars.isAppearanceLightNavigationBars = lightNavigation
+            container?.background = containerBackground
+            container?.clipChildren = clipChildren
+            container?.clipToPadding = clipToPadding
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) window.isNavigationBarContrastEnforced = veiled
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+                window.statusBarColor = statusColor
+                window.navigationBarColor = navigationColor
+            }
+        }
+    }
+
     override fun onDestroyView() {
+        restoreSystemBars?.invoke()
+        restoreSystemBars = null
         super.onDestroyView()
         mCompositeDisposable.clear()
         binding = null

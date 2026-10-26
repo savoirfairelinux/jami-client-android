@@ -132,7 +132,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
             add(IconCardHelper.getAccountAddDeviceCard(context))
             add(IconCardHelper.getAccountShareCard(context, null).apply { qrCard = this })
         }
-        return createRow(getString(R.string.account_tv_settings_header), cards, false)
+        return createRow(getString(R.string.identity_tv_settings_header), cards, false)
     }
 
     private fun createContactRequestRow(): CardListRow {

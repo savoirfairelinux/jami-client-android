@@ -36,7 +36,7 @@ object IconCardHelper {
     fun getAccountAddDeviceCard(context: Context): IconCard {
         return IconCard(
             Card.Type.ACCOUNT_ADD_DEVICE,
-            context.getString(R.string.account_export_title),
+            context.getString(R.string.identity_export_title),
             "",
             context,
             R.drawable.baseline_androidtv_link_device
@@ -46,7 +46,7 @@ object IconCardHelper {
     fun getAccountManagementCard(context: Context): IconCard {
         return IconCard(
             Card.Type.ACCOUNT_EDIT_PROFILE,
-            context.getString(R.string.account_edit_profile),
+            context.getString(R.string.identity_edit),
             "",
             context,
             R.drawable.baseline_androidtv_account
@@ -56,7 +56,7 @@ object IconCardHelper {
     fun getAccountShareCard(context: Context, bitmapDrawable: BitmapDrawable?): IconCard {
         return IconCard(
             Card.Type.ACCOUNT_SHARE_ACCOUNT,
-            context.getString(R.string.menu_item_share),
+            context.getString(R.string.menu_item_share_identity),
             "",
             bitmapDrawable
         )
