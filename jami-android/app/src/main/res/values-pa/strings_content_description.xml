@@ -6,4 +6,6 @@
   <string name="control_play">ਚਲਾਓ</string>
   <string name="control_pause">ਰੋਕੋ</string>
   <string name="searchbar_navigation_account">ਖਾਤਾ ਚੁਣੋ</string>
+  <string name="collab_format_italic">ਟੇਡੇ ਅੱਖਰ</string>
+  <string name="collab_format_strike">ਸਟ੍ਰਾਇਕਥਰੂ ਕਰੋ</string>
 </resources>

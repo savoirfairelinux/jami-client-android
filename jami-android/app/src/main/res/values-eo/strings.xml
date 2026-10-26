@@ -344,4 +344,12 @@
   <string name="shared_services_type_custom_label">Propra</string>
   <string name="shared_services_choose">Elektu dosieron</string>
   <string name="shared_services_save">Savi</string>
+  <!--Collaborative documents-->
+  <string name="collab_documents">Dokumentoj</string>
+  <string name="collab_create">Krei</string>
+  <string name="collab_link_title">Rilato</string>
+  <string name="collab_link_hint">Adreso</string>
+  <string name="collab_link_add">Aldoni</string>
+  <string name="collab_link_remove">Forigi</string>
+  <string name="collab_remove">Forigi</string>
 </resources>
