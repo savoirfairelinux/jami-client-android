@@ -76,7 +76,8 @@ class AutoFitTextureView @JvmOverloads constructor(context: Context, attrs: Attr
         val targetWidth = if (isFullscreen) requestedWidth else min(requestedWidth, mSize)
         val targetHeight = if (isFullscreen) requestedHeight else min(requestedHeight, mSize)
 
-        if (mRatioWidth == 0 || mRatioHeight == 0) {
+        if (isFullscreen || mRatioWidth == 0 || mRatioHeight == 0) {
+            // Resize the image with its transform, not the camera's fullscreen output surface.
             setMeasuredDimension(targetWidth, targetHeight)
             return
         }
@@ -85,24 +86,12 @@ class AutoFitTextureView @JvmOverloads constructor(context: Context, attrs: Attr
         val adjustedWidth: Int
         val adjustedHeight: Int
 
-        if (isFullscreen) {
-            // Fullscreen mode: adjust to fill parent while keeping aspect ratio
-            if (targetHeight >= targetWidth) {
-                adjustedHeight = targetHeight
-                adjustedWidth = (adjustedHeight * aspectRatio).toInt().coerceAtMost(targetWidth)
-            } else {
-                adjustedWidth = targetWidth
-                adjustedHeight = (adjustedWidth / aspectRatio).toInt().coerceAtMost(targetHeight)
-            }
+        if (targetWidth < targetHeight * aspectRatio) {
+            adjustedWidth = targetWidth
+            adjustedHeight = (adjustedWidth / aspectRatio).toInt()
         } else {
-            // Preview mode: fit inside a 150dp box with correct aspect ratio
-            if (targetWidth < targetHeight * aspectRatio) {
-                adjustedWidth = targetWidth
-                adjustedHeight = (adjustedWidth / aspectRatio).toInt()
-            } else {
-                adjustedHeight = targetHeight
-                adjustedWidth = (adjustedHeight * aspectRatio).toInt()
-            }
+            adjustedHeight = targetHeight
+            adjustedWidth = (adjustedHeight * aspectRatio).toInt()
         }
 
         setMeasuredDimension(adjustedWidth, adjustedHeight)
