@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4892020_e2f30906",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/AutoFitTextureView.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T16:14:46Z",
+      "side": 1,
+      "message": "[warning] Line 80: 🟡 This changes core `onMeasure` behavior for fullscreen, but there is no accompanying regression test. Add a UI/unit measurement test (Robolectric or instrumentation) that asserts fullscreen always measures to parent constraints even when ratio is set, plus a non-fullscreen case that preserves aspect-fit sizing. This protects against reintroducing tablet preview shrink and camera-buffer resize regressions.",
+      "revId": "4599267c0fd564a044fe8486fbfc6faa29cebd5a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
