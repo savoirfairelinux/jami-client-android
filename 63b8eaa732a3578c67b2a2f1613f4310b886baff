@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e64d891_8e604039",
+        "filename": "jami-android/app/src/main/res/values-ast-rES/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T05:08:27Z",
+      "side": 1,
+      "message": "[warning] Line 84: 🟡 `notif_incoming_file_transfer_title` is translated as an incoming call (`Llamada entrante de %1$s`) instead of an incoming file transfer. This changes meaning and can mislead users during file reception; translate it to a file-transfer-specific message while keeping `%1$s`.",
+      "revId": "63b8eaa732a3578c67b2a2f1613f4310b886baff",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0b3cae2_f270b26f",
+        "filename": "jami-android/app/src/main/res/values-ast-rES/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T05:08:27Z",
+      "side": 1,
+      "message": "[warning] Line 320: 🟡 `navigation_item_conversation` contains escaped HTML markup text (`\u0026lt;br style\u003d\"\"\u0026gt;`) in the user-visible label. This will render literal garbage in navigation instead of a clean title. Replace with plain localized text (for example just `Conversaciones`).",
+      "revId": "63b8eaa732a3578c67b2a2f1613f4310b886baff",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9ceb508_91042e10",
+        "filename": "jami-android/app/src/main/res/values-ast-rES/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T05:08:27Z",
+      "side": 1,
+      "message": "[warning] Line 413: 🟡 `collab_link_remove`/`collab_remove` use unrelated sentence text (`La so primer apaición...`) instead of a removal action label. This is a UX regression on destructive actions; replace both with proper localized equivalents of `Remove/Delete`.",
+      "revId": "63b8eaa732a3578c67b2a2f1613f4310b886baff",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf7d3903_a6617890",
+        "filename": "jami-android/app/src/main/res/values-es_rVE/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T05:08:27Z",
+      "side": 1,
+      "message": "[error] 🔴 `values-es_rVE` uses an invalid Android resource qualifier format. Region-qualified locale folders must use `values-\u003clang\u003e-r\u003cREGION\u003e` (e.g. `values-es-rVE`). Keep this name and Android will not resolve it as the intended locale (and can fail resource processing depending on toolchain). Rename both added files to `res/values-es-rVE/...`.",
+      "revId": "63b8eaa732a3578c67b2a2f1613f4310b886baff",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
