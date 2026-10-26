@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc6ab4e9_7b21a2c1",
+        "filename": "jami-android/app/src/main/res/values-ast-rES/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T18:08:42Z",
+      "side": 1,
+      "message": "[error] 🔴 `collab_link_remove` and `collab_remove` are mistranslated to an unrelated sentence (`La so primer apaición...`) instead of a remove action label. These keys drive destructive UI actions; wrong wording can mislead users and cause incorrect actions. Set both to a clear Asturian equivalent of “Remove/Delete”.",
+      "revId": "785cf8ad11b7cf843e45620f11f4c3a5c0529587",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61a7fec3_6a1cf26a",
+        "filename": "jami-android/app/src/main/res/values-ast-rES/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T18:08:42Z",
+      "side": 1,
+      "message": "[error] 🔴 `navigation_item_conversation` contains escaped HTML markup (`Conversaciones\u0026lt;br style\u003d\"\"\u0026gt;`) instead of a user-facing label. This will render literal garbage text in navigation and indicates a bad translation payload. Replace it with plain Asturian text only (no HTML fragment).",
+      "revId": "785cf8ad11b7cf843e45620f11f4c3a5c0529587",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5147d976_28dd6841",
+        "filename": "jami-android/app/src/main/res/values-ast-rES/strings_content_description.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T18:08:42Z",
+      "side": 1,
+      "message": "[warning] 🟡 Accessibility regression: `collab_format_bold`, `collab_format_italic`, and `collab_format_strike` are not action-descriptive (nonsensical phrases), so screen reader users won’t understand formatting controls. Use concise semantic labels equivalent to “Bold”, “Italic”, and “Strikethrough”.",
+      "revId": "785cf8ad11b7cf843e45620f11f4c3a5c0529587",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
