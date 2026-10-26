@@ -20,6 +20,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2777f916_81c004aa",
+        "filename": "jami-android/app/src/main/res/values-ast-rES/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T18:25:05Z",
+      "side": 1,
+      "message": "[warning] Line 381: 🟡 `group_member_invited` is translated as the plural **\"Convidaos\"**, but this key is used as a per-member state label (source: \"Invited\"). Use a singular status term to avoid grammatically incorrect member rows (e.g., a singular equivalent of \"Invited\").",
+      "revId": "1ac7cb9fb083c1d674c094370093a4be0d94bf78",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3ff308b_ed14cbc0",
+        "filename": "jami-android/app/src/main/res/values-ast-rES/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T18:25:05Z",
+      "side": 1,
+      "message": "[warning] Line 412: 🟡 `collab_link_add` is translated as **\"Aumenta\"** (\"increase\"), which does not match the action semantics of source \"Add\" in a link dialog. Use a verb meaning \"add/insert\" to keep the CTA unambiguous.",
+      "revId": "1ac7cb9fb083c1d674c094370093a4be0d94bf78",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4d76f743_47c5483f",
         "filename": "jami-android/app/src/main/res/values-ast-rES/strings_account.xml",
         "patchSetId": 1
