@@ -18,6 +18,7 @@ package cx.ring.viewholders
 
 import android.view.animation.AlphaAnimation
 import android.view.animation.DecelerateInterpolator
+import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import cx.ring.databinding.ItemContactBinding
@@ -29,6 +30,10 @@ class ContactPickerViewHolder(b: ItemContactBinding) :
     RecyclerView.ViewHolder(b.root) {
     private val binding: ItemContactBinding = b
     private var currentUri: Uri? = null
+
+    init {
+        ViewCompat.setScreenReaderFocusable(itemView, true)
+    }
 
     private fun fadeIn() = AlphaAnimation(0f, 1f).apply {
         interpolator = DecelerateInterpolator()
@@ -49,6 +54,7 @@ class ContactPickerViewHolder(b: ItemContactBinding) :
         }
 
         binding.displayName.text = conversation.title
+        itemView.isSelected = conversation.isChecked
         val fade = binding.photo.setAvatar(AvatarDrawable.Builder()
             .withViewModel(conversation)
             .withCircleCrop(true)
