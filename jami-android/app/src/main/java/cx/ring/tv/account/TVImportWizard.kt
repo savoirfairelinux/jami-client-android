@@ -189,8 +189,8 @@ class TVImportWizard : AppCompatActivity(), OnResultCallback {
         val message = when (state) {
             is AddDeviceImportState.Connecting,
             is AddDeviceImportState.Authenticating,
-            is AddDeviceImportState.InProgress -> getString(R.string.link_device_dialog_stop_import_body)
-            else -> getString(R.string.link_device_dialog_stop_import_body)
+            is AddDeviceImportState.InProgress -> getString(R.string.link_device_dialog_stop_import_body_identity)
+            else -> getString(R.string.link_device_dialog_stop_import_body_identity)
         }
 
         dismissExitDialog()

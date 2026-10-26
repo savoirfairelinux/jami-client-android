@@ -107,7 +107,7 @@ class PushNotificationLogsActivity : AppCompatActivity() {
             if (account != null) {
                 mNotificationService.testPushNotification(account.accountId)
             } else {
-                Snackbar.make(binding.root, R.string.error_account_offline, Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(binding.root, R.string.error_identity_offline, Snackbar.LENGTH_SHORT).show()
             }
         }
 

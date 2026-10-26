@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:lineSpacingExtra="8dp"
-        android:text="@string/import_side_step1_advice_qr"
+        android:text="@string/import_side_step1_advice_qr_identity"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/mainContainer"
         app:layout_constraintEnd_toEndOf="parent"

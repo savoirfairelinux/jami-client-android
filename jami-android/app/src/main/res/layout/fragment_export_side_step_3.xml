@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="@string/export_side_step3_body_done" />
+        tools:text="@string/export_side_step3_body_done_identity" />
 
     <ProgressBar
         android:id="@+id/loading"

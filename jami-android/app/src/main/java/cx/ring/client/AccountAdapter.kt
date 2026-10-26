@@ -119,7 +119,7 @@ class AccountAdapter(
         } else {
             holder.binding.invitationBadge.visibility = View.GONE
             holder.binding.title.setText(
-                if (type == TYPE_CREATE_ACCOUNT) R.string.add_ring_account_title
+                if (type == TYPE_CREATE_ACCOUNT) R.string.add_ring_identity_title
                 else R.string.add_sip_account_title
             )
             holder.binding.logo.setImageResource(R.drawable.baseline_add_24)
@@ -142,7 +142,7 @@ class AccountAdapter(
             account.registeredName.ifEmpty {
                 account.alias.orEmpty().ifEmpty {
                     if (account.isSip) context.getString(R.string.sip_account)
-                    else context.getString(R.string.ring_account)
+                    else context.getString(R.string.ring_identity)
                 }
             }
         }

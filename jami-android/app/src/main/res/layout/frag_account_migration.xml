@@ -95,7 +95,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
-                        android:text="@string/update_account" />
+                        android:text="@string/update_identity" />
                 </LinearLayout>
 
                 <TextView
@@ -108,7 +108,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                     android:paddingTop="16dp"
                     android:paddingRight="16dp"
                     android:paddingBottom="16dp"
-                    android:text="@string/account_migration"
+                    android:text="@string/identity_migration"
                     android:textSize="14sp" />
 
                 <TextView
@@ -121,7 +121,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                     android:paddingLeft="16dp"
                     android:paddingTop="24dp"
                     android:paddingRight="16dp"
-                    android:text="@string/ring_account"
+                    android:text="@string/ring_identity"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
 
             </RelativeLayout>

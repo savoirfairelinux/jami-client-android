@@ -139,12 +139,13 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
     fun createAccount() {
         val viewModel: AccountCreationViewModel by viewModels()
         val model = viewModel.model
+        val defaultName = getText(R.string.identity_default_name).toString()
         if (!TextUtils.isEmpty(model.managementServer)) {
-            presenter.initJamiAccountConnect(model, getText(R.string.ring_account_default_name).toString())
+            presenter.initJamiAccountConnect(model, defaultName)
         } else if (model.archive != null) {
-            presenter.initJamiAccountBackup(model, getText(R.string.ring_account_default_name).toString())
+            presenter.initJamiAccountBackup(model, defaultName)
         } else {
-            presenter.initJamiAccountCreation(model, getText(R.string.ring_account_default_name).toString())
+            presenter.initJamiAccountCreation(model, defaultName)
         }
     }
 
@@ -185,7 +186,10 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
         val fragments = supportFragmentManager.fragments
         if (fragments.size > 0) {
             val fragment = fragments[0]
-            if (fragment is JamiAccountConnectFragment || fragment is JamiImportBackupFragment) {
+            if (fragment is JamiAccountCreationFragment) {
+                val model: AccountCreationViewModel by viewModels()
+                profileCreated(model.model.fullName.isNotBlank() || model.model.photo != null)
+            } else if (fragment is JamiAccountConnectFragment || fragment is JamiImportBackupFragment) {
                 profileCreated(false)
             }
         }
@@ -201,8 +205,8 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
         if (display) {
             mProgress = MaterialAlertDialogBuilder(this@AccountWizardActivity)
                 .setView(ItemProgressDialogBinding.inflate(layoutInflater).root)
-                .setTitle(R.string.dialog_wait_create)
-                .setMessage(getString(R.string.dialog_wait_create_details))
+                .setTitle(R.string.identity_wait_create)
+                .setMessage(getString(R.string.identity_wait_create_details))
                 .setCancelable(false)
                 .show()
         } else {
@@ -216,7 +220,7 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
     override fun displayCreationError() {
         Toast.makeText(
             this@AccountWizardActivity,
-            getString(R.string.account_creation_error),
+            getString(R.string.identity_creation_error),
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -241,7 +245,7 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
         }
         mAlertDialog = MaterialAlertDialogBuilder(this@AccountWizardActivity)
             .setPositiveButton(android.R.string.ok, null)
-            .setTitle(R.string.account_cannot_be_found_title)
+            .setTitle(R.string.identity_cannot_be_found_title)
             .setMessage(R.string.account_export_end_decryption_message)
             .show()
     }
@@ -253,7 +257,7 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
         mAlertDialog = MaterialAlertDialogBuilder(this@AccountWizardActivity)
             .setPositiveButton(android.R.string.ok, null)
             .setTitle(R.string.account_no_network_title)
-            .setMessage(R.string.account_no_network_message)
+            .setMessage(R.string.identity_no_network_message)
             .show()
     }
 
@@ -262,13 +266,13 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
             return
         }
         val message = if (mIsJamsAccount == true) {
-            getString(R.string.jams_account_cannot_be_found_message)
+            getString(R.string.jams_identity_cannot_be_found_message)
         } else {
-            getString(R.string.account_cannot_be_found_message)
+            getString(R.string.identity_cannot_be_found_message)
         }
         mAlertDialog = AlertDialog.Builder(this@AccountWizardActivity)
             .setPositiveButton(android.R.string.ok, null)
-            .setTitle(R.string.account_cannot_be_found_title)
+            .setTitle(R.string.identity_cannot_be_found_title)
             .setMessage(message)
             .setOnDismissListener { supportFragmentManager.popBackStack() }
             .show()

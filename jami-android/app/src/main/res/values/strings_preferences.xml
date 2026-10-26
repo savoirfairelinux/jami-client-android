@@ -56,8 +56,9 @@
     <string name="pref_blackList_title">Block list</string>
     <string name="pref_blackList_summary">Check your block list.</string>
 
-    <string name="pref_delete_account_title">Delete account</string>
-    <string name="pref_delete_account_summary">Delete account from this device</string>
+    <string name="pref_delete_identity_title">Delete identity</string>
+    <string name="pref_delete_identity_summary">Delete identity from this device</string>
+    <string name="sip_delete_account_title">Delete SIP account</string>
 
     <string name="pref_persistNotification_title">Run in the background</string>
     <string name="pref_persistNotification_summary">Allow running in the background to receive calls and messages.</string>
@@ -111,7 +112,7 @@
     <string name="extension_reset_preferences">Reset extension preferences</string>
     <string name="extension_reset_preferences_summary">Extension restored to the default settings</string>
     <string name="extension_reset_preferences_ask">Do you want to reset the general extension settings?</string>
-    <string name="extension_reset_account_preferences_ask">Do you want to reset the account extension settings?</string>
+    <string name="extension_reset_identity_preferences_ask">Do you want to reset the identity extension settings?</string>
     <string name="account_advanced_reset">Reset advanced settings</string>
     <string name="account_advanced_reset_summary">Restore default advanced settings</string>
     <string name="account_advanced_reset_confirm">Reset all advanced settings to default?</string>

@@ -109,6 +109,6 @@
         android:clickable="true"
         android:drawableTint="@color/colorOnPrimary"
         android:focusable="true"
-        android:text="@string/open_account_extension_settings" />
+        android:text="@string/open_identity_extension_settings" />
 
 </android.widget.RelativeLayout>

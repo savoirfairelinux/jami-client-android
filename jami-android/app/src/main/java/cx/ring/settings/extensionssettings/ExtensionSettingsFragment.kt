@@ -96,7 +96,7 @@ class ExtensionSettingsFragment : PreferenceFragmentCompat() {
         val message = run {
             var value = R.string.extension_reset_preferences_ask
             if (accountId!!.isNotEmpty()) {
-                value = R.string.extension_reset_account_preferences_ask
+                value = R.string.extension_reset_identity_preferences_ask
             }
             value
         }

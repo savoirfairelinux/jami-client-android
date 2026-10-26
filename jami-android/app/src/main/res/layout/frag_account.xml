@@ -57,14 +57,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:lines="1"
-                    android:text="@string/account_export_file"
+                    android:text="@string/identity_export_file"
                     android:layout_toEndOf="@id/system_export_image"/>
 
                 <TextView
                     style="@style/ListSecondary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/account_export_file_summary"
+                    android:text="@string/identity_export_file_summary"
                     android:layout_toEndOf="@id/system_export_image"
                     android:layout_below="@id/system_export_title"/>
 
@@ -101,7 +101,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     style="@style/ListSecondary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/account_password_summary"
+                    android:text="@string/identity_password_summary"
                     android:layout_toEndOf="@id/system_change_password_image"
                     android:layout_below="@id/system_change_password_title"/>
 
@@ -138,7 +138,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     style="@style/ListSecondary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/account_biometric_summary"
+                    android:text="@string/identity_biometric_summary"
                     android:layout_toEndOf="@id/system_biometric_image"
                     android:layout_below="@id/system_biometric_title"/>
 
@@ -205,14 +205,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:lines="1"
-                    android:text="@string/pref_delete_account_title"
+                    android:text="@string/pref_delete_identity_title"
                     android:layout_toEndOf="@+id/system_delete_account_image"/>
 
                 <TextView
                     style="@style/ListSecondary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/pref_delete_account_summary"
+                    android:text="@string/pref_delete_identity_summary"
                     android:layout_toEndOf="@+id/system_delete_account_image"
                     android:layout_below="@id/system_delete_account_title"/>
 

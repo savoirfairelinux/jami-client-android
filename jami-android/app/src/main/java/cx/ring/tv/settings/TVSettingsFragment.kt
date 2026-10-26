@@ -158,7 +158,7 @@ class TVSettingsFragment : LeanbackSettingsFragmentCompat() {
 
         private fun showDeleteAccountDialog() {
             val dialog = MaterialAlertDialogBuilder(requireContext(), Theme_MaterialComponents_Dialog)
-                .setTitle(R.string.account_delete_dialog_title)
+                .setTitle(R.string.identity_delete_dialog_title)
                 .setMessage(R.string.account_delete_dialog_message)
                 .setPositiveButton(R.string.menu_delete) { _, _ -> deleteAccount() }
                 .setNegativeButton(android.R.string.cancel, null)

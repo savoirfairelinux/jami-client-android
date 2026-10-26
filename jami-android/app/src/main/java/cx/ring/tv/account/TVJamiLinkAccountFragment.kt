@@ -45,7 +45,7 @@ class TVJamiLinkAccountFragment : JamiGuidedStepFragment<JamiLinkAccountPresente
 
     override fun onCreateGuidance(savedInstanceState: Bundle?): Guidance = Guidance(
         getString(R.string.account_link_archive_button),
-        getString(R.string.help_password_enter),
+        getString(R.string.help_password_enter_identity),
         "",
         requireContext().getDrawable(R.drawable.ic_contact_picture_fallback)
     )
@@ -53,7 +53,7 @@ class TVJamiLinkAccountFragment : JamiGuidedStepFragment<JamiLinkAccountPresente
     override fun onCreateActions(actions: MutableList<GuidedAction>, savedInstanceState: Bundle?) {
         val context = requireContext()
         addPasswordAction(context, actions, PASSWORD, getString(R.string.account_enter_password), "", "")
-        addDisabledAction(context, actions, LINK, getString(R.string.import_side_main_title), "", null, true)
+        addDisabledAction(context, actions, LINK, getString(R.string.import_side_main_title_identity), "", null, true)
     }
 
     override fun onProvideTheme(): Int = R.style.Theme_Ring_Leanback_GuidedStep_First

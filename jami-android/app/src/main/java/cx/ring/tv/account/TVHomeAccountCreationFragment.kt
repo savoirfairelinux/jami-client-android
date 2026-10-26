@@ -133,14 +133,14 @@ class TVHomeAccountCreationFragment : JamiGuidedStepFragment<HomeAccountCreation
     override fun onCreateGuidance(savedInstanceState: Bundle?): Guidance {
         val title = getString(R.string.account_creation_home)
         val breadcrumb = ""
-        val description = getString(R.string.help_ring)
+        val description = getString(R.string.help_ring_identity)
         val icon = requireContext().getDrawable(R.drawable.ic_jami)
         return Guidance(title, description, breadcrumb, icon)
     }
 
     override fun onCreateActions(actions: MutableList<GuidedAction>, savedInstanceState: Bundle?) {
         val context = requireContext()
-        addAction(context, actions, CREATE_ACCOUNT, getString(R.string.account_create_title), "", true)
+        addAction(context, actions, CREATE_ACCOUNT, getString(R.string.identity_create_jami_title), "", true)
         addAction(context, actions, LINK_ACCOUNT, getString(R.string.account_link_device), "", true)
         addAction(context, actions, LINK_BACKUP_ACCOUNT, getString(R.string.account_link_archive_button), "", true)
         addAction(context, actions, CREATE_JAMS_ACCOUNT, getString(R.string.account_connect_server_button), "", true)

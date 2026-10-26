@@ -57,7 +57,7 @@ class ChangePasswordDialog : DialogFragment() {
         }
         val result = MaterialAlertDialogBuilder(requireContext())
             .setView(binding!!.root)
-            .setMessage(R.string.help_password_choose)
+            .setMessage(R.string.help_password_choose_identity)
             .setTitle(passwordMessage)
             .setPositiveButton(passwordMessage, null) //Set to null. We override the onclick
             .setNegativeButton(android.R.string.cancel) { dialog: DialogInterface?, whichButton: Int -> dismiss() }

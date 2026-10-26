@@ -53,7 +53,7 @@ class RenameDeviceDialog : DialogFragment() {
         return MaterialAlertDialogBuilder(requireContext())
             .setView(binding!!.root)
             .setTitle(R.string.rename_device_title)
-            .setMessage(R.string.rename_device_message)
+            .setMessage(R.string.rename_device_message_identity)
             .setPositiveButton(R.string.rename_device_button, null)
             .setNegativeButton(android.R.string.cancel, null)
             .create()

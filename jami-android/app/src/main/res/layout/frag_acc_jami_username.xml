@@ -37,7 +37,7 @@
                 android:layout_weight="1"
                 android:layout_marginRight="4dp"
                 android:textStyle="bold"
-                android:text="@string/wizard_username_info"/>
+                android:text="@string/wizard_username_info_identity"/>
 
             <TextView
                 android:id="@+id/status"

@@ -79,7 +79,7 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
     fun createAccount() {
         val viewModel: AccountCreationViewModel by viewModels()
         val model = viewModel.model
-        val defaultAccountName = getText(R.string.ring_account_default_name).toString()
+        val defaultAccountName = getText(R.string.ring_identity_default_name).toString()
         mIsJamiAccountCreation = false
         if (!model.managementServer.isNullOrEmpty()) {
             presenter.initJamiAccountConnect(model, defaultAccountName)
@@ -132,8 +132,8 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
         if (display) {
             mProgress = MaterialAlertDialogBuilder(this)
                 .setView(ItemProgressDialogBinding.inflate(layoutInflater).root)
-                .setTitle(R.string.dialog_wait_create)
-                .setMessage(R.string.dialog_wait_create_details)
+                .setTitle(R.string.identity_wait_create)
+                .setMessage(R.string.identity_wait_create_details)
                 .setCancelable(false)
                 .show()
         } else {
@@ -148,7 +148,7 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
     override fun displayCreationError() {
         Toast.makeText(
             this@TVAccountWizard,
-            getString(R.string.account_creation_error),
+            getString(R.string.identity_creation_error),
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -186,8 +186,8 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
         }
         mAlertDialog = AlertDialog.Builder(this@TVAccountWizard)
             .setPositiveButton(android.R.string.ok, null)
-            .setTitle(R.string.account_cannot_be_found_title)
-            .setMessage(R.string.account_cannot_be_found_message)
+            .setTitle(R.string.identity_cannot_be_found_title)
+            .setMessage(R.string.identity_cannot_be_found_message)
             .show()
     }
 
@@ -198,7 +198,7 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
         mAlertDialog = AlertDialog.Builder(this@TVAccountWizard)
             .setPositiveButton(android.R.string.ok, null)
             .setTitle(R.string.account_no_network_title)
-            .setMessage(R.string.account_no_network_message)
+            .setMessage(R.string.identity_no_network_message)
             .show()
     }
 
@@ -207,13 +207,13 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
             return
         }
         val message = if (mIsJamsAccount == true) {
-            getString(R.string.jams_account_cannot_be_found_message)
+            getString(R.string.jams_identity_cannot_be_found_message)
         } else {
-            getString(R.string.account_cannot_be_found_message)
+            getString(R.string.identity_cannot_be_found_message)
         }
         mAlertDialog = AlertDialog.Builder(this@TVAccountWizard)
             .setPositiveButton(android.R.string.ok, null)
-            .setTitle(R.string.account_cannot_be_found_title)
+            .setTitle(R.string.identity_cannot_be_found_title)
             .setMessage(message)
             .show()
     }
