@@ -35,7 +35,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="16dp"
-        android:contentDescription="@string/contact_picture_description"
+        android:importantForAccessibility="no"
         android:scaleType="fitCenter"
         tools:uri="@tools:sample/full_names"
         tools:avatar="@tools:sample/avatars" />
