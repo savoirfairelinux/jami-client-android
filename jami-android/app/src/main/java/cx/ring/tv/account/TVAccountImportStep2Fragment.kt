@@ -46,7 +46,7 @@ class TVAccountImportStep2Fragment : GuidedStepSupportFragment() {
         val id = args.getString("id") ?: ""
         val name = args.getString("registeredName", id)
         return GuidanceStylist.Guidance(
-            getString(R.string.import_side_main_title),
+            getString(R.string.import_side_main_title_identity),
             id,
             null,
             AvatarDrawable.Builder()
@@ -95,7 +95,7 @@ class TVAccountImportStep2Fragment : GuidedStepSupportFragment() {
             actions.add(
                 GuidedAction.Builder(requireContext())
                     .id(ACTION_ID_PASSWORD)
-                    .title(R.string.wizard_password_info)
+                    .title(R.string.wizard_password_info_identity)
                     .description(R.string.enter_password)
                     .descriptionEditInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
                     .descriptionEditable(true)

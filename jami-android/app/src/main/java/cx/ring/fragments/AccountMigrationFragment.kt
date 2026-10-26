@@ -82,7 +82,7 @@ class AccountMigrationFragment : Fragment() {
     private fun initAccountDelete() {
         if (migratingAccount) return
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.account_delete_dialog_title)
+            .setTitle(R.string.identity_delete_dialog_title)
             .setMessage(R.string.account_delete_dialog_message)
             .setNegativeButton(android.R.string.cancel, null)
             .setPositiveButton(R.string.menu_delete) { d: DialogInterface?, w: Int -> deleteAccount() }
@@ -145,11 +145,11 @@ class AccountMigrationFragment : Fragment() {
         dialogBuilder.setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, id: Int -> }
         var success = false
         if (AccountConfig.STATE_INVALID == newState) {
-            dialogBuilder.setTitle(R.string.account_cannot_be_found_title)
-                .setMessage(R.string.account_cannot_be_updated_message)
+            dialogBuilder.setTitle(R.string.identity_cannot_be_found_title)
+                .setMessage(R.string.identity_cannot_be_updated_message)
         } else {
-            dialogBuilder.setTitle(R.string.account_device_updated_title)
-                .setMessage(R.string.account_device_updated_message)
+            dialogBuilder.setTitle(R.string.identity_device_updated_title)
+                .setMessage(R.string.identity_device_updated_message)
             success = true
         }
         val dialogSuccess = dialogBuilder.show()

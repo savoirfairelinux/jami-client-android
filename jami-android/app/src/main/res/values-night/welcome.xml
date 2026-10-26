@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2004-2026 Savoir-faire Linux Inc.
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program. If not, see <https://www.gnu.org/licenses/>.
+  -->
+<!-- Welcome screen in Cubist ("Just between us") style. By night, deep Prussian/indigo facets under a crescent moon above a calm painted indigo table plane (#131A35). -->
+<resources>
+    <bool name="welcome_dark">true</bool>
+
+    <color name="welcome_background">#131A35</color>
+    <color name="welcome_band">#1B2550</color>
+    <color name="welcome_ink">#FFFFFF</color>
+    <color name="welcome_text">#D6E0EC</color>
+    <color name="welcome_accent">#FFC542</color>
+    <color name="welcome_cta_bg">#FFC542</color>
+    <color name="welcome_cta_ink">#14232E</color>
+    <color name="welcome_on_accent">#14232E</color>
+    <color name="welcome_line">#6CCBF0</color>
+    <color name="welcome_sheet">#172042</color>
+    <color name="welcome_card">#E6172042</color>
+    <color name="welcome_card_stroke">#55FFFFFF</color>
+    <color name="welcome_field_bg">#B80F152D</color>
+    <color name="welcome_hint">#99AEC7</color>
+    <color name="welcome_divider">#2EFFFFFF</color>
+    <color name="welcome_claim_bg">#880A0E20</color>
+    <color name="welcome_claim_stroke">#6EFFFFFF</color>
+
+</resources>

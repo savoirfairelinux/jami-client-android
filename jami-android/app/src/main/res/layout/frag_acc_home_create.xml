@@ -1,99 +1,151 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2004-2026 Savoir-faire Linux Inc.
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program. If not, see <https://www.gnu.org/licenses/>.
+  -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/welcome_background"
+    android:clipChildren="false"
     tools:context=".account.AccountWizardActivity">
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true">
+    <cx.ring.views.CubistView
+        android:id="@+id/welcome_painting"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:importantForAccessibility="no" />
 
-        <LinearLayout
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
+        <cx.ring.views.BoundedLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingBottom="16dp">
+            android:paddingStart="24dp"
+            android:paddingTop="36dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="28dp"
+            app:bounded_width="480dp">
 
-            <ImageView
-                android:id="@+id/imageView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginRight="16dp"
-                android:layout_marginLeft="16dp"
-                android:contentDescription="@string/app_name"
-                app:srcCompat="@drawable/ic_jami_full_logo" />
+            <!-- Reserves the upper ~45% of the page for the Cubist painting ("Just between us") -->
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3.4" />
 
             <TextView
+                android:id="@+id/welcome_title"
+                style="@style/Welcome.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="30dp"
-                android:layout_marginBottom="18dp"
-                android:layout_marginTop="18dp"
-                android:text="@string/help_ring"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:gravity="center_horizontal"
+                android:text="@string/welcome_title" />
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/welcome_claims"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                app:flexWrap="wrap"
+                app:justifyContent="center">
+
+                <TextView
+                    style="@style/Welcome.Claim"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/welcome_claim_no_phone" />
+
+                <TextView
+                    style="@style/Welcome.Claim"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/welcome_claim_no_email" />
+
+                <TextView
+                    style="@style/Welcome.Claim"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/welcome_claim_no_ads" />
+
+                <TextView
+                    style="@style/Welcome.Claim"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/welcome_claim_no_stolen_data" />
+
+                <TextView
+                    style="@style/Welcome.Claim"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/welcome_claim_no_algorithm" />
+
+                <TextView
+                    style="@style/Welcome.Claim"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/welcome_claim_totally_free" />
+
+            </com.google.android.flexbox.FlexboxLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/ring_create_btn"
-                style="@style/WizardButton"
-                android:layout_width="@dimen/wizard_button_width"
+                style="@style/Welcome.Cta"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/account_new_button"
-                android:drawableLeft="@drawable/baseline_account_circle_white_36"
-                android:drawableRight="@drawable/baseline_arrow_forward_white_18"/>
+                android:layout_marginTop="20dp"
+                android:text="@string/account_new_get_started" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/link_device"
-                style="@style/WizardButton"
-                android:layout_width="@dimen/wizard_button_width"
+                android:id="@+id/existing_account_btn"
+                style="@style/Welcome.Link"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="12dp"
-                android:text="@string/account_link_device"
-                android:drawableLeft="@drawable/baseline_devices_white_36"
-                android:drawableRight="@drawable/baseline_arrow_forward_white_18"/>
+                android:layout_marginTop="8dp"
+                android:text="@string/account_already_have" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/ring_import_account"
-                style="@style/ButtonOutLined"
-                android:layout_width="@dimen/wizard_button_width"
+                android:id="@+id/advanced_btn"
+                style="@style/Welcome.Link"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/account_link_archive_button"
-                android:drawableTint="@color/color_primary_dark"
-                android:drawableLeft="@drawable/baseline_backup_black_36"
-                android:drawableRight="@drawable/baseline_arrow_forward_black_18"/>
+                android:text="@string/account_advanced_show" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/account_connect_server"
-                style="@style/ButtonOutLined"
-                android:layout_width="@dimen/wizard_button_width"
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.35" />
+
+            <ImageView
+                android:layout_width="156dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="12dp"
-                android:text="@string/account_connect_server_button"
-                android:drawableTint="@color/color_primary_dark"
-                android:drawableLeft="@drawable/baseline_router_black_36"
-                android:drawableRight="@drawable/baseline_arrow_forward_black_18"/>
+                android:layout_marginTop="12dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/app_name"
+                app:srcCompat="@drawable/jami_full_logo" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/sip_add_account"
-                style="@style/ButtonOutLined"
-                android:layout_width="@dimen/wizard_button_width"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/add_sip_account_title"
-                android:drawableTint="@color/color_primary_dark"
-                android:drawableLeft="@drawable/baseline_dialer_sip_24"
-                android:drawableRight="@drawable/baseline_arrow_forward_black_18"/>
-
-        </LinearLayout>
+        </cx.ring.views.BoundedLinearLayout>
 
     </ScrollView>
-</RelativeLayout>
+
+</FrameLayout>

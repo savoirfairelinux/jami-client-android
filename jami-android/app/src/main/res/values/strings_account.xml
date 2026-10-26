@@ -23,17 +23,17 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="ic_blacklist_menu">Blocked contacts</string>
 
     <!-- Strings related to account creation -->
-    <string name="account_selection">Select account</string>
-    <string name="add_ring_account_title">Add account</string>
+    <string name="identity_selection">Select identity</string>
+    <string name="add_ring_identity_title">Add identity</string>
     <string name="add_sip_account_title">Add SIP account</string>
-    <string name="ring_account_default_name">Jami account %1$s</string>
-    <string name="account_creation_error">An error occurred while creating the account.</string>
+    <string name="ring_identity_default_name">Jami identity %1$s</string>
+    <string name="identity_creation_error">An error occurred while creating the identity.</string>
 
     <string name="prompt_alias">Alias</string>
     <string name="prompt_hostname">Hostname</string>
     <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
-    <string name="action_create">Create account</string>
+    <string name="action_create_identity">Create identity</string>
     <string name="action_create_short">Create</string>
     <string name="action_register">Register</string>
     <string name="action_settings">Settings</string>
@@ -50,14 +50,15 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         You can edit your account later</string>
 
     <string name="account_type_ip2ip">IP account</string>
-    <string name="help_ring">A Jami account allows you to reach people securely in peer to peer through a fully distributed network.</string>
+    <string name="help_ring_identity">A Jami identity allows you to reach people securely in peer to peer through a fully distributed network.</string>
 
     <string name="help_sip_title">Add SIP account</string>
     <string name="help_sip">Configure existing SIP account</string>
     <string name="create_sip_account">Configure SIP account</string>
 
     <!-- Strings related to account deletion -->
-    <string name="account_delete_dialog_title">Delete account?</string>
+    <string name="identity_delete_dialog_title">Delete identity?</string>
+    <string name="sip_delete_dialog_title">Delete SIP account?</string>
     <string name="account_delete_dialog_message">This action cannot be undone.</string>
 
     <!-- AccountManagementFragment -->
@@ -73,11 +74,11 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="account_device_revocation_error_unknown">Unknown error.</string>
     <string name="account_password_change">Change Password</string>
     <string name="account_password_set">Set Password</string>
-    <string name="account_password_summary">Manage your account password.</string>
-    <string name="account_password_change_wait_message">Changing account password</string>
+    <string name="identity_password_summary">Manage your identity password.</string>
+    <string name="identity_password_change_wait_message">Changing identity password</string>
     <string name="account_biometric_disable">Disable biometric authentication</string>
     <string name="account_biometric_set">Enable biometric authentication</string>
-    <string name="account_biometric_summary">Manage biometric authentication for your account.</string>
+    <string name="identity_biometric_summary">Manage biometric authentication for your identity.</string>
 
     <!-- Basic Details -->
     <string name="account_preferences_basic_tab">General</string>
@@ -190,43 +191,43 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="account_rtp_port_range">Audio RTP port range</string>
 
     <!-- restore/backup -->
-    <string name="account_new_device_password">Enter main password to unlock account</string>
+    <string name="identity_new_device_password">Enter main password to unlock identity</string>
     <string name="error_password_char_count">6 characters minimum</string>
     <string name="error_passwords_not_equals">Passwords do not match.</string>
     <string name="export_account_wait_title">Please wait…</string>
-    <string name="export_account_wait_message">Exporting account information</string>
-    <string name="account_export_file">Backup account</string>
-    <string name="account_export_file_summary">Backup your account on your device to restore it later.</string>
+    <string name="export_identity_wait_message">Exporting identity information</string>
+    <string name="identity_export_file">Backup identity</string>
+    <string name="identity_export_file_summary">Backup your identity on your device to restore it later.</string>
     <string name="account_export_end_decryption_message">Incorrect password. Please try again with the correct password.</string>
     <string name="account_enter_password">Enter password</string>
     <string name="account_share_body">Contact me using “%1$s” on the Jami distributed communication platform: %2$s</string>
     <string name="account_share_body_with_username">Contact me using “%1$s” or my public username “%2$s” on the Jami distributed communication platform: %3$s</string>
     <string name="account_contact_me">Contact me on Jami!</string>
-    <string name="update_account">Update account</string>
-    <string name="account_migration">Your Jami account can be updated.\nPlease enter your password.</string>
-    <string name="ring_account">Jami account</string>
+    <string name="update_identity">Update identity</string>
+    <string name="identity_migration">Your Jami identity can be updated.\nPlease enter your password.</string>
+    <string name="ring_identity">Jami identity</string>
     <string name="sip_account">SIP account</string>
     <string name="ring_account_identity">Identity</string>
-    <string name="account_migration_title_dialog">Account migration</string>
-    <string name="account_migration_message_dialog">Your accounts need to be updated. Do you want to go the Account management screen to perform this operation?</string>
+    <string name="identity_migration_title_dialog">Identity migration</string>
+    <string name="identity_migration_message_dialog">Your identities need to be updated. Do you want to go to the Identity management screen to perform this operation?</string>
     <string name="account_update_needed">Update needed</string>
-    <string name="account_cannot_be_found_title">Account error</string>
-    <string name="account_cannot_be_found_message">Unable to find account on the Jami network. Make sure it was exported on Jami from an existing device, and that provided credentials are correct.</string>
-    <string name="jams_account_cannot_be_found_message">An error occurred while connecting the account. Please check credentials and try again.</string>
+    <string name="identity_cannot_be_found_title">Identity error</string>
+    <string name="identity_cannot_be_found_message">Unable to find identity on the Jami network. Make sure it was exported on Jami from an existing device, and that provided credentials are correct.</string>
+    <string name="jams_identity_cannot_be_found_message">An error occurred while connecting the identity. Please check credentials and try again.</string>
     <string name="account_sip_cannot_be_registered_message">You can continue with the account creation process or edit your information here. Edition is still possible later in the account settings.</string>
     <string name="account_no_network_title">Network error</string>
-    <string name="account_no_network_message">A connectivity error occurred while adding the Jami account to the distributed network. Check your device connectivity.</string>
+    <string name="identity_no_network_message">A connectivity error occurred while adding the Jami identity to the distributed network. Check your device connectivity.</string>
     <string name="account_device_added_title">Account device added</string>
     <string name="account_device_added_message">Jami account set up successfully on this device.</string>
-    <string name="account_device_updated_title">Account device updated</string>
-    <string name="account_device_updated_message">Jami account updated successfully.</string>
-    <string name="account_cannot_be_updated_message">An error occurred while updating the account. Please check account password.</string>
+    <string name="identity_device_updated_title">Identity device updated</string>
+    <string name="identity_device_updated_message">Jami identity updated successfully.</string>
+    <string name="identity_cannot_be_updated_message">An error occurred while updating the identity. Please check identity password.</string>
     <string name="account_sip_success_title">SIP account registered</string>
     <string name="account_sip_success_message">SIP account registered successfully.</string>
     <string name="account_sip_register_anyway">Register anyway</string>
 
     <!-- TV -->
-    <string name="account_tv_settings_header">Account settings</string>
+    <string name="identity_tv_settings_header">Identity settings</string>
     <string name="account_tv_advance_settings_header">Advanced settings</string>
     <string name="account_tv_add_contact">Add contact</string>
     <string name="account_tv_advanced_settings">Change the general settings</string>
@@ -236,16 +237,46 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="tv_about_author">Author rights</string>
     <string name="tv_about_credits">Credits</string>
 
+    <!-- Welcome screen -->
+    <string name="welcome_title">Just between us.</string>
+    <string name="welcome_claim_no_phone">No phone number</string>
+    <string name="welcome_claim_no_email">No email</string>
+    <string name="welcome_claim_no_ads">No ads</string>
+    <string name="welcome_claim_no_stolen_data">No stolen data</string>
+    <string name="welcome_claim_no_algorithm">No algorithm</string>
+    <string name="welcome_claim_totally_free">Totally free</string>
+    <string name="account_new_get_started">Get started</string>
+    <string name="account_already_have">I am already on Jami</string>
+    <string name="account_advanced_show">Advanced</string>
+    <string name="account_link_from_device">From my other phone or computer</string>
+    <string name="account_link_from_backup">From a backup</string>
+    <string name="account_link_from_organization">From my organization</string>
+    <string name="account_add_phone_line">Connect a phone line (SIP)</string>
+
+    <!-- Identity creation (single panel) -->
+    <string name="identity_create_title">Create your identity</string>
+    <string name="identity_create_subtitle">Everything is optional — you can change it anytime.</string>
+    <string name="identity_photo_gallery">Gallery</string>
+    <string name="identity_photo_camera">Camera</string>
+    <string name="identity_photo_remove">Remove</string>
+    <string name="identity_display_name_hint">Display name (optional)</string>
+    <string name="identity_display_name_helper">Shown only to the contacts you accept</string>
+    <string name="identity_username_hint">Username (optional)</string>
+    <string name="identity_username_helper">Public name so people can find you</string>
+    <string name="identity_create_cta">Create my identity</string>
+    <string name="identity_wait_create">Creating your identity</string>
+    <string name="identity_wait_create_details">Please wait while your identity is created…</string>
+    <string name="identity_default_name">Jami identity %1$s</string>
+
     <string name="account_link_device">Connect from another device</string>
     <string name="account_link_button">Connect from network</string>
     <string name="account_link_archive_button">Connect from backup</string>
-    <string name="account_new_button">Create Jami account</string>
     <string name="account_link_export_button">Link new device</string>
     <string name="account_link_show_button">Show %d more linked device</string>
     <string name="account_link_hide_button">Hide linked device</string>
     <string name="account_start_export_button">Generate authentication code</string>
     <string name="account_end_export_button">close</string>
-    <string name="account_export_title">Link account to other devices</string>
+    <string name="identity_export_title">Link identity to other devices</string>
     <string name="account_connect_server_button">Connect to management server</string>
     <string name="account_connect_button">Connect</string>
     <string name="prompt_server">Management server URL</string>
@@ -279,11 +310,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <!-- Create account -->
     <string name="account_creation_home">Welcome to Jami</string>
     <string name="account_creation_profile">Create your profile</string>
-    <string name="account_creation_ring">Create your Jami account</string>
     <string name="account_sip_cannot_be_registered">An error occurred while registering the SIP account.</string>
 
     <!-- Edit profile-->
-    <string name="account_edit_profile">Edit profile</string>
+    <string name="identity_edit">Edit identity</string>
 
     <!-- Devices -->
     <string name="account_revoke_device_hint">Enter password to confirm</string>
@@ -293,7 +323,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="revoke_device_wait_title">Please wait…</string>
     <string name="revoke_device_wait_message">Revoking device</string>
     <string name="rename_device_title">Rename this device</string>
-    <string name="rename_device_message">Enter device name to identify this device in your Jami account</string>
+    <string name="rename_device_message_identity">Enter device name to identify this device in your Jami identity</string>
     <string name="rename_device_button">Rename device</string>
     <string name="account_rename_device_hint">Choose new device name</string>
     <string name="account_device_name_empty">Device name cannot be empty.</string>
@@ -318,18 +348,18 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="account_link_device_button">Connect</string>
 
     <!-- Biometry -->
-    <string name="account_biometry_auth_title">Unlock Jami account</string>
+    <string name="identity_biometry_auth_title">Unlock Jami identity</string>
     <string name="account_biometry_auth_message">Use biometry to unlock your account</string>
     <string name="account_biometry_enroll_title">Use biometric authentication?</string>
-    <string name="account_biometry_enroll_message">Your device supports secure biometric authentication.
-Biometric or device authentication adds a convenient way to locally unlock access to your Jami account. You will still be able to use your password.</string>
+    <string name="identity_biometry_enroll_message">Your device supports secure biometric authentication.
+Biometric or device authentication adds a convenient way to locally unlock access to your Jami identity. You will still be able to use your password.</string>
     <string name="account_biometry_enroll_accept">Use biometrics</string>
     <string name="no_thanks">No thanks</string>
 
-    <string name="account_biometry_enroll_auth_title">Add authentication for your Jami account</string>
+    <string name="identity_biometry_enroll_auth_title">Add authentication for your Jami identity</string>
     <string name="account_biometry_enroll_auth_message">Add secure biometric or device authentication as an alternative to your password</string>
     <string name="account_auth_error">Authentication error: %1$s</string>
     <string name="account_auth_success">Authentication succeeded</string>
-    <string name="account_auth_key_error">An error occurred while decrypting the account key.</string>
-    <string name="account_auth_password">Use account password</string>
+    <string name="identity_auth_key_error">An error occurred while decrypting the identity key.</string>
+    <string name="identity_auth_password">Use identity password</string>
 </resources>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2004-2026 Savoir-faire Linux Inc.
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program. If not, see <https://www.gnu.org/licenses/>.
+  -->
+<!-- Welcome screen in Cubist ("Just between us") style. By day, warm ochre/terracotta/sky-blue facets above a calm painted table plane (#F3ECDF). -->
+<resources>
+    <bool name="welcome_dark">false</bool>
+
+    <color name="welcome_background">#F3ECDF</color>
+    <color name="welcome_band">#EFE3C8</color>
+    <color name="welcome_ink">#12213A</color>
+    <color name="welcome_text">#344459</color>
+    <color name="welcome_accent">#24569A</color>
+    <color name="welcome_cta_bg">#FFC542</color>
+    <color name="welcome_cta_ink">#14232E</color>
+    <color name="welcome_on_accent">#FFFFFF</color>
+    <color name="welcome_line">#24569A</color>
+    <color name="welcome_sheet">#FAF6EC</color>
+    <color name="welcome_card">#ECFAF6EC</color>
+    <color name="welcome_card_stroke">#48123A63</color>
+    <color name="welcome_field_bg">#D8FFFCF4</color>
+    <color name="welcome_hint">#5C6D82</color>
+    <color name="welcome_divider">#2E123A63</color>
+    <color name="welcome_claim_bg">#B8FFFCF4</color>
+    <color name="welcome_claim_stroke">#5A123A63</color>
+
+
+    <style name="Welcome.Title" parent="">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">34sp</item>
+        <item name="android:textColor">@color/welcome_ink</item>
+        <item name="android:letterSpacing">-0.01</item>
+    </style>
+
+    <style name="Welcome.Claim" parent="">
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:layout_marginEnd">4dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:background">@drawable/bg_welcome_claim_cubist</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/welcome_ink</item>
+    </style>
+
+    <style name="Welcome.Shape" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">27dp</item>
+    </style>
+
+    <style name="Welcome.Cta" parent="Widget.Material3.Button">
+        <item name="android:minHeight">54dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">@color/welcome_cta_ink</item>
+        <item name="backgroundTint">@color/welcome_cta_bg</item>
+        <item name="shapeAppearance">@style/Welcome.Shape</item>
+        <item name="icon">@drawable/ic_chevron_right_24</item>
+        <item name="iconGravity">textEnd</item>
+        <item name="iconSize">22dp</item>
+        <item name="iconPadding">4dp</item>
+        <item name="iconTint">@color/welcome_cta_ink</item>
+    </style>
+
+    <style name="Welcome.Link" parent="Widget.Material3.Button.TextButton">
+        <item name="android:minHeight">42dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">@color/welcome_ink</item>
+        <item name="shapeAppearance">@style/Welcome.Shape</item>
+        <item name="icon">@drawable/ic_chevron_right_24</item>
+        <item name="iconGravity">textEnd</item>
+        <item name="iconSize">18dp</item>
+        <item name="iconPadding">2dp</item>
+        <item name="iconTint">@color/welcome_ink</item>
+    </style>
+
+    <style name="Welcome.Sheet" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Welcome.Sheet.Modal</item>
+    </style>
+
+    <style name="Welcome.Sheet.Modal" parent="Widget.Material3.BottomSheet.Modal">
+        <item name="backgroundTint">@color/welcome_sheet</item>
+        <item name="shapeAppearance">@style/Welcome.Shape</item>
+    </style>
+
+    <style name="Welcome.SheetTitle" parent="">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/welcome_ink</item>
+    </style>
+
+    <style name="Welcome.Choice" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:minHeight">54dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="android:paddingStart">18dp</item>
+        <item name="android:paddingEnd">14dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">@color/welcome_ink</item>
+        <item name="strokeColor">@color/welcome_line</item>
+        <item name="shapeAppearance">@style/Welcome.Shape</item>
+        <item name="icon">@drawable/ic_chevron_right_24</item>
+        <item name="iconGravity">end</item>
+        <item name="iconSize">20dp</item>
+        <item name="iconTint">@color/welcome_ink</item>
+    </style>
+
+    <style name="Welcome.AvatarAction" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:minHeight">32dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">14dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">@color/welcome_ink</item>
+        <item name="strokeColor">@color/welcome_card_stroke</item>
+        <item name="backgroundTint">@color/welcome_field_bg</item>
+        <item name="shapeAppearance">@style/Welcome.Shape</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconSize">15dp</item>
+        <item name="iconPadding">6dp</item>
+        <item name="iconTint">@color/welcome_accent</item>
+    </style>
+
+    <style name="Welcome.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundColor">@color/welcome_field_bg</item>
+        <item name="boxStrokeColor">@color/welcome_accent</item>
+        <item name="boxCornerRadiusTopStart">14dp</item>
+        <item name="boxCornerRadiusTopEnd">14dp</item>
+        <item name="boxCornerRadiusBottomStart">14dp</item>
+        <item name="boxCornerRadiusBottomEnd">14dp</item>
+        <item name="hintTextColor">@color/welcome_accent</item>
+        <item name="android:textColorHint">@color/welcome_hint</item>
+        <item name="helperTextTextColor">@color/welcome_text</item>
+        <item name="startIconTint">@color/welcome_accent</item>
+    </style>
+</resources>

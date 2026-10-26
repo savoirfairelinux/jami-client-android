@@ -201,7 +201,7 @@ class GeneralAccountFragment : BasePreferenceFragment<GeneralAccountPresenter>()
     private fun createDeleteDialog(): AlertDialog {
         val alertDialog = MaterialAlertDialogBuilder(requireContext())
             .setMessage(R.string.account_delete_dialog_message)
-            .setTitle(R.string.account_delete_dialog_title)
+            .setTitle(R.string.sip_delete_dialog_title)
             .setPositiveButton(R.string.menu_delete) { dialog: DialogInterface?, whichButton: Int -> presenter.removeAccount() }
             .setNegativeButton(android.R.string.cancel, null)
             .create()
