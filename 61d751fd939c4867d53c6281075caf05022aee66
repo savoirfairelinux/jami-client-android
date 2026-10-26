@@ -3,6 +3,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a56c738d_0d8725a9",
+        "filename": "jami-android/app/src/main/res/values-ace/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T18:05:43Z",
+      "side": 1,
+      "message": "[warning] Line 198: 🟡 `collab_link_remove` / `collab_remove` contain placeholder-like text (`...?? ...`) instead of a translation of “Remove”. These labels are used in destructive document actions, so users won’t understand the action. Replace both with the proper Acehnese “Remove” equivalent.",
+      "revId": "61d751fd939c4867d53c6281075caf05022aee66",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "125dd69b_d21f9be9",
+        "filename": "jami-android/app/src/main/res/values-ast-rES/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T18:05:43Z",
+      "side": 1,
+      "message": "[error] Line 84: 🔴 `notif_incoming_file_transfer_title` was changed to “Llamada entrante de %1$s”, which describes a call, not a file transfer. This will show the wrong notification type in UX. Replace it with an Asturian translation for “Incoming file from %1$s” to keep notification semantics correct.",
+      "revId": "61d751fd939c4867d53c6281075caf05022aee66",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a0c6d679_1e128697",
         "filename": "jami-android/app/src/main/res/values-ast-rES/strings.xml",
         "patchSetId": 1
@@ -31,6 +65,40 @@
       "writtenOn": "2026-10-26T18:04:14Z",
       "side": 1,
       "message": "[warning] Line 413: 🟡 `collab_link_remove` (and the adjacent `collab_remove`) appears to contain unrelated placeholder/prose text rather than a translation of “Remove”. This creates a broken UX in document actions. Replace both with the proper Asturian equivalent for the remove action.",
+      "revId": "61d751fd939c4867d53c6281075caf05022aee66",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b6ef8b9_1ba6e611",
+        "filename": "jami-android/app/src/main/res/values-ast-rES/strings_content_description.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T18:05:43Z",
+      "side": 1,
+      "message": "[warning] Line 9: 🟡 `collab_format_bold`, `collab_format_italic`, and `collab_format_strike` are currently unrelated phrases, not formatting control labels. Because these are accessibility content descriptions, screen-reader users will receive incorrect control names. Use direct Asturian labels equivalent to “Bold”, “Italic”, and “Strikethrough”.",
+      "revId": "61d751fd939c4867d53c6281075caf05022aee66",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53c31efb_8b300a84",
+        "filename": "jami-android/app/src/main/res/values-b+es+419/strings_content_description.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-26T18:05:43Z",
+      "side": 1,
+      "message": "[warning] Line 20: 🟡 Several new accessibility labels are mistranslated: `collab_format_h1/h2/h3` as “Dirección 1/2/3” and `collab_format_bullet_list` as “Lista de bolos”. These do not represent the editor controls and will mislead screen-reader navigation. Replace with LATAM Spanish terms for heading levels and bullet list.",
       "revId": "61d751fd939c4867d53c6281075caf05022aee66",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
