@@ -274,6 +274,13 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="action_call_end_accept">Accept incoming call and end current call</string>
     <string name="action_call_decline">Decline</string>
     <string name="action_call_mic_mute">Mute microphone</string>
+    <string name="action_call_mic_unmute">Unmute microphone</string>
+    <string name="action_call_camera_on">Turn camera on</string>
+    <string name="action_call_camera_off">Turn camera off</string>
+    <string name="action_call_stop_screen_share">Stop sharing screen</string>
+    <string name="action_call_lower_hand">Lower hand</string>
+    <string name="action_call_show_extensions">Show extensions</string>
+    <string name="action_call_show_participants">Show participants</string>
     <string name="action_load_extension">Load extension</string>
     <string name="ab_action_speakerphone">Turn on speaker</string>
     <string name="ab_action_contact_add">Add to contacts</string>
