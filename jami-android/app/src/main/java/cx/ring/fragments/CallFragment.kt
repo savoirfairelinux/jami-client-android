@@ -59,6 +59,7 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.annotation.StringRes
 import androidx.core.view.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -78,6 +79,7 @@ import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils.isTablet
 import cx.ring.utils.MediaButtonsHelper.MediaButtonsHelperCallback
 import cx.ring.views.AvatarDrawable
+import cx.ring.views.CheckableImageButton
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.call.CallPresenter
@@ -199,8 +201,52 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 b.callCameraFlipBtn.setOnClickListener { cameraFlip() }
                 b.callResumeBtn.setOnClickListener { presenter.resumeCallFromHold() }
                 b.callHoldEndBtn.setOnClickListener { refuseClicked() }
+                setToggleDescription(
+                    b.callMicBtn,
+                    R.string.action_call_mic_mute,
+                    R.string.action_call_mic_unmute
+                )
+                setToggleDescription(
+                    b.callVideocamBtn,
+                    R.string.action_call_camera_off,
+                    R.string.action_call_camera_on
+                )
+                setToggleDescription(
+                    b.callSharescreenBtn,
+                    R.string.screen_share_btn_description,
+                    R.string.action_call_stop_screen_share
+                )
+                setToggleDescription(
+                    b.callRaiseHandBtn,
+                    R.string.bottomSheet_raiseHand_btn,
+                    R.string.action_call_lower_hand
+                )
+                setToggleDescription(
+                    b.callExtensionsBtn,
+                    R.string.action_call_show_extensions,
+                    R.string.action_call_show_participants
+                )
                 bottomSheetParams = binding?.callOptionsBottomSheet?.let { BottomSheetBehavior.from(it) }
             }.root
+    }
+
+    private fun setToggleDescription(
+        button: CheckableImageButton,
+        @StringRes uncheckedLabel: Int,
+        @StringRes checkedLabel: Int
+    ) {
+        val listener = object : CheckableImageButton.OnCheckedChangeListener {
+            override fun onCheckedChanged(
+                checkable: android.widget.Checkable?,
+                isChecked: Boolean
+            ) {
+                button.contentDescription = button.context.getString(
+                    if (isChecked) checkedLabel else uncheckedLabel
+                )
+            }
+        }
+        button.setOnCheckedChangeListener(listener)
+        listener.onCheckedChanged(button, button.isChecked)
     }
 
     @RequiresApi(Build.VERSION_CODES.S)
