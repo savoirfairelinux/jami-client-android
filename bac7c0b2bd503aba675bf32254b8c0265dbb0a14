@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1edc8e00_801f0849",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/BroadcastFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-27T01:21:03Z",
+      "side": 1,
+      "message": "[error] Line 331: 🔴 `conversationFacade.sendFile(target, target.uri, copy)` is only effective for swarm conversations; for non-swarm contact conversations it currently completes without sending. Since Circles include both contacts and groups, media broadcast silently skips contact recipients but `showBroadcastSuccess()` still reports all recipients as sent. Handle non-swarm recipients explicitly (either implement direct-contact file send here, or reject/skip them with a user-visible error and accurate success count) so behavior matches the feature contract.",
+      "revId": "bac7c0b2bd503aba675bf32254b8c0265dbb0a14",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57d1d7f8_a187d64b",
+        "filename": "jami-android/app/src/main/java/cx/ring/navigation/CirclesBottomSheet.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-27T01:21:03Z",
+      "side": 1,
+      "message": "[warning] Line 418: 🟡 `conv.profile.blockingFirst()`, `peer?.profile?.blockingFirst()`, and `peer?.username?.blockingGet()` run on the main thread while building member candidates. With many conversations or slow profile sources this can freeze the sheet and risks ANR. Move candidate resolution to a background scheduler (Rx `fromCallable`/`subscribeOn(Schedulers.io())`) and publish the ready list back on main thread before showing the dialog.",
+      "revId": "bac7c0b2bd503aba675bf32254b8c0265dbb0a14",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
