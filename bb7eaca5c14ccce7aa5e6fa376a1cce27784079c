@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0620bdb2_b467ae4d",
+        "filename": "jami-android/app/src/main/java/cx/ring/navigation/ServicesBottomSheet.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-27T01:29:39Z",
+      "side": 1,
+      "message": "[warning] Line 126: 🟡 The `observeTunnelUrl` subscription auto-opens URLs for all providers each time the provider set changes. If `observeTunnelUrl()` replays/currently emits existing URLs, opening the sheet (or receiving later contact answers) can trigger unexpected browser launches without a fresh user tap. Gate browser opening to user-initiated connect actions (or de-duplicate already-opened tunnel URLs per session).",
+      "revId": "bb7eaca5c14ccce7aa5e6fa376a1cce27784079c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b11dd02e_03508dcd",
+        "filename": "jami-android/app/src/main/java/cx/ring/navigation/ServicesBottomSheet.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-27T01:29:39Z",
+      "side": 1,
+      "message": "[error] Line 156: 🔴 For Jami accounts with zero message-capable contacts, `gather()` emits nothing because `Observable.fromIterable(contacts.keys)` is empty, so `scan()` never produces an item. The sheet then stays stuck with the progress indicator forever. Emit at least one `Gathering` when `contacts` is empty (or prepend `OfferedServices.asking(contacts.keys)` with `startWithItem`) so the UI can render the empty state.",
+      "revId": "bb7eaca5c14ccce7aa5e6fa376a1cce27784079c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
