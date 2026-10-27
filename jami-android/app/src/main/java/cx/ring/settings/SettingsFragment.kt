@@ -65,7 +65,7 @@ class SettingsFragment :
     GenericView<SettingsViewModel>,
     AppBarStateListener {
     enum class ConnectivityType {
-        LOCAL_NODE, GOOGLE_SERVICES, UNIFIED_PUSH, CUSTOM
+        LOCAL_NODE, GOOGLE_SERVICES, UNIFIED_PUSH, HUAWEI_PUSH, CUSTOM
     }
     private var binding: FragSettingsBinding? = null
     private var currentSettings: Settings? = null
@@ -253,14 +253,29 @@ class SettingsFragment :
                     description = getString(R.string.connectivity_unified_push_description)
                 )
             )
+            "withHuaweiPush" -> listOf(
+                ConnectivityOption(
+                    mode = ConnectivityType.LOCAL_NODE,
+                    iconResId = R.drawable.connectivity_mode_dht_24,
+                    title = getString(R.string.connectivity_local_node_title),
+                    description = getString(R.string.connectivity_local_node_description)
+                ),
+                ConnectivityOption(
+                    mode = ConnectivityType.HUAWEI_PUSH,
+                    iconResId = R.drawable.connectivity_mode_huawei_24,
+                    title = getString(R.string.connectivity_huawei_push_title),
+                    description = getString(R.string.connectivity_huawei_push_description)
+                )
+            )
             else -> emptyList()
         }
 
         val isPushCompatible = BuildConfig.FLAVOR == "withFirebase"
                 || BuildConfig.FLAVOR == "withUnifiedPush"
+                || BuildConfig.FLAVOR == "withHuaweiPush"
         // Verify if the user has selected a valid combination of settings:
-        // - If the user wants to enable push notifications, the build must support it (Firebase or
-        //   Unified Push), or the 'enablePermanentService' option must be enabled.
+        // - If the user wants to enable push notifications, the build must support it (Firebase,
+        //   Unified Push or Huawei Push), or the 'enablePermanentService' option must be enabled.
         // - If the user wants to act as a local DHT node, push notifications are not required, but
         //   the 'enablePermanentService' option must be enabled.
         return if ((enablePushNotifications && !enablePermanentService && isPushCompatible)
@@ -297,6 +312,11 @@ class SettingsFragment :
                     enablePermanentService = false
                 )
 
+                ConnectivityType.HUAWEI_PUSH -> currentSettings?.copy(
+                    enablePushNotifications = true,
+                    enablePermanentService = false
+                )
+
                 else -> currentSettings
             }
             presenter.saveSettings(currentSettings!!)
@@ -323,6 +343,7 @@ class SettingsFragment :
                 when (BuildConfig.FLAVOR) {
                     "withFirebase" -> ConnectivityType.GOOGLE_SERVICES
                     "withUnifiedPush" -> ConnectivityType.UNIFIED_PUSH
+                    "withHuaweiPush" -> ConnectivityType.HUAWEI_PUSH
                     else -> ConnectivityType.CUSTOM
                 }
             }
