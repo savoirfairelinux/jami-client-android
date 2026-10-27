@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19898085_79428912",
+        "filename": "fastlane/metadata/android/en-US/full_description.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-27T00:22:43Z",
+      "side": 1,
+      "message": "[warning] Line 4: 🟡 This line uses absolute privacy/storage claims (\"No server reads them, no company keeps them, not even ours\") that may not hold in every deployment mode and can create legal/store-policy risk. Rephrase to a verifiable statement (for example: content is end-to-end encrypted and service operators cannot read message/call content).",
+      "revId": "f1af495e25d871aca7552ec0e93441850ee017f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0810b71c_c7569aae",
+        "filename": "fastlane/metadata/android/en-US/full_description.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-27T00:22:43Z",
+      "side": 1,
+      "message": "[warning] Line 7: 🟡 \"no size limit\" is an absolute claim that is typically not strictly true due to device, network, and platform constraints. Use a bounded/defensible wording such as \"send large files\" to avoid misleading-copy rejection risk.",
+      "revId": "f1af495e25d871aca7552ec0e93441850ee017f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
