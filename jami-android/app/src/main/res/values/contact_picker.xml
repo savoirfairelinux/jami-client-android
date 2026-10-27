@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="contact_picker_floating">false</bool>
+    <dimen name="contact_picker_dialog_width">560dp</dimen>
+    <dimen name="contact_picker_dialog_height">640dp</dimen>
+    <dimen name="contact_picker_dialog_margin">24dp</dimen>
+</resources>

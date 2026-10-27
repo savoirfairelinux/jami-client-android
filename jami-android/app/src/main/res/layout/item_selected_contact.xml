@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="76dp"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/padding_small">
+
+    <!-- Reserve space for the full touch target while the badge straddles the avatar rim. -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="74dp">
+
+        <cx.ring.views.AvatarView
+            android:id="@+id/photo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="top|start"
+            android:importantForAccessibility="no"
+            android:scaleType="fitCenter"
+            tools:avatar="@tools:sample/avatars"
+            tools:uri="@tools:sample/full_names" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/remove_contact"
+            style="@style/Widget.Material3.Button.IconButton.Filled"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom|end"
+            android:gravity="center"
+            android:insetLeft="12dp"
+            android:insetTop="12dp"
+            android:insetRight="12dp"
+            android:insetBottom="12dp"
+            android:padding="0dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
+            app:backgroundTint="?attr/colorOutline"
+            app:icon="@drawable/baseline_close_24"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconSize="14dp"
+            app:iconTint="?attr/colorSurface"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
+            app:strokeColor="?attr/colorSurface"
+            app:strokeWidth="2dp"
+            tools:contentDescription="Remove contact" />
+
+    </FrameLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/display_name"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:importantForAccessibility="no"
+        android:maxLines="1"
+        android:textAppearance="?attr/textAppearanceBodySmall"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        tools:text="@tools:sample/full_names" />
+
+</LinearLayout>
