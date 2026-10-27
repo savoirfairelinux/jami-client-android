@@ -859,10 +859,12 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     override fun onStart() {
         super.onStart()
         presenter.resume(mIsBubble)
+        mAdapter?.setTypingAnimationsActive(true)
     }
 
     override fun onStop() {
         super.onStop()
+        mAdapter?.setTypingAnimationsActive(false)
         inlineAudioRecorder?.release()
         presenter.pause()
     }

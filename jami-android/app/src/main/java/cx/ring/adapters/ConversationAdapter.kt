@@ -52,6 +52,7 @@ import androidx.core.view.isVisible
 import androidx.core.view.setPadding
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
+import androidx.vectordrawable.graphics.drawable.Animatable2Compat
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -142,6 +143,10 @@ class ConversationAdapter(
         Observable.interval(10, TimeUnit.SECONDS).startWithItem(0L)
     private var lastMsgPos = -1
     private var isComposing = false
+    // Typing-indicator rows currently attached to the window, and whether the conversation is
+    // visible. The indicator animates only while both hold -- see startTypingAnimation().
+    private val typingHolders = mutableSetOf<ConversationViewHolder>()
+    private var typingAnimationsActive = true
     var showLinkPreviews = true
     private val markwon: Markwon = Markwon.builder(conversationFragment.requireContext())
             .usePlugin(LinkifyPlugin.create())
@@ -667,6 +672,29 @@ class ConversationAdapter(
 
         if (isSearch)
             configureSearchResult(conversationViewHolder, interaction)
+    }
+
+    override fun onViewAttachedToWindow(holder: ConversationViewHolder) {
+        super.onViewAttachedToWindow(holder)
+        if (holder.type == MessageType.COMPOSING_INDICATION) {
+            typingHolders.add(holder)
+            startTypingAnimation(holder)
+        }
+    }
+
+    override fun onViewDetachedFromWindow(holder: ConversationViewHolder) {
+        super.onViewDetachedFromWindow(holder)
+        if (typingHolders.remove(holder))
+            (holder.mIcon?.drawable as? Animatable)?.stop()
+    }
+
+    /** Called by the fragment on start/stop, so the indicator never animates while not visible. */
+    fun setTypingAnimationsActive(active: Boolean) {
+        typingAnimationsActive = active
+        for (holder in typingHolders) {
+            if (active) startTypingAnimation(holder)
+            else (holder.mIcon?.drawable as? Animatable)?.stop()
+        }
     }
 
     override fun onViewRecycled(holder: ConversationViewHolder) {
@@ -1363,20 +1391,44 @@ class ConversationAdapter(
             )
         }
         viewHolder.mTypingIndicatorLayout?.layoutParams = layoutParams
-        // Reuse the drawable already set on the icon rather than creating one per bind, so at most
-        // one animator exists per view holder instead of one per typing indicator ever shown.
-        //
-        // No restart-on-end callback: two of the three targets in typing_indicator_animation.xml
-        // (bounce2, bounce3) already declare repeatCount="infinite", so the set does not end on its
-        // own, and a callback that calls start() again keeps the drawable animating for the life of
-        // the process. An AnimatedVectorDrawable is only stopped by an explicit stop() -- recycling
-        // the row, detaching the view or backgrounding the app do not stop it -- so such animators
-        // accumulate and keep requesting Choreographer frames while the app is not visible.
-        val anim = viewHolder.mIcon?.drawable as? AnimatedVectorDrawableCompat
-            ?: AnimatedVectorDrawableCompat.create(
-                viewHolder.itemView.context, R.drawable.typing_indicator_animation
-            )?.also { viewHolder.mIcon?.setImageDrawable(it) }
-        if (anim != null && !anim.isRunning)
+        // Attach starts the animation; a rebind of a row that is already attached keeps it going.
+        startTypingAnimation(viewHolder)
+    }
+
+    /**
+     * Animates the typing indicator of [holder] for as long as the row is attached and the
+     * conversation is visible, and not a frame longer.
+     *
+     * The bounce animators are plain objectAnimators inside <set>s; an AnimatorSet ignores
+     * repeatCount, so the drawable plays ONE bounce (~0.8 s) and stops. It must be restarted from
+     * onAnimationEnd -- without that the dots freeze after the first bounce.
+     *
+     * The restart is what used to leak (one never-ending animator per indicator ever shown, still
+     * requesting Choreographer frames in the background), because an AnimatedVectorDrawable is only
+     * stopped by an explicit stop(). So: one drawable and one callback per view holder, created
+     * once; the callback restarts only while the holder is in [typingHolders] and
+     * [typingAnimationsActive]; detach and the fragment's onStop stop it, and nothing restarts it.
+     */
+    private fun startTypingAnimation(holder: ConversationViewHolder) {
+        val icon = holder.mIcon ?: return
+        val anim = icon.drawable as? AnimatedVectorDrawableCompat
+            ?: AnimatedVectorDrawableCompat.create(icon.context, R.drawable.typing_indicator_animation)
+                ?.also { avd ->
+                    icon.setImageDrawable(avd)
+                    avd.registerAnimationCallback(object : Animatable2Compat.AnimationCallback() {
+                        override fun onAnimationEnd(drawable: Drawable?) {
+                            // Posted: restarting from inside the end callback of the same set is
+                            // re-entrant. Re-checked when it runs, as stop() also ends the set.
+                            icon.post {
+                                if (typingAnimationsActive && holder in typingHolders
+                                    && icon.drawable === avd && !avd.isRunning)
+                                    avd.start()
+                            }
+                        }
+                    })
+                }
+            ?: return
+        if (typingAnimationsActive && holder in typingHolders && !anim.isRunning)
             anim.start()
     }
 
