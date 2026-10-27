@@ -19,21 +19,29 @@ package cx.ring.fragments
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.accessibility.AccessibilityManager
 import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.children
+import androidx.core.view.doOnLayout
+import androidx.core.view.doOnNextLayout
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
@@ -48,14 +56,24 @@ import androidx.transition.Slide
 import androidx.transition.TransitionManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.Behavior.DragCallback
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.account.AccountWizardActivity
 import cx.ring.adapters.SmartListAdapter
 import cx.ring.client.AccountAdapter
+import cx.ring.client.BroadcastActivity
+import cx.ring.client.CallActivity
 import cx.ring.client.HomeActivity
+import cx.ring.databinding.LayoutFunctionsPanelBinding
 import cx.ring.mvp.BaseSupportFragment
+import cx.ring.navigation.BoardBottomSheet
+import cx.ring.navigation.CirclesBottomSheet
+import cx.ring.navigation.GroupsBottomSheet
+import cx.ring.navigation.TargetPickerBottomSheet
 import cx.ring.utils.BitmapUtils
+import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import cx.ring.viewholders.SmartListViewHolder
 import cx.ring.views.AvatarDrawable
@@ -66,10 +84,16 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import net.jami.home.HomePresenter
 import net.jami.home.HomeView
 import net.jami.model.Conversation
+import net.jami.model.Target
+import net.jami.model.TargetCapability
 import net.jami.services.AccountService
 import net.jami.services.ConversationFacade
 import net.jami.smartlist.ConversationItemViewModel
+import java.text.Collator
 import java.util.concurrent.TimeUnit
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.roundToInt
 import javax.inject.Inject
 import com.google.android.material.search.SearchView.TransitionState
 import com.google.android.material.shape.MaterialShapeDrawable
@@ -91,6 +115,11 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     private var searchAdapter: SmartListAdapter? = null
     private var pendingAdapter: SmartListAdapter? = null
     private val querySubject = BehaviorSubject.createDefault("")
+    private val sortAlphabeticallySubject = BehaviorSubject.createDefault(false)
+    /** The search view shows the Contacts screen, opened by the Contacts function, rather than a search. */
+    @Volatile private var contactsMode = false
+    private var openingContacts = false
+    private var functionsBehavior: BottomSheetBehavior<View>? = null
     private val debouncedQuery = querySubject.debounce { item ->
         if (item.isEmpty()) Observable.empty()
         else Observable.timer(350, TimeUnit.MILLISECONDS)
@@ -130,6 +159,31 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
         qrCode.setOnClickListener { goToQRFragment() }
         newSwarm.setOnClickListener { startNewSwarm() }
+
+        // Contacts screen: the QR code sits before the search field, which shows a magnifier
+        contactsQrCode.setOnClickListener { goToQRFragment() }
+        (searchView.editText.parent as? LinearLayout)?.let { field ->
+            (contactsQrCode.parent as? ViewGroup)?.removeView(contactsQrCode)
+            field.addView(contactsQrCode, 0, LinearLayout.LayoutParams(dp(44f), dp(40f)).apply {
+                gravity = Gravity.CENTER_VERTICAL
+                marginEnd = dp(12f)
+            })
+        }
+        searchView.editText.compoundDrawablePadding = dp(8f)
+        contactsSortTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                sortAlphabeticallySubject.onNext(tab.position == 1)
+                searchResult.scrollToPosition(0)
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+
+            override fun onTabReselected(tab: TabLayout.Tab) {
+                searchResult.scrollToPosition(0)
+            }
+        })
+
+        setUpFunctions(functionsPanel)
 
         // SearchBar is composed of:
         // - Account selection (navigation)
@@ -177,10 +231,8 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
         // Update padding of the list depending on the AppBarLayout height
         appBar.addOnLayoutChangeListener { _, _, top, _, bottom, _, _, _, _ ->
-            mSmartListFragment?.getRecyclerView()?.setPadding(
-                    0,
-                    appBar.height - DeviceUtils.getStatusBarHeight(requireContext()),
-                    0, 0
+            mSmartListFragment?.getRecyclerView()?.updatePadding(
+                top = appBar.height - DeviceUtils.getStatusBarHeight(requireContext())
             )
         }
 
@@ -222,24 +274,23 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             }
 
             if (newState === TransitionState.HIDDEN) { // Hidden
-                // Hide floating button to avoid weird animation
-                newSwarmFab.isVisible = true
+                updateFunctionsPanelVisibility()
 
                 searchDisposable?.dispose()
                 querySubject.onNext("")
                 searchAdapter?.update(ConversationFacade.ConversationList())
                 searchDisposable = null
             } else if (previousState === TransitionState.HIDDEN) { // Showing
+                // From the search bar, the search; from the Contacts function, the Contacts screen.
+                if (!openingContacts) applySearchMode(contacts = false)
+                openingContacts = false
+                updateFunctionsPanelVisibility()
                 searchView.toolbar.navigationIcon = AppCompatResources.getDrawable(
                     requireContext(), R.drawable.baseline_arrow_back_24
                 )
-                newSwarmFab.isVisible = false
                 startSearch()
             }
         }
-
-        // Setup floating button.
-        newSwarmFab.setOnClickListener { expandSearchActionView() }
 
         // Setup donation card
         donationCard.donationCard.visibility = View.GONE
@@ -303,9 +354,77 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
                 }.show()
     }
 
+    /**
+     * The search view serves two screens: the search, as the search bar opens it,
+     * and the Contacts screen, every conversation sorted by date or by name.
+     */
+    private fun applySearchMode(contacts: Boolean) {
+        val binding = mBinding ?: return
+        contactsMode = contacts
+        binding.contactsSortTabs.isVisible = contacts
+        binding.contactsQrCode.isVisible = contacts
+        binding.buttons.isVisible = !contacts
+        binding.searchView.isAutoShowKeyboard = !contacts
+        binding.searchView.hint = if (contacts) "" else getString(R.string.searchbar_hint)
+        binding.searchView.editText.setCompoundDrawablesRelativeWithIntrinsicBounds(
+            if (contacts) R.drawable.baseline_search_24 else 0, 0, 0, 0
+        )
+    }
+
+    /** The Contacts function. */
+    private fun openContactsScreen() {
+        openingContacts = true
+        applySearchMode(contacts = true)
+        mBinding?.searchView?.show()
+    }
+
+    /**
+     * The conversations sorted by the titles the list shows, as they resolve. A title that
+     * does not come (name lookup) does not hold the list up: it is sorted last meanwhile.
+     */
+    private fun sortedByTitle(conversations: List<Conversation>): Observable<List<Conversation>> {
+        if (conversations.isEmpty()) return Observable.just(conversations)
+        val collator = Collator.getInstance().apply { strength = Collator.SECONDARY }
+        return Observable.combineLatest(conversations.map { conversation ->
+            mConversationFacade.observeConversation(conversation)
+                .map { it.title }
+                .publish { titles ->
+                    Observable.merge(titles, Observable.timer(TITLE_WAIT_MS, TimeUnit.MILLISECONDS)
+                        .takeUntil(titles).map { "" })
+                }
+                .map { title -> Pair(conversation, title) }
+        }) { entries ->
+            @Suppress("UNCHECKED_CAST")
+            (entries.toList() as List<Pair<Conversation, String>>).sortedWith { a, b ->
+                when {
+                    a.second.isBlank() != b.second.isBlank() -> if (a.second.isBlank()) 1 else -1
+                    else -> collator.compare(a.second, b.second).takeIf { it != 0 }
+                        ?: a.first.uri.rawUriString.compareTo(b.first.uri.rawUriString)
+                }
+            }.map { it.first }
+        }.distinctUntilChanged()
+    }
+
     private fun startSearch() {
         searchDisposable?.dispose()
-        searchDisposable = mConversationFacade.getSearchResults(debouncedQuery)
+        searchDisposable = Observable.combineLatest(
+            mConversationFacade.getSearchResults(debouncedQuery),
+            sortAlphabeticallySubject
+        ) { list, alphabetical -> Pair(list, alphabetical) }
+            .switchMap { (list, alphabetical) ->
+                // Boards have their own function: they are not listed with the conversations
+                val conversations = list.conversations.filterNot { it.isFeed() }
+                val result = { items: List<Conversation> ->
+                    ConversationFacade.ConversationList(items, list.searchResult, list.latestQuery)
+                }
+                when {
+                    contactsMode && alphabetical -> sortedByTitle(conversations).map(result)
+                    contactsMode -> Observable.just(result(conversations.sortedByDescending { it.lastEvent?.timestamp ?: 0L }))
+                    // The search shows nothing until something is typed
+                    list.latestQuery.isBlank() -> Observable.just(result(emptyList()))
+                    else -> Observable.just(result(conversations))
+                }
+            }
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe { searchAdapter?.update(it) }
             .apply { mDisposable.add(this) }
@@ -352,10 +471,10 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         binding.searchBar.isVisible = false
         binding.invitationCard.invitationSummary.isVisible = false
         binding.fragmentContainer.isVisible = false
-        binding.newSwarmFab.isVisible = false
 
         // Display pending list.
         binding.invitationCard.pendingListGroup.isVisible = true
+        updateFunctionsPanelVisibility()
 
         // Enable back press.
         conversationBackPressedCallback.isEnabled = true
@@ -404,27 +523,14 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         binding.donationCard.donationCard.isVisible = presenter.donationCardIsVisible
         binding.searchBar.isVisible = true
         binding.invitationCard.invitationSummary.isVisible = true
-        binding.newSwarmFab.isVisible = true
         binding.fragmentContainer.isVisible = true
 
         // Hide pending list.
         binding.invitationCard.pendingListGroup.isVisible = false
+        updateFunctionsPanelVisibility()
 
         // Disable back press.
         conversationBackPressedCallback.isEnabled = false
-    }
-
-    // Will hide the floating button when scrolling down and show it when scrolling up.
-    private val fabScrollListener = object : RecyclerView.OnScrollListener() {
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            val canScrollUp = recyclerView.canScrollVertically(-1)
-            val isExtended = mBinding!!.newSwarmFab.isExtended
-            if (dy > 0 && isExtended) { // Going down
-                mBinding!!.newSwarmFab.shrink()
-            } else if ((dy < 0 || !canScrollUp) && !isExtended) { // Going up
-                mBinding!!.newSwarmFab.extend()
-            }
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -450,23 +556,191 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
         disableAppBarScroll()
 
-        // Subscribe on fragmentContainer to add scroll listener on the recycler view.
+        // Keep the end of the conversation list above the functions panel.
         mSmartListFragment?.viewLifecycleOwnerLiveData?.observe(viewLifecycleOwner) {
             it.lifecycle.addObserver(object : DefaultLifecycleObserver {
                 override fun onCreate(owner: LifecycleOwner) {
-                    mSmartListFragment?.getRecyclerView()?.addOnScrollListener(fabScrollListener)
-                }
-
-                override fun onDestroy(owner: LifecycleOwner) {
-                    mSmartListFragment?.getRecyclerView()?.removeOnScrollListener(fabScrollListener)
+                    mBinding?.root?.post { updateListBottomPadding() }
                 }
             })
         }
+
+        setUpFunctionsPanel()
     }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        // The activity handles rotations itself: lay the functions out again for the new shape.
+        mBinding?.root?.let { root ->
+            root.doOnNextLayout { arrangeFunctions() }
+            root.requestLayout()
+        }
+    }
+
+    /* -------------------------------------------------------------- functions */
+
+    private fun setUpFunctions(panel: LayoutFunctionsPanelBinding) {
+        // 1. Calls: video or audio, straight from the list
+        panel.cardFuncCalls.setOnClickListener {
+            val sheet = TargetPickerBottomSheet.newInstance(TargetCapability.CAN_CALL, getString(R.string.function_calls))
+            sheet.setOnCallSelectedListener { target, hasVideo ->
+                val accountId = mAccountService.currentAccount?.accountId ?: return@setOnCallSelectedListener
+                val targetUri = Uri.fromString(target.id)
+                val conversationUri = target.viewModel?.uri ?: targetUri
+                startActivity(Intent(Intent.ACTION_CALL)
+                    .setClass(requireContext(), CallActivity::class.java)
+                    .putExtras(ConversationPath.toBundle(accountId, conversationUri))
+                    .putExtra(Intent.EXTRA_PHONE_NUMBER, targetUri.uri)
+                    .putExtra(CallFragment.KEY_HAS_VIDEO, hasVideo))
+            }
+            sheet.show(parentFragmentManager, TargetPickerBottomSheet.TAG)
+        }
+
+        // 2. Messages, 4. Shared documents: open the conversation, or broadcast to a Circle
+        panel.cardFuncMessages.setOnClickListener {
+            pickConversationTarget(TargetCapability.CAN_MESSAGE, R.string.function_messages)
+        }
+        panel.cardFuncDocuments.setOnClickListener {
+            pickConversationTarget(TargetCapability.CAN_SHARE_DOC, R.string.function_documents)
+        }
+
+        // 3. Contacts
+        panel.cardFuncContacts.setOnClickListener { openContactsScreen() }
+
+        // 5. Groups
+        panel.cardFuncGroups.setOnClickListener {
+            GroupsBottomSheet.newInstance().show(parentFragmentManager, GroupsBottomSheet.TAG)
+        }
+
+        // 6. Boards and their publications
+        panel.cardFuncBoard.setOnClickListener {
+            BoardBottomSheet.newInstance().show(parentFragmentManager, BoardBottomSheet.TAG)
+        }
+
+        // 7. Shared services
+        panel.cardFuncServices.setOnClickListener { (activity as? HomeActivity)?.goToAdvancedSettings() }
+
+        // 8. Location
+        panel.cardFuncLocation.setOnClickListener {
+            val sheet = TargetPickerBottomSheet.newInstance(TargetCapability.CAN_SHARE_LOCATION, getString(R.string.function_location))
+            sheet.setOnTargetSelectedListener { target ->
+                val accountId = mAccountService.currentAccount?.accountId ?: return@setOnTargetSelectedListener
+                (requireActivity() as HomeActivity).startConversation(accountId, Uri.fromString(target.id))
+            }
+            sheet.show(parentFragmentManager, TargetPickerBottomSheet.TAG)
+        }
+
+        // 9. Circles
+        panel.cardFuncCircles.setOnClickListener {
+            CirclesBottomSheet.newInstance().show(parentFragmentManager, CirclesBottomSheet.TAG)
+        }
+    }
+
+    private fun pickConversationTarget(capability: TargetCapability, title: Int) {
+        val sheet = TargetPickerBottomSheet.newInstance(capability, getString(title))
+        sheet.setOnTargetSelectedListener { target ->
+            val accountId = mAccountService.currentAccount?.accountId ?: return@setOnTargetSelectedListener
+            if (target is Target.CircleTarget)
+                startActivity(BroadcastActivity.intent(requireContext(), accountId, target.circleId))
+            else
+                (requireActivity() as HomeActivity).startConversation(accountId, Uri.fromString(target.id))
+        }
+        sheet.show(parentFragmentManager, TargetPickerBottomSheet.TAG)
+    }
+
+    private fun setUpFunctionsPanel() {
+        val binding = mBinding ?: return
+        val panel = binding.functionsPanel.root
+        functionsBehavior = BottomSheetBehavior.from<View>(panel).apply {
+            // Always unfolded when the application starts
+            state = BottomSheetBehavior.STATE_EXPANDED
+            addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+                override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    // Folded, only the handle shows: nothing must show through the navigation bar
+                    binding.functionsPanel.functionsGrid.isInvisible = newState == BottomSheetBehavior.STATE_COLLAPSED
+                    if (newState == BottomSheetBehavior.STATE_EXPANDED)
+                        binding.functionsPanel.functionsGrid.alpha = 1f
+                    updateListBottomPadding()
+                }
+
+                override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                    binding.functionsPanel.functionsGrid.alpha = slideOffset.coerceIn(0f, 1f)
+                    updateListBottomPadding()
+                }
+            })
+        }
+        panel.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> updateListBottomPadding() }
+        binding.root.doOnLayout { arrangeFunctions() }
+    }
+
+    /**
+     * Lays the nine functions out so that the panel takes at most a third of the
+     * screen: three rows of three, or one row when three do not fit, as in
+     * landscape. The names go when the cards become too small for them.
+     */
+    private fun arrangeFunctions() {
+        val binding = mBinding ?: return
+        val panel = binding.functionsPanel
+        val metrics = resources.displayMetrics
+        val heightBudget = resources.configuration.screenHeightDp / 3f
+        val widthDp = (binding.root.width.takeIf { it > 0 } ?: metrics.widthPixels) / metrics.density
+        fun cellHeight(rows: Int) = (heightBudget - HANDLE_DP - GRID_BOTTOM_PADDING_DP) / rows - 2 * CARD_MARGIN_DP
+        val rows = if (cellHeight(3) >= MIN_CELL_DP) 3 else 1
+        val columns = FUNCTION_COUNT / rows
+        val width = (widthDp - 2 * GRID_SIDE_PADDING_DP) / columns - 2 * CARD_MARGIN_DP
+        val withNames = min(MAX_CELL_DP, cellHeight(rows)) >= NAMED_CELL_DP && width >= NAMED_CELL_DP
+        // Without their names, the cards stay about square rather than becoming narrow pills
+        val height = min(MAX_CELL_DP, cellHeight(rows)).let { if (withNames) it else min(it, max(width, MIN_TOUCH_DP)) }
+        val iconSize = dp(min(ICON_DP, min(height, width) - 2 * CARD_PADDING_DP))
+
+        val cards = listOf(
+            panel.cardFuncCalls, panel.cardFuncMessages, panel.cardFuncContacts,
+            panel.cardFuncDocuments, panel.cardFuncGroups, panel.cardFuncBoard,
+            panel.cardFuncServices, panel.cardFuncLocation, panel.cardFuncCircles
+        )
+        val rowViews = listOf(panel.functionsRow1, panel.functionsRow2, panel.functionsRow3)
+        rowViews.forEach { it.removeAllViews() }
+        cards.forEachIndexed { index, card ->
+            rowViews[index / columns].addView(card, LinearLayout.LayoutParams(0, dp(height), 1f).apply {
+                val margin = dp(CARD_MARGIN_DP)
+                setMargins(margin, margin, margin, margin)
+            })
+            (card.getChildAt(0) as? ViewGroup)?.children?.forEach { child ->
+                if (child is TextView) child.isVisible = withNames
+                else child.updateLayoutParams { this.width = iconSize; this.height = iconSize }
+            }
+        }
+        panel.functionsRow2.isVisible = rows == 3
+        panel.functionsRow3.isVisible = rows == 3
+    }
+
+    /**
+     * The functions panel goes with the conversation list only. It is drawn above the
+     * SearchView, so it must not show while the search, the contacts or the pending
+     * invitations take the screen.
+     */
+    private fun updateFunctionsPanelVisibility() {
+        val binding = mBinding ?: return
+        binding.functionsPanel.root.isVisible =
+            binding.searchView.currentTransitionState == TransitionState.HIDDEN
+                && !binding.invitationCard.pendingListGroup.isVisible
+    }
+
+    /** Keeps the end of the conversation list visible above the functions panel. */
+    private fun updateListBottomPadding() {
+        val binding = mBinding ?: return
+        val list = mSmartListFragment?.getRecyclerView() ?: return
+        val panel = binding.functionsPanel.root
+        val covered = if (panel.isVisible) max(0, binding.fragmentContainer.bottom - panel.top) else 0
+        if (list.paddingBottom != covered) list.updatePadding(bottom = covered)
+    }
+
+    private fun dp(value: Float): Int = (value * resources.displayMetrics.density).roundToInt()
 
     override fun onDestroyView() {
         super.onDestroyView()
         mSmartListFragment = null
+        functionsBehavior = null
         pendingAdapter = null
         searchAdapter = null
         mBinding = null
@@ -654,7 +928,21 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     }
 
     companion object {
+        private const val TITLE_WAIT_MS = 1500L
         private val TAG = HomeFragment::class.simpleName!!
+
+        private const val FUNCTION_COUNT = 9
+        private const val HANDLE_DP = 32f
+        private const val GRID_BOTTOM_PADDING_DP = 6f
+        private const val GRID_SIDE_PADDING_DP = 9f
+        private const val CARD_MARGIN_DP = 3f
+        private const val CARD_PADDING_DP = 4f
+        private const val ICON_DP = 34f
+        /** Below this, three rows do not fit in a third of the screen: one row instead. */
+        private const val MIN_CELL_DP = 52f
+        private const val MAX_CELL_DP = 76f
+        private const val MIN_TOUCH_DP = 48f
+        private const val NAMED_CELL_DP = 56f
     }
 
 }

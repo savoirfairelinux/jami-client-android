@@ -443,7 +443,7 @@ class ConversationFacade(
                     .map { newList ->
                         ConversationList(newList, list.searchResult, list.latestQuery)
                     }
-            } else Single.just(ConversationList(emptyList(), list.searchResult, list.latestQuery))
+            } else Single.just(ConversationList(list.conversations, list.searchResult, list.latestQuery))
         }
 
     fun getFullConversationList(currentAccount: Observable<Account>, query: Observable<String>, withBlocked: Boolean = false): Observable<ConversationList> =

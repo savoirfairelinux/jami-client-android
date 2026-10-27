@@ -120,6 +120,45 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
             </com.google.android.material.button.MaterialButtonGroup>
 
+            <!-- Contacts screen: QR code, an icon placed before the search field -->
+            <Button
+                android:id="@+id/contacts_qr_code"
+                android:layout_width="44dp"
+                android:layout_height="40dp"
+                android:contentDescription="@string/qr_code"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minWidth="44dp"
+                android:minHeight="40dp"
+                android:padding="0dp"
+                android:visibility="gone"
+                app:icon="@drawable/baseline_qr_code_2_black_24dp"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp" />
+
+            <!-- Contacts screen: sorted by interaction date, or alphabetically -->
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/contacts_sort_tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:tabGravity="fill"
+                app:tabMode="fixed">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contacts_tab_by_date"
+                    android:icon="@drawable/baseline_history_24" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contacts_tab_alphabetical"
+                    android:icon="@drawable/baseline_sort_by_alpha_24" />
+
+            </com.google.android.material.tabs.TabLayout>
+
             <!-- Search results -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/searchResult"
@@ -136,20 +175,13 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
     </com.google.android.material.search.SearchView>
 
-    <!-- Floating button to start a new conversation -->
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        style="?attr/extendedFloatingActionButtonSmallStyle"
-        android:id="@+id/new_swarm_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="8dp"
-        android:backgroundTint="@color/fab_background_color"
-        android:outlineProvider="none"
-        android:text="@string/start_conversation"
-        app:icon="@drawable/baseline_chat_24"
-        app:layout_anchorGravity="bottom|center_horizontal"
-        app:pressedTranslationZ="12dp"
-        app:materialThemeOverlay="@style/ThemeOverlay.Material3Expressive.FloatingActionButton.Primary" />
+    <!--
+        The nine functions, in a panel below the conversation list. It must come after
+        the SearchView: hidden or not, that one covers the screen, and the bottom sheet
+        drag only captures the topmost child under the finger.
+    -->
+    <include
+        android:id="@+id/functions_panel"
+        layout="@layout/layout_functions_panel" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

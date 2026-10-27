@@ -1041,4 +1041,23 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="group_no_name">No name</string>
     <string name="group_pick_from_circles">Choose from Circles</string>
 
+    <!-- Home functions panel -->
+    <string name="functions_panel_toggle">Show or hide the functions</string>
+    <string name="function_calls">Calls</string>
+    <string name="function_messages">Messages</string>
+    <string name="function_contacts">Contacts</string>
+    <string name="function_documents">Documents</string>
+    <string name="function_board">Board</string>
+    <string name="function_services">Services</string>
+    <string name="function_location">Location</string>
+    <string name="target_picker_title">Select recipient</string>
+    <string name="target_tab_all">All</string>
+    <string name="target_tab_contacts">Contacts</string>
+    <string name="target_tab_groups">Groups</string>
+    <string name="target_tab_circles">Circles</string>
+    <string name="target_tab_boards">Boards</string>
+    <string name="target_empty_hint">No recipient available for this action</string>
+    <string name="contacts_tab_by_date">By interaction date</string>
+    <string name="contacts_tab_alphabetical">Alphabetical (A–Z)</string>
+
 </resources>
