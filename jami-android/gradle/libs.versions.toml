@@ -53,6 +53,8 @@ junit4 = "4.13.2"
 robolectric = "4.17"
 mockito = "5.24.0"
 gson = "2.14.0"
+huawei-agconnect = "1.9.6.300"
+huaweiPush = "6.13.0.301"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -121,6 +123,10 @@ gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 androidx-documentfile = { group = "androidx.documentfile", name = "documentfile", version = "1.1.0" }
 nanohttpd = { group = "org.nanohttpd", name = "nanohttpd", version.ref = "nanohttpd" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+
+huawei-agconnect = { group = "com.huawei.agconnect", name = "agcp", version.ref = "huawei-agconnect" }
+huawei-agconnect-core = { group = "com.huawei.agconnect", name = "agconnect-core", version.ref = "huawei-agconnect" }
+huawei-push = { group = "com.huawei.hms", name = "push", version.ref = "huaweiPush" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
