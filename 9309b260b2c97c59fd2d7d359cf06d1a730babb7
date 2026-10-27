@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1975a4f2_06bfe25f",
+        "filename": "jami-android/app/src/main/java/cx/ring/navigation/TargetAdapter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-27T01:31:34Z",
+      "side": 1,
+      "message": "[warning] Line 114: 🟡 `Pulse.start(...)` creates an infinite animator per row, but cancellation currently relies only on `onViewRecycled`. Rows that are detached with the RecyclerView/dialog teardown may never hit recycle, leaving animators running longer than intended. Cancel the row pulse in a detach lifecycle path as well (e.g., `onViewDetachedFromWindow`, and/or explicitly stop all active holder pulses when the adapter/recycler is detached).",
+      "revId": "9309b260b2c97c59fd2d7d359cf06d1a730babb7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
