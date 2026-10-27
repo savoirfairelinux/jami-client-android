@@ -85,6 +85,12 @@ class JamiApplicationFirebase : JamiApplication() {
             // grace window, also exempt from the cap.
             callGraceRemaining > 0 -> scheduleBackgroundDeactivation(callGraceRemaining)
             messageGraceRemaining > 0 -> scheduleBackgroundDeactivation(messageGraceRemaining)
+            // A shared document announced meanwhile is still downloading: stay up until it lands,
+            // within the episode cap since a failed download never reports.
+            !capReached && mCollaborationService.hasPendingReplications() -> {
+                Log.d(TAG, "Shared document still downloading — keeping accounts active")
+                scheduleBackgroundDeactivation(REPLICATION_RECHECK_MS)
+            }
             // Recent push/token refresh: wait out the grace window unless the episode cap is reached.
             graceRemaining > 0 && !capReached -> scheduleBackgroundDeactivation(graceRemaining)
             else -> {
@@ -234,6 +240,8 @@ class JamiApplicationFirebase : JamiApplication() {
         private const val CALL_PUSH_GRACE_MS = 60_000L
         // Upper bound for one continuous background-active episode under sustained pushes.
         private const val MAX_BACKGROUND_ACTIVE_MS = 10 * 60_000L
+        // Recheck interval while an announced shared document is still downloading.
+        private const val REPLICATION_RECHECK_MS = 5_000L
         private val TAG = JamiApplicationFirebase::class.simpleName
     }
 }

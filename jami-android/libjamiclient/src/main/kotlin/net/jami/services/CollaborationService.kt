@@ -27,6 +27,7 @@ import net.jami.daemon.JamiService
 import net.jami.model.CollaborativeDocument
 import net.jami.model.Uri
 import net.jami.model.CollaborativeVersion
+import net.jami.utils.Log
 import java.util.concurrent.Callable
 import java.util.concurrent.ExecutorService
 
@@ -110,6 +111,17 @@ class CollaborationService(private val executor: ExecutorService) {
         val everywhere: Boolean,
     )
 
+    /**
+     * No download of an announced document is in progress any more: one completed,
+     * or the announcement needed none. [stored] tells whether the document is here.
+     */
+    data class DocumentReplicated(
+        val accountId: String,
+        val conversationId: String,
+        val documentId: String,
+        val stored: Boolean,
+    )
+
     // Serialized: these are fed straight from the daemon's callbacks, which run
     // on whatever thread the daemon happens to be on, and a PublishSubject on
     // its own would let two of them call onNext at once.
@@ -119,6 +131,7 @@ class CollaborationService(private val executor: ExecutorService) {
     private val renamedSubject: Subject<DocumentRenamed> = PublishSubject.create<DocumentRenamed>().toSerialized()
     private val attachmentSubject: Subject<AttachmentAdded> = PublishSubject.create<AttachmentAdded>().toSerialized()
     private val removedSubject: Subject<DocumentRemoved> = PublishSubject.create<DocumentRemoved>().toSerialized()
+    private val replicatedSubject: Subject<DocumentReplicated> = PublishSubject.create<DocumentReplicated>().toSerialized()
 
     // Handed over off the daemon's thread. onNext() runs subscribers where it
     // stands, and these are called from the daemon's own callbacks: a subscriber
@@ -131,6 +144,13 @@ class CollaborationService(private val executor: ExecutorService) {
     val documentsRenamed: Observable<DocumentRenamed> = renamedSubject.observeOn(Schedulers.io())
     val attachmentsAdded: Observable<AttachmentAdded> = attachmentSubject.observeOn(Schedulers.io())
     val documentsRemoved: Observable<DocumentRemoved> = removedSubject.observeOn(Schedulers.io())
+    val documentsReplicated: Observable<DocumentReplicated> = replicatedSubject.observeOn(Schedulers.io())
+
+    // Announced documents still downloading, so a device woken by a push stays up
+    // until they land. A failed download reports nothing: entries expire.
+    private val replicationLock = Any()
+    private val pendingReplications = HashMap<String, Long>()
+    private val recentlyReplicated = HashMap<String, Long>()
 
     /** Updates for one open document, the form an editor subscribes to. */
     fun updatesFor(accountId: String, conversation: Uri, documentId: String): Observable<ByteArray> =
@@ -344,6 +364,45 @@ class CollaborationService(private val executor: ExecutorService) {
         removedSubject.onNext(DocumentRemoved(accountId, conversationId, documentId, everywhere))
     }
 
+    /** A new announcement arrived: the daemon is fetching the document, unless it already said it was done. */
+    fun replicationExpected(accountId: String, documentId: String) {
+        val key = replicationKey(accountId, documentId)
+        val now = nowMs()
+        synchronized(replicationLock) {
+            purgeReplications(now)
+            // The daemon's report can overtake the announcement on its way here
+            if (!recentlyReplicated.containsKey(key))
+                pendingReplications[key] = now
+        }
+    }
+
+    fun documentReplicated(accountId: String, conversationId: String, documentId: String, stored: Boolean) {
+        val key = replicationKey(accountId, documentId)
+        val now = nowMs()
+        synchronized(replicationLock) {
+            pendingReplications.remove(key)
+            recentlyReplicated[key] = now
+            purgeReplications(now)
+        }
+        Log.i(TAG, "Document $documentId of $conversationId replicated (stored=$stored)")
+        replicatedSubject.onNext(DocumentReplicated(accountId, conversationId, documentId, stored))
+    }
+
+    /** Whether an announced document is still downloading on this device. */
+    fun hasPendingReplications(): Boolean = synchronized(replicationLock) {
+        purgeReplications(nowMs())
+        pendingReplications.isNotEmpty()
+    }
+
+    private fun purgeReplications(now: Long) {
+        pendingReplications.values.removeAll { now - it > PENDING_REPLICATION_MAX_AGE_MS }
+        recentlyReplicated.values.removeAll { now - it > RECENT_REPLICATION_MAX_AGE_MS }
+    }
+
+    private fun replicationKey(accountId: String, documentId: String) = "$accountId/$documentId"
+
+    private fun nowMs() = System.nanoTime() / 1_000_000
+
     private fun <T : Any> fromDaemon(block: Callable<T>): Single<T> =
         Single.fromCallable(block).subscribeOn(scheduler)
 
@@ -353,6 +412,12 @@ class CollaborationService(private val executor: ExecutorService) {
     private val scheduler = Schedulers.from(executor)
 
     companion object {
+        private val TAG = CollaborationService::class.simpleName!!
+
+        /** A download that never reports is forgotten after the background-active cap. */
+        private const val PENDING_REPLICATION_MAX_AGE_MS = 10 * 60_000L
+        private const val RECENT_REPLICATION_MAX_AGE_MS = 2 * 60_000L
+
         /**
          * Take a returned Blob's bytes and free it at once. SWIG owns the C++
          * vector until then, and documents are large enough that waiting for a

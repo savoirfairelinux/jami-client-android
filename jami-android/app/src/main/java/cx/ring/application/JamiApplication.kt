@@ -100,6 +100,9 @@ abstract class JamiApplication : Application() {
     var mConversationFacade: ConversationFacade
 
     @Inject lateinit
+    var mCollaborationService: CollaborationService
+
+    @Inject lateinit
     var peerServicesService: PeerServicesService
 
     @Inject lateinit

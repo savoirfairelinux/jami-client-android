@@ -410,7 +410,11 @@ class DaemonService(
 
         override fun swarmMessageReceived(accountId: String, conversationId: String, message: SwarmMessage) {
             snapshotConversationCallback {
-                mAccountService.swarmMessageReceived(accountId, conversationId, SwarmMessageData.from(message))
+                val data = SwarmMessageData.from(message)
+                // A new document announcement makes the daemon fetch the document (not a removal, which edits one)
+                if (data.type == COLLAB_DOC_TYPE && data.body["edit"].isNullOrEmpty())
+                    data.body["uri"]?.takeIf { it.isNotEmpty() }?.let { mCollaborationService.replicationExpected(accountId, it) }
+                mAccountService.swarmMessageReceived(accountId, conversationId, data)
             }
         }
 
@@ -468,6 +472,10 @@ class DaemonService(
             mCollaborationService.documentRemoved(accountId, conversationId, documentId, everywhere)
         }
 
+        override fun collaborativeDocumentReplicated(accountId: String, conversationId: String, documentId: String, stored: Boolean) {
+            mCollaborationService.documentReplicated(accountId, conversationId, documentId, stored)
+        }
+
         override fun feedsChanged(accountId: String) {
             mAccountService.feedsChanged(accountId)
         }
@@ -485,5 +493,6 @@ class DaemonService(
 
     companion object {
         private val TAG = DaemonService::class.simpleName!!
+        private const val COLLAB_DOC_TYPE = "application/collab-doc+json"
     }
 }
