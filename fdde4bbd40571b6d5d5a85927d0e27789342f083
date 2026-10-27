@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49d8bb97_c388617e",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/conversation/ConversationPresenter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-27T01:19:47Z",
+      "side": 1,
+      "message": "[error] Line 275: 🔴 When mode switches away from Feed, `feedState` is cleared but the view is never told to clear Feed UI state. Because `ConversationFragment` stores Feed UI flags, opening a non-Feed conversation after a Feed can keep Feed restrictions applied. Explicitly reset the view on non-Feed state (e.g., add `clearFeedMode()` / nullable `setFeedMode` path and invoke it when `state` is empty).",
+      "revId": "fdde4bbd40571b6d5d5a85927d0e27789342f083",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ebdf65b_a106153b",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/conversation/ConversationPresenter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-27T01:19:47Z",
+      "side": 1,
+      "message": "[warning] Line 431: 🟡 Feed restrictions are enforced only after async `conversationInfos` populates `feedState`. Until then, `goToCall()`/send actions can pass client-side checks for Feed conversations. Add an immediate guard from `c.mode` (or cached conversation mode) so Feed actions are blocked deterministically even before policy metadata arrives.",
+      "revId": "fdde4bbd40571b6d5d5a85927d0e27789342f083",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3d2603f_8a6581f2",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1613,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-27T01:19:47Z",
+      "side": 1,
+      "message": "[error] Line 1613: 🔴 `conversationProfileUpdated()` no longer updates the in-memory conversation profile—the dispatch block is now empty. This regresses title/avatar/profile refreshes for all conversations after daemon profile updates. Restore `setProfile(mVCardService.loadConversationProfile(info))` (or equivalent) inside this callback.",
+      "revId": "fdde4bbd40571b6d5d5a85927d0e27789342f083",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
