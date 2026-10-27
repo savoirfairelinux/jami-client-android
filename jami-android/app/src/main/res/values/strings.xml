@@ -963,4 +963,67 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     </plurals>
     <string name="broadcast_error">Error while broadcasting to the circle</string>
 
+    <!-- Boards -->
+    <string name="board_sheet_title">Boards &amp; publications</string>
+    <string name="board_sheet_subtitle">Create your boards, manage access by contact or circle, and publish</string>
+    <string name="board_new">+ New board</string>
+    <string name="board_publish">Publish</string>
+    <string name="board_error_unavailable">This board is no longer available.</string>
+    <string name="board_error_no_longer_allowed">The owner no longer allows this subscription.</string>
+    <string name="board_error_confirmed_contacts_only">Only confirmed contacts can be authorized.</string>
+    <string name="board_error_not_permitted">Operation not permitted on this board.</string>
+    <string name="board_error_generic">Board: %1$s</string>
+    <string name="board_empty_title">No boards yet</string>
+    <string name="board_empty_message">Create your first board and choose the contacts or circles allowed to subscribe to it. Boards offered by your contacts will appear here.</string>
+    <string name="board_create_first">Create my first board</string>
+    <string name="board_section_mine">My boards</string>
+    <string name="board_section_followed">Followed boards</string>
+    <string name="board_section_available">Available boards</string>
+    <string name="board_action_view">View</string>
+    <string name="board_manage">Manage board</string>
+    <string name="board_options">Board options</string>
+    <string name="board_unsubscribe">Unsubscribe</string>
+    <string name="board_pending">Pending…</string>
+    <string name="board_subscribe">Subscribe</string>
+    <string name="board_subscription_requested">Subscription requested to “%1$s”</string>
+    <string name="board_unsubscribe_title">Unsubscribe from “%1$s”?</string>
+    <string name="board_unsubscribe_message">You will no longer receive its publications. You can subscribe again as long as its owner allows it.</string>
+    <string name="board_choose_for_publish">Choose the board to publish to</string>
+    <string name="board_name_hint">Board name (e.g. My holidays, News)</string>
+    <string name="board_allow_replies">Allow subscribers to reply to publications</string>
+    <string name="board_authorized_circles">Circles allowed to subscribe:</string>
+    <plurals name="board_circle_option">
+        <item quantity="one">Circle • %1$s (%2$d contact)</item>
+        <item quantity="other">Circle • %1$s (%2$d contacts)</item>
+    </plurals>
+    <string name="board_authorized_contacts">Authorized contacts:</string>
+    <string name="board_no_confirmed_contacts">No confirmed contacts to authorize yet.</string>
+    <string name="board_create_title">Create a board</string>
+    <string name="board_manage_title">Manage “%1$s”</string>
+    <string name="board_name_required">The board name is required</string>
+    <string name="board_created">Board “%1$s” created</string>
+    <string name="board_updated">Board “%1$s” updated</string>
+    <string name="board_close">Close board</string>
+    <string name="board_close_title">Close “%1$s”?</string>
+    <string name="board_close_message">Closing is permanent: your subscribers will lose access and you will no longer be able to publish to it.</string>
+    <string name="board_close_confirm">Close permanently</string>
+    <string name="board_closed">Board “%1$s” closed</string>
+    <string name="board_error_no_account">No active account</string>
+    <string name="board_error_update">Unable to update the board</string>
+    <string name="board_error_close">Unable to close the board</string>
+    <string name="board_error_unsubscribe">Unable to unsubscribe</string>
+    <string name="board_error_not_found">Board not found</string>
+    <string name="board_default_title">Board</string>
+    <string name="board_status_mine">My board</string>
+    <string name="board_status_subscribed">Subscribed</string>
+    <string name="board_status_requested">Subscription requested…</string>
+    <string name="board_status_offered">Offered</string>
+    <string name="board_status_owner">by %1$s</string>
+    <string name="board_status_replies">Replies allowed</string>
+    <string name="board_status_read_only">Read-only</string>
+    <plurals name="board_status_authorized">
+        <item quantity="one">%1$d authorized</item>
+        <item quantity="other">%1$d authorized</item>
+    </plurals>
+
 </resources>
