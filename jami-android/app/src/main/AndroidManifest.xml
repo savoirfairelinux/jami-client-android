@@ -537,6 +537,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:theme="@style/AppTheme.Navigation"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:name=".client.BroadcastActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
+            android:exported="false"
+            android:theme="@style/AppTheme.Navigation"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".client.MessageEditActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:exported="false"

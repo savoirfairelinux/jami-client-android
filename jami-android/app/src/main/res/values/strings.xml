@@ -908,4 +908,59 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="board_read_only_banner">Read-only board: only its owner can publish.</string>
     <string name="board_reply_hint">Reply to a publication…</string>
 
+    <!-- Circles -->
+    <string name="function_circles">Circles</string>
+    <string name="circle_error_no_account">Jami account unavailable</string>
+    <string name="circle_sheet_subtitle">Group your contacts and broadcast your messages</string>
+    <string name="circle_create_button">+ Create</string>
+    <string name="circle_no_members">No members • Tap to add</string>
+    <plurals name="circle_count_contacts">
+        <item quantity="one">%1$d contact</item>
+        <item quantity="other">%1$d contacts</item>
+    </plurals>
+    <plurals name="circle_count_groups">
+        <item quantity="one">%1$d group</item>
+        <item quantity="other">%1$d groups</item>
+    </plurals>
+    <string name="circle_count_contacts_groups">%1$s, %2$s</string>
+    <string name="circle_broadcast">Broadcast</string>
+    <string name="circle_manage_members">Manage members</string>
+    <string name="circle_rename">Rename circle</string>
+    <string name="circle_delete">Delete circle</string>
+    <string name="circle_name_hint">Circle name (e.g. Sports, Project, Neighbours)</string>
+    <string name="circle_new_title">New circle</string>
+    <string name="circle_delete_title">Delete circle?</string>
+    <string name="circle_delete_message">Do you want to delete the circle “%1$s”? Its contacts will not be deleted.</string>
+    <string name="circle_group_entry">Group • %1$s</string>
+    <string name="circle_no_candidates">Add contacts first to include them in the circle “%1$s”</string>
+    <string name="circle_members_title">Members of “%1$s”</string>
+    <string name="circle_default_all">All</string>
+    <string name="circle_default_friends">Friends</string>
+    <string name="circle_default_real_friends">Close friends</string>
+    <string name="circle_default_family">Family</string>
+    <string name="circle_default_colleagues">Colleagues</string>
+    <string name="circle_error_invalid_id">Invalid circle identifier</string>
+    <string name="circle_error_exists">This circle already exists</string>
+    <string name="circle_error_missing_member">Missing circle member</string>
+    <string name="circle_error_not_editable">The “All” circle cannot be modified</string>
+    <string name="circle_error_not_found">This circle no longer exists</string>
+    <string name="circle_error_name_required">The circle name is required</string>
+    <string name="circle_error_name_taken">A circle with this name already exists</string>
+    <string name="broadcast_loading_circle">Loading circle…</string>
+    <string name="broadcast_input_hint">Message to broadcast to the circle…</string>
+    <string name="broadcast_title">Circle • %1$s</string>
+    <string name="broadcast_account_changed">The active account has changed</string>
+    <string name="broadcast_circle_deleted">This circle has been deleted</string>
+    <string name="broadcast_circle_empty">No members in this circle</string>
+    <plurals name="broadcast_recipients">
+        <item quantity="one">%1$d recipient in this circle</item>
+        <item quantity="other">%1$d recipients in this circle</item>
+    </plurals>
+    <string name="broadcast_load_error">Unable to load the circle</string>
+    <plurals name="broadcast_sent">
+        <item quantity="one">Message broadcast to %1$d circle member</item>
+        <item quantity="other">Message broadcast to %1$d circle members</item>
+    </plurals>
+    <string name="broadcast_error">Error while broadcasting to the circle</string>
+
 </resources>
