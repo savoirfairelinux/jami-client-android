@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f721e2e5_fe4648e1",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ContactPickerFragment.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-27T15:13:01Z",
+      "side": 1,
+      "message": "[error] Line 95: 🔴 `selected.first()` can crash when selection and `availableContacts` get out of sync (e.g., contact list refresh removes currently selected URIs right before tap). It also derives `accountId` from list ordering, not from a stable picker/account context. Guard against empty `selected`, and pass a stable account id (e.g., validated `accountId` state) after ensuring all selected contacts belong to that account.",
+      "revId": "acd9c573f245c777f493c733246dcb17af1e9762",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ee4432c_e1e2a1eb",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ContactPickerFragment.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-27T15:13:01Z",
+      "side": 1,
+      "message": "[warning] Line 143: 🟡 `distinctBy { it.getContact()!!.contact.uri }` deduplicates across accounts, which can drop valid entries when the same URI exists on multiple accounts. Use a composite key (`accountId + uri`) to preserve account-scoped identity and avoid silent contact loss.",
+      "revId": "acd9c573f245c777f493c733246dcb17af1e9762",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
