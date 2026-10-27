@@ -125,6 +125,13 @@
     </style>
 
     <!-- Dialog -->
+    <style name="AppTheme.ContactPicker" parent="AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">?attr/colorSurface</item>
+        <item name="android:windowSoftInputMode">adjustResize|stateAlwaysHidden</item>
+    </style>
+
     <style name="AppTheme.Dialog" parent="AppThemeBase">
         <item name="android:windowBackground">#88000000</item>
         <item name="android:windowNoTitle">true</item>
