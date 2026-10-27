@@ -1,6 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val buildFirebase = project.hasProperty("buildFirebase") || gradle.startParameter.taskRequests.toString().contains("Firebase")
+val buildHuawei = project.hasProperty("buildHuawei") || gradle.startParameter.taskRequests.toString().contains("Huawei")
 
 val collabEditorDir = layout.projectDirectory.dir("src/collabeditor")
 val collabEditorAssets = layout.buildDirectory.dir("generated/collabeditor").get().asFile
@@ -73,6 +74,9 @@ android {
             dimension = "push"
         }
         create("withUnifiedPush") {
+            dimension = "push"
+        }
+        create("withHuaweiPush") {
             dimension = "push"
         }
     }
@@ -248,6 +252,9 @@ dependencies {
     }
     "withUnifiedPushImplementation"(libs.unifiedpush.connector.ui)
 
+    "withHuaweiPushImplementation"(libs.huawei.agconnect.core)
+    "withHuaweiPushImplementation"(libs.huawei.push)
+
     implementation(libs.nanohttpd)
     implementation(libs.androidx.documentfile)
 }
@@ -270,6 +277,11 @@ protobuf {
 if (buildFirebase) {
     println ("apply plugin $buildFirebase")
     apply(plugin = libs.plugins.google.services.get().pluginId)
+}
+
+if (buildHuawei) {
+    println ("apply plugin $buildHuawei")
+    apply(plugin = "com.huawei.agconnect")
 }
 
 // Make sure the native build runs before the Kotlin/Java build
