@@ -776,6 +776,11 @@ class Conversation(
     /** Syncing means that Jami is attempting to download conversation from peer */
     fun isSyncing() = mode.blockingFirst() == Mode.Syncing
 
+    /** Tells if the conversation is a Feed (Board), including while it is still being cloned. */
+    fun isFeed() = isSwarm && mode.blockingFirst().let {
+        it == Mode.Feed || (it == Mode.Syncing && requestMode == Mode.Feed)
+    }
+
     /** Tells if the conversation is a swarm:group. No matter how many participants. */
     fun isSwarmGroup() = isSwarm && mode.blockingFirst().let {
         if (it == Mode.Request) request?.mode != Mode.OneToOne
@@ -862,13 +867,26 @@ class Conversation(
 
     enum class Mode {
         OneToOne, AdminInvitesOnly, InvitesOnly,  // Non-daemon modes
-        Syncing, Public, Legacy, Request;
+        Syncing, Public, Legacy, Request,
+        /** Owner-published private swarm (Board), daemon ConversationMode::FEED. */
+        Feed;
 
         val isSwarm: Boolean
-            get() = this == OneToOne || this == InvitesOnly || this == Public
+            get() = this == OneToOne || this == InvitesOnly || this == Public || this == Feed
 
         val isGroup: Boolean
-            get() = this == AdminInvitesOnly || this == InvitesOnly || this == Public
+            get() = this == AdminInvitesOnly || this == InvitesOnly || this == Public || this == Feed
+
+        companion object {
+            private const val DAEMON_MODE_FEED = 5
+
+            /** Maps a daemon ConversationMode value; values below FEED keep their historical mapping. */
+            fun fromDaemon(value: Int?, default: Mode = OneToOne): Mode = when (value) {
+                null -> default
+                DAEMON_MODE_FEED -> Feed
+                else -> entries.getOrNull(value) ?: default
+            }
+        }
     }
 
     val isEnded: Boolean

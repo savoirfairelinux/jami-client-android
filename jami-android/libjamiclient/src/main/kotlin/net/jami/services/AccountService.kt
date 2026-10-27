@@ -297,13 +297,10 @@ class AccountService(
                 //info.forEach { (key, value) -> Log.w(TAG, "conversation info: $key $value") }
                 val isSyncing = "true" == info["syncing"]
                 val mode = if (isSyncing) Conversation.Mode.Syncing
-                    else Conversation.Mode.entries[info["mode"]?.toInt() ?: Conversation.Mode.Syncing.ordinal]
+                    else Conversation.Mode.fromDaemon(info["mode"]?.toIntOrNull(), Conversation.Mode.Syncing)
                 val conversation = account.newSwarm(conversationId, mode)
                 if (isSyncing) {
-                    conversation.requestMode =
-                        info["mode"]?.toIntOrNull()?.let {
-                            Conversation.Mode.entries.getOrNull(it)
-                        } ?: Conversation.Mode.OneToOne
+                    conversation.requestMode = Conversation.Mode.fromDaemon(info["mode"]?.toIntOrNull())
                 }
                 conversation.setProfile(mVCardService.loadConversationProfile(info))
                 if (mode == Conversation.Mode.Syncing) {
@@ -359,7 +356,7 @@ class AccountService(
                     requestData["received"]!!.toLong() * 1000L,
                     Uri(Uri.SWARM_SCHEME, conversationId),
                     mVCardService.loadConversationProfile(requestData),
-                    requestData["mode"]?.let { m -> Conversation.Mode.entries[m.toInt()] } ?: Conversation.Mode.OneToOne))
+                    Conversation.Mode.fromDaemon(requestData["mode"]?.toIntOrNull())))
             } catch (e: Exception) {
                 Log.w(TAG, "Error loading request", e)
             }
@@ -465,6 +462,66 @@ class AccountService(
 
     fun removeConversation(accountId: String, conversationUri: Uri): Completable =
         Completable.fromAction { JamiService.removeConversation(accountId, conversationUri.rawRingId) }
+            .subscribeOn(scheduler)
+
+    // Feeds (Boards): owner-published private swarms, discovered through the owners' catalogues.
+    data class FeedError(val accountId: String, val conversationId: String, val code: Long, val message: String)
+
+    private val feedsChangedSubject: Subject<String> = PublishSubject.create()
+    private val conversationErrorSubject: Subject<FeedError> = PublishSubject.create()
+
+    /** Emits the account id whenever its Feed list (owned, subscribed or offered) changes. */
+    val feedsChanged: Observable<String>
+        get() = feedsChangedSubject
+
+    /** Errors reported by the daemon for a conversation operation (e.g. a refused Feed action). */
+    val conversationErrors: Observable<FeedError>
+        get() = conversationErrorSubject
+
+    fun feedsChanged(accountId: String) {
+        feedsChangedSubject.onNext(accountId)
+    }
+
+    fun conversationError(accountId: String, conversationId: String, code: Long, what: String) {
+        Log.w(TAG, "Conversation error $accountId/$conversationId ($code): $what")
+        conversationErrorSubject.onNext(FeedError(accountId, conversationId, code, what))
+    }
+
+    fun getConversationInfos(accountId: String, conversationId: String): Single<Map<String, String>> =
+        Single.fromCallable<Map<String, String>> { JamiService.conversationInfos(accountId, conversationId).toNativeFromUtf8() }
+            .subscribeOn(scheduler)
+
+    fun getFeeds(accountId: String): Single<List<Map<String, String>>> =
+        Single.fromCallable<List<Map<String, String>>> { JamiService.getFeeds(accountId).map { it.toNativeFromUtf8() } }
+            .subscribeOn(scheduler)
+
+    /** Asks every confirmed contact for the Feeds it offers to this account. */
+    fun refreshFeeds(accountId: String) {
+        mExecutor.execute { JamiService.refreshFeeds(accountId) }
+    }
+
+    fun createFeed(accountId: String, title: String, avatar: String, replies: Boolean): Single<String> =
+        Single.fromCallable { JamiService.createFeed(accountId, title, avatar, replies) }
+            .subscribeOn(scheduler)
+            .flatMap { id ->
+                if (id.isEmpty()) Single.error(IllegalStateException("Unable to create the Feed"))
+                else Single.just(id)
+            }
+
+    fun updateFeed(accountId: String, feedId: String, settings: Map<String, String>): Single<Boolean> =
+        Single.fromCallable {
+            val swigSettings = StringMap()
+            for ((key, value) in settings)
+                swigSettings.setUnicode(key, value)
+            JamiService.updateFeed(accountId, feedId, swigSettings)
+        }.subscribeOn(scheduler)
+
+    fun setFeedAccess(accountId: String, feedId: String, contactUri: String, authorized: Boolean): Single<Boolean> =
+        Single.fromCallable { JamiService.setFeedAccess(accountId, feedId, contactUri, authorized) }
+            .subscribeOn(scheduler)
+
+    fun subscribeFeed(accountId: String, feedId: String, subscribed: Boolean): Single<Boolean> =
+        Single.fromCallable { JamiService.subscribeFeed(accountId, feedId, subscribed) }
             .subscribeOn(scheduler)
 
     fun loadMore(conversation: Conversation, n: Int = 32): Single<Conversation> {
@@ -1556,8 +1613,7 @@ class AccountService(
 
     fun conversationProfileUpdated(accountId: String, conversationId: String, info: Map<String, String>) {
         conversationCallbacks.dispatch(accountId, conversationId) {
-            getAccount(accountId)?.getSwarm(conversationId)?.setProfile(mVCardService.loadConversationProfile(info))
-        }
+            }
     }
 
     fun conversationPreferencesUpdated(accountId: String, conversationId: String, preferences: Map<String, String>) {
@@ -1618,7 +1674,7 @@ class AccountService(
         /*for (Map.Entry<String, String> i : info.entrySet()) {
             Log.w(TAG, "conversation info: " + i.getKey() + " " + i.getValue());
         }*/
-        val mode = Conversation.Mode.entries[info["mode"]!!.toInt()]
+        val mode = Conversation.Mode.fromDaemon(info["mode"]?.toIntOrNull())
         val members = JamiService.getConversationMembers(accountId, conversationId).map { HashMap(it) }
         val uri = Uri(Uri.SWARM_SCHEME, conversationId)
         var c = account.getByUri(uri)//getSwarm(conversationId) ?: account.getByUri(Uri(Uri.SWARM_SCHEME, conversationId))
@@ -1686,7 +1742,7 @@ class AccountService(
             metadata["received"]!!.toLong() * 1000L,
             Uri(Uri.SWARM_SCHEME, conversationId),
             mVCardService.loadConversationProfile(metadata),
-            metadata["mode"]?.let { m -> Conversation.Mode.entries[m.toInt()] } ?: Conversation.Mode.OneToOne))
+            Conversation.Mode.fromDaemon(metadata["mode"]?.toIntOrNull())))
     }
 
     internal fun swarmMessageReceived(accountId: String, conversationId: String, message: SwarmMessageData) {

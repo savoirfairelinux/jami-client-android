@@ -897,4 +897,15 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="collab_document_removed_locally">Document removed from this device</string>
     <string name="collab_document_removed_locally_message">\"%1$s\" is no longer on this device. Opening it again downloads it back.</string>
 
+
+    <!-- Boards (Feeds) in conversations -->
+    <string name="board_restriction_read_only">This board is read-only.</string>
+    <string name="board_restriction_reply_only">On a board, you can only reply to a publication from the owner (long-press → Reply).</string>
+    <string name="board_restriction_no_file">Only the owner can publish files on this board.</string>
+    <string name="board_restriction_no_reaction">Reactions are not available on a board.</string>
+    <string name="board_restriction_no_call">Calls are not available on a board.</string>
+    <string name="board_closed_banner">This board is closed.</string>
+    <string name="board_read_only_banner">Read-only board: only its owner can publish.</string>
+    <string name="board_reply_hint">Reply to a publication…</string>
+
 </resources>

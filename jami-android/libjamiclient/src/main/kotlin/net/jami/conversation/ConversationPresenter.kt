@@ -41,6 +41,7 @@ import net.jami.smartlist.ConversationItemViewModel
 import net.jami.utils.Log
 import net.jami.utils.VCardUtils
 import java.io.File
+import java.util.Optional
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -63,6 +64,10 @@ class ConversationPresenter @Inject constructor(
     }
     private val mConversationSubject: Subject<Conversation> = BehaviorSubject.create()
     private var searchQuerySubject: Subject<String>? = null
+
+    /** Policy of the open Feed (Board); null for any other conversation. */
+    private data class FeedState(val owner: String, val owned: Boolean, val replies: Boolean, val closed: Boolean)
+    private var feedState: FeedState? = null
 
     fun init(conversationUri: Uri, accountId: String) {
         if (conversationUri == mConversationUri) return
@@ -98,6 +103,7 @@ class ConversationPresenter @Inject constructor(
         super.unbindView()
         mConversation = null
         mConversationUri = null
+        feedState = null
         mConversationDisposable?.let { conversationDisposable ->
             conversationDisposable.dispose()
             mConversationDisposable = null
@@ -250,6 +256,23 @@ class ConversationPresenter @Inject constructor(
             view.displayOngoingCallPane(confList.isNotEmpty(), hasVideo)
         }) { e: Throwable -> Log.e(TAG, "conversation.calls subscription error", e) })
 
+        // A Feed policy (owner, replies, closure) travels in the conversation profile
+        val selfId = account.uri?.let { Uri.fromString(it).rawRingId }.orEmpty()
+        disposable.add(c.mode
+            .switchMap { mode ->
+                if (mode != Conversation.Mode.Feed) Observable.just(Optional.empty())
+                else c.profile.switchMapSingle { accountService.getConversationInfos(c.accountId, c.uri.rawRingId) }
+                    .map { info ->
+                        val owner = info["feedOwner"].orEmpty()
+                        Optional.of(FeedState(owner, owner == selfId, info["feedReplies"] == "true", info["feedClosed"] == "true"))
+                    }
+            }
+            .observeOn(uiScheduler)
+            .subscribe({ state ->
+                feedState = state.orElse(null)
+                feedState?.let { this.view?.setFeedMode(it.owned, it.replies, it.closed) }
+            }) { e -> Log.e(TAG, "Unable to read the Feed policy", e) })
+
         disposable.add(c.getColor()
             .observeOn(uiScheduler)
             .subscribe({ integer: Int -> this.view?.setConversationColor(integer) }) { e: Throwable ->
@@ -293,6 +316,17 @@ class ConversationPresenter @Inject constructor(
         if (message.isNullOrEmpty() || conversation == null) {
             return
         }
+        feedState?.let { feed ->
+            val restriction = when {
+                feed.closed || (!feed.owned && !feed.replies) -> ConversationView.FeedRestriction.READ_ONLY
+                !feed.owned && (replyTo == null || !isFeedPublication(replyTo, feed.owner)) -> ConversationView.FeedRestriction.REPLY_ONLY
+                else -> null
+            }
+            if (restriction != null) {
+                view?.displayFeedRestriction(restriction)
+                return
+            }
+        }
         val conference = conversation.currentCall
         if (conversation.isSwarm || conference == null || !conference.isOnGoing) {
             conversationFacade.sendTextMessage(conversation, conversation.uri, message, replyTo?.messageId).subscribe()
@@ -302,6 +336,13 @@ class ConversationPresenter @Inject constructor(
     }
 
     fun sendFile(file: File) {
+        feedState?.let { feed ->
+            if (feed.closed || !feed.owned) {
+                view?.displayFeedRestriction(
+                    if (feed.closed) ConversationView.FeedRestriction.READ_ONLY else ConversationView.FeedRestriction.NO_FILE)
+                return
+            }
+        }
         mCompositeDisposable.add(mConversationSubject.firstElement().subscribe({ conversation ->
             conversationFacade.sendFile(conversation, conversation.uri, file).subscribe()
         }) {e -> Log.e(TAG, "Can't send file", e)})
@@ -389,6 +430,10 @@ class ConversationPresenter @Inject constructor(
      * @param withCamera Indicates whether the call should include camera functionality.
      */
     fun goToCall(withCamera: Boolean) {
+        if (feedState != null) {
+            view?.displayFeedRestriction(ConversationView.FeedRestriction.NO_CALL)
+            return
+        }
         // Check if the device has a camera or microphone
         if (!withCamera && !hardwareService.hasMicrophone()) {
             view!!.displayErrorToast(Error.NO_MICROPHONE)
@@ -506,6 +551,12 @@ class ConversationPresenter @Inject constructor(
         }
     }
 
+    /** Subscribers may only answer an original publication of the Feed owner. */
+    private fun isFeedPublication(interaction: Interaction, owner: String): Boolean =
+        interaction.contact?.uri?.rawRingId == owner
+            && interaction.replyToId.isNullOrEmpty()
+            && (interaction is TextMessage || interaction is DataTransfer)
+
     fun stopSearch() {
         searchQuerySubject?.let {
             it.onComplete()
@@ -515,6 +566,10 @@ class ConversationPresenter @Inject constructor(
 
     fun sendReaction(interaction: Interaction, text: CharSequence) {
         val conversation = mConversation ?: return
+        if (feedState != null) {
+            view?.displayFeedRestriction(ConversationView.FeedRestriction.NO_REACTION)
+            return
+        }
         accountService.sendConversationReaction(conversation.accountId, conversation.uri, text.toString(), interaction.messageId ?: return)
     }
 

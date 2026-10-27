@@ -191,7 +191,8 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
 
             val isGroup = effectiveMode == Conversation.Mode.AdminInvitesOnly ||
                     effectiveMode == Conversation.Mode.InvitesOnly ||
-                    effectiveMode == Conversation.Mode.Public
+                    effectiveMode == Conversation.Mode.Public ||
+                    effectiveMode == Conversation.Mode.Feed
 
             if (isGroup) {
                 ActionListBottomSheet(

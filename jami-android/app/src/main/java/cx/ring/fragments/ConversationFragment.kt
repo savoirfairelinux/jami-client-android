@@ -102,6 +102,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private var locationServiceConnection: ServiceConnection? = null
     private var binding: FragConversationBinding? = null
     private var currentBottomView: View? = null
+
+    /** Policy of the open Board (daemon Feed); null for any other conversation. */
+    private data class FeedMode(val owned: Boolean, val replies: Boolean, val closed: Boolean)
+    private var feedMode: FeedMode? = null
+    private var conversationViewShown = false
     private var mAdapter: ConversationAdapter? = null
     private var mSearchAdapter: ConversationAdapter? = null
     private val animation = ValueAnimator()
@@ -223,6 +228,48 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             else -> getString(R.string.generic_error)
         }
         Toast.makeText(requireContext(), errorString, Toast.LENGTH_LONG).show()
+    }
+
+    override fun setFeedMode(owned: Boolean, replies: Boolean, closed: Boolean) {
+        val mode = FeedMode(owned, replies, closed)
+        if (mode == feedMode) return
+        feedMode = mode
+        if (conversationViewShown) switchToConversationView()
+    }
+
+    override fun displayFeedRestriction(restriction: ConversationView.FeedRestriction) {
+        val text = when (restriction) {
+            ConversationView.FeedRestriction.READ_ONLY -> getString(R.string.board_restriction_read_only)
+            ConversationView.FeedRestriction.REPLY_ONLY ->
+                getString(R.string.board_restriction_reply_only)
+            ConversationView.FeedRestriction.NO_FILE -> getString(R.string.board_restriction_no_file)
+            ConversationView.FeedRestriction.NO_REACTION -> getString(R.string.board_restriction_no_reaction)
+            ConversationView.FeedRestriction.NO_CALL -> getString(R.string.board_restriction_no_call)
+        }
+        Toast.makeText(requireContext(), text, Toast.LENGTH_LONG).show()
+    }
+
+    /** Only the owner publishes on a Board; subscribers read, or reply in text when allowed. No calls. */
+    private fun applyFeedMode() {
+        val feed = feedMode ?: return
+        binding?.apply {
+            toolbar.menu.findItem(R.id.conv_action_videocall)?.isVisible = false
+            toolbar.menu.findItem(R.id.conv_action_audiocall)?.isVisible = false
+            toolbar.menu.findItem(R.id.conv_action_peer_services)?.isVisible = false
+            if (feed.closed || (!feed.owned && !feed.replies)) {
+                cvMessageInput.visibility = View.GONE
+                trustRequestMessage.text = if (feed.closed) getString(R.string.board_closed_banner)
+                    else getString(R.string.board_read_only_banner)
+                trustRequestMessage.visibility = View.VISIBLE
+                currentBottomView = null
+            } else if (!feed.owned) {
+                btnMenu.visibility = View.GONE
+                btnTakePicture.visibility = View.GONE
+                btnAudioRecord.visibility = View.GONE
+                msgInputTxt.hint = getString(R.string.board_reply_hint)
+            }
+        }
+        updatePaddings()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -1180,6 +1227,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 //    }
 
     override fun switchToUnknownView() {
+        conversationViewShown = false
         binding?.apply {
             toolbar.menu.findItem(R.id.conv_search).isVisible = false
             toolbar.menu.findItem(R.id.conv_action_videocall).isVisible = false
@@ -1196,6 +1244,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun switchToIncomingTrustRequestView(name: String, requestMode: Conversation.Mode) {
+        conversationViewShown = false
         binding?.apply {
             toolbar.menu.findItem(R.id.conv_search).isVisible = false
             toolbar.menu.findItem(R.id.conv_action_videocall).isVisible = false
@@ -1213,6 +1262,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun switchToConversationView() {
+        conversationViewShown = true
         binding?.apply {
             toolbar.menu.findItem(R.id.conv_search).isVisible = true
             toolbar.menu.findItem(R.id.conv_action_videocall).isVisible = true
@@ -1229,9 +1279,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             }
         }
         updatePaddings()
+        applyFeedMode()
     }
 
     override fun switchToSyncingView() {
+        conversationViewShown = false
         binding?.apply {
             toolbar.menu.findItem(R.id.conv_search).setVisible(false)
             toolbar.menu.findItem(R.id.conv_action_videocall).setVisible(false)
@@ -1248,6 +1300,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun switchToBlockedView() {
+        conversationViewShown = false
         binding?.apply {
             toolbar.menu.findItem(R.id.conv_search).setVisible(false)
             toolbar.menu.findItem(R.id.conv_action_videocall).setVisible(false)
@@ -1263,6 +1316,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun switchToEndedView(canSwitch: Boolean) {
+        conversationViewShown = false
         binding?.apply {
             toolbar.menu.findItem(R.id.conv_search).isVisible = false
             toolbar.menu.findItem(R.id.conv_action_videocall).isVisible = false

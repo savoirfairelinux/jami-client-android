@@ -467,6 +467,14 @@ class DaemonService(
         override fun collaborativeDocumentRemoved(accountId: String, conversationId: String, documentId: String, everywhere: Boolean) {
             mCollaborationService.documentRemoved(accountId, conversationId, documentId, everywhere)
         }
+
+        override fun feedsChanged(accountId: String) {
+            mAccountService.feedsChanged(accountId)
+        }
+
+        override fun onConversationError(accountId: String, conversationId: String, code: Long, what: String) {
+            mAccountService.conversationError(accountId, conversationId, code, what)
+        }
     }
 
     private inline fun snapshotConversationCallback(callback: () -> Unit) {

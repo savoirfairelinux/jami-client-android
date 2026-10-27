@@ -38,6 +38,8 @@ class SmartListPresenter @Inject constructor(
         super.bindView(view)
         view.setLoading(true)
         mCompositeDisposable.add(conversationFacade.getConversationList(conversationFacade.currentAccountSubject)
+            // Boards (Feeds) are reached through their own function, not listed with the conversations
+            .map { list -> list.copy(conversations = list.conversations.filterNot { it.isFeed() }) }
             .throttleLatest(150, TimeUnit.MILLISECONDS, uiScheduler)
             .observeOn(uiScheduler)
             .subscribe { list ->

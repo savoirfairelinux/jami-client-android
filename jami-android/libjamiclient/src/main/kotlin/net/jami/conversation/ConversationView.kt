@@ -70,4 +70,11 @@ interface ConversationView {
     fun shareText(body: String)
     fun goToSearchMessage(messageId: String)
     fun openConversation(accountId: String, conversationUri: Uri)
+
+    /** Actions a Feed (Board) policy refuses, so the view can explain why. */
+    enum class FeedRestriction { READ_ONLY, REPLY_ONLY, NO_FILE, NO_REACTION, NO_CALL }
+
+    /** Applies the Feed policy of the open conversation. Only the owner publishes; subscribers may reply if allowed. */
+    fun setFeedMode(owned: Boolean, replies: Boolean, closed: Boolean) {}
+    fun displayFeedRestriction(restriction: FeedRestriction) {}
 }
