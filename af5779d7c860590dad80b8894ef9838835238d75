@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d56f6da_7a9da769",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/HomeFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-27T01:26:43Z",
+      "side": 1,
+      "message": "[error] Line 424: 🔴 Empty-query search is explicitly forced to `emptyList()` in non-contacts mode, which conflicts with the change intent (“empty query lists every conversation”) and negates the updated `ConversationFacade.getSearchResults()` behavior that now returns full conversations when `latestQuery` is blank. Remove this branch (or gate it behind a clearly named mode flag) so blank query can surface full conversation results as intended.",
+      "revId": "af5779d7c860590dad80b8894ef9838835238d75",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4090dd81_d6de77a5",
+        "filename": "jami-android/app/src/main/java/cx/ring/navigation/TargetAdapter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-27T01:26:43Z",
+      "side": 1,
+      "message": "[warning] Line 76: 🟡 `applyFilter()` always calls `notifyDataSetChanged()`, including on every keystroke and chip change. For larger target sets this causes unnecessary full-list rebinding and visible scroll/input jank. Switch to `ListAdapter` + `DiffUtil` (or at least compute and dispatch granular item changes) so filtering updates are incremental.",
+      "revId": "af5779d7c860590dad80b8894ef9838835238d75",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6853571d_066c964e",
+        "filename": "jami-android/app/src/main/java/cx/ring/repositories/TargetRepository.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-27T01:26:43Z",
+      "side": 1,
+      "message": "[error] Line 78: 🔴 This mapping path performs multiple blocking Rx calls (`blockingFirst`/`blockingGet`, including at lines 78-80, 84, and 104) while building targets. Since `observeTargets()` is consumed from UI code, this can block the main thread and cause jank/ANR when conversations or profiles are slow to resolve. Replace blocking access with a fully reactive composition (e.g., precompute title/mode/username via `combineLatest`/`zip` and keep this mapper pure/non-blocking), then emit targets once all required async values are available.",
+      "revId": "af5779d7c860590dad80b8894ef9838835238d75",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
