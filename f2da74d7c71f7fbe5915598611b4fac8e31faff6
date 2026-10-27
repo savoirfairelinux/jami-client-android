@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d5c9ce5_4df928f6",
+        "filename": "jami-android/app/src/main/java/cx/ring/navigation/BoardBottomSheet.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-27T01:23:01Z",
+      "side": 1,
+      "message": "[warning] Line 487: 🟡 Contact name resolution uses `blockingFirst()` / `blockingGet()` inside a UI-thread loop when opening the dialog. With many conversations or slow sources this can freeze the sheet and cause jank/ANR. Build this list asynchronously (Rx chain/coroutine) and update the dialog content when data arrives, or use already-cached non-blocking fields only.",
+      "revId": "f2da74d7c71f7fbe5915598611b4fac8e31faff6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2e8022e_eafe8d78",
+        "filename": "jami-android/app/src/main/java/cx/ring/navigation/BoardBottomSheet.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-27T01:23:01Z",
+      "side": 1,
+      "message": "[warning] Line 531: 🟡 Circle uncheck logic removes members from `selectedContactUris` unless covered by another selected circle, but it does not preserve contacts explicitly selected by the user. Example: manually select Alice, check then uncheck a circle containing Alice → Alice is unintentionally removed. Track manual selections separately from circle-derived selections (or recompute from two sets) before updating `selectedContactUris`.",
+      "revId": "f2da74d7c71f7fbe5915598611b4fac8e31faff6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b7b644e_787ee0cd",
+        "filename": "jami-android/app/src/main/java/cx/ring/repositories/BoardRepository.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-27T01:23:01Z",
+      "side": 1,
+      "message": "[error] Line 207: 🔴 `setAccess()` logs `setFeedAccess(...)\u003dfalse` but still completes successfully, so create/update flows can report success while access grants/revokes were not applied. This can silently leave a Board with broader or stale authorization than intended. Treat `ok \u003d\u003d false` as an error (e.g., return `Single.error(...)` and fail the chain) so callers surface the failure and avoid inconsistent privacy state.",
+      "revId": "f2da74d7c71f7fbe5915598611b4fac8e31faff6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
