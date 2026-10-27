@@ -16,20 +16,22 @@
  */
 package cx.ring.adapters
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import cx.ring.databinding.ItemContactBinding
 import cx.ring.viewholders.ContactPickerViewHolder
-import cx.ring.viewholders.ContactPickerViewHolder.ContactPickerListeners
 import net.jami.smartlist.ConversationItemViewModel
 
 class ContactPickerAdapter(
-    private var conversations: List<ConversationItemViewModel>?,
-    private val listener: ContactPickerListeners,
-) : RecyclerView.Adapter<ContactPickerViewHolder>() {
-    private var recyclerView: RecyclerView? = null
+    private val onClick: (ConversationItemViewModel) -> Unit,
+) : ListAdapter<ConversationItemViewModel, ContactPickerViewHolder>(ContactDiffCallback) {
+    private var selectedContactUris: Set<String> = emptySet()
+
+    init {
+        stateRestorationPolicy = StateRestorationPolicy.PREVENT_WHEN_EMPTY
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactPickerViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -42,27 +44,30 @@ class ContactPickerAdapter(
     }
 
     override fun onBindViewHolder(holder: ContactPickerViewHolder, position: Int) {
-        conversations!![position].let { conversation ->
-            return holder.bind(listener, conversation)
+        val conversation = getItem(position)
+        val checked = conversation.getContact()?.contact?.uri?.rawUriString in selectedContactUris
+        holder.bind(conversation, checked, onClick)
+    }
+
+    fun setSelection(uris: Set<String>) {
+        val changed = (selectedContactUris - uris) + (uris - selectedContactUris)
+        selectedContactUris = uris.toSet()
+        currentList.forEachIndexed { index, item ->
+            if (item.getContact()?.contact?.uri?.rawUriString in changed) {
+                notifyItemChanged(index)
+            }
         }
     }
 
-    override fun getItemCount(): Int = conversations?.size ?: 0
+    private object ContactDiffCallback : DiffUtil.ItemCallback<ConversationItemViewModel>() {
+        override fun areItemsTheSame(
+            oldItem: ConversationItemViewModel,
+            newItem: ConversationItemViewModel
+        ): Boolean = oldItem.accountId == newItem.accountId && oldItem.uri == newItem.uri
 
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-        this.recyclerView = recyclerView
+        override fun areContentsTheSame(
+            oldItem: ConversationItemViewModel,
+            newItem: ConversationItemViewModel
+        ): Boolean = oldItem == newItem
     }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun update(conversations: List<ConversationItemViewModel>) {
-        this.conversations = conversations
-        notifyDataSetChanged()
-    }
-
-    fun update(conversation: ConversationItemViewModel) {
-        val index = conversations!!.indexOf(conversation)
-        notifyItemChanged(index)
-    }
-
 }

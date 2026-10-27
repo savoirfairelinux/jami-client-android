@@ -19,53 +19,76 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
+    android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
     android:descendantFocusability="blocksDescendants"
     android:minHeight="72dp"
-    android:paddingBottom="8dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="8dp">
+    android:paddingVertical="@dimen/padding_small"
+    android:paddingHorizontal="@dimen/padding_large">
 
-    <cx.ring.views.AvatarView
-        android:id="@+id/photo"
+    <FrameLayout
+        android:id="@+id/contact_avatar"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="16dp"
-        android:contentDescription="@string/contact_picture_description"
-        android:scaleType="fitCenter"
-        tools:uri="@tools:sample/full_names"
-        tools:avatar="@tools:sample/avatars" />
+        android:importantForAccessibility="no">
+
+        <cx.ring.views.AvatarView
+            android:id="@+id/photo"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="top|start"
+            android:importantForAccessibility="no"
+            android:scaleType="fitCenter"
+            tools:uri="@tools:sample/full_names"
+            tools:avatar="@tools:sample/avatars" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/contact_selected"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="bottom|end"
+            android:clickable="false"
+            android:focusable="false"
+            android:importantForAccessibility="noHideDescendants"
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/online_indicator"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="0dp"
+            app:cardPreventCornerOverlap="false"
+            app:strokeColor="?attr/colorSurface"
+            app:strokeWidth="2dp"
+            tools:visibility="visible">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:importantForAccessibility="no"
+                android:padding="5dp"
+                app:srcCompat="@drawable/check_24dp"
+                app:tint="@color/white" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/display_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toStartOf="@+id/quick_call"
-        android:layout_toEndOf="@+id/photo"
+        android:layout_toEndOf="@+id/contact_avatar"
         android:ellipsize="end"
         android:gravity="start"
-        android:maxLines="1"
-        android:singleLine="true"
+        android:importantForAccessibility="no"
+        android:maxLines="2"
+        android:paddingVertical="@dimen/padding_small"
         android:textAlignment="viewStart"
         android:textColor="@color/colorOnSurface"
         android:textIsSelectable="false"
         android:textSize="16sp"
         tools:text="@tools:sample/full_names" />
-
-    <ImageButton
-        android:id="@+id/quick_call"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:background="?selectableItemBackgroundBorderless"
-        android:contentDescription="@string/contact_quick_call_description"
-        android:padding="16dp"
-        app:srcCompat="@drawable/baseline_videocam_24" />
 
 </RelativeLayout>

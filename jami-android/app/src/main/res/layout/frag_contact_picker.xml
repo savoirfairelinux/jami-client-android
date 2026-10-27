@@ -4,91 +4,168 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     tools:context=".fragments.ContactPickerFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/selected_contacts_tooolbar"
-        style="@style/Widget.Material3.AppBarLayout"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/picker_header"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/transparent"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             style="@style/Widget.Material3.Toolbar.Surface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/transparent"
-            app:navigationIcon="@drawable/baseline_group_add_24"
-            app:title="@string/picker_title" />
+            android:minHeight="?attr/actionBarSize"
+            app:navigationContentDescription="@string/picker_close"
+            app:navigationIcon="@drawable/baseline_close_24"
+            app:title="@string/new_group" />
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/selected_contacts"
-            style="@style/Widget.Material3.ChipGroup"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/search_input_layout"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="100dp"
-            android:paddingHorizontal="8dp">
+            android:layout_marginHorizontal="@dimen/padding_large"
+            android:layout_marginBottom="@dimen/padding_small"
+            app:boxBackgroundColor="@android:color/transparent"
+            app:endIconMode="clear_text"
+            app:hintEnabled="false"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
+            app:startIconDrawable="@drawable/baseline_search_24">
 
-        </com.google.android.material.chip.ChipGroup>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/search_contacts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/picker_search_hint"
+                android:imeOptions="actionDone|flagNoExtractUi"
+                android:inputType="text|textNoSuggestions"
+                android:minHeight="56dp"
+                android:paddingVertical="@dimen/padding_medium"
+                android:singleLine="true" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <ImageView
-        android:id="@+id/no_contact_logo"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:contentDescription="@null"
-        android:src="@drawable/baseline_person_add_24"
-        app:layout_constraintBottom_toTopOf="@id/no_contact_title"
+        <HorizontalScrollView
+            android:id="@+id/selected_contacts_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingHorizontal="@dimen/padding_large"
+            android:scrollbars="none"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:id="@+id/selected_contacts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+
+        </HorizontalScrollView>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/contact_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/picker_footer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/selected_contacts_tooolbar"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:tint="@color/darker_gray"
-        tools:visibility="gone" />
+        app:layout_constraintTop_toBottomOf="@id/picker_header">
 
-    <TextView
-        android:id="@+id/no_contact_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/no_contact_to_add"
-        app:layout_constraintBottom_toTopOf="@id/create_group_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/no_contact_logo"
-        tools:visibility="gone" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/contact_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingVertical="@dimen/padding_small"
+            android:scrollbars="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_contact" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/contact_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:minHeight="200dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="120dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/selected_contacts_tooolbar"
-        tools:listitem="@layout/item_contact" />
+        <LinearLayout
+            android:id="@+id/empty_state"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_large"
+            android:visibility="gone"
+            tools:visibility="gone">
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/create_group_btn"
-        style="?attr/extendedFloatingActionButtonSmallStyle"
-        android:layout_width="wrap_content"
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/baseline_person_add_24"
+                app:tint="?attr/colorOnSurfaceVariant" />
+
+            <TextView
+                android:id="@+id/no_contact_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_large"
+                android:gravity="center"
+                android:text="@string/no_contact_to_add"
+                android:textAppearance="?attr/textAppearanceBodyLarge" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/picker_footer"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:enabled="false"
-        android:text="@string/picker_btn"
-        app:icon="@drawable/baseline_group_add_24"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:enabled="true" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/padding_large"
+            android:paddingVertical="@dimen/padding_small">
+
+            <TextView
+                android:id="@+id/selection_count"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/padding_large"
+                android:layout_weight="1"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                tools:text="3 selected" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/create_group_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:minHeight="@dimen/button_size"
+                android:text="@string/picker_create_group"
+                tools:enabled="true" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
