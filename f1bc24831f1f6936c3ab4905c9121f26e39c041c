@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce01582c_7a9b07ef",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/CollaborationService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-27T01:25:08Z",
+      "side": 1,
+      "message": "[warning] Line 404: 🟡 `replicationKey` is built from `accountId/documentId` only, while the replication callbacks also carry `conversationId`. If the same `documentId` is reused across conversations, a replicate event in one conversation can clear or suppress pending state for another, which can deactivate accounts while that second document is still downloading. Scope the key to `accountId/conversationId/documentId` in both `replicationExpected` and `documentReplicated` to avoid cross-conversation collisions.",
+      "revId": "f1bc24831f1f6936c3ab4905c9121f26e39c041c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
