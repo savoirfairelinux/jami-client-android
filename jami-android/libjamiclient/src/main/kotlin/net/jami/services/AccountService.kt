@@ -440,7 +440,11 @@ class AccountService(
         mExecutor.execute { JamiService.setMessageDisplayed(accountId, conversationUri.uri, messageId, 3) }
     }
 
-    fun startConversation(accountId: String, initialMembers: Collection<String>): Single<Conversation> =
+    fun startConversation(
+        accountId: String,
+        initialMembers: Collection<String>,
+        title: String? = null
+    ): Single<Conversation> =
         getAccountSingle(accountId).flatMap { account ->
             Log.w(TAG, "startConversation")
             val id = JamiService.startConversation(accountId)
@@ -451,7 +455,18 @@ class AccountService(
             conversationCallbacks.submit(accountId, id) {
                 val conversation = account.getSwarm(id)
                     ?: throw IllegalStateException("Conversation $id was not registered")
-                for (member in initialMembers) {
+                val cleanTitle = title?.trim().orEmpty()
+                if (cleanTitle.isNotEmpty()) {
+                    val info = mapOf("title" to cleanTitle)
+                    JamiService.updateConversationInfos(accountId, id, StringMap.toSwig(info))
+                    conversation.setProfile(mVCardService.loadConversationProfile(info))
+                }
+                val selfId = account.uri?.let { Uri.fromString(it).rawRingId }.orEmpty()
+                val uniqueMembers = initialMembers
+                    .map { Uri.fromString(it).rawRingId }
+                    .filter { it.isNotEmpty() && it != selfId }
+                    .distinct()
+                for (member in uniqueMembers) {
                     Log.w(TAG, "addConversationMember $member")
                     JamiService.addConversationMember(accountId, id, member)
                     conversation.addContact(account.getContactFromCache(member), MemberRole.INVITED)
@@ -1387,6 +1402,7 @@ class AccountService(
 
     fun updateConversationInfo(accountId: String, conversationId: String, info: Map<String, String>) {
         JamiService.updateConversationInfos(accountId, conversationId, StringMap.toSwig(info))
+        getAccount(accountId)?.getSwarm(conversationId)?.setProfile(mVCardService.loadConversationProfile(info))
     }
 
     fun addConversationMembers(accountId: String, conversationId: String, uris: List<Uri>) =
@@ -1613,7 +1629,8 @@ class AccountService(
 
     fun conversationProfileUpdated(accountId: String, conversationId: String, info: Map<String, String>) {
         conversationCallbacks.dispatch(accountId, conversationId) {
-            }
+            getAccount(accountId)?.getSwarm(conversationId)?.setProfile(mVCardService.loadConversationProfile(info))
+        }
     }
 
     fun conversationPreferencesUpdated(accountId: String, conversationId: String, preferences: Map<String, String>) {

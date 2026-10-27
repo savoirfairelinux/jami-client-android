@@ -765,7 +765,11 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
     }
 
     override fun onContactPicked(accountId: String, contacts: Set<Contact>) {
-        mDisposable.add(mConversationFacade.createConversation(accountId, contacts)
+        onContactPicked(accountId, contacts, null)
+    }
+
+    override fun onContactPicked(accountId: String, contacts: Set<Contact>, groupName: String?) {
+        mDisposable.add(mConversationFacade.createConversation(accountId, contacts, groupName)
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe({ conversation: Conversation ->
                 startConversation(conversation.accountId, conversation.uri)

@@ -715,9 +715,17 @@ class ConversationFacade(
         } else mAccountService.removeContact(accountId, conversationUri.rawRingId, true)
     }
 
-    fun createConversation(accountId: String, currentSelection: Collection<Contact>): Single<Conversation> {
-        val contactIds = currentSelection.map { contact -> contact.primaryNumber }
-        return mAccountService.startConversation(accountId, contactIds)
+    fun createConversation(
+        accountId: String,
+        currentSelection: Collection<Contact>,
+        title: String? = null
+    ): Single<Conversation> {
+        val contactIds = currentSelection
+            .filter { !it.isUser }
+            .map { contact -> contact.primaryNumber }
+            .filter { it.isNotBlank() }
+            .distinct()
+        return mAccountService.startConversation(accountId, contactIds, title)
     }
 
     fun getLoadedContact(accountId: String, conversation: Conversation?, contactIds: Collection<String>): Observable<List<ContactViewModel>> =

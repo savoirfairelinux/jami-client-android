@@ -1026,4 +1026,19 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         <item quantity="other">%1$d authorized</item>
     </plurals>
 
+    <!-- Groups and contact picker -->
+    <string name="function_groups">Groups</string>
+    <string name="group_sheet_subtitle">Group chats and collaborative spaces</string>
+    <string name="group_empty">No groups yet.\nTap “+ %1$s” to create one.</string>
+    <plurals name="group_member_count">
+        <item quantity="one">%1$d member</item>
+        <item quantity="other">%1$d members</item>
+    </plurals>
+    <string name="group_subtitle_with_preview">%1$s • %2$s</string>
+    <string name="group_options">Group options</string>
+    <string name="group_name_hint">Group name</string>
+    <string name="group_name_dialog_title">Name the group</string>
+    <string name="group_no_name">No name</string>
+    <string name="group_pick_from_circles">Choose from Circles</string>
+
 </resources>
