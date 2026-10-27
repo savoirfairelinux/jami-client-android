@@ -1840,8 +1840,13 @@ class AccountService(
             })
     }
 
-    fun sendFile(conversation: Conversation, file: File) {
-        mExecutor.execute { JamiService.sendFile(conversation.accountId, conversation.uri.rawRingId,file.absolutePath, file.name, "") }
+    fun sendFile(conversation: Conversation, file: File, replyTo: String? = null) {
+        mExecutor.execute {
+            JamiService.sendFile(
+                conversation.accountId, conversation.uri.rawRingId,
+                file.absolutePath, file.name, replyTo.orEmpty()
+            )
+        }
     }
 
     fun acceptFileTransfer(accountId: String, conversationUri: Uri, messageId: String?, fileId: String) {
