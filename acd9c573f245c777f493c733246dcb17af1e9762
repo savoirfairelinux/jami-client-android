@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d52b4fd0_b6ef221f",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ContactPickerFragment.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-27T15:14:39Z",
+      "side": 1,
+      "message": "[warning] Line 124: 🟡 Selection reset is keyed to `conversations.firstOrNull()?.accountId`, which is order-dependent and can change when list ordering changes (e.g., updates from another account), clearing the user\u0027s current selection unexpectedly. Use a stable account scope (picker/account context or selected-contact account) and only clear when that scoped account actually changes; ideally filter `availableContacts` to that single account before rendering.",
+      "revId": "acd9c573f245c777f493c733246dcb17af1e9762",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2ee4432c_e1e2a1eb",
         "filename": "jami-android/app/src/main/java/cx/ring/fragments/ContactPickerFragment.kt",
         "patchSetId": 2
