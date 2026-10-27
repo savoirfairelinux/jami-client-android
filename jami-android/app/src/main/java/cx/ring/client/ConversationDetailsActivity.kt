@@ -291,7 +291,7 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
         }.attach()
 
         binding.toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
-        binding.addMember.setOnClickListener { ContactPickerFragment(conversation.contacts).show(supportFragmentManager, ContactPickerFragment.TAG) }
+        binding.addMember.setOnClickListener { ContactPickerFragment.newInstance(conversation.contacts).show(supportFragmentManager, ContactPickerFragment.TAG) }
     }
 
     private fun profileImageClicked(contact: Contact?, isGroup: Boolean) {
