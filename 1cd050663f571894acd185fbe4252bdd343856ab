@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c98f41d1_9d9bf178",
+        "filename": "jami-android/app/src/main/java/cx/ring/navigation/GroupsBottomSheet.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-27T01:24:10Z",
+      "side": 1,
+      "message": "[warning] Line 193: 🟡 The subscription error handler is empty (`subscribe({ ... }, {})`), so group-list loading failures are silently swallowed. Surface or at least log the error and render a fallback state; otherwise users get an empty sheet with no indication that loading failed.",
+      "revId": "1cd050663f571894acd185fbe4252bdd343856ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9df2111_d19b7376",
+        "filename": "jami-android/app/src/main/java/cx/ring/navigation/GroupsBottomSheet.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-27T01:24:10Z",
+      "side": 1,
+      "message": "[warning] Line 310: 🟡 Leaving a group also swallows failures (`removeConversation(...).subscribe({}, {})`). If the backend call fails, UI and data state diverge with no feedback. Handle the error path (log + user-visible failure message) and keep the item until success.",
+      "revId": "1cd050663f571894acd185fbe4252bdd343856ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "387b4cf6_44e03867",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-27T01:24:10Z",
+      "side": 1,
+      "message": "[error] Line 456: 🔴 `startConversation()` now converts each invitee to `rawRingId` before calling `JamiService.addConversationMember()`. This strips URI scheme/details and can break invitations for non-Jami identifiers (for example SIP URIs or any address where normalization is lossy). Keep the canonical URI string for daemon calls (or normalize with a method that preserves protocol semantics), and only use a normalized key for dedup/self-filter comparisons.",
+      "revId": "1cd050663f571894acd185fbe4252bdd343856ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
