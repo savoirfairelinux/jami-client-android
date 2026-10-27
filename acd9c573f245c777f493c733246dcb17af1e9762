@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ba7e8c4_ba98dc14",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ContactPickerFragment.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-10-27T15:40:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f721e2e5_fe4648e1",
+      "revId": "acd9c573f245c777f493c733246dcb17af1e9762",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d52b4fd0_b6ef221f",
@@ -35,6 +53,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7869d7e_583e30cf",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ContactPickerFragment.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-10-27T15:40:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d52b4fd0_b6ef221f",
+      "revId": "acd9c573f245c777f493c733246dcb17af1e9762",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2ee4432c_e1e2a1eb",
@@ -48,6 +84,24 @@
       "writtenOn": "2026-10-27T15:13:01Z",
       "side": 1,
       "message": "[warning] Line 143: 🟡 `distinctBy { it.getContact()!!.contact.uri }` deduplicates across accounts, which can drop valid entries when the same URI exists on multiple accounts. Use a composite key (`accountId + uri`) to preserve account-scoped identity and avoid silent contact loss.",
+      "revId": "acd9c573f245c777f493c733246dcb17af1e9762",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f56d51b_50d42060",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ContactPickerFragment.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-10-27T15:40:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ee4432c_e1e2a1eb",
       "revId": "acd9c573f245c777f493c733246dcb17af1e9762",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }

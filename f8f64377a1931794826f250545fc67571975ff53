@@ -16,6 +16,24 @@
       "message": "[error] Line 145: 🔴 Selection state is keyed only by raw URI (`selectedContactUris`), but the list now preserves same-URI contacts across accounts (`distinctBy { accountId to uri }`). With duplicate URIs on multiple accounts, tapping one row can implicitly affect the other, and confirmation is then rejected as account-mismatched by `resolveContactPickerSelection`, leaving users unable to complete selection. Use a stable composite selection key (`accountId + uri`) end-to-end (toggle, checked rendering, chip rendering, and resolver), or strictly constrain `availableContacts` to a single picker account before any selection logic.",
       "revId": "f8f64377a1931794826f250545fc67571975ff53",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95b6aaf5_6e149607",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ContactPickerFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-10-27T15:40:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d73777d_31bf7c61",
+      "revId": "f8f64377a1931794826f250545fc67571975ff53",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
