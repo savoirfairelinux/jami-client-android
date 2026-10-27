@@ -2,9 +2,11 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven { url = uri("https://developer.huawei.com/repo/") }
     }
     dependencies {
         classpath(libs.kotlin.gradle.plugin)
+        classpath(libs.huawei.agconnect)
     }
 }
 
@@ -23,5 +25,6 @@ allprojects {
         maven { url = uri("https://maven.google.com") }
         mavenCentral()
         maven { url = uri("https://jitpack.io") }
+        maven { url = uri("https://developer.huawei.com/repo/") }
     }
 }
