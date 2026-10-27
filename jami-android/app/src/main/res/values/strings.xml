@@ -660,6 +660,16 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="dialog_hint_description">Description</string>
     <string name="picker_title">Select contacts</string>
     <string name="picker_btn">Select contacts</string>
+    <string name="picker_close">Close contact picker</string>
+    <string name="picker_search_hint">Search contacts</string>
+    <string name="picker_create_group">Create group</string>
+    <string name="picker_add_members">Add members</string>
+    <string name="picker_no_matches">No matching contacts</string>
+    <string name="picker_remove_contact">Remove %1$s</string>
+    <plurals name="picker_selection_count">
+        <item quantity="one">%d selected</item>
+        <item quantity="other">%d selected</item>
+    </plurals>
     <string name="no_contact_to_add">You have no contact to add</string>
     <string name="bottomsheet_contact">Contact Jami\n%1$s</string>
     <string name="bottomsheet_block">Block member</string>

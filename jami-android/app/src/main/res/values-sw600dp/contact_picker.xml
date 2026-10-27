@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="contact_picker_floating">true</bool>
+
+    <style name="AppTheme.ContactPicker" parent="AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowBackground">@drawable/contact_picker_dialog_background</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowSoftInputMode">adjustResize|stateAlwaysHidden</item>
+    </style>
+</resources>
