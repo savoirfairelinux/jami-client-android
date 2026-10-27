@@ -301,9 +301,9 @@ class ConversationPresenter @Inject constructor(
         }
     }
 
-    fun sendFile(file: File) {
+    fun sendFile(file: File, replyTo: String? = null) {
         mCompositeDisposable.add(mConversationSubject.firstElement().subscribe({ conversation ->
-            conversationFacade.sendFile(conversation, conversation.uri, file).subscribe()
+            conversationFacade.sendFile(conversation, conversation.uri, file, replyTo).subscribe()
         }) {e -> Log.e(TAG, "Can't send file", e)})
     }
 
