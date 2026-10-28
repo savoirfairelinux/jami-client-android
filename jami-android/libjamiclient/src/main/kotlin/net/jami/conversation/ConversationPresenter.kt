@@ -270,8 +270,15 @@ class ConversationPresenter @Inject constructor(
             })
     }
 
-    fun loadMore() {
-        mConversationDisposable?.add(accountService.loadMore(mConversation!!).subscribe({}) {})
+    fun loadMore(onComplete: (() -> Unit)? = null) {
+        val conversation = mConversation ?: return
+        mConversationDisposable?.add(accountService.loadMore(conversation)
+            .observeOn(uiScheduler)
+            .subscribe({ onComplete?.invoke() }, { error ->
+                Log.e(TAG, "Unable to load conversation history", error)
+                view?.displayErrorToast(Error.GENERIC_ERROR)
+                onComplete?.invoke()
+            }))
     }
 
     fun scrollToMessage(messageId: String) {
@@ -280,7 +287,10 @@ class ConversationPresenter @Inject constructor(
         } else {
             mConversationDisposable?.add(accountService.loadUntil(mConversation!!, until = messageId)
                 .observeOn(uiScheduler)
-                .subscribe { _ -> this.view?.scrollToMessage(messageId)})
+                .subscribe({ _ -> this.view?.scrollToMessage(messageId) }, { error ->
+                    Log.e(TAG, "Unable to load message $messageId", error)
+                    view?.displayErrorToast(Error.GENERIC_ERROR)
+                }))
         }
     }
 

@@ -175,5 +175,8 @@ class ConversationThreadsTest {
         assertEquals("0", threads.rootId("10000"))
         assertEquals(10_000, threads.replyCount("0"))
         assertEquals(1, threads.timeline.size)
+        val backwards = ConversationThreads(history.reversed())
+        assertEquals("0", backwards.rootId("10000"))
+        assertEquals(10_000, backwards.replyCount("0"))
     }
 }
