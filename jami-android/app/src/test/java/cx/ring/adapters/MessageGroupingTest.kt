@@ -148,6 +148,19 @@ class MessageGroupingTest {
     }
 
     @Test
+    fun threadRootRepliesKeepSharedGroupingRules() {
+        adapter.threadRootId = "root"
+        val reply = transfer("image.png", gap = 45 * 60_000L).apply { replyToId = "root" }
+        adapter.updateDataset(mutableListOf(message(), reply))
+        assertEquals("FIRST", sequence(adapter, 0))
+        assertEquals("LAST", sequence(adapter, 1))
+
+        reply.replyToId = "other"
+        assertEquals("SINGLE", sequence(adapter, 0))
+        assertEquals("SINGLE", sequence(adapter, 1))
+    }
+
+    @Test
     fun gapOverOneHourBreaksOnBothSidesOfBoundary() {
         assertSequences(
             listOf(

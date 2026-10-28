@@ -17,7 +17,7 @@
 package cx.ring.fragments
 
 class ConversationThreadNavigation {
-    class Request internal constructor(val loadedIds: Set<String?>)
+    class Request internal constructor(val loadedIds: Set<String>)
 
     var target: String? = null
         private set
@@ -40,12 +40,12 @@ class ConversationThreadNavigation {
         pending = null
     }
 
-    fun begin(loadedIds: Set<String?>): Request? {
+    fun begin(loadedIds: Set<String>): Request? {
         if (target == null || pending != null) return null
         return Request(loadedIds).also { pending = it }
     }
 
-    fun complete(request: Request, loadedIds: Set<String?>, resolved: Boolean): Boolean {
+    fun complete(request: Request, loadedIds: Set<String>, resolved: Boolean): Boolean {
         if (pending !== request) return false
         pending = null
         if (target == null) return false
