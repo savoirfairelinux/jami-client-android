@@ -56,6 +56,8 @@ class ConversationActivity : AppCompatActivity() {
         JamiApplication.instance?.startDaemon(this)
         val binding = ActivityConversationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        mConversationFragment = supportFragmentManager
+            .findFragmentById(R.id.main_frame) as? ConversationFragment
         if (mConversationFragment == null) {
             mConversationFragment = ConversationFragment().apply {
                 arguments = path.toBundle().apply {
