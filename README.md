@@ -88,6 +88,34 @@ cd jami-client-android/daemon/extras/tools
 ./bootstrap && make .pkg-config
 ```
 
+## Threaded conversations (experimental)
+
+Enable **Threaded view** in **Account settings > Messages** to group replies
+under their original message. This setting is off by default and applies to
+that account on this Android device; it is not synced to linked devices.
+Legacy conversations without swarm reply metadata remain chronological.
+
+Open a message's replies button, or use Reply, to open its thread. The thread
+shows the original message and its nested replies in chronological order.
+Its composer replies to the original unless another message is explicitly
+selected with Reply. Text, emoji and attachments use the same reply metadata
+as the normal conversation. Reactions, edits and message actions remain
+available in both views.
+
+For thread roots, reactions and the reply count share one row below the
+message: reactions first for incoming messages, replies first for outgoing.
+
+Threads open at the latest reply; scroll up for older messages and the
+original. Search and quoted-message jumps reveal their specific target.
+
+Drafts are kept separately for the main conversation and each thread.
+Reply counts include only loaded history. Scrolling up in the main
+conversation loads older messages automatically; an open thread shows
+the original and its loaded replies without paging unrelated history.
+Read receipts remain conversation-wide, not thread-specific.
+Disabling the setting restores the chronological view without changing
+messages or their reply relationships.
+
 ## Update translations
 
 Update translations using the Transifex client (tx) :

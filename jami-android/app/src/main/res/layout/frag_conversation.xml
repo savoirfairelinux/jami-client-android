@@ -144,6 +144,52 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             tools:text="@string/outgoing_contact_invitation_message"
             tools:visibility="visible" />
 
+        <LinearLayout
+            android:id="@+id/thread_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="4dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/thread_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/conversation_thread_title"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textColor="?attr/colorOnSurface"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="24dp"
+                android:layout_marginHorizontal="12dp"
+                android:background="?attr/colorOutlineVariant"
+                android:importantForAccessibility="no" />
+
+            <TextView
+                android:id="@+id/thread_conversation_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                tools:text="@tools:sample/first_names" />
+
+            <ImageButton
+                android:id="@+id/thread_close"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/conversation_thread_close"
+                android:src="@drawable/baseline_close_24"
+                app:tint="?attr/colorOnSurface" />
+        </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
@@ -486,6 +532,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
                         <EditText
                             android:id="@+id/msg_input_txt"
+                            android:saveEnabled="false"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
