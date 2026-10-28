@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6c6a4f5_6d9697cd",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-28T19:02:42Z",
+      "side": 1,
+      "message": "[warning] Line 399: 🟡 `updateThreadHeader()` only updates `toolbar/threadBar` visibility when `threadBar` differs from target state. If `toolbar` gets out of sync independently (e.g., after an interrupted transition or state restore), this method will no longer correct it. Update both visibilities whenever either one differs, or always assign both while temporarily disabling `layoutTransition`, so header state is self-healing.",
+      "revId": "0d776e6ccaa6c2a6d64622b7d38caf9a572de292",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
