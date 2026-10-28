@@ -40,6 +40,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
@@ -65,6 +66,8 @@ import cx.ring.services.NotificationServiceImpl
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationColor
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationPreferences
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationSymbol
+import cx.ring.services.SharedPreferencesServiceImpl.Companion.getAccountPreferences
+import cx.ring.services.SharedPreferencesServiceImpl.Companion.PREF_THREADED_VIEW
 import cx.ring.utils.*
 import cx.ring.utils.ContentUri.getShareItems
 import cx.ring.views.AvatarDrawable
@@ -75,6 +78,7 @@ import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.conversation.ConversationPresenter
 import net.jami.conversation.ConversationView
 import net.jami.daemon.JamiService
@@ -92,6 +96,7 @@ import java.io.File
 import java.util.*
 import androidx.core.content.edit
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import cx.ring.client.HomeActivity
 import javax.inject.Inject
 import javax.inject.Named
@@ -104,6 +109,45 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private var currentBottomView: View? = null
     private var mAdapter: ConversationAdapter? = null
     private var mSearchAdapter: ConversationAdapter? = null
+    private var threadAdapter: ConversationAdapter? = null
+    private var threadState = ConversationThreadState()
+    private var accountPreferences: SharedPreferences? = null
+    private val threadPreferenceListener =
+        SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            if (key == PREF_THREADED_VIEW) applyThreadPreference()
+        }
+    private var threads: ConversationThreads? = null
+    private var restoredThreadRoot: String? = null
+    private var threadRenderJob: Disposable? = null
+    private val changedThreadMessages = HashSet<String>()
+    private val newThreadMessages = HashSet<String>()
+    private var forceThreadRefresh = false
+    private var pendingThreadScroll: String? = null
+    private var pendingThreadOffset = 0
+    private var pendingThreadHighlight = false
+    private var mainScrollMessage: String? = null
+    private var mainScrollOffset = 0
+    private var requestedThreadRoot: String? = null
+    private val threadNavigation = ConversationThreadNavigation()
+    private var threadNavigationSnackbar: Snackbar? = null
+    private var historyRequestInFlight = false
+    private var historyExhausted = false
+    private var viewGeneration = 0
+    private var attachmentReplyTarget: String? = null
+    private var audioReplyTarget: String? = null
+    private var composingStatus = ComposingStatus.Idle
+    private val renderThread = Runnable { renderThreadHistory() }
+    private val threadBack = object : OnBackPressedCallback(false) {
+        override fun handleOnBackPressed() {
+            if (threadNavigation.target != null)
+                cancelThreadNavigation()
+            else if (binding?.toolbar?.menu?.findItem(R.id.conv_search)?.isActionViewExpanded == true)
+                binding?.toolbar?.menu?.findItem(R.id.conv_search)?.collapseActionView()
+            else closeThread()
+        }
+    }
+    private val visibleAdapter: ConversationAdapter?
+        get() = if (threadState.enabled) threadAdapter else mAdapter
     private val animation = ValueAnimator()
     private var mPreferences: SharedPreferences? = null
     private var mCurrentPhoto: File? = null
@@ -117,6 +161,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private var mapHeight = 0
     private var marginPxTotal = 0
     private var loading = true
+    private var accountOffline = false
     private var animating = 0
     private var lastInsets: WindowInsetsCompat? = null
     private var mConversationItem: ConversationItemViewModel? = null
@@ -152,20 +197,339 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     private val pickMultipleMedia =
         registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(8)) { uris ->
+            val replyTo = attachmentReplyTarget
             for (uri in uris) {
                 startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri)
                     .observeOn(DeviceUtils.uiScheduler)
-                    .flatMapCompletable { file: File -> sendFile(file) })
+                    .flatMapCompletable { file: File -> sendFile(file, replyTo) })
             }
         }
 
     fun getConversationAvatar(uri: String): AvatarDrawable? = mParticipantAvatars[uri]
 
+    private fun outgoingReplyTarget(): String? =
+        threadState.replyTarget(replyingTo?.messageId)
+
+    private fun currentThreadRoot(): Interaction? =
+        threadState.rootId?.let { root ->
+            mAdapter?.history?.firstOrNull {
+                it.messageId == root && it.type != Interaction.InteractionType.INVALID
+            }
+        }
+
+    private fun canSendThreadReply(): Boolean {
+        if (threadState.rootId == null || currentThreadRoot() != null) return true
+        Toast.makeText(context, R.string.conversation_thread_missing, Toast.LENGTH_LONG).show()
+        return false
+    }
+
+    private fun restoreComposerDraft() {
+        replyingTo = null
+        binding?.replyGroup?.isVisible = false
+        binding?.msgInputTxt?.setText(mPreferences?.getString(threadState.draftKey, null))
+        restoreComposerReply()
+    }
+
+    private fun restoreComposerReply() {
+        if (replyingTo != null) return
+        val id = mPreferences?.getString(threadState.replyDraftKey, null) ?: return
+        mAdapter?.history?.firstOrNull { it.messageId == id }?.let {
+            showReplyPreview(it, focus = false)
+        }
+    }
+
+    private fun rememberMainScroll() {
+        if (threadState.rootId != null) return
+        val list = binding?.histList ?: return
+        val manager = list.layoutManager as? LinearLayoutManager ?: return
+        val position = manager.findFirstVisibleItemPosition()
+        mainScrollMessage = visibleAdapter?.getMessageFromPosition(position)?.messageId
+        mainScrollOffset = manager.findViewByPosition(position)?.top?.minus(list.paddingTop) ?: 0
+    }
+
+    private fun restoreScrollAnchor() {
+        val id = pendingThreadScroll ?: return
+        val list = binding?.histList ?: return
+        val adapter = visibleAdapter ?: return
+        var position = adapter.getMessagePosition(id)
+        if (position == -1 && threadState.enabled && threadState.rootId == null)
+            threads?.rootId(id)?.let { position = adapter.getMessagePosition(it) }
+        if (position == -1) return
+        (list.layoutManager as? LinearLayoutManager)
+            ?.scrollToPositionWithOffset(position, pendingThreadOffset)
+        if (pendingThreadHighlight) {
+            val highlightedPosition = position
+            list.doOnNextLayout {
+                list.layoutManager?.findViewByPosition(highlightedPosition)
+                    ?.setBackgroundColor(requireContext().getColor(R.color.surface))
+            }
+        }
+        pendingThreadScroll = null
+        pendingThreadOffset = 0
+        pendingThreadHighlight = false
+    }
+
+    fun openThread(rootId: String) {
+        if (!threadState.enabled || threadState.rootId == rootId) return
+        rememberMainScroll()
+        threadState.openThread(rootId)
+        restoreComposerDraft()
+        pendingThreadScroll = null
+        pendingThreadOffset = 0
+        pendingThreadHighlight = false
+        forceThreadRefresh = true
+        updateThreadHeader()
+        scheduleThreadRender()
+    }
+
+    private fun closeThread() {
+        cancelThreadNavigation()
+        threadState.closeThread()
+        restoreComposerDraft()
+        pendingThreadScroll = mainScrollMessage
+        pendingThreadOffset = mainScrollOffset
+        pendingThreadHighlight = false
+        forceThreadRefresh = true
+        updateThreadHeader()
+        scheduleThreadRender()
+    }
+
+    private fun setThreadingEnabled(enabled: Boolean) {
+        rememberMainScroll()
+        cancelThreadNavigation()
+        threadRenderJob?.dispose()
+        threadState.enable(enabled)
+        restoreComposerDraft()
+        pendingThreadScroll = mainScrollMessage
+        pendingThreadOffset = mainScrollOffset
+        pendingThreadHighlight = false
+        binding?.histList?.adapter = visibleAdapter
+        updateThreadHeader()
+        if (enabled) {
+            forceThreadRefresh = true
+            scheduleThreadRender()
+        } else {
+            changedThreadMessages.clear()
+            newThreadMessages.clear()
+            binding?.histList?.removeCallbacks(renderThread)
+            restoreScrollAnchor()
+        }
+    }
+
+    private fun updateThreadHeader() {
+        val binding = binding ?: return
+        val root = threadState.rootId
+        binding.threadBar.isVisible = root != null
+        binding.toolbar.isVisible = root == null
+        binding.threadConversationName.text = binding.contactTitle.text
+        updateThreadNavigationFeedback()
+        val canCompose = !accountOffline && (root == null || currentThreadRoot() != null)
+        binding.msgInputTxt.isEnabled = canCompose
+        binding.msgInputTxt.setHint(
+            if (root == null) R.string.write_a_message else R.string.conversation_thread_reply_hint
+        )
+        binding.msgSend.isEnabled = canCompose
+        binding.emojiSend.isEnabled = canCompose
+        binding.btnMenu.isEnabled = canCompose
+        binding.btnTakePicture.isEnabled = canCompose
+        binding.btnAudioRecord.isEnabled = canCompose
+        threadBack.isEnabled = root != null || threadNavigation.target != null
+    }
+
+    private fun updateThreadNavigationFeedback() {
+        val binding = binding ?: return
+        if (threadNavigation.target != null) {
+            if (threadNavigationSnackbar != null) return
+            threadNavigationSnackbar = Snackbar.make(
+                binding.root, R.string.conversation_thread_finding, Snackbar.LENGTH_INDEFINITE
+            ).setAnchorView(binding.cvMessageInput)
+                .setAction(android.R.string.cancel) { cancelThreadNavigation() }
+                .addCallback(object : Snackbar.Callback() {
+                    override fun onDismissed(snackbar: Snackbar, event: Int) {
+                        if (threadNavigationSnackbar === snackbar) {
+                            threadNavigationSnackbar = null
+                            cancelThreadNavigation()
+                        }
+                    }
+                })
+                .also { it.show() }
+        } else {
+            val snackbar = threadNavigationSnackbar
+            threadNavigationSnackbar = null
+            snackbar?.dismiss()
+            if (threadNavigation.failed) {
+                threadNavigation.cancel()
+                Toast.makeText(context, R.string.conversation_thread_unavailable, Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun loadEarlierMessages() {
+        if (loading || historyRequestInFlight || historyExhausted ||
+            threadState.rootId != null || threadNavigation.target != null
+        ) return
+        val knownIds = mAdapter?.history.orEmpty().map { it.messageId }.toSet()
+        historyRequestInFlight = true
+        loading = true
+        val generation = viewGeneration
+        presenter.loadMore {
+            if (generation != viewGeneration || binding == null) return@loadMore
+            historyRequestInFlight = false
+            historyExhausted = mAdapter?.history.orEmpty().all { it.messageId in knownIds }
+            loading = false
+            if (threadNavigation.target != null) continueThreadNavigation()
+            else if (threadState.enabled) scheduleThreadRender()
+        }
+    }
+
+    private fun applyThreadPreference() {
+        if (binding == null) return
+        val enabled = ConversationPath.fromBundle(arguments)?.conversationUri?.isSwarm == true &&
+            accountPreferences?.getBoolean(PREF_THREADED_VIEW, false) == true
+        if (threadState.enabled != enabled) setThreadingEnabled(enabled)
+    }
+
+    fun revealThreadMessage(messageId: String) {
+        threadNavigation.start(messageId)
+        continueThreadNavigation()
+    }
+
+    private fun cancelThreadNavigation() {
+        threadNavigation.cancel()
+        updateThreadHeader()
+    }
+
+    private fun continueThreadNavigation() {
+        val target = threadNavigation.target ?: return
+        if (binding == null || !threadState.enabled) return
+        val history = mAdapter?.history.orEmpty()
+        if (ConversationThreads(history).rootId(target) != null) {
+            threadNavigation.cancel()
+            scrollToMessage(target, true)
+            updateThreadHeader()
+            return
+        }
+        updateThreadHeader()
+        if (historyRequestInFlight) return
+        val request = threadNavigation.begin(history.map { it.messageId }.toSet()) ?: return
+        historyRequestInFlight = true
+        val generation = viewGeneration
+        presenter.loadMore {
+            if (generation != viewGeneration || binding == null) return@loadMore
+            historyRequestInFlight = false
+            loading = false
+            val loaded = mAdapter?.history.orEmpty()
+            historyExhausted = loaded.all { it.messageId in request.loadedIds }
+            val resolved = threadNavigation.target?.let {
+                ConversationThreads(loaded).rootId(it) != null
+            } ?: false
+            if (threadNavigation.complete(request, loaded.map { it.messageId }.toSet(), resolved))
+                binding?.histList?.post { continueThreadNavigation() }
+            else updateThreadHeader()
+        }
+    }
+
+    private fun scheduleThreadRender(changedId: String? = null) {
+        if (!threadState.enabled) return
+        changedId?.let { changedThreadMessages.add(it) }
+        threadRenderJob?.dispose()
+        binding?.histList?.apply {
+            removeCallbacks(renderThread)
+            postOnAnimation(renderThread)
+        }
+    }
+
+    private fun renderThreadHistory() {
+        if (!threadState.enabled) return
+        val history = mAdapter?.history ?: return
+        val root = threadState.rootId
+        val changed = changedThreadMessages.toSet()
+        val added = newThreadMessages.toSet()
+        val force = forceThreadRefresh
+        threadRenderJob = Single.fromCallable { ConversationThreads(history) }
+            .subscribeOn(Schedulers.computation())
+            .observeOn(uiScheduler)
+            .subscribe({ projection ->
+                val list = binding?.histList ?: return@subscribe
+                val adapter = threadAdapter ?: return@subscribe
+                if (!threadState.enabled || threadState.rootId != root) return@subscribe
+                val messages = if (root == null) projection.timeline
+                    else projection.messages(root)
+                val oldIds = adapter.history.map { it.messageId }.toSet()
+                val incoming = messages.filter {
+                    it.messageId in added && it.messageId !in oldIds
+                }
+                val manager = list.layoutManager as? LinearLayoutManager
+                val nearEnd = (manager?.findLastVisibleItemPosition() ?: 0) >=
+                    adapter.itemCount - 3
+                val counts = if (root == null) projection.timeline.mapNotNull { message ->
+                    message.messageId?.let { it to projection.replyCount(it) }
+                }.toMap() else emptyMap()
+                adapter.threadRootId = root
+                adapter.updateProjection(
+                    messages, counts, changed, force,
+                    if (root == null) composingStatus else ComposingStatus.Idle
+                )
+                threads = projection
+                changedThreadMessages.removeAll(changed)
+                newThreadMessages.removeAll(added)
+                forceThreadRefresh = false
+                restoreComposerReply()
+                updateThreadHeader()
+                val showLatest = threadState.consumeScrollToLatest(pendingThreadScroll)
+                if (pendingThreadScroll != null) restoreScrollAnchor()
+                else if (showLatest) scrollToEnd()
+                else if (incoming.isNotEmpty() &&
+                    (nearEnd || incoming.any { !it.isIncoming })
+                ) {
+                    scrollToEnd()
+                    if (incoming.any { it.isIncoming })
+                        announceIncomingMessageForAccessibility()
+                }
+            }, { error ->
+                Log.e(TAG, "Unable to display conversation threads", error)
+                displayErrorToast(Error.GENERIC_ERROR)
+            })
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        val list = binding?.histList
+        val manager = list?.layoutManager as? LinearLayoutManager
+        val position = manager?.findFirstVisibleItemPosition() ?: -1
+        outState.putString(STATE_THREAD_ROOT, threadState.rootId)
+        outState.putString(
+            STATE_SCROLL_MESSAGE,
+            visibleAdapter?.getMessageFromPosition(position)?.messageId
+        )
+        outState.putInt(
+            STATE_SCROLL_OFFSET,
+            manager?.findViewByPosition(position)?.top?.minus(list?.paddingTop ?: 0) ?: 0
+        )
+        outState.putString(STATE_MAIN_SCROLL_MESSAGE, mainScrollMessage)
+        outState.putInt(STATE_MAIN_SCROLL_OFFSET, mainScrollOffset)
+        outState.putString(STATE_ATTACHMENT_REPLY, attachmentReplyTarget)
+        outState.putString(STATE_AUDIO_REPLY, audioReplyTarget)
+        outState.putString(STATE_PHOTO, mCurrentPhoto?.absolutePath)
+        super.onSaveInstanceState(outState)
+    }
+
     override fun refreshView(conversation: List<Interaction>) {
         if (binding != null) binding!!.pbLoading.visibility = View.GONE
         mAdapter?.let { adapter ->
             adapter.updateDataset(conversation.toMutableList())
+            historyExhausted = false
             loading = false
+            if (threadState.enabled) {
+                forceThreadRefresh = true
+                scheduleThreadRender()
+                val root = threadState.rootId
+                if (root != null && conversation.none { it.messageId == root } &&
+                    requestedThreadRoot != root
+                ) {
+                    requestedThreadRoot = root
+                    revealThreadMessage(root)
+                }
+            }
             binding?.histList?.doOnNextLayout {
                 it.animate()
                     .alpha(1f)
@@ -176,7 +540,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun scrollToEnd() {
-        mAdapter?.let { adapter ->
+        visibleAdapter?.let { adapter ->
             if (adapter.itemCount > 0)
                 binding?.histList?.scrollToPosition(adapter.itemCount - 1)
         }
@@ -187,7 +551,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         val am = requireContext().getSystemService(Context.ACCESSIBILITY_SERVICE) as? AccessibilityManager
         if (am?.isTouchExplorationEnabled != true) return
         recyclerView.doOnNextLayout {
-            val lastPosition = (mAdapter?.itemCount ?: 0) - 1
+            val lastPosition = (visibleAdapter?.itemCount ?: 0) - 1
             if (lastPosition < 0) return@doOnNextLayout
             recyclerView.layoutManager?.findViewByPosition(lastPosition)
                 ?.performAccessibilityAction(
@@ -198,7 +562,22 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun scrollToMessage(messageId: String, highlight: Boolean) {
         val histList = binding?.histList ?: return
-        mAdapter?.let { adapter ->
+        if (threadState.enabled) {
+            val projection = ConversationThreads(mAdapter?.history.orEmpty())
+            val root = projection.rootId(messageId)
+            if (root != null && root != threadState.rootId &&
+                (root != messageId || threadState.rootId != null)
+            ) {
+                openThread(root)
+            }
+            if (root == null && threadState.rootId != null) closeThread()
+            if (messageId != requestedThreadRoot || pendingThreadScroll == null)
+                pendingThreadScroll = messageId
+            pendingThreadHighlight = highlight
+            scheduleThreadRender()
+            return
+        }
+        visibleAdapter?.let { adapter ->
             val position = adapter.getMessagePosition(messageId)
             if (position == -1)
                 return
@@ -226,6 +605,15 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        restoredThreadRoot = savedInstanceState?.getString(STATE_THREAD_ROOT)
+            ?: threadState.rootId
+        pendingThreadScroll = savedInstanceState?.getString(STATE_SCROLL_MESSAGE)
+        pendingThreadOffset = savedInstanceState?.getInt(STATE_SCROLL_OFFSET) ?: 0
+        mainScrollMessage = savedInstanceState?.getString(STATE_MAIN_SCROLL_MESSAGE)
+        mainScrollOffset = savedInstanceState?.getInt(STATE_MAIN_SCROLL_OFFSET) ?: 0
+        attachmentReplyTarget = savedInstanceState?.getString(STATE_ATTACHMENT_REPLY)
+        audioReplyTarget = savedInstanceState?.getString(STATE_AUDIO_REPLY)
+        mCurrentPhoto = savedInstanceState?.getString(STATE_PHOTO)?.let { File(it) }
         val res = resources
         mapWidth = res.getDimensionPixelSize(R.dimen.location_sharing_minmap_width)
         mapHeight = res.getDimensionPixelSize(R.dimen.location_sharing_minmap_height)
@@ -283,11 +671,12 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
                 // Handles content URIs.
                 if (uriContent != null) {
+                    val replyTo = outgoingReplyTarget()
                     val clip = uriContent.clip
                     for (i in 0 until clip.itemCount) {
                         val uri = clip.getItemAt(i).uri
                         startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri)
-                            .flatMapCompletable { sendFile(it) })
+                            .flatMapCompletable { sendFile(it, replyTo) })
                     }
                 }
                 // Delegates the processing for text and everything else to the platform.
@@ -317,8 +706,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     }
                     mPreferences?.let { preferences ->
                         if (hasMessage)
-                            preferences.edit { putString(KEY_PREFERENCE_PENDING_MESSAGE, message) }
-                        else preferences.edit { remove(KEY_PREFERENCE_PENDING_MESSAGE) }
+                            preferences.edit { putString(threadState.draftKey, message) }
+                        else preferences.edit { remove(threadState.draftKey) }
                     }
                 }
             })
@@ -349,7 +738,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             setupInlineAudioRecorder(this)
             emojiSend.setOnClickListener { sendEmoji() }
             btnMenu.setOnClickListener { expandMenu(it) }
-            btnTakePicture.setOnClickListener { takePicture() }
+            btnTakePicture.setOnClickListener {
+                attachmentReplyTarget = outgoingReplyTarget()
+                takePicture()
+            }
+            threadClose.setOnClickListener { closeThread() }
             unknownContactButton.setOnClickListener { presenter.onAddContact() }
             btnBlock.setOnClickListener { presenter.onBlockIncomingContactRequest() }
             btnRefuse.setOnClickListener { presenter.onRefuseIncomingContactRequest() }
@@ -361,6 +754,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, threadBack)
         // Listen for the audio recorder's result here so it survives the dialog being recreated
         // (e.g. on a theme or orientation change).
         childFragmentManager.setFragmentResultListener(
@@ -369,18 +763,16 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             val path = result.getString(AudioMessageRecorderFragment.RESULT_FILE_PATH) ?: return@setFragmentResultListener
             val file = File(path)
             if (file.exists() && file.length() > 0L) {
-                startFileSend(Single.just(file).flatMapCompletable { f -> sendFile(f) })
+                val replyTo = audioReplyTarget
+                startFileSend(Single.just(file).flatMapCompletable { f ->
+                    sendFile(f, replyTo)
+                })
             }
         }
         binding?.apply {
-            mPreferences?.let { preferences ->
-                val pendingMessage = preferences.getString(KEY_PREFERENCE_PENDING_MESSAGE, null)
-                if (!pendingMessage.isNullOrEmpty()) {
-                    msgInputTxt.setText(pendingMessage)
-                    msgSend.visibility = View.VISIBLE
-                    emojiSend.visibility = View.GONE
-                }
-            }
+            ViewCompat.setAccessibilityHeading(threadTitle, true)
+            restoreComposerDraft()
+            updateThreadHeader()
 
             histList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 // The minimum amount of items to have below current scroll position before loading more.
@@ -391,11 +783,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {}
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     val layoutManager = recyclerView.layoutManager as? LinearLayoutManager ?: return
-                    if (!loading && histList.adapter != mSearchAdapter
+                    if (threadState.rootId == null && histList.adapter != mSearchAdapter
                         && layoutManager.findFirstVisibleItemPosition() < visibleLoadThreshold
                     ) {
-                        loading = true
-                        presenter.loadMore()
+                        if (dy < 0) historyExhausted = false
+                        loadEarlierMessages()
                     }
 
                     val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
@@ -406,14 +798,14 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             })
 
             (histList.itemAnimator as? DefaultItemAnimator)?.supportsChangeAnimations = false
-            histList.adapter = mAdapter
+            histList.adapter = visibleAdapter
             searchList.adapter = mSearchAdapter
 
             val messageSwipeController =
                 ActionHelper.MessageSwipeController(
                     context = requireContext(),
                     onSwipe = { position: Int ->
-                        mAdapter?.getMessageFromPosition(position)?.let {
+                        visibleAdapter?.getMessageFromPosition(position)?.let {
                             presenter.startReplyTo(it)
                         }
                     }
@@ -427,6 +819,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     override fun setConversationColor(@ColorInt color: Int) {
         mAdapter?.convColor = getConversationColor(requireContext(), color)
         mSearchAdapter?.convColor = getConversationColor(requireContext(), color)
+        threadAdapter?.convColor = getConversationColor(requireContext(), color)
     }
 
     override fun setConversationSymbol(symbol: CharSequence) {
@@ -434,6 +827,21 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun onDestroyView() {
+        viewGeneration++
+        threadNavigation.reset()
+        threadState.consumeScrollToLatest(null)
+        val snackbar = threadNavigationSnackbar
+        threadNavigationSnackbar = null
+        snackbar?.dismiss()
+        historyRequestInFlight = false
+        historyExhausted = false
+        requestedThreadRoot = null
+        binding?.histList?.removeCallbacks(renderThread)
+        threadRenderJob?.dispose()
+        threadRenderJob = null
+        threads = null
+        changedThreadMessages.clear()
+        newThreadMessages.clear()
         animation.removeAllUpdateListeners()
         binding?.histList?.adapter = null
         mCompositeDisposable.clear()
@@ -447,11 +855,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             }
         }
         mAdapter = null
+        threadAdapter = null
         super.onDestroyView()
         binding = null
     }
 
     private fun clearReply() {
+        mPreferences?.edit { remove(threadState.replyDraftKey) }
         if (replyingTo != null) {
             replyingTo = null
             binding?.apply {
@@ -461,20 +871,26 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     fun sendMessageText() {
+        if (!canSendThreadReply()) return
         val message = binding!!.msgInputTxt.text.toString()
-        presenter.sendTextMessage(message, replyingTo)
+        presenter.sendTextMessage(message, replyingTo ?: currentThreadRoot())
         clearMsgEdit()
     }
 
     fun sendEmoji() {
-        presenter.sendTextMessage(binding!!.emojiSend.text.toString(), replyingTo)
+        if (!canSendThreadReply()) return
+        presenter.sendTextMessage(
+            binding!!.emojiSend.text.toString(), replyingTo ?: currentThreadRoot()
+        )
         clearReply()
     }
 
     private fun expandMenu(v: View) {
+        if (!canSendThreadReply()) return
         val popup = PopupMenu(requireContext(), v)
         popup.inflate(R.menu.conversation_share_actions)
         popup.setOnMenuItemClickListener { item: MenuItem ->
+            attachmentReplyTarget = outgoingReplyTarget()
             when (item.itemId) {
                 //R.id.conv_send_audio -> sendAudioMessage()
                 R.id.conv_send_video -> sendVideoMessage()
@@ -487,6 +903,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             false
         }
         popup.menu.findItem(R.id.chat_extensions).isVisible = JamiService.getPluginsEnabled() && !JamiService.getChatHandlers().isEmpty()
+        if (threadState.rootId != null) {
+            popup.menu.findItem(R.id.conv_share_location).isVisible = false
+            popup.menu.findItem(R.id.conv_new_document).isVisible = false
+            popup.menu.findItem(R.id.chat_extensions).isVisible = false
+        }
         popup.setForceShowIcon(true)
         popup.show()
     }
@@ -594,6 +1015,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     private fun sendAudioMessage() {
+        if (!canSendThreadReply()) return
         if (!presenter.deviceRuntimeService.hasAudioPermission()) {
             requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), REQUEST_CODE_CAPTURE_AUDIO)
         } else {
@@ -610,14 +1032,22 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             callbacks = object : InlineAudioRecorder.Callbacks {
                 override fun hasAudioPermission() = presenter.deviceRuntimeService.hasAudioPermission()
 
+                override fun onStart() {
+                    audioReplyTarget = outgoingReplyTarget()
+                }
+
                 override fun onSimpleTap() = sendAudioMessage()
 
                 override fun onSend(file: File) {
-                    startFileSend(Single.just(file).flatMapCompletable { f -> sendFile(f) })
+                    val replyTo = audioReplyTarget
+                    startFileSend(Single.just(file).flatMapCompletable { f ->
+                        sendFile(f, replyTo)
+                    })
                 }
 
-                override fun onReview(file: File, amplitudes: FloatArray, continueRecording: Boolean) =
+                override fun onReview(file: File, amplitudes: FloatArray, continueRecording: Boolean) {
                     showAudioRecorder(file, amplitudes, continueRecording)
+                }
             }
         )
         recorder.attach(binding.btnAudioRecord)
@@ -663,6 +1093,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     private fun takePicture() {
+        if (!canSendThreadReply()) return
         if (!presenter.deviceRuntimeService.hasVideoPermission()) {
             requestPermissions(arrayOf(Manifest.permission.CAMERA), REQUEST_CODE_TAKE_PICTURE)
             return
@@ -686,6 +1117,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun openFilePicker() {
+        attachmentReplyTarget = outgoingReplyTarget()
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.addCategory(Intent.CATEGORY_OPENABLE)
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
@@ -694,11 +1126,12 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     private fun openGallery() {
+        attachmentReplyTarget = outgoingReplyTarget()
         pickMultipleMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
     }
 
-    private fun sendFile(file: File): Completable = Completable.fromAction {
-        presenter.sendFile(file)
+    private fun sendFile(file: File, replyTo: String?): Completable = Completable.fromAction {
+        presenter.sendFile(file, replyTo)
     }
 
     private fun startFileSend(op: Completable): Disposable {
@@ -713,6 +1146,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
         Log.w(TAG, "onActivityResult: $requestCode $resultCode $resultData")
+        val replyTo = attachmentReplyTarget
         if (requestCode == REQUEST_CODE_FILE_PICKER) {
             if (resultCode == Activity.RESULT_OK && resultData != null) {
                 val clipData = resultData.clipData
@@ -721,13 +1155,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                         val uri = clipData.getItemAt(i).uri
                         startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri)
                             .observeOn(DeviceUtils.uiScheduler)
-                            .flatMapCompletable { file: File -> sendFile(file) })
+                            .flatMapCompletable { file: File -> sendFile(file, replyTo) })
                     }
                 } else {
                     resultData.data?.let { uri ->
                         startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri)
                             .observeOn(DeviceUtils.uiScheduler)
-                            .flatMapCompletable { file: File -> sendFile(file) })
+                            .flatMapCompletable { file: File -> sendFile(file, replyTo) })
                     }
                 }
             }
@@ -748,7 +1182,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             mCurrentPhoto = null
             val sendingFile = file
             if (sendingFile != null)
-                startFileSend(sendingFile.flatMapCompletable { f -> sendFile(f) })
+                startFileSend(sendingFile.flatMapCompletable { f -> sendFile(f, replyTo) })
             else
                 Toast.makeText(activity, getString(R.string.find_picture_error), Toast.LENGTH_SHORT).show()
         } else if (requestCode == REQUEST_CODE_SAVE_FILE) {
@@ -800,25 +1234,42 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun addElement(element: Interaction) {
-        if (mAdapter!!.add(element) && element.type != Interaction.InteractionType.INVALID) {
+        val appended = mAdapter?.add(element) == true
+        if (!historyRequestInFlight) historyExhausted = false
+        loading = false
+        if (threadState.enabled) {
+            if (mAdapter?.history?.lastOrNull()?.messageId == element.messageId &&
+                element.type != Interaction.InteractionType.INVALID
+            ) element.messageId?.let { newThreadMessages.add(it) }
+            scheduleThreadRender(element.messageId)
+            return
+        }
+        if (appended && element.type != Interaction.InteractionType.INVALID) {
             scrollToEnd()
             if (element.isIncoming && !element.body.isNullOrEmpty()) {
                 announceIncomingMessageForAccessibility()
             }
         }
-        loading = false
     }
 
     override fun updateElement(element: Interaction) {
         mAdapter?.update(element)
+        scheduleThreadRender(element.messageId)
     }
 
     override fun removeElement(element: Interaction) {
         mAdapter?.remove(element)
+        scheduleThreadRender(element.messageId)
     }
 
     override fun setComposingStatus(composingStatus: ComposingStatus) {
+        this.composingStatus = composingStatus
         mAdapter?.setComposingStatus(composingStatus)
+        if (threadState.enabled) {
+            if (threadState.rootId == null)
+                threadAdapter?.setComposingStatus(composingStatus)
+            return
+        }
         if (composingStatus == ComposingStatus.Active) scrollToEnd()
     }
 
@@ -858,13 +1309,18 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun onStart() {
         super.onStart()
+        accountPreferences?.registerOnSharedPreferenceChangeListener(threadPreferenceListener)
+        applyThreadPreference()
         presenter.resume(mIsBubble)
         mAdapter?.setTypingAnimationsActive(true)
+        threadAdapter?.setTypingAnimationsActive(true)
     }
 
     override fun onStop() {
         super.onStop()
+        accountPreferences?.unregisterOnSharedPreferenceChangeListener(threadPreferenceListener)
         mAdapter?.setTypingAnimationsActive(false)
+        threadAdapter?.setTypingAnimationsActive(false)
         inlineAudioRecorder?.release()
         presenter.pause()
     }
@@ -944,7 +1400,15 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
         mAdapter = ConversationAdapter(this, presenter)
         mSearchAdapter = ConversationAdapter(this, presenter, isSearch = true)
-        presenter.init(path.conversationUri, path.accountId)
+        threadAdapter = ConversationAdapter(this, presenter, isThreadProjection = true).apply {
+            stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        }
+        accountPreferences = getAccountPreferences(requireContext(), path.accountId)
+        threadState = ConversationThreadState(
+            path.conversationUri.isSwarm &&
+                accountPreferences?.getBoolean(PREF_THREADED_VIEW, false) == true,
+            restoredThreadRoot
+        )
 
         // Load shared preferences. Usually useful for non-swarm conversations.
         try {
@@ -956,6 +1420,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         } catch (e: Exception) {
             Log.e(TAG, "Unable to load conversation preferences")
         }
+        presenter.init(path.conversationUri, path.accountId)
 
         var connection = locationServiceConnection
         if (connection == null) {
@@ -992,6 +1457,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             a.update(contact)
             mParticipantAvatars[contactKey]!!.update(contact)
             mAdapter?.setPhoto()
+            threadAdapter?.setPhoto()
         } else {
             val builder = AvatarDrawable.Builder()
                 .withContact(contact)
@@ -1158,6 +1624,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         binding?.apply {
             conversationAvatar.setImageDrawable(img)
             contactTitle.text = conversation.title
+            threadConversationName.text = conversation.title
             if (conversation.uriTitle != conversation.title) {
                 contactSubtitle.text = conversation.uriTitle
                 contactSubtitle.visibility = View.VISIBLE
@@ -1324,11 +1791,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         Log.w(TAG, "handleShareIntent $intent")
         val action = intent.action
         if (Intent.ACTION_SEND == action || Intent.ACTION_SEND_MULTIPLE == action) {
+            val replyTo = outgoingReplyTarget()
             intent.getShareItems(requireContext()).forEach { shareItem ->
                 if (shareItem.type == "text/plain" && shareItem.text != null) {
                     binding!!.msgInputTxt.setText(shareItem.text)
                 } else if (shareItem.data != null){
-                    startFileSend(AndroidFileUtils.getCacheFile(requireContext(), shareItem.data).flatMapCompletable { file -> sendFile(file) })
+                    startFileSend(AndroidFileUtils.getCacheFile(requireContext(), shareItem.data)
+                        .flatMapCompletable { file -> sendFile(file, replyTo) })
                 }
             }
         } else if (Intent.ACTION_VIEW == action) {
@@ -1371,14 +1840,22 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun startReplyTo(interaction: Interaction) {
-        replyingTo = interaction
-        binding?.apply {
-            if (interaction is TextMessage) {
-                replyMessage.text = interaction.body
-                replyMessage.isVisible = true
-            }
-            replyGroup.isVisible = true
+        if (threadState.enabled) {
+            val id = interaction.messageId
+            val root = id?.let { ConversationThreads(mAdapter?.history.orEmpty()).rootId(it) }
+            if (root != null) openThread(root)
+        }
+        showReplyPreview(interaction, focus = true)
+    }
 
+    private fun showReplyPreview(interaction: Interaction, focus: Boolean) {
+        replyingTo = interaction
+        mPreferences?.edit { putString(threadState.replyDraftKey, interaction.messageId) }
+        binding?.apply {
+            replyMessage.text = interaction.body
+            replyMessage.isVisible = !interaction.body.isNullOrEmpty()
+            replyGroup.isVisible = true
+            if (!focus) return@apply
             msgInputTxt.post {
                 if (!msgInputTxt.hasFocus()) {
                     msgInputTxt.requestFocus()
@@ -1400,6 +1877,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun displayAccountOfflineErrorPanel() {
+        accountOffline = true
         binding?.apply {
             errorMsgPane.visibility = View.VISIBLE
             errorMsgPane.setOnClickListener(null)
@@ -1409,20 +1887,29 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             }
         }
         lastInsets?.let { updatePaddings(it) }
+        updateThreadHeader()
     }
 
     override fun setSettings(linkPreviews: Boolean) {
         mAdapter?.showLinkPreviews = linkPreviews
         mSearchAdapter?.showLinkPreviews = linkPreviews
+        threadAdapter?.showLinkPreviews = linkPreviews
     }
 
     override fun hideErrorPanel() {
+        if (binding?.errorMsgPane?.isVisible == true) historyExhausted = false
+        accountOffline = false
         binding?.errorMsgPane?.visibility = View.GONE
         lastInsets?.let { updatePaddings(it) }
+        updateThreadHeader()
     }
 
     override fun goToSearchMessage(messageId: String) {
         binding?.toolbar?.menu?.findItem(R.id.conv_search)?.collapseActionView()
+        if (threadState.enabled) {
+            revealThreadMessage(messageId)
+            return
+        }
         binding?.histList?.doOnNextLayout {
             presenter.scrollToMessage(messageId)
         }
@@ -1431,7 +1918,15 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     companion object {
         val TAG = ConversationFragment::class.simpleName
         const val REQ_ADD_CONTACT = 42
-        const val KEY_PREFERENCE_PENDING_MESSAGE = "pendingMessage"
+        const val KEY_PREFERENCE_PENDING_MESSAGE = ConversationThreadState.MAIN_DRAFT_KEY
+        private const val STATE_THREAD_ROOT = "threadRoot"
+        private const val STATE_SCROLL_MESSAGE = "threadScrollMessage"
+        private const val STATE_SCROLL_OFFSET = "threadScrollOffset"
+        private const val STATE_MAIN_SCROLL_MESSAGE = "mainScrollMessage"
+        private const val STATE_MAIN_SCROLL_OFFSET = "mainScrollOffset"
+        private const val STATE_ATTACHMENT_REPLY = "attachmentReply"
+        private const val STATE_AUDIO_REPLY = "audioReply"
+        private const val STATE_PHOTO = "pendingPhoto"
         @Deprecated("Use daemon feature")
         const val KEY_PREFERENCE_CONVERSATION_LAST_READ = "lastRead"
         const val EXTRA_SHOW_MAP = "showMap"

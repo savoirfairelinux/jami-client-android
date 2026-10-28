@@ -313,8 +313,17 @@ class ConversationPresenter @Inject constructor(
 
     fun sendFile(file: File, replyTo: String? = null) {
         mCompositeDisposable.add(mConversationSubject.firstElement().subscribe({ conversation ->
-            conversationFacade.sendFile(conversation, conversation.uri, file, replyTo).subscribe()
-        }) {e -> Log.e(TAG, "Can't send file", e)})
+            // A picked file must finish sending even if its composer is closed.
+            conversationFacade.sendFile(conversation, conversation.uri, file, replyTo)
+                .observeOn(uiScheduler)
+                .subscribe({}, { error ->
+                    Log.e(TAG, "Can't send file", error)
+                    view?.displayErrorToast(Error.INVALID_FILE)
+                })
+        }, { error ->
+            Log.e(TAG, "Can't send file", error)
+            view?.displayErrorToast(Error.INVALID_FILE)
+        }))
     }
 
     /**

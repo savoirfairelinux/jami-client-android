@@ -178,7 +178,7 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
     }
 
     override fun getMaxFileAutoAccept(accountId: String): Int {
-        return context.getSharedPreferences(PREFS_ACCOUNT + accountId, Context.MODE_PRIVATE)
+        return getAccountPreferences(context, accountId)
             .getInt(PREF_ACCEPT_IN_MAX_SIZE, 30) * 1024 * 1024
     }
 
@@ -200,6 +200,7 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
         const val PREFS_THEME = "theme"
         const val PREFS_VIDEO = "videoPrefs"
         const val PREFS_ACCOUNT = "account_"
+        const val PREF_THREADED_VIEW = "threaded_view"
         private const val PREF_PUSH_NOTIFICATIONS = "push_notifs"
         private const val PREF_PERSISTENT_NOTIFICATION = "persistent_notif"
         private const val PREF_ADD_GROUP = "add_group"
@@ -219,6 +220,9 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
         private const val PREF_ACCEPT_IN_MAX_SIZE = "acceptIncomingFilesMaxSize"
         const val PREF_EXTENSIONS = "extensions"
         private const val PREF_LOG_IS_ACTIVE = "log_is_active"
+
+        fun getAccountPreferences(context: Context, accountId: String): SharedPreferences =
+            context.getSharedPreferences(PREFS_ACCOUNT + accountId, Context.MODE_PRIVATE)
 
         fun getConversationPreferences(context: Context, accountId: String, conversationUri: Uri): SharedPreferences =
             context.getSharedPreferences(accountId + "_" + conversationUri.uri, Context.MODE_PRIVATE)

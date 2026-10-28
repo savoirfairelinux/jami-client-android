@@ -108,13 +108,80 @@ import com.google.android.material.button.MaterialButton
 class ConversationAdapter(
     private val conversationFragment: ConversationFragment,
     private val presenter: ConversationPresenter,
-    private val isSearch: Boolean = false
+    private val isSearch: Boolean = false,
+    private val isThreadProjection: Boolean = false
 ) : RecyclerView.Adapter<ConversationViewHolder>() {
     private var mInteractions: MutableList<Interaction> = ArrayList<Interaction>()
     private val res = conversationFragment.resources
     private val mPictureMaxSize =
         TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200f, res.displayMetrics).toInt()
     private var successView: ConversationViewHolder? = null
+    private data class ProjectionRow(
+        val message: Interaction,
+        val type: Int,
+        val revision: Int,
+        val replies: Int,
+        val previous: String?,
+        val next: String?
+    ) {
+        val key = message.messageId ?: "legacy:${message.id}"
+    }
+
+    private var projectionRows = emptyList<ProjectionRow>()
+    private var threadReplyCounts = emptyMap<String, Int>()
+    var threadRootId: String? = null
+    val history: List<Interaction>
+        get() = mInteractions.toList()
+
+    fun updateProjection(
+        messages: List<Interaction>,
+        replyCounts: Map<String, Int>,
+        changedIds: Set<String>,
+        forceRefresh: Boolean,
+        composingStatus: ComposingStatus
+    ) {
+        check(isThreadProjection)
+        val oldRows = projectionRows
+        val oldComposing = isComposing
+        val newComposing = composingStatus == ComposingStatus.Active
+        val oldById = oldRows.associateBy { it.key }
+        val newRows = messages.mapIndexed { index, message ->
+            val key = message.messageId ?: "legacy:${message.id}"
+            val old = oldById[key]
+            ProjectionRow(
+                message, getMessageViewType(message),
+                (old?.revision ?: 0) +
+                    if (forceRefresh || key in changedIds) 1 else 0,
+                replyCounts[message.messageId] ?: 0,
+                messages.getOrNull(index - 1)?.messageId,
+                messages.getOrNull(index + 1)?.messageId
+            )
+        }
+        val diff = androidx.recyclerview.widget.DiffUtil.calculateDiff(
+            object : androidx.recyclerview.widget.DiffUtil.Callback() {
+                override fun getOldListSize() = oldRows.size + if (oldComposing) 1 else 0
+                override fun getNewListSize() = newRows.size + if (newComposing) 1 else 0
+                override fun areItemsTheSame(old: Int, new: Int): Boolean {
+                    if (old == oldRows.size || new == newRows.size)
+                        return old == oldRows.size && new == newRows.size
+                    return oldRows[old].key == newRows[new].key &&
+                        oldRows[old].type == newRows[new].type
+                }
+
+                override fun areContentsTheSame(old: Int, new: Int): Boolean {
+                    if (old == oldRows.size || new == newRows.size) return true
+                    return oldRows[old] == newRows[new] &&
+                        oldRows[old].previous !in changedIds &&
+                        oldRows[old].next !in changedIds
+                }
+            }
+        )
+        mInteractions = messages.toMutableList()
+        threadReplyCounts = replyCounts
+        projectionRows = newRows
+        isComposing = newComposing
+        diff.dispatchUpdatesTo(this)
+    }
 
     @ColorInt
     var convColor = 0
@@ -311,8 +378,11 @@ class ConversationAdapter(
         if (isComposing && position == mInteractions.size)
             return MessageType.COMPOSING_INDICATION.ordinal
 
-        val interaction = mInteractions[position]
-        return when (interaction.type) {
+        return getMessageViewType(mInteractions[position])
+    }
+
+    private fun getMessageViewType(interaction: Interaction): Int =
+        when (interaction.type) {
             Interaction.InteractionType.CONTACT -> MessageType.CONTACT_EVENT.ordinal
 
             Interaction.InteractionType.COLLAB_DOC -> MessageType.COLLAB_DOCUMENT.ordinal
@@ -365,13 +435,18 @@ class ConversationAdapter(
 
             Interaction.InteractionType.INVALID -> MessageType.INVALID.ordinal
         }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConversationViewHolder {
         val type = MessageType.entries[viewType]
         val v = if (type == MessageType.INVALID) FrameLayout(parent.context)
         else (LayoutInflater.from(parent.context).inflate(type.layout, parent, false) as ViewGroup)
-        return ConversationViewHolder(v, type)
+        if (!isThreadProjection || type == MessageType.INVALID ||
+            type == MessageType.COMPOSING_INDICATION
+        ) return ConversationViewHolder(v, type)
+        val wrapper = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_thread_message, parent, false) as LinearLayout
+        wrapper.addView(v, 0)
+        return ConversationViewHolder(wrapper, type)
     }
 
     private fun configureDisplayIndicator(
@@ -524,6 +599,7 @@ class ConversationAdapter(
                             chip.isFocusable = true
                             //chip.isChecked = false
                         }
+                        conversationViewHolder.updateThreadFooter(interaction.isIncoming)
                     }
                 }
         )
@@ -539,6 +615,8 @@ class ConversationAdapter(
         conversationViewHolder: ConversationViewHolder,
         interaction: Interaction
     ) {
+        conversationViewHolder.mReplyBubble?.isVisible = false
+        if (!showsReplyPreview(interaction.replyToId, threadRootId)) return
         val context = conversationViewHolder.itemView.context
         val conversation = interaction.conversation
         if (conversation == null || conversation !is Conversation) {
@@ -603,7 +681,11 @@ class ConversationAdapter(
                         listOf(conversationViewHolder.mReplyTxt,
                             replyBubble).forEach{
                             it?.setOnClickListener{
-                                i.first.messageId?.let { presenter.scrollToMessage(it) }
+                                i.first.messageId?.let { id ->
+                                    if (isThreadProjection)
+                                        conversationFragment.revealThreadMessage(id)
+                                    else presenter.scrollToMessage(id)
+                                }
                             }
                         }
                     }) {
@@ -625,6 +707,8 @@ class ConversationAdapter(
 
         val interaction = mInteractions[position]
         conversationViewHolder.compositeDisposable.clear()
+        if (conversationViewHolder.threadFooter != null)
+            conversationViewHolder.reactionChip?.isVisible = false
 
         when (interaction.type) {
             Interaction.InteractionType.INVALID -> {
@@ -669,6 +753,16 @@ class ConversationAdapter(
         conversationViewHolder.reactionChip?.let {
             configureReactions(conversationViewHolder, interaction)
         }
+
+        conversationViewHolder.threadReplies?.apply {
+            val count = threadReplyCounts[interaction.messageId] ?: 0
+            isVisible = count > 0
+            text = res.getQuantityString(R.plurals.conversation_thread_replies, count, count)
+            setOnClickListener {
+                interaction.messageId?.let { conversationFragment.openThread(it) }
+            }
+        }
+        conversationViewHolder.updateThreadFooter(interaction.isIncoming)
 
         if (isSearch)
             configureSearchResult(conversationViewHolder, interaction)
@@ -1501,7 +1595,7 @@ class ConversationAdapter(
         val contact = interaction.contact ?: return
         val isDeleted = interaction.body.isNullOrEmpty() || interaction.transferStatus == TransferStatus.FILE_REMOVED
         val isEdited = interaction.history.size > 1
-        val isReplying = interaction.replyToId != null
+        val isReplying = showsReplyPreview(interaction.replyToId, threadRootId)
 
         val messageBubble = viewHolder.mMessageBubble ?: return
         val replyBubble = viewHolder.mReplyBubble
@@ -1528,7 +1622,7 @@ class ConversationAdapter(
 
         // If in a replying bubble, we need to overlap the message bubble
         // with the answered message bubble.
-        if (interaction.replyToId != null && !isDeleted)
+        if (isReplying && !isDeleted)
             messageBubble.updateLayoutParams<MarginLayoutParams> {
                 topMargin = context.resources.getDimensionPixelSize(R.dimen.conversation_reply_overlap)
             }
@@ -2176,7 +2270,19 @@ class ConversationAdapter(
 
     private enum class SequenceType { FIRST, MIDDLE, LAST, SINGLE }
 
+    private fun isSeqBreak(first: Interaction, second: Interaction): Boolean =
+        StringUtils.isOnlyEmoji(first.body) != StringUtils.isOnlyEmoji(second.body)
+                || first.isIncoming != second.isIncoming
+                || ((first.type !== Interaction.InteractionType.TEXT) && (first.type !== Interaction.InteractionType.CALL))
+                || ((second.type !== Interaction.InteractionType.TEXT) && (second.type !== Interaction.InteractionType.CALL))
+                || (second.replyTo != null && showsReplyPreview(second.replyToId, threadRootId))
+                || first.contact != second.contact
+                || (second.timestamp - first.timestamp) > (10 * DateUtils.MINUTE_IN_MILLIS)
+
     companion object {
+        internal fun showsReplyPreview(replyToId: String?, threadRootId: String?): Boolean =
+            replyToId != null && replyToId != threadRootId
+
         private val TAG = ConversationAdapter::class.simpleName!!
 
         /** How far the name of a retired document is faded. */
@@ -2195,23 +2301,6 @@ class ConversationAdapter(
             R.drawable.textmsg_bg_in_reply,
             R.drawable.textmsg_bg_in_reply_first
         )
-
-        /**
-         * Tells if a break should be added in the sequence.
-         * The first interaction must be before the second interaction.
-         *
-         * @param first     first interaction
-         * @param second    second interaction
-         * @return          True if a sequence break is needed. Else false.
-         */
-        private fun isSeqBreak(first: Interaction, second: Interaction): Boolean =
-            StringUtils.isOnlyEmoji(first.body) != StringUtils.isOnlyEmoji(second.body)
-                    || first.isIncoming != second.isIncoming
-                    || ((first.type !== Interaction.InteractionType.TEXT) && (first.type !== Interaction.InteractionType.CALL))
-                    || ((second.type !== Interaction.InteractionType.TEXT) && (second.type !== Interaction.InteractionType.CALL))
-                    || second.replyTo != null
-                    || first.contact != second.contact
-                    || (second.timestamp - first.timestamp) > (10 * DateUtils.MINUTE_IN_MILLIS)
 
         private fun isAlwaysSingleMsg(msg: Interaction): Boolean =
             ((msg.type !== Interaction.InteractionType.TEXT && msg.type !== Interaction.InteractionType.CALL)

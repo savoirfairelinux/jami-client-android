@@ -67,6 +67,7 @@ class InlineAudioRecorder(
 ) {
     interface Callbacks {
         fun hasAudioPermission(): Boolean
+        fun onStart()
 
         /** A short tap: open the full recorder dialog. */
         fun onSimpleTap()
@@ -159,6 +160,7 @@ class InlineAudioRecorder(
     }
 
     private fun onDown(v: View, event: MotionEvent): Boolean {
+        callbacks.onStart()
         downX = event.rawX
         downY = event.rawY
         zone = Zone.SEND
