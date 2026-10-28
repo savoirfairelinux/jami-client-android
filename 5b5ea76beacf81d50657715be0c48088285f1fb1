@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df0f5e9b_c323c9b1",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationThreadNavigation.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-28T16:20:33Z",
+      "side": 1,
+      "message": "[warning] Line 20: 🟡 `Request` stores the caller-provided `loadedIds` set by reference. If a mutable set is passed and later modified, `complete()` can mis-detect history progress and incorrectly mark navigation as failed/successful. Snapshot the set on creation (e.g., `loadedIds.toSet()`) so progress checks are deterministic.",
+      "revId": "5b5ea76beacf81d50657715be0c48088285f1fb1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
