@@ -9,12 +9,12 @@ internal object MessageGrouping {
     val MAX_GAP_MILLIS = TimeUnit.HOURS.toMillis(1)
 
     /** Neighbors are chronological; replies start a group, but may be followed by other messages. */
-    fun isSeqBreak(first: Interaction, second: Interaction): Boolean =
+    fun isSeqBreak(first: Interaction, second: Interaction, threadRootId: String? = null): Boolean =
         isAlwaysSingleMsg(first)
                 || isAlwaysSingleMsg(second)
                 || first.isIncoming != second.isIncoming
-                || second.replyToId != null
-                || second.replyTo != null
+                || ((second.replyToId != null || second.replyTo != null)
+                    && (threadRootId == null || second.replyToId != threadRootId))
                 || first.contact != second.contact
                 || second.timestamp - first.timestamp > MAX_GAP_MILLIS
 

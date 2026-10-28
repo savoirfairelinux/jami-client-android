@@ -914,4 +914,17 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="collab_document_removed_locally">Document removed from this device</string>
     <string name="collab_document_removed_locally_message">\"%1$s\" is no longer on this device. Opening it again downloads it back.</string>
 
+    <!-- Threaded conversations -->
+    <string name="conversation_threaded_view">Threaded view</string>
+    <string name="conversation_threaded_view_summary">Show replies in threads. Open a thread to read it and reply to it</string>
+    <string name="conversation_thread_title">Thread</string>
+    <string name="conversation_thread_reply_hint">Reply in thread</string>
+    <string name="conversation_thread_missing">The original message is unavailable. Return to the conversation to continue.</string>
+    <string name="conversation_thread_finding">Finding message in conversation history&#8230;</string>
+    <string name="conversation_thread_unavailable">The message or its original is unavailable.</string>
+    <string name="conversation_thread_close">Return to conversation</string>
+    <plurals name="conversation_thread_replies">
+        <item quantity="one">%d reply</item>
+        <item quantity="other">%d replies</item>
+    </plurals>
 </resources>
