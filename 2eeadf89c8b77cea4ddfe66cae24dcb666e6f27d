@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d585a489_6519abe7",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationThreadState.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-28T16:19:35Z",
+      "side": 1,
+      "message": "[warning] Line 22: 🟡 `rootId` is accepted from the constructor without the same non-empty validation enforced by `openThread`, so `ConversationThreadState(true, \"\")` creates an invalid thread state (`replyTarget(null)` returns `\"\"` and draft keys become `pendingMessage:thread:`). Normalize constructor input to `null` when blank (e.g., `rootId?.takeIf { it.isNotBlank() }`) so restored state follows the same invariants as runtime thread opening.",
+      "revId": "2eeadf89c8b77cea4ddfe66cae24dcb666e6f27d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
