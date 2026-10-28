@@ -26,12 +26,17 @@ import android.view.TextureView
 import android.widget.LinearLayout
 import android.animation.ValueAnimator
 import android.media.MediaPlayer
+import android.text.TextUtils
 import android.view.Surface
 import android.view.View
+import android.view.Gravity
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import cx.ring.R
 import cx.ring.views.MessageBubble
 import cx.ring.adapters.MessageType
@@ -39,8 +44,11 @@ import cx.ring.views.AvatarView
 import cx.ring.views.MessageStatusView
 import cx.ring.views.WaveformView
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import com.google.android.material.button.MaterialButton
 
 class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView.ViewHolder(v) {
+    val threadReplies: MaterialButton? = v.findViewById(R.id.thread_replies)
+    val threadFooter: LinearLayout? = v.findViewById(R.id.thread_message_footer)
     val mItem: View? = when (type) {
         MessageType.OUTGOING_CALL_INFORMATION,
         MessageType.INCOMING_CALL_INFORMATION -> v.findViewById(R.id.callLayout)
@@ -109,6 +117,8 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     var mReplyTxt: TextView? = null
 
     val reactionChip: TextView? = v.findViewById(R.id.reaction_chip)
+    private val reactionTopMargin =
+        (reactionChip?.layoutParams as? ViewGroup.MarginLayoutParams)?.topMargin ?: 0
     val mIcon: ImageView? = when (type) {
         MessageType.INCOMING_CALL_INFORMATION,
         MessageType.OUTGOING_CALL_INFORMATION -> v.findViewById(R.id.call_icon)
@@ -254,6 +264,59 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
             }
             else ->  {}
         }
+        prepareThreadFooter()
+    }
+
+    private fun prepareThreadFooter() {
+        val footer = threadFooter ?: return
+        val chip = reactionChip ?: return
+        val parent = chip.parent
+        check(parent is ConstraintLayout) { "Thread reactions require a ConstraintLayout anchor" }
+        val params = chip.layoutParams
+        val index = parent.indexOfChild(chip)
+        parent.removeView(chip)
+        (footer.parent as ViewGroup).removeView(footer)
+        footer.addView(
+            chip, 0, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
+        )
+        parent.addView(footer, index, params)
+        chip.ellipsize = TextUtils.TruncateAt.END
+        chip.isVisible = false
+    }
+
+    fun updateThreadFooter(isIncoming: Boolean) {
+        val footer = threadFooter ?: return
+        val replies = threadReplies ?: return
+        val chip = reactionChip
+        if (chip != null) {
+            val replyIndex = if (isIncoming) 1 else 0
+            if (footer.indexOfChild(replies) != replyIndex) {
+                footer.removeView(replies)
+                footer.addView(replies, replyIndex)
+            }
+            val gap = itemView.resources.getDimensionPixelSize(R.dimen.padding_small)
+            replies.updateLayoutParams<LinearLayout.LayoutParams> {
+                marginStart = if (isIncoming && chip.isVisible) gap else 0
+                marginEnd = if (!isIncoming && chip.isVisible) gap else 0
+            }
+            footer.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                topMargin = if (replies.isVisible) 0 else reactionTopMargin
+                constrainedWidth = true
+                horizontalBias = if (isIncoming) 0f else 1f
+                if (isIncoming) {
+                    endToEnd = ConstraintSet.PARENT_ID
+                    marginEnd = gap
+                } else {
+                    startToStart = ConstraintSet.PARENT_ID
+                    marginStart = gap
+                }
+            }
+        } else {
+            footer.updateLayoutParams<LinearLayout.LayoutParams> {
+                gravity = if (isIncoming) Gravity.START else Gravity.END
+            }
+        }
+        footer.isVisible = replies.isVisible || chip?.isVisible == true
     }
 
     fun setItemViewExpansionState(expanded: Boolean) {
