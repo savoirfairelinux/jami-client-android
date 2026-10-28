@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8a024bc_5747fa94",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1852,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-28T16:22:09Z",
+      "side": 1,
+      "message": "[warning] Line 1852: 🟡 `showReplyPreview()` now assigns `interaction.body` for every interaction type, while it previously only rendered text messages. For file/audio/location interactions this can surface raw internal payloads (e.g., paths/URIs or non-user-facing blobs) in the composer preview. Keep text behavior, but map non-text interactions to safe, user-facing labels (e.g., filename, “Voice message”, “Attachment”) or hide preview text when no safe label exists.",
+      "revId": "3a84c6f2cd35a4a02c05ff1d7d6d6bd2fbf15c4d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ed835cf_cfe67447",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/conversation/ConversationPresenter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-28T16:22:09Z",
+      "side": 1,
+      "message": "[warning] Line 319: 🟡 `sendFile()` reports `Error.INVALID_FILE` for every send failure path, including non-file errors (transport/offline/conversation state). This misclassifies failures and can mislead users and troubleshooting. Use error-aware mapping (or preserve the upstream error category) so invalid-file errors are only shown for actual file validation/read failures.",
+      "revId": "3a84c6f2cd35a4a02c05ff1d7d6d6bd2fbf15c4d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
