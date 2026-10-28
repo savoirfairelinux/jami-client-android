@@ -34,6 +34,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.view.accessibility.AccessibilityManager
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -119,6 +120,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private var threads: ConversationThreads? = null
     private var restoredThreadRoot: String? = null
     private var threadRenderJob: Disposable? = null
+    private var threadScreenAnimation: Animation? = null
+    private var pendingThreadSlide: Boolean? = null
+    private var threadScreenOnShown: (() -> Unit)? = null
+    private var threadScreenGeneration = 0
     private val changedThreadMessages = HashSet<String>()
     private val newThreadMessages = HashSet<String>()
     private var forceThreadRefresh = false
@@ -139,7 +144,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private val renderThread = Runnable { renderThreadHistory() }
     private val threadBack = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
-            if (threadNavigation.target != null)
+            if (threadScreenAnimation != null) {
+                cancelThreadScreenTransition()
+                updateThreadHeader()
+            } else if (threadNavigation.target != null)
                 cancelThreadNavigation()
             else if (binding?.toolbar?.menu?.findItem(R.id.conv_search)?.isActionViewExpanded == true)
                 binding?.toolbar?.menu?.findItem(R.id.conv_search)?.collapseActionView()
@@ -269,32 +277,103 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         pendingThreadHighlight = false
     }
 
-    fun openThread(rootId: String) {
-        if (!threadState.enabled || threadState.rootId == rootId) return
-        rememberMainScroll()
-        threadState.openThread(rootId)
-        restoreComposerDraft()
-        pendingThreadScroll = null
-        pendingThreadOffset = 0
-        pendingThreadHighlight = false
-        forceThreadRefresh = true
-        updateThreadHeader()
-        scheduleThreadRender()
+    private fun createThreadSlide(page: View, forward: Boolean, enter: Boolean): Animation {
+        val movingRight = forward == (page.layoutDirection == View.LAYOUT_DIRECTION_RTL)
+        val slide = if (enter) AnimationUtils.makeInAnimation(page.context, movingRight)
+            else AnimationUtils.makeOutAnimation(page.context, movingRight)
+        slide.duration = page.resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
+        return slide
     }
 
-    private fun closeThread() {
+    private fun transitionThreadScreen(forward: Boolean, change: () -> Unit) {
+        val page = binding?.root ?: return
+        cancelThreadScreenTransition(showPage = false)
+        if (page.isInvisible) pendingThreadSlide = forward
+        if (!page.isLaidOut || !page.isShown || !ValueAnimator.areAnimatorsEnabled()) {
+            change()
+            return
+        }
+        val slide = createThreadSlide(page, forward, enter = false)
+        threadScreenAnimation = slide
+        slide.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation) {}
+            override fun onAnimationRepeat(animation: Animation) {}
+            override fun onAnimationEnd(animation: Animation) {
+                if (threadScreenAnimation !== animation || binding?.root !== page) return
+                threadScreenAnimation = null
+                page.isInvisible = true
+                pendingThreadSlide = forward
+                change()
+            }
+        })
+        threadBack.isEnabled = true
+        page.startAnimation(slide)
+    }
+
+    private fun showThreadScreen() {
+        if (threadScreenAnimation != null) return
+        val page = binding?.root ?: return
+        val forward = pendingThreadSlide
+        val onShown = threadScreenOnShown
+        if (forward == null && onShown == null) return
+        val generation = threadScreenGeneration
+        pendingThreadSlide = null
+        threadScreenOnShown = null
+        // Wait for RecyclerView to lay out the destination, not just update its adapter.
+        page.doOnPreDraw {
+            if (binding?.root !== page || generation != threadScreenGeneration) return@doOnPreDraw
+            binding?.histList?.itemAnimator?.endAnimations()
+            page.isVisible = true
+            if (forward != null && ValueAnimator.areAnimatorsEnabled())
+                page.startAnimation(createThreadSlide(page, forward, enter = true))
+            onShown?.invoke()
+        }
+    }
+
+    private fun cancelThreadScreenTransition(showPage: Boolean = true) {
+        threadScreenGeneration++
+        threadScreenAnimation = null
+        pendingThreadSlide = null
+        threadScreenOnShown = null
+        binding?.root?.apply {
+            clearAnimation()
+            if (showPage) isVisible = true
+        }
+    }
+
+    fun openThread(rootId: String, onOpened: (() -> Unit)? = null) {
+        if (!threadState.enabled || threadState.rootId == rootId) return
+        rememberMainScroll()
+        transitionThreadScreen(forward = true) {
+            threadState.openThread(rootId)
+            restoreComposerDraft()
+            pendingThreadScroll = null
+            pendingThreadOffset = 0
+            pendingThreadHighlight = false
+            forceThreadRefresh = true
+            updateThreadHeader()
+            onOpened?.invoke()
+            scheduleThreadRender()
+        }
+    }
+
+    private fun closeThread(onClosed: (() -> Unit)? = null) {
         cancelThreadNavigation()
-        threadState.closeThread()
-        restoreComposerDraft()
-        pendingThreadScroll = mainScrollMessage
-        pendingThreadOffset = mainScrollOffset
-        pendingThreadHighlight = false
-        forceThreadRefresh = true
-        updateThreadHeader()
-        scheduleThreadRender()
+        transitionThreadScreen(forward = false) {
+            threadState.closeThread()
+            restoreComposerDraft()
+            pendingThreadScroll = mainScrollMessage
+            pendingThreadOffset = mainScrollOffset
+            pendingThreadHighlight = false
+            forceThreadRefresh = true
+            updateThreadHeader()
+            onClosed?.invoke()
+            scheduleThreadRender()
+        }
     }
 
     private fun setThreadingEnabled(enabled: Boolean) {
+        cancelThreadScreenTransition()
         rememberMainScroll()
         cancelThreadNavigation()
         threadRenderJob?.dispose()
@@ -319,8 +398,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private fun updateThreadHeader() {
         val binding = binding ?: return
         val root = threadState.rootId
-        binding.threadBar.isVisible = root != null
-        binding.toolbar.isVisible = root == null
+        if (binding.threadBar.isVisible != (root != null)) {
+            val transition = binding.appbar.layoutTransition
+            binding.appbar.layoutTransition = null
+            binding.threadBar.isVisible = root != null
+            binding.toolbar.isVisible = root == null
+            binding.appbar.layoutTransition = transition
+        }
         binding.threadConversationName.text = binding.contactTitle.text
         updateThreadNavigationFeedback()
         val canCompose = !accountOffline && (root == null || currentThreadRoot() != null)
@@ -333,7 +417,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         binding.btnMenu.isEnabled = canCompose
         binding.btnTakePicture.isEnabled = canCompose
         binding.btnAudioRecord.isEnabled = canCompose
-        threadBack.isEnabled = root != null || threadNavigation.target != null
+        threadBack.isEnabled = root != null || threadNavigation.target != null ||
+            threadScreenAnimation != null
     }
 
     private fun updateThreadNavigationFeedback() {
@@ -486,7 +571,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     if (incoming.any { it.isIncoming })
                         announceIncomingMessageForAccessibility()
                 }
+                showThreadScreen()
             }, { error ->
+                cancelThreadScreenTransition()
                 Log.e(TAG, "Unable to display conversation threads", error)
                 displayErrorToast(Error.GENERIC_ERROR)
             })
@@ -568,9 +655,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             if (root != null && root != threadState.rootId &&
                 (root != messageId || threadState.rootId != null)
             ) {
-                openThread(root)
+                openThread(root) { scrollToMessage(messageId, highlight) }
+                return
             }
-            if (root == null && threadState.rootId != null) closeThread()
+            if (root == null && threadState.rootId != null) {
+                closeThread { scrollToMessage(messageId, highlight) }
+                return
+            }
             if (messageId != requestedThreadRoot || pendingThreadScroll == null)
                 pendingThreadScroll = messageId
             pendingThreadHighlight = highlight
@@ -827,6 +918,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun onDestroyView() {
+        cancelThreadScreenTransition()
         viewGeneration++
         threadNavigation.reset()
         threadState.consumeScrollToLatest(null)
@@ -1843,7 +1935,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         if (threadState.enabled) {
             val id = interaction.messageId
             val root = id?.let { ConversationThreads(mAdapter?.history.orEmpty()).rootId(it) }
-            if (root != null) openThread(root)
+            if (root != null && root != threadState.rootId) {
+                openThread(root) {
+                    showReplyPreview(interaction, focus = false)
+                    threadScreenOnShown = { showReplyPreview(interaction, focus = true) }
+                }
+                return
+            }
         }
         showReplyPreview(interaction, focus = true)
     }
