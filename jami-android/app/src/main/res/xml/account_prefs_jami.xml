@@ -20,6 +20,14 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
     <androidx.preference.PreferenceCategory android:title="@string/account_chat_settings_title">
         <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_threaded_chat"
+            android:key="threaded_view"
+            android:persistent="true"
+            android:title="@string/conversation_threaded_view"
+            android:summary="@string/conversation_threaded_view_summary" />
+
+        <SwitchPreferenceCompat
             android:defaultValue="true"
             android:icon="@drawable/baseline_mark_chat_read_24dp"
             android:key="Account.sendReadReceipt"
