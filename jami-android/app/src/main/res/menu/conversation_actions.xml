@@ -22,7 +22,7 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/conv_contact_details"
+        android:id="@+id/conv_conversation_details"
         android:icon="@drawable/outline_person_24"
         android:title="@string/conversation_details"
         app:showAsAction="ifRoom" />
