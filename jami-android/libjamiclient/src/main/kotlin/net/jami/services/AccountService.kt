@@ -768,6 +768,12 @@ class AccountService(
         JamiService.updateProfile(accountId, displayName, "", "", "", 0)
     }
 
+    internal fun loadAccountDevices(accountId: String): Map<String, AccountDevice> =
+        JamiService.getDeviceList(accountId).associate { details ->
+            val device = AccountDevice.fromMap(details.toNativeFromUtf8())
+            device.id to device
+        }
+
     /**
      * @return the list of the account's devices from the Daemon
      */
