@@ -1,13 +1,20 @@
 package net.jami.services
 
 import net.jami.daemon.JamiService
+import net.jami.model.Account
+import net.jami.model.AccountDevice
+import net.jami.model.ConfigKey
 import net.jami.utils.Log
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.doAnswer
+import org.mockito.Mockito.doReturn
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.mockStatic
+import org.mockito.Mockito.spy
+import org.mockito.Mockito.verify
 import java.util.concurrent.Callable
 import java.util.concurrent.FutureTask
 import java.util.concurrent.ScheduledExecutorService
@@ -26,12 +33,12 @@ class AccountServiceTest {
         doAnswer {
             FutureTask(it.getArgument<Callable<Any?>>(0)).apply { run() }
         }.`when`(executor).submit(any(Callable::class.java))
-        service = AccountService(
+        service = spy(AccountService(
             executor,
             mock(HistoryService::class.java),
             mock(DeviceRuntimeService::class.java),
             mock(VCardService::class.java)
-        )
+        ))
     }
 
     @Test
@@ -85,5 +92,21 @@ class AccountServiceTest {
                 .assertValue { it.address == "address" && it.state == AccountService.LookupState.Success }
                 .assertComplete()
         }
+    }
+
+    @Test
+    fun deviceNotificationReloadsTimestampsAndRemovals() {
+        val account = Account("account", emptyMap(), emptyList(),
+            mapOf(ConfigKey.ACCOUNT_REGISTRATION_STATUS.key to "REGISTERED"))
+        val previous = AccountDevice("device", "Phone", 10)
+        val updated = previous.copy(lastSync = 20)
+        account.devices = mapOf("device" to previous, "revoked" to AccountDevice("revoked", "Old phone"))
+        doReturn(account).`when`(service).getAccount("account")
+        doReturn(mapOf("device" to updated)).`when`(service).loadAccountDevices("account")
+
+        service.knownDevicesChanged("account")
+
+        verify(service).loadAccountDevices("account")
+        assertEquals(mapOf("device" to updated), account.devices)
     }
 }
