@@ -21,6 +21,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -212,6 +213,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                         1 -> presenter.clearConversation(item)
                         2 -> presenter.removeConversation(item)
                         3 -> presenter.blockContact(item)
+                        ActionHelper.ACTION_CONTACT_DETAILS -> showContactDetails(item)
                     }
                 }.show(childFragmentManager, "SmartListFragment")
             }
@@ -225,9 +227,21 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                     ActionHelper.ACTION_CLEAR -> presenter.clearConversation(item)
                     ActionHelper.ACTION_DELETE -> presenter.removeConversation(item)
                     ActionHelper.ACTION_BLOCK -> presenter.blockContact(item)
+                    ActionHelper.ACTION_CONTACT_DETAILS -> showContactDetails(item)
                 }
             }.show(childFragmentManager, "SmartListFragment")
         }
+    }
+
+    private fun showContactDetails(conversation: Conversation) {
+        val contact = conversation.contact
+        if (contact == null) {
+            Log.w(TAG, "Cannot show contact details: contact is not loaded for ${conversation.uri}")
+            Toast.makeText(requireContext(), R.string.generic_error, Toast.LENGTH_SHORT).show()
+            return
+        }
+        ContactDetailsBottomSheet.newInstance(conversation.accountId, contact.uri)
+            .show(childFragmentManager, ContactDetailsBottomSheet.TAG)
     }
 
     companion object {
