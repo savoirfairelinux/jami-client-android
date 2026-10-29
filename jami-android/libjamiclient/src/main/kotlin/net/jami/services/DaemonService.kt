@@ -161,8 +161,7 @@ class DaemonService(
         }
 
         override fun knownDevicesChanged(accountId: String, devices: StringMap) {
-            val jdevices: Map<String, String> = devices.toNativeFromUtf8()
-            mExecutor.submit { mAccountService.knownDevicesChanged(accountId, jdevices) }
+            mExecutor.submit { mAccountService.knownDevicesChanged(accountId) }
         }
 
         override fun nameRegistrationEnded(accountId: String, state: Int, name: String) {

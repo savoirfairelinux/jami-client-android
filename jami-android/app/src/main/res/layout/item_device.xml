@@ -13,32 +13,76 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="8dp">
 
-    <cx.ring.views.TwoButtonEditText
-        android:id="@+id/txt_device_id"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:enabled="false"
-        android:singleLine="true"
-        app:tint="@color/button_border" />
+        android:layout_weight="1"
+        android:layout_marginEnd="8dp"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/txt_device_thisflag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="42dp"
-        android:text="@string/account_device_this_indicator"
-        android:textColor="@color/colorPrimary"
-        android:textSize="11sp"
-        android:textStyle="italic|bold"
-        android:visibility="gone"
-        tools:visibility="visible" />
+        <TextView
+            android:id="@+id/txt_device_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="middle"
+            android:fontFamily="monospace"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:textColor="@color/textColorSecondary"
+            android:textSize="12sp"
+            tools:text="0123456789abcdef012345dfgh45y34t234246789abcdef01234567" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/txt_device_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="Laptop" />
+
+        <TextView
+            android:id="@+id/txt_device_last_sync"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColorSecondary"
+            android:textSize="12sp"
+            tools:text="Last synced: Never" />
+
+        <TextView
+            android:id="@+id/txt_device_thisflag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/account_device_this_indicator"
+            android:textColor="@color/colorPrimary"
+            android:textSize="11sp"
+            android:textStyle="italic|bold"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btn_device_action"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/account_device_revoke"
+        android:padding="12dp"
+        app:srcCompat="@drawable/baseline_cancel_24"
+        app:tint="@color/icon_color" />
+
+</LinearLayout>

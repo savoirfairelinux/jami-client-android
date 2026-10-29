@@ -22,26 +22,36 @@ import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
 import cx.ring.R
-import cx.ring.views.TwoButtonEditText
+import android.widget.ImageButton
 import android.widget.TextView
+import net.jami.model.AccountDevice
+import net.jami.utils.Log
+import android.text.format.DateUtils
+import java.time.LocalDate
+import java.time.ZoneId
 import java.util.ArrayList
+import java.util.Date
+import java.util.Formatter
 
 class DeviceAdapter(
-    private val mContext: Context, devices: Map<String, String>?,
+    private val mContext: Context, devices: Map<String, AccountDevice>?,
     currentDeviceId: String?,
     private val mListener: DeviceRevocationListener
 ) : BaseAdapter() {
-    private val mDevices = ArrayList<Map.Entry<String, String>>()
+    private val mDevices = ArrayList<AccountDevice>()
     private var mCurrentDeviceId: String? = null
+    private val dateFormatter by lazy {
+        Formatter(StringBuilder(48), mContext.resources.configuration.locales[0])
+    }
 
-    fun setData(devices: Map<String, String>?, currentDeviceId: String?) {
+    fun setData(devices: Map<String, AccountDevice>?, currentDeviceId: String?) {
         mDevices.clear()
         mCurrentDeviceId = currentDeviceId
-        if (devices != null && devices.isNotEmpty()) {
+        if (!devices.isNullOrEmpty()) {
             mDevices.ensureCapacity(devices.size)
-            mDevices.addAll(devices.entries)
+            mDevices.addAll(devices.values)
         }
-        mDevices.removeAll { d ->d.key == mCurrentDeviceId }
+        mDevices.removeAll { d -> d.id == mCurrentDeviceId }
         notifyDataSetChanged()
     }
 
@@ -53,22 +63,44 @@ class DeviceAdapter(
 
     override fun getView(i: Int, convertView: View?, parent: ViewGroup): View {
         val view = convertView ?: LayoutInflater.from(mContext).inflate(R.layout.item_device, parent, false)
-        val isCurrentDevice = mDevices[i].key.contentEquals(mCurrentDeviceId)
-        val devId: TwoButtonEditText = view.findViewById(R.id.txt_device_id)
+        val device = mDevices[i]
+        val isCurrentDevice = device.id.contentEquals(mCurrentDeviceId)
+        val action = view.findViewById<ImageButton>(R.id.btn_device_action)
         val thisDevice = view.findViewById<TextView>(R.id.txt_device_thisflag)
-        devId.text = mDevices[i].value
-        var hint = mDevices[i].key
-        hint = hint.substring(0, (hint.length * 0.66).toInt())
-        devId.setHint(hint)
+        view.findViewById<TextView>(R.id.txt_device_name).text = device.name
+        view.findViewById<TextView>(R.id.txt_device_id).text = device.id
+        view.findViewById<TextView>(R.id.txt_device_last_sync).apply {
+            val timestamp = lastSyncDate(device.lastSync)?.let {
+                val zone = ZoneId.systemDefault()
+                val date = if (it.toInstant().atZone(zone).toLocalDate() == LocalDate.now(zone)) {
+                    mContext.getString(R.string.today)
+                } else {
+                    (dateFormatter.out() as StringBuilder).setLength(0)
+                    DateUtils.formatDateRange(
+                        mContext, dateFormatter, it.time, it.time,
+                        DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_NO_YEAR or DateUtils.FORMAT_ABBREV_MONTH,
+                        zone.id
+                    ).toString()
+                }
+                (dateFormatter.out() as StringBuilder).setLength(0)
+                val time = DateUtils.formatDateRange(
+                    mContext, dateFormatter, it.time, it.time, DateUtils.FORMAT_SHOW_TIME, zone.id
+                ).toString()
+                "$date, $time"
+            } ?: mContext.getString(R.string.account_device_never_synced)
+            text = mContext.getString(R.string.account_device_last_sync, timestamp)
+            visibility = if (isCurrentDevice) View.GONE else View.VISIBLE
+        }
         if (isCurrentDevice) {
             thisDevice.visibility = View.VISIBLE
-            devId.setLeftDrawable(R.drawable.baseline_edit_rounded_24)
-            devId.setLeftDrawableOnClickListener { mListener.onDeviceRename() }
+            action.setImageResource(R.drawable.baseline_edit_rounded_24)
+            action.contentDescription = mContext.getString(R.string.rename_device_button)
+            action.setOnClickListener { mListener.onDeviceRename() }
         } else {
             thisDevice.visibility = View.GONE
-            devId.setLeftDrawable(R.drawable.baseline_cancel_24)
-            devId.setDrawableTint(R.color.icon_color)
-            devId.setLeftDrawableOnClickListener { mListener.onDeviceRevocationAsked(mDevices[i].key) }
+            action.setImageResource(R.drawable.baseline_cancel_24)
+            action.contentDescription = mContext.getString(R.string.account_device_revoke)
+            action.setOnClickListener { mListener.onDeviceRevocationAsked(device.id) }
         }
         return view
     }
@@ -80,5 +112,17 @@ class DeviceAdapter(
 
     init {
         setData(devices, currentDeviceId)
+    }
+
+    companion object {
+        internal fun lastSyncDate(lastSync: Long): Date? {
+            if (lastSync <= 0L)
+                return null
+            if (lastSync > Long.MAX_VALUE / 1000L) {
+                Log.w("DeviceAdapter", "Invalid device lastSync timestamp")
+                return null
+            }
+            return Date(lastSync * 1000L)
+        }
     }
 }
