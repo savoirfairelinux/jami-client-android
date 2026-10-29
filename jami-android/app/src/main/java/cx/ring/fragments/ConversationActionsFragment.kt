@@ -39,6 +39,7 @@ import cx.ring.utils.ActionHelper
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import cx.ring.utils.TextUtils.copyAndShow
+import cx.ring.views.setDate
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Conversation
@@ -148,6 +149,13 @@ class ConversationActionsFragment : Fragment() {
         mDisposableBag.add(conversation.profile
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe { profile -> description.text = profile.description })
+
+        mDisposableBag.add(conversation.joinedDate
+            .observeOn(DeviceUtils.uiScheduler)
+            .subscribe {
+                conversationJoinedDate.setDate(R.string.conversation_joined_date, it)
+                lifecycleDatesPanel.isVisible = conversationJoinedDate.root.isVisible
+            })
 
         // Update color on RX color signal.
         mDisposableBag.add(conversation.getColor()

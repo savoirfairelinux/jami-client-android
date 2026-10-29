@@ -557,11 +557,7 @@ class Account(
     fun addContact(contact: Map<String, String>): Contact {
         val contactId = contact[CONTACT_ID]!!
         val callContact = mContacts[contactId] ?: getContactFromCache(Uri.fromId(contactId))
-        val addedStr = contact[CONTACT_ADDED]
-        if (!addedStr.isNullOrEmpty()) {
-            val added = addedStr.toLong()
-            callContact.addedDate = Date(added * 1000)
-        }
+        callContact.updateDates(contact)
         if (contact.containsKey(CONTACT_BLOCKED) && contact[CONTACT_BLOCKED] == "true") {
             callContact.status = Contact.Status.BLOCKED
         } else if (contact.containsKey(CONTACT_CONFIRMED)) {
@@ -843,7 +839,6 @@ class Account(
 
     companion object {
         private val TAG = Account::class.simpleName!!
-        private const val CONTACT_ADDED = "added"
         private const val CONTACT_CONFIRMED = "confirmed"
         private const val CONTACT_BLOCKED = "banned"
         private const val CONTACT_ID = "id"
