@@ -2,10 +2,17 @@ package net.jami.services
 
 import net.jami.daemon.JamiService
 import net.jami.model.Account
+import net.jami.model.AccountConfig
 import net.jami.model.AccountDevice
 import net.jami.model.ConfigKey
+import net.jami.model.Conversation
+import net.jami.model.MemberRole
+import net.jami.model.Uri
+import net.jami.model.interaction.ContactEvent
 import net.jami.utils.Log
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertSame
 import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers.any
@@ -108,5 +115,38 @@ class AccountServiceTest {
 
         verify(service).loadAccountDevices("account")
         assertEquals(mapOf("device" to updated), account.devices)
+    }
+
+    @Test
+    fun historyEventsPreserveContactAddedDate() {
+        val parser = AccountService::class.java.getDeclaredMethod(
+            "getInteraction", Account::class.java, Conversation::class.java, Map::class.java
+        ).apply { isAccessible = true }
+        val peer = "a".repeat(40)
+        for (added in listOf(null, 1700000000123L)) {
+            val account = Account("account",
+                mapOf(ConfigKey.ACCOUNT_TYPE.key to AccountConfig.ACCOUNT_TYPE_JAMI),
+                emptyList(), mapOf(ConfigKey.ACCOUNT_REGISTRATION_STATUS.key to "REGISTERED"))
+            val contact = account.getContactFromCache(Uri.fromId(peer))
+            added?.let { contact.updateDates(mapOf("addedMs" to it.toString())) }
+            val conversation = account.newSwarm("conversation", Conversation.Mode.OneToOne)
+            conversation.addContact(contact, MemberRole.MEMBER)
+            for (type in listOf("initial", "member")) {
+                val message = mapOf(
+                    "id" to "message", "type" to type, "author" to peer,
+                    "timestamp" to "1700000100", "invited" to peer, "uri" to peer, "action" to "join"
+                )
+                val event = parser.invoke(service, account, conversation, message) as ContactEvent
+
+                assertEquals(1700000100000L, event.timestamp)
+                assertSame(contact, event.contact)
+                assertEquals(added, contact.addedDate?.time)
+                assertNull(contact.removedDate)
+                assertEquals(
+                    if (type == "initial") ContactEvent.Event.INVITED else ContactEvent.Event.ADDED,
+                    event.event
+                )
+            }
+        }
     }
 }

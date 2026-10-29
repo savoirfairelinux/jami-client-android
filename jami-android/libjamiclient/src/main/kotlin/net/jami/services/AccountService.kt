@@ -36,6 +36,7 @@ import net.jami.model.interaction.Interaction.TransferStatus
 import net.jami.services.ConversationFacade.SearchResult
 import net.jami.utils.Log
 import net.jami.utils.SwigNativeConverter
+import net.jami.utils.TimestampUtils
 import java.io.File
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
@@ -325,10 +326,10 @@ class AccountService(
                             Conversation.Mode.entries.getOrNull(it)
                         } ?: Conversation.Mode.OneToOne
                 }
+                conversation.updateTimestamps(info)
                 conversation.setProfile(mVCardService.loadConversationProfile(info))
                 if (mode == Conversation.Mode.Syncing) {
-                    val created = (info["created"]?.toLong() ?: 0) * 1000L
-                    conversation.lastEvent = ContactEvent(created)
+                    conversation.lastEvent = ContactEvent(TimestampUtils.fromDetails(info, "created"))
                 }
                 JamiService.getActiveCalls(account.accountId, conversationId)
                     .map { Conversation.ActiveCall(it) }
@@ -1399,6 +1400,8 @@ class AccountService(
     fun contactRemoved(accountId: String, uri: String, blocked: Boolean) {
         Log.d(TAG, "Contact removed: $uri User is blocked: $blocked")
         getAccount(accountId)?.let { account ->
+            account.getContactFromCache(Uri.fromId(uri))
+                .updateDates(JamiService.getContactDetails(accountId, uri))
             mHistoryService.clearHistory(uri, accountId, true).subscribe()
             account.removeContact(uri, blocked)
         }
@@ -1459,8 +1462,7 @@ class AccountService(
             "initial" -> if (conversation.mode.blockingFirst() == Conversation.Mode.OneToOne) {
                 val invited = message["invited"]!!
                 val invitedContact = conversation.findContact(Uri.fromId(invited)) ?: account.getContactFromCache(invited)
-                invitedContact.addedDate = Date(timestamp)
-                ContactEvent(account.accountId, invitedContact).setEvent(ContactEvent.Event.INVITED)
+                ContactEvent(account.accountId, invitedContact, timestamp).setEvent(ContactEvent.Event.INVITED)
             } else {
                 Interaction(conversation, Interaction.InteractionType.INVALID)
             }
@@ -1468,8 +1470,7 @@ class AccountService(
                 val action = message["action"]!!
                 val uri = message["uri"]!!
                 val member = conversation.findContact(Uri.fromId(uri)) ?: account.getContactFromCache(uri)
-                member.addedDate = Date(timestamp)
-                ContactEvent(account.accountId, member).setEvent(ContactEvent.Event.fromConversationAction(action))
+                ContactEvent(account.accountId, member, timestamp).setEvent(ContactEvent.Event.fromConversationAction(action))
             }
             "application/edited-message",
             "text/plain" -> TextMessage(author, account.accountId, timestamp, conversation, message["body"]!!, !contact.isUser)
@@ -1594,7 +1595,10 @@ class AccountService(
 
     fun conversationProfileUpdated(accountId: String, conversationId: String, info: Map<String, String>) {
         conversationCallbacks.dispatch(accountId, conversationId) {
-            getAccount(accountId)?.getSwarm(conversationId)?.setProfile(mVCardService.loadConversationProfile(info))
+            getAccount(accountId)?.getSwarm(conversationId)?.let { conversation ->
+                conversation.updateTimestamps(info)
+                conversation.setProfile(mVCardService.loadConversationProfile(info))
+            }
         }
     }
 
@@ -1671,6 +1675,7 @@ class AccountService(
         }
         val conversation = c
         synchronized(conversation) {
+            conversation.updateTimestamps(info)
             conversation.setProfile(mVCardService.loadConversationProfile(info))
             // Making sure to add contacts before changing the mode
             for (member in members) {
