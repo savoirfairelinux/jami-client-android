@@ -28,137 +28,20 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/private_conversation_panel"
+            android:id="@+id/lifecycle_dates_panel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/account_details_group_margin"
             android:background="@drawable/background_rounded_16"
             android:backgroundTint="@color/background_secondary"
-            android:clickable="false"
             android:divider="@drawable/layout_divider"
             android:orientation="vertical"
-            android:showDividers="middle">
+            android:showDividers="middle"
+            android:visibility="gone">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/user_name_panel"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="12dp">
-
-                <TextView
-                    android:id="@+id/user_name_header"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:text="@string/registered_username"
-                    android:textColor="@color/colorOnSurface"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/user_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="@dimen/padding_large"
-                    android:layout_toEndOf="@id/user_name_header"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textAlignment="textEnd"
-                    android:textColor="@color/textColorSecondary"
-                    android:textSize="14sp"
-                    app:layout_constrainedWidth="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1"
-                    app:layout_constraintStart_toEndOf="@id/user_name_header"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="ThisIsARegisteredName" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/identifier_panel"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="12dp">
-
-                <TextView
-                    android:id="@+id/identifier_header"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:text="@string/identifier"
-                    android:textColor="@color/colorOnSurface"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/identifier"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="@dimen/padding_large"
-                    android:layout_toEndOf="@id/identifier_header"
-                    android:ellipsize="middle"
-                    android:maxLines="1"
-                    android:textAlignment="textEnd"
-                    android:textColor="@color/textColorSecondary"
-                    android:textSize="14sp"
-                    app:layout_constrainedWidth="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1"
-                    app:layout_constraintStart_toEndOf="@id/identifier_header"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="1ae0ff8100fc4df204ca878b51e1f770507ab2ff" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/background_rounded_16"
-                android:divider="@drawable/layout_divider"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:showDividers="middle">
-
-                <ImageView
-                    android:id="@+id/qr_code"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:contentDescription="@string/show_qr_code"
-                    android:padding="12dp"
-                    android:src="@drawable/baseline_qr_code_2_black_24dp" />
-
-                <ImageView
-                    android:id="@+id/share_button"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:contentDescription="@string/jami_id_share"
-                    android:padding="12dp"
-                    android:src="@drawable/outline_share_24" />
-
-                <ImageView
-                    android:id="@+id/certificate_button"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_clickable"
-                    android:backgroundTint="@color/background_secondary"
-                    android:contentDescription="@string/jami_id_share"
-                    android:padding="12dp"
-                    android:src="@drawable/baseline_license_24"
-                    android:visibility="gone" />
-
-            </LinearLayout>
+            <include
+                android:id="@+id/conversation_joined_date"
+                layout="@layout/item_lifecycle_date" />
 
         </LinearLayout>
 
