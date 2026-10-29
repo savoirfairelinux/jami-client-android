@@ -44,14 +44,16 @@ class ContactEvent : Interaction {
         mIsRead = 1
     }
 
-    constructor(accountId: String, contact: Contact) {
+    constructor(accountId: String, contact: Contact) : this(accountId, contact, contact.addedDate!!.time)
+
+    constructor(accountId: String, contact: Contact, eventTimestamp: Long) {
         this.contact = contact
         account = accountId
         author = contact.uri.uri
         type = InteractionType.CONTACT
         event = Event.ADDED
         status = InteractionStatus.SUCCESS
-        timestamp = contact.addedDate!!.time
+        timestamp = eventTimestamp
         mIsRead = 1
     }
 

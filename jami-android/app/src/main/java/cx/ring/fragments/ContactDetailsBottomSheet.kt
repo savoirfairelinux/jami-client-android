@@ -17,6 +17,7 @@ import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import cx.ring.utils.TextUtils.copyAndShow
 import cx.ring.views.AvatarDrawable
+import cx.ring.views.setDate
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Uri
@@ -71,6 +72,13 @@ class ContactDetailsBottomSheet : BottomSheetDialogFragment() {
             startActivity(Intent.createChooser(intent, getString(R.string.share_via)))
         }
 
+        disposables.add(contact.updatesSubject.startWithItem(contact)
+            .observeOn(DeviceUtils.uiScheduler)
+            .subscribe { updated ->
+                b.contactAddedDate.setDate(R.string.contact_added_date, updated.addedDate?.time ?: 0L)
+                b.contactRemovedDate.setDate(R.string.contact_removed_date, updated.removedDate?.time ?: 0L)
+                b.contactDatesPanel.isVisible = b.contactAddedDate.root.isVisible || b.contactRemovedDate.root.isVisible
+            })
         disposables.add(contactService.observeContact(path.accountId, contact, false)
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe({ model ->
