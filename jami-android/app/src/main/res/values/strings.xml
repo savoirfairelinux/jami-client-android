@@ -479,6 +479,9 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="hist_contact_blocked">Contact blocked</string>
     <string name="hist_contact_unblocked">Contact unblocked</string>
     <string name="hist_invitation_received">Invitation received</string>
+    <string name="conversation_joined_date">Joined</string>
+    <string name="contact_added_date">Added</string>
+    <string name="contact_removed_date">Removed</string>
 
     <!-- Account summary -->
     <string name="profile">Profile</string>
