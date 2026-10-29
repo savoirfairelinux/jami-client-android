@@ -26,6 +26,7 @@ import io.reactivex.rxjava3.subjects.Subject
 import net.jami.model.interaction.*
 import net.jami.utils.Log
 import net.jami.utils.StringUtils
+import net.jami.utils.TimestampUtils
 import java.util.*
 
 class Conversation(
@@ -70,6 +71,8 @@ class Conversation(
 
     private val profileSubject: Subject<Single<Profile>> = BehaviorSubject.createDefault(Profile.EMPTY_PROFILE_SINGLE)
     val profile: Observable<Profile> = profileSubject.switchMapSingle { it }
+    private val joinedDateSubject = BehaviorSubject.createDefault(0L)
+    val joinedDate: Observable<Long> = joinedDateSubject.distinctUntilChanged()
 
     // runtime flag set to true if the user is currently viewing this conversation
     private var mVisible = false
@@ -256,6 +259,11 @@ class Conversation(
 
     fun setProfile(profile: Single<Profile>) {
         profileSubject.onNext(profile)
+    }
+
+    fun updateTimestamps(info: Map<String, String>) {
+        if (info.containsKey("created") || info.containsKey("createdMs"))
+            joinedDateSubject.onNext(TimestampUtils.fromDetails(info, "created"))
     }
 
     fun setMode(mode: Mode) {
