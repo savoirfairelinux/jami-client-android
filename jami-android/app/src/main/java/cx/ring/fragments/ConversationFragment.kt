@@ -1451,7 +1451,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             when (item.itemId) {
                 R.id.conv_action_audiocall -> presenter.goToCall(false)
                 R.id.conv_action_videocall -> presenter.goToCall(true)
-                R.id.conv_contact_details -> presenter.openContact()
+                R.id.conv_conversation_details -> presenter.openContact()
                 R.id.conv_action_peer_services -> showPeerServicesBottomSheet()
                 else -> return false
             }
