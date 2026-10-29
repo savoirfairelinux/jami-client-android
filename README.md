@@ -122,6 +122,18 @@ The linked-device list in account settings shows the last received account
 sync from each other device. A missing or zero timestamp is shown as "Never".
 This is not a last-online time or a conversation-history sync indicator.
 
+## Conversation details
+
+Conversation details show "Joined" when the daemon provides a conversation
+creation date. A separate "Contact details" option opens the contact's avatar,
+name, identifier, QR code and sharing controls, with "Added" and, when retained
+for an accessible contact, "Removed". Open it by long-pressing a one-to-one
+contact in the main list and choosing "Contact details". It is not part of
+the conversation menu or conversation details page, and is not offered for
+whole groups.
+Unknown dates are hidden; deleted contacts and erased conversations do not
+gain a separate browsing interface.
+
 ## Update translations
 
 Update translations using the Transifex client (tx) :

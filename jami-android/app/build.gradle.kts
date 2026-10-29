@@ -142,7 +142,16 @@ tasks.matching { it.name.startsWith("merge") && it.name.endsWith("Assets") }
     .configureEach { dependsOn(buildCollabEditor) }
 // The unit test tasks are per-variant, and are created late.
 tasks.matching { it.name.startsWith("test") && it.name.endsWith("UnitTest") }
-    .configureEach { dependsOn(testCollabEditor) }
+    .configureEach {
+        dependsOn(testCollabEditor)
+        // Layout contract tests must rerun when their source XML changes.
+        inputs.files(
+            "src/main/res/layout/frag_conversation_actions.xml",
+            "src/main/res/layout/frag_contact_details.xml",
+            "src/main/res/menu/conversation_actions.xml",
+            "src/main/res/values/arrays.xml"
+        )
+    }
 
 configurations {
     all {
