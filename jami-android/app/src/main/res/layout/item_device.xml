@@ -28,6 +28,17 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         app:tint="@color/button_border" />
 
     <TextView
+        android:id="@+id/txt_device_last_sync"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_device_id"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/textColorSecondary"
+        android:textSize="12sp"
+        tools:text="Last synced: Never" />
+
+    <TextView
         android:id="@+id/txt_device_thisflag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

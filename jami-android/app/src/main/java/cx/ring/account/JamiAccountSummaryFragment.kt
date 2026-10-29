@@ -77,6 +77,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.account.JamiAccountSummaryPresenter
 import net.jami.account.JamiAccountSummaryView
 import net.jami.model.Account
+import net.jami.model.AccountDevice
 import net.jami.model.Contact
 import net.jami.model.Profile
 import net.jami.services.AccountService
@@ -645,7 +646,7 @@ class JamiAccountSummaryFragment :
             .show()
     }
 
-    override fun updateDeviceList(devices: Map<String, String>, currentDeviceId: String) {
+    override fun updateDeviceList(devices: Map<String, AccountDevice>, currentDeviceId: String) {
         mDeviceAdapter?.setData(devices, currentDeviceId)
         collapse(mBinding!!.devicesList)
     }

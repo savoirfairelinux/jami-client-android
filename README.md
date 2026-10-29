@@ -116,6 +116,12 @@ Read receipts remain conversation-wide, not thread-specific.
 Disabling the setting restores the chronological view without changing
 messages or their reply relationships.
 
+## Linked-device status
+
+The linked-device list in account settings shows the last received account
+sync from each other device. A missing or zero timestamp is shown as "Never".
+This is not a last-online time or a conversation-history sync indicator.
+
 ## Update translations
 
 Update translations using the Transifex client (tx) :
