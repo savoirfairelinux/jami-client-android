@@ -1050,24 +1050,33 @@ class AccountService(
     fun findRegistrationByName(account: String, nameserver: String, name: String): Single<RegisteredName> =
         if (name.isEmpty())
             Single.just(RegisteredName(account, name, name))
-        else registeredNames
-            .filter { r: RegisteredName -> account == r.accountId && name == r.query }
-            .firstOrError()
-            .doOnSubscribe {
-                mExecutor.execute { JamiService.lookupName(account, nameserver, name) }
+        else findRegistration(account, name) {
+            JamiService.lookupName(account, nameserver, name)
+        }
+
+    private fun findRegistration(account: String, query: String, lookup: () -> Boolean): Single<RegisteredName> =
+        Single.create<RegisteredName> { emitter ->
+            val result = registeredNames
+                .filter { it.accountId == account && it.query == query }
+                .firstOrError()
+                .subscribe(emitter::onSuccess) { emitter.tryOnError(it) }
+            emitter.setDisposable(result)
+            if (!emitter.isDisposed && !lookup()) {
+                emitter.onSuccess(failedLookup(account, query))
             }
-            .subscribeOn(scheduler)
+        }.subscribeOn(scheduler)
+
+    private fun failedLookup(account: String, query: String): RegisteredName {
+        Log.w(TAG, "Unable to start name lookup for account $account")
+        return RegisteredName(account, query, "", state = LookupState.NetworkError)
+    }
 
     fun findRegistrationByAddress(account: String, nameserver: String, address: String): Single<RegisteredName> =
         if (address.isEmpty())
             Single.error(IllegalArgumentException())
-        else registeredNames
-            .filter { r: RegisteredName -> account == r.accountId && address == r.query }
-            .firstOrError()
-            .doOnSubscribe {
-                mExecutor.execute { JamiService.lookupAddress(account, nameserver, address) }
-            }
-            .subscribeOn(scheduler)
+        else findRegistration(account, address) {
+            JamiService.lookupAddress(account, nameserver, address)
+        }
 
     fun searchUser(account: String, query: String): Single<UserSearchResult> {
         if (query.isEmpty()) {
@@ -1092,7 +1101,10 @@ class AccountService(
      */
     fun lookupAddress(account: String, nameserver: String, address: String) {
         //Log.w(TAG, "lookupAddress $address")
-        mExecutor.execute { JamiService.lookupAddress(account, nameserver, address) }
+        mExecutor.execute {
+            if (!JamiService.lookupAddress(account, nameserver, address))
+                registeredNameSubject.onNext(failedLookup(account, address))
+        }
     }
 
     fun getConversationByUri(account: Account, conversationUri: Uri): Single<Conversation> =
