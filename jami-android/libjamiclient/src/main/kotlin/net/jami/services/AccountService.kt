@@ -286,7 +286,7 @@ class AccountService(
             return
         }
         Log.w(TAG, "${account.accountId} loading devices")
-        account.devices = JamiService.getKnownRingDevices(account.accountId).toNative()
+        account.devices = loadAccountDevices(account.accountId)
         Log.w(TAG, "${account.accountId} loading contacts")
         account.setContacts(JamiService.getContacts(account.accountId).toNative())
         val conversations: List<String> = JamiService.getConversations(account.accountId)
@@ -816,7 +816,7 @@ class AccountService(
             details[ConfigKey.ACCOUNT_DEVICE_NAME.key] = newName
             JamiService.setAccountDetails(accountId, details)
             account?.setDetail(ConfigKey.ACCOUNT_DEVICE_NAME, newName)
-            account?.devices = JamiService.getKnownRingDevices(accountId).toNative()
+            account?.devices = loadAccountDevices(accountId)
         }
     }
 
@@ -1189,7 +1189,7 @@ class AccountService(
         if (oldState == AccountConfig.RegistrationState.INITIALIZING && state != AccountConfig.RegistrationState.INITIALIZING) {
             account.setDetails(JamiService.getAccountDetails(account.accountId).toNative())
             account.setCredentials(JamiService.getCredentials(account.accountId).toNative())
-            account.devices = JamiService.getKnownRingDevices(account.accountId).toNative()
+            account.devices = loadAccountDevices(account.accountId)
             // sets the registration state
             account.setVolatileDetails(JamiService.getVolatileAccountDetails(account.accountId).toNative())
         } else {
@@ -1288,9 +1288,9 @@ class AccountService(
         Log.d(TAG, "errorAlert : $alert")
     }
 
-    fun knownDevicesChanged(accountId: String, devices: Map<String, String>) {
+    fun knownDevicesChanged(accountId: String) {
         getAccount(accountId)?.let { account ->
-            account.devices = devices
+            account.devices = loadAccountDevices(accountId)
             observableAccounts.onNext(account)
         }
     }
