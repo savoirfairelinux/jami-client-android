@@ -55,6 +55,7 @@ object ActionHelper {
     const val ACTION_CLEAR = 1
     const val ACTION_DELETE = 2
     const val ACTION_BLOCK = 3
+    const val ACTION_CONTACT_DETAILS = 4
 
     data class Padding(
         val pixelsLeft: Int, val pixelsTop: Int,
