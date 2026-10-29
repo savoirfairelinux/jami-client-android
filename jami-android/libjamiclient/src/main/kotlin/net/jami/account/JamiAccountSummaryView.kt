@@ -17,6 +17,7 @@
 package net.jami.account
 
 import net.jami.model.Account
+import net.jami.model.AccountDevice
 import net.jami.model.Profile
 import java.io.File
 
@@ -35,5 +36,5 @@ interface JamiAccountSummaryView {
     fun goToAccount(accountId: String)
     fun showRevokingProgressDialog()
     fun deviceRevocationEnded(device: String, status: Int)
-    fun updateDeviceList(devices: Map<String, String>, currentDeviceId: String)
+    fun updateDeviceList(devices: Map<String, AccountDevice>, currentDeviceId: String)
 }

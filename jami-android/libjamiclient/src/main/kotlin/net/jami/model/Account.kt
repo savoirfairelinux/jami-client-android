@@ -46,7 +46,7 @@ class Account(
     var username: String? = config[ConfigKey.ACCOUNT_USERNAME]
         private set
     val credentials = credentials.mapTo(ArrayList()) { AccountCredentials(it) }
-    var devices: Map<String, String> = HashMap()
+    var devices: Map<String, AccountDevice> = emptyMap()
     private val mContacts: MutableMap<String, Contact> = HashMap()
     private val mContactCache: MutableMap<String, Contact> = HashMap()
     private val swarmConversations: MutableMap<String, Conversation> = HashMap()
