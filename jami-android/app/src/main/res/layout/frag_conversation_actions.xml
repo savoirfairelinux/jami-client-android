@@ -28,6 +28,24 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/lifecycle_dates_panel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/account_details_group_margin"
+            android:background="@drawable/background_rounded_16"
+            android:backgroundTint="@color/background_secondary"
+            android:divider="@drawable/layout_divider"
+            android:orientation="vertical"
+            android:showDividers="middle"
+            android:visibility="gone">
+
+            <include
+                android:id="@+id/conversation_joined_date"
+                layout="@layout/item_lifecycle_date" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/conversation_details_panel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

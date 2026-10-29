@@ -21,6 +21,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
+import net.jami.utils.TimestampUtils
 import java.util.*
 
 class Contact(val uri: Uri, val isUser: Boolean = false) {
@@ -60,11 +61,20 @@ class Contact(val uri: Uri, val isUser: Boolean = false) {
     var isFromSystem = false
     var status = Status.NO_REQUEST
     var addedDate: Date? = null
+    var removedDate: Date? = null
     var id: Long = 0
     private var mLookupKey: String? = null
     private val mConversationUri: BehaviorSubject<Uri> = BehaviorSubject.createDefault(uri)
     private val mContactUpdates: Subject<Contact> = BehaviorSubject.create()
     var updates: Observable<Contact>? = null
+
+    fun updateDates(details: Map<String, String>) {
+        if (details.containsKey("added") || details.containsKey("addedMs"))
+            addedDate = Date(TimestampUtils.fromDetails(details, "added"))
+        if (details.containsKey("removed") || details.containsKey("removedMs"))
+            removedDate = TimestampUtils.fromDetails(details, "removed").takeIf { it > 0 }?.let(::Date)
+        mContactUpdates.onNext(this)
+    }
 
     fun setConversationUri(conversationUri: Uri) {
         mConversationUri.onNext(conversationUri)
