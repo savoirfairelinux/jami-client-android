@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93a35c7e_ebeba2a3",
+        "filename": "jami-android/libjamiclient/src/test/java/net/jami/model/AccountDeviceTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-30T15:39:06Z",
+      "side": 1,
+      "message": "[warning] Line 33: 🟡 `Log.injectLogService(logger)` mutates a global logger and is not restored after the test, which can leak state into other tests and cause order-dependent failures. Restore the previous logger in a `try/finally` (or reset in `@After`) so this test remains isolated.",
+      "revId": "ff28527bd10ea3216c46847733a7b06504d867e2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
