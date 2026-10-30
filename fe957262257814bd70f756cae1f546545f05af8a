@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d209dfe8_1c7ccd8b",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/AccountDevice.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-10-30T14:52:58Z",
+      "side": 1,
+      "message": "[error] Line 9: 🔴 `lastSync` is parsed with `toLong()`, which throws `NumberFormatException` on malformed values and can crash device loading from daemon data. Parse defensively with `toLongOrNull()` (and fallback to `0` or explicit error handling/logging) so invalid metadata does not take down account/device flows.",
+      "revId": "fe957262257814bd70f756cae1f546545f05af8a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
