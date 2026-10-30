@@ -16,6 +16,24 @@
       "message": "[error] Line 69: 🔴 `Math.multiplyExact(device.lastSync, 1000L)` can throw `ArithmeticException` for large/untrusted values and crash the account settings screen while rendering a device row. `lastSync` ultimately comes from daemon/account data, so UI formatting should be defensive. Replace this with a bounded conversion (e.g., range-check against `Long.MAX_VALUE / 1000`, then multiply, otherwise treat as unknown/\"Never\"), or catch overflow and fallback to the non-crashing path.",
       "revId": "bd80d341b70f54647f0781e6126a0d5171798ede",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "625ba767_ab29a5c7",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/DeviceAdapter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-10-30T15:40:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e8149e1_30bde1b0",
+      "revId": "bd80d341b70f54647f0781e6126a0d5171798ede",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
