@@ -16,6 +16,24 @@
       "message": "[error] Line 310: 🔴 The Syncing branch still parses and scales `created` unsafely: `info[\"created\"]?.toLong()` can throw on malformed daemon data, and `* 1000L` can overflow/wrap for large values. This bypasses the new timestamp hardening and can still crash or corrupt event ordering. Use `TimestampUtils.fromDetails(info, \"created\")` (or equivalent guarded parsing with bounds checks) for `ContactEvent` as well.",
       "revId": "71f8256314630faf1bf9196585ac8cef239dd84a",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64225e7d_3828a483",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-10-30T16:08:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "732dce6b_2528adbd",
+      "revId": "71f8256314630faf1bf9196585ac8cef239dd84a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
