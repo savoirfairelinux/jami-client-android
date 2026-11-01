@@ -206,6 +206,9 @@ class AccountService(
     data class ConversationSearchResult(val results: List<Interaction>)
     private val conversationSearches: MutableMap<Long, Subject<ConversationSearchResult>> = ConcurrentHashMap()
     private val loadingTasks: MutableMap<Long, SingleSubject<List<Interaction>>> = ConcurrentHashMap()
+    private val replyLoadsInFlight: MutableSet<String> = ConcurrentHashMap.newKeySet()
+    private val replyLoadIds: MutableMap<Long, String> = ConcurrentHashMap()
+    private val replyLoadsAnswered: MutableSet<Long> = ConcurrentHashMap.newKeySet()
 
     class UserSearchResult(val accountId: String, val query: String, val state: Int = 0, val results: List<Contact> = emptyList())
 
@@ -1477,8 +1480,19 @@ class AccountService(
         interaction.edit = edit
         if (replyTo != null) {
             interaction.replyTo = conversation.loadMessage(replyTo) {
-                mExecutor.execute {
-                    JamiService.loadSwarmUntil(account.accountId, conversation.uri.rawRingId, "", replyTo)
+                // Keep at most one reply-target load in flight per conversation. Each distinct
+                // missing target used to start its own loadSwarmUntil, and each of those walks the
+                // history under the conversation lock on the daemon's io pool: a large conversation
+                // with many replies queued hundreds of them and starved every other io task.
+                // One load back to a target also loads everything newer, resolving most others.
+                val key = account.accountId + "|" + conversation.uri.rawRingId
+                if (replyLoadsInFlight.add(key)) {
+                    mExecutor.execute {
+                        val id = JamiService.loadSwarmUntil(account.accountId, conversation.uri.rawRingId, "", replyTo)
+                        // The answer may already have arrived; release the slot then.
+                        if (id == 0L || replyLoadsAnswered.remove(id)) replyLoadsInFlight.remove(key)
+                        else replyLoadIds[id] = key
+                    }
                 }
             }
         }
@@ -1515,6 +1529,14 @@ class AccountService(
     }
 
     internal fun swarmLoaded(id: Long, accountId: String, conversationId: String, messages: List<SwarmMessageData>) {
+        val replyLoadKey = replyLoadIds.remove(id)
+        if (replyLoadKey != null) {
+            replyLoadsInFlight.remove(replyLoadKey)
+        } else if (replyLoadsInFlight.isNotEmpty()) {
+            // Possibly a reply-target load answered before its id was recorded.
+            replyLoadsAnswered.add(id)
+            if (replyLoadsAnswered.size > 256) replyLoadsAnswered.clear()
+        }
         conversationCallbacks.dispatch(accountId, conversationId) {
             swarmLoadedNow(id, accountId, conversationId, messages)
         }
