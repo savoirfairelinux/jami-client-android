@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98b69ba1_708eb63d",
+        "filename": "jami-android/app/src/main/res/values-es/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-02T06:05:22Z",
+      "side": 1,
+      "message": "[warning] Line 47: 🟡 The new Spanish string uses \"video\" while existing nearby UI text in the same locale uses \"vídeo\" (e.g., `video_setting_title`). Please align terminology/orthography across the newly added Spanish locale entries (`values-es*`) to keep UI wording consistent and avoid mixed spellings.",
+      "revId": "633f605dd85f3f3ce7c9527b45e17e5e3fb34112",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
