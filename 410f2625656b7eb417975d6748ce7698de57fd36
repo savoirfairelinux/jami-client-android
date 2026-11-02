@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5cba4b8e_16e4f49e",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Contact.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-02T18:45:36Z",
+      "side": 1,
+      "message": "[warning] Line 70: 🟡 `addedDate` is assigned `Date(0)` whenever `added`/`addedMs` is present but parses to unknown (`0L`). That turns malformed/unknown metadata into a concrete epoch date instead of “no date”, and can leak into non-UI consumers (e.g., event ordering/timestamps) as a real value. Treat non-positive parsed values as absent (`null`) just like `removedDate` does, e.g. `addedDate \u003d TimestampUtils.fromDetails(details, \"added\").takeIf { it \u003e 0 }?.let(::Date)`.",
+      "revId": "410f2625656b7eb417975d6748ce7698de57fd36",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
