@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5910100_75bb1824",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/SmartListFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-02T18:47:10Z",
+      "side": 1,
+      "message": "[error] Line 240: 🔴 `showContactDetails` hard-fails when `conversation.contact` is null, even though this can legitimately happen before contact metadata is loaded. That makes the new action intermittently unusable and shows a generic error instead of opening details. Pass `conversation.uri` directly to `ContactDetailsBottomSheet.newInstance(...)` (or resolve the contact by URI inside the sheet) and remove the null gate in this caller.",
+      "revId": "8b3f51ef77bd001f1d53c1d543b9a18308e45f81",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
