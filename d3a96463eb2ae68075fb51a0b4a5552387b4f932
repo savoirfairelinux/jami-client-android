@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5178bb28_b1d9c81c",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1489,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-02T10:17:09Z",
+      "side": 1,
+      "message": "[error] Line 1489: 🔴 There is a race that can permanently block future reply-target loads for a conversation. If `swarmLoaded(id, ...)` arrives after `replyLoadsAnswered.remove(id)` is checked but before `replyLoadIds[id] \u003d key` executes, the callback stores `id` in `replyLoadsAnswered` and returns; then this code records `replyLoadIds[id]` too late, leaving `replyLoadsInFlight` never released for that conversation. Make publication/consumption of `id` atomic (e.g., store `replyLoadIds[id]` first, then consume `replyLoadsAnswered`, or protect both paths with a shared lock / `compute` sequence) so an early callback cannot be missed.",
+      "revId": "d3a96463eb2ae68075fb51a0b4a5552387b4f932",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
