@@ -822,6 +822,7 @@ class Conversation(
     @Synchronized
     fun updateSwarmMessage(interaction: Interaction) {
         val existingInteraction = interaction.messageId?.let { getMessage(it) } ?: return
+        val oldParent = existingInteraction.parentId
         interaction.parentId?.let { existingInteraction.updateParent(it) }
         existingInteraction.replaceEdits(interaction.history)
         existingInteraction.replaceReactions(interaction.reactions)
@@ -836,6 +837,41 @@ class Conversation(
         if (lastEvent == existingInteraction) {
             lastEventSubject.onNext(existingInteraction)
         }
+        // After a non-fast-forward merge the daemon re-linearizes the history and reports each
+        // moved message with its new parent. Updating the parent alone leaves the displayed list
+        // in its old order, so re-chain it and hand the view the result.
+        if (isSwarm && interaction.parentId != null && interaction.parentId != oldParent)
+            relinkAggregateHistory()
+    }
+
+    /**
+     * Re-orders [aggregateHistory] by following parent links from its root. Only applied when the
+     * links form one complete chain; while moves are reported one by one they may not, and the
+     * list is left untouched until the update that completes the chain.
+     */
+    private fun relinkAggregateHistory() {
+        if (aggregateHistory.size < 2) return
+        val ids = HashSet<String>(aggregateHistory.size)
+        aggregateHistory.forEach { it.messageId?.let(ids::add) }
+        val childOf = HashMap<String, Interaction>(aggregateHistory.size)
+        var root: Interaction? = null
+        for (e in aggregateHistory) {
+            val p = e.parentId
+            if (p == null || p !in ids) {
+                if (root != null) return
+                root = e
+            } else if (childOf.put(p, e) != null) return
+        }
+        val ordered = ArrayList<Interaction>(aggregateHistory.size)
+        var cur = root
+        while (cur != null && ordered.size <= aggregateHistory.size) {
+            ordered.add(cur)
+            cur = cur.messageId?.let { childOf[it] }
+        }
+        if (ordered.size != aggregateHistory.size || ordered == aggregateHistory) return
+        aggregateHistory.clear()
+        aggregateHistory.addAll(ordered)
+        clearedSubject.onNext(ArrayList(aggregateHistory))
     }
 
     data class ActiveCall(val confId: String, val uri: String, val device: String) {
