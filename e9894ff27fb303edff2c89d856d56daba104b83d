@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfe55959_48fb0d57",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/conversation/ConversationPresenter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-02T18:30:10Z",
+      "side": 1,
+      "message": "[error] Line 276: 🔴 `onComplete` is only called from `onNext`/`onError`. If `accountService.loadMore(...)` completes without emitting (e.g., empty history page / terminal completion without item), the callback is never invoked, leaving navigation state pending and blocking subsequent history requests. Trigger the callback from terminal signals (`doFinally { ... }` or `subscribe(onNext, onError, onComplete)`) so it runs exactly once on success, empty completion, and error.",
+      "revId": "e9894ff27fb303edff2c89d856d56daba104b83d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
