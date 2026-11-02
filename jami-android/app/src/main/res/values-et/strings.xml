@@ -44,6 +44,8 @@
   <string name="menu_item_share">Jaga minu kontot</string>
   <string name="menu_item_about">Teave Jami kohta</string>
   <string name="video_setting_title">Videoseadistused</string>
+  <string name="pref_conference_resolution_title">Konverentsikõne video eraldusvõime</string>
+  <string name="pref_conference_resolution_summary">Oled valinud: %1$s. Kehtib uute konverentskõnede puhul, mida see seade algatab.</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Vali number</string>
   <!--History Fragment-->

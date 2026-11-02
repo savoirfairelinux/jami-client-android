@@ -6,6 +6,8 @@
   <!--RingActivity-->
   <!--AB menus-->
   <!--Sections-->
+  <string name="pref_conference_resolution_title">Resolución de video de conferencia</string>
+  <string name="pref_conference_resolution_summary">Seleccionado: %1$s. Se aplica a las conferencias nuevas alojadas desde este dispositivo.</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
   <!--Home Fragment-->
