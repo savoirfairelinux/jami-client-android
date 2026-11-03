@@ -144,6 +144,42 @@ class AccountServiceTest {
     }
 
     @Test
+    fun emptyHistoryPagesStillUpdateConversationPermissions() {
+        val account = Account("account", emptyMap(), emptyList(),
+            mapOf(ConfigKey.ACCOUNT_REGISTRATION_STATUS.key to "REGISTERED"))
+        val conversation = account.newSwarm("conversation", Conversation.Mode.InvitesOnly)
+        doReturn(account).`when`(service).getAccount("account")
+        val updates = conversation.permissions.test()
+
+        service.swarmLoaded(1, "account", "conversation", emptyList(), setOf("textReply", "reaction"))
+        updates.awaitCount(1).assertValue(setOf("textReply", "reaction"))
+        service.swarmLoaded(2, "account", "conversation", emptyList(), emptySet())
+        updates.awaitCount(2).assertValues(setOf("textReply", "reaction"), emptySet())
+    }
+
+    @Test
+    fun membershipChangesRefreshDaemonPermissions() {
+        val account = Account("account", emptyMap(), emptyList(),
+            mapOf(ConfigKey.ACCOUNT_REGISTRATION_STATUS.key to "REGISTERED"))
+        val conversation = account.newSwarm("conversation", Conversation.Mode.InvitesOnly)
+        doReturn(account).`when`(service).getAccount("account")
+        val permissions = mock(StringVect::class.java)
+        doReturn(1).`when`(permissions).size
+        doReturn("textReply").`when`(permissions).get(0)
+        mockStatic(JamiService::class.java).use { daemon ->
+            daemon.`when`<StringVect> { JamiService.getConversationPermissions("account", "conversation") }
+                .thenReturn(permissions)
+            AccountService::class.java.getDeclaredMethod(
+                "conversationMemberEventNow", String::class.java, String::class.java, String::class.java,
+                Int::class.javaPrimitiveType
+            ).apply { isAccessible = true }.invoke(service, "account", "conversation", "a".repeat(40), 0)
+
+            conversation.permissions.test().assertValue(setOf("textReply"))
+            daemon.verify { JamiService.getConversationPermissions("account", "conversation") }
+        }
+    }
+
+    @Test
     fun historyEventsPreserveContactAddedDate() {
         val parser = AccountService::class.java.getDeclaredMethod(
             "getInteraction", Account::class.java, Conversation::class.java, Map::class.java

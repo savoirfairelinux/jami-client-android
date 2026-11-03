@@ -73,6 +73,8 @@ class Conversation(
     val profile: Observable<Profile> = profileSubject.switchMapSingle { it }
     private val joinedDateSubject = BehaviorSubject.createDefault(0L)
     val joinedDate: Observable<Long> = joinedDateSubject.distinctUntilChanged()
+    private val permissionsSubject = BehaviorSubject.create<Set<String>>()
+    val permissions: Observable<Set<String>> = permissionsSubject.distinctUntilChanged()
 
     // runtime flag set to true if the user is currently viewing this conversation
     private var mVisible = false
@@ -859,6 +861,9 @@ class Conversation(
 
     fun setActiveCalls(activeCalls: List<ActiveCall>) =
         activeCallsSubject.onNext(activeCalls)
+
+    fun setPermissions(permissions: Collection<String>) =
+        permissionsSubject.onNext(permissions.toSet())
 
     /**
      * Return the lock object used to synchronize loading
