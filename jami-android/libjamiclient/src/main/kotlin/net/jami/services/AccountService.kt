@@ -304,13 +304,11 @@ class AccountService(
                 //info.forEach { (key, value) -> Log.w(TAG, "conversation info: $key $value") }
                 val isSyncing = "true" == info["syncing"]
                 val mode = if (isSyncing) Conversation.Mode.Syncing
-                    else Conversation.Mode.entries[info["mode"]?.toInt() ?: Conversation.Mode.Syncing.ordinal]
+                    else info["mode"]?.let { Conversation.Mode.fromDaemon(it.toInt()) } ?: Conversation.Mode.Syncing
                 val conversation = account.newSwarm(conversationId, mode)
                 if (isSyncing) {
                     conversation.requestMode =
-                        info["mode"]?.toIntOrNull()?.let {
-                            Conversation.Mode.entries.getOrNull(it)
-                        } ?: Conversation.Mode.OneToOne
+                        info["mode"]?.let { Conversation.Mode.fromDaemon(it.toInt()) } ?: Conversation.Mode.OneToOne
                 }
                 conversation.updateTimestamps(info)
                 conversation.setProfile(mVCardService.loadConversationProfile(info))
@@ -367,7 +365,7 @@ class AccountService(
                     requestData["received"]!!.toLong() * 1000L,
                     Uri(Uri.SWARM_SCHEME, conversationId),
                     mVCardService.loadConversationProfile(requestData),
-                    requestData["mode"]?.let { m -> Conversation.Mode.entries[m.toInt()] } ?: Conversation.Mode.OneToOne))
+                    requestData["mode"]?.let { m -> Conversation.Mode.fromDaemon(m.toInt()) } ?: Conversation.Mode.OneToOne))
             } catch (e: Exception) {
                 Log.w(TAG, "Error loading request", e)
             }
@@ -1650,7 +1648,7 @@ class AccountService(
         /*for (Map.Entry<String, String> i : info.entrySet()) {
             Log.w(TAG, "conversation info: " + i.getKey() + " " + i.getValue());
         }*/
-        val mode = Conversation.Mode.entries[info["mode"]!!.toInt()]
+        val mode = Conversation.Mode.fromDaemon(info["mode"]!!.toInt())
         val members = JamiService.getConversationMembers(accountId, conversationId).map { HashMap(it) }
         val uri = Uri(Uri.SWARM_SCHEME, conversationId)
         var c = account.getByUri(uri)//getSwarm(conversationId) ?: account.getByUri(Uri(Uri.SWARM_SCHEME, conversationId))
@@ -1720,7 +1718,7 @@ class AccountService(
             metadata["received"]!!.toLong() * 1000L,
             Uri(Uri.SWARM_SCHEME, conversationId),
             mVCardService.loadConversationProfile(metadata),
-            metadata["mode"]?.let { m -> Conversation.Mode.entries[m.toInt()] } ?: Conversation.Mode.OneToOne))
+            metadata["mode"]?.let { m -> Conversation.Mode.fromDaemon(m.toInt()) } ?: Conversation.Mode.OneToOne))
     }
 
     internal fun swarmMessageReceived(accountId: String, conversationId: String, message: SwarmMessageData) {
