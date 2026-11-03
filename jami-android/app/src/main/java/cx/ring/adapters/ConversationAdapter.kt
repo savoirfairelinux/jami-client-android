@@ -1082,14 +1082,29 @@ class ConversationAdapter(
             val history = interaction.historyObservable.blockingFirst()
             val isDeleted = interaction is TextMessage && interaction.body.isNullOrEmpty()
             val isFileMenu = interaction is DataTransfer && interaction.isComplete
+            val reactionButtons = listOf(convActionEmoji1, convActionEmoji2, convActionEmoji3, convActionEmoji4)
+
+            fun updateActions() {
+                val canReact = presenter.hasPermission(Conversation.Permission.Reaction)
+                val canRemoveReaction = presenter.hasPermission(Conversation.Permission.Delete)
+                convActionEdit.isVisible = !isDeleted && !interaction.isIncoming && interaction is TextMessage &&
+                    presenter.hasPermission(Conversation.Permission.Edit)
+                convActionDelete.isVisible = !isDeleted && !interaction.isIncoming && presenter.canDeleteMessage(interaction)
+                convActionReply.isVisible = presenter.canSendText(interaction.messageId) || presenter.canSendFile(interaction.messageId)
+                convActionMore.isVisible = canReact
+                reactionButtons.forEach { it.root.isVisible = canReact || (it.chip.isChecked && canRemoveReaction) }
+                if (!canReact) {
+                    emojiPicker.isVisible = false
+                    menuActions.isVisible = true
+                }
+            }
 
             // Configure what should be displayed
             convActionFileOpen.isVisible = isFileMenu
             convActionFileSave.isVisible = isFileMenu
             convActionFileDelete.isVisible = isFileMenu
             convActionCopyText.isVisible = !isDeleted && interaction !is DataTransfer
-            convActionEdit.isVisible = !isDeleted && !interaction.isIncoming && interaction is TextMessage
-            convActionDelete.isVisible = !isDeleted && !interaction.isIncoming
+            updateActions()
             convActionHistory.isVisible = !isDeleted && history.size > 1
             root.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
 
@@ -1101,10 +1116,7 @@ class ConversationAdapter(
             popupWindow.elevation = view.context.resources.getDimension(R.dimen.call_preview_elevation)
             popupWindow.showAsDropDown(view)
 
-            val textViews = listOf(
-                convActionEmoji1.chip, convActionEmoji2.chip,
-                convActionEmoji3.chip, convActionEmoji4.chip
-            )
+            val textViews = reactionButtons.map { it.chip }
 
             convActionEmoji1.chip.text = view.context.getString(R.string.default_emoji_1)
             convActionEmoji2.chip.text = view.context.getString(R.string.default_emoji_2)
@@ -1112,7 +1124,9 @@ class ConversationAdapter(
             convActionEmoji4.chip.text = view.context.getString(R.string.default_emoji_4)
 
             // Subscribe on reactions to allows user to see which reaction he already selected.
-            val disposable = interaction.reactionObservable
+            val disposable = Observable.combineLatest(
+                interaction.reactionObservable, presenter.messagingPermissions
+            ) { reactions, _ -> reactions }
                 .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { reactions ->
                     textViews.forEach { textView ->
@@ -1121,7 +1135,9 @@ class ConversationAdapter(
                             (textView.text == it.body) && (it.contact?.isUser == true)
                         }
                     }
-                    popupWindow.update()
+                    updateActions()
+                    root.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+                    popupWindow.update(root.measuredWidth, root.measuredHeight)
                 }
             viewHolder.compositeDisposable.add(disposable)
 

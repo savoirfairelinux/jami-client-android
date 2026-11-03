@@ -179,6 +179,10 @@ class ConversationPresenter @Inject constructor(
         }
 
         view.hideNumberSpinner()
+        disposable.add(c.permissions
+            .startWithItem(emptySet())
+            .observeOn(uiScheduler)
+            .subscribe { this.view?.updateMessagingPermissions() })
         disposable.add(c.mode
             .switchMap { mode: Conversation.Mode ->
                 val showPresence = !c.isSwarmGroup() // Don't show presence for swarm groups.
@@ -305,7 +309,9 @@ class ConversationPresenter @Inject constructor(
         }
         val conference = conversation.currentCall
         if (conversation.isSwarm || conference == null || !conference.isOnGoing) {
-            conversationFacade.sendTextMessage(conversation, conversation.uri, message, replyTo?.messageId).subscribe()
+            mCompositeDisposable.add(conversationFacade.sendTextMessage(conversation, conversation.uri, message, replyTo?.messageId)
+                .observeOn(uiScheduler)
+                .subscribe({}, { reportMessagingError(it) }))
         } else {
             conversationFacade.sendTextMessage(conversation, conference, message)
         }
@@ -317,14 +323,34 @@ class ConversationPresenter @Inject constructor(
             conversationFacade.sendFile(conversation, conversation.uri, file, replyTo)
                 .observeOn(uiScheduler)
                 .subscribe({}, { error ->
-                    Log.e(TAG, "Can't send file", error)
-                    view?.displayErrorToast(Error.INVALID_FILE)
+                    reportMessagingError(error, Error.INVALID_FILE)
                 })
         }, { error ->
-            Log.e(TAG, "Can't send file", error)
-            view?.displayErrorToast(Error.INVALID_FILE)
+            reportMessagingError(error, Error.INVALID_FILE)
         }))
     }
+
+    private fun reportMessagingError(error: Throwable, fallback: Error = Error.GENERIC_ERROR) {
+        Log.e(TAG, "Messaging action failed", error)
+        view?.displayErrorToast(if (error is SecurityException) Error.PERMISSION_DENIED else fallback)
+    }
+
+    private fun performMessagingAction(action: () -> Unit) {
+        mCompositeDisposable.add(Completable.fromAction(action)
+            .observeOn(uiScheduler)
+            .subscribe({}, { reportMessagingError(it) }))
+    }
+
+    fun canSendText(replyTo: String? = null): Boolean = mConversation?.canSendText(replyTo) == true
+
+    fun canSendFile(replyTo: String? = null): Boolean = mConversation?.canSendFile(replyTo) == true
+
+    fun hasPermission(permission: Conversation.Permission): Boolean = mConversation?.hasPermission(permission) == true
+
+    fun canDeleteMessage(interaction: Interaction): Boolean = mConversation?.canDeleteMessage(interaction) == true
+
+    val messagingPermissions: Observable<Set<String>>
+        get() = mConversationSubject.switchMap { it.permissions.startWithItem(emptySet()) }
 
     /**
      * Gets the absolute path of the file dataTransfer and sends both the DataTransfer and the
@@ -370,7 +396,7 @@ class ConversationPresenter @Inject constructor(
 
     fun deleteConversationItem(element: Interaction) {
         val conversation = mConversation ?: return
-        conversationFacade.deleteConversationItem(conversation, element)
+        performMessagingAction { conversationFacade.deleteConversationItem(conversation, element) }
     }
 
     fun deleteConversationFile(element: Interaction) {
@@ -380,7 +406,10 @@ class ConversationPresenter @Inject constructor(
     }
 
     fun startReplyTo(interaction: Interaction) {
-        view?.startReplyTo(interaction)
+        if (canSendText(interaction.messageId) || canSendFile(interaction.messageId))
+            view?.startReplyTo(interaction)
+        else
+            view?.displayErrorToast(Error.PERMISSION_DENIED)
     }
 
     private fun sendTrustRequest() {
@@ -534,7 +563,10 @@ class ConversationPresenter @Inject constructor(
 
     fun sendReaction(interaction: Interaction, text: CharSequence) {
         val conversation = mConversation ?: return
-        accountService.sendConversationReaction(conversation.accountId, conversation.uri, text.toString(), interaction.messageId ?: return)
+        val messageId = interaction.messageId ?: return
+        performMessagingAction {
+            accountService.sendConversationReaction(conversation.accountId, conversation.uri, text.toString(), messageId)
+        }
     }
 
     fun shareText(interaction: TextMessage) {
@@ -547,15 +579,17 @@ class ConversationPresenter @Inject constructor(
      */
     fun removeReaction(reactionToRemove: Interaction) {
         val conversation = mConversation ?: return
-        accountService.editConversationMessage(
-            conversation.accountId, conversation.uri, "", reactionToRemove.messageId!!
-        )
+        performMessagingAction {
+            accountService.editConversationMessage(
+                conversation.accountId, conversation.uri, "", reactionToRemove.messageId!!
+            )
+        }
     }
 
     fun editMessage(accountId: String, conversationUri: Uri, messageId: String, newMessage: String) {
         val message = mConversation?.getMessage(messageId)
         if (message?.body != newMessage)
-            accountService.editConversationMessage(accountId, conversationUri, newMessage, messageId)
+            performMessagingAction { accountService.editConversationMessage(accountId, conversationUri, newMessage, messageId) }
     }
 
     fun deleteConversation() {
