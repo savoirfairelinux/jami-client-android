@@ -874,14 +874,29 @@ class Conversation(
     private val conferenceEnded: MutableMap<String, CallHistory> = HashMap()
 
     enum class Mode {
-        OneToOne, AdminInvitesOnly, InvitesOnly,  // Non-daemon modes
-        Syncing, Public, Legacy, Request;
+        OneToOne, AdminInvitesOnly, InvitesOnly,
+        Syncing, Public, Legacy, Request, Feed;
 
         val isSwarm: Boolean
-            get() = this == OneToOne || this == InvitesOnly || this == Public
+            get() = this == OneToOne || this == InvitesOnly || this == Public || this == Feed
 
         val isGroup: Boolean
-            get() = this == AdminInvitesOnly || this == InvitesOnly || this == Public
+            get() = this == AdminInvitesOnly || this == InvitesOnly || this == Public || this == Feed
+
+        companion object {
+            // Local states do not share the daemon's persisted mode numbering.
+            fun fromDaemon(value: Int): Mode = fromDaemonOrNull(value)
+                ?: throw IllegalArgumentException("Unsupported daemon conversation mode: $value")
+
+            fun fromDaemonOrNull(value: Int): Mode? = when (value) {
+                0 -> OneToOne
+                1 -> AdminInvitesOnly
+                2 -> InvitesOnly
+                3 -> Public
+                5 -> Feed
+                else -> null
+            }
+        }
     }
 
     val isEnded: Boolean

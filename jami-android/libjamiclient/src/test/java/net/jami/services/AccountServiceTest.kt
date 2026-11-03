@@ -211,4 +211,27 @@ class AccountServiceTest {
             }
         }
     }
+
+    @Test
+    fun invitationsDecodeFeedAndPreserveExistingDefaults() {
+        val account = Account("account", emptyMap(), emptyList(),
+            mapOf(ConfigKey.ACCOUNT_REGISTRATION_STATUS.key to "REGISTERED"))
+        doReturn(account).`when`(service).getAccount("account")
+        for ((mode, expected) in listOf(
+            "5" to Conversation.Mode.Feed,
+            "2" to Conversation.Mode.InvitesOnly,
+            null to Conversation.Mode.OneToOne
+        )) {
+            val conversationId = "conversation-$mode"
+            val metadata = mutableMapOf("from" to "a".repeat(40), "received" to "1700000000")
+            mode?.let { metadata["mode"] = it }
+
+            service.conversationRequestReceived("account", conversationId, metadata)
+
+            val request = account.getByUri(Uri(Uri.SWARM_SCHEME, conversationId))!!
+            assertEquals(Conversation.Mode.Request, request.mode.blockingFirst())
+            assertEquals(expected, request.requestMode)
+            assertEquals(expected, request.request!!.mode)
+        }
+    }
 }
