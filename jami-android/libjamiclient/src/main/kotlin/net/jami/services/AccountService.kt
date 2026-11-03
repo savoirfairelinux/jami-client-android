@@ -545,6 +545,21 @@ class AccountService(
     }
 
     fun sendConversationMessage(accountId: String, conversationUri: Uri, txt: String, replyTo: String?, flag: Int = 0) {
+        val conversation = checkNotNull(getAccount(accountId)?.getByUri(conversationUri)) {
+            "Conversation is unavailable: ${conversationUri.uri}"
+        }
+        when (flag) {
+            0 -> conversation.requirePermission(
+                if (replyTo.isNullOrEmpty()) Conversation.Permission.Text else Conversation.Permission.TextReply)
+            1 -> {
+                val target = replyTo?.let(conversation::getMessage)
+                if (txt.isEmpty()) conversation.requireMessageDeletion(target)
+                else if (target?.type != Interaction.InteractionType.COLLAB_DOC)
+                    conversation.requirePermission(Conversation.Permission.Edit)
+            }
+            2 -> conversation.requirePermission(Conversation.Permission.Reaction)
+            else -> throw IllegalArgumentException("Unsupported message flag: $flag")
+        }
         mExecutor.execute {
             Log.w(TAG, "sendConversationMessage ${conversationUri.rawRingId} $txt $replyTo $flag")
             JamiService.sendMessage(accountId, conversationUri.rawRingId, txt, replyTo ?: "", flag)
@@ -1873,6 +1888,8 @@ class AccountService(
     }
 
     fun sendFile(conversation: Conversation, file: File, replyTo: String? = null) {
+        conversation.requirePermission(
+            if (replyTo.isNullOrEmpty()) Conversation.Permission.File else Conversation.Permission.FileReply)
         mExecutor.execute {
             JamiService.sendFile(
                 conversation.accountId, conversation.uri.rawRingId,

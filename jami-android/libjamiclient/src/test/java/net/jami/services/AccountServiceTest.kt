@@ -10,10 +10,12 @@ import net.jami.model.Conversation
 import net.jami.model.MemberRole
 import net.jami.model.Uri
 import net.jami.model.interaction.ContactEvent
+import net.jami.model.interaction.DataTransfer
 import net.jami.utils.Log
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertSame
+import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers.any
@@ -26,6 +28,7 @@ import org.mockito.Mockito.verify
 import java.util.concurrent.Callable
 import java.util.concurrent.FutureTask
 import java.util.concurrent.ScheduledExecutorService
+import java.io.File
 
 class AccountServiceTest {
     private lateinit var service: AccountService
@@ -151,6 +154,54 @@ class AccountServiceTest {
 
             conversation.permissions.test().assertValue(setOf("textReply"))
             daemon.verify { JamiService.getConversationPermissions("account", "conversation") }
+        }
+    }
+
+    @Test
+    fun messagingOperationsRequireTheirOwnPermissionBeforeCallingNativeCode() {
+        val account = Account("account", emptyMap(), emptyList(),
+            mapOf(ConfigKey.ACCOUNT_REGISTRATION_STATUS.key to "REGISTERED"))
+        val conversation = account.newSwarm("conversation", Conversation.Mode.Feed)
+        val transfer = DataTransfer("file", "account", "a".repeat(40), "file.txt", true, 0L, 1L, 0L)
+            .apply { setSwarmInfo("conversation", "file-message", null) }
+        conversation.addSwarmElement(transfer, false)
+        doReturn(account).`when`(service).getAccount("account")
+        mockStatic(JamiService::class.java).use { daemon ->
+            val operations = listOf(
+                Triple("text", null, 0),
+                Triple("textReply", "post", 0),
+                Triple("reaction", "post", 2),
+                Triple("edit", "post", 1),
+                Triple("delete", "post", 1),
+                Triple("deleteFile", "file-message", 1)
+            )
+            for ((permission, target, flag) in operations) {
+                val text = if (permission.startsWith("delete")) "" else "message"
+                conversation.setPermissions(emptySet())
+                assertThrows(SecurityException::class.java) {
+                    service.sendConversationMessage("account", conversation.uri, text, target, flag)
+                }
+                daemon.verifyNoInteractions()
+                conversation.setPermissions(setOf(permission))
+                service.sendConversationMessage("account", conversation.uri, text, target, flag)
+                daemon.verify { JamiService.sendMessage("account", "conversation", text, target.orEmpty(), flag) }
+                daemon.clearInvocations()
+            }
+        }
+    }
+
+    @Test
+    fun filePublishingAndRepliesAreCheckedBeforeCallingNativeCode() {
+        val account = Account("account", emptyMap(), emptyList(),
+            mapOf(ConfigKey.ACCOUNT_REGISTRATION_STATUS.key to "REGISTERED"))
+        val conversation = account.newSwarm("conversation", Conversation.Mode.Feed)
+        val file = File("file.txt")
+        conversation.setPermissions(setOf("fileReply"))
+        mockStatic(JamiService::class.java).use { daemon ->
+            assertThrows(SecurityException::class.java) { service.sendFile(conversation, file) }
+            daemon.verifyNoInteractions()
+            service.sendFile(conversation, file, "post")
+            daemon.verify { JamiService.sendFile("account", "conversation", file.absolutePath, file.name, "post") }
         }
     }
 
