@@ -367,7 +367,7 @@ class DaemonService(
             permissions: StringVect
         ) {
             snapshotConversationCallback {
-                mAccountService.swarmLoaded(id, accountId, conversationId, messages.map(SwarmMessageData::from))
+                mAccountService.swarmLoaded(id, accountId, conversationId, messages.map(SwarmMessageData::from), permissions.toSet())
             }
         }
 
