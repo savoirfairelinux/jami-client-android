@@ -1383,18 +1383,37 @@ class AccountService(
         return JamiService.getConversationPreferences(accountId, conversationId)
     }
 
-    fun updateConversationInfo(accountId: String, conversationId: String, info: Map<String, String>) {
-        JamiService.updateConversationInfos(accountId, conversationId, StringMap.toSwig(info))
-    }
+    fun updateConversationInfo(accountId: String, conversationId: String, info: Map<String, String>): Completable =
+        Completable.fromAction {
+            val conversation = getAccount(accountId)?.getSwarm(conversationId)
+            if (conversation == null || conversation.isSwarmGroup())
+                requireConversationPermission(accountId, conversationId, Conversation.Permission.UpdateProfile)
+            JamiService.updateConversationInfos(accountId, conversationId, StringMap.toSwig(info))
+        }.subscribeOn(scheduler)
 
-    fun addConversationMembers(accountId: String, conversationId: String, uris: List<Uri>) =
-        mExecutor.execute {
+    fun addConversationMembers(accountId: String, conversationId: String, uris: List<Uri>): Completable =
+        Completable.fromAction {
+            val conversation = getAccount(accountId)?.getSwarm(conversationId)
+            uris.map { uri ->
+                if (conversation?.roles?.get(uri.uri) == MemberRole.BLOCKED)
+                    Conversation.Permission.BanUnbanMember
+                else Conversation.Permission.AddMember
+            }.distinct().forEach { requireConversationPermission(accountId, conversationId, it) }
             for (uri in uris)
                 JamiService.addConversationMember(accountId, conversationId, uri.rawRingId)
-        }
+        }.subscribeOn(scheduler)
 
-    fun removeConversationMember(accountId: String, conversationId: String, uri: Uri) =
-        JamiService.removeConversationMember(accountId, conversationId, uri.rawRingId)
+    fun removeConversationMember(accountId: String, conversationId: String, uri: Uri): Completable =
+        Completable.fromAction {
+            requireConversationPermission(accountId, conversationId, Conversation.Permission.BanUnbanMember)
+            JamiService.removeConversationMember(accountId, conversationId, uri.rawRingId)
+        }.subscribeOn(scheduler)
+
+    fun unbanConversationMember(accountId: String, conversationId: String, uri: Uri): Completable =
+        Completable.fromAction {
+            requireConversationPermission(accountId, conversationId, Conversation.Permission.BanUnbanMember)
+            JamiService.addConversationMember(accountId, conversationId, uri.rawRingId)
+        }.subscribeOn(scheduler)
 
     fun contactAdded(accountId: String, uri: String, confirmed: Boolean) {
         getAccount(accountId)?.let { account ->
@@ -2201,6 +2220,14 @@ class AccountService(
 
     companion object {
         private val TAG = AccountService::class.java.simpleName
+        internal fun requireConversationPermission(
+            accountId: String, conversationId: String, vararg anyOf: Conversation.Permission
+        ) {
+            val grants = JamiService.getConversationPermissions(accountId, conversationId).toSet()
+            if (anyOf.none { it.key in grants })
+                throw SecurityException("Conversation does not grant ${anyOf.joinToString { it.key }}")
+        }
+
         private const val VCARD_CHUNK_SIZE = 1000
         private const val DATA_TRANSFER_REFRESH_PERIOD: Long = 500
         private const val DATA_TRANSFER_INFO_MAX_RETRIES = 4

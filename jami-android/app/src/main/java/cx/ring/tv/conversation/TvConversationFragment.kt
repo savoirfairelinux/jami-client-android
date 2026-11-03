@@ -649,10 +649,10 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
             endedConversationGroup.isVisible = false
             conversationActionMessage.isVisible = false
         }
-        updateMessagingPermissions()
+        updateConversationPermissions()
     }
 
-    override fun updateMessagingPermissions() {
+    override fun updateConversationPermissions() {
         binding?.apply {
             textContainer.isVisible = presenter.canSendText()
             audioContainer.isVisible = presenter.canSendFile() || isRecording
