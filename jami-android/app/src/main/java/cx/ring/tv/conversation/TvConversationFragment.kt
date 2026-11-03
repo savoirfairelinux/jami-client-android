@@ -210,6 +210,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
             Error.INVALID_FILE -> getString(R.string.invalid_file)
             Error.NOT_ABLE_TO_WRITE_FILE -> getString(R.string.not_able_to_write_file)
             Error.NO_SPACE_LEFT -> getString(R.string.no_space_left_on_device)
+            Error.PERMISSION_DENIED -> getString(R.string.generic_error)
             else -> getString(R.string.generic_error)
         }
         Toast.makeText(requireContext(), errorString, Toast.LENGTH_LONG).show()
@@ -647,6 +648,15 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
             conversationActionGroup.isVisible = true
             endedConversationGroup.isVisible = false
             conversationActionMessage.isVisible = false
+        }
+        updateMessagingPermissions()
+    }
+
+    override fun updateMessagingPermissions() {
+        binding?.apply {
+            textContainer.isVisible = presenter.canSendText()
+            audioContainer.isVisible = presenter.canSendFile() || isRecording
+            videoContainer.isVisible = presenter.canSendFile()
         }
     }
 

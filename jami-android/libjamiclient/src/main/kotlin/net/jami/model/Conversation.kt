@@ -865,6 +865,38 @@ class Conversation(
     fun setPermissions(permissions: Collection<String>) =
         permissionsSubject.onNext(permissions.toSet())
 
+    enum class Permission(val key: String) {
+        Text("text"), TextReply("textReply"), File("file"), FileReply("fileReply"),
+        Reaction("reaction"), Edit("edit"), Delete("delete"), DeleteFile("deleteFile")
+    }
+
+    fun hasPermission(permission: Permission): Boolean =
+        !isSwarm || permissionsSubject.value?.contains(permission.key) == true
+
+    fun requirePermission(permission: Permission) {
+        if (!hasPermission(permission))
+            throw SecurityException("Conversation does not grant ${permission.key}")
+    }
+
+    fun canSendText(replyTo: String?): Boolean =
+        hasPermission(if (replyTo.isNullOrEmpty()) Permission.Text else Permission.TextReply)
+
+    fun canSendFile(replyTo: String?): Boolean =
+        hasPermission(if (replyTo.isNullOrEmpty()) Permission.File else Permission.FileReply)
+
+    private fun deletionPermission(interaction: Interaction?): Permission? = when (interaction?.type) {
+        Interaction.InteractionType.DATA_TRANSFER -> Permission.DeleteFile
+        Interaction.InteractionType.CALL, Interaction.InteractionType.COLLAB_DOC -> null
+        else -> Permission.Delete
+    }
+
+    fun canDeleteMessage(interaction: Interaction): Boolean =
+        deletionPermission(interaction)?.let(::hasPermission) ?: true
+
+    fun requireMessageDeletion(interaction: Interaction?) {
+        deletionPermission(interaction)?.let(::requirePermission)
+    }
+
     /**
      * Return the lock object used to synchronize loading
      */
