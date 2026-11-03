@@ -96,6 +96,9 @@ composer. Text, file, reaction, edit and shared deletion controls respect
 their individual grants. Removing a downloaded local file remains available
 independently of permission to delete its shared publication. Legacy chats
 do not require swarm permissions.
+Feed invitations, moderation and shared profile edits are admin-only.
+Calls and document creation are unavailable in Feeds; private contact
+name/avatar overrides and personal conversation preferences are unchanged.
 
 ## Threaded conversations (experimental)
 
