@@ -41,6 +41,7 @@ interface ConversationView {
     fun switchToUnknownView()
     fun switchToIncomingTrustRequestView(name: String, requestMode: Conversation.Mode)
     fun switchToConversationView()
+    fun updateMessagingPermissions()
     fun switchToBlockedView()
     fun switchToSyncingView()
     fun switchToEndedView(canSwitch: Boolean)
