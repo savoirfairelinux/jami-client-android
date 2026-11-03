@@ -408,15 +408,29 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         binding.threadConversationName.text = binding.contactTitle.text
         updateThreadNavigationFeedback()
         val canCompose = !accountOffline && (root == null || currentThreadRoot() != null)
-        binding.msgInputTxt.isEnabled = canCompose
+        val replyTo = outgoingReplyTarget()
+        val canText = presenter.canSendText(replyTo)
+        val canFile = presenter.canSendFile(replyTo)
+        val composerWasVisible = binding.cvMessageInput.isVisible
+        binding.cvMessageInput.isVisible = currentBottomView == binding.cvMessageInput && (canText || canFile)
+        if (composerWasVisible != binding.cvMessageInput.isVisible) {
+            binding.histList.updatePadding(bottom = (currentBottomView?.takeIf { it.isVisible }?.height ?: 0) + marginPxTotal)
+        }
+        if (!canFile) inlineAudioRecorder?.release()
+        binding.msgInputTxt.isVisible = canText
+        binding.msgInputTxt.isEnabled = canCompose && canText
         binding.msgInputTxt.setHint(
             if (root == null) R.string.write_a_message else R.string.conversation_thread_reply_hint
         )
-        binding.msgSend.isEnabled = canCompose
-        binding.emojiSend.isEnabled = canCompose
-        binding.btnMenu.isEnabled = canCompose
-        binding.btnTakePicture.isEnabled = canCompose
-        binding.btnAudioRecord.isEnabled = canCompose
+        binding.msgSend.isVisible = canText && !binding.msgInputTxt.text.isNullOrEmpty()
+        binding.emojiSend.isVisible = canText && binding.msgInputTxt.text.isNullOrEmpty()
+        binding.msgSend.isEnabled = canCompose && canText
+        binding.emojiSend.isEnabled = canCompose && canText
+        binding.btnMenu.isEnabled = canCompose && (canText || canFile)
+        binding.btnTakePicture.isVisible = canFile
+        binding.btnAudioRecord.isVisible = canFile
+        binding.btnTakePicture.isEnabled = canCompose && canFile
+        binding.btnAudioRecord.isEnabled = canCompose && canFile
         threadBack.isEnabled = root != null || threadNavigation.target != null ||
             threadScreenAnimation != null
     }
@@ -690,6 +704,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             Error.INVALID_FILE -> getString(R.string.invalid_file)
             Error.NOT_ABLE_TO_WRITE_FILE -> getString(R.string.not_able_to_write_file)
             Error.NO_SPACE_LEFT -> getString(R.string.no_space_left_on_device)
+            Error.PERMISSION_DENIED -> getString(R.string.generic_error)
             else -> getString(R.string.generic_error)
         }
         Toast.makeText(requireContext(), errorString, Toast.LENGTH_LONG).show()
@@ -763,6 +778,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 // Handles content URIs.
                 if (uriContent != null) {
                     val replyTo = outgoingReplyTarget()
+                    if (!presenter.canSendFile(replyTo)) {
+                        displayErrorToast(Error.PERMISSION_DENIED)
+                        return@setOnReceiveContentListener payload
+                    }
                     val clip = uriContent.clip
                     for (i in 0 until clip.itemCount) {
                         val uri = clip.getItemAt(i).uri
@@ -788,13 +807,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     val message = s.toString()
                     val hasMessage = !TextUtils.isEmpty(message)
                     presenter.onComposingChanged(hasMessage)
-                    if (hasMessage) {
-                        msgSend.visibility = View.VISIBLE
-                        emojiSend.visibility = View.GONE
-                    } else {
-                        msgSend.visibility = View.GONE
-                        emojiSend.visibility = View.VISIBLE
-                    }
+                    val canText = presenter.canSendText(outgoingReplyTarget())
+                    msgSend.isVisible = hasMessage && canText
+                    emojiSend.isVisible = !hasMessage && canText
                     mPreferences?.let { preferences ->
                         if (hasMessage)
                             preferences.edit { putString(threadState.draftKey, message) }
@@ -803,15 +818,15 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 }
             })
 
-            msgInputTxt.addOnLayoutChangeListener { _, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+            cvMessageInput.addOnLayoutChangeListener { _, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
                 if (oldBottom == 0 && oldTop == 0) {
                     // set initial list padding
-                    histList.updatePadding(bottom = (currentBottomView?.height ?: 0) + marginPxTotal)
+                    histList.updatePadding(bottom = (currentBottomView?.takeIf { it.isVisible }?.height ?: 0) + marginPxTotal)
                 } else {
                     if (animation.isStarted) animation.cancel()
                     animation.setIntValues(
                         histList.paddingBottom,
-                        (currentBottomView?.height ?: 0) + marginPxTotal
+                        (currentBottomView?.takeIf { it.isVisible }?.height ?: 0) + marginPxTotal
                     )
                     animation.start()
                 }
@@ -959,11 +974,16 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             binding?.apply {
                 replyGroup.isVisible = false
             }
+            updateThreadHeader()
         }
     }
 
     fun sendMessageText() {
         if (!canSendThreadReply()) return
+        if (!presenter.canSendText(outgoingReplyTarget())) {
+            displayErrorToast(Error.PERMISSION_DENIED)
+            return
+        }
         val message = binding!!.msgInputTxt.text.toString()
         presenter.sendTextMessage(message, replyingTo ?: currentThreadRoot())
         clearMsgEdit()
@@ -971,6 +991,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     fun sendEmoji() {
         if (!canSendThreadReply()) return
+        if (!presenter.canSendText(outgoingReplyTarget())) {
+            displayErrorToast(Error.PERMISSION_DENIED)
+            return
+        }
         presenter.sendTextMessage(
             binding!!.emojiSend.text.toString(), replyingTo ?: currentThreadRoot()
         )
@@ -981,8 +1005,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         if (!canSendThreadReply()) return
         val popup = PopupMenu(requireContext(), v)
         popup.inflate(R.menu.conversation_share_actions)
+        val fileActions = setOf(R.id.conv_send_video, R.id.conv_send_file, R.id.conv_select_media)
         popup.setOnMenuItemClickListener { item: MenuItem ->
             attachmentReplyTarget = outgoingReplyTarget()
+            if (item.itemId in fileActions && !presenter.canSendFile(attachmentReplyTarget)) {
+                displayErrorToast(Error.PERMISSION_DENIED)
+                return@setOnMenuItemClickListener false
+            }
             when (item.itemId) {
                 //R.id.conv_send_audio -> sendAudioMessage()
                 R.id.conv_send_video -> sendVideoMessage()
@@ -994,6 +1023,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             }
             false
         }
+        fileActions.forEach { popup.menu.findItem(it).isVisible = presenter.canSendFile(outgoingReplyTarget()) }
         popup.menu.findItem(R.id.chat_extensions).isVisible = JamiService.getPluginsEnabled() && !JamiService.getChatHandlers().isEmpty()
         if (threadState.rootId != null) {
             popup.menu.findItem(R.id.conv_share_location).isVisible = false
@@ -1784,11 +1814,17 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             trustRequestMessage.visibility = View.GONE
             currentBottomView = cvMessageInput
             cvMessageInput.doOnNextLayout {
-                cvMessageInput.height.takeIf { it > 0 }?.let {
+                cvMessageInput.height.takeIf { cvMessageInput.isVisible && it > 0 }?.let {
                     histList.updatePadding(bottom = it + marginPxTotal)
                 }
             }
         }
+        updateThreadHeader()
+        updatePaddings()
+    }
+
+    override fun updateMessagingPermissions() {
+        updateThreadHeader()
         updatePaddings()
     }
 
@@ -1953,8 +1989,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             replyMessage.text = interaction.body
             replyMessage.isVisible = !interaction.body.isNullOrEmpty()
             replyGroup.isVisible = true
-            if (!focus) return@apply
+            updateThreadHeader()
+            if (!focus || !presenter.canSendText(outgoingReplyTarget())) return@apply
             msgInputTxt.post {
+                if (!presenter.canSendText(outgoingReplyTarget())) return@post
                 if (!msgInputTxt.hasFocus()) {
                     msgInputTxt.requestFocus()
                     (requireContext()
