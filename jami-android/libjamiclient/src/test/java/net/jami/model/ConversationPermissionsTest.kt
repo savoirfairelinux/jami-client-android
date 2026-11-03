@@ -7,6 +7,39 @@ import org.junit.Assert.assertTrue
 
 class ConversationPermissionsTest {
     @Test
+    fun feedControlsFollowGrantsWithoutEnablingCallsOrDocuments() {
+        val conversation = Conversation("account", Uri(Uri.SWARM_SCHEME, "feed"), Conversation.Mode.Feed)
+        assertFalse(conversation.canCall())
+        assertFalse(conversation.canCreateDocument())
+        assertFalse(conversation.canUpdateProfile())
+        conversation.setPermissions(setOf("textReply", "fileReply"))
+        assertFalse(conversation.hasPermission(Conversation.Permission.AddMember))
+        assertFalse(conversation.hasPermission(Conversation.Permission.BanUnbanMember))
+        conversation.setPermissions(setOf("addMember", "banUnbanMember", "updateProfile"))
+        assertTrue(conversation.hasPermission(Conversation.Permission.AddMember))
+        assertTrue(conversation.hasPermission(Conversation.Permission.BanUnbanMember))
+        assertTrue(conversation.canUpdateProfile())
+        assertFalse(conversation.canCall())
+        assertFalse(conversation.canCreateDocument())
+        conversation.setPermissions(setOf("hostConference", "createDocument"))
+        assertTrue(conversation.canCall())
+        assertTrue(conversation.canCreateDocument())
+    }
+
+    @Test
+    fun privateChatsKeepCallsAndLocalProfileCustomization() {
+        val legacy = Conversation("account", Contact(Uri.fromString("jami://test")))
+        assertTrue(legacy.canCall())
+        assertTrue(legacy.canUpdateProfile())
+        assertFalse(legacy.canCreateDocument())
+        val conversation = Conversation("account", Uri(Uri.SWARM_SCHEME, "private"), Conversation.Mode.OneToOne)
+        assertFalse(conversation.canCall())
+        assertTrue(conversation.canUpdateProfile())
+        conversation.setPermissions(setOf("call"))
+        assertTrue(conversation.canCall())
+    }
+
+    @Test
     fun swarmMessagingRequiresLoadedGrantsAndDistinguishesReplies() {
         val conversation = Conversation("account", Uri(Uri.SWARM_SCHEME, "feed"), Conversation.Mode.Feed)
         assertFalse(conversation.canSendText(null))
