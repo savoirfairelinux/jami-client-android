@@ -29,6 +29,7 @@ import net.jami.model.Call
 import net.jami.model.Call.CallStatus
 import net.jami.model.Call.Direction
 import net.jami.model.Conference
+import net.jami.model.Conversation
 import net.jami.model.Conference.ParticipantInfo
 import net.jami.model.ContactViewModel
 import net.jami.model.Media
@@ -265,7 +266,8 @@ abstract class CallService(
 
     fun placeCallIfAllowed(
         account: String, conversationUri: Uri?, numberUri: Uri, hasVideo: Boolean
-    ): Single<Call> =
+    ): Single<Call> = Single.defer {
+        requireCallPermission(account, conversationUri, numberUri)
         // Need to check if the call is allowed by system before placing it.
         requestPlaceCall(account, conversationUri, numberUri, hasVideo)
             .onErrorReturnItem(CALL_ALLOWED_VAL) // Fallback to not block the call.
@@ -277,11 +279,26 @@ abstract class CallService(
                         .doOnSuccess { result.setCall(it) }
                         .doOnError { result.setCall(null) }
             }
+    }
+
+    private fun requireCallPermission(accountId: String, conversationUri: Uri?, numberUri: Uri) {
+        val conversationId = when {
+            numberUri.isSwarm -> numberUri.rawRingId
+            numberUri.isRendezvous -> numberUri.uri.removePrefix(Uri.RENDEZVOUS_SCHEME).substringBefore('/')
+            conversationUri?.isSwarm == true -> conversationUri.rawRingId
+            else -> mAccountService.getAccount(accountId)?.getByUri(numberUri)
+                ?.takeIf { it.isSwarm }?.uri?.rawRingId
+        }
+        if (conversationId != null)
+            AccountService.requireConversationPermission(
+                accountId, conversationId, Conversation.Permission.Call, Conversation.Permission.HostConference)
+    }
 
     private fun placeCall(
         account: String, conversationUri: Uri?, numberUri: Uri, hasVideo: Boolean
     ): Single<Call> =
         Single.fromCallable<Call> {
+            requireCallPermission(account, conversationUri, numberUri)
             Log.i(TAG, "placeCall() account=$account conversationUri=$conversationUri numberUri=$numberUri hasVideo=$hasVideo")
 
             // Create a media list with audio and video (optional).
