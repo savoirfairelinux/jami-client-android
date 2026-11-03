@@ -359,9 +359,9 @@ class DaemonService(
     }
 
     internal inner class ConversationCallbackImpl : ConversationCallback() {
-        override fun swarmLoaded(id: Long, accountId: String, conversationId: String, messages: SwarmMessageVect) {
+        override fun swarmLoaded(id: Long, accountId: String, conversationId: String, messages: SwarmMessageVect, permissions: StringVect) {
             snapshotConversationCallback {
-                mAccountService.swarmLoaded(id, accountId, conversationId, messages.map(SwarmMessageData::from))
+                mAccountService.swarmLoaded(id, accountId, conversationId, messages.map(SwarmMessageData::from), permissions.toSet())
             }
         }
 

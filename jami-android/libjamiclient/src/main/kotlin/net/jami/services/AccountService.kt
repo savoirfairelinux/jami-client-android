@@ -282,6 +282,12 @@ class AccountService(
         accountsSubject.onNext(newAccounts)
     }
 
+    private fun refreshConversationPermissions(conversation: Conversation) {
+        conversation.setPermissions(
+            JamiService.getConversationPermissions(conversation.accountId, conversation.uri.rawRingId)
+        )
+    }
+
     private fun loadAccount(account: Account) {
         if (!account.isJami) {
             return
@@ -308,6 +314,7 @@ class AccountService(
                 }
                 conversation.updateTimestamps(info)
                 conversation.setProfile(mVCardService.loadConversationProfile(info))
+                refreshConversationPermissions(conversation)
                 if (mode == Conversation.Mode.Syncing) {
                     conversation.lastEvent = ContactEvent(TimestampUtils.fromDetails(info, "created"))
                 }
@@ -1533,13 +1540,14 @@ class AccountService(
         return interaction
     }
 
-    internal fun swarmLoaded(id: Long, accountId: String, conversationId: String, messages: List<SwarmMessageData>) {
+    internal fun swarmLoaded(id: Long, accountId: String, conversationId: String, messages: List<SwarmMessageData>, permissions: Set<String>) {
+        val grantedPermissions = permissions.toSet()
         conversationCallbacks.dispatch(accountId, conversationId) {
-            swarmLoadedNow(id, accountId, conversationId, messages)
+            swarmLoadedNow(id, accountId, conversationId, messages, grantedPermissions)
         }
     }
 
-    private fun swarmLoadedNow(id: Long, accountId: String, conversationId: String, messages: List<SwarmMessageData>) {
+    private fun swarmLoadedNow(id: Long, accountId: String, conversationId: String, messages: List<SwarmMessageData>, permissions: Set<String>) {
         var conversationLoad: ConversationLoad? = null
         try {
             val task = loadingTasks.remove(id)
@@ -1554,6 +1562,7 @@ class AccountService(
             }
             val interactions = messages.map { getInteractionFromSwarmMessage(account, conversation, it) }
             val subject = synchronized(conversation) {
+                conversation.setPermissions(permissions)
                 interactions.forEach { conversation.addSwarmElement(it, false) }
                 conversationLoad?.takeIf { it.conversation === conversation }?.let { load ->
                     synchronized(conversation.loadingLock()) {
@@ -1620,6 +1629,7 @@ class AccountService(
                     }
                 }
             }
+            refreshConversationPermissions(conversation)
         }}
     }
 
@@ -1654,6 +1664,7 @@ class AccountService(
             setMode = mode != c.mode.blockingFirst()
         }
         val conversation = c
+        refreshConversationPermissions(conversation)
         synchronized(conversation) {
             conversation.updateTimestamps(info)
             conversation.setProfile(mVCardService.loadConversationProfile(info))
