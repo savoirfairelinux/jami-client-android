@@ -182,7 +182,7 @@ class ConversationPresenter @Inject constructor(
         disposable.add(c.permissions
             .startWithItem(emptySet())
             .observeOn(uiScheduler)
-            .subscribe { this.view?.updateMessagingPermissions() })
+            .subscribe { this.view?.updateConversationPermissions() })
         disposable.add(c.mode
             .switchMap { mode: Conversation.Mode ->
                 val showPresence = !c.isSwarmGroup() // Don't show presence for swarm groups.
@@ -349,6 +349,10 @@ class ConversationPresenter @Inject constructor(
 
     fun canDeleteMessage(interaction: Interaction): Boolean = mConversation?.canDeleteMessage(interaction) == true
 
+    fun canCall(): Boolean = mConversation?.canCall() == true
+
+    fun canCreateDocument(): Boolean = mConversation?.canCreateDocument() == true
+
     val messagingPermissions: Observable<Set<String>>
         get() = mConversationSubject.switchMap { it.permissions.startWithItem(emptySet()) }
 
@@ -382,12 +386,20 @@ class ConversationPresenter @Inject constructor(
 
     fun goToGroupCall(media: Boolean) {
         val conversation = mConversation ?: return
+        if (!canCall()) {
+            view?.displayErrorToast(Error.PERMISSION_DENIED)
+            return
+        }
         view?.goToGroupCall(conversation, conversation.uri, media)
     }
 
     fun goToSwarmCall(callHistory: CallHistory, withVideo: Boolean) {
         Log.w(TAG, "goToSwarmCall $callHistory")
         val conversation = mConversation ?: return
+        if (!canCall()) {
+            view?.displayErrorToast(Error.PERMISSION_DENIED)
+            return
+        }
         if (callHistory.confId == null || callHistory.hostUri == null || callHistory.hostDevice == null)
             goToGroupCall(withVideo)
         else
@@ -437,6 +449,10 @@ class ConversationPresenter @Inject constructor(
      * @param withCamera Indicates whether the call should include camera functionality.
      */
     fun goToCall(withCamera: Boolean) {
+        if (!canCall()) {
+            view?.displayErrorToast(Error.PERMISSION_DENIED)
+            return
+        }
         // Check if the device has a camera or microphone
         if (!withCamera && !hardwareService.hasMicrophone()) {
             view!!.displayErrorToast(Error.NO_MICROPHONE)
