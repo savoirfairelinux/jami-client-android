@@ -1024,6 +1024,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             false
         }
         fileActions.forEach { popup.menu.findItem(it).isVisible = presenter.canSendFile(outgoingReplyTarget()) }
+        popup.menu.findItem(R.id.conv_new_document).isVisible = presenter.canCreateDocument()
         popup.menu.findItem(R.id.chat_extensions).isVisible = JamiService.getPluginsEnabled() && !JamiService.getChatHandlers().isEmpty()
         if (threadState.rootId != null) {
             popup.menu.findItem(R.id.conv_share_location).isVisible = false
@@ -1035,6 +1036,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     private fun newCollabDocument() {
+        if (!presenter.canCreateDocument()) {
+            displayErrorToast(Error.PERMISSION_DENIED)
+            return
+        }
         val path = ConversationPath.fromBundle(arguments) ?: return
         CollabDocuments.promptNew(
             requireContext(), path, presenter.collaborationService, mCompositeDisposable
@@ -1455,6 +1460,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     private val menuProvider = object : MenuProvider {
         override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
+            val canCall = currentBottomView == binding?.cvMessageInput && presenter.canCall()
+            menu.findItem(R.id.conv_action_audiocall)?.isVisible = canCall
+            menu.findItem(R.id.conv_action_videocall)?.isVisible = canCall
             val searchMenuItem = menu.findItem(R.id.conv_search)
             searchMenuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
                 override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
@@ -1806,8 +1814,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     override fun switchToConversationView() {
         binding?.apply {
             toolbar.menu.findItem(R.id.conv_search).isVisible = true
-            toolbar.menu.findItem(R.id.conv_action_videocall).isVisible = true
-            toolbar.menu.findItem(R.id.conv_action_audiocall).isVisible = true
+            toolbar.menu.findItem(R.id.conv_action_videocall).isVisible = presenter.canCall()
+            toolbar.menu.findItem(R.id.conv_action_audiocall).isVisible = presenter.canCall()
             cvMessageInput.visibility = View.VISIBLE
             unknownContactPrompt.visibility = View.GONE
             trustRequestPrompt.visibility = View.GONE
@@ -1823,9 +1831,14 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         updatePaddings()
     }
 
-    override fun updateMessagingPermissions() {
+    override fun updateConversationPermissions() {
         updateThreadHeader()
         updatePaddings()
+        binding?.apply {
+            val canCall = currentBottomView == cvMessageInput && presenter.canCall()
+            toolbar.menu.findItem(R.id.conv_action_videocall)?.isVisible = canCall
+            toolbar.menu.findItem(R.id.conv_action_audiocall)?.isVisible = canCall
+        }
     }
 
     override fun switchToSyncingView() {

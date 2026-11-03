@@ -57,6 +57,7 @@ import cx.ring.utils.*
 import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Call.CallStatus
@@ -163,9 +164,11 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
             }
         }
 
-        mDisposableBag.add(mConversationFacade.observeConversation(conversation)
+        mDisposableBag.add(Observable.combineLatest(
+            mConversationFacade.observeConversation(conversation).doOnComplete { runOnUiThread { finish() } },
+            conversation.permissions.startWithItem(emptySet())
+        ) { vm, _ -> vm }
             .observeOn(DeviceUtils.uiScheduler)
-            .doOnComplete { finish() }
             .subscribe({ vm ->
                 binding.conversationAvatar.setImageDrawable(AvatarDrawable.Builder()
                     .withViewModel(vm)
@@ -240,8 +243,6 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
                     binding.conversationTitle.setOnClickListener { showNotAdminToast() }
                     binding.conversationAvatar.setOnClickListener { showNotAdminToast() }
                 } else {
-                    binding.audioCall.setOnClickListener { goToCallActivity(conversation, conversation.uri, false) }
-                    binding.videoCall.setOnClickListener { goToCallActivity(conversation, conversation.uri, true) }
                     // Passing `null` for `contact` because this is a group conversation
                     binding.conversationAvatar.setOnClickListener { profileImageClicked(null, true) }
                     binding.conversationTitle.setOnClickListener {
@@ -254,14 +255,24 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
                             .setTitle(getString(R.string.dialogtitle_title))
                             .setPositiveButton(R.string.rename_btn) { d: DialogInterface, i: Int ->
                                 val input = dialogBinding.titleTxt.text.toString().trim { it <= ' ' }
-                                mAccountService.updateConversationInfo(
-                                    path!!.accountId, path!!.conversationUri.host, mapOf("title" to input)
-                                )
+                                updateConversationInfo(mapOf("title" to input))
                                 d.dismiss()
                             }
                             .setNegativeButton(android.R.string.cancel, null)
                             .show()
                     }
+                }
+                binding.audioCall.isVisible = conversation.canCall()
+                binding.videoCall.isVisible = conversation.canCall()
+                binding.addMember.isVisible = vm.request == null && vm.isGroup() &&
+                    conversation.hasPermission(Conversation.Permission.AddMember)
+                if (vm.isGroup()) {
+                    binding.btnPanel.isVisible = vm.request == null && (conversation.canCall() || binding.addMember.isVisible)
+                    binding.audioCall.setOnClickListener { goToCallActivity(conversation, conversation.uri, false) }
+                    binding.videoCall.setOnClickListener { goToCallActivity(conversation, conversation.uri, true) }
+                    val canEditProfile = conversation.isUserGroupAdmin() && conversation.canUpdateProfile()
+                    binding.conversationTitle.isClickable = canEditProfile
+                    binding.conversationAvatar.isClickable = canEditProfile
                 }
 
             }) { e ->
@@ -291,7 +302,11 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
         }.attach()
 
         binding.toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
-        binding.addMember.setOnClickListener { ContactPickerFragment.newInstance(conversation.contacts).show(supportFragmentManager, ContactPickerFragment.TAG) }
+        binding.addMember.setOnClickListener {
+            if (conversation.hasPermission(Conversation.Permission.AddMember))
+                ContactPickerFragment.newInstance(conversation.contacts).show(supportFragmentManager, ContactPickerFragment.TAG)
+            else Toast.makeText(this, R.string.generic_error, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun profileImageClicked(contact: Contact?, isGroup: Boolean) {
@@ -351,8 +366,7 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
                     } else {
                         val map: MutableMap<String, String> = HashMap()
                         map["avatar"] = avatarBase64
-                        mAccountService.updateConversationInfo(path!!.accountId,
-                            path!!.conversationUri.host, map)
+                        updateConversationInfo(map)
                     }
                 }
             }
@@ -467,6 +481,10 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
     }
 
     fun goToCallActivity(conversation: Conversation, contactUri: Uri, hasVideo: Boolean) {
+        if (!conversation.canCall()) {
+            Toast.makeText(this, R.string.generic_error, Toast.LENGTH_SHORT).show()
+            return
+        }
         val conf = conversation.currentCall
         if (conf != null && conf.participants.isNotEmpty()
             && conf.participants[0].callStatus != CallStatus.INACTIVE
@@ -492,12 +510,27 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
         ))
     }
 
-    override fun onContactPicked(accountId: String, contacts: Set<Contact>) =
-        mAccountService.addConversationMembers(
+    private fun reportConversationError(error: Throwable) {
+        Log.e(TAG, "Conversation action failed", error)
+        Toast.makeText(this, R.string.generic_error, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun updateConversationInfo(info: Map<String, String>) {
+        val path = path ?: return
+        mDisposableBag.add(mAccountService.updateConversationInfo(
+            path.accountId, path.conversationUri.rawRingId, info)
+            .observeOn(DeviceUtils.uiScheduler)
+            .subscribe({}, { reportConversationError(it) }))
+    }
+
+    override fun onContactPicked(accountId: String, contacts: Set<Contact>) {
+        mDisposableBag.add(mAccountService.addConversationMembers(
             accountId,
             conversationId = path!!.conversationUri.host,
             uris = contacts.map { contact -> contact.uri }
-        )
+        ).observeOn(DeviceUtils.uiScheduler)
+            .subscribe({}, { reportConversationError(it) }))
+    }
 
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity, conversation: Conversation) : FragmentStateAdapter(fa) {
 
