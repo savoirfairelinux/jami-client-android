@@ -42,6 +42,7 @@ import cx.ring.utils.TextUtils.copyAndShow
 import cx.ring.views.setDate
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.core.Observable
 import net.jami.model.Conversation
 import net.jami.model.Uri
 import net.jami.services.AccountService
@@ -81,7 +82,7 @@ class ConversationActionsFragment : Fragment() {
         conversationPath = path
 
         descriptionPanel.setOnClickListener {
-            if (!conversation.isUserGroupAdmin()) {
+            if (!conversation.isUserGroupAdmin() || !conversation.canUpdateProfile()) {
                 Toast.makeText(
                     requireContext(),
                     R.string.not_admin_toast,
@@ -98,10 +99,15 @@ class ConversationActionsFragment : Fragment() {
                 .setTitle(getString(R.string.dialogtitle_description))
                 .setPositiveButton(R.string.rename_btn) { d, _: Int ->
                     val input = dialogBinding.titleTxt.text.toString().trim { it <= ' ' }
-                    mAccountService.updateConversationInfo(
+                    mDisposableBag.add(mAccountService.updateConversationInfo(
                         conversationPath.accountId,
                         conversationPath.conversationUri.host,
                         mapOf("description" to input))
+                        .observeOn(DeviceUtils.uiScheduler)
+                        .subscribe({}, { error ->
+                            net.jami.utils.Log.e("ConversationActions", "Cannot update conversation profile", error)
+                            Toast.makeText(requireContext(), R.string.generic_error, Toast.LENGTH_SHORT).show()
+                        }))
                     d.dismiss()
                 }
                 .setNegativeButton(android.R.string.cancel, null)
@@ -146,9 +152,14 @@ class ConversationActionsFragment : Fragment() {
             if (!path.conversationUri.isSwarm) conversation.setNotification(!isMuted)
         }
 
-        mDisposableBag.add(conversation.profile
+        mDisposableBag.add(Observable.combineLatest(
+            conversation.profile, conversation.permissions.startWithItem(emptySet())
+        ) { profile, _ -> profile }
             .observeOn(DeviceUtils.uiScheduler)
-            .subscribe { profile -> description.text = profile.description })
+            .subscribe { profile ->
+                description.text = profile.description
+                descriptionPanel.isClickable = conversation.isUserGroupAdmin() && conversation.canUpdateProfile()
+            })
 
         mDisposableBag.add(conversation.joinedDate
             .observeOn(DeviceUtils.uiScheduler)
