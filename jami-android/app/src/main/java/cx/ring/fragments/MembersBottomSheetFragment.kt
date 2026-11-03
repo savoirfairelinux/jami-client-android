@@ -20,6 +20,7 @@ import android.app.Dialog
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import android.view.*
 import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView
@@ -31,11 +32,14 @@ import cx.ring.client.ConversationDetailsActivity
 import cx.ring.databinding.FragMembersBottomsheetBinding
 import cx.ring.databinding.ItemMembersBottomsheetBinding
 import cx.ring.utils.ConversationPath
+import cx.ring.utils.DeviceUtils
 import cx.ring.utils.TextUtils.copyAndShow
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Uri
+import net.jami.model.Conversation
 import net.jami.model.MemberRole
 import net.jami.services.AccountService
 import net.jami.services.ConversationFacade
@@ -71,46 +75,55 @@ class MembersBottomSheetFragment : BottomSheetDialogFragment() {
             .startConversation(path.accountId, path.conversationUri)
             .blockingGet()
 
-        adapter.actions.add(ContactAction(null,
-            getString(R.string.bottomsheet_contact, contactUri.host)) {
-            copyAndShow(requireContext(), getString(R.string.clip_contact_uri), contactUri.host)
-        })
-
-        adapter.actions.add(ContactAction(null, getText(R.string.ab_action_audio_call)) {
-            (activity as? ConversationDetailsActivity)?.goToCallActivity(conversation, contactUri, false)
-        })
-
-        adapter.actions.add(ContactAction(null, getText(R.string.ab_action_video_call)) {
-            (activity as? ConversationDetailsActivity)?.goToCallActivity(conversation, contactUri, true)
-        })
-
-        adapter.actions.add(ContactAction(null, getString(R.string.send_message)) {
-            (activity as? ConversationDetailsActivity)?.goToConversationActivity(path.accountId, contactUri)
-        })
-
-        val isAdmin = conversation.isUserGroupAdmin()
-        if (isAdmin) {
-            val isBlocked = conversation.roles[contactUri.uri] == MemberRole.BLOCKED
+        fun updateActions() {
+            adapter.actions.clear()
             adapter.actions.add(ContactAction(null,
-                getString(if (isBlocked) R.string.bottomsheet_unblock else R.string.bottomsheet_block)) {
-                if (isBlocked) {
-                    mAccountService.addConversationMembers(
-                        path.accountId,
-                        path.conversationUri.host,
-                        listOf(contactUri)
-                    )
-                } else {
-                    mAccountService.removeConversationMember(
-                        path.accountId,
-                        conversationId = path.conversationUri.host,
-                        uri = contactUri
-                    )
-                }
-                dismiss()
+                getString(R.string.bottomsheet_contact, contactUri.host)) {
+                copyAndShow(requireContext(), getString(R.string.clip_contact_uri), contactUri.host)
             })
+
+            if (conversation.canCall()) {
+                adapter.actions.add(ContactAction(null, getText(R.string.ab_action_audio_call)) {
+                    (activity as? ConversationDetailsActivity)?.goToCallActivity(conversation, contactUri, false)
+                })
+                adapter.actions.add(ContactAction(null, getText(R.string.ab_action_video_call)) {
+                    (activity as? ConversationDetailsActivity)?.goToCallActivity(conversation, contactUri, true)
+                })
+            }
+
+            adapter.actions.add(ContactAction(null, getString(R.string.send_message)) {
+                (activity as? ConversationDetailsActivity)?.goToConversationActivity(path.accountId, contactUri)
+            })
+
+            val isAdmin = conversation.isUserGroupAdmin()
+            if (isAdmin && conversation.hasPermission(Conversation.Permission.BanUnbanMember)) {
+                val isBlocked = conversation.roles[contactUri.uri] == MemberRole.BLOCKED
+                adapter.actions.add(ContactAction(null,
+                    getString(if (isBlocked) R.string.bottomsheet_unblock else R.string.bottomsheet_block)) {
+                    val action = if (isBlocked) {
+                        mAccountService.unbanConversationMember(path.accountId, path.conversationUri.rawRingId, contactUri)
+                    } else {
+                        mAccountService.removeConversationMember(
+                            path.accountId,
+                            conversationId = path.conversationUri.host,
+                            uri = contactUri
+                        )
+                    }
+                    mDisposableBag.add(action.observeOn(DeviceUtils.uiScheduler)
+                        .subscribe({ dismiss() }, { error ->
+                            Log.w(TAG, "Cannot moderate conversation member", error)
+                            Toast.makeText(requireContext(), R.string.generic_error, Toast.LENGTH_SHORT).show()
+                        }))
+                })
+            }
+            adapter.notifyDataSetChanged()
         }
 
         binding!!.actions.adapter = adapter
+        mDisposableBag.add(Observable.merge(
+            conversation.permissions.map { Unit }, conversation.contactUpdates.map { Unit }
+        ).startWithItem(Unit).observeOn(DeviceUtils.uiScheduler)
+            .subscribe { if (binding != null) updateActions() })
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -122,10 +135,15 @@ class MembersBottomSheetFragment : BottomSheetDialogFragment() {
         return dialog
     }
 
+    override fun onDestroyView() {
+        mDisposableBag.clear()
+        binding = null
+        super.onDestroyView()
+    }
+
     override fun onDestroy() {
         mDisposableBag.dispose()
         super.onDestroy()
-        binding = null
     }
 
     private class ContactActionAdapter(private val disposable: CompositeDisposable) :
