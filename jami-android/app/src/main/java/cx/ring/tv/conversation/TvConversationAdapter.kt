@@ -586,7 +586,7 @@ class TvConversationAdapter(
                 menu.removeItem(R.id.conv_action_share)
                 menu.removeItem(R.id.conv_action_open)
             }
-            if (file.isIncoming) menu.removeItem(R.id.conv_action_delete)
+            if (file.isIncoming || !presenter.canDeleteMessage(file)) menu.removeItem(R.id.conv_action_delete)
         }
         longPressView.setOnLongClickListener { v: View ->
             if (type == MessageType.TransferType.AUDIO || type == MessageType.TransferType.FILE) {
@@ -715,6 +715,7 @@ class TvConversationAdapter(
                 menu.findItem(R.id.conv_action_delete).setTitle(R.string.menu_message_delete)
                 menu.removeItem(R.id.conv_action_cancel_message)
             }
+            if (!presenter.canDeleteMessage(interaction)) menu.removeItem(R.id.conv_action_delete)
         }
         longPressView.setOnLongClickListener { v: View ->
             if (expandedItemPosition == position) {

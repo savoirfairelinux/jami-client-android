@@ -88,6 +88,15 @@ cd jami-client-android/daemon/extras/tools
 ./bootstrap && make .pkg-config
 ```
 
+## Messaging permissions
+
+Swarm messaging follows the permissions provided by the daemon. Feed admins
+can publish messages and files; members can reply using Reply or a thread's
+composer. Text, file, reaction, edit and shared deletion controls respect
+their individual grants. Removing a downloaded local file remains available
+independently of permission to delete its shared publication. Legacy chats
+do not require swarm permissions.
+
 ## Threaded conversations (experimental)
 
 Enable **Threaded view** in **Account settings > Messages** to group replies
