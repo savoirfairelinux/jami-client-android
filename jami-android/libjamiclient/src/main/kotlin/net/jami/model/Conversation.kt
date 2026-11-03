@@ -867,7 +867,9 @@ class Conversation(
 
     enum class Permission(val key: String) {
         Text("text"), TextReply("textReply"), File("file"), FileReply("fileReply"),
-        Reaction("reaction"), Edit("edit"), Delete("delete"), DeleteFile("deleteFile")
+        Reaction("reaction"), Edit("edit"), Delete("delete"), DeleteFile("deleteFile"),
+        Call("call"), HostConference("hostConference"), AddMember("addMember"),
+        BanUnbanMember("banUnbanMember"), UpdateProfile("updateProfile"), CreateDocument("createDocument")
     }
 
     fun hasPermission(permission: Permission): Boolean =
@@ -883,6 +885,12 @@ class Conversation(
 
     fun canSendFile(replyTo: String?): Boolean =
         hasPermission(if (replyTo.isNullOrEmpty()) Permission.File else Permission.FileReply)
+
+    fun canCall(): Boolean = hasPermission(Permission.Call) || hasPermission(Permission.HostConference)
+
+    fun canCreateDocument(): Boolean = isSwarm && hasPermission(Permission.CreateDocument)
+
+    fun canUpdateProfile(): Boolean = !isSwarmGroup() || hasPermission(Permission.UpdateProfile)
 
     private fun deletionPermission(interaction: Interaction?): Permission? = when (interaction?.type) {
         Interaction.InteractionType.DATA_TRANSFER -> Permission.DeleteFile

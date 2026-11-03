@@ -2028,6 +2028,15 @@ class ConversationAdapter(
             val acceptCallVideoButton =
                 convViewHolder.mAcceptCallVideoButton ?: return
 
+            acceptCallAudioButton.isVisible = presenter.canCall()
+            acceptCallVideoButton.isVisible = presenter.canCall()
+            convViewHolder.compositeDisposable.add(presenter.messagingPermissions
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe {
+                    acceptCallAudioButton.isVisible = presenter.canCall()
+                    acceptCallVideoButton.isVisible = presenter.canCall()
+                })
+
             callAcceptLayout.apply {
                 // Accept with audio only
                 convViewHolder.mAcceptCallAudioButton?.setOnClickListener {

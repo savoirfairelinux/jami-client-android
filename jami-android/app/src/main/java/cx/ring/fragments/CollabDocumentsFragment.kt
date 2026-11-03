@@ -34,6 +34,7 @@ import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 import net.jami.model.CollaborativeDocument
 import net.jami.model.Uri
 import net.jami.services.AccountService
@@ -54,6 +55,7 @@ class CollabDocumentsFragment : Fragment() {
     lateinit var accountService: AccountService
 
     private val disposable = CompositeDisposable()
+    private var permissionDisposable: Disposable? = null
     private var binding: FragCollabDocumentsBinding? = null
     private lateinit var path: ConversationPath
     private val adapter = DocumentAdapter()
@@ -78,7 +80,16 @@ class CollabDocumentsFragment : Fragment() {
     ): View = FragCollabDocumentsBinding.inflate(inflater, container, false).apply {
         documentList.adapter = adapter
         newDocument.setOnClickListener { promptNewDocument() }
+        newDocument.isVisible = false
         binding = this
+        permissionDisposable = accountService.getAccountSingle(path.accountId)
+            .flatMap { account -> accountService.getConversationByUri(account, path.conversationUri) }
+            .flatMapObservable { conversation ->
+                conversation.permissions.startWithItem(emptySet()).map { conversation.canCreateDocument() }
+            }
+            .observeOn(DeviceUtils.uiScheduler)
+            .subscribe({ canCreate -> binding?.newDocument?.isVisible = canCreate },
+                { error -> Log.e(TAG, "Cannot load document creation permission", error) })
     }.root
 
     override fun onResume() {
@@ -89,6 +100,8 @@ class CollabDocumentsFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        permissionDisposable?.dispose()
+        permissionDisposable = null
         binding = null
         super.onDestroyView()
     }
@@ -109,6 +122,11 @@ class CollabDocumentsFragment : Fragment() {
     }
 
     private fun promptNewDocument() {
+        val conversation = accountService.getAccount(path.accountId)?.getByUri(path.conversationUri)
+        if (conversation?.canCreateDocument() != true) {
+            Toast.makeText(requireContext(), R.string.collab_create_error, Toast.LENGTH_SHORT).show()
+            return
+        }
         CollabDocuments.promptNew(context ?: return, path, collaborationService, disposable)
     }
 

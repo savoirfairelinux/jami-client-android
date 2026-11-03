@@ -25,6 +25,7 @@ import io.reactivex.rxjava3.subjects.Subject
 import net.jami.daemon.Blob
 import net.jami.daemon.JamiService
 import net.jami.model.CollaborativeDocument
+import net.jami.model.Conversation
 import net.jami.model.Uri
 import net.jami.model.CollaborativeVersion
 import java.util.concurrent.Callable
@@ -173,6 +174,7 @@ class CollaborationService(private val executor: ExecutorService) {
         name: String,
         mimeType: String = CollaborativeDocument.MIME_RICH_TEXT,
     ): Single<String> = fromDaemon {
+        AccountService.requireConversationPermission(accountId, conversation.rawRingId, Conversation.Permission.CreateDocument)
         JamiService.createCollaborativeDocument(accountId, conversation.rawRingId, name, mimeType)
     }
 
