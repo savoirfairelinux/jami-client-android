@@ -44,7 +44,7 @@ internal fun createContactPickerItem(
     val members = when {
         conversation.mode == Conversation.Mode.Legacy || conversation.mode == Conversation.Mode.OneToOne ->
             listOfNotNull(conversation.getContact())
-        conversation.mode.isGroup && !conversation.isEnded ->
+        conversation.mode.isGroup && conversation.mode != Conversation.Mode.Feed && !conversation.isEnded ->
             conversation.contacts.filter {
                 when (roles[it.contact.uri.uri]) {
                     MemberRole.ADMIN, MemberRole.MEMBER, MemberRole.INVITED -> true
