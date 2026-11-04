@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52b90f73_2ff02b70",
+        "filename": "jami-android/app/src/main/java/cx/ring/backup/JamiBackupAgent.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-04T20:20:43Z",
+      "side": 1,
+      "message": "[error] Line 79: 🔴 `onRestoreFile` returns early for unsupported types, `restoreFailed`, and non-allowlisted destinations without consuming the current entry payload. In Android full-restore, each callback is positioned on that entry’s data; if bytes are not drained/skipped, subsequent entries can be misaligned or corrupted. Always consume `size` bytes even when rejecting an entry (e.g., call `FullBackup.restoreFile(data, size, type, mode, mtime, null)` or explicitly read/discard the stream before returning).",
+      "revId": "00bc8b5d2b81b4745739d59cca148f7686fa7d0e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
