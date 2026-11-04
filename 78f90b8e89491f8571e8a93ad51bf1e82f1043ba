@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14ff8451_02f2438e",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/ConversationDetailsActivity.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-04T20:03:22Z",
+      "side": 1,
+      "message": "[warning] Line 592: 🟡 `groupConversationDetailsTabs(mode)` uses the raw `mode`, but elsewhere this patch correctly switched to feed-aware `effectiveMode` for request/syncing conversations. If a Feed arrives as `Request`/`Syncing` with `requestMode \u003d Feed`, this can still append `Documents`, contradicting the intended Feed behavior. Use the same effective-mode source here (or normalize before calling) so Feed requests also keep only Details/Members/Files.",
+      "revId": "78f90b8e89491f8571e8a93ad51bf1e82f1043ba",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
