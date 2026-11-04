@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b91bdd4f_29d6e174",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CreateFeedFragment.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-04T20:01:18Z",
+      "side": 1,
+      "message": "[warning] Line 82: 🟡 The dialog hard-casts `requireActivity()` to `HomeActivity`, which can crash with `ClassCastException` if this fragment is ever hosted elsewhere (tests, refactors, alternate navigation hosts). Use a safer host contract (callback interface) or a nullable cast with guarded handling before calling `startConversation`.",
+      "revId": "d8bf8ba6b10e2495772da3cd0f52296d77974142",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc69e86a_84bd4e87",
+        "filename": "jami-android/app/src/main/res/layout/dialog_create_feed.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-04T20:01:18Z",
+      "side": 1,
+      "message": "[warning] Line 61: 🟡 The feed name/description fields have no length constraints, so very large input can be sent to `updateConversationInfo`, increasing failure risk and avoidable processing overhead. Add `android:maxLength` (and align limits with daemon/backend constraints) for both fields to enforce predictable client-side validation.",
+      "revId": "d8bf8ba6b10e2495772da3cd0f52296d77974142",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
