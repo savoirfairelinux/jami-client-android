@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f5de59b_3c2fad76",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-04T20:18:55Z",
+      "side": 1,
+      "message": "[error] Line 166: 🔴 **Startup gate has a race window.** `backupGeneration` is captured, then `canStartRuntime()` is checked inside the executor right before `daemon.startDaemon()`, but backup can still become active between that check and the actual start call (TOCTOU). That breaks the stated guarantee that restore/backup gates runtime startup. Use a shared lock/critical section between `JamiBackupAgent` state transitions and daemon-start decision+start, or re-check under the same synchronized block immediately before starting the daemon.",
+      "revId": "468fabc0ee373a6252606ffad4923b25980c4d73",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c8ccc6b_749129c0",
+        "filename": "jami-android/app/src/main/java/cx/ring/backup/RuntimeServiceGuard.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-04T20:18:55Z",
+      "side": 1,
+      "message": "[error] Line 25: 🔴 **API-compat crash risk on pre-O devices.** `NotificationChannel(...)` and `createNotificationChannel(...)` are invoked unconditionally in `rejectStart`. On API \u003c 26 this can crash (`NoClassDefFoundError`/`NoSuchMethodError`). Guard channel creation with `if (Build.VERSION.SDK_INT \u003e\u003d Build.VERSION_CODES.O)` and keep the fallback notification path for older SDKs.",
+      "revId": "468fabc0ee373a6252606ffad4923b25980c4d73",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
