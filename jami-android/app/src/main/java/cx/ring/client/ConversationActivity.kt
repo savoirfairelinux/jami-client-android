@@ -56,6 +56,7 @@ class ConversationActivity : AppCompatActivity() {
         JamiApplication.instance?.startDaemon(this)
         val binding = ActivityConversationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        mConversationFragment = supportFragmentManager.findFragmentById(R.id.main_frame) as? ConversationFragment
         if (mConversationFragment == null) {
             mConversationFragment = ConversationFragment().apply {
                 arguments = path.toBundle().apply {
@@ -66,7 +67,9 @@ class ConversationActivity : AppCompatActivity() {
                 .replace(R.id.main_frame, mConversationFragment!!, null)
                 .commitNow()
         }
-        if (Intent.ACTION_SEND == action || Intent.ACTION_SEND_MULTIPLE == action || Intent.ACTION_VIEW == action) {
+        if (savedInstanceState == null &&
+            (Intent.ACTION_SEND == action || Intent.ACTION_SEND_MULTIPLE == action || Intent.ACTION_VIEW == action)
+        ) {
             mPendingIntent = intent
         }
     }
