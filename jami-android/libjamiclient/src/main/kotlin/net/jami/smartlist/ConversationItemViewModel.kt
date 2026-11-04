@@ -29,6 +29,7 @@ class ConversationItemViewModel(
     val accountId: String = conversation.accountId
     val uri: Uri = conversation.uri
     val mode: Conversation.Mode = conversation.mode.blockingFirst()
+    val effectiveMode: Conversation.Mode = conversation.effectiveMode
     val uuid: String = uri.rawUriString
     val title: String = getTitle(conversation, conversationProfile, contacts)
     // Presence of conversation is:
@@ -85,13 +86,18 @@ class ConversationItemViewModel(
     }
 
     // Conversation mode can also be a request. In this case, we need to check the request mode.
-    fun isGroup(): Boolean = mode.isGroup || request?.mode?.isGroup ?: false
+    fun isGroup(): Boolean = effectiveMode.isGroup
+
+    fun isFeed(): Boolean = effectiveMode == Conversation.Mode.Feed
 
     override fun equals(other: Any?): Boolean {
         if (other !is ConversationItemViewModel) return false
         return contacts === other.contacts
                 && title == other.title
                 && presenceStatus == other.presenceStatus
+                && mode == other.mode
+                && effectiveMode == other.effectiveMode
+                && request?.mode == other.request?.mode
     }
 
     companion object {

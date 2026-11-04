@@ -92,6 +92,13 @@ class Conversation(
     var requestMode: Mode? = null
         internal set
 
+    val effectiveMode: Mode
+        get() = when (val current = mode.blockingFirst()) {
+            Mode.Request -> request?.mode ?: current
+            Mode.Syncing -> requestMode ?: current
+            else -> current
+        }
+
     val isSwarm: Boolean
         get() = Uri.SWARM_SCHEME == uri.scheme
 

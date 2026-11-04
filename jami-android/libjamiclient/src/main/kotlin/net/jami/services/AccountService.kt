@@ -1511,6 +1511,8 @@ class AccountService(
                 val invited = message["invited"]!!
                 val invitedContact = conversation.findContact(Uri.fromId(invited)) ?: account.getContactFromCache(invited)
                 ContactEvent(account.accountId, invitedContact, timestamp).setEvent(ContactEvent.Event.INVITED)
+            } else if (conversation.mode.blockingFirst() == Conversation.Mode.Feed) {
+                ContactEvent(account.accountId, contact, timestamp).setEvent(ContactEvent.Event.FEED_CREATED)
             } else {
                 Interaction(conversation, Interaction.InteractionType.INVALID)
             }
