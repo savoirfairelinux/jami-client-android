@@ -40,14 +40,14 @@ import cx.ring.R
 import cx.ring.adapters.ContactPickerAdapter
 import cx.ring.databinding.FragContactPickerBinding
 import cx.ring.databinding.ItemSelectedContactBinding
+import cx.ring.model.ContactPickerItem
+import cx.ring.model.createContactPickerItem
 import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Contact
-import net.jami.model.Conversation
 import net.jami.services.ConversationFacade
-import net.jami.smartlist.ConversationItemViewModel
 import java.text.Collator
 import javax.inject.Inject
 
@@ -56,7 +56,7 @@ class ContactPickerFragment : AppCompatDialogFragment() {
     private var binding: FragContactPickerBinding? = null
     private var adapter: ContactPickerAdapter? = null
     private val disposables = CompositeDisposable()
-    private var availableContacts: List<ConversationItemViewModel> = emptyList()
+    private var availableContacts: List<ContactPickerItem> = emptyList()
     private val selectedContactUris = linkedSetOf<String>()
     private var accountId: String? = null
     private var searchQuery = ""
@@ -140,14 +140,18 @@ class ContactPickerFragment : AppCompatDialogFragment() {
         observeContacts()
     }
 
-    private fun onContactClicked(item: ConversationItemViewModel) {
+    private fun onContactClicked(item: ContactPickerItem) {
         val binding = checkNotNull(binding)
-        if (item.accountId != accountId) {
+        if (item.conversation.accountId != accountId) {
             Log.w(TAG, "Ignoring a contact click from a different picker account")
             return
         }
-        val uri = item.getContact()!!.contact.uri.rawUriString
-        if (!selectedContactUris.remove(uri)) selectedContactUris.add(uri)
+        val currentItem = availableContacts.firstOrNull { it.conversation.uri == item.conversation.uri }
+        if (currentItem == null) {
+            Log.w(TAG, "Ignoring a stale contact picker entry")
+            return
+        }
+        currentItem.toggleSelection(selectedContactUris)
         if (searchQuery.isNotEmpty()) {
             binding.searchContacts.setText("")
             binding.searchContacts.clearFocus()
@@ -170,14 +174,18 @@ class ContactPickerFragment : AppCompatDialogFragment() {
                 }
                 accountId = newAccountId
                 availableContacts = conversations
-                    .filter {
-                        it.accountId == newAccountId &&
-                            (it.mode == Conversation.Mode.Legacy || it.mode == Conversation.Mode.OneToOne) &&
-                            it.getContact()?.contact?.uri?.rawUriString?.let { uri -> uri !in excluded } == true
+                    .filter { it.accountId == newAccountId }
+                    .mapNotNull {
+                        createContactPickerItem(
+                            it, excluded,
+                            mConversationFacade.getConversation(it.accountId, it.uri)?.roles.orEmpty()
+                        )
                     }
-                    .distinctBy { it.getContact()!!.contact.uri }
-                    .sortedWith { first, second -> collator.compare(first.title, second.title) }
-                selectedContactUris.retainAll(availableContacts.map { it.getContact()!!.contact.uri.rawUriString }.toSet())
+                    .distinctBy {
+                        if (it.conversation.mode.isGroup) it.conversation.uri else it.members.single().contact.uri
+                    }
+                    .sortedWith { first, second -> collator.compare(first.conversation.title, second.conversation.title) }
+                selectedContactUris.retainAll(availableContacts.flatMap { it.memberUris }.toSet())
                 renderSelection()
                 renderContacts()
             }, { error -> Log.e(TAG, "Unable to load contacts for the contact picker", error) }))
@@ -202,7 +210,8 @@ class ContactPickerFragment : AppCompatDialogFragment() {
         val binding = binding ?: return
         val query = searchQuery.trim()
         val contacts = availableContacts.filter {
-            query.isEmpty() || it.title.contains(query, ignoreCase = true) || it.uriTitle.contains(query, ignoreCase = true)
+            query.isEmpty() || it.conversation.title.contains(query, ignoreCase = true) ||
+                it.conversation.uriTitle.contains(query, ignoreCase = true)
         }
         adapter?.submitList(contacts)
         binding.emptyState.isVisible = contacts.isEmpty()
@@ -229,8 +238,12 @@ class ContactPickerFragment : AppCompatDialogFragment() {
             resolveContactPickerSelection(accountId, selectedContactUris, availableContacts) != null
         binding.selectedContacts.children.toList().filter { it.tag !in selectedContactUris }
             .forEach { binding.selectedContacts.removeView(it) }
+        val members = availableContacts.sortedBy { it.conversation.mode.isGroup }
+            .flatMap { it.members }
+            .distinctBy { it.contact.uri.rawUriString }
+            .associateBy { it.contact.uri.rawUriString }
         for (uri in selectedContactUris) {
-            val item = availableContacts.firstOrNull { it.getContact()!!.contact.uri.rawUriString == uri } ?: continue
+            val member = members[uri] ?: continue
             val selectedContact = binding.selectedContacts.findViewWithTag<View>(uri)
                 ?.let { ItemSelectedContactBinding.bind(it) }
                 ?: ItemSelectedContactBinding.inflate(layoutInflater, binding.selectedContacts, false).apply {
@@ -241,11 +254,11 @@ class ContactPickerFragment : AppCompatDialogFragment() {
                     }
                     binding.selectedContacts.addView(root)
                 }
-            selectedContact.displayName.text = item.title
-            selectedContact.removeContact.contentDescription = getString(R.string.picker_remove_contact, item.title)
+            selectedContact.displayName.text = member.displayName
+            selectedContact.removeContact.contentDescription = getString(R.string.picker_remove_contact, member.displayName)
             selectedContact.photo.setAvatar(
                 AvatarDrawable.Builder()
-                    .withContact(item.getContact())
+                    .withContact(member)
                     .withCircleCrop(true)
                     .withCheck(false)
                     .withPresence(false)
@@ -299,13 +312,14 @@ class ContactPickerFragment : AppCompatDialogFragment() {
 internal fun resolveContactPickerSelection(
     accountId: String?,
     selectedContactUris: Set<String>,
-    availableContacts: List<ConversationItemViewModel>
+    availableContacts: List<ContactPickerItem>
 ): Set<Contact>? {
     if (accountId.isNullOrBlank() || selectedContactUris.isEmpty()) return null
 
     val contacts = availableContacts
-        .filter { it.accountId == accountId }
-        .mapNotNull { it.getContact()?.contact }
+        .filter { it.conversation.accountId == accountId }
+        .flatMap { it.members }
+        .map { it.contact }
         .filter { it.uri.rawUriString in selectedContactUris }
         .toSet()
     return contacts.takeIf { it.map { contact -> contact.uri.rawUriString }.toSet() == selectedContactUris }

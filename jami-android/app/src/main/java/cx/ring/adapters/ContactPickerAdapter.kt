@@ -21,12 +21,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import cx.ring.databinding.ItemContactBinding
+import cx.ring.model.ContactPickerItem
 import cx.ring.viewholders.ContactPickerViewHolder
-import net.jami.smartlist.ConversationItemViewModel
 
 class ContactPickerAdapter(
-    private val onClick: (ConversationItemViewModel) -> Unit,
-) : ListAdapter<ConversationItemViewModel, ContactPickerViewHolder>(ContactDiffCallback) {
+    private val onClick: (ContactPickerItem) -> Unit,
+) : ListAdapter<ContactPickerItem, ContactPickerViewHolder>(ContactDiffCallback) {
     private var selectedContactUris: Set<String> = emptySet()
 
     init {
@@ -44,30 +44,30 @@ class ContactPickerAdapter(
     }
 
     override fun onBindViewHolder(holder: ContactPickerViewHolder, position: Int) {
-        val conversation = getItem(position)
-        val checked = conversation.getContact()?.contact?.uri?.rawUriString in selectedContactUris
-        holder.bind(conversation, checked, onClick)
+        val item = getItem(position)
+        holder.bind(item.conversation, item.isSelected(selectedContactUris)) { onClick(item) }
     }
 
     fun setSelection(uris: Set<String>) {
         val changed = (selectedContactUris - uris) + (uris - selectedContactUris)
         selectedContactUris = uris.toSet()
         currentList.forEachIndexed { index, item ->
-            if (item.getContact()?.contact?.uri?.rawUriString in changed) {
+            if (item.memberUris.any { it in changed }) {
                 notifyItemChanged(index)
             }
         }
     }
 
-    private object ContactDiffCallback : DiffUtil.ItemCallback<ConversationItemViewModel>() {
+    private object ContactDiffCallback : DiffUtil.ItemCallback<ContactPickerItem>() {
         override fun areItemsTheSame(
-            oldItem: ConversationItemViewModel,
-            newItem: ConversationItemViewModel
-        ): Boolean = oldItem.accountId == newItem.accountId && oldItem.uri == newItem.uri
+            oldItem: ContactPickerItem,
+            newItem: ContactPickerItem
+        ): Boolean = oldItem.conversation.accountId == newItem.conversation.accountId &&
+            oldItem.conversation.uri == newItem.conversation.uri
 
         override fun areContentsTheSame(
-            oldItem: ConversationItemViewModel,
-            newItem: ConversationItemViewModel
+            oldItem: ContactPickerItem,
+            newItem: ContactPickerItem
         ): Boolean = oldItem == newItem
     }
 }
