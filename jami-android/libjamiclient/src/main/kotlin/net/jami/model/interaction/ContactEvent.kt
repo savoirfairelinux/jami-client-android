@@ -70,7 +70,7 @@ class ContactEvent : Interaction {
     }
 
     enum class Event {
-        UNKNOWN, INCOMING_REQUEST, INVITED, ADDED, REMOVED, BLOCKED, UNBLOCKED;
+        UNKNOWN, INCOMING_REQUEST, INVITED, ADDED, REMOVED, BLOCKED, UNBLOCKED, FEED_CREATED;
 
         companion object {
             fun fromConversationAction(action: String): Event = when (action) {

@@ -556,7 +556,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
 
     override fun displayContact(conversation: ConversationItemViewModel) {
         binding?.let { binding ->
-            binding.title.text = conversation.title
+            cx.ring.utils.TextUtils.setConversationTitle(binding.title, conversation)
             if (conversation.title.isEmpty() || conversation.title != conversation.uriTitle)
                 binding.subtitle.text = conversation.uriTitle
             else

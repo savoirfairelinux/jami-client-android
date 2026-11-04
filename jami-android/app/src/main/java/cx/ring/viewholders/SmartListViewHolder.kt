@@ -76,6 +76,8 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
                 binding.convLastItem.text = ""
                 binding.convLastTime.text = ""
                 binding.convParticipant.text = ""
+                binding.convParticipant.setCompoundDrawablesRelative(null, null, null, null)
+                binding.convParticipant.contentDescription = null
                 binding.photo.setAvatar(null)
             }
 
@@ -122,7 +124,7 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
                 .onErrorComplete()
                 .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { conversationItemViewModel ->
-                    binding.convParticipant.text = conversationItemViewModel.title
+                    TextUtils.setConversationTitle(binding.convParticipant, conversationItemViewModel)
                     if (binding.photo.setAvatar(AvatarDrawable.Builder()
                         .withViewModel(conversationItemViewModel)
                         .withCircleCrop(true)
@@ -158,7 +160,9 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
             ) else String.format(context.getString(R.string.hist_out_call), callHistory.durationString)
         } else if (e.type == Interaction.InteractionType.CONTACT) {
             val contactEvent = e as ContactEvent
-            if (contactEvent.event == ContactEvent.Event.ADDED) {
+            if (contactEvent.event == ContactEvent.Event.FEED_CREATED) {
+                return context.getString(R.string.feed_created)
+            } else if (contactEvent.event == ContactEvent.Event.ADDED) {
                 return context.getString(R.string.hist_contact_added)
             } else if (contactEvent.event == ContactEvent.Event.INCOMING_REQUEST) {
                 return ""

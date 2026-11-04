@@ -175,7 +175,7 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
                     .withCircleCrop(true)
                     .build(this))
                 name = vm.title
-                binding.conversationTitle.text = vm.title
+                TextUtils.setConversationTitle(binding.conversationTitle, vm)
 
                 // Note: For a random account from search results, mode will be Legacy
                 if (vm.request != null){

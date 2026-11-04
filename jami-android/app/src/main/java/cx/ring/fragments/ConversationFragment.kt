@@ -71,6 +71,7 @@ import cx.ring.services.SharedPreferencesServiceImpl.Companion.getAccountPrefere
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.PREF_THREADED_VIEW
 import cx.ring.utils.*
 import cx.ring.utils.ContentUri.getShareItems
+import cx.ring.utils.TextUtils.setConversationTitle
 import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
 import dagger.hilt.android.AndroidEntryPoint
@@ -1753,8 +1754,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private fun setupActionbar(conversation: ConversationItemViewModel, img: AvatarDrawable) {
         binding?.apply {
             conversationAvatar.setImageDrawable(img)
-            contactTitle.text = conversation.title
-            threadConversationName.text = conversation.title
+            setConversationTitle(contactTitle, conversation)
+            setConversationTitle(threadConversationName, conversation)
             if (conversation.uriTitle != conversation.title) {
                 contactSubtitle.text = conversation.uriTitle
                 contactSubtitle.visibility = View.VISIBLE

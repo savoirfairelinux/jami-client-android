@@ -1520,12 +1520,15 @@ class AccountService(
         val edit = message["edit"]
         val contact = conversation.findContact(authorUri) ?: account.getContactFromCache(authorUri)
         val interaction: Interaction = when (type) {
-            "initial" -> if (conversation.mode.blockingFirst() == Conversation.Mode.OneToOne) {
-                val invited = message["invited"]!!
-                val invitedContact = conversation.findContact(Uri.fromId(invited)) ?: account.getContactFromCache(invited)
-                ContactEvent(account.accountId, invitedContact, timestamp).setEvent(ContactEvent.Event.INVITED)
-            } else {
-                Interaction(conversation, Interaction.InteractionType.INVALID)
+            "initial" -> when (conversation.effectiveMode) {
+                Conversation.Mode.OneToOne -> {
+                    val invited = message["invited"]!!
+                    val invitedContact = conversation.findContact(Uri.fromId(invited)) ?: account.getContactFromCache(invited)
+                    ContactEvent(account.accountId, invitedContact, timestamp).setEvent(ContactEvent.Event.INVITED)
+                }
+                Conversation.Mode.Feed ->
+                    ContactEvent(account.accountId, contact, timestamp).setEvent(ContactEvent.Event.FEED_CREATED)
+                else -> Interaction(conversation, Interaction.InteractionType.INVALID)
             }
             "member" -> {
                 val action = message["action"]!!
