@@ -85,7 +85,7 @@ class ConversationActionsFragment : Fragment() {
             if (!conversation.isUserGroupAdmin() || !conversation.canUpdateProfile()) {
                 Toast.makeText(
                     requireContext(),
-                    R.string.not_admin_toast,
+                    if (conversation.effectiveMode == Conversation.Mode.Feed) R.string.feed_not_admin else R.string.not_admin_toast,
                     Toast.LENGTH_SHORT
                 ).show()
                 return@setOnClickListener
@@ -96,7 +96,7 @@ class ConversationActionsFragment : Fragment() {
             }
             MaterialAlertDialogBuilder(requireContext())
                 .setView(dialogBinding.root)
-                .setTitle(getString(R.string.dialogtitle_description))
+                .setTitle(if (conversation.effectiveMode == Conversation.Mode.Feed) R.string.feed_edit_description else R.string.dialogtitle_description)
                 .setPositiveButton(R.string.rename_btn) { d, _: Int ->
                     val input = dialogBinding.titleTxt.text.toString().trim { it <= ' ' }
                     mDisposableBag.add(mAccountService.updateConversationInfo(
@@ -186,11 +186,7 @@ class ConversationActionsFragment : Fragment() {
         // Setup card with
         //  - conversation type (such as "Private swarm")
         //  - conversation id (such as swarm:1234)"
-        // The real conversation mode is hidden in TrustRequest when it's a request.
-        val conversationMode =
-            if (conversation.mode.blockingFirst() == Conversation.Mode.Request)
-                conversation.request!!.mode
-            else conversation.mode.blockingFirst()
+        val conversationMode = conversation.effectiveMode
 
         if (conversationMode == Conversation.Mode.OneToOne || conversation.isLegacy()) {
             mDisposableBag.add(conversation.contactUpdates
@@ -327,7 +323,7 @@ class ConversationActionsFragment : Fragment() {
                 conversationDelete.text = resources.getString(R.string.delete_contact)
             }
         } else {    // If conversation mode is not one to one
-            conversationDelete.text = resources.getString(R.string.leave_conversation)
+            conversationDelete.setText(if (conversationMode == Conversation.Mode.Feed) R.string.leave_feed else R.string.leave_conversation)
             conversationDelete.setOnClickListener {
                 if (conversation.mode.blockingFirst() == Conversation.Mode.Request)
                     mDisposableBag.add(ActionHelper.launchAcceptInvitation(
@@ -345,6 +341,7 @@ class ConversationActionsFragment : Fragment() {
                         context = requireContext(),
                         accountId = mAccountService.currentAccount!!.accountId,
                         uri = conversation.uri,
+                        isFeed = conversationMode == Conversation.Mode.Feed,
                         callback = { accountId: String, conversationUri: Uri ->
                             mConversationFacade.removeConversation(accountId, conversationUri)
                                 .subscribe().apply { mDisposableBag.add(this) }
@@ -366,10 +363,10 @@ class ConversationActionsFragment : Fragment() {
 
         @StringRes val infoString =
             if (conversation.isSwarm) {
-                if (conversationMode == Conversation.Mode.OneToOne)
-                    R.string.conversation_type_private
-                else {
-                    R.string.conversation_type_group
+                when (conversationMode) {
+                    Conversation.Mode.OneToOne -> R.string.conversation_type_private
+                    Conversation.Mode.Feed -> R.string.conversation_type_feed
+                    else -> R.string.conversation_type_group
                 }
             } else R.string.conversation_type_contact
 
