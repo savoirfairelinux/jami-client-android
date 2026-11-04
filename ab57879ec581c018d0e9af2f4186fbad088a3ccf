@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdd5df40_3b89248d",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CreateFeedFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-04T21:29:02Z",
+      "side": 1,
+      "message": "[warning] Line 80: 🟡 `State.Created` is handled as a persistent `StateFlow` value, so lifecycle restarts can re-deliver it and call `startConversation(...)` more than once (duplicate navigation/opening). Treat creation success as a one-shot event (e.g., `SharedFlow`/`Channel`) or reset state to `Idle` immediately after handling the success branch in the UI.",
+      "revId": "ab57879ec581c018d0e9af2f4186fbad088a3ccf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
