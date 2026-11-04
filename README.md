@@ -120,6 +120,8 @@ Enable **Threaded view** in **Account settings > Messages** to group replies
 under their original message. This setting is off by default and applies to
 that account on this Android device; it is not synced to linked devices.
 Legacy conversations without swarm reply metadata remain chronological.
+Feeds always use the threaded view, independently of this setting; other
+swarm conversations continue to follow the account setting.
 
 Open a message's replies button, or use Reply, to open its thread. The thread
 shows the original message and its nested replies in chronological order.
