@@ -294,8 +294,12 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="qr_code">QR Code</string>
     <string name="qr_code_not_contact">Not a Jami contact QR code</string>
     <string name="new_group">New group</string>
+    <string name="new_feed">New Feed</string>
+    <string name="feed_creation_hint">A dedicated space for sharing announcements and updates.</string>
     <string name="feed_conversation_name">Feed: %1$s</string>
     <string name="feed_created">Feed created</string>
+    <string name="feed_name">Feed name</string>
+    <string name="create_feed">Create Feed</string>
     <string name="ab_action_flipcamera">Flip camera</string>
     <string name="ab_action_hidepreview">Hide preview</string>
     <string name="remote_recording">%s recording…</string>
