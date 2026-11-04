@@ -30,6 +30,7 @@ import cx.ring.R
 import cx.ring.tv.account.JamiPreferenceFragment
 import cx.ring.utils.ConversationPath.Companion.fromIntent
 import dagger.hilt.android.AndroidEntryPoint
+import net.jami.model.Conversation
 
 @AndroidEntryPoint
 class TVContactMoreFragment : LeanbackSettingsFragmentCompat() {
@@ -54,27 +55,28 @@ class TVContactMoreFragment : LeanbackSettingsFragmentCompat() {
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
             presenter.setContact(fromIntent(requireActivity().intent)!!)
-            val isGroup = presenter.getConversation()?.isSwarmGroup() == true
+            val mode = presenter.getConversation()?.effectiveMode
+            val isGroup = mode?.isGroup == true
 
             findPreference<Preference>("Contact.remove")?.isVisible = !isGroup
             findPreference<Preference>("Contact.delete")?.setTitle(
-                if (isGroup) {
-                    R.string.swarm_group_action_leave
-                } else {
-                    R.string.delete_contact
+                when {
+                    mode == Conversation.Mode.Feed -> R.string.leave_feed
+                    isGroup -> R.string.swarm_group_action_leave
+                    else -> R.string.delete_contact
                 }
             )
         }
 
         override fun onPreferenceTreeClick(preference: Preference): Boolean {
-            val isGroup =
-                presenter.getConversation()?.isSwarmGroup() == true
+            val mode = presenter.getConversation()?.effectiveMode
+            val isGroup = mode?.isGroup == true
 
             if (preference.key == "Contact.delete") {
-                val message = if (isGroup) {
-                    R.string.swarm_group_action_leave_message
-                } else {
-                    R.string.conversation_action_remove_this_message
+                val message = when {
+                    mode == Conversation.Mode.Feed -> R.string.leave_feed_message
+                    isGroup -> R.string.swarm_group_action_leave_message
+                    else -> R.string.conversation_action_remove_this_message
                 }
 
                 createDialog(getString(message)) { _, _ ->

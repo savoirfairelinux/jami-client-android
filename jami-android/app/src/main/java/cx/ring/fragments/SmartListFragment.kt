@@ -106,12 +106,13 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         ActionHelper.launchClearAction(requireContext(), accountId, conversationUri, this@SmartListFragment)
     }
 
-    override fun displayDeleteDialog(accountId: String, conversationUri: Uri, isGroup: Boolean) {
-        if (isGroup)
+    override fun displayDeleteDialog(accountId: String, conversationUri: Uri, mode: Conversation.Mode) {
+        if (mode.isGroup)
             ActionHelper.launchDeleteSwarmGroupAction(
                 context = requireContext(),
                 accountId = accountId,
                 uri = conversationUri,
+                isFeed = mode == Conversation.Mode.Feed,
                 callback = this@SmartListFragment
             )
         else
@@ -183,20 +184,10 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
 
     override fun onItemLongClick(item: Conversation) {
         if (item.isSwarm) {
-            val currentMode = item.mode.blockingFirst()
-            val effectiveMode = if (currentMode == Conversation.Mode.Syncing) {
-                item.requestMode ?: Conversation.Mode.OneToOne
-            } else {
-                currentMode
-            }
-
-            val isGroup = effectiveMode == Conversation.Mode.AdminInvitesOnly ||
-                    effectiveMode == Conversation.Mode.InvitesOnly ||
-                    effectiveMode == Conversation.Mode.Public
-
-            if (isGroup) {
+            val effectiveMode = item.effectiveMode
+            if (effectiveMode.isGroup) {
                 ActionListBottomSheet(
-                    R.array.swarm_group_actions,
+                    if (effectiveMode == Conversation.Mode.Feed) R.array.swarm_feed_actions else R.array.swarm_group_actions,
                     R.array.swarm_group_action_icons
                 ) { which ->
                     when (which) {
