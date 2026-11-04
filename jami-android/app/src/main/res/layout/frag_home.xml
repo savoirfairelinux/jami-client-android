@@ -94,31 +94,56 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             android:orientation="vertical"
             android:layout_marginTop="8dp">
 
-            <!-- Buttons (QR code and new swarm) -->
-            <com.google.android.material.button.MaterialButtonGroup
+            <!-- Creation actions wrap when the screen or translated labels need more room. -->
+            <com.google.android.flexbox.FlexboxLayout
                 android:id="@+id/buttons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal">
+                android:paddingStart="@dimen/padding_small"
+                android:paddingEnd="@dimen/padding_small"
+                app:flexWrap="wrap"
+                app:alignItems="center"
+                app:justifyContent="center">
                 <!-- QR Code button -->
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/qr_code"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/padding_xsmall"
+                    android:layout_marginEnd="@dimen/padding_xsmall"
+                    android:singleLine="false"
+                    android:maxLines="2"
                     app:icon="@drawable/baseline_qr_code_2_black_24dp"
                     android:text="@string/qr_code"
                     tools:visibility="visible" />
 
                 <!-- New swarm button -->
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/new_swarm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/padding_xsmall"
+                    android:layout_marginEnd="@dimen/padding_xsmall"
+                    android:singleLine="false"
+                    android:maxLines="2"
                     app:icon="@drawable/baseline_group_add_24"
                     android:text="@string/new_group"
                     tools:visibility="visible" />
 
-            </com.google.android.material.button.MaterialButtonGroup>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/new_feed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/padding_xsmall"
+                    android:layout_marginEnd="@dimen/padding_xsmall"
+                    android:singleLine="false"
+                    android:maxLines="2"
+                    android:visibility="gone"
+                    app:icon="@drawable/ic_feed"
+                    android:text="@string/new_feed"
+                    tools:visibility="visible" />
+
+            </com.google.android.flexbox.FlexboxLayout>
 
             <!-- Search results -->
             <androidx.recyclerview.widget.RecyclerView
