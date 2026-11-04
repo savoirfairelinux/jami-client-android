@@ -61,6 +61,9 @@ android {
         viewBinding = true
         buildConfig = true
     }
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
+    }
     flavorDimensions += "push"
     productFlavors {
         create("noPush") {
@@ -154,6 +157,8 @@ dependencies {
     implementation(project(":libjamiclient"))
     implementation(libs.kotlin.stdlib)
     testImplementation(libs.junit)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.mockito.core)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
