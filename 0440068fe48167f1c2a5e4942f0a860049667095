@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8eb8ede0_485d3086",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-04T20:22:56Z",
+      "side": 1,
+      "message": "[error] Line 349: 🔴 `startForegroundService(...)` is now called solely based on user preference, without guarding API level. On devices below Android O (API 26), this can trigger runtime failure because foreground-service start APIs are version-gated. Restore the SDK check (`Build.VERSION.SDK_INT \u003e\u003d Build.VERSION_CODES.O`) or switch to `ContextCompat.startForegroundService(...)` with a pre-O fallback to `startService(...)` to preserve compatibility.",
+      "revId": "0440068fe48167f1c2a5e4942f0a860049667095",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
