@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab995db1_f205e3c3",
+        "filename": "jami-android/app/src/test/java/cx/ring/client/ConversationChooserTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-04T20:22:00Z",
+      "side": 1,
+      "message": "[warning] Line 45: 🟡 The test selects a color by hard-coded adapter position (`12`), which makes it brittle to non-functional UI list reordering. Prefer locating the item by the expected semantic value (e.g., iterate adapter items until `R.color.conversation_palette_red` is found) before clicking, so palette reordering does not create false failures.",
+      "revId": "817c44327b4afedd5c0e0e7c3fe03aedd59c8e1d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7edecb67_90b11ea0",
+        "filename": "jami-android/app/src/test/java/cx/ring/client/ConversationChooserTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-04T20:22:00Z",
+      "side": 1,
+      "message": "[warning] Line 70: 🟡 The emoji assertion/click also relies on a hard-coded position (`4`), coupling the test to list order rather than behavior. Resolve the target row by matching the rendered emoji/resource value first, then click that row to keep the test stable if defaults are reordered.",
+      "revId": "817c44327b4afedd5c0e0e7c3fe03aedd59c8e1d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
