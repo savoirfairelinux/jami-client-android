@@ -9,4 +9,3 @@ Jami is an open-source peer-to-peer communication tool that allows users to make
 - Avoid over-testing and adding tests for small, trivial changes.
 - Eagerly commit your work in small, logical commits with clear messages.
 - End by suggesting potential next steps when relevant.
-- 
