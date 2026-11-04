@@ -1,5 +1,6 @@
 package net.jami.services
 
+import io.reactivex.rxjava3.core.Single
 import net.jami.daemon.JamiService
 import net.jami.daemon.StringVect
 import net.jami.model.Account
@@ -28,6 +29,7 @@ import org.mockito.Mockito.verify
 import java.util.concurrent.Callable
 import java.util.concurrent.FutureTask
 import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 import java.io.File
 
 class AccountServiceTest {
@@ -50,6 +52,50 @@ class AccountServiceTest {
             mock(DeviceRuntimeService::class.java),
             mock(VCardService::class.java)
         ))
+    }
+
+    @Test
+    fun feedCreationReturnsTheRegisteredFeedWithoutCreatingAGroup() {
+        val account = Account("account", emptyMap(), emptyList(),
+            mapOf(ConfigKey.ACCOUNT_REGISTRATION_STATUS.key to "REGISTERED"))
+        val conversation = account.newSwarm("feed", Conversation.Mode.Feed)
+        doReturn(Single.just(account)).`when`(service).getAccountSingle("account")
+        mockStatic(JamiService::class.java).use { daemon ->
+            daemon.`when`<String> { JamiService.startFeedConversation("account") }.thenReturn("feed")
+
+            service.startFeedConversation("account").test()
+                .awaitDone(3, TimeUnit.SECONDS).assertValue(conversation).assertComplete().assertNoErrors()
+
+            daemon.verify { JamiService.startFeedConversation("account") }
+            daemon.verifyNoMoreInteractions()
+        }
+    }
+
+    @Test
+    fun rejectedFeedCreationCompletesWithFailure() {
+        val account = Account("account", emptyMap(), emptyList(),
+            mapOf(ConfigKey.ACCOUNT_REGISTRATION_STATUS.key to "REGISTERED"))
+        doReturn(Single.just(account)).`when`(service).getAccountSingle("account")
+        mockStatic(JamiService::class.java).use { daemon ->
+            daemon.`when`<String> { JamiService.startFeedConversation("account") }.thenReturn("")
+
+            service.startFeedConversation("account").test()
+                .assertError(IllegalStateException::class.java).assertNoValues()
+
+            daemon.verify { JamiService.startFeedConversation("account") }
+            daemon.verifyNoMoreInteractions()
+        }
+    }
+
+    @Test
+    fun sipAccountsCannotCreateFeeds() {
+        val account = Account("account", mapOf(ConfigKey.ACCOUNT_TYPE.key to AccountConfig.ACCOUNT_TYPE_SIP),
+            emptyList(), mapOf(ConfigKey.ACCOUNT_REGISTRATION_STATUS.key to "REGISTERED"))
+        doReturn(Single.just(account)).`when`(service).getAccountSingle("account")
+        mockStatic(JamiService::class.java).use { daemon ->
+            service.startFeedConversation("account").test().assertError(IllegalArgumentException::class.java)
+            daemon.verifyNoInteractions()
+        }
     }
 
     @Test
