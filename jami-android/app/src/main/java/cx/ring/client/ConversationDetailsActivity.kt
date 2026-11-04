@@ -164,12 +164,24 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
             }
         }
 
+        var tabAdapter = ScreenSlidePagerAdapter(this, conversation)
+        binding.pager.adapter = tabAdapter
+        val tabMediator = TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
+            tab.text = tabAdapter.getTabTitle(position)
+        }.apply { attach() }
+
         mDisposableBag.add(Observable.combineLatest(
             mConversationFacade.observeConversation(conversation).doOnComplete { runOnUiThread { finish() } },
             conversation.permissions.startWithItem(emptySet())
         ) { vm, _ -> vm }
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe({ vm ->
+                if (vm.isFeed() && tabAdapter.isUserAdmin != conversation.isUserGroupAdmin()) {
+                    tabMediator.detach()
+                    tabAdapter = ScreenSlidePagerAdapter(this, conversation)
+                    binding.pager.adapter = tabAdapter
+                    tabMediator.attach()
+                }
                 binding.conversationAvatar.setImageDrawable(AvatarDrawable.Builder()
                     .withViewModel(vm)
                     .withCircleCrop(true)
@@ -239,7 +251,7 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
                     // Block conversation edition for non-admin users.
                     binding.addMember.isVisible = true
                     fun showNotAdminToast() =
-                        Toast.makeText(this, R.string.not_admin_toast, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, if (vm.isFeed()) R.string.feed_not_admin else R.string.not_admin_toast, Toast.LENGTH_SHORT).show()
                     binding.conversationTitle.setOnClickListener { showNotAdminToast() }
                     binding.conversationAvatar.setOnClickListener { showNotAdminToast() }
                 } else {
@@ -252,7 +264,7 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
                         }
                         MaterialAlertDialogBuilder(this)
                             .setView(dialogBinding.root)
-                            .setTitle(getString(R.string.dialogtitle_title))
+                            .setTitle(if (vm.isFeed()) R.string.feed_edit_title else R.string.dialogtitle_title)
                             .setPositiveButton(R.string.rename_btn) { d: DialogInterface, i: Int ->
                                 val input = dialogBinding.titleTxt.text.toString().trim { it <= ' ' }
                                 updateConversationInfo(mapOf("title" to input))
@@ -294,12 +306,6 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
 //                binding.tabLayout.getTabAt(position)!!.select()
 //            }
 //        })
-
-        val tabAdapter = ScreenSlidePagerAdapter(this, conversation)
-        binding.pager.adapter = tabAdapter
-        TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
-            tab.text = tabAdapter.getTabTitle(position)
-        }.attach()
 
         binding.toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
         binding.addMember.setOnClickListener {
@@ -534,6 +540,7 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
 
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity, conversation: Conversation) : FragmentStateAdapter(fa) {
 
+        val isUserAdmin = conversation.isUserGroupAdmin()
         private val fragments: List<Fragment>
         private val titles: List<String>
 
@@ -573,7 +580,8 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
                 }
 
                 Conversation.Mode.Request, Conversation.Mode.Syncing -> {
-                    if (conversation.request?.mode == Conversation.Mode.OneToOne) {
+                    if (conversation.request?.mode == Conversation.Mode.OneToOne
+                        || (conversation.request?.mode == Conversation.Mode.Feed && !isUserAdmin)) {
                         titles = listOf(getString(R.string.details))
                         fragments = listOf(
                             ConversationActionsFragment.newInstance(accountId, conversationId)
@@ -590,18 +598,18 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
                 }
 
                 else -> {
-                    titles = listOf(
-                        getString(R.string.details),
-                        getString(R.string.tab_members),
-                        getString(R.string.tab_files),
-                        getString(R.string.collab_documents)
-                    )
-                    fragments = listOf(
-                        ConversationActionsFragment.newInstance(accountId, conversationId),
-                        ConversationMembersFragment.newInstance(accountId, conversationId),
-                        ConversationGalleryFragment.newInstance(accountId, conversationId),
-                        CollabDocumentsFragment.newInstance(accountId, conversationId)
-                    )
+                    val tabs = groupConversationDetailsTabs(mode).filterNot {
+                        mode == Conversation.Mode.Feed && !isUserAdmin && it == ConversationDetailsTab.Members
+                    }
+                    titles = tabs.map { getString(it.title) }
+                    fragments = tabs.map {
+                        when (it) {
+                            ConversationDetailsTab.Details -> ConversationActionsFragment.newInstance(accountId, conversationId)
+                            ConversationDetailsTab.Members -> ConversationMembersFragment.newInstance(accountId, conversationId)
+                            ConversationDetailsTab.Files -> ConversationGalleryFragment.newInstance(accountId, conversationId)
+                            ConversationDetailsTab.Documents -> CollabDocumentsFragment.newInstance(accountId, conversationId)
+                        }
+                    }
                 }
             }
 
@@ -624,3 +632,19 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
         const val REQUEST_CODE_CALL = 3
     }
 }
+
+internal enum class ConversationDetailsTab(val title: Int) {
+    Details(R.string.details),
+    Members(R.string.tab_members),
+    Files(R.string.tab_files),
+    Documents(R.string.collab_documents)
+}
+
+internal fun groupConversationDetailsTabs(mode: Conversation.Mode): List<ConversationDetailsTab> =
+    listOf(
+        ConversationDetailsTab.Details,
+        ConversationDetailsTab.Members,
+        ConversationDetailsTab.Files
+    ).let { tabs ->
+        if (mode == Conversation.Mode.Feed) tabs else tabs + ConversationDetailsTab.Documents
+    }
