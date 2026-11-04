@@ -188,11 +188,11 @@ object ActionHelper {
     }
 
     fun launchDeleteSwarmGroupAction(
-        context: Context, accountId: String, uri: Uri, callback: ConversationActionCallback,
+        context: Context, accountId: String, uri: Uri, isFeed: Boolean = false, callback: ConversationActionCallback,
     ) {
         MaterialAlertDialogBuilder(context)
-            .setTitle(R.string.swarm_group_action_leave_title)
-            .setMessage(R.string.swarm_group_action_leave_message)
+            .setTitle(if (isFeed) R.string.leave_feed_title else R.string.swarm_group_action_leave_title)
+            .setMessage(if (isFeed) R.string.leave_feed_message else R.string.swarm_group_action_leave_message)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 callback.removeConversation(accountId, uri)
             }
@@ -204,11 +204,12 @@ object ActionHelper {
         context: Context,
         accountId: String,
         uri: Uri,
+        isFeed: Boolean = false,
         callback: (accountId: String, uri: Uri) -> Unit,
     ) {
         MaterialAlertDialogBuilder(context)
-            .setTitle(R.string.swarm_group_action_leave_title)
-            .setMessage(R.string.swarm_group_action_leave_message)
+            .setTitle(if (isFeed) R.string.leave_feed_title else R.string.swarm_group_action_leave_title)
+            .setMessage(if (isFeed) R.string.leave_feed_message else R.string.swarm_group_action_leave_message)
             .setPositiveButton(android.R.string.ok) { _, _ -> callback(accountId, uri) }
             .setNegativeButton(android.R.string.cancel) { _, _ -> }.show()
     }
