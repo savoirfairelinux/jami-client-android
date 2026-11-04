@@ -130,6 +130,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
         qrCode.setOnClickListener { goToQRFragment() }
         newSwarm.setOnClickListener { startNewSwarm() }
+        newFeed.setOnClickListener { startNewFeed() }
 
         // SearchBar is composed of:
         // - Account selection (navigation)
@@ -482,6 +483,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe {
                 mBinding?.newSwarm?.isVisible = !it.isSip
+                mBinding?.newFeed?.isVisible = !it.isSip
                 mBinding?.searchBar?.menu?.findItem(R.id.menu_account_settings)?.isEnabled = true
             }
         )
@@ -632,6 +634,15 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
     private fun startNewSwarm() {
         ContactPickerFragment().show(parentFragmentManager, ContactPickerFragment.TAG)
+        collapseSearchActionView()
+    }
+
+    private fun startNewFeed() {
+        val account = mAccountService.currentAccount ?: return
+        if (account.isSip || parentFragmentManager.findFragmentByTag(CreateFeedFragment.TAG) != null)
+            return
+        CreateFeedFragment.newInstance(account.accountId)
+            .show(parentFragmentManager, CreateFeedFragment.TAG)
         collapseSearchActionView()
     }
 
