@@ -119,6 +119,13 @@ type as **Feed** and use Feed-specific leave and profile-edit wording.
 Leaving uses the existing conversation removal flow. Feed details retain
 Details, Members and Files, without the collaborative Documents tab.
 
+The shared picker used for group creation and for adding members to groups
+or Feeds includes contacts, groups and Feeds. Selecting a group or Feed
+selects its eligible members, excluding yourself, blocked or departed
+members and contacts already in the destination. Overlapping selections
+are deduplicated. Sources with no new eligible members are hidden.
+Feed rows show the Feed icon.
+
 ## Threaded conversations (experimental)
 
 Enable **Threaded view** in **Account settings > Messages** to group replies

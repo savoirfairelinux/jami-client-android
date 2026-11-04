@@ -27,6 +27,7 @@ import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import cx.ring.databinding.ItemContactBinding
+import cx.ring.utils.TextUtils
 import cx.ring.views.AvatarDrawable
 import net.jami.model.Uri
 import net.jami.smartlist.ConversationItemViewModel
@@ -41,7 +42,7 @@ class ContactPickerViewHolder(private val binding: ItemContactBinding) :
             override fun onInitializeAccessibilityNodeInfo(host: View, info: AccessibilityNodeInfoCompat) {
                 super.onInitializeAccessibilityNodeInfo(host, info)
                 info.className = CheckBox::class.java.name
-                info.text = binding.displayName.text
+                info.text = binding.displayName.contentDescription ?: binding.displayName.text
                 info.isCheckable = true
                 info.isChecked = isChecked
             }
@@ -65,7 +66,7 @@ class ContactPickerViewHolder(private val binding: ItemContactBinding) :
 
         itemView.setOnClickListener { onClick(conversation) }
 
-        binding.displayName.text = conversation.title
+        TextUtils.setConversationTitle(binding.displayName, conversation)
         val selectionChanged = isChecked != checked
         isChecked = checked
         binding.contactSelected.isVisible = checked
