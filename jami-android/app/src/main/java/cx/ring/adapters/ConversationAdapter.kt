@@ -60,6 +60,8 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withC
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
+import cx.ring.adapters.MessageGrouping.isAlwaysSingleMsg
+import cx.ring.adapters.MessageGrouping.isSeqBreak
 import cx.ring.client.CollabEditorActivity
 import cx.ring.client.MediaViewerActivity
 import cx.ring.client.MessageEditActivity
@@ -1218,29 +1220,9 @@ class ConversationAdapter(
         })
 
         val isDateShown = hasPermanentDateString(file, position)
+        val msgSequenceType = getMsgSequencing(position, isDateShown)
         configureTimestamp(viewHolder, file, isDateShown)
-
-        val contact = interaction.contact ?: return
-        if (interaction.isIncoming && presenter.isGroup()) {
-            viewHolder.mAvatar?.let { avatar ->
-                avatar.setAvatar(conversationFragment.getConversationAvatar(contact.primaryNumber))
-                avatar.visibility = View.VISIBLE
-            }
-            val account = interaction.account?: return
-            // Show the name of the contact.
-            viewHolder.mPeerDisplayName?.apply {
-                    visibility = View.VISIBLE
-                    viewHolder.compositeDisposable.add(
-                        presenter.contactService
-                            .observeContact(account, contact, false)
-                            .observeOn(DeviceUtils.uiScheduler)
-                            .subscribe { text = it.displayName }
-                    )
-            }
-        } else {
-            viewHolder.mAvatar?.visibility = View.GONE
-            viewHolder.mPeerDisplayName?.visibility = View.GONE
-        }
+        configureSender(viewHolder, interaction, position, msgSequenceType)
         val type = viewHolder.type.transferType
         val longPressView = when (type) {
             MessageType.TransferType.IMAGE -> viewHolder.mImage
@@ -1506,7 +1488,6 @@ class ConversationAdapter(
         val messageBubble = viewHolder.mMessageBubble ?: return
         val replyBubble = viewHolder.mReplyBubble
         val answerLayout = viewHolder.mAnswerLayout
-        val peerDisplayName = viewHolder.mPeerDisplayName
 
         val isDateShown = hasPermanentDateString(interaction, position)
         val msgSequenceType = getMsgSequencing(position, isDateShown)
@@ -1613,45 +1594,7 @@ class ConversationAdapter(
             } else answerLayout?.visibility = View.GONE
         }
 
-        val endOfSeq = msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
-        // Manage animation for avatar and name.
-        val avatar = viewHolder.mAvatar
-        if (presenter.isGroup() && interaction.isIncoming) {
-            avatar?.let {
-                if (endOfSeq) { // To only display the avatar of the last message.
-                    avatar.setAvatar(conversationFragment.getConversationAvatar(contact.primaryNumber))
-                    avatar.visibility = View.VISIBLE
-                } else {
-                    if (position == lastMsgPos - 1) {
-                        ActionHelper.startFadeOutAnimation(avatar)
-                    } else {
-                        avatar.setAvatar(null)
-                        avatar.visibility = View.INVISIBLE
-                    }
-                }
-            }
-
-            // Show the name of the contact.
-            val startOfSeq = msgSequenceType == SequenceType.FIRST
-                    || msgSequenceType == SequenceType.SINGLE
-            peerDisplayName?.apply {
-                if (startOfSeq) {
-                    visibility = View.VISIBLE
-                    viewHolder.compositeDisposable.add(
-                        presenter.contactService
-                            .observeContact(account, contact, false)
-                            .observeOn(DeviceUtils.uiScheduler)
-                            .subscribe { text = it.displayName }
-                    )
-                } else {
-                    visibility = View.GONE
-                    text = null
-                }
-            }
-        } else {
-            avatar?.visibility = View.GONE
-            peerDisplayName?.visibility = View.GONE
-        }
+        configureSender(viewHolder, interaction, position, msgSequenceType)
 
         // Manage deleted message.
         if (isDeleted) {
@@ -1817,8 +1760,53 @@ class ConversationAdapter(
         }
     }
 
+    private fun configureSender(
+        viewHolder: ConversationViewHolder,
+        interaction: Interaction,
+        position: Int,
+        sequenceType: SequenceType,
+    ) {
+        val avatar = viewHolder.mAvatar
+        val peerDisplayName = viewHolder.mPeerDisplayName
+        if (presenter.isGroup() && interaction.isIncoming) {
+            val contact = interaction.contact ?: return
+            val account = interaction.account ?: return
+            val endOfSeq = sequenceType == SequenceType.LAST || sequenceType == SequenceType.SINGLE
+            avatar?.let {
+                if (endOfSeq) {
+                    avatar.setAvatar(conversationFragment.getConversationAvatar(contact.primaryNumber))
+                    avatar.visibility = View.VISIBLE
+                } else if (position == lastMsgPos - 1) {
+                    ActionHelper.startFadeOutAnimation(avatar)
+                } else {
+                    avatar.setAvatar(null)
+                    avatar.visibility = View.INVISIBLE
+                }
+            }
+            val startOfSeq = sequenceType == SequenceType.FIRST || sequenceType == SequenceType.SINGLE
+            peerDisplayName?.apply {
+                if (startOfSeq) {
+                    visibility = View.VISIBLE
+                    viewHolder.compositeDisposable.add(
+                        presenter.contactService
+                            .observeContact(account, contact, false)
+                            .observeOn(DeviceUtils.uiScheduler)
+                            .subscribe { text = it.displayName }
+                    )
+                } else {
+                    visibility = View.GONE
+                    text = null
+                }
+            }
+        } else {
+            avatar?.visibility = View.GONE
+            peerDisplayName?.visibility = View.GONE
+        }
+    }
+
     /**
-     * Message Separation is used to highlight two group of messages.
+     * Message Separation is used to highlight two groups of messages.
+     * Text, calls and transfers share groups with gaps of at most one hour.
      * We don't need message separation if:
      * - The message is the first of the conversation
      * - The message is the first of the day (date already shown)
@@ -2196,26 +2184,6 @@ class ConversationAdapter(
             R.drawable.textmsg_bg_in_reply_first
         )
 
-        /**
-         * Tells if a break should be added in the sequence.
-         * The first interaction must be before the second interaction.
-         *
-         * @param first     first interaction
-         * @param second    second interaction
-         * @return          True if a sequence break is needed. Else false.
-         */
-        private fun isSeqBreak(first: Interaction, second: Interaction): Boolean =
-            StringUtils.isOnlyEmoji(first.body) != StringUtils.isOnlyEmoji(second.body)
-                    || first.isIncoming != second.isIncoming
-                    || ((first.type !== Interaction.InteractionType.TEXT) && (first.type !== Interaction.InteractionType.CALL))
-                    || ((second.type !== Interaction.InteractionType.TEXT) && (second.type !== Interaction.InteractionType.CALL))
-                    || second.replyTo != null
-                    || first.contact != second.contact
-                    || (second.timestamp - first.timestamp) > (10 * DateUtils.MINUTE_IN_MILLIS)
-
-        private fun isAlwaysSingleMsg(msg: Interaction): Boolean =
-            ((msg.type !== Interaction.InteractionType.TEXT && msg.type !== Interaction.InteractionType.CALL)
-                    || StringUtils.isOnlyEmoji(msg.body))
     }
 
 }
