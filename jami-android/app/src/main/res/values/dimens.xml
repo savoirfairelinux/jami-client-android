@@ -102,6 +102,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <dimen name="bottom_sheet_radius">16dp</dimen>
     <dimen name="edit_text_radius">12dp</dimen>
     <dimen name="dialog_radius">@dimen/bottom_sheet_radius</dimen>
+    <dimen name="feed_creation_content_padding">24dp</dimen>
 
     <!--  JamiId  -->
     <dimen name="jami_id_small_font_size">14sp</dimen>
