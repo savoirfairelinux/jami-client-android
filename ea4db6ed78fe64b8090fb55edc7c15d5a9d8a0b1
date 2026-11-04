@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee01fe4c_f82c2499",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-04T20:02:12Z",
+      "side": 1,
+      "message": "[error] Line 493: 🔴 `blockingFirst()` is being called from `threadingEnabled()`, which is used during UI lifecycle paths (`onViewCreated` initialization and `displayContact`). This can block the main thread and may throw if the stream errors or is empty, causing UI jank or crashes. Compute feed mode without blocking (reuse already-available `ConversationItemViewModel` when possible), or resolve mode asynchronously and then call `applyThreadPreference()` when the value is ready.",
+      "revId": "ea4db6ed78fe64b8090fb55edc7c15d5a9d8a0b1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1eefd451_1d20a345",
+        "filename": "jami-android/app/src/test/java/cx/ring/fragments/ConversationThreadStateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-04T20:02:12Z",
+      "side": 1,
+      "message": "[warning] Line 22: 🟡 The unit test validates the pure `shouldEnable` predicate, but the behavior change depends on `ConversationFragment.threadingEnabled()` feed detection paths (`mConversationItem?.isFeed()` and account lookup fallback). Add a fragment-level or presenter-level test covering both detection paths so regressions in feed detection don’t silently bypass this rule.",
+      "revId": "ea4db6ed78fe64b8090fb55edc7c15d5a9d8a0b1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
