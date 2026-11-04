@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "583f46dd_5c7a7fb6",
+        "filename": "jami-android/app/build.gradle.kts",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-04T20:24:12Z",
+      "side": 1,
+      "message": "[error] Line 2: 🔴 `buildHuawei` is inferred from `gradle.startParameter.taskRequests.toString().contains(\"Huawei\")`, which is brittle and can miss real Huawei builds (for example aggregate tasks like `assembleDebug`/`bundleDebug` that still include `withHuaweiPush` variants). In those cases the AGConnect plugin is not applied, so Huawei resources/config processing is skipped for the variant. Apply `com.huawei.agconnect` unconditionally in this module (or gate it on reliable variant/config detection) instead of parsing task request strings.",
+      "revId": "7aaf6ceb5b07fa1540cf0796fb5aec64b2c7f77b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
