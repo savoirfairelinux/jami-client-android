@@ -847,6 +847,7 @@ class TvConversationAdapter(
         val event = interaction as ContactEvent
         viewHolder.mMsgTxt?.setText(
             when (event.event) {
+                ContactEvent.Event.FEED_CREATED -> R.string.feed_created
                 ContactEvent.Event.ADDED -> R.string.hist_contact_added
                 ContactEvent.Event.INVITED -> R.string.hist_contact_invited
                 ContactEvent.Event.REMOVED -> R.string.hist_contact_left

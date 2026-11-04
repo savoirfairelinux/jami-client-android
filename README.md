@@ -100,6 +100,12 @@ Feed invitations, moderation and shared profile edits are admin-only.
 Calls and document creation are unavailable in Feeds; private contact
 name/avatar overrides and personal conversation preferences are unchanged.
 
+## Feeds
+
+Feeds display a distinguishing icon beside their names.
+The daemon's initial commit appears as **Feed created** and supplies the
+first activity timestamp, so new Feeds sort to the top without a message.
+
 ## Threaded conversations (experimental)
 
 Enable **Threaded view** in **Account settings > Messages** to group replies

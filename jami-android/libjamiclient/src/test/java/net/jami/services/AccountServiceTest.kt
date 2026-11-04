@@ -12,6 +12,7 @@ import net.jami.model.MemberRole
 import net.jami.model.Uri
 import net.jami.model.interaction.ContactEvent
 import net.jami.model.interaction.DataTransfer
+import net.jami.model.interaction.Interaction
 import net.jami.utils.Log
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -53,6 +54,54 @@ class AccountServiceTest {
             mock(VCardService::class.java)
         ))
     }
+
+    @Test
+    fun feedInitialCommitIsVisibleAndSortsAnEmptyFeedFirst() {
+        repeat(2) {
+            val account = Account("account", emptyMap(), emptyList(),
+                mapOf(ConfigKey.ACCOUNT_REGISTRATION_STATUS.key to "REGISTERED")).apply { setHistoryLoaded() }
+            val group = account.newSwarm("group", Conversation.Mode.InvitesOnly)
+            account.conversationStarted(group)
+            group.lastEvent = Interaction("account").apply {
+                type = Interaction.InteractionType.TEXT
+                timestamp = 1000
+            }
+            val feed = account.newSwarm("feed", Conversation.Mode.Feed)
+            account.conversationStarted(feed)
+            val updates = account.getConversationsSubject(true).test()
+            val creation = decodeInitialCommit(account, feed)
+            feed.addSwarmElement(creation, false)
+
+            assertEquals(Interaction.InteractionType.CONTACT, creation.type)
+            assertEquals(ContactEvent.Event.FEED_CREATED, (creation as ContactEvent).event)
+            assertEquals(2000L, creation.timestamp)
+            assertEquals("initial", creation.messageId)
+            assertEquals(listOf(feed, group), updates.values().last())
+            assertEquals(0, account.unreadConversations.blockingFirst())
+            group.lastEvent = Interaction("account").apply {
+                type = Interaction.InteractionType.TEXT
+                timestamp = 3000
+            }
+            assertEquals(listOf(group, feed), updates.values().last())
+            updates.dispose()
+        }
+    }
+
+    @Test
+    fun ordinaryGroupInitialCommitsKeepTheirExistingHiddenBehavior() {
+        val account = Account("account", emptyMap(), emptyList(),
+            mapOf(ConfigKey.ACCOUNT_REGISTRATION_STATUS.key to "REGISTERED"))
+        val group = account.newSwarm("group", Conversation.Mode.InvitesOnly)
+        assertEquals(Interaction.InteractionType.INVALID, decodeInitialCommit(account, group).type)
+    }
+
+    private fun decodeInitialCommit(account: Account, conversation: Conversation): Interaction =
+        AccountService::class.java.getDeclaredMethod(
+            "getInteraction", Account::class.java, Conversation::class.java, Map::class.java
+        ).apply { isAccessible = true }.invoke(service, account, conversation, mapOf(
+            "id" to "initial", "type" to "initial", "author" to "a".repeat(40),
+            "timestamp" to "2", "mode" to if (conversation.mode.blockingFirst() == Conversation.Mode.Feed) "5" else "2"
+        )) as Interaction
 
     @Test
     fun feedCreationReturnsTheRegisteredFeedWithoutCreatingAGroup() {
