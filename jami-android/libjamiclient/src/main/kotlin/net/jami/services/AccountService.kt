@@ -494,6 +494,19 @@ class AccountService(
             }
         }.subscribeOn(scheduler)
 
+    fun startFeedConversation(accountId: String): Single<Conversation> =
+        getAccountSingle(accountId).flatMap { account ->
+            if (account.isSip)
+                return@flatMap Single.error(IllegalArgumentException("Feeds require a Jami account"))
+            val id = JamiService.startFeedConversation(accountId)
+            if (id.isEmpty())
+                return@flatMap Single.error(IllegalStateException("Daemon failed to create Feed"))
+            conversationCallbacks.submit(accountId, id) {
+                account.getSwarm(id)
+                    ?: throw IllegalStateException("Feed $id was not registered")
+            }
+        }.subscribeOn(scheduler)
+
     fun removeConversation(accountId: String, conversationUri: Uri): Completable =
         Completable.fromAction { JamiService.removeConversation(accountId, conversationUri.rawRingId) }
             .subscribeOn(scheduler)
