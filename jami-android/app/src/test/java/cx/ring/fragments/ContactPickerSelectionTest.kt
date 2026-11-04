@@ -132,6 +132,18 @@ class ContactPickerSelectionTest {
     }
 
     @Test
+    fun feedSourcesAreNotSelectionSources() {
+        val alice = contact("account-a", "alice")
+        val bob = contact("account-a", "bob")
+        val feedMembers = alice.members + bob.members
+        assertNull(createContactPickerItem(
+            group("feed", feedMembers, Conversation.Mode.Feed).conversation,
+            emptySet(),
+            feedMembers.associate { it.contact.uri.uri to MemberRole.MEMBER }
+        ))
+    }
+
+    @Test
     fun groupSourcesExcludeSelfRemovedBlockedAndAlreadyPresentContacts() {
         val names = listOf("self", "admin", "member", "invited", "blocked", "left", "unknown", "existing")
         val members = names.map { name ->
@@ -142,13 +154,19 @@ class ContactPickerSelectionTest {
             MemberRole.ADMIN, MemberRole.ADMIN, MemberRole.MEMBER, MemberRole.INVITED,
             MemberRole.BLOCKED, MemberRole.LEFT, MemberRole.UNKNOWN, MemberRole.MEMBER
         )
-        val source = group("source", members).conversation
-        val item = createContactPickerItem(
-            source, setOf(members.last().contact.uri.rawUriString),
-            members.zip(roles).associate { (member, role) -> member.contact.uri.uri to role }
-        )!!
-        assertEquals(members.slice(1..3), item.members)
-        assertNull(createContactPickerItem(source, emptySet(), emptyMap()))
+        for (mode in listOf(
+            Conversation.Mode.AdminInvitesOnly,
+            Conversation.Mode.InvitesOnly,
+            Conversation.Mode.Public
+        )) {
+            val source = group("source", members, mode).conversation
+            val item = createContactPickerItem(
+                source, setOf(members.last().contact.uri.rawUriString),
+                members.zip(roles).associate { (member, role) -> member.contact.uri.uri to role }
+            )!!
+            assertEquals(members.slice(1..3), item.members)
+            assertNull(createContactPickerItem(source, emptySet(), emptyMap()))
+        }
     }
 
     @Test
@@ -160,10 +178,17 @@ class ContactPickerSelectionTest {
         )
         assertNull(createContactPickerItem(pending, emptySet(), emptyMap()))
         assertNull(createContactPickerItem(group("empty", emptyList()).conversation, emptySet(), emptyMap()))
+        assertNull(createContactPickerItem(
+            group("empty-feed", emptyList(), Conversation.Mode.Feed).conversation, emptySet(), emptyMap()
+        ))
     }
 
-    private fun group(name: String, members: List<ContactViewModel>): ContactPickerItem {
-        val conversation = Conversation("account-a", Uri(Uri.SWARM_SCHEME, name), Conversation.Mode.InvitesOnly)
+    private fun group(
+        name: String,
+        members: List<ContactViewModel>,
+        mode: Conversation.Mode = Conversation.Mode.InvitesOnly
+    ): ContactPickerItem {
+        val conversation = Conversation("account-a", Uri(Uri.SWARM_SCHEME, name), mode)
         members.forEach {
             conversation.addContact(it.contact, if (it.contact.isUser) MemberRole.ADMIN else MemberRole.MEMBER)
         }
