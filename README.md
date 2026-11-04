@@ -106,6 +106,14 @@ Feeds display a distinguishing icon beside their names.
 The daemon's initial commit appears as **Feed created** and supplies the
 first activity timestamp, so new Feeds sort to the top without a message.
 
+On phones, choose **New Feed** beside **QR Code** and **New group** in the
+search view. These actions wrap when screen width, font size or translated
+labels need more space. Feed creation uses a separate dialog with a required
+name and optional description, without selecting members. It is available
+for Jami accounts only. Invite members and customize the shared profile
+afterwards from the conversation details. Group creation keeps its existing
+contact picker.
+
 ## Threaded conversations (experimental)
 
 Enable **Threaded view** in **Account settings > Messages** to group replies
