@@ -89,7 +89,7 @@ class SmartListPresenter @Inject constructor(
         view?.displayDeleteDialog(
             conversation.accountId,
             conversation.uri,
-            conversation.isSwarmGroup()
+            conversation.effectiveMode
         )
 
     fun removeConversation(accountId: String, uri: Uri) {
