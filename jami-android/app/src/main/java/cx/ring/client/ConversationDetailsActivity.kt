@@ -239,7 +239,7 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
                     // Block conversation edition for non-admin users.
                     binding.addMember.isVisible = true
                     fun showNotAdminToast() =
-                        Toast.makeText(this, R.string.not_admin_toast, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, if (vm.isFeed()) R.string.feed_not_admin else R.string.not_admin_toast, Toast.LENGTH_SHORT).show()
                     binding.conversationTitle.setOnClickListener { showNotAdminToast() }
                     binding.conversationAvatar.setOnClickListener { showNotAdminToast() }
                 } else {
@@ -252,7 +252,7 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
                         }
                         MaterialAlertDialogBuilder(this)
                             .setView(dialogBinding.root)
-                            .setTitle(getString(R.string.dialogtitle_title))
+                            .setTitle(if (vm.isFeed()) R.string.feed_edit_title else R.string.dialogtitle_title)
                             .setPositiveButton(R.string.rename_btn) { d: DialogInterface, i: Int ->
                                 val input = dialogBinding.titleTxt.text.toString().trim { it <= ' ' }
                                 updateConversationInfo(mapOf("title" to input))
@@ -590,18 +590,16 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
                 }
 
                 else -> {
-                    titles = listOf(
-                        getString(R.string.details),
-                        getString(R.string.tab_members),
-                        getString(R.string.tab_files),
-                        getString(R.string.collab_documents)
-                    )
-                    fragments = listOf(
-                        ConversationActionsFragment.newInstance(accountId, conversationId),
-                        ConversationMembersFragment.newInstance(accountId, conversationId),
-                        ConversationGalleryFragment.newInstance(accountId, conversationId),
-                        CollabDocumentsFragment.newInstance(accountId, conversationId)
-                    )
+                    val tabs = groupConversationDetailsTabs(mode)
+                    titles = tabs.map { getString(it.title) }
+                    fragments = tabs.map {
+                        when (it) {
+                            ConversationDetailsTab.Details -> ConversationActionsFragment.newInstance(accountId, conversationId)
+                            ConversationDetailsTab.Members -> ConversationMembersFragment.newInstance(accountId, conversationId)
+                            ConversationDetailsTab.Files -> ConversationGalleryFragment.newInstance(accountId, conversationId)
+                            ConversationDetailsTab.Documents -> CollabDocumentsFragment.newInstance(accountId, conversationId)
+                        }
+                    }
                 }
             }
 
@@ -624,3 +622,19 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
         const val REQUEST_CODE_CALL = 3
     }
 }
+
+internal enum class ConversationDetailsTab(val title: Int) {
+    Details(R.string.details),
+    Members(R.string.tab_members),
+    Files(R.string.tab_files),
+    Documents(R.string.collab_documents)
+}
+
+internal fun groupConversationDetailsTabs(mode: Conversation.Mode): List<ConversationDetailsTab> =
+    listOf(
+        ConversationDetailsTab.Details,
+        ConversationDetailsTab.Members,
+        ConversationDetailsTab.Files
+    ).let { tabs ->
+        if (mode == Conversation.Mode.Feed) tabs else tabs + ConversationDetailsTab.Documents
+    }

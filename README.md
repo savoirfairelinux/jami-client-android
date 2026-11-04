@@ -114,6 +114,11 @@ for Jami accounts only. Invite members and customize the shared profile
 afterwards from the conversation details. Group creation keeps its existing
 contact picker.
 
+The Feed list action menu offers only **Leave Feed**. Details identify the
+type as **Feed** and use Feed-specific leave and profile-edit wording.
+Leaving uses the existing conversation removal flow. Feed details retain
+Details, Members and Files, without the collaborative Documents tab.
+
 ## Threaded conversations (experimental)
 
 Enable **Threaded view** in **Account settings > Messages** to group replies

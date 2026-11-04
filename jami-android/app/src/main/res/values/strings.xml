@@ -301,6 +301,14 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="feed_created_at">Feed created, %1$s</string>
     <string name="feed_name">Feed name</string>
     <string name="create_feed">Create Feed</string>
+    <string name="feed_details">Feed details</string>
+    <string name="conversation_type_feed">Feed</string>
+    <string name="leave_feed">Leave Feed</string>
+    <string name="leave_feed_title">Leave this Feed?</string>
+    <string name="leave_feed_message">This will remove the Feed from your conversations list.</string>
+    <string name="feed_edit_title">Edit Feed title</string>
+    <string name="feed_edit_description">Edit Feed description</string>
+    <string name="feed_not_admin">Only admins can edit the information of this Feed</string>
     <string name="ab_action_flipcamera">Flip camera</string>
     <string name="ab_action_hidepreview">Hide preview</string>
     <string name="remote_recording">%s recording…</string>

@@ -1473,6 +1473,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     private val menuProvider = object : MenuProvider {
         override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
+            menu.findItem(R.id.conv_conversation_details)?.setTitle(
+                if (mConversationItem?.isFeed() == true) R.string.feed_details else R.string.conversation_details
+            )
             val canCall = currentBottomView == binding?.cvMessageInput && presenter.canCall()
             menu.findItem(R.id.conv_action_audiocall)?.isVisible = canCall
             menu.findItem(R.id.conv_action_videocall)?.isVisible = canCall
@@ -1619,6 +1622,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         val avatar = AvatarFactory.getAvatar(requireContext(), conversation).blockingGet()
         mParticipantAvatars[conversation.uri.rawRingId] = AvatarDrawable(avatar)
         setupActionbar(conversation, avatar)
+        binding?.toolbar?.menu?.findItem(R.id.conv_conversation_details)?.setTitle(
+            if (conversation.isFeed()) R.string.feed_details else R.string.conversation_details
+        )
 
         mPeerServicesCheckDisposable?.dispose()
         mPeerServicesCheckDisposable = null
