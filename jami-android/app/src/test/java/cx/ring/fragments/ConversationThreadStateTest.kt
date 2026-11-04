@@ -21,6 +21,15 @@ import org.junit.Test
 
 class ConversationThreadStateTest {
     @Test
+    fun feedsAlwaysUseThreadsWhileOtherChatsFollowTheSetting() {
+        for (preference in listOf(false, true)) {
+            assertTrue(ConversationThreadState.shouldEnable(true, true, preference))
+            assertEquals(preference, ConversationThreadState.shouldEnable(true, false, preference))
+            assertFalse(ConversationThreadState.shouldEnable(false, false, preference))
+        }
+    }
+
+    @Test
     fun draftsAndReplyTargetsStayIndependentAcrossThreads() {
         val state = ConversationThreadState()
         assertFalse(state.enabled)

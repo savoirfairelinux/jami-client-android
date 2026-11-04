@@ -90,6 +90,7 @@ import net.jami.model.Call.CallStatus
 import net.jami.model.interaction.DataTransfer
 import net.jami.model.interaction.Interaction
 import net.jami.model.interaction.TextMessage
+import net.jami.services.AccountService
 import net.jami.services.NotificationService
 import net.jami.services.PeerServicesService
 import net.jami.services.PeerServicesStatus
@@ -179,6 +180,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private var inlineAudioRecorder: InlineAudioRecorder? = null
 
     @Inject lateinit var peerServicesService: PeerServicesService
+    @Inject lateinit var accountService: AccountService
     @Named("UiScheduler") @Inject lateinit var uiScheduler: Scheduler
 
     private fun isImeAnimation(a: WindowInsetsAnimationCompat): Boolean {
@@ -484,9 +486,19 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     private fun applyThreadPreference() {
         if (binding == null) return
-        val enabled = ConversationPath.fromBundle(arguments)?.conversationUri?.isSwarm == true &&
-            accountPreferences?.getBoolean(PREF_THREADED_VIEW, false) == true
+        val enabled = threadingEnabled()
         if (threadState.enabled != enabled) setThreadingEnabled(enabled)
+    }
+
+    private fun threadingEnabled(): Boolean {
+        val path = ConversationPath.fromBundle(arguments) ?: return false
+        val isFeed = mConversationItem?.isFeed() == true ||
+            accountService.getAccount(path.accountId)?.getByUri(path.conversationUri)
+                ?.effectiveMode == Conversation.Mode.Feed
+        return ConversationThreadState.shouldEnable(
+            path.conversationUri.isSwarm, isFeed,
+            accountPreferences?.getBoolean(PREF_THREADED_VIEW, false) == true
+        )
     }
 
     fun revealThreadMessage(messageId: String) {
@@ -1536,8 +1548,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
         accountPreferences = getAccountPreferences(requireContext(), path.accountId)
         threadState = ConversationThreadState(
-            path.conversationUri.isSwarm &&
-                accountPreferences?.getBoolean(PREF_THREADED_VIEW, false) == true,
+            threadingEnabled(),
             restoredThreadRoot
         )
 
@@ -1604,6 +1615,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun displayContact(conversation: ConversationItemViewModel) {
         mConversationItem = conversation
+        applyThreadPreference()
         val avatar = AvatarFactory.getAvatar(requireContext(), conversation).blockingGet()
         mParticipantAvatars[conversation.uri.rawRingId] = AvatarDrawable(avatar)
         setupActionbar(conversation, avatar)
