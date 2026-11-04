@@ -56,5 +56,8 @@ class ConversationThreadState(enabled: Boolean = false, rootId: String? = null) 
 
     companion object {
         const val MAIN_DRAFT_KEY = "pendingMessage"
+
+        fun shouldEnable(isSwarm: Boolean, isFeed: Boolean, preference: Boolean): Boolean =
+            isSwarm && (isFeed || preference)
     }
 }
