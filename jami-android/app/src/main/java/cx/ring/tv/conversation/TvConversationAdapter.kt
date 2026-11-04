@@ -53,6 +53,9 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.DrawableImageViewTarget
 import com.google.android.material.color.MaterialColors
 import cx.ring.R
+import cx.ring.adapters.MessageGrouping
+import cx.ring.adapters.MessageGrouping.isAlwaysSingleMsg
+import cx.ring.adapters.MessageGrouping.isSeqBreak
 import cx.ring.adapters.MessageType
 import cx.ring.client.MediaViewerActivity
 import cx.ring.utils.ActionHelper
@@ -545,7 +548,12 @@ class TvConversationAdapter(
         .subscribe {
             viewHolder.mFileSize?.text = it
         })
-        if (hasPermanentTimeString(file, position)) {
+        val isTimeShown = hasPermanentTimeString(file, position)
+        val msgSequenceType = getMsgSequencing(position, isTimeShown)
+        val endOfSeq = msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
+        val startOfSeq = msgSequenceType == SequenceType.FIRST || msgSequenceType == SequenceType.SINGLE
+        setBottomMargin(viewHolder.itemView, if (startOfSeq) 8 else 0)
+        if (isTimeShown) {
             viewHolder.compositeDisposable.add(timestampText(context, file.timestamp).subscribe {
                 viewHolder.mMsgDetailTxtPerm?.text = it
             })
@@ -556,19 +564,29 @@ class TvConversationAdapter(
         val contact = interaction.contact ?: return
         if (interaction.isIncoming && presenter.isGroup()) {
             viewHolder.mAvatar?.let { avatar ->
-                avatar.setAvatar(conversationFragment.getConversationAvatar(contact.primaryNumber))
-                avatar.visibility = View.VISIBLE
+                if (endOfSeq) {
+                    avatar.setAvatar(conversationFragment.getConversationAvatar(contact.primaryNumber))
+                    avatar.visibility = View.VISIBLE
+                } else {
+                    avatar.setAvatar(null)
+                    avatar.visibility = View.INVISIBLE
+                }
             }
             val account = interaction.account ?: return
             // Show the name of the contact.
             viewHolder.mPeerDisplayName?.apply {
-                visibility = View.VISIBLE
-                viewHolder.compositeDisposable.add(
-                    presenter.contactService
-                        .observeContact(account, contact, false)
-                        .observeOn(DeviceUtils.uiScheduler)
-                        .subscribe { text = it.displayName }
-                )
+                if (endOfSeq) {
+                    visibility = View.VISIBLE
+                    viewHolder.compositeDisposable.add(
+                        presenter.contactService
+                            .observeContact(account, contact, false)
+                            .observeOn(DeviceUtils.uiScheduler)
+                            .subscribe { text = it.displayName }
+                    )
+                } else {
+                    visibility = View.GONE
+                    text = null
+                }
             }
         } else {
             viewHolder.mAvatar?.visibility = View.GONE
@@ -1182,7 +1200,7 @@ class TvConversationAdapter(
         val prevMsg = getPreviousInteractionFromPosition(i)
         val nextMsg = getNextInteractionFromPosition(i)
 
-        if (mInteractions.size == 1 || i == 0) {
+        if (prevMsg == null) {
             if (mInteractions.size == i + 1) {
                 return SequenceType.SINGLE
             }
@@ -1195,20 +1213,18 @@ class TvConversationAdapter(
                 }
             }
         } else if (nextMsg == null) { // If this is the last interaction.
-            if (prevMsg != null) {
-                return if (isSeqBreak(msg, prevMsg) || isTimeShown) {
-                    SequenceType.SINGLE
-                } else SequenceType.LAST
-            }
+            return if (isSeqBreak(prevMsg, msg) || isTimeShown) {
+                SequenceType.SINGLE
+            } else SequenceType.LAST
         }
 
         if (prevMsg != null && nextMsg != null) {
             val nextMsgHasTime = hasPermanentTimeString(nextMsg, i + 1)
-            if ((isSeqBreak(msg, prevMsg) || isTimeShown) && !(isSeqBreak(msg, nextMsg) || nextMsgHasTime)) {
+            if ((isSeqBreak(prevMsg, msg) || isTimeShown) && !(isSeqBreak(msg, nextMsg) || nextMsgHasTime)) {
                 return SequenceType.FIRST
-            } else if (!isSeqBreak(msg, prevMsg) && !isTimeShown && isSeqBreak(msg, nextMsg)) {
+            } else if (!isSeqBreak(prevMsg, msg) && !isTimeShown && isSeqBreak(msg, nextMsg)) {
                 return SequenceType.LAST
-            } else if (!isSeqBreak(msg, prevMsg) && !isTimeShown && !isSeqBreak(msg, nextMsg)) {
+            } else if (!isSeqBreak(prevMsg, msg) && !isTimeShown && !isSeqBreak(msg, nextMsg)) {
                 return if (nextMsgHasTime) SequenceType.LAST else SequenceType.MIDDLE
             }
         }
@@ -1217,7 +1233,7 @@ class TvConversationAdapter(
 
     private fun hasPermanentTimeString(msg: Interaction, position: Int): Boolean {
         val prevMsg = getPreviousInteractionFromPosition(position)
-        return prevMsg != null && msg.timestamp - prevMsg.timestamp > 10 * DateUtils.MINUTE_IN_MILLIS
+        return prevMsg != null && msg.timestamp - prevMsg.timestamp > MessageGrouping.MAX_GAP_MILLIS
     }
 
     private enum class SequenceType {
@@ -1255,18 +1271,6 @@ class TvConversationAdapter(
             params.bottomMargin = targetSize
         }
 
-        private fun isSeqBreak(first: Interaction, second: Interaction): Boolean =
-            isOnlyEmoji(first.body) != isOnlyEmoji(second.body)
-                    || first.isIncoming != second.isIncoming
-                    || (first.type !== Interaction.InteractionType.TEXT
-                        && (first.type !== Interaction.InteractionType.CALL))
-                    || (second.type !== Interaction.InteractionType.TEXT
-                        && (second.type !== Interaction.InteractionType.CALL))
-                    || first.contact != second.contact
-
-        private fun isAlwaysSingleMsg(msg: Interaction): Boolean =
-            (msg.type !== Interaction.InteractionType.TEXT
-                    && msg.type !== Interaction.InteractionType.CALL || isOnlyEmoji(msg.body))
     }
 
 }
