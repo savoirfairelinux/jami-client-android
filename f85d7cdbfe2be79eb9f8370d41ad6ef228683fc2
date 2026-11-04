@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96e72723_0149e9c0",
+        "filename": "jami-android/libjamiclient/src/test/java/net/jami/services/AccountServiceTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-04T19:58:31Z",
+      "side": 1,
+      "message": "[warning] 🟡 Add a test for the non-empty ID but unregistered-feed path (`IllegalStateException(\"Feed ... was not registered\")`). This is the key async contract of `startFeedConversation`, and without a dedicated test, regressions in callback/registration timing could slip through unnoticed.",
+      "revId": "f85d7cdbfe2be79eb9f8370d41ad6ef228683fc2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
