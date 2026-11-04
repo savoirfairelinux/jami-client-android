@@ -9,6 +9,28 @@ import org.junit.Test
 
 class ConversationModeTest {
     @Test
+    fun feedIdentityIsRetainedForPendingAndSyncingConversations() {
+        val uri = Uri(Uri.SWARM_SCHEME, "feed")
+        val syncing = Conversation("account", uri, Conversation.Mode.Syncing)
+        syncing.requestMode = Conversation.Mode.Feed
+        assertEquals(Conversation.Mode.Feed, syncing.effectiveMode)
+        assertTrue(syncing.effectiveMode.isGroup)
+
+        val pending = Conversation("account", uri, Conversation.Mode.Request)
+        pending.request = TrustRequest("account", Uri.fromId("sender"), 1L, uri, mode = Conversation.Mode.Feed)
+        assertEquals(Conversation.Mode.Feed, pending.effectiveMode)
+        assertTrue(pending.effectiveMode.isGroup)
+    }
+
+    @Test
+    fun ordinaryConversationModesKeepTheirUiIdentity() {
+        for (mode in listOf(Conversation.Mode.OneToOne, Conversation.Mode.InvitesOnly, Conversation.Mode.Legacy)) {
+            val conversation = Conversation("account", Uri(Uri.SWARM_SCHEME, "conversation"), mode)
+            assertEquals(mode, conversation.effectiveMode)
+        }
+    }
+
+    @Test
     fun daemonModesDoNotDependOnLocalEnumOrdinals() {
         val modes = mapOf(
             0 to Conversation.Mode.OneToOne,

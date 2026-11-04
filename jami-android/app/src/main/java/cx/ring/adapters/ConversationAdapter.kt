@@ -1845,7 +1845,9 @@ class ConversationAdapter(
         }
         val timestamp = TextUtils.timestampToTime(context, formatter, event.timestamp)
 
-        if (interaction.isSwarm) {
+        if (event.event == ContactEvent.Event.FEED_CREATED) {
+            viewHolder.mMsgTxt?.text = context.getString(R.string.feed_created_at, timestamp)
+        } else if (interaction.isSwarm) {
             viewHolder.compositeDisposable.add(
                 presenter.contactService.observeContact(event.account!!, event.contact!!, false)
                     .observeOn(DeviceUtils.uiScheduler)

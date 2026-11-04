@@ -22,13 +22,25 @@ import android.content.Context
 import android.os.Build
 import android.text.TextUtils
 import android.text.format.DateUtils
+import android.widget.TextView
 import android.widget.Toast
 import cx.ring.R
 import net.jami.model.interaction.Interaction.TransferStatus
+import net.jami.smartlist.ConversationItemViewModel
 import java.util.*
 
 object TextUtils {
     val TAG = TextUtils::class.simpleName!!
+
+    fun setConversationTitle(view: TextView, conversation: ConversationItemViewModel) {
+        val isFeed = conversation.isFeed()
+        view.text = conversation.title
+        view.setCompoundDrawablesRelativeWithIntrinsicBounds(if (isFeed) R.drawable.ic_feed else 0, 0, 0, 0)
+        view.compoundDrawablePadding = view.resources.getDimensionPixelSize(R.dimen.padding_small)
+        view.contentDescription = if (isFeed)
+            view.context.getString(R.string.feed_conversation_name, conversation.title)
+        else null
+    }
 
     /**
      * Copy the text to the clipboard and show a toast to notify the user.
@@ -123,4 +135,3 @@ object TextUtils {
         }
     }
 }
-
