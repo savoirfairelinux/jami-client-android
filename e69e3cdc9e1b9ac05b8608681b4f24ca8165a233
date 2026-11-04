@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81bdc98f_4e9a3890",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1662,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-04T19:54:38Z",
+      "side": 1,
+      "message": "[warning] Line 1662: 🟡 `Mode.fromDaemon(info[\"mode\"]!!.toInt())` is fail-fast for any new daemon mode; that creates a hard compatibility cliff when daemon adds protocol values. Consider a non-throwing decode path at this boundary (e.g., `fromDaemonOrNull`) with explicit fallback/logging so newer daemon values degrade gracefully instead of aborting conversation loading.",
+      "revId": "e69e3cdc9e1b9ac05b8608681b4f24ca8165a233",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd1afb2d_2f0de456",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1732,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-04T19:54:38Z",
+      "side": 1,
+      "message": "[error] Line 1732: 🔴 `metadata[\"mode\"]` is parsed with `toInt()` and fed to `Mode.fromDaemon()` without a guard, so malformed or future/unknown mode values can throw and break request handling on daemon-provided input. Parse with `toIntOrNull()` and handle unknown values explicitly (e.g., log + fallback mode, or reject request without throwing) to avoid runtime failure from untrusted/forward-compat data.",
+      "revId": "e69e3cdc9e1b9ac05b8608681b4f24ca8165a233",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
