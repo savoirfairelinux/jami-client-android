@@ -251,7 +251,10 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             Log.w(TAG, "No conversation Restored")
         }
         onBackPressedDispatcher.addCallback(this, conversationBackPressedCallback)
-        handleIntent(intent)
+        // Restored fragments already handled the launch intent, including any shared files.
+        if (savedInstanceState == null) {
+            handleIntent(intent)
+        }
         checkLocalNetworkPermission()
     }
 
