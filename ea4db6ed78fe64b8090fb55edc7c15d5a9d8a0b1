@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9969f3c6_459186e2",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-11-05T21:43:20Z",
+      "side": 1,
+      "message": " mode  is backed by an initialized  BehaviorSubject , so  blockingFirst()  immediately returns the cached value on this path. A UI hang will not happen here",
+      "parentUuid": "ee01fe4c_f82c2499",
+      "revId": "ea4db6ed78fe64b8090fb55edc7c15d5a9d8a0b1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1eefd451_1d20a345",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-11-04T20:02:12Z",
       "side": 1,
       "message": "[warning] Line 22: 🟡 The unit test validates the pure `shouldEnable` predicate, but the behavior change depends on `ConversationFragment.threadingEnabled()` feed detection paths (`mConversationItem?.isFeed()` and account lookup fallback). Add a fragment-level or presenter-level test covering both detection paths so regressions in feed detection don’t silently bypass this rule.",
+      "revId": "ea4db6ed78fe64b8090fb55edc7c15d5a9d8a0b1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff2bd8ab_05cc5b6f",
+        "filename": "jami-android/app/src/test/java/cx/ring/fragments/ConversationThreadStateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-11-05T21:43:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1eefd451_1d20a345",
       "revId": "ea4db6ed78fe64b8090fb55edc7c15d5a9d8a0b1",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
