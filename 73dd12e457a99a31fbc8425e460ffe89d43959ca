@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "103d8544_68c86a8d",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/DaemonService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-05T02:09:12Z",
+      "side": 1,
+      "message": "[error] Line 372: 🔴 The new `permissions: StringVect` argument is accepted by `ConversationCallbackImpl.swarmLoaded` but never propagated to `mAccountService.swarmLoaded(...)`, so permission data from daemon is silently dropped. This makes the signature update incomplete and can leave conversation authorization state stale/incorrect. Update the downstream call (and related service contract) to pass mapped permissions through end-to-end.",
+      "revId": "73dd12e457a99a31fbc8425e460ffe89d43959ca",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
