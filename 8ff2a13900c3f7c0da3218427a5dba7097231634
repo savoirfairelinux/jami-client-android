@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1baeccb8_2322cb34",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1902,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-11-05T20:28:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "160655ad_bcc2bda1",
+      "revId": "8ff2a13900c3f7c0da3218427a5dba7097231634",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d403b8b3_e18f5109",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-11-04T19:59:44Z",
       "side": 1,
       "message": "[error] Line 1512: 🔴 `\"initial\"` commit decoding checks `conversation.mode.blockingFirst() \u003d\u003d Feed`, which misses feeds while the conversation is still `Syncing` or `Request` (where identity now lives in `effectiveMode`/request metadata). In those states, the code falls through to `INVALID`, so the `FEED_CREATED` event can be dropped and the feed won’t get its intended creation event/timestamp ordering. Use `conversation.effectiveMode` (or decode from the commit `mode` field) for this branch so feed initial commits are consistently emitted.",
+      "revId": "8ff2a13900c3f7c0da3218427a5dba7097231634",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe48da4b_e96d5a7e",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-11-05T20:28:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d403b8b3_e18f5109",
       "revId": "8ff2a13900c3f7c0da3218427a5dba7097231634",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
