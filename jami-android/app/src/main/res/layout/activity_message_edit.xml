@@ -13,6 +13,7 @@
         android:layout_margin="32dp"
         android:minHeight="48dp"
         android:transitionName="messageEdit"
+        app:cardBackgroundColor="@color/conversation_message_input_background"
         app:cardCornerRadius="@dimen/conversation_message_input_radius"
         app:cardElevation="4dp">
 
