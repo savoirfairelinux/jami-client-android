@@ -28,7 +28,9 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.RemoteMessage
 import cx.ring.service.ActiveServiceMonitor
+import cx.ring.service.PushRecoveryWindow
 import dagger.hilt.android.HiltAndroidApp
+import io.reactivex.rxjava3.schedulers.Schedulers
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -73,7 +75,7 @@ class JamiApplicationFirebase : JamiApplication() {
         }
         val now = SystemClock.elapsedRealtime()
         val callGraceRemaining = lastCallPushTime.get() + CALL_PUSH_GRACE_MS - now
-        val messageGraceRemaining = lastMessagePushTime.get() + PUSH_GRACE_MS - now
+        val messageGraceRemaining = lastMessagePushTime.get() + PushRecoveryWindow.RECOVERY_MS - now
         val graceRemaining = maxOf(callGraceRemaining, messageGraceRemaining, lastPushTime.get() + PUSH_GRACE_MS - now)
         val episodeStart = backgroundActiveSince.get()
         val capReached = episodeStart != 0L && now - episodeStart >= MAX_BACKGROUND_ACTIVE_MS
@@ -98,30 +100,40 @@ class JamiApplicationFirebase : JamiApplication() {
     }
 
     /**
-     * Handles an actionable push received while backgrounded: opens the grace window,
-     * restores accounts (and reconnects for call/message pushes), then re-arms the
-     * deactivation check. The caller filters on FCM priority, so presence and expiration
-     * pushes never get here.
+     * Publishes background grace before posting, then enqueues restore, reconnect and
+     * push together on the main looper. All three native operations use the daemon
+     * executor, behind bootstrap, so delivery cannot overtake restoration.
      */
-    fun onBackgroundPushReceived(isCallPush: Boolean, isMessagePush: Boolean) {
+    fun onMessageReceived(
+        remoteMessage: RemoteMessage,
+        isActionable: Boolean,
+        isCallPush: Boolean,
+        isMessagePush: Boolean
+    ) {
         if (!prepareRuntime()) return
         bootstrapDaemon()
-        // Publish the grace window before cancelling: a deactivateRunnable already running
-        // reads these atomics, and any deactivation it queues runs FIFO after the restore below.
-        val now = SystemClock.elapsedRealtime()
-        lastPushTime.set(now)
-        if (isCallPush) lastCallPushTime.set(now)
-        if (isMessagePush) lastMessagePushTime.set(now)
-        backgroundActiveSince.compareAndSet(0L, now)
-        backgroundHandler.removeCallbacks(deactivateRunnable)
+        val backgroundPush = !isForeground && isActionable
+        if (backgroundPush) {
+            val now = SystemClock.elapsedRealtime()
+            lastPushTime.set(now)
+            if (isCallPush) lastCallPushTime.set(now)
+            if (isMessagePush) lastMessagePushTime.set(now)
+            backgroundActiveSince.compareAndSet(0L, now)
+            backgroundHandler.removeCallbacks(deactivateRunnable)
+        }
         backgroundHandler.post {
             if (!isRuntimeReady) return@post
-            // No-op unless a background deactivation actually recorded accounts to restore.
-            mAccountService.restoreProxyAccountsAfterBackground()
-            // Full DHT/SIP reconnect to rebuild sockets torn down in doze.
-            if (isCallPush || isMessagePush) hardwareService.connectivityChanged(true)
-            backgroundHandler.removeCallbacks(deactivateRunnable)
-            backgroundHandler.postDelayed(deactivateRunnable, BACKGROUND_DEACTIVATION_DELAY_MS)
+            try {
+                if (backgroundPush) {
+                    mAccountService.restoreProxyAccountsAfterBackground()
+                    if (isCallPush || isMessagePush) hardwareService.connectivityChanged(true)
+                }
+                dispatchPush(remoteMessage)
+            } catch (e: Exception) {
+                Log.e(TAG, "Error in processing message", e)
+            } finally {
+                if (!isAppVisible()) scheduleBackgroundDeactivation()
+            }
         }
     }
 
@@ -217,12 +229,9 @@ class JamiApplicationFirebase : JamiApplication() {
         return formatter.format(Date())
     }
 
-    fun onMessageReceived(remoteMessage: RemoteMessage) {
-        if (!prepareRuntime()) return
-        bootstrapDaemon()
+    private fun dispatchPush(remoteMessage: RemoteMessage) {
         Log.d(TAG, "onMessageReceived: ${remoteMessage.from} ${remoteMessage.priority} ${remoteMessage.originalPriority}")
         mAccountService.pushNotificationReceived(remoteMessage.from ?: "", remoteMessage.data)
-        mNotificationService.processPush()
         when (remoteMessage.priority) {
             RemoteMessage.PRIORITY_HIGH -> hardwareService.highPriorityPushCount++
             RemoteMessage.PRIORITY_NORMAL -> hardwareService.normalPriorityPushCount++
@@ -230,7 +239,14 @@ class JamiApplicationFirebase : JamiApplication() {
         }
         val messageData = remoteMessage.data.toString()
         val currentTimestamp = getCurrentTimestamp(withMilliseconds = true)
-        hardwareService.pushLogMessage("[$currentTimestamp] Received message from: ${remoteMessage.from}, data: $messageData")
+        Schedulers.io().scheduleDirect {
+            try {
+                mNotificationService.processPush()
+                hardwareService.pushLogMessage("[$currentTimestamp] Received message from: ${remoteMessage.from}, data: $messageData")
+            } catch (e: Exception) {
+                Log.e(TAG, "Error recording push", e)
+            }
+        }
     }
 
     companion object {
@@ -242,7 +258,7 @@ class JamiApplicationFirebase : JamiApplication() {
         private const val PUSH_GRACE_MS = 30_000L
         private const val CALL_PUSH_GRACE_MS = 60_000L
         // Upper bound for one continuous background-active episode under sustained pushes.
-        private const val MAX_BACKGROUND_ACTIVE_MS = 10 * 60_000L
+        private const val MAX_BACKGROUND_ACTIVE_MS = PushRecoveryWindow.MAX_EPISODE_MS
         private val TAG = JamiApplicationFirebase::class.simpleName
     }
 }
