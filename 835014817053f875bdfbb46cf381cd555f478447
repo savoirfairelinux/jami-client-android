@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8431e207_f4f4003a",
+        "filename": "jami-android/app/src/test/java/cx/ring/UiServicesModule.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-05T20:49:11Z",
+      "side": 1,
+      "message": "[warning] Line 79: 🟡 `executor()` returns a bare Mockito mock of `ScheduledExecutorService`, so queued tasks are silently dropped by default. This can produce false-green UI tests whenever production code relies on async work submitted to the daemon executor. Replace this with a deterministic test executor (e.g., inline `execute/submit` behavior or a single-thread scheduled executor) so async side effects actually run during tests.",
+      "revId": "835014817053f875bdfbb46cf381cd555f478447",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
