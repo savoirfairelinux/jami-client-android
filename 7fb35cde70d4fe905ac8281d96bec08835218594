@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81423289_100ced79",
+        "filename": "jami-android/app/src/main/res/values-night/colors.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-05T02:26:30Z",
+      "side": 1,
+      "message": "[warning] Line 22: 🟡 `conversation_secondary_background` is changed from `#515151` to `#313131`, which appears unrelated to this change’s stated scope (message input card color) and can unintentionally alter other dark-mode surfaces that reuse this shared token. Prefer keeping this token unchanged and only introducing/using `conversation_message_input_background` for the input card, or split this broader palette adjustment into a separate change with dedicated visual review.",
+      "revId": "7fb35cde70d4fe905ac8281d96bec08835218594",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
