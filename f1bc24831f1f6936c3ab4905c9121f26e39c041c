@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "44587cb2_c3e6c1cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2026-11-05T21:16:58Z",
+      "side": 1,
+      "message": "we don\u0027t keep the app awake when downloading conversations. I don\u0027t see a reason to do that specifically for documents.\nIf the user has the app open waiting for the document, this would not change anything.",
+      "revId": "f1bc24831f1f6936c3ab4905c9121f26e39c041c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ce01582c_7a9b07ef",
