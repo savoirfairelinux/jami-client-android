@@ -79,23 +79,14 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
             }
         }
 
-        if (!appInForeground && isActionable) {
-            // Single serialized entry point; grace window, restore, reconnect and
-            // deactivation re-arm are all evaluated on the main thread.
-            app.onBackgroundPushReceived(isCallPush = isCallWakeup, isMessagePush = isMessageWakeup)
-        }
+        app.onMessageReceived(remoteMessage, isActionable, isCallWakeup, isMessageWakeup)
 
         serviceScope.launch {
             try {
-                app.onMessageReceived(remoteMessage)
+                app.processPushDiagnostics(remoteMessage)
             } catch (e: Exception) {
                 Log.e(TAG, "Error in processing message", e)
             } finally {
-                // Re-arm deactivation so accounts restored above are not left active.
-                if (!appInForeground) {
-                    Log.d(TAG, "scheduling deactivation")
-                    app.scheduleBackgroundDeactivation()
-                }
                 // Presence/expiration push: nothing to do, so release early instead of
                 // burning the 10s timeout. Actionable pushes keep the lock — they trigger
                 // an async daemon fetch or proxy re-subscribe that can take several

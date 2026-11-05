@@ -271,7 +271,9 @@ class AccountService(
      */
     fun loadAccountsFromDaemon(isConnected: Boolean) {
         refreshAccountsCacheFromDaemon()
-        setAccountsActive(isConnected)
+        // Called on the daemon executor during bootstrap. Do not enqueue activation behind
+        // pushes already waiting for bootstrap to finish.
+        setAccountsActiveOnExecutor(isConnected)
     }
 
     private fun refreshAccountsCacheFromDaemon() {
@@ -639,18 +641,20 @@ class AccountService(
      * for battery-saving background optimization.
      */
     fun setAccountsActive(active: Boolean) {
-        mExecutor.execute {
-            Log.i(TAG, "setAccountsActive() running… $active")
-            // Keep explicit-deactivation markers consistent with bulk transitions.
-            if (active) {
-                explicitlyDeactivatedAccounts.clear()
-            } else {
-                for (a in mAccountList)
-                    if (!a.isDhtProxyEnabled) explicitlyDeactivatedAccounts.add(a.accountId)
-            }
-            for (a in mAccountList) {
-                JamiService.setAccountActive(a.accountId, active || a.isDhtProxyEnabled)
-            }
+        mExecutor.execute { setAccountsActiveOnExecutor(active) }
+    }
+
+    private fun setAccountsActiveOnExecutor(active: Boolean) {
+        Log.i(TAG, "setAccountsActive() running… $active")
+        // Keep explicit-deactivation markers consistent with bulk transitions.
+        if (active) {
+            explicitlyDeactivatedAccounts.clear()
+        } else {
+            for (a in mAccountList)
+                if (!a.isDhtProxyEnabled) explicitlyDeactivatedAccounts.add(a.accountId)
+        }
+        for (a in mAccountList) {
+            JamiService.setAccountActive(a.accountId, active || a.isDhtProxyEnabled)
         }
     }
 
