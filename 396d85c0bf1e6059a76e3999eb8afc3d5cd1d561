@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f7fbeec_6e941c53",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1394,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-11-05T20:20:47Z",
+      "side": 1,
+      "message": "```\nif (!pimpl_-\u003ehasLocalPermission(Permission::BanUnbanMember))\n    return {};\n```\n\nthis corner case is handled in the daemon in  conversationrepository.cpp and the behaviour is simialr to Qt.",
+      "parentUuid": "34cdded1_f9f0bf5c",
+      "revId": "396d85c0bf1e6059a76e3999eb8afc3d5cd1d561",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5af4cad1_8c31024a",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-11-04T19:57:28Z",
       "side": 1,
       "message": "[warning] Line 266: 🟡 `placeCallIfAllowed` checks `requireCallPermission(...)`, then `placeCall(...)` checks it again, causing duplicate permission fetches on the same call path. This is unnecessary overhead and adds avoidable failure points. Check once in the outer flow and keep `placeCall` as a trusted internal step.",
+      "revId": "396d85c0bf1e6059a76e3999eb8afc3d5cd1d561",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fab09cc2_57297c10",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/CallService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-11-05T20:20:47Z",
+      "side": 1,
+      "message": "Both checks are intentional: one runs before asynchronous Telecom setup, and the other immediately before placement, when permissions may have changed. Add-participant calls also reach  placeCall()  without the outer check, so the inner guard must remain.",
+      "parentUuid": "5af4cad1_8c31024a",
       "revId": "396d85c0bf1e6059a76e3999eb8afc3d5cd1d561",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
