@@ -1232,7 +1232,12 @@ class ConversationAdapter(
         } ?: return
 
         if (type == MessageType.TransferType.AUDIO || type == MessageType.TransferType.FILE) {
-            longPressView.background?.setTintList(null)
+            val template = ContextCompat.getDrawable(
+                context, msgBGLayouts[msgSequenceType.ordinal + (if (file.isIncoming) 4 else 0)]
+            ) as GradientDrawable
+            val background = longPressView.background.mutate() as GradientDrawable
+            background.cornerRadii = template.cornerRadii ?: FloatArray(8) { template.cornerRadius }
+            background.setTintList(null)
         }
 
         longPressView.setOnLongClickListener { v: View ->

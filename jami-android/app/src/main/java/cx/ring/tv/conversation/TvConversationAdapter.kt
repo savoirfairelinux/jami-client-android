@@ -19,6 +19,7 @@ package cx.ring.tv.conversation
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.media.MediaPlayer
 import android.media.ThumbnailUtils
 import android.provider.MediaStore
@@ -593,6 +594,18 @@ class TvConversationAdapter(
             viewHolder.mPeerDisplayName?.visibility = View.GONE
         }
         val type = viewHolder.type.transferType
+        val bubble = when (type) {
+            MessageType.TransferType.FILE -> viewHolder.mFileInfoLayout
+            MessageType.TransferType.AUDIO -> viewHolder.mAudioInfoLayout
+            else -> null
+        }
+        bubble?.let {
+            val template = ContextCompat.getDrawable(
+                context, msgBGLayouts[msgSequenceType.ordinal + (if (file.isIncoming) 4 else 0)]
+            ) as GradientDrawable
+            val background = it.background.mutate() as GradientDrawable
+            background.cornerRadii = template.cornerRadii ?: FloatArray(8) { template.cornerRadius }
+        }
         val longPressView = viewHolder.itemView
         longPressView.setOnCreateContextMenuListener { menu: ContextMenu, v: View, menuInfo: ContextMenuInfo? ->
             menu.setHeaderTitle(file.displayName)
