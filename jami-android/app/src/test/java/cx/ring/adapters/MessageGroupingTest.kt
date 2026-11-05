@@ -2,10 +2,13 @@ package cx.ring.adapters
 
 import android.app.Application
 import android.content.Context
+import android.graphics.Rect
+import android.graphics.drawable.GradientDrawable
 import android.view.ContextThemeWrapper
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.FrameLayout
+import androidx.core.content.ContextCompat
 import cx.ring.R
 import cx.ring.fragments.ConversationFragment
 import cx.ring.tv.conversation.TvConversationAdapter
@@ -269,6 +272,65 @@ class MessageGroupingTest {
             peerName?.let { assertEquals(View.VISIBLE, it.visibility) }
             assertEquals(View.VISIBLE, avatar.visibility)
         }
+    }
+
+    @Test
+    fun transferCornersMatchTextGroupsAndResetWithoutChangingPadding() {
+        for (incoming in listOf(true, false)) {
+            val templates = if (incoming) listOf(
+                R.drawable.textmsg_bg_in_first, R.drawable.textmsg_bg_in_middle,
+                R.drawable.textmsg_bg_in_last, R.drawable.textmsg_bg_in
+            ) else listOf(
+                R.drawable.textmsg_bg_out_first, R.drawable.textmsg_bg_out_middle,
+                R.drawable.textmsg_bg_out_last, R.drawable.textmsg_bg_out
+            )
+            val file = transfer("document.pdf", TransferStatus.FILE_AVAILABLE).apply {
+                isIncoming = incoming
+            }
+            val before = message().apply { isIncoming = incoming }
+            val after = message(gap = 2_000).apply { isIncoming = incoming }
+            `when`(presenter.deviceRuntimeService.getConversationPath(file))
+                .thenReturn(File(context.cacheDir, "document.pdf"))
+            adapter.updateDataset(mutableListOf(file))
+            tvAdapter.updateDataset(listOf(file))
+            val holder = bind(0)
+            val tvHolder = tvAdapter.onCreateViewHolder(
+                FrameLayout(context), tvAdapter.getItemViewType(0)
+            ).also { holders.add(it) }
+            val background = holder.mFileInfoLayout!!.background as GradientDrawable
+            val padding = Rect().also { background.getPadding(it) }
+
+            val groups = listOf(
+                listOf(file, after), listOf(before, file, after),
+                listOf(before, file), listOf(file)
+            )
+            for ((index, group) in groups.withIndex()) {
+                val position = group.indexOf(file)
+                adapter.updateDataset(group.toMutableList())
+                adapter.onBindViewHolder(holder, position)
+                assertCorners(background, templates[index])
+                assertEquals(padding, Rect().also { background.getPadding(it) })
+
+                tvAdapter.updateDataset(emptyList())
+                tvAdapter.updateDataset(group)
+                tvAdapter.onBindViewHolder(tvHolder, position)
+                val tvTemplate = templates[when (index) {
+                    0 -> 2
+                    2 -> 0
+                    else -> index
+                }]
+                assertCorners(tvHolder.mFileInfoLayout!!.background as GradientDrawable, tvTemplate)
+            }
+        }
+    }
+
+    private fun assertCorners(background: GradientDrawable, templateResource: Int) {
+        val template = ContextCompat.getDrawable(context, templateResource) as GradientDrawable
+        assertArrayEquals(
+            template.cornerRadii ?: FloatArray(8) { template.cornerRadius },
+            background.cornerRadii,
+            0f
+        )
     }
 
     private fun message(type: InteractionType = InteractionType.TEXT, gap: Long = 0) =
