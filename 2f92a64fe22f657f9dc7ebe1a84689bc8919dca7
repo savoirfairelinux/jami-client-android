@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f182dca_4db3395d",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-05T02:24:57Z",
+      "side": 1,
+      "message": "[warning] Line 1235: 🟡 Hard-casting both template/background to `GradientDrawable` can crash if resources are wrapped (e.g., ripple/inset/state-list) or changed by theme. Use safe casting (`as?`) plus unwrapping (`DrawableCompat.unwrap`) and only apply radii when both drawables resolve to `GradientDrawable`; apply the same guard in `TvConversationAdapter`.",
+      "revId": "2f92a64fe22f657f9dc7ebe1a84689bc8919dca7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9a77bba_2c16db7c",
+        "filename": "jami-android/app/src/test/java/cx/ring/adapters/MessageGroupingTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-05T02:24:57Z",
+      "side": 1,
+      "message": "[warning] Line 277: 🟡 The new regression test validates FILE transfers only, while the production change also updates AUDIO bubbles. Add the same assertions for AUDIO (or parameterize over FILE/AUDIO) so both modified code paths are protected.",
+      "revId": "2f92a64fe22f657f9dc7ebe1a84689bc8919dca7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
