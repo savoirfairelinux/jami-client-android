@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a6eef4c_11d2cea1",
+        "filename": "AGENTS.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-05T02:28:43Z",
+      "side": 1,
+      "message": "[warning] Line 10: 🟡 This hard requirement can force automatic commits even when a task is exploratory or review-only. Consider softening it (for example, commit only when explicitly requested or when changes are finalized) to avoid unintended history changes and workflow friction.",
+      "revId": "13fec3cb947a493f8ba11192550b2cc6c7b3b79a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b13186f_46413ece",
+        "filename": "AGENTS.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-05T02:28:43Z",
+      "side": 1,
+      "message": "[warning] Line 11: 🟡 This instruction conflicts with concise-response workflows by requiring extra output even when no next step is needed. Consider making next-step suggestions conditional (only when useful or requested).",
+      "revId": "13fec3cb947a493f8ba11192550b2cc6c7b3b79a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ccc0d71a_1dfbff7c",
+        "filename": "AGENTS.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-05T02:28:43Z",
+      "side": 1,
+      "message": "[error] Line 11: 🔴 File is missing a trailing newline (`\\ No newline at end of file`). Add a final newline to satisfy standard POSIX/editor expectations and avoid noisy diffs.",
+      "revId": "13fec3cb947a493f8ba11192550b2cc6c7b3b79a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
