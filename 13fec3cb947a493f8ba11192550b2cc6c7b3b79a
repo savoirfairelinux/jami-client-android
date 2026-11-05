@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6e3a3d7_438c1546",
+        "filename": "AGENTS.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2026-11-05T03:43:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a6eef4c_11d2cea1",
+      "revId": "13fec3cb947a493f8ba11192550b2cc6c7b3b79a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8b13186f_46413ece",
@@ -48,6 +66,42 @@
       "writtenOn": "2026-11-05T02:28:43Z",
       "side": 1,
       "message": "[error] Line 11: 🔴 File is missing a trailing newline (`\\ No newline at end of file`). Add a final newline to satisfy standard POSIX/editor expectations and avoid noisy diffs.",
+      "revId": "13fec3cb947a493f8ba11192550b2cc6c7b3b79a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f636bb73_39fb5ab9",
+        "filename": "AGENTS.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2026-11-05T03:43:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccc0d71a_1dfbff7c",
+      "revId": "13fec3cb947a493f8ba11192550b2cc6c7b3b79a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70dcd480_59c0586c",
+        "filename": "AGENTS.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2026-11-05T03:43:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b13186f_46413ece",
       "revId": "13fec3cb947a493f8ba11192550b2cc6c7b3b79a",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
