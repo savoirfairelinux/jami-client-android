@@ -26,15 +26,12 @@ import com.google.firebase.messaging.RemoteMessage
 import cx.ring.application.JamiApplication
 import cx.ring.application.JamiApplicationFirebase
 import cx.ring.service.PushForegroundService
-import kotlinx.coroutines.*
 import java.util.Locale
 
 class JamiFirebaseMessagingService : FirebaseMessagingService() {
-    private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
-
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        // Some devices block during call negotiation without a wake lock. The 10s timeout
-        // is a safety net only: the lock is released as soon as the push is processed.
+        // Covers dispatch and the handoff to PushForegroundService. JNI submission is not
+        // sync completion; useful high-priority pushes get a longer bounded lock in the FGS.
         var wakeLock: PowerManager.WakeLock? = null
         try {
             val pm = getSystemService(POWER_SERVICE) as PowerManager
@@ -78,34 +75,12 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
             }
         }
 
-        if (!appInForeground && app != null && isActionable) {
-            // Single serialized entry point; grace window, restore, reconnect and
-            // deactivation re-arm are all evaluated on the main thread.
-            app.onBackgroundPushReceived(isCallPush = isCallWakeup, isMessagePush = isMessageWakeup)
-        }
-
-        serviceScope.launch {
+        app?.onMessageReceived(remoteMessage, isActionable, isCallWakeup, isMessageWakeup)
+        if (!isActionable) {
             try {
-                app?.onMessageReceived(remoteMessage)
+                wakeLock?.let { if (it.isHeld) it.release() }
             } catch (e: Exception) {
-                Log.e(TAG, "Error in processing message", e)
-            } finally {
-                // Re-arm deactivation so accounts restored above are not left active.
-                if (!appInForeground) {
-                    Log.d(TAG, "scheduling deactivation")
-                    app?.scheduleBackgroundDeactivation()
-                }
-                // Presence/expiration push: nothing to do, so release early instead of
-                // burning the 10s timeout. Actionable pushes keep the lock — they trigger
-                // an async daemon fetch or proxy re-subscribe that can take several
-                // seconds after this returns.
-                if (!isActionable) {
-                    try {
-                        wakeLock?.let { if (it.isHeld) it.release() }
-                    } catch (e: Exception) {
-                        Log.w(TAG, "Can't release wake lock", e)
-                    }
-                }
+                Log.w(TAG, "Can't release wake lock", e)
             }
         }
     }

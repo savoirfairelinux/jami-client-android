@@ -1,6 +1,7 @@
 package net.jami.services
 
 import net.jami.daemon.JamiService
+import net.jami.daemon.StringVect
 import net.jami.model.Account
 import net.jami.model.AccountDevice
 import net.jami.model.ConfigKey
@@ -21,11 +22,12 @@ import java.util.concurrent.ScheduledExecutorService
 
 class AccountServiceTest {
     private lateinit var service: AccountService
+    private lateinit var executor: ScheduledExecutorService
 
     @Before
     fun setUp() {
         Log.injectLogService(mock(LogService::class.java))
-        val executor = mock(ScheduledExecutorService::class.java)
+        executor = mock(ScheduledExecutorService::class.java)
         doAnswer {
             it.getArgument<Runnable>(0).run()
             null
@@ -108,5 +110,29 @@ class AccountServiceTest {
 
         verify(service).loadAccountDevices("account")
         assertEquals(mapOf("device" to updated), account.devices)
+    }
+
+    @Test
+    fun bootstrapActivationCannotFallBehindAlreadyQueuedPushWork() {
+        val account = Account("account", emptyMap(), emptyList(),
+            mapOf(ConfigKey.ACCOUNT_REGISTRATION_STATUS.key to "REGISTERED"))
+        AccountService::class.java.getDeclaredField("mAccountList").apply {
+            isAccessible = true
+            set(service, listOf(account))
+        }
+        val queue = ArrayDeque<Runnable>()
+        doAnswer { queue.addLast(it.getArgument(0)); null }
+            .`when`(executor).execute(any(Runnable::class.java))
+        val ids = mock(StringVect::class.java)
+        doReturn(mutableListOf(account.accountId).iterator()).`when`(ids).iterator()
+        mockStatic(JamiService::class.java).use { daemon ->
+            daemon.`when`<StringVect> { JamiService.getAccountList() }.thenReturn(ids)
+            executor.execute { service.loadAccountsFromDaemon(true) }
+            executor.execute {
+                // This task represents a push already queued while cold bootstrap runs.
+                daemon.verify { JamiService.setAccountActive(account.accountId, true) }
+            }
+            while (queue.isNotEmpty()) queue.removeFirst().run()
+        }
     }
 }

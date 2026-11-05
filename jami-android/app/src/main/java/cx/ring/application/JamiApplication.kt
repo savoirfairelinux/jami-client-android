@@ -42,6 +42,7 @@ import cx.ring.service.JamiJobService
 import cx.ring.service.PeerTunnelForegroundService
 import cx.ring.linkpreview.LinkPreview
 import cx.ring.services.AndroidExposedServicesService
+import cx.ring.services.DaemonNetworkMonitor
 import cx.ring.services.CallServiceImpl.Companion.CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.views.AvatarFactory
@@ -118,6 +119,7 @@ abstract class JamiApplication : Application() {
     open fun activityInit(activityContext: Context) {}
 
     private var mBound = false
+    private lateinit var networkMonitor: DaemonNetworkMonitor
     private val mConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, s: IBinder) {
             Log.d(TAG, "onServiceConnected: " + className.className)
@@ -202,6 +204,7 @@ abstract class JamiApplication : Application() {
     }
 
     private fun terminateDaemon() {
+        networkMonitor.stop()
         val stopResult = mExecutor.submit<Boolean> {
             unregisterReceiver(ringerModeListener)
             daemon.stopDaemon()
@@ -263,6 +266,11 @@ abstract class JamiApplication : Application() {
         }
 
         bootstrapDaemon()
+        // A Firebase cold start need not create DRingService. Register once for the
+        // application lifetime without starting a background/foreground Android service.
+        networkMonitor = DaemonNetworkMonitor(
+            this, daemon, mAccountService, mCallService, hardwareService, mPreferencesService
+        ).also { it.start() }
         mPreferencesService.loadDarkMode()
         Completable.fromAction {
             val caRootFile = getString(R.string.ca_root_file)
