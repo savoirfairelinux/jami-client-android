@@ -16,6 +16,24 @@
       "message": "[error] Line 8: 🔴 `details.getValue(\"id\")` (and later `getValue(\"label\")`) will throw `NoSuchElementException` if daemon/JNI metadata is missing a key, which can crash device loading for the whole account. Parse defensively at this boundary: read with nullable access (`details[\"id\"]`, `details[\"label\"]`), validate required fields, and either skip malformed entries with a warning or provide a safe fallback so one bad device record does not break the full list.",
       "revId": "8e2e2fbdc9ca19c7bb33d2c16daba17664013c9d",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee6a5440_15addabf",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/AccountDevice.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2026-11-05T02:15:24Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "83ffde9a_998f062d",
+      "revId": "8e2e2fbdc9ca19c7bb33d2c16daba17664013c9d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
