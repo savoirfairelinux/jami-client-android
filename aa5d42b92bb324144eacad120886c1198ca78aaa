@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f37c8211_046f12a2",
+        "filename": "jami-android/app/src/main/res/values-night/colors.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-05T04:57:57Z",
+      "side": 1,
+      "message": "[warning] Line 3: 🟡 This patch also changes the global `background` token from `#202020` to `#181818`, which is outside the stated scope (message input card color) and can shift dark-mode appearance across many screens. Please keep `background` unchanged here and isolate any global palette update into a dedicated change with visual validation.",
+      "revId": "aa5d42b92bb324144eacad120886c1198ca78aaa",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3283194_5615facb",
+        "filename": "jami-android/app/src/main/res/values/dimens.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-05T04:57:57Z",
+      "side": 1,
+      "message": "[warning] Line 142: 🟡 `reaction_chip_background_radius` is changed from `5dp` to `12dp`, but this change is unrelated to message input background and affects reaction chip UI globally. Please revert this in this CL (or move it to a separate, explicitly scoped UI change).",
+      "revId": "aa5d42b92bb324144eacad120886c1198ca78aaa",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
