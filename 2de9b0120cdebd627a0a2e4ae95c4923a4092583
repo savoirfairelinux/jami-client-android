@@ -16,6 +16,24 @@
       "message": "[warning] Line 69: 🟡 A new `DateFormat` instance is created on every row bind, which adds avoidable object churn on list rendering. Cache the formatter once in the adapter (or companion) and reuse it when formatting `lastSync` values to keep scrolling/binding lighter.",
       "revId": "2de9b0120cdebd627a0a2e4ae95c4923a4092583",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33d8874f_687ab81c",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/DeviceAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2026-11-05T04:52:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97e5fea5_45f2d907",
+      "revId": "2de9b0120cdebd627a0a2e4ae95c4923a4092583",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
