@@ -82,7 +82,7 @@
         android:animateLayoutChanges="true"
         android:background="@drawable/filemsg_background_in"
         app:layout_constrainedWidth="true"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/right_guideline"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@id/photo"
         app:layout_constraintTop_toBottomOf="@id/peer_name">
