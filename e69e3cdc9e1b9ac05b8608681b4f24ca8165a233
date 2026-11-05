@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbfda2f0_41115ee3",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1662,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-11-05T19:19:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81bdc98f_4e9a3890",
+      "revId": "e69e3cdc9e1b9ac05b8608681b4f24ca8165a233",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fd1afb2d_2f0de456",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-11-04T19:54:38Z",
       "side": 1,
       "message": "[error] Line 1732: 🔴 `metadata[\"mode\"]` is parsed with `toInt()` and fed to `Mode.fromDaemon()` without a guard, so malformed or future/unknown mode values can throw and break request handling on daemon-provided input. Parse with `toIntOrNull()` and handle unknown values explicitly (e.g., log + fallback mode, or reject request without throwing) to avoid runtime failure from untrusted/forward-compat data.",
+      "revId": "e69e3cdc9e1b9ac05b8608681b4f24ca8165a233",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce001791_96b2d0e0",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1732,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-11-05T19:19:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd1afb2d_2f0de456",
       "revId": "e69e3cdc9e1b9ac05b8608681b4f24ca8165a233",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
