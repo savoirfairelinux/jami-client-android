@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d3dbefa_99964e0a",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-05T18:01:46Z",
+      "side": 1,
+      "message": "[warning] Line 350: 🟡 `loadEarlierMessages()` determines exhaustion via `all { it.messageId in knownIds }`, but many legacy interactions can have `messageId \u003d\u003d null`. Since `null` is a single set member, newly loaded null-id messages are treated as already known, so paging may stop after one fetch even when older history exists. Use a stable per-row identity (`messageId ?: \"legacy:${id}\"`) or compare list growth/new tail identity instead of raw nullable `messageId` membership.",
+      "revId": "29482c3feba63859ef7f42d02c27b3b3cc1a6656",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
