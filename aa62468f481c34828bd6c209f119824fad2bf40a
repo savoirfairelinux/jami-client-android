@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33fe74ea_8c1da3fc",
+        "filename": ".agents/skills/commit/SKILL.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-05T02:22:04Z",
+      "side": 1,
+      "message": "[warning] Line 10: 🟡 For a Gerrit workflow, commit messages should include a `Change-Id:` footer (or explicitly note reliance on the `commit-msg` hook that injects it). Without this guidance, contributors can produce commits that are rejected on push when the hook is missing.",
+      "revId": "aa62468f481c34828bd6c209f119824fad2bf40a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b164a855_e554e4be",
+        "filename": ".agents/skills/commit/SKILL.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-05T02:22:04Z",
+      "side": 1,
+      "message": "[warning] Line 11: 🟡 `topic: subject` is not the standard Conventional Commits syntax (`type: subject` or `type(scope): subject`). Keeping the current text while calling it “conventional commits” can mislead contributors and break downstream tooling that parses conventional format. Either align the example to the spec or rename this as a project-specific format.",
+      "revId": "aa62468f481c34828bd6c209f119824fad2bf40a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
