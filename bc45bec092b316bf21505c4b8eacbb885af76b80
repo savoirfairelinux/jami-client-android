@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e93a144d_056d741d",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1769,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-11-05T16:48:51Z",
+      "side": 1,
+      "message": "avatar and name can be cleared before returining, so recycled rows don’t show the previous sender’s identity.",
+      "parentUuid": "6736dff6_69d2f5e1",
+      "revId": "bc45bec092b316bf21505c4b8eacbb885af76b80",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8b565b51_02b608e8",
         "filename": "jami-android/app/src/main/java/cx/ring/tv/conversation/TvConversationAdapter.kt",
         "patchSetId": 1
