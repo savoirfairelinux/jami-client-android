@@ -16,6 +16,24 @@
       "message": "[error] Line 14: 🔴 The account directory filter is overly restrictive: `Regex(\"[0-9a-fA-F]{1,16}\")` only accepts up to 16 hex chars, but Jami account IDs are longer in practice. This causes valid account trees to be silently excluded from export/restore (`transferEntries`, `restorePath`, and `applyPending` paths all depend on this), yielding successful-looking transfers with missing account data. Use the real account-id format/length used by the daemon (or validate against known account IDs) so complete account directories are actually transferred.",
       "revId": "8f00aeb81c13932f2af60513770ae757d88feb8e",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56cda67f_7daf56e2",
+        "filename": "jami-android/app/src/main/java/cx/ring/backup/AccountDataBackup.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2026-11-05T19:32:11Z",
+      "side": 1,
+      "message": "the account ID is not the same as the JamiID.",
+      "parentUuid": "10a6a3f9_bf7a48a0",
+      "revId": "8f00aeb81c13932f2af60513770ae757d88feb8e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
