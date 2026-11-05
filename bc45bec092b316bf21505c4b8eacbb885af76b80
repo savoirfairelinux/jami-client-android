@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6736dff6_69d2f5e1",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1769,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-05T02:23:47Z",
+      "side": 1,
+      "message": "[error] Line 1769: 🔴 `configureSender` returns early on `interaction.contact \u003d\u003d null` / `interaction.account \u003d\u003d null` without resetting `mAvatar` and `mPeerDisplayName`. On a recycled holder this can display stale sender identity from a previous row. Before returning, explicitly clear/hide both views (`setAvatar(null)`, `visibility \u003d GONE/INVISIBLE`, `text \u003d null`) so null-metadata interactions cannot leak prior UI state.",
+      "revId": "bc45bec092b316bf21505c4b8eacbb885af76b80",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b565b51_02b608e8",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/conversation/TvConversationAdapter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-05T02:23:47Z",
+      "side": 1,
+      "message": "[warning] Line 572: 🟡 `mPeerDisplayName` visibility is currently keyed to `endOfSeq`, while mobile shows sender name at the start boundary. This means the first attachment in a TV group can be unattributed until the last item. Consider switching name visibility to `startOfSeq` (keeping avatar on `endOfSeq`) to align sender attribution with group boundaries consistently.",
+      "revId": "bc45bec092b316bf21505c4b8eacbb885af76b80",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
