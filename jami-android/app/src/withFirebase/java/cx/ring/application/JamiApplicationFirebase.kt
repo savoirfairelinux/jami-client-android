@@ -98,30 +98,40 @@ class JamiApplicationFirebase : JamiApplication() {
     }
 
     /**
-     * Handles an actionable push received while backgrounded: opens the grace window,
-     * restores accounts (and reconnects for call/message pushes), then re-arms the
-     * deactivation check. The caller filters on FCM priority, so presence and expiration
-     * pushes never get here.
+     * Publishes background grace before posting, then enqueues restore, reconnect and
+     * push together on the main looper. All three native operations use the daemon
+     * executor, behind bootstrap, so delivery cannot overtake restoration.
      */
-    fun onBackgroundPushReceived(isCallPush: Boolean, isMessagePush: Boolean) {
+    fun onMessageReceived(
+        remoteMessage: RemoteMessage,
+        isActionable: Boolean,
+        isCallPush: Boolean,
+        isMessagePush: Boolean
+    ) {
         if (!prepareRuntime()) return
         bootstrapDaemon()
-        // Publish the grace window before cancelling: a deactivateRunnable already running
-        // reads these atomics, and any deactivation it queues runs FIFO after the restore below.
-        val now = SystemClock.elapsedRealtime()
-        lastPushTime.set(now)
-        if (isCallPush) lastCallPushTime.set(now)
-        if (isMessagePush) lastMessagePushTime.set(now)
-        backgroundActiveSince.compareAndSet(0L, now)
-        backgroundHandler.removeCallbacks(deactivateRunnable)
+        val backgroundPush = !isForeground && isActionable
+        if (backgroundPush) {
+            val now = SystemClock.elapsedRealtime()
+            lastPushTime.set(now)
+            if (isCallPush) lastCallPushTime.set(now)
+            if (isMessagePush) lastMessagePushTime.set(now)
+            backgroundActiveSince.compareAndSet(0L, now)
+            backgroundHandler.removeCallbacks(deactivateRunnable)
+        }
         backgroundHandler.post {
             if (!isRuntimeReady) return@post
-            // No-op unless a background deactivation actually recorded accounts to restore.
-            mAccountService.restoreProxyAccountsAfterBackground()
-            // Full DHT/SIP reconnect to rebuild sockets torn down in doze.
-            if (isCallPush || isMessagePush) hardwareService.connectivityChanged(true)
-            backgroundHandler.removeCallbacks(deactivateRunnable)
-            backgroundHandler.postDelayed(deactivateRunnable, BACKGROUND_DEACTIVATION_DELAY_MS)
+            try {
+                if (backgroundPush) {
+                    mAccountService.restoreProxyAccountsAfterBackground()
+                    if (isCallPush || isMessagePush) hardwareService.connectivityChanged(true)
+                }
+                mAccountService.pushNotificationReceived(remoteMessage.from ?: "", remoteMessage.data)
+            } catch (e: Exception) {
+                Log.e(TAG, "Error in processing message", e)
+            } finally {
+                if (!isAppVisible()) scheduleBackgroundDeactivation()
+            }
         }
     }
 
@@ -217,11 +227,9 @@ class JamiApplicationFirebase : JamiApplication() {
         return formatter.format(Date())
     }
 
-    fun onMessageReceived(remoteMessage: RemoteMessage) {
-        if (!prepareRuntime()) return
-        bootstrapDaemon()
+    internal fun processPushDiagnostics(remoteMessage: RemoteMessage) {
+        if (!isRuntimeReady) return
         Log.d(TAG, "onMessageReceived: ${remoteMessage.from} ${remoteMessage.priority} ${remoteMessage.originalPriority}")
-        mAccountService.pushNotificationReceived(remoteMessage.from ?: "", remoteMessage.data)
         mNotificationService.processPush()
         when (remoteMessage.priority) {
             RemoteMessage.PRIORITY_HIGH -> hardwareService.highPriorityPushCount++
