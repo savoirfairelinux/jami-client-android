@@ -139,7 +139,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <dimen name="file_name">16sp</dimen>
     <dimen name="conversation_message_separation">15dp</dimen>
     <dimen name="conversation_date_padding">15dp</dimen>
-    <dimen name="reaction_chip_background_radius">5dp</dimen>
+    <dimen name="reaction_chip_background_radius">12dp</dimen>
     <dimen name="message_reaction_stroke">2dp</dimen>
     <dimen name="conversation_text_size_small">12sp</dimen>
     <dimen name="conversation_reply_overlap">-6.5dp</dimen>
