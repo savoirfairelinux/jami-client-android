@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f3d3eef_292b17cc",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-05T21:03:19Z",
+      "side": 1,
+      "message": "[warning] Line 155: 🟡 `updateProjection()` tracks neighbor invalidation via `previous`/`next` using nullable `messageId`. For legacy interactions (`messageId \u003d\u003d null`), neighbors collapse to `null`, so adjacency-dependent UI (grouping/reply visuals) can miss rebinds after inserts/updates/removals around those rows. Use a stable row key everywhere (`messageId ?: \"legacy:${id}\"`) for `key`, `previous`, `next`, and `changedIds` matching (or invalidate by index adjacency) so legacy rows trigger correct neighbor refreshes.",
+      "revId": "889aaa974272a89277309261e89f947040794cca",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
