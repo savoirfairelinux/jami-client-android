@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "135605f8_d5d91f0b",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/DaemonNetworkMonitor.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-05T21:16:00Z",
+      "side": 1,
+      "message": "[error] Line 97: 🔴 `stop()` unconditionally calls `context.unregisterReceiver(receiver)`. If shutdown paths call `terminateDaemon()` more than once (or if `start()` failed/was skipped), this throws `IllegalArgumentException` and can crash process teardown. Track a `started/registered` flag (set only after successful registration) and make `stop()` idempotent, or catch `IllegalArgumentException` here like you already do for network callback unregistration.",
+      "revId": "893b57ccaae9265a4fffc1d48217d41396cf48ce",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b3615a3_ba9fbd15",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-05T21:16:00Z",
+      "side": 1,
+      "message": "[warning] Line 231: 🟡 `dispatchPush()` offloads `mNotificationService.processPush()` to `Schedulers.io()` with no ordering/serialization guarantee. Under bursty pushes, processing may run concurrently and reorder relative to other queued push work, weakening the ‘restore/reconnect before delivery’ intent. Route push processing through the same serialized execution path (main-handler block or daemon executor) to preserve deterministic ordering.",
+      "revId": "893b57ccaae9265a4fffc1d48217d41396cf48ce",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
