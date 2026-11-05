@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97d6fea9_0899534a",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CreateFeedFragment.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-05T21:07:35Z",
+      "side": 1,
+      "message": "[warning] Line 55: 🟡 `feedDescription` text changes currently clear `feedNameLayout.error`, which can hide the required-name validation error even when the name is still empty. Only clear the name error when the name field changes (or revalidate both fields explicitly) so the error state stays accurate.",
+      "revId": "937023dd2ea279f6864b0de08c77facf466f611b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
