@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9cf96924_107e5947",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-06T20:53:17Z",
+      "side": 1,
+      "message": "[warning] Line 22: 🟡 The release codename is wrapped in literal quotes (`\"Tim Berners-Lee\"`), which will render quotes in the UI. If the quotes are not intentional branding, change this to `Tim Berners-Lee - %1$s` to keep formatting consistent with previous releases and avoid user-facing punctuation noise.",
+      "revId": "dd2b9a090633249f10d65890d8d598c7363b26d5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
