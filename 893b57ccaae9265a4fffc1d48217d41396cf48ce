@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8945077_c9e9283c",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/DaemonNetworkMonitor.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-11-06T17:35:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "135605f8_d5d91f0b",
+      "revId": "893b57ccaae9265a4fffc1d48217d41396cf48ce",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2b3615a3_ba9fbd15",
