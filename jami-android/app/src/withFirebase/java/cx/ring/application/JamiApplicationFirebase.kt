@@ -191,6 +191,11 @@ class JamiApplicationFirebase : JamiApplication() {
         }
     }
 
+    override fun onNetworkConnectivityChanged() {
+        super.onNetworkConnectivityChanged()
+        if (!isAppVisible()) scheduleBackgroundDeactivation()
+    }
+
     override fun onRuntimeReady() {
         super.onRuntimeReady()
         hardwareService.startTime = getCurrentTimestamp()

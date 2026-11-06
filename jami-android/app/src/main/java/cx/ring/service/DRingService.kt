@@ -18,14 +18,10 @@ package cx.ring.service
 
 import android.app.Notification
 import android.app.Service
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.ServiceInfo
 import android.database.ContentObserver
-import android.net.*
-import android.net.ConnectivityManager.NetworkCallback
+import android.net.Uri
 import android.os.*
 import android.provider.ContactsContract
 import android.util.Log
@@ -41,7 +37,6 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Conversation
 import net.jami.model.Settings
 import net.jami.services.*
-import java.net.InetAddress
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -90,88 +85,7 @@ class DRingService : Service() {
     @Singleton
     lateinit var mConversationFacade: ConversationFacade
 
-    private val mHandler = Handler(Looper.myLooper()!!)
     private val mDisposableBag = CompositeDisposable()
-    private val mConnectivityChecker = Runnable { updateConnectivityState() }
-    private var networkDeactivationScheduled = false
-    private val mDeactivateAfterNetworkLoss = Runnable {
-        networkDeactivationScheduled = false
-        if (mDaemonService.isStarted && !mPreferencesService.hasNetworkConnected())
-            mAccountService.setAccountsActive(false)
-    }
-
-    private val monitor = object : NetworkCallback() {
-        private var defaultNetwork: Network? = null
-        private var defaultAddresses: Set<InetAddress> = emptySet()
-
-        fun enable(context: Context) {
-            val connectivityManager = context.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager?
-            try {
-                connectivityManager?.registerDefaultNetworkCallback(this, mHandler)
-            } catch (e: Exception) {
-                Log.e(TAG, "Can't register network callback", e)
-            }
-        }
-
-        fun disable(context: Context) {
-            val connectivityManager =
-                context.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager?
-            try {
-                connectivityManager?.unregisterNetworkCallback(this)
-            } catch (e: Exception) {
-                Log.w(TAG, "Can't unregister network callback", e)
-            }
-        }
-
-        override fun onAvailable(network: Network) {
-            if (defaultNetwork != network) {
-                Log.i(TAG, "Default network changed to $network")
-                defaultNetwork = network
-                defaultAddresses = emptySet()
-            }
-            // A network is back: keep the accounts active while its link
-            // properties are reported.
-            cancelNetworkDeactivation()
-        }
-
-        override fun onLinkPropertiesChanged(network: Network, linkProperties: LinkProperties) {
-            if (network != defaultNetwork || !isRunning) return
-            val addresses = linkProperties.linkAddresses.map { it.address }.toSet()
-            if (addresses.isEmpty() || addresses == defaultAddresses) return
-            defaultAddresses = addresses
-            updateConnectivityState(true)
-            if (mDaemonService.isStarted)
-                mHardwareService.networkInterfaceChanged()
-        }
-
-        override fun onLost(network: Network) {
-            if (network != defaultNetwork) return
-            Log.i(TAG, "Default network lost: $network")
-            defaultNetwork = null
-            defaultAddresses = emptySet()
-            updateConnectivityState(false)
-        }
-    }
-
-    private val receiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            val action = intent.action
-            if (action == null) {
-                Log.w(TAG, "onReceive: received a null action on broadcast receiver")
-                return
-            }
-            Log.d(TAG, "receiver.onReceive: $action")
-            when (action) {
-                ConnectivityManager.CONNECTIVITY_ACTION -> {
-                    updateConnectivityState()
-                }
-                PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED -> {
-                    mConnectivityChecker.run()
-                    mHandler.postDelayed(mConnectivityChecker, 100)
-                }
-            }
-        }
-    }
 
     override fun onCreate() {
         if (!RuntimeServiceGuard.canInitialize(this)) return
@@ -181,16 +95,9 @@ class DRingService : Service() {
         if (mDeviceRuntimeService.hasContactPermission()) {
             contentResolver.registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, contactContentObserver)
         }
-        val intentFilter = IntentFilter().apply {
-            addAction(ConnectivityManager.CONNECTIVITY_ACTION)
-            addAction(PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED)
-        }
-        registerReceiver(receiver, intentFilter)
-        updateConnectivityState()
         mDisposableBag.add(mPreferencesService.settingsSubject.subscribe { settings: Settings ->
             showSystemNotification(settings)
         })
-        monitor.enable(this)
         JamiApplication.instance!!.apply {
             bindDaemon()
             bootstrapDaemon()
@@ -201,11 +108,7 @@ class DRingService : Service() {
         super.onDestroy()
         if (!::mDaemonService.isInitialized) return
         Log.i(TAG, "onDestroy()")
-        unregisterReceiver(receiver)
         contentResolver.unregisterContentObserver(contactContentObserver)
-        monitor.disable(this)
-        cancelNetworkDeactivation()
-        mHandler.removeCallbacks(mConnectivityChecker)
         mHardwareService.unregisterCameraDetectionCallback()
         mDisposableBag.clear()
         isRunning = false
@@ -258,33 +161,6 @@ class DRingService : Service() {
      *
      * *********************************
      */
-    private fun updateConnectivityState() {
-        updateConnectivityState(mPreferencesService.hasNetworkConnected())
-    }
-
-    private fun cancelNetworkDeactivation() {
-        mHandler.removeCallbacks(mDeactivateAfterNetworkLoss)
-        networkDeactivationScheduled = false
-    }
-
-    private fun updateConnectivityState(isConnected: Boolean) {
-        if (mDaemonService.isStarted) {
-            if (isConnected) {
-                cancelNetworkDeactivation()
-                mAccountService.setAccountsActive(true)
-            } else if (mCallService.hasActiveCalls()) {
-                if (!networkDeactivationScheduled) {
-                    networkDeactivationScheduled = true
-                    mHandler.postDelayed(mDeactivateAfterNetworkLoss, CALL_RECOVERY_TIMEOUT_MS)
-                }
-            } else {
-                cancelNetworkDeactivation()
-                mAccountService.setAccountsActive(false)
-            }
-            mHardwareService.connectivityChanged(isConnected)
-        }
-    }
-
     private fun parseIntent(intent: Intent) {
         val action = intent.action ?: return
         val extras = intent.extras
@@ -429,7 +305,6 @@ class DRingService : Service() {
         const val KEY_TRANSFER_ID = "transferId"
         const val KEY_TEXT_REPLY = "textReply"
         private const val NOTIFICATION_ID = 1
-        private const val CALL_RECOVERY_TIMEOUT_MS = 20_000L
         var isRunning = false
     }
 }
