@@ -48,6 +48,7 @@ import cx.ring.service.PeerTunnelForegroundService
 import cx.ring.linkpreview.LinkPreview
 import cx.ring.services.AndroidExposedServicesService
 import cx.ring.services.CallServiceImpl.Companion.CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY
+import cx.ring.services.DaemonNetworkMonitor
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.views.AvatarFactory
 import io.reactivex.rxjava3.core.Completable
@@ -125,6 +126,8 @@ abstract class JamiApplication : Application() {
 
     protected open fun onRuntimeReady() {}
 
+    protected open fun onNetworkConnectivityChanged() {}
+
     @Volatile
     private var runtimeInitialized = false
     private var runtimeRequested = false
@@ -136,6 +139,7 @@ abstract class JamiApplication : Application() {
     private val appInForeground = BehaviorSubject.createDefault(true)
 
     private var mBound = false
+    private lateinit var networkMonitor: DaemonNetworkMonitor
     private val mConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, s: IBinder) {
             Log.d(TAG, "onServiceConnected: " + className.className)
@@ -165,7 +169,9 @@ abstract class JamiApplication : Application() {
     fun bootstrapDaemon() {
         runtimeRequested = true
         val backupGeneration = JamiBackupAgent.generation
-        if (!prepareRuntime() || daemon.isStarted) {
+        if (!prepareRuntime()) return
+        if (daemon.isStarted) {
+            startNetworkMonitoring()
             return
         }
         Log.d(TAG, "bootstrapDaemon")
@@ -209,6 +215,7 @@ abstract class JamiApplication : Application() {
                 sendBroadcast(Intent(DRING_CONNECTION_CHANGED).apply {
                     putExtra("connected", daemon.isStarted)
                 })
+                startNetworkMonitoring()
                 scheduleRefreshJob()
             } catch (e: Exception) {
                 Log.e(TAG, "DRingService start failed", e)
@@ -224,6 +231,20 @@ abstract class JamiApplication : Application() {
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                 .setPeriodic(JamiJobService.JOB_INTERVAL, JamiJobService.JOB_FLEX)
                 .build())
+    }
+
+    private fun startNetworkMonitoring() {
+        Handler(mainLooper).post {
+            if (!isRuntimeReady || !isDaemonRunning) return@post
+            if (!::networkMonitor.isInitialized) {
+                networkMonitor = DaemonNetworkMonitor(
+                    this, { isRuntimeReady && isDaemonRunning },
+                    mAccountService, mCallService, hardwareService, mPreferencesService,
+                    ::onNetworkConnectivityChanged
+                )
+            }
+            networkMonitor.start()
+        }
     }
 
     internal fun resumeAfterBackup() {
