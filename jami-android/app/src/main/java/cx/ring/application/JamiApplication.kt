@@ -230,24 +230,6 @@ abstract class JamiApplication : Application() {
         if (runtimeRequested) bootstrapDaemon()
     }
 
-    private fun terminateDaemon() {
-        if (!daemon.isStarted) return
-        val stopResult = mExecutor.submit<Boolean> {
-            unregisterReceiver(ringerModeListener)
-            daemon.stopDaemon()
-            val intent = Intent(DRING_CONNECTION_CHANGED)
-            intent.putExtra("connected", daemon.isStarted)
-            sendBroadcast(intent)
-            true
-        }
-        try {
-            stopResult.get()
-            mExecutor.shutdown()
-        } catch (e: Exception) {
-            Log.e(TAG, "DRingService stop failed", e)
-        }
-    }
-
     override fun onCreate() {
         super.onCreate()
         instance = this
@@ -372,7 +354,6 @@ abstract class JamiApplication : Application() {
 
     override fun onTerminate() {
         super.onTerminate()
-        terminateDaemon()
         instance = null
     }
 
