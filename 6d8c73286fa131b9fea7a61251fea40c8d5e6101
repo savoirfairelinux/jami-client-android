@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfa57aef_f298c0eb",
+        "filename": "daemon",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-06T21:56:12Z",
+      "side": 1,
+      "message": "[error] Line 1: 🔴 This patch only advances the submodule SHA with no accompanying change summary, compatibility notes, or validation evidence for `a39cf186..e62dfcb`. As-is, reviewers cannot assess security/behavioral impact (API/ABI changes, protocol changes, dependency CVEs, etc.). Please include a short changelog for the daemon range, highlight any breaking/risk-relevant changes, and reference the verification performed against Android client integration before merge.",
+      "revId": "6d8c73286fa131b9fea7a61251fea40c8d5e6101",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
