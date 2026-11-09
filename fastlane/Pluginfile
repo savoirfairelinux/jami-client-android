@@ -1,0 +1,1 @@
+gem "fastlane-plugin-huawei_appgallery_connect", "~> 1.1.3"

@@ -111,7 +111,8 @@ RUN wget -O /tmp/swig.tar.gz https://github.com/swig/swig/archive/v4.4.1.tar.gz 
     cd .. && rm -rf /opt/swig-4.4.1 /tmp/swig.tar.gz
 
 # Install Fastlane
-RUN gem install fastlane -NV
+RUN gem install fastlane -NV && \
+    gem install fastlane-plugin-huawei_appgallery_connect -v '~> 1.1.3' -NV
 
 ARG API_LEVEL="37.0"
 ARG BUILD_TOOLS="37.0.0"

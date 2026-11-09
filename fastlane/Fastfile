@@ -20,6 +20,31 @@ default_platform :android
 
 platform :android do
 
+  desc "Submit a new Build to Huawei AppGallery"
+  lane :appgallery do |options|
+    gradle(
+      task: "assemble",
+      flavor: "withHuaweiPush",
+      build_type: "Release",
+      print_command: false,
+      project_dir: 'jami-android',
+      properties: {
+        "android.injected.signing.store.file" => options[:keystore_path],
+        "android.injected.signing.store.password" => options[:storepass] || ENV['ANDROID_KEYSTORE_PASS'],
+        "android.injected.signing.key.alias" => options[:keyalias],
+        "android.injected.signing.key.password" => options[:keypass] || ENV['ANDROID_KEY_PASS'],
+      }
+    )
+
+    huawei_appgallery_connect(
+      client_id: ENV['HUAWEI_CLIENT_ID'],
+      client_secret: ENV['HUAWEI_CLIENT_SECRET'],
+      app_id: ENV['HUAWEI_APP_ID'],
+      apk_path: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH],
+      submit_for_review: true
+    )
+  end
+
   desc "Submit a new Build to the Google Play Store"
   lane :playstore do |options|
     gradle(
