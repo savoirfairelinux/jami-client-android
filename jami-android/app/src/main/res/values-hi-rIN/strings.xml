@@ -100,6 +100,8 @@
   <string name="switch_to_video">वीडियो सक्षम करें</string>
   <string name="action_call_decline">गिरावट</string>
   <string name="action_call_mic_mute">मूक माइक्रोफोन</string>
+  <string name="action_call_mic_unmute">माइक्रोफ़ोन अनम्यूट करें</string>
+  <string name="action_call_lower_hand">निचला हाथ</string>
   <string name="ab_action_speakerphone">स्पीकर चालू करें</string>
   <string name="ab_action_contact_add">संपर्क के खाते में जोड़ें</string>
   <string name="ab_action_contact_add_question">संपर्क जोड़ें?</string>
@@ -110,7 +112,7 @@
   <string name="scan_qr">QR कोड स्कैन करें</string>
   <string name="qr_code">क्यूआर कोड</string>
   <string name="qr_code_not_contact">यह जामी संपर्क क्यूआर कोड नहीं है</string>
-  <string name="new_group">नया समूह बनाएँ</string>
+  <string name="new_group">नया समूह</string>
   <string name="ab_action_flipcamera">फ्लिप कैमरा</string>
   <string name="ab_action_hidepreview">पूर्वावलोकन छिपाएँ</string>
   <string name="remote_recording">%s रिकॉर्डिंग...</string>

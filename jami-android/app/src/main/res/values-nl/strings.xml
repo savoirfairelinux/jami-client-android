@@ -120,6 +120,8 @@
   <string name="action_call_end_accept">Inkomende oproep aannemen en huidige oproep beëindigen</string>
   <string name="action_call_decline">Weigeren</string>
   <string name="action_call_mic_mute">Microfoon dempen</string>
+  <string name="action_call_mic_unmute">Demping microfoon opheffen</string>
+  <string name="action_call_lower_hand">Onderaan hand</string>
   <string name="action_load_extension">Uitbreiding laden</string>
   <string name="ab_action_speakerphone">Luidspreker inschakelen</string>
   <string name="ab_action_contact_add">Aan contacten toevoegen</string>
@@ -132,7 +134,7 @@
   <string name="scan_qr">QR-code scannen</string>
   <string name="qr_code">QR-code</string>
   <string name="qr_code_not_contact">Geen Jami contact QR code</string>
-  <string name="new_group">Nieuwe groep aanmaken</string>
+  <string name="new_group">Nieuwe groep</string>
   <string name="ab_action_flipcamera">Camera draaien</string>
   <string name="ab_action_hidepreview">Verberg voorbeeld</string>
   <string name="remote_recording">%s aan het opnemen...</string>

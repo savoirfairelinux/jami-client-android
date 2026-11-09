@@ -123,6 +123,10 @@
   <string name="action_call_end_accept">Vasta uuele sissetulevale kõnele ja lõpeta pooleliolev kõne</string>
   <string name="action_call_decline">Keeldu</string>
   <string name="action_call_mic_mute">Summuta mikrofon</string>
+  <string name="action_call_camera_on">Lülita kaamera sisse</string>
+  <string name="action_call_camera_off">Lülita kaamera välja</string>
+  <string name="action_call_stop_screen_share">Lõpeta ekraani jagamine</string>
+  <string name="action_call_show_participants">Näita osalejaid</string>
   <string name="action_load_extension">Laadi lisamoodul</string>
   <string name="ab_action_speakerphone">Lülita valjuhääldi sisse</string>
   <string name="ab_action_contact_add">Lisa kontaktitele</string>
@@ -135,7 +139,7 @@
   <string name="scan_qr">Skaneeri QR-koodi</string>
   <string name="qr_code">QR-kood</string>
   <string name="qr_code_not_contact">See pole Jami kontakti QR-kood</string>
-  <string name="new_group">Loo uus grupp</string>
+  <string name="new_group">Uus grupp</string>
   <string name="ab_action_flipcamera">Pööra kaamerat</string>
   <string name="ab_action_hidepreview">Peida eelvaade</string>
   <string name="remote_recording">%s on salvestamas...</string>

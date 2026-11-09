@@ -122,6 +122,10 @@
   <string name="action_call_end_accept">接听来电并结束当前通话</string>
   <string name="action_call_decline">拒接</string>
   <string name="action_call_mic_mute">禁用麦克风</string>
+  <string name="action_call_mic_unmute">麦克风静音</string>
+  <string name="action_call_stop_screen_share">停止分享畫面</string>
+  <string name="action_call_lower_hand">放下手</string>
+  <string name="action_call_show_participants">显示参与者</string>
   <string name="action_load_extension">加载扩展</string>
   <string name="ab_action_speakerphone">打开扬声器</string>
   <string name="ab_action_contact_add">加到联系人</string>
@@ -134,7 +138,7 @@
   <string name="scan_qr">扫描二维码</string>
   <string name="qr_code">二维码</string>
   <string name="qr_code_not_contact">不是Jami的二维码</string>
-  <string name="new_group">建立新群組</string>
+  <string name="new_group">新群组</string>
   <string name="ab_action_flipcamera">翻转相机</string>
   <string name="ab_action_hidepreview">隐藏预览</string>
   <string name="remote_recording">%s录制中...</string>
@@ -480,6 +484,7 @@
   <string name="dialog_hint_description">描述</string>
   <string name="picker_title">選擇聯繫人</string>
   <string name="picker_btn">選擇聯繫人</string>
+  <string name="picker_search_hint">搜索联系人</string>
   <string name="no_contact_to_add">您没有要添加的联系人</string>
   <string name="bottomsheet_contact">聯繫Jami\n%1$s</string>
   <string name="bottomsheet_block">群员</string>

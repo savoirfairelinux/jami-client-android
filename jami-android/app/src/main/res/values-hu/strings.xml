@@ -120,6 +120,9 @@
   <string name="action_call_end_accept">Bejövő hívás fogadása és a jelenlegi hívás befejezése</string>
   <string name="action_call_decline">Elutasítás</string>
   <string name="action_call_mic_mute">Mikrofon elnémítása</string>
+  <string name="action_call_mic_unmute">Mikrofon némításának feloldása</string>
+  <string name="action_call_stop_screen_share">Képernyőmegosztás leállítása</string>
+  <string name="action_call_lower_hand">Kéz leengedése</string>
   <string name="action_load_extension">Bővítmény betöltése</string>
   <string name="ab_action_speakerphone">Hangszóró bekapcsolása</string>
   <string name="ab_action_contact_add">Hozzáadás a kapcsolattartók közé</string>
@@ -132,7 +135,7 @@
   <string name="scan_qr">QR-kód beolvasása</string>
   <string name="qr_code">QR-kód</string>
   <string name="qr_code_not_contact">Nem Jami kapcsolati QR-kód</string>
-  <string name="new_group">Új csoport létrehozása</string>
+  <string name="new_group">Új csoport</string>
   <string name="ab_action_flipcamera">Fényképezőgép tükrözése</string>
   <string name="ab_action_hidepreview">Előnézet elrejtése</string>
   <string name="remote_recording">%s felvétel folyamatban…</string>
@@ -468,6 +471,7 @@
   <string name="dialog_hint_description">Leírás</string>
   <string name="picker_title">Kapcsolattartók kijelölése</string>
   <string name="picker_btn">Kapcsolattartók kijelölése</string>
+  <string name="picker_search_hint">Keresés a kapcsolatok között</string>
   <string name="no_contact_to_add">Nincsenek hozzáadható kapcsolattartók.</string>
   <string name="bottomsheet_contact">Forduljon a Jamihez\n%1$s</string>
   <string name="bottomsheet_block">Tag letiltása</string>

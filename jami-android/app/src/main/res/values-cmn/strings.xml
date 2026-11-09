@@ -134,7 +134,6 @@
   <string name="scan_qr">扫描二维码</string>
   <string name="qr_code">二维码</string>
   <string name="qr_code_not_contact">不是Jami的二维码</string>
-  <string name="new_group">建立新群組</string>
   <string name="ab_action_flipcamera">翻转相机</string>
   <string name="ab_action_hidepreview">隐藏预览</string>
   <string name="remote_recording">%s录制中...</string>
@@ -480,6 +479,7 @@
   <string name="dialog_hint_description">描述</string>
   <string name="picker_title">選擇聯繫人</string>
   <string name="picker_btn">選擇聯繫人</string>
+  <string name="picker_search_hint">搜索联系人</string>
   <string name="no_contact_to_add">您没有要添加的联系人</string>
   <string name="bottomsheet_contact">聯繫Jami\n%1$s</string>
   <string name="bottomsheet_block">群员</string>

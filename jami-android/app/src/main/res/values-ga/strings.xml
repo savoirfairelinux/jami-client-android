@@ -67,10 +67,11 @@
   <string name="switch_to_video">Céadú físeán</string>
   <string name="action_call_decline">Tarraing</string>
   <string name="action_call_mic_mute">Micrófón muinte</string>
+  <string name="action_call_mic_unmute">Díbhalbhaigh micreafón</string>
+  <string name="action_call_lower_hand">lámh íochtarach</string>
   <string name="ab_action_contact_add">Cuir le teagmhálacha</string>
   <string name="ab_action_audio_call">Tosaigh glao fuaime</string>
   <string name="ab_action_video_call">Tosaigh glao físe</string>
-  <string name="new_group">Cruthaigh grúpa nua</string>
   <!--Text messages-->
   <string name="message_failed">Fágadh</string>
   <string name="time_just_now">Díreach anois</string>

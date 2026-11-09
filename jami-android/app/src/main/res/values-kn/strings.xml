@@ -97,6 +97,8 @@
   <string name="switch_to_video">ವೀಡಿಯೊವನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
   <string name="action_call_decline">ಕುಸಿತ</string>
   <string name="action_call_mic_mute">ಮೂಕ ಮೈಕ್ರೊಫೋನ್</string>
+  <string name="action_call_mic_unmute">ಮೈಕ್ರೊಫೋನ್ ಅನ್‌ಮ್ಯೂಟ್ ಮಾಡಿ</string>
+  <string name="action_call_lower_hand">ಕೆಳ ಕೈ</string>
   <string name="ab_action_contact_add">ಸಂಪರ್ಕಗಳನ್ನು ಸೇರಿಸಿ</string>
   <string name="ab_action_contact_add_question">ಸಂಪರ್ಕಗಳಿಗೆ ಸೇರಿಸುವುದೇ?</string>
   <string name="ab_action_audio_call">ಆಡಿಯೋ ಕರೆ ಆರಂಭಿಸಿ</string>
@@ -105,7 +107,6 @@
   <string name="share_via">ಮೂಲಕ ಹಂಚಿಕೆ</string>
   <string name="scan_qr">QR ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ</string>
   <string name="qr_code">ಕ್ಯೂಆರ್ ಕೋಡ್</string>
-  <string name="new_group">ಹೊಸ ಗುಂಪು ರಚಿಸಿ</string>
   <string name="ab_action_flipcamera">ಫ್ಲಿಪ್ ಕ್ಯಾಮೆರಾ</string>
   <string name="ab_action_hidepreview">ಪೂರ್ವವೀಕ್ಷಣೆ ಮರೆಮಾಡಿ</string>
   <string name="remote_recording">%s ರೆಕಾರ್ಡಿಂಗ್</string>

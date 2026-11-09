@@ -121,6 +121,8 @@
   <string name="action_call_end_accept">Прихвати долазни позив и заврши тренутни позив</string>
   <string name="action_call_decline">Одбиј</string>
   <string name="action_call_mic_mute">Искључи микрофон</string>
+  <string name="action_call_mic_unmute">Укључи микрофон</string>
+  <string name="action_call_lower_hand">Ниже руке</string>
   <string name="action_load_extension">Учитај проширење</string>
   <string name="ab_action_speakerphone">Укључи звучник</string>
   <string name="ab_action_contact_add">Додај у контакте</string>
@@ -133,7 +135,7 @@
   <string name="scan_qr">Скенирај QR код</string>
   <string name="qr_code">QR код</string>
   <string name="qr_code_not_contact">Nije QR kod za kontakt sa Jami</string>
-  <string name="new_group">Kreiraj novu grupu</string>
+  <string name="new_group">Нова група</string>
   <string name="ab_action_flipcamera">Обрни камеру</string>
   <string name="ab_action_hidepreview">Сакриј преглед</string>
   <string name="remote_recording">%s снима…</string>

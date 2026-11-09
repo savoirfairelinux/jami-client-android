@@ -250,6 +250,7 @@
   <string name="account_rename_device_hint">Yeni aygıt adı seç</string>
   <string name="account_device_name_empty">Aygıt adı boş olamaz.</string>
   <string name="account_device_this_indicator">Bu aygıt</string>
+  <string name="account_device_never_synced">Asla</string>
   <string name="account_disabled_indicator">Engelli</string>
   <string name="account_device_id">Aygıt Kimliği</string>
   <!--Link a new device-->

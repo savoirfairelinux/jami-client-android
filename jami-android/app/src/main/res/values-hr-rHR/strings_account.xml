@@ -120,6 +120,7 @@
   <string name="rename_device_button">Uređaj za preimenovanje</string>
   <string name="account_rename_device_hint">Izberite ime uređaja</string>
   <string name="account_device_this_indicator">Ovaj uređaj</string>
+  <string name="account_device_never_synced">Nikada</string>
   <string name="account_disabled_indicator">S invaliditetom</string>
   <string name="account_device_id">ID uređaja</string>
   <!--Link a new device-->

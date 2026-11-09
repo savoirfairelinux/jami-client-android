@@ -105,7 +105,6 @@
   <string name="share_via">Partekatu honen bidez</string>
   <string name="scan_qr">Eskaneatu QR kodea</string>
   <string name="qr_code">QR kodea</string>
-  <string name="new_group">Sortu talde berria</string>
   <string name="ab_action_flipcamera">Itzulbiratu kamera</string>
   <string name="ab_action_hidepreview">Ezkutatu aurretiko bista</string>
   <string name="remote_recording">%s Grabatzen...</string>

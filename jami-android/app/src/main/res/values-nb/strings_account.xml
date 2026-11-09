@@ -250,6 +250,7 @@
   <string name="account_rename_device_hint">Velg nytt navn for enhet</string>
   <string name="account_device_name_empty">Enhetsnavnet kan ikke være tomt.</string>
   <string name="account_device_this_indicator">Denne enheten</string>
+  <string name="account_device_never_synced">Aldri</string>
   <string name="account_disabled_indicator">Invalid</string>
   <string name="account_device_id">Enhets-ID</string>
   <!--Link a new device-->

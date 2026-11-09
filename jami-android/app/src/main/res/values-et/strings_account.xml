@@ -250,6 +250,7 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_rename_device_hint">Vali uus seadme nimi</string>
   <string name="account_device_name_empty">Seadme nimi ei saa olla tühi</string>
   <string name="account_device_this_indicator">See seade</string>
+  <string name="account_device_never_synced">Mitte kunagi</string>
   <string name="account_disabled_indicator">Väljalülitatud</string>
   <string name="account_device_id">Seadme tunnus</string>
   <!--Link a new device-->

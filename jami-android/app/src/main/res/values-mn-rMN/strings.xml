@@ -86,6 +86,7 @@
   <string name="switch_to_video">Видеог ашиглах</string>
   <string name="action_call_decline">Хөгжиж байна</string>
   <string name="action_call_mic_mute">Улаан чимээгүй микрофон</string>
+  <string name="action_call_lower_hand">Доод гар</string>
   <string name="ab_action_contact_add">Байрлуудад нэмнэ</string>
   <string name="ab_action_contact_add_question">Та нар ч гэсэн холбоотондоо нэмж байна уу?</string>
   <string name="ab_action_audio_call">Зэвсэгт дуу дуулах</string>
@@ -94,7 +95,6 @@
   <string name="share_via">Асуулгах</string>
   <string name="scan_qr">QR код сканируулна</string>
   <string name="qr_code">QR код</string>
-  <string name="new_group">Шинэ бүлэг үүсгэх</string>
   <string name="ab_action_flipcamera">Хэлтийн камер</string>
   <string name="ab_action_hidepreview">Урьдчилгаа нуух</string>
   <string name="remote_recording">%s-ийн бүртгэл...</string>

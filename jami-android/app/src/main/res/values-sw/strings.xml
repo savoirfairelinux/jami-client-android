@@ -97,6 +97,8 @@
   <string name="switch_to_video">Weka Video</string>
   <string name="action_call_decline">Kupungua</string>
   <string name="action_call_mic_mute">Kipaza sauti</string>
+  <string name="action_call_mic_unmute">Ondoa unyamazishaji wa maikrofoni</string>
+  <string name="action_call_lower_hand">Mkono wa chini</string>
   <string name="ab_action_contact_add">Ongeza kwa mawasiliano</string>
   <string name="ab_action_contact_add_question">Kuongeza mawasiliano?</string>
   <string name="ab_action_audio_call">Kuanza wito wa sauti</string>
@@ -105,7 +107,6 @@
   <string name="share_via">Kushiriki kupitia</string>
   <string name="scan_qr">Scan QR Code</string>
   <string name="qr_code">Nambari ya QR</string>
-  <string name="new_group">Unda kikundi kipya</string>
   <string name="ab_action_flipcamera">Kamera flip</string>
   <string name="ab_action_hidepreview">Ficha ya awali ya kuficha</string>
   <string name="remote_recording">Kurekodi %s...</string>

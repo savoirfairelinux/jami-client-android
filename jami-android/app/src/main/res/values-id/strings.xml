@@ -96,6 +96,8 @@
   <string name="switch_to_video">Aktifkan Video</string>
   <string name="action_call_decline">Tolak</string>
   <string name="action_call_mic_mute">Senyapkan mikrofon</string>
+  <string name="action_call_mic_unmute">Suarakan mikrofon</string>
+  <string name="action_call_lower_hand">Turunkan tangan</string>
   <string name="ab_action_contact_add">Tambah sebagai kontak</string>
   <string name="ab_action_contact_add_question">Tambah ke kontak?</string>
   <string name="ab_action_audio_call">Mulai panggilan suara</string>
@@ -104,7 +106,6 @@
   <string name="share_via">Bagikan melalui</string>
   <string name="scan_qr">Pindai QR Code</string>
   <string name="qr_code">Kode QR</string>
-  <string name="new_group">Buat grup baru</string>
   <string name="ab_action_flipcamera">Tukar kamera</string>
   <string name="ab_action_hidepreview">Sembunyikan pratinjau</string>
   <string name="remote_recording">%smerekam...</string>

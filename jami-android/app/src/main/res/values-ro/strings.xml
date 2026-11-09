@@ -122,6 +122,9 @@
   <string name="action_call_end_accept">Răspunde și termină apelul actual</string>
   <string name="action_call_decline">Refuză</string>
   <string name="action_call_mic_mute">Oprește microfonul</string>
+  <string name="action_call_mic_unmute">Pornește microfonul</string>
+  <string name="action_call_lower_hand">Coboară mîna</string>
+  <string name="action_call_show_participants">Arată participanții</string>
   <string name="action_load_extension">Încarcă extensia</string>
   <string name="ab_action_speakerphone">Pornește difuzorul</string>
   <string name="ab_action_contact_add">Adaugă la contacte</string>
@@ -134,7 +137,7 @@
   <string name="scan_qr">Scanează Codul QR</string>
   <string name="qr_code">Cod QR</string>
   <string name="qr_code_not_contact">Nu este un cod QR de contact Jami</string>
-  <string name="new_group">Creează un grup nou</string>
+  <string name="new_group">Grup nou</string>
   <string name="ab_action_flipcamera">Schimbă camera</string>
   <string name="ab_action_hidepreview">Ascunde previzualizarea</string>
   <string name="remote_recording">%s înregistrează…</string>
@@ -479,6 +482,7 @@
   <string name="dialog_hint_description">Descriere</string>
   <string name="picker_title">Alege contacte</string>
   <string name="picker_btn">Alege contacte</string>
+  <string name="picker_search_hint">Caută contacte</string>
   <string name="no_contact_to_add">Nu ai niciun contact de adăugat</string>
   <string name="bottomsheet_contact">Contactează Jami\n%1$s</string>
   <string name="bottomsheet_block">Blochează membrul</string>

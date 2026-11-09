@@ -120,6 +120,9 @@
   <string name="action_call_end_accept">Prano thirrje ardhëse dhe përfundo thirrjen e tanishme</string>
   <string name="action_call_decline">Hidhe tej</string>
   <string name="action_call_mic_mute">Heshtoje mikrofonin</string>
+  <string name="action_call_mic_unmute">Hiqi heshtimin mikrofonit</string>
+  <string name="action_call_stop_screen_share">Resht së dhëni ekranin</string>
+  <string name="action_call_lower_hand">Uleni dorën</string>
   <string name="action_load_extension">Ngarko zgjerimin</string>
   <string name="ab_action_speakerphone">Hap altoparlantin</string>
   <string name="ab_action_contact_add">Shtoje te kontaktet</string>
@@ -132,7 +135,7 @@
   <string name="scan_qr">Skanoni Kodin QR</string>
   <string name="qr_code">Kod QR</string>
   <string name="qr_code_not_contact">S’është kod QR kontakti Jami</string>
-  <string name="new_group">Krijoni grup të ri</string>
+  <string name="new_group">Grup i ri</string>
   <string name="ab_action_flipcamera">Rrotulloni kamerën</string>
   <string name="ab_action_hidepreview">Fshihe paraparjen</string>
   <string name="remote_recording">%s po regjistron…</string>
@@ -458,6 +461,7 @@
   <string name="dialog_hint_description">Përshkrim</string>
   <string name="picker_title">Përzgjidhni Kontakte</string>
   <string name="picker_btn">Përzgjidhni kontake</string>
+  <string name="picker_search_hint">Kërko te kontaktet</string>
   <string name="no_contact_to_add">S’keni kontakt për shtim</string>
   <string name="bottomsheet_contact">Lidhuni me Jami-n\n%1$s</string>
   <string name="bottomsheet_block">Bllokoni anëtar</string>

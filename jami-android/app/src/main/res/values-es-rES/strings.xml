@@ -90,6 +90,9 @@
   <string name="switch_to_video">Permitir video</string>
   <string name="action_call_decline">Rechazar</string>
   <string name="action_call_mic_mute">Silenciar micrófono</string>
+  <string name="action_call_camera_on">Encender la cámara</string>
+  <string name="action_call_camera_off">Apagar la cámara</string>
+  <string name="action_call_stop_screen_share">Dejar de compartir pantalla</string>
   <string name="ab_action_contact_add">Añadir a contactos</string>
   <string name="ab_action_contact_add_question">¿Añadir a contactos?</string>
   <string name="ab_action_audio_call">Empezar llamada de audio</string>
@@ -98,7 +101,7 @@
   <string name="share_via">Compatir via</string>
   <string name="scan_qr">Escanear código QR</string>
   <string name="qr_code">Código QR</string>
-  <string name="new_group">Crear nuevo grupo</string>
+  <string name="new_group">Nuevo grupo</string>
   <string name="ab_action_flipcamera">Cambiar de cámara</string>
   <string name="ab_action_hidepreview">Ocultar vista previa</string>
   <string name="remote_recording">%s grabando...</string>
@@ -332,6 +335,7 @@
   <string name="dialog_hint_title">Título</string>
   <string name="picker_title">Seleccionar contactos</string>
   <string name="picker_btn">Seleccionar contactos</string>
+  <string name="picker_search_hint">Buscar contactos</string>
   <string name="bottomsheet_block">Miembro bloqueado</string>
   <string name="bottomsheet_unblock">Miembro desbloqueado</string>
   <string name="group_member_blocked">Bloqueado</string>

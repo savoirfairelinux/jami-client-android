@@ -112,6 +112,9 @@ contact@jami.net.</string>
   <string name="action_call_hold_accept_video">در حالت انتظار نگه داشتن تماس فعلی و پذیرفتن تماس ویدیویی</string>
   <string name="action_call_decline">ردکردن</string>
   <string name="action_call_mic_mute">قطع میکروفون</string>
+  <string name="action_call_camera_on">روشن کردن دوربین</string>
+  <string name="action_call_camera_off">خاموش کردن دوربین</string>
+  <string name="action_call_stop_screen_share">توقف اشتراک‌گذاری صفحه</string>
   <string name="ab_action_contact_add">افزودن به مخاطبان</string>
   <string name="ab_action_contact_add_question">افزودن به مخاطبان؟</string>
   <string name="ab_action_audio_call">شروع تماس صوتی</string>
@@ -120,7 +123,6 @@ contact@jami.net.</string>
   <string name="share_via">اشتراک از طریق</string>
   <string name="scan_qr">اسکن کد QR</string>
   <string name="qr_code">کد QR</string>
-  <string name="new_group">ایجاد گروه جدید</string>
   <string name="ab_action_flipcamera">چرخاندن دوربین</string>
   <string name="ab_action_hidepreview">مخفی‌کردن پیش‌نمایش</string>
   <string name="remote_recording">%s در حال ضبط...</string>

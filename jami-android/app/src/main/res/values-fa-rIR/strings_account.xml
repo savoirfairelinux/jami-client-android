@@ -199,6 +199,7 @@
   <string name="rename_device_button">تغییر نام دستگاه</string>
   <string name="account_rename_device_hint">انتخاب نام دستگاه جدید</string>
   <string name="account_device_this_indicator">این دستگاه</string>
+  <string name="account_device_never_synced">هرگز</string>
   <string name="account_disabled_indicator">غیرفعال</string>
   <string name="account_device_id">شناسه دستگاه</string>
   <!--Link a new device-->

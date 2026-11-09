@@ -111,6 +111,8 @@
   <string name="action_call_end_accept">നിലവിലുള്ള കോൾ നിർത്തി വരുന്ന കോൾ സ്വീകരിക്കുക</string>
   <string name="action_call_decline">കുറവ്</string>
   <string name="action_call_mic_mute">മിണ്ടാത്ത മൈക്രോഫോൺ</string>
+  <string name="action_call_mic_unmute">മൈക്ക് അൺമ്യൂട്ട് ചെയ്യുക</string>
+  <string name="action_call_lower_hand">താഴത്തെ കൈ</string>
   <string name="action_load_extension">എക്സ്റ്റൻഷൻ ലോഡു ചെയ്യുക</string>
   <string name="ab_action_speakerphone">സ്പീക്കർ ഓണാക്കുക</string>
   <string name="ab_action_contact_add">കോൺടാക്റ്റുകളിലേക്ക് ചേർക്കുക</string>
@@ -123,7 +125,6 @@
   <string name="scan_qr">ക്യുആർ കോഡ് സ്കാൻ ചെയ്യുക</string>
   <string name="qr_code">ക്യുആർ കോഡ്</string>
   <string name="qr_code_not_contact">ഒരു ജാമി കോണ്ടാക്ടിന്റെ QR കോഡല്ല</string>
-  <string name="new_group">പുതിയ ഗ്രൂപ്പ് നിർമ്മിക്കുക</string>
   <string name="ab_action_flipcamera">ഫ്ലിപ്പ് ക്യാമറ</string>
   <string name="ab_action_hidepreview">പ്രിവ്യൂ മറയ്ക്കുക</string>
   <string name="remote_recording">%s റെക്കോർഡിംഗ്</string>

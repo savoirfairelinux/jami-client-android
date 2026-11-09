@@ -105,7 +105,6 @@
   <string name="share_via">Споделяне чрез</string>
   <string name="scan_qr">Сканиране на QR-код</string>
   <string name="qr_code">QR код</string>
-  <string name="new_group">Създаване на нова група</string>
   <string name="ab_action_flipcamera">Обръщане на камерата</string>
   <string name="ab_action_hidepreview">Скрийте предварителното преглеждане</string>
   <string name="remote_recording">Записване на %s...</string>

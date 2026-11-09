@@ -98,6 +98,8 @@
   <string name="switch_to_video">Omogući video</string>
   <string name="action_call_decline">Odbij</string>
   <string name="action_call_mic_mute">Utišaj mikrofon</string>
+  <string name="action_call_mic_unmute">Poništi utišavanje mikrofona</string>
+  <string name="action_call_lower_hand">Dolnja ruka</string>
   <string name="ab_action_contact_add">Dodaj u kontakte</string>
   <string name="ab_action_contact_add_question">Dodati u kontakte?</string>
   <string name="ab_action_audio_call">Pokrenite audio poziv</string>
@@ -106,7 +108,6 @@
   <string name="share_via">Dijeli putem</string>
   <string name="scan_qr">Skeniraj QR kod</string>
   <string name="qr_code">QR kod</string>
-  <string name="new_group">Stvori novu grupu</string>
   <string name="ab_action_flipcamera">Okreni kameru</string>
   <string name="ab_action_hidepreview">Skrij preview</string>
   <string name="remote_recording">%s snimanje...</string>

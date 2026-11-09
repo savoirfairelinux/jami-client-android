@@ -121,6 +121,11 @@
   <string name="action_call_end_accept">Hyväksy saapuva puhelu ja lopeta nykyinen puhelu</string>
   <string name="action_call_decline">Hylkää</string>
   <string name="action_call_mic_mute">Mykistä mikrofoni</string>
+  <string name="action_call_camera_on">Käynnistä kamera</string>
+  <string name="action_call_camera_off">Sammuta kamera</string>
+  <string name="action_call_stop_screen_share">Lopeta näytön jakaminen</string>
+  <string name="action_call_lower_hand">Käsi alas</string>
+  <string name="action_call_show_participants">Näytä osallistujat</string>
   <string name="action_load_extension">Lataa laajennus</string>
   <string name="ab_action_speakerphone">Laita kaiutin päälle</string>
   <string name="ab_action_contact_add">Lisää yhteystietoihin</string>
@@ -133,7 +138,7 @@
   <string name="scan_qr">Skannaa QR-koodi</string>
   <string name="qr_code">QR-koodi</string>
   <string name="qr_code_not_contact">Ei Jamissa - henkilön QR-koodi</string>
-  <string name="new_group">Luo uusi ryhmä</string>
+  <string name="new_group">Uusi ryhmä</string>
   <string name="ab_action_flipcamera">Käännä kamera</string>
   <string name="ab_action_hidepreview">Piilota esikatselu</string>
   <string name="remote_recording">%s tallentaa…</string>
@@ -478,6 +483,7 @@
   <string name="dialog_hint_description">Kuvaus</string>
   <string name="picker_title">Valitse henkilöt</string>
   <string name="picker_btn">Valitse henkilöt</string>
+  <string name="picker_search_hint">Hae yhteystietoja</string>
   <string name="no_contact_to_add">Sinulla ei ole henkilöä lisättävänä</string>
   <string name="bottomsheet_contact">Jami yhteystiedot\n%1$s</string>
   <string name="bottomsheet_block">Estä jäsen</string>

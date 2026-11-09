@@ -122,6 +122,8 @@
   <string name="action_call_end_accept">Прийняти вхідний дзвінок та завершити поточний дзвінок</string>
   <string name="action_call_decline">Відхилити</string>
   <string name="action_call_mic_mute">Відключити мікрофон</string>
+  <string name="action_call_mic_unmute">Увімкнути звук мікрофона</string>
+  <string name="action_call_lower_hand">Нижня рука</string>
   <string name="action_load_extension">Завантажити розширення</string>
   <string name="ab_action_speakerphone">Увімкнути гучномовець</string>
   <string name="ab_action_contact_add">Додати до контактів</string>
@@ -134,7 +136,7 @@
   <string name="scan_qr">Сканування QR коду</string>
   <string name="qr_code">QR код</string>
   <string name="qr_code_not_contact">Це не QR-код контакту Jami</string>
-  <string name="new_group">Створити нову групу</string>
+  <string name="new_group">Нова група</string>
   <string name="ab_action_flipcamera">Змінити камеру</string>
   <string name="ab_action_hidepreview">Сховати передогляд</string>
   <string name="remote_recording">Запис %s...</string>

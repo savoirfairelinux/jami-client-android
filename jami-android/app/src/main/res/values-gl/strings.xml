@@ -120,6 +120,8 @@
   <string name="action_call_end_accept">Aceptar a chamada entrante e rematar a actual</string>
   <string name="action_call_decline">Rexeitar</string>
   <string name="action_call_mic_mute">Apagar micrófono</string>
+  <string name="action_call_mic_unmute">Activar son do micrófono</string>
+  <string name="action_call_lower_hand">Man inferior</string>
   <string name="action_load_extension">Cargar extensión</string>
   <string name="ab_action_speakerphone">Activar o altofalante</string>
   <string name="ab_action_contact_add">Engadir a contactos</string>
@@ -132,7 +134,7 @@
   <string name="scan_qr">Escanear código QR</string>
   <string name="qr_code">Código QR</string>
   <string name="qr_code_not_contact">Non é un código QR de contacto de Jami</string>
-  <string name="new_group">Crear novo grupo</string>
+  <string name="new_group">Novo grupo</string>
   <string name="ab_action_flipcamera">Cambiar de cámara</string>
   <string name="ab_action_hidepreview">Agochar vista previa</string>
   <string name="remote_recording">%s gravando...</string>

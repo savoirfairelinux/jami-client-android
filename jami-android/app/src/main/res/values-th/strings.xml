@@ -96,6 +96,8 @@
   <string name="switch_to_video">เปิดวีดีโอ</string>
   <string name="action_call_decline">ปฏิเสธ</string>
   <string name="action_call_mic_mute">ปิดเสียงไมโครโฟน</string>
+  <string name="action_call_mic_unmute">เปิดเสียงไมโครโฟน</string>
+  <string name="action_call_lower_hand">มือต่ํา</string>
   <string name="ab_action_contact_add">เพิ่มในรายชื่อติดต่อ</string>
   <string name="ab_action_contact_add_question">เพิ่มในรายชื่อติดต่อไหม</string>
   <string name="ab_action_audio_call">เริ่มการโทรเสียง</string>
@@ -104,7 +106,6 @@
   <string name="share_via">แบ่งปันผ่าน</string>
   <string name="scan_qr">สแกนคิวอาร์โค้ด</string>
   <string name="qr_code">คิวอาร์โค้ด</string>
-  <string name="new_group">สร้างกลุ่มใหม่</string>
   <string name="ab_action_flipcamera">พลิกกล้อง</string>
   <string name="ab_action_hidepreview">ซ่อนตัวอย่าง</string>
   <string name="remote_recording">กำลังบันทึก…%s</string>

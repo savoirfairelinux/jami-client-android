@@ -16,6 +16,10 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <!--Call Fragment-->
+  <string name="action_call_camera_on">Encender la cámara</string>
+  <string name="action_call_camera_off">Apagar la cámara</string>
+  <string name="action_call_stop_screen_share">Dejar de compartir pantalla</string>
+  <string name="new_group">Nuevo grupo</string>
   <!--Text messages-->
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
@@ -41,6 +45,7 @@
   <!--Bottom sheet-->
   <string name="audio_output_mute">Silenciar</string>
   <!--Swarm Details-->
+  <string name="picker_search_hint">Buscar contactos</string>
   <string name="bottomsheet_block">Miembro bloqueado</string>
   <string name="bottomsheet_unblock">Miembro desbloqueado</string>
   <string name="group_member_blocked">Bloqueado</string>

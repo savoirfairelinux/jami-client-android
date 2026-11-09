@@ -99,6 +99,8 @@
   <string name="switch_to_video">動画を有効化</string>
   <string name="action_call_decline">辞退</string>
   <string name="action_call_mic_mute">マイクをミュート</string>
+  <string name="action_call_mic_unmute">マイクのミュートを解除</string>
+  <string name="action_call_lower_hand">手を下げる</string>
   <string name="ab_action_speakerphone">スピーカーをオン</string>
   <string name="ab_action_contact_add">連絡先に追加</string>
   <string name="ab_action_contact_add_question">連絡先を追加しますか？</string>
@@ -108,7 +110,7 @@
   <string name="share_via">共有...</string>
   <string name="scan_qr">QR コードをスキャン</string>
   <string name="qr_code">QRコード</string>
-  <string name="new_group">新規グループを作成</string>
+  <string name="new_group">新しいグループ</string>
   <string name="ab_action_flipcamera">カメラを押す</string>
   <string name="ab_action_hidepreview">プレビューを隠す</string>
   <string name="remote_recording">%s記録中…</string>

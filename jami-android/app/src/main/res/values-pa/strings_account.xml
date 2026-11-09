@@ -177,6 +177,7 @@
   <string name="rename_device_title">ਇਸ ਡੀਵਾਈਸ ਦਾ ਨਾਂ ਬਦਲੋ</string>
   <string name="rename_device_button">ਡੀਵਾਈਸ ਦਾ ਨਾਂ ਬਦਲੋ</string>
   <string name="account_rename_device_hint">ਨਵਾਂ ਡੀਵਾਈਸ ਨਾਂ ਚੁਣੋ</string>
+  <string name="account_device_never_synced">ਕਦੇ ਵੀ ਨਹੀਂ</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">ਇਸ ਵੰਨਗੀ ਵਿੱਚ ਨਹੀਂ ਵਰਤ ਸਕਦੇ।</string>
   <string name="account_link_device_title">ਨਵਾਂ ਡੀਵਾਈਸ ਜੋੜੋ</string>

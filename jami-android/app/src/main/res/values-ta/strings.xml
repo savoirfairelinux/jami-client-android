@@ -100,6 +100,7 @@
   <string name="action_call_end_accept">உள்வரும் அழைப்பை ஏற்று தற்போதைய அழைப்பை முடிக்கவும்</string>
   <string name="action_call_decline">குறைவு</string>
   <string name="action_call_mic_mute">மைக்ரோஃபோன் முடக்கப்பட்டது</string>
+  <string name="action_call_lower_hand">கீழ் கை</string>
   <string name="action_load_extension">சுமை நீட்டிப்பு</string>
   <string name="ab_action_speakerphone">ஸ்பீக்கரை இயக்கவும்</string>
   <string name="ab_action_contact_add">தொடர்புகளை சேர்க்கவும்</string>
@@ -111,7 +112,6 @@
   <string name="write_a_message">செய்தி எழுத</string>
   <string name="scan_qr">QR குறியீட்டை ஸ்கேன் செய்யவும்</string>
   <string name="qr_code">QR குறியீடு</string>
-  <string name="new_group">ஒரு புதிய குழுவை உருவாக்கவும்</string>
   <string name="ab_action_flipcamera">ஃபில்ப் கேமரா</string>
   <string name="ab_action_hidepreview">முன்னோட்டத்தை மறைக்கவும்</string>
   <string name="remote_recording">%s பதிவு.</string>

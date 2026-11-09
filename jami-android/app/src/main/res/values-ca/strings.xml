@@ -132,7 +132,6 @@
   <string name="scan_qr">Escaneja un codi QR</string>
   <string name="qr_code">Codi QR</string>
   <string name="qr_code_not_contact">No és un codi QR de contacte de Jami</string>
-  <string name="new_group">Crea un grup nou</string>
   <string name="ab_action_flipcamera">Canvia la càmera</string>
   <string name="ab_action_hidepreview">Amaga la previsualització</string>
   <string name="remote_recording">%s gravant...</string>

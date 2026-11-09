@@ -119,6 +119,8 @@
   <string name="action_call_end_accept">수신 전화 수락 및 현재 통화 종료</string>
   <string name="action_call_decline">감소</string>
   <string name="action_call_mic_mute">무음 마이크</string>
+  <string name="action_call_mic_unmute">마이크 음소거 해제</string>
+  <string name="action_call_lower_hand">하위 손</string>
   <string name="action_load_extension">확장 불러오기</string>
   <string name="ab_action_speakerphone">스피커 켜기</string>
   <string name="ab_action_contact_add">연락처에 추가하기</string>
@@ -131,7 +133,7 @@
   <string name="scan_qr">QR 코드를 스캔</string>
   <string name="qr_code">QR 코드</string>
   <string name="qr_code_not_contact">Jami 연락처 QR 코드가 아닙니다</string>
-  <string name="new_group">새 그룹 만들기</string>
+  <string name="new_group">새 모임</string>
   <string name="ab_action_flipcamera"> 카메라</string>
   <string name="ab_action_hidepreview">미리보기 숨기기</string>
   <string name="remote_recording">%s 기록...</string>

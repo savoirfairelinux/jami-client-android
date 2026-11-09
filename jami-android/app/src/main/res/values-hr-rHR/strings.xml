@@ -46,10 +46,11 @@
   <string name="action_call_accept_audio">Prihvati sa zvukom</string>
   <string name="action_call_accept_video">Prihvati s videom</string>
   <string name="switch_to_video">Omogući video</string>
+  <string name="action_call_mic_unmute">Poništi utišavanje mikrofona</string>
+  <string name="action_call_lower_hand">Dolnja ruka</string>
   <string name="ab_action_audio_call">Pokrenite audio poziv</string>
   <string name="ab_action_video_call">Pokrenite video pozive</string>
   <string name="qr_code">QR kod</string>
-  <string name="new_group">Stvori novu grupu</string>
   <string name="ab_action_hidepreview">Skrij preview</string>
   <string name="remote_recording">%s snimanje...</string>
   <!--Text messages-->

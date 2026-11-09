@@ -133,6 +133,7 @@
   <string name="rename_device_message">Skriv inn et enhetsnavn for å identifisere denne enheten i Jami-kontoen din</string>
   <string name="account_device_name_empty">Enhetsnavnet kan ikke være tomt.</string>
   <string name="account_device_this_indicator">Denne enheten</string>
+  <string name="account_device_never_synced">Aldri</string>
   <string name="account_device_id">Enhets-ID</string>
   <!--Link a new device-->
   <string name="account_link_info">I Jami-appen på den nye enheten, skann QR-koden eller skriv inn autentiseringskoden manuelt.</string>

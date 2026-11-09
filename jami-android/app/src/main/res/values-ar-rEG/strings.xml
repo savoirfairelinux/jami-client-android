@@ -106,7 +106,6 @@
   <string name="share_via">مشاركة عبر</string>
   <string name="scan_qr">مسح رمز الإستجابة السريعة</string>
   <string name="qr_code">رمز الإستجابة السريعة</string>
-  <string name="new_group">إنشاء مجموعة جديدة</string>
   <string name="ab_action_flipcamera">قلب كاميرا</string>
   <string name="ab_action_hidepreview">إخفاء معاينة</string>
   <string name="remote_recording">%s تسجيل... </string>

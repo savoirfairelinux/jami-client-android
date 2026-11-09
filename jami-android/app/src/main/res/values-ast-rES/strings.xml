@@ -129,7 +129,6 @@
   <string name="scan_qr">Escaniar códigu QR</string>
   <string name="qr_code">Códigu QR</string>
   <string name="qr_code_not_contact">Non ye un códigu QR de Jami</string>
-  <string name="new_group">Crear nuevo grupu</string>
   <string name="ab_action_flipcamera">Voltiar cámara</string>
   <string name="ab_action_hidepreview">Esconder vista previa</string>
   <string name="remote_recording">%s grabando...</string>

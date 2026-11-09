@@ -86,6 +86,7 @@
   <string name="switch_to_video">વિડિઓ સક્ષમ કરો</string>
   <string name="action_call_decline">ઘટાડો</string>
   <string name="action_call_mic_mute">મ્યૂટ માઇક્રોફોન</string>
+  <string name="action_call_lower_hand">નીચે હાથ</string>
   <string name="ab_action_contact_add">સંપર્કો ઉમેરવા</string>
   <string name="ab_action_contact_add_question">સંપર્કમાં ઉમેરો?</string>
   <string name="ab_action_audio_call">ઑડિઓ કૉલ શરૂ કરો</string>

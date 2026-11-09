@@ -195,6 +195,7 @@
   <string name="rename_device_button">מכשיר שינוי</string>
   <string name="account_rename_device_hint">בחר שם מכשיר חדש</string>
   <string name="account_device_this_indicator">המכשיר הזה</string>
+  <string name="account_device_never_synced">אף פעם</string>
   <string name="account_disabled_indicator">איכותי</string>
   <string name="account_device_id">מזהה מכשיר</string>
   <!--Link a new device-->

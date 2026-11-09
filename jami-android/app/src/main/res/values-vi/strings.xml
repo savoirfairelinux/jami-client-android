@@ -89,6 +89,8 @@
   <string name="switch_to_video">Bật video</string>
   <string name="action_call_decline">Từ chối</string>
   <string name="action_call_mic_mute">Tắt tiếng micrô</string>
+  <string name="action_call_mic_unmute">Bật tiếng micrô</string>
+  <string name="action_call_lower_hand">Tay dưới</string>
   <string name="ab_action_speakerphone">Bật loa ngoài</string>
   <string name="ab_action_contact_add">Thêm vào danh bạ</string>
   <string name="ab_action_contact_add_question">Thêm vào danh bạ?</string>
@@ -97,7 +99,7 @@
   <string name="scan_qr">Quét mã QR</string>
   <string name="qr_code">Mã QR</string>
   <string name="qr_code_not_contact">Không phải mã QR liên hệ Jami</string>
-  <string name="new_group">Tạo nhóm mới</string>
+  <string name="new_group">Nhóm mới</string>
   <!--Text messages-->
   <string name="message_failed">Không thành công</string>
   <string name="time_just_now">Vừa xong</string>

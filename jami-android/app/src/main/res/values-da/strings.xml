@@ -132,7 +132,7 @@
   <string name="scan_qr">Scan QR-kode</string>
   <string name="qr_code">QR-kode</string>
   <string name="qr_code_not_contact">QR koden er ikke til en Jami kontakt</string>
-  <string name="new_group">Opret ny gruppe</string>
+  <string name="new_group">Ny gruppe</string>
   <string name="ab_action_flipcamera">Vend kamera</string>
   <string name="ab_action_hidepreview">Skjul forhåndsvisning</string>
   <string name="remote_recording">%s optagelse...</string>
@@ -468,6 +468,7 @@
   <string name="dialog_hint_description">Beskrivelse</string>
   <string name="picker_title">Vælg kontakter</string>
   <string name="picker_btn">Vælg kontakter</string>
+  <string name="picker_search_hint">Søg efter kontakter</string>
   <string name="no_contact_to_add">Du har ingen kontakt at tilføje</string>
   <string name="bottomsheet_contact">Kontakt Jami\n%1$s</string>
   <string name="bottomsheet_block">Blokér medlem</string>

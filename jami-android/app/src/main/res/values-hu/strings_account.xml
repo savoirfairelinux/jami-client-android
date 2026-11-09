@@ -250,6 +250,7 @@
   <string name="account_rename_device_hint">Új eszköznév kiválasztása</string>
   <string name="account_device_name_empty">Az eszköznév nem lehet üres.</string>
   <string name="account_device_this_indicator">Ez az eszköz</string>
+  <string name="account_device_never_synced">Soha</string>
   <string name="account_disabled_indicator">Letiltva</string>
   <string name="account_device_id">Eszközazonosító</string>
   <!--Link a new device-->

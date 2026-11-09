@@ -120,6 +120,8 @@
   <string name="action_call_end_accept">Acceptera inkommande samtal och avsluta aktuellt samtal</string>
   <string name="action_call_decline">Avslå</string>
   <string name="action_call_mic_mute">Stäng av mikrofon</string>
+  <string name="action_call_mic_unmute">Sluta tysta mikrofon</string>
+  <string name="action_call_lower_hand">Ta ned handen </string>
   <string name="action_load_extension">Läs in tillägg</string>
   <string name="ab_action_speakerphone">Slå på högtalare</string>
   <string name="ab_action_contact_add">Lägg till i kontakter</string>
@@ -132,7 +134,7 @@
   <string name="scan_qr">Skanna QR-kod</string>
   <string name="qr_code">QR-kod</string>
   <string name="qr_code_not_contact">Inte en QR-kod för en Jami-kontakt</string>
-  <string name="new_group">Skapa ny grupp</string>
+  <string name="new_group">Ny grupp</string>
   <string name="ab_action_flipcamera">Vänd kameran</string>
   <string name="ab_action_hidepreview">Dölj förhandsvisningen</string>
   <string name="remote_recording">%s spelar in...</string>
@@ -468,6 +470,7 @@
   <string name="dialog_hint_description">Beskrivning</string>
   <string name="picker_title">Välj kontakter</string>
   <string name="picker_btn">Välj kontakter</string>
+  <string name="picker_search_hint">Sök kontakter</string>
   <string name="no_contact_to_add">Du har ingen kontakt att lägga till</string>
   <string name="bottomsheet_contact">Kontakta Jami\n%1$s</string>
   <string name="bottomsheet_block">Blockera medlem</string>

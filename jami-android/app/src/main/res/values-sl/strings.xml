@@ -122,6 +122,8 @@
   <string name="action_call_end_accept">Sprejmi dohodni klic in končaj trenutni klic</string>
   <string name="action_call_decline">Zavrni</string>
   <string name="action_call_mic_mute">Izključi mikrofon</string>
+  <string name="action_call_mic_unmute">Vključi mikrofon</string>
+  <string name="action_call_lower_hand">Spusti roko</string>
   <string name="action_load_extension">Naloži razširitev</string>
   <string name="ab_action_speakerphone">Vklopi zvočnik</string>
   <string name="ab_action_contact_add">Dodaj med stike</string>
@@ -134,7 +136,7 @@
   <string name="scan_qr">Preberi QR-kodo</string>
   <string name="qr_code">QR-koda</string>
   <string name="qr_code_not_contact">Ni koda QR stika Jami</string>
-  <string name="new_group">Ustvari novo skupino</string>
+  <string name="new_group">Nova skupina</string>
   <string name="ab_action_flipcamera">Zrcali kamero</string>
   <string name="ab_action_hidepreview">Skrij predogled</string>
   <string name="remote_recording">%s snema …</string>
@@ -470,6 +472,7 @@
   <string name="dialog_hint_description">Opis</string>
   <string name="picker_title">Izberite stike</string>
   <string name="picker_btn">Izberite stike</string>
+  <string name="picker_search_hint">Iskanje stika</string>
   <string name="no_contact_to_add">Nimate stikov, ki bi jih lahko dodali</string>
   <string name="bottomsheet_contact">Stop v stik z Jamijem\n%1$s</string>
   <string name="bottomsheet_block">Blokiraj člana</string>

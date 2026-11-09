@@ -105,7 +105,6 @@
   <string name="share_via">মাধ্যমে শেয়ার করুন</string>
   <string name="scan_qr">QR কোড স্ক্যান করুন</string>
   <string name="qr_code">কিউআর কোড</string>
-  <string name="new_group">নতুন গোষ্ঠী বানান</string>
   <string name="ab_action_flipcamera">ফ্লিপ ক্যামেরা</string>
   <string name="ab_action_hidepreview">প্রিভিউ লুকান</string>
   <string name="remote_recording">%s রেকর্ডিং...</string>

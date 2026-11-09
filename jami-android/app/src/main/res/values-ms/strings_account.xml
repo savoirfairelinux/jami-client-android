@@ -188,6 +188,7 @@
   <string name="rename_device_button">പേരുമാറ്റ ഉപകരണം</string>
   <string name="account_rename_device_hint">പുതിയ ഉപകരണ നാമം തിരഞ്ഞെടുക്കുക</string>
   <string name="account_device_this_indicator">ഈ ഉപകരണം</string>
+  <string name="account_device_never_synced">Tidak pernah</string>
   <string name="account_disabled_indicator">വൈകല്യമുള്ളവർ</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Format ini tidak disokong.</string>

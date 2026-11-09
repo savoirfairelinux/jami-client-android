@@ -97,6 +97,8 @@
   <string name="switch_to_video">Видеоны қосу</string>
   <string name="action_call_decline">Ауыру</string>
   <string name="action_call_mic_mute">Ақысыз микрофон</string>
+  <string name="action_call_mic_unmute">Микрофон дыбысын қосу</string>
+  <string name="action_call_lower_hand">Төменгі қол</string>
   <string name="ab_action_contact_add">Байланыстарға қосу</string>
   <string name="ab_action_contact_add_question">Байланыстарға қосыл?</string>
   <string name="ab_action_audio_call">Аудио шақыруды бастау</string>
@@ -105,7 +107,6 @@
   <string name="share_via">арқылы бөлісу</string>
   <string name="scan_qr">QR кодын сканерлеу</string>
   <string name="qr_code">QR кодтары</string>
-  <string name="new_group">Жаңа топ жасау</string>
   <string name="ab_action_flipcamera">Қалған камера</string>
   <string name="ab_action_hidepreview">Алдын ала қарауды жасыру</string>
   <string name="remote_recording">%s жазуы...</string>

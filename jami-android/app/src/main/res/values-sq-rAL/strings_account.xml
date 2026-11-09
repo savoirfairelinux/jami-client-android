@@ -250,6 +250,7 @@
   <string name="account_rename_device_hint">Zgjidhni një emër të ri për pajisjen</string>
   <string name="account_device_name_empty">Emri i pajisjes s\’mund të jetë i zbrazët</string>
   <string name="account_device_this_indicator">Këtë pajisje</string>
+  <string name="account_device_never_synced">Kurrë</string>
   <string name="account_disabled_indicator">Çaktivizuar</string>
   <string name="account_device_id">ID Pajisjeje</string>
   <!--Link a new device-->

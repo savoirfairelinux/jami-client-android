@@ -250,6 +250,7 @@
   <string name="account_rename_device_hint">Escolha um novo nome do dispositivo</string>
   <string name="account_device_name_empty">O nome do dispositivo não pode estar vazio</string>
   <string name="account_device_this_indicator">Este dispositivo</string>
+  <string name="account_device_never_synced">Nunca</string>
   <string name="account_disabled_indicator">Desativado</string>
   <string name="account_device_id">ID do dispositivo</string>
   <!--Link a new device-->

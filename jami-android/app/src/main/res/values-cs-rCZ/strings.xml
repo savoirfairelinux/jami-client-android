@@ -134,7 +134,7 @@
   <string name="scan_qr">Skenovat kód QR</string>
   <string name="qr_code">Kód QR</string>
   <string name="qr_code_not_contact">Nejedná se o QR kód kontaktu Jami</string>
-  <string name="new_group">Vytvořit novou skupinu</string>
+  <string name="new_group">Nová skupina</string>
   <string name="ab_action_flipcamera">Otočit kameru</string>
   <string name="ab_action_hidepreview">Skrýt náhled</string>
   <string name="remote_recording">%s nahrávání...</string>
@@ -470,6 +470,7 @@
   <string name="dialog_hint_description">Popis</string>
   <string name="picker_title">Vybrat kontakt</string>
   <string name="picker_btn">Vybrat kontakt</string>
+  <string name="picker_search_hint">Hledat kontakty</string>
   <string name="no_contact_to_add">Nemáte žádný kontakt k přidání</string>
   <string name="bottomsheet_contact">Kontaktovat Jami\n %1$s</string>
   <string name="bottomsheet_block">Zablokovat člena</string>

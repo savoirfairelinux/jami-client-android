@@ -123,6 +123,9 @@
   <string name="action_call_end_accept">Eingehenden Anruf annehmen und den aktuellen Anruf beenden</string>
   <string name="action_call_decline">Ablehnen</string>
   <string name="action_call_mic_mute">Mikrofon stummschalten</string>
+  <string name="action_call_camera_on">Kamera einschalten</string>
+  <string name="action_call_camera_off">Kamera ausschalten</string>
+  <string name="action_call_stop_screen_share">Bildschirmfreigabe beenden</string>
   <string name="action_load_extension">Erweiterung laden</string>
   <string name="ab_action_speakerphone">Lautsprecher einschalten</string>
   <string name="ab_action_contact_add">Zu Kontakten hinzufügen</string>
@@ -135,7 +138,7 @@
   <string name="scan_qr">QR-Code scannen</string>
   <string name="qr_code">QR-Code</string>
   <string name="qr_code_not_contact">Kein QR-Code eines Jami-Kontakts</string>
-  <string name="new_group">Neue Gruppe erstellen</string>
+  <string name="new_group">Neue Gruppe</string>
   <string name="ab_action_flipcamera">Kamera wechseln</string>
   <string name="ab_action_hidepreview">Vorschau ausblenden</string>
   <string name="remote_recording">Aufnahme läuft bei %s</string>

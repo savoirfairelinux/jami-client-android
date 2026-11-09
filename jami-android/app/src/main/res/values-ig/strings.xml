@@ -67,10 +67,11 @@
   <string name="switch_to_video">Gbaa vidiyo ahụ</string>
   <string name="action_call_decline">Ọdịda</string>
   <string name="action_call_mic_mute">Igwe okwu na-adịghị arụ ọrụ</string>
+  <string name="action_call_mic_unmute">Mepe maịkrofoonụ</string>
+  <string name="action_call_lower_hand">Aka ala</string>
   <string name="ab_action_contact_add">Tinye na kọntaktị</string>
   <string name="ab_action_audio_call">Malite oku ọdịyo</string>
   <string name="ab_action_video_call">Malite ịkpọ oku vidiyo</string>
-  <string name="new_group">Mepụta otu ọhụrụ</string>
   <!--Text messages-->
   <string name="send_message">Zie ozi</string>
   <string name="message_failed">Ihe na-agaghị ekwe omume</string>

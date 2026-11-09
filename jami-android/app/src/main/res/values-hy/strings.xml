@@ -97,6 +97,8 @@
   <string name="switch_to_video">Հեռուստատեսություն</string>
   <string name="action_call_decline">Հասնում է</string>
   <string name="action_call_mic_mute">Միկրոֆոն անջատ</string>
+  <string name="action_call_mic_unmute">Միացնել խոսափողի ձայնը</string>
+  <string name="action_call_lower_hand">Նվազագույն ձեռքը</string>
   <string name="ab_action_contact_add">Բարձրացնել շփումները</string>
   <string name="ab_action_contact_add_question">Բարձրացնել կոնտակտներին:</string>
   <string name="ab_action_audio_call">Սկսել ձայնային զանգը</string>
@@ -105,7 +107,6 @@
   <string name="share_via">Գործակցել</string>
   <string name="scan_qr">QR կոդը ստուգել</string>
   <string name="qr_code">QR կոդ</string>
-  <string name="new_group">Ստեղծել նոր խումբ</string>
   <string name="ab_action_flipcamera">Կապակային տեսախցիկ</string>
   <string name="ab_action_hidepreview">Գցեք նախադիտություն</string>
   <string name="remote_recording">%s ձայնագրումը...</string>

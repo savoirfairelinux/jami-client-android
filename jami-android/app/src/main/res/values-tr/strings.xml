@@ -120,6 +120,8 @@
   <string name="action_call_end_accept">Gelen çağrıyı kabul et ve mevcut çağrıyı sonlandır.</string>
   <string name="action_call_decline">Reddet</string>
   <string name="action_call_mic_mute">Mikrofonun sesini kapat</string>
+  <string name="action_call_mic_unmute">Mikrofonun sesini aç</string>
+  <string name="action_call_lower_hand">Elini indir</string>
   <string name="action_load_extension">Uzantı yükle</string>
   <string name="ab_action_speakerphone">Hoparlörü aç</string>
   <string name="ab_action_contact_add">Kişilere ekle</string>
@@ -132,7 +134,7 @@
   <string name="scan_qr">QR Kod Tara</string>
   <string name="qr_code">QR Kod</string>
   <string name="qr_code_not_contact">QR bir Jami kişisi kodu değil</string>
-  <string name="new_group">Yeni grup oluştur</string>
+  <string name="new_group">Yeni grup</string>
   <string name="ab_action_flipcamera">Kamerayı döndür</string>
   <string name="ab_action_hidepreview">Ön izlemeyi gizle</string>
   <string name="remote_recording">%s kaydediliyor…</string>

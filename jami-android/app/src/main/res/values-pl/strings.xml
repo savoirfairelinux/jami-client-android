@@ -122,6 +122,8 @@
   <string name="action_call_end_accept"> Odbierz przychodzącą rozmowę i zakończ obecną rozmowę</string>
   <string name="action_call_decline">Odrzuć</string>
   <string name="action_call_mic_mute">Wycisz mikrofon</string>
+  <string name="action_call_mic_unmute">Cofnij wyciszenie mikrofonu</string>
+  <string name="action_call_lower_hand">Dolna ręka</string>
   <string name="action_load_extension">Załaduj rozszerzenie</string>
   <string name="ab_action_speakerphone">Włącz głośnik</string>
   <string name="ab_action_contact_add">Dodaj do kontaków</string>
@@ -134,7 +136,7 @@
   <string name="scan_qr">Zeskanuj kod QR</string>
   <string name="qr_code">Kod QR</string>
   <string name="qr_code_not_contact">Nie jest to kod QR kontaktu Jami</string>
-  <string name="new_group">Utwórz nową grupę</string>
+  <string name="new_group">Nowa grupa</string>
   <string name="ab_action_flipcamera">Zamień kamerę</string>
   <string name="ab_action_hidepreview">Ukryj podgląd</string>
   <string name="remote_recording">%s nagrywanie...</string>
@@ -470,6 +472,7 @@
   <string name="dialog_hint_description">Opis</string>
   <string name="picker_title">Wybierz kontakty</string>
   <string name="picker_btn">Wybierz kontakty</string>
+  <string name="picker_search_hint">Szukaj kontaktów</string>
   <string name="no_contact_to_add">Nie masz kontaktu do dodania</string>
   <string name="bottomsheet_contact">Skontaktuj się z Jami\n%1$s</string>
   <string name="bottomsheet_block">Zablokuj użytkownika</string>

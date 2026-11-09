@@ -56,6 +56,7 @@
   <string name="switch_to_video">Видеоны кую</string>
   <string name="action_call_decline">Кирешү</string>
   <string name="action_call_mic_mute">Тыныч микрофон</string>
+  <string name="action_call_lower_hand">Түбән кул</string>
   <string name="ab_action_contact_add">Контактларга өстәү</string>
   <string name="ab_action_audio_call">Аудиокызылышны башлау</string>
   <string name="ab_action_video_call">Видеокүршетүне башлау</string>

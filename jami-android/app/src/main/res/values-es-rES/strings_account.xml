@@ -186,6 +186,7 @@
   <string name="rename_device_button">Renombrar dispositivo</string>
   <string name="account_rename_device_hint">Elige un nuevo nombre para el dispositivo</string>
   <string name="account_device_this_indicator">Este dispositivo</string>
+  <string name="account_device_never_synced">Nunca</string>
   <string name="account_disabled_indicator">Deshabilitado</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Este formato no está soportado.</string>

@@ -250,6 +250,7 @@
   <string name="account_rename_device_hint">输入新的设备名</string>
   <string name="account_device_name_empty">设备名不可为空</string>
   <string name="account_device_this_indicator">本设备</string>
+  <string name="account_device_never_synced">从不</string>
   <string name="account_disabled_indicator">已停用</string>
   <string name="account_device_id">设备标识符</string>
   <!--Link a new device-->

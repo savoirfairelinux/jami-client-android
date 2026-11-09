@@ -250,6 +250,7 @@
   <string name="account_rename_device_hint">Выберите новое название для устройства</string>
   <string name="account_device_name_empty">Необходимо указать название устройства.</string>
   <string name="account_device_this_indicator">Это устройство</string>
+  <string name="account_device_never_synced">Никогда</string>
   <string name="account_disabled_indicator">Отключен</string>
   <string name="account_device_id">Идентификатор устройства</string>
   <!--Link a new device-->

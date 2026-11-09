@@ -109,7 +109,7 @@
   <string name="share_via">Μοίρασμα μέσω</string>
   <string name="scan_qr">Σάρωση QR κώδικα</string>
   <string name="qr_code">QR κώδικας</string>
-  <string name="new_group">Δημιουργία νέας ομάδας</string>
+  <string name="new_group">Νέα ομάδα</string>
   <string name="ab_action_flipcamera">Εναλλαγή κάμερας</string>
   <string name="ab_action_hidepreview">Απόκρυψη προεπισκόπησης</string>
   <string name="remote_recording">%s καταγράφει...</string>

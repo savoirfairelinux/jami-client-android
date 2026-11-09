@@ -69,13 +69,15 @@
   <string name="action_call_end_accept">Godta innkommende samtale og avslutt gjeldende samtale</string>
   <string name="action_call_decline">Avslå</string>
   <string name="action_call_mic_mute">Koble ut mikrofon</string>
+  <string name="action_call_mic_unmute">Opphev demping av mikrofon</string>
+  <string name="action_call_lower_hand">Ta ned hånden</string>
   <string name="action_load_extension">Last inn utvidelse</string>
   <string name="ab_action_speakerphone">Slå på høyttaler</string>
   <string name="ab_action_audio_call">Start lydsamtale</string>
   <string name="ab_action_video_call">Start videosamtale</string>
   <string name="write_a_message">Skriv melding</string>
   <string name="qr_code_not_contact">Ikke en QR-kode for en Jami-kontakt</string>
-  <string name="new_group">Opprett ny gruppe</string>
+  <string name="new_group">Ny gruppe</string>
   <!--Text messages-->
   <string name="time_just_now">Akkurat nå</string>
   <string name="send_file">Send fil</string>
@@ -282,6 +284,7 @@
   <string name="dialogtitle_title">Rediger gruppetittel</string>
   <string name="dialogtitle_description">Rediger gruppebeskrivelse</string>
   <string name="dialog_hint_title">Tittel</string>
+  <string name="picker_search_hint">Søk kontakter</string>
   <string name="no_contact_to_add">Du har ingen kontakt å legge til</string>
   <string name="bottomsheet_block">Blokker medlem</string>
   <string name="bottomsheet_unblock">Opphev blokkering av medlem</string>

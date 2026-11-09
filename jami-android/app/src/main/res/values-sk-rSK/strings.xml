@@ -122,6 +122,8 @@
   <string name="action_call_end_accept">Prijať prichádzajúci hovor a ukončiť aktuálny hovor</string>
   <string name="action_call_decline">Odmietnuť</string>
   <string name="action_call_mic_mute">Stlmiť mikrofón</string>
+  <string name="action_call_mic_unmute">Zrušiť stlmenie mikrofónu</string>
+  <string name="action_call_lower_hand">Dolná ruka</string>
   <string name="action_load_extension">Načítať rozšírenie</string>
   <string name="ab_action_speakerphone">Zapnúť reproduktor</string>
   <string name="ab_action_contact_add">Pridať kontakt</string>
@@ -134,7 +136,7 @@
   <string name="scan_qr">Nasnímať QR kód</string>
   <string name="qr_code">QR kód</string>
   <string name="qr_code_not_contact">Nie je to QR kód kontaktu Jami</string>
-  <string name="new_group">Vytvoriť novú skupinu</string>
+  <string name="new_group">Nová skupina</string>
   <string name="ab_action_flipcamera">Otočiť kameru</string>
   <string name="ab_action_hidepreview">Skryť náhľad</string>
   <string name="remote_recording">Záznam %s...</string>

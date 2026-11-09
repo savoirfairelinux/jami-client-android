@@ -120,6 +120,8 @@
   <string name="action_call_end_accept">Godta den innkomande samtala og enda den noverande samtala</string>
   <string name="action_call_decline">Ikkje godta</string>
   <string name="action_call_mic_mute">Døyva mikrofonen</string>
+  <string name="action_call_mic_unmute">Opphev demping av mikrofon</string>
+  <string name="action_call_lower_hand">Nedre hand</string>
   <string name="action_load_extension">Last opp utviding</string>
   <string name="ab_action_speakerphone">Skru på høgtalar</string>
   <string name="ab_action_contact_add">Legg til kontakt</string>
@@ -132,7 +134,7 @@
   <string name="scan_qr">Skanna QR-kode</string>
   <string name="qr_code">QR-kode</string>
   <string name="qr_code_not_contact">Dette er ikkje ein QR kode for å kontakta andre på Jami</string>
-  <string name="new_group">Lag ei ny gruppe</string>
+  <string name="new_group">Ny gruppe</string>
   <string name="ab_action_flipcamera">Flip-kamera</string>
   <string name="ab_action_hidepreview">Skjå ut forhandsvisning</string>
   <string name="remote_recording">%s innspilling...</string>

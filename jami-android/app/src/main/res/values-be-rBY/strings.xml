@@ -70,7 +70,6 @@
   <string name="ab_action_contact_add">Дадаць да кантактаў</string>
   <string name="ab_action_audio_call">Пачатак аўдыё-запаведзі</string>
   <string name="ab_action_video_call">Пачатак відэазванку</string>
-  <string name="new_group">Стварыць новую групу</string>
   <!--Text messages-->
   <string name="message_failed">Недасягнуты</string>
   <string name="time_just_now">Толькі што</string>

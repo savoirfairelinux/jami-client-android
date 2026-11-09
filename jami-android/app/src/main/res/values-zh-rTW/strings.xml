@@ -122,6 +122,10 @@
   <string name="action_call_end_accept">接聽來電，並結束目前通話</string>
   <string name="action_call_decline">拒接</string>
   <string name="action_call_mic_mute">靜音麥克風</string>
+  <string name="action_call_mic_unmute">麥克風靜音</string>
+  <string name="action_call_stop_screen_share">停止分享畫面</string>
+  <string name="action_call_lower_hand">放下手</string>
+  <string name="action_call_show_participants">顯示參與者</string>
   <string name="action_load_extension">載入擴充程式</string>
   <string name="ab_action_speakerphone">開啟喇叭</string>
   <string name="ab_action_contact_add">新增至聯絡人</string>
@@ -479,6 +483,7 @@
   <string name="dialog_hint_description">描述</string>
   <string name="picker_title">選擇聯絡人</string>
   <string name="picker_btn">選擇聯絡人</string>
+  <string name="picker_search_hint">搜尋聯絡人</string>
   <string name="no_contact_to_add">您沒有聯絡人要進行新增</string>
   <string name="bottomsheet_contact">聯絡 Jami\n%1$s</string>
   <string name="bottomsheet_block">封鎖成員</string>

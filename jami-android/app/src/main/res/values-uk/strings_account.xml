@@ -250,6 +250,7 @@
   <string name="account_rename_device_hint">Вибрати нову назву для пристрою</string>
   <string name="account_device_name_empty">Назва пристрою не може бути порожньою.</string>
   <string name="account_device_this_indicator">Цей пристрій</string>
+  <string name="account_device_never_synced">Ніколи</string>
   <string name="account_disabled_indicator">Вимкнено</string>
   <string name="account_device_id">Ідентифікатор пристрою</string>
   <!--Link a new device-->

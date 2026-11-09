@@ -85,6 +85,7 @@
   <string name="switch_to_video">Aktifkan panggilan video</string>
   <string name="action_call_decline">Bantah panggilan</string>
   <string name="action_call_mic_mute">മിണ്ടാത്ത മൈക്രോഫോൺ</string>
+  <string name="action_call_lower_hand">താഴത്തെ കൈ</string>
   <string name="ab_action_contact_add">Tambahkan sebagai kenalan</string>
   <string name="ab_action_contact_add_question">ബന്ധുക്കളെ കൂട്ടിച്ചേർക്കണോ?</string>
   <string name="ab_action_audio_call">ഓഡിയോ കോൾ ആരംഭിക്കുക</string>

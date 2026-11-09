@@ -103,6 +103,8 @@
   <string name="switch_to_video">Įjungti vaizdą</string>
   <string name="action_call_decline">Atmesti</string>
   <string name="action_call_mic_mute">Išjungti mikrofoną</string>
+  <string name="action_call_mic_unmute">Įjungti mikrofoną</string>
+  <string name="action_call_lower_hand">Nuleisti ranką</string>
   <string name="action_load_extension">Įkelti plėtinį</string>
   <string name="ab_action_speakerphone">Įjungti garsiakalbį</string>
   <string name="ab_action_contact_add">Pridėti prie adresatų</string>
@@ -115,7 +117,7 @@
   <string name="scan_qr">Skenuoti QR kodą</string>
   <string name="qr_code">QR kodas</string>
   <string name="qr_code_not_contact">Ne Jami adresato QR kodas</string>
-  <string name="new_group">Sukurti naują grupę</string>
+  <string name="new_group">Nauja grupė</string>
   <string name="ab_action_flipcamera">Apversti kamerą</string>
   <string name="ab_action_hidepreview">Slėpti peržiūrą</string>
   <!--Text messages-->
