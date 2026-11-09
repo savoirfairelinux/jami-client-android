@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "429f8b1a_036bbf4b",
+        "filename": "jami-android/app/src/main/res/values-b+zh+Hans/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-09T06:05:41Z",
+      "side": 1,
+      "message": "[warning] Line 125: 🟡 `action_call_mic_unmute` is mistranslated as a mute action (`麦克风静音`). Please correct to an unmute action label.",
+      "revId": "877b6afa34b34bf6f065c838167e199eec574427",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2017b22_4c358e53",
+        "filename": "jami-android/app/src/main/res/values-b+zh+Hant/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-09T06:05:41Z",
+      "side": 1,
+      "message": "[warning] Line 125: 🟡 `action_call_mic_unmute` is mistranslated as a mute action (`麦克风静音`). Please correct to an unmute action label.",
+      "revId": "877b6afa34b34bf6f065c838167e199eec574427",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d258faad_5fa07160",
+        "filename": "jami-android/app/src/main/res/values-ms/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-09T06:05:41Z",
+      "side": 1,
+      "message": "[warning] Line 87: 🟡 New key `action_call_lower_hand` is added in Malayalam (`താഴത്തെ കൈ`) inside Malay locale (`values-ms`). This introduces language mixing in UI. Please provide a Malay translation for this key.",
+      "revId": "877b6afa34b34bf6f065c838167e199eec574427",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f96804c1_b1d9fa7a",
+        "filename": "jami-android/app/src/main/res/values-zh-rCN/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-09T06:05:41Z",
+      "side": 1,
+      "message": "[warning] Line 125: 🟡 `action_call_mic_unmute` is translated as `麦克风静音`, which means *mute microphone* (the opposite action). Please change this key to an explicit unmute label (e.g., `取消麦克风静音` / `打开麦克风`) to avoid inverted call controls.",
+      "revId": "877b6afa34b34bf6f065c838167e199eec574427",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb6c941b_57c9004b",
+        "filename": "jami-android/app/src/main/res/values-zh-rCN/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-09T06:05:41Z",
+      "side": 1,
+      "message": "[warning] Line 127: 🟡 `action_call_lower_hand` is translated as `免提` (speakerphone), which does not match the feature semantics (lower raised hand). Please replace with a hand-lowering translation consistent with other Chinese locales (e.g., `放下手`).",
+      "revId": "877b6afa34b34bf6f065c838167e199eec574427",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f563b015_06a85078",
+        "filename": "jami-android/app/src/main/res/values-zh-rTW/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-09T06:05:41Z",
+      "side": 1,
+      "message": "[warning] Line 125: 🟡 `action_call_mic_unmute` is translated as `麥克風靜音` (mute), not unmute. Please correct to an unmute wording (e.g., `取消麥克風靜音`).",
+      "revId": "877b6afa34b34bf6f065c838167e199eec574427",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87e90f47_074f4b72",
+        "filename": "jami-android/app/src/main/res/values-zh/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-09T06:05:41Z",
+      "side": 1,
+      "message": "[warning] Line 125: 🟡 `action_call_mic_unmute` currently uses `麦克风静音` (mute), which reverses the intended action. Update to an unmute phrase so users are not shown contradictory controls.",
+      "revId": "877b6afa34b34bf6f065c838167e199eec574427",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
