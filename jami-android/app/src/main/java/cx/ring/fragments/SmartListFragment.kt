@@ -42,6 +42,7 @@ import net.jami.model.Conversation
 import net.jami.model.Conversation.ConversationActionCallback
 import net.jami.model.Uri
 import net.jami.services.ConversationFacade
+import net.jami.smartlist.ConversationFilter
 import net.jami.smartlist.SmartListPresenter
 import net.jami.smartlist.SmartListView
 import androidx.core.net.toUri
@@ -59,6 +60,10 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         }.root
 
     fun getRecyclerView(): RecyclerView? = binding?.confsList
+
+    fun setConversationFilter(filter: ConversationFilter) {
+        presenter.setConversationFilter(filter)
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

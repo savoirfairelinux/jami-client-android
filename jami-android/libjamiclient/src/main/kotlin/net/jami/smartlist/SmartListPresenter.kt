@@ -16,8 +16,10 @@
  */
 package net.jami.smartlist
 
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import net.jami.model.Contact
 import net.jami.model.Conversation
 import net.jami.model.Uri
@@ -34,23 +36,36 @@ class SmartListPresenter @Inject constructor(
     @param:Named("UiScheduler") private val uiScheduler: Scheduler
 ) : RootPresenter<SmartListView>() {
 
+    private val conversationFilter = BehaviorSubject.createDefault(ConversationFilter.All)
+
     override fun bindView(view: SmartListView) {
         super.bindView(view)
         view.setLoading(true)
-        mCompositeDisposable.add(conversationFacade.getConversationList(conversationFacade.currentAccountSubject)
-            .throttleLatest(150, TimeUnit.MILLISECONDS, uiScheduler)
-            .observeOn(uiScheduler)
-            .subscribe { list ->
-                val v = this.view ?: return@subscribe
-                v.setLoading(false)
-                if (list.isEmpty()) {
-                    v.hideList()
-                    v.displayNoConversationMessage()
-                } else {
-                    v.hideNoConversationMessage()
-                    v.updateList(list, conversationFacade, mCompositeDisposable)
+        mCompositeDisposable.add(
+            Observable.combineLatest(
+                conversationFacade.getConversationList(conversationFacade.currentAccountSubject)
+                    .throttleLatest(150, TimeUnit.MILLISECONDS, uiScheduler),
+                conversationFilter.distinctUntilChanged()
+            ) { list, filter ->
+                list.copy(conversations = list.conversations.filter(filter::matches))
+            }
+                .observeOn(uiScheduler)
+                .subscribe { list ->
+                    val v = this.view ?: return@subscribe
+                    v.setLoading(false)
+                    if (list.isEmpty()) {
+                        v.hideList()
+                        v.displayNoConversationMessage()
+                    } else {
+                        v.hideNoConversationMessage()
+                        v.updateList(list, conversationFacade, mCompositeDisposable)
+                    }
                 }
-            })
+        )
+    }
+
+    fun setConversationFilter(filter: ConversationFilter) {
+        conversationFilter.onNext(filter)
     }
 
     fun copyNumber(conversation: Conversation) {
