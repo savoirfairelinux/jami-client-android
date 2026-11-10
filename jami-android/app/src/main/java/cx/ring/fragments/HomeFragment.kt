@@ -68,6 +68,7 @@ import net.jami.home.HomeView
 import net.jami.model.Conversation
 import net.jami.services.AccountService
 import net.jami.services.ConversationFacade
+import net.jami.smartlist.ConversationFilter
 import net.jami.smartlist.ConversationItemViewModel
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -90,6 +91,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     private var searchDisposable: Disposable? = null
     private var searchAdapter: SmartListAdapter? = null
     private var pendingAdapter: SmartListAdapter? = null
+    private val conversationFilter = BehaviorSubject.createDefault(ConversationFilter.All)
     private val querySubject = BehaviorSubject.createDefault("")
     private val debouncedQuery = querySubject.debounce { item ->
         if (item.isEmpty()) Observable.empty()
@@ -122,6 +124,20 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        savedInstanceState?.getString(STATE_CONVERSATION_FILTER)?.let { name ->
+            val filter = ConversationFilter.entries.find { it.name == name }
+            if (filter != null) conversationFilter.onNext(filter)
+            else Log.w(TAG, "Unknown saved conversation filter: $name")
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(STATE_CONVERSATION_FILTER, checkNotNull(conversationFilter.value).name)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -131,6 +147,27 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         qrCode.setOnClickListener { goToQRFragment() }
         newSwarm.setOnClickListener { startNewSwarm() }
         newFeed.setOnClickListener { startNewFeed() }
+
+        conversationFilters.check(
+            when (checkNotNull(conversationFilter.value)) {
+                ConversationFilter.All -> R.id.filter_all
+                ConversationFilter.Contacts -> R.id.filter_contacts
+                ConversationFilter.Groups -> R.id.filter_groups
+                ConversationFilter.Feeds -> R.id.filter_feeds
+            }
+        )
+        conversationFilters.setOnCheckedStateChangeListener { _, checkedIds ->
+            val filter = when (checkedIds.singleOrNull()) {
+                R.id.filter_all -> ConversationFilter.All
+                R.id.filter_contacts -> ConversationFilter.Contacts
+                R.id.filter_groups -> ConversationFilter.Groups
+                R.id.filter_feeds -> ConversationFilter.Feeds
+                else -> return@setOnCheckedStateChangeListener
+            }
+            conversationFilter.onNext(filter)
+            mSmartListFragment?.setConversationFilter(filter)
+            mSmartListFragment?.scrollToTop()
+        }
 
         // SearchBar is composed of:
         // - Account selection (navigation)
@@ -448,6 +485,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         }
 
         mSmartListFragment = mBinding!!.fragmentContainer.getFragment()
+        mSmartListFragment?.setConversationFilter(checkNotNull(conversationFilter.value))
 
         disableAppBarScroll()
 
@@ -471,7 +509,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         pendingAdapter = null
         searchAdapter = null
         mBinding = null
-        mDisposable.dispose()
+        mDisposable.clear()
     }
 
     override fun onStart() {
@@ -492,7 +530,10 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         mDisposable.add(mAccountService
             .currentAccountSubject
             .switchMap { account ->
-                account.getPendingSubject()
+                Observable.combineLatest(
+                    account.getPendingSubject(),
+                    conversationFilter.distinctUntilChanged()
+                ) { list, filter -> list.filter(filter::matches) }
                     .switchMap { list ->
                         Log.w(TAG, "setBadge getPendingSubject ${list.size}")
                         if (list.isEmpty()) Observable.just(Pair(emptyList(), emptyList()))
@@ -595,6 +636,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             }
 
             NotificationService.NOTIF_TRUST_REQUEST_MULTIPLE -> {
+                mBinding?.conversationFilters?.check(R.id.filter_all)
                 expandPendingView()
             }
 
@@ -666,6 +708,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
     companion object {
         private val TAG = HomeFragment::class.simpleName!!
+        private const val STATE_CONVERSATION_FILTER = "conversation_filter"
     }
 
 }
