@@ -417,6 +417,21 @@
     </style>
 
 
+    <style name="Widget.Jami.ConversationFilter" parent="Widget.Material3.Chip.Filter">
+        <item name="checkedIconVisible">false</item>
+        <item name="chipIconVisible">true</item>
+        <item name="chipIconSize">18dp</item>
+        <item name="chipIconTint">@color/conversation_filter_text</item>
+        <item name="chipStartPadding">10dp</item>
+        <item name="chipEndPadding">10dp</item>
+        <item name="textEndPadding">0dp</item>
+        <item name="chipBackgroundColor">@color/conversation_filter_background</item>
+        <item name="chipStrokeColor">?attr/colorOutlineVariant</item>
+        <item name="android:textColor">@color/conversation_filter_text</item>
+        <item name="ensureMinTouchTargetSize">true</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Material3.Corner.Full</item>
+    </style>
+
     <style name="Widget.Jami.TextInputLayout" parent="Widget.Material3.TextInputLayout.FilledBox">
         <item name="boxStrokeWidth">0dp</item>
         <item name="boxStrokeWidthFocused">0dp</item>
