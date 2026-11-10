@@ -293,6 +293,9 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="scan_qr">Scan QR Code</string>
     <string name="qr_code">QR Code</string>
     <string name="qr_code_not_contact">Not a Jami contact QR code</string>
+    <string name="conversation_filter_all">All</string>
+    <string name="conversation_filter_groups">Groups</string>
+    <string name="conversation_filter_feeds">Feeds</string>
     <string name="new_group">New group</string>
     <string name="new_feed">New Feed</string>
     <string name="feed_creation_hint">A dedicated space for sharing announcements and updates.</string>

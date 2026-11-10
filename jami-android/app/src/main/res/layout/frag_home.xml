@@ -51,11 +51,65 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                 android:id="@+id/search_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_small"
                 android:backgroundTint="@color/searchbar_color"
                 android:hint="@string/searchbar_hint"
                 app:autoShowKeyboard="true"
                 app:navigationContentDescription="@string/searchbar_navigation_account"
                 app:navigationIcon="@android:color/transparent" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_small"
+                android:clipToPadding="false"
+                android:paddingStart="@dimen/padding_large"
+                android:paddingEnd="@dimen/padding_large"
+                android:scrollbars="none">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/conversation_filters"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:chipSpacingHorizontal="4dp"
+                    app:selectionRequired="true"
+                    app:singleLine="true"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/filter_all"
+                        style="@style/Widget.Jami.ConversationFilter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/conversation_filter_all"
+                        app:chipIcon="@drawable/baseline_chat_24" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/filter_contacts"
+                        style="@style/Widget.Jami.ConversationFilter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tv_contact_row_header"
+                        app:chipIcon="@drawable/outline_person_24" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/filter_groups"
+                        style="@style/Widget.Jami.ConversationFilter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/conversation_filter_groups"
+                        app:chipIcon="@drawable/outline_group_24" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/filter_feeds"
+                        style="@style/Widget.Jami.ConversationFilter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/conversation_filter_feeds"
+                        app:chipIcon="@drawable/ic_feed" />
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
 
             <!-- Donation card -->
             <include
