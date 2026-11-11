@@ -160,7 +160,6 @@ configurations {
 dependencies {
     implementation(project(":libjamiclient"))
     implementation(libs.kotlin.stdlib)
-    testImplementation(libs.junit)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
@@ -207,7 +206,6 @@ dependencies {
     testImplementation(libs.robolectric)
     testImplementation(libs.hilt.android.testing)
     testImplementation(libs.mockito.core)
-    kspTest(libs.hilt.android.compiler)
 
     // Native integration tests
     androidTestImplementation(libs.androidx.test.ext.junit.ktx)
