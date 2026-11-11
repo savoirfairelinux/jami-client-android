@@ -109,19 +109,23 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
-    <style name="InvitationCardTheme" parent="Widget.Material3.CardView.Elevated">
-        <item name="android:theme">@style/InvitationCardThemeOverlay</item>
+    <style name="TextAppearance.Jami.PendingTitle" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:fontFamily">@font/ubuntu_medium</item>
     </style>
 
-    <style name="InvitationCardThemeOverlay" parent="@style/Theme.Material3Expressive.Dark">
+    <style name="TextAppearance.Jami.PendingSupporting" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:fontFamily">@font/ubuntu_regular</item>
+    </style>
 
-        <item name="colorPrimary">@color/color_secondary</item>
-        <item name="android:colorBackground">@color/invitation_card_background_color</item>
-        <item name="colorSecondary">@color/invitation_card_badge_color</item>
-        <item name="colorSurface">@color/color_primary_dark</item>
-        <item name="colorContainer">@color/color_secondary</item>
-        <item name="colorOnPrimary">@color/invitation_card_text_color</item>
-        <item name="colorOnSurface">@color/invitation_card_on_surface_text_color</item>
+    <style name="Widget.Jami.PendingCount" parent="">
+        <item name="android:background">@drawable/background_pending_accent</item>
+        <item name="android:fontFamily">@font/ubuntu_medium</item>
+        <item name="android:gravity">center</item>
+        <item name="android:minWidth">28dp</item>
+        <item name="android:minHeight">28dp</item>
+        <item name="android:paddingHorizontal">@dimen/padding_small</item>
+        <item name="android:textAppearance">@style/TextAppearance.Material3.LabelMedium</item>
+        <item name="android:textColor">?attr/colorOnPrimaryContainer</item>
     </style>
 
     <!-- Dialog -->
@@ -192,12 +196,6 @@
         <!--        <item name="iconPadding">8dp</item>-->
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">16dp</item>
-    </style>
-
-    <style name="InvitationCardToolbarTitleStyle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textSize">15sp</item>
-        <item name="android:textColor">@color/invitation_card_text_color</item>
-        <item name="android:fontFamily">@font/ubuntu_regular</item>
     </style>
 
     <style name="TextAppearance.AppTheme.MainActionButton" parent="TextAppearance.Material3.LabelLarge">
