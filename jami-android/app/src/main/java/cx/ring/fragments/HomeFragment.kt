@@ -26,7 +26,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.accessibility.AccessibilityManager
-import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.content.res.AppCompatResources
@@ -40,15 +39,18 @@ import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.ChangeBounds
 import androidx.transition.Fade
-import androidx.transition.Slide
 import androidx.transition.TransitionManager
+import androidx.transition.TransitionSet
+import com.google.android.material.R as MaterialR
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.Behavior.DragCallback
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.motion.MotionUtils
 import cx.ring.R
 import cx.ring.account.AccountWizardActivity
 import cx.ring.adapters.SmartListAdapter
@@ -80,6 +82,30 @@ import cx.ring.utils.ActionHelper.openJamiDonateWebPage
 import io.reactivex.rxjava3.disposables.Disposable
 import net.jami.model.Uri
 import net.jami.services.NotificationService
+
+internal fun beginPendingViewTransition(root: ViewGroup) {
+    TransitionManager.endTransitions(root)
+    root.findViewById<ViewGroup>(R.id.app_bar)?.let(TransitionManager::endTransitions)
+    val context = root.context
+    val transition = TransitionSet().apply {
+        ordering = TransitionSet.ORDERING_SEQUENTIAL
+        interpolator = MotionUtils.resolveThemeInterpolator(
+            context, MaterialR.attr.motionEasingStandardInterpolator, FastOutSlowInInterpolator()
+        )
+        // Hide outgoing content before its space is reclaimed by the filters and list.
+        addTransition(Fade(Fade.OUT).apply {
+            duration = MotionUtils.resolveThemeDuration(context, MaterialR.attr.motionDurationShort1, 50).toLong()
+        })
+        addTransition(ChangeBounds().apply {
+            duration = MotionUtils.resolveThemeDuration(context, MaterialR.attr.motionDurationShort3, 150).toLong()
+        })
+        addTransition(Fade(Fade.IN).apply {
+            duration = MotionUtils.resolveThemeDuration(context, MaterialR.attr.motionDurationShort2, 100).toLong()
+        })
+        excludeChildren(RecyclerView::class.java, true)
+    }
+    TransitionManager.beginDelayedTransition(root, transition)
+}
 
 @AndroidEntryPoint
 class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
@@ -218,11 +244,13 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
         // Update padding of the list depending on the AppBarLayout height
         appBar.addOnLayoutChangeListener { _, _, top, _, bottom, _, _, _, _ ->
-            mSmartListFragment?.getRecyclerView()?.setPadding(
+            if (fragmentContainer.isVisible) {
+                mSmartListFragment?.getRecyclerView()?.setPadding(
                     0,
                     appBar.height - DeviceUtils.getStatusBarHeight(requireContext()),
                     0, 0
-            )
+                )
+            }
         }
 
         // Make the appBarLayout not going under the status bar.
@@ -383,14 +411,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         pendingAdapter?.update(pendingRequests)
         binding.invitationCard.pendingToolbar.setTitle(pendingTitle(pendingFeeds))
 
-        // Transitions to animate the changes
-        // Make the search bar slide down
-        TransitionManager.beginDelayedTransition(binding.searchBar, Slide())
-        // Make the invitation card expand.
-        TransitionManager.beginDelayedTransition(
-            binding.invitationCard.invitationGroup,
-            ChangeBounds().setInterpolator(DecelerateInterpolator())
-        )
+        beginPendingViewTransition(binding.root)
 
         // Make the invitation card take all the height.
         binding.appBar.updateLayoutParams {
@@ -431,22 +452,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     fun collapsePendingView() {
         val binding = mBinding ?: return
 
-        // Animate back to search
-        // Make the search bar slide up
-        TransitionManager.beginDelayedTransition(
-            binding.searchBar,
-            Slide().setInterpolator(DecelerateInterpolator())
-        )
-        // Make the invitation card collapse.
-        TransitionManager.beginDelayedTransition(
-            binding.appBar,
-            ChangeBounds().setInterpolator(DecelerateInterpolator())
-        )
-        // Make the invitation card text fade in.
-        TransitionManager.beginDelayedTransition(
-            binding.invitationCard.invitationSummary,
-            Fade()
-        )
+        beginPendingViewTransition(binding.root)
 
         binding.appBar.updatePadding(bottom = 0)
 
@@ -533,6 +539,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     }
 
     override fun onDestroyView() {
+        mBinding?.root?.let(TransitionManager::endTransitions)
         super.onDestroyView()
         mSmartListFragment = null
         pendingAdapter = null
