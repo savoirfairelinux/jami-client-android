@@ -59,6 +59,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                 app:navigationIcon="@android:color/transparent" />
 
             <HorizontalScrollView
+                android:id="@+id/conversation_filter_scroll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/padding_small"
