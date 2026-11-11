@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea235463_798a03ac",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/HomeFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-11-11T21:19:35Z",
+      "side": 1,
+      "message": "Not a current defect. The single Home layout guarantees a LinearLayout parent; weight is intentional.",
+      "parentUuid": "50e1241a_385fcf14",
+      "revId": "a5bb9a2900885802dfb9fc5c56f8d6f3df69c2ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "df985f8b_65ab0b98",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-11-11T20:37:08Z",
       "side": 1,
       "message": "[error] Line 120: 🔴 `parent\u003d\"\"` is invalid for a style and can break AAPT resource compilation. Remove the `parent` attribute entirely (or set a real parent style) for `Widget.Jami.PendingCount` to restore a valid resources build.",
+      "revId": "a5bb9a2900885802dfb9fc5c56f8d6f3df69c2ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b58059cd_a7cf2221",
+        "filename": "jami-android/app/src/main/res/values/styles.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-11-11T21:19:35Z",
+      "side": 1,
+      "message": "Wrong. It validly disables implicit style inheritance; AAPT passes.",
+      "parentUuid": "df985f8b_65ab0b98",
       "revId": "a5bb9a2900885802dfb9fc5c56f8d6f3df69c2ab",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
