@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86d9d404_bd1810cb",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/HomeFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-11T20:34:47Z",
+      "side": 1,
+      "message": "[error] Line 94: 🔴 The new transition uses `MaterialR.attr.motionEasingStandardInterpolator` and `motionDurationShort1/2/3` directly. If the project’s Material Components version does not expose these token attrs, this is a compile-time break (consistent with the failing CI thread). Please switch to attrs/resources already guaranteed by this branch (or app-defined compat attrs) and keep fallback values only for runtime resolution.",
+      "revId": "349deb82f5f6ea9eecb4cb3e63346facca449077",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86b734b4_c4a303e4",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/HomeFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-11T20:34:47Z",
+      "side": 1,
+      "message": "[warning] Line 103: 🟡 `beginDelayedTransition(binding.root, transition)` applies a sequential fade+resize+fade across the entire fragment root. That broad scope can cause extra relayout/invalidations and visible jank on lower-end devices. Narrow the transition targets to the specific containers involved in the pending/search swap (or explicitly exclude unaffected subtrees) to keep the animation cost bounded.",
+      "revId": "349deb82f5f6ea9eecb4cb3e63346facca449077",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
