@@ -67,4 +67,42 @@ class LifecycleDatesTest {
         assertEquals(1700000100123L, replacement.joinedDate.blockingFirst())
         assertNull(contact.removedDate)
     }
+
+    @Test
+    fun pendingRequestsKeepReceivedDateOrderBeforeAndAfterOpening() {
+        val account = Account("account", emptyMap(), emptyList(),
+            mapOf(ConfigKey.ACCOUNT_REGISTRATION_STATUS.key to "REGISTERED")).apply { setHistoryLoaded() }
+        val contact = Uri.fromId("a".repeat(40))
+        val group = Uri(Uri.SWARM_SCHEME, "group")
+        val feed = Uri(Uri.SWARM_SCHEME, "feed")
+        account.addRequest(TrustRequest("account", contact, 1000L, contact, mode = Conversation.Mode.OneToOne))
+        account.addRequest(TrustRequest("account", Uri.fromId("b".repeat(40)), 2000L, group, mode = Conversation.Mode.InvitesOnly))
+        account.addRequest(TrustRequest("account", Uri.fromId("c".repeat(40)), 3000L, feed, mode = Conversation.Mode.Feed))
+        val pending = account.getPendingSubject().test()
+        val expected = listOf(feed, group, contact)
+
+        assertEquals(expected, pending.values().last().map { it.uri })
+        for (uri in listOf(contact, group, feed)) {
+            account.getByUri(uri)!!.sortedHistory.blockingGet()
+            assertEquals("After opening $uri", expected, pending.values().last().map { it.uri })
+        }
+        pending.dispose()
+    }
+
+    @Test
+    fun pendingRequestsWithEqualDatesKeepADeterministicOrderAfterOpening() {
+        val account = Account("account", emptyMap(), emptyList(),
+            mapOf(ConfigKey.ACCOUNT_REGISTRATION_STATUS.key to "REGISTERED")).apply { setHistoryLoaded() }
+        val first = Uri(Uri.SWARM_SCHEME, "a")
+        val second = Uri(Uri.SWARM_SCHEME, "b")
+        account.addRequest(TrustRequest("account", Uri.fromId("a".repeat(40)), 1000L, second, mode = Conversation.Mode.InvitesOnly))
+        account.addRequest(TrustRequest("account", Uri.fromId("a".repeat(40)), 1000L, first, mode = Conversation.Mode.InvitesOnly))
+        val pending = account.getPendingSubject().test()
+        val expected = listOf(first, second)
+
+        assertEquals(expected, pending.values().last().map { it.uri })
+        account.getByUri(second)!!.sortedHistory.blockingGet()
+        assertEquals(expected, pending.values().last().map { it.uri })
+        pending.dispose()
+    }
 }
