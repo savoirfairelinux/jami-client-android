@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e28ccb2d_de3405d6",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/HomeFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-11-11T21:20:26Z",
+      "side": 1,
+      "message": "Material 1.14.0 provides them; compilation passes.",
+      "parentUuid": "86d9d404_bd1810cb",
+      "revId": "349deb82f5f6ea9eecb4cb3e63346facca449077",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "86b734b4_c4a303e4",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-11-11T20:34:47Z",
       "side": 1,
       "message": "[warning] Line 103: 🟡 `beginDelayedTransition(binding.root, transition)` applies a sequential fade+resize+fade across the entire fragment root. That broad scope can cause extra relayout/invalidations and visible jank on lower-end devices. Narrow the transition targets to the specific containers involved in the pending/search swap (or explicitly exclude unaffected subtrees) to keep the animation cost bounded.",
+      "revId": "349deb82f5f6ea9eecb4cb3e63346facca449077",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "21ff6736_3e146175",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/HomeFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-11-11T21:20:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86b734b4_c4a303e4",
       "revId": "349deb82f5f6ea9eecb4cb3e63346facca449077",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
