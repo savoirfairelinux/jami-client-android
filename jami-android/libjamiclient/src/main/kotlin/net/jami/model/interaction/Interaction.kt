@@ -213,7 +213,7 @@ open class Interaction {
         historySubject.onNext(ArrayList(history))
     }
 
-    fun updateParent(parentId: String) {
+    fun updateParent(parentId: String?) {
         this.parentId = parentId
     }
 
