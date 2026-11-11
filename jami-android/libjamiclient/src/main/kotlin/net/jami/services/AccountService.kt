@@ -1779,8 +1779,10 @@ class AccountService(
     }
 
     fun conversationRequestDeclined(accountId: String, conversationId: String) {
-        Log.d(TAG, "conversation request for $conversationId is declined")
-        getAccount(accountId)?.removeRequest(Uri(Uri.SWARM_SCHEME, conversationId))
+        conversationCallbacks.dispatchAndClose(accountId, conversationId) {
+            Log.d(TAG, "conversation request for $conversationId is declined")
+            getAccount(accountId)?.removeRequest(Uri(Uri.SWARM_SCHEME, conversationId))
+        }
     }
 
     private fun parseConversationMode(
@@ -1798,6 +1800,12 @@ class AccountService(
     }
 
     fun conversationRequestReceived(accountId: String, conversationId: String, metadata: Map<String, String>) {
+        conversationCallbacks.dispatch(accountId, conversationId) {
+            conversationRequestReceivedNow(accountId, conversationId, metadata)
+        }
+    }
+
+    private fun conversationRequestReceivedNow(accountId: String, conversationId: String, metadata: Map<String, String>) {
         Log.w(TAG, "ConversationCallback: conversationRequestReceived $accountId/$conversationId ${metadata.size}")
         val account = getAccount(accountId)
         if (account == null || conversationId.isEmpty()) {

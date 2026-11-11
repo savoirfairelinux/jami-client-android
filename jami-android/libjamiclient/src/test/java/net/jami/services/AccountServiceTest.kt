@@ -1,16 +1,23 @@
 package net.jami.services
 
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.plugins.RxJavaPlugins
+import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.schedulers.TestScheduler
 import net.jami.daemon.JamiService
+import net.jami.daemon.StringMap
 import net.jami.daemon.StringVect
+import net.jami.daemon.VectMap
 import net.jami.model.Account
 import net.jami.model.AccountConfig
 import net.jami.model.AccountDevice
 import net.jami.model.ConfigKey
 import net.jami.model.Conversation
 import net.jami.model.MemberRole
+import net.jami.model.Profile
 import net.jami.model.TrustRequest
 import net.jami.model.Uri
+import net.jami.smartlist.ConversationFilter
 import net.jami.model.interaction.ContactEvent
 import net.jami.model.interaction.DataTransfer
 import net.jami.model.interaction.Interaction
@@ -19,9 +26,12 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertThrows
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.mockito.MockedStatic
 import org.mockito.ArgumentMatchers.any
+import org.mockito.ArgumentMatchers.anyMap
 import org.mockito.Mockito.doAnswer
 import org.mockito.Mockito.doReturn
 import org.mockito.Mockito.mock
@@ -41,6 +51,7 @@ class AccountServiceTest {
     @Before
     fun setUp() {
         Log.injectLogService(mock(LogService::class.java))
+        RxJavaPlugins.setComputationSchedulerHandler { Schedulers.trampoline() }
         executor = mock(ScheduledExecutorService::class.java)
         doAnswer {
             it.getArgument<Runnable>(0).run()
@@ -49,12 +60,30 @@ class AccountServiceTest {
         doAnswer {
             FutureTask(it.getArgument<Callable<Any?>>(0)).apply { run() }
         }.`when`(executor).submit(any(Callable::class.java))
-        service = spy(AccountService(
+        service = createService()
+    }
+
+    @After
+    fun tearDown() {
+        RxJavaPlugins.reset()
+    }
+
+    private fun createService(): AccountService {
+        val profiles = mock(VCardService::class.java)
+        doReturn(Profile.EMPTY_PROFILE_SINGLE).`when`(profiles).loadConversationProfile(anyMap())
+        return spy(AccountService(
             executor,
             mock(HistoryService::class.java),
             mock(DeviceRuntimeService::class.java),
-            mock(VCardService::class.java)
+            profiles
         ))
+    }
+
+    private fun queueConversationCallbacks(): TestScheduler {
+        val scheduler = TestScheduler()
+        RxJavaPlugins.setComputationSchedulerHandler { scheduler }
+        service = createService()
+        return scheduler
     }
 
     @Test
@@ -402,5 +431,97 @@ class AccountServiceTest {
             assertEquals(expected, request.requestMode)
             assertEquals(expected, request.request!!.mode)
         }
+    }
+
+    @Test
+    fun leftFeedBecomesJoinableOnlyAfterItsSubscribedRowIsRemoved() {
+        val callbacks = queueConversationCallbacks()
+        val account = Account("account", emptyMap(), emptyList(),
+            mapOf(ConfigKey.ACCOUNT_REGISTRATION_STATUS.key to "REGISTERED")).apply { setHistoryLoaded() }
+        val feed = account.newSwarm("feed", Conversation.Mode.Feed)
+        account.conversationStarted(feed)
+        doReturn(account).`when`(service).getAccount("account")
+        val pending = account.getPendingSubject().map { it to account.getSwarm("feed") }.test()
+
+        service.conversationRemoved("account", "feed")
+        service.conversationRequestReceived("account", "feed", feedInvitation)
+
+        pending.assertValueCount(1)
+        callbacks.triggerActions()
+
+        val (requests, subscribed) = pending.values().last()
+        assertNull(subscribed)
+        val request = requests.single()
+        assertSame(request, account.getByUri(feed.uri))
+        assertEquals(Conversation.Mode.Request, request.mode.blockingFirst())
+        assertEquals(listOf(request), requests.filter(ConversationFilter.Feeds::matches))
+        assertEquals(emptyList<Conversation>(), requests.filter(ConversationFilter.Groups::matches))
+        assertEquals(1700000000000L, request.request!!.timestamp)
+        account.getConversationsSubject(true).test().assertValue(emptyList())
+        pending.dispose()
+    }
+
+    @Test
+    fun queuedReadinessCannotConsumeTheRetainedInvitationAndTheFeedCanRejoin() {
+        val callbacks = queueConversationCallbacks()
+        val account = Account("account", emptyMap(), emptyList(),
+            mapOf(ConfigKey.ACCOUNT_REGISTRATION_STATUS.key to "REGISTERED")).apply { setHistoryLoaded() }
+        val feed = account.newSwarm("feed", Conversation.Mode.Feed)
+        account.conversationStarted(feed)
+        doReturn(account).`when`(service).getAccount("account")
+        mockStatic(JamiService::class.java).use { daemon ->
+            stubReadyFeed(daemon, feed)
+
+            service.conversationReady("account", "feed")
+            service.conversationRemoved("account", "feed")
+            service.conversationRequestReceived("account", "feed", feedInvitation)
+            callbacks.triggerActions()
+
+            val invitation = account.getPending().single()
+            assertEquals(Conversation.Mode.Feed, invitation.effectiveMode)
+            service.acceptTrustRequest("account", invitation.uri)
+            daemon.verify { JamiService.acceptConversationRequest("account", "feed") }
+            stubReadyFeed(daemon, invitation)
+            service.conversationReady("account", "feed")
+            callbacks.triggerActions()
+
+            assertSame(invitation, account.getSwarm("feed"))
+            assertEquals(Conversation.Mode.Feed, invitation.mode.blockingFirst())
+            assertNull(invitation.request)
+            assertEquals(emptyList<Conversation>(), account.getPending().toList())
+            account.getConversationsSubject(true).test().assertValue(listOf(invitation))
+        }
+    }
+
+    @Test
+    fun dismissingAQueuedFeedInvitationDoesNotLeaveItJoinable() {
+        val callbacks = queueConversationCallbacks()
+        val account = Account("account", emptyMap(), emptyList(),
+            mapOf(ConfigKey.ACCOUNT_REGISTRATION_STATUS.key to "REGISTERED")).apply { setHistoryLoaded() }
+        doReturn(account).`when`(service).getAccount("account")
+
+        service.conversationRequestReceived("account", "feed", feedInvitation)
+        service.conversationRequestDeclined("account", "feed")
+        callbacks.triggerActions()
+
+        assertNull(account.getByUri(Uri(Uri.SWARM_SCHEME, "feed")))
+        account.getPendingSubject().test().assertValue(emptyList())
+    }
+
+    private val feedInvitation = mapOf(
+        "from" to "a".repeat(40), "received" to "1700000000", "mode" to "5"
+    )
+
+    private fun stubReadyFeed(daemon: MockedStatic<JamiService>, conversation: Conversation) {
+        val info = mock(StringMap::class.java)
+        doReturn(hashMapOf("mode" to "5")).`when`(info).toNativeFromUtf8()
+        val members = mock(VectMap::class.java)
+        doReturn(emptyList<StringMap>().iterator()).`when`(members).iterator()
+        daemon.`when`<StringMap> { JamiService.conversationInfos("account", "feed") }.thenReturn(info)
+        daemon.`when`<VectMap> { JamiService.getConversationMembers("account", "feed") }.thenReturn(members)
+        daemon.`when`<StringVect> { JamiService.getConversationPermissions("account", "feed") }
+            .thenReturn(mock(StringVect::class.java))
+        doReturn(Single.just(conversation)).`when`(service).loadMore(conversation, 8)
+        doReturn(Single.just(conversation)).`when`(service).loadMore(conversation, 2)
     }
 }

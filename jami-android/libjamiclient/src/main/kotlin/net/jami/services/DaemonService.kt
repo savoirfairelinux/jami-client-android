@@ -388,11 +388,15 @@ class DaemonService(
         }
 
         override fun conversationRequestReceived(accountId: String, conversationId: String, metadata: StringMap) {
-            mAccountService.conversationRequestReceived(accountId, conversationId, metadata.toNativeFromUtf8())
+            snapshotConversationCallback {
+                mAccountService.conversationRequestReceived(accountId, conversationId, metadata.toNativeFromUtf8())
+            }
         }
 
         override fun conversationRequestDeclined(accountId: String, conversationId: String) {
-            mAccountService.conversationRequestDeclined(accountId, conversationId)
+            snapshotConversationCallback {
+                mAccountService.conversationRequestDeclined(accountId, conversationId)
+            }
         }
 
         override fun conversationMemberEvent(accountId: String, conversationId: String, uri: String, event: Int) {
