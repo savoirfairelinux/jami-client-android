@@ -27,6 +27,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.accessibility.AccessibilityManager
 import android.view.inputmethod.InputMethodManager
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.content.res.AppCompatResources
@@ -55,6 +56,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.motion.MotionUtils
 import cx.ring.R
 import cx.ring.account.AccountWizardActivity
+import cx.ring.adapters.PendingRequestAdapter
 import cx.ring.adapters.SmartListAdapter
 import cx.ring.client.AccountAdapter
 import cx.ring.client.HomeActivity
@@ -87,11 +89,25 @@ import io.reactivex.rxjava3.disposables.Disposable
 import net.jami.model.Uri
 import net.jami.services.NotificationService
 
-internal fun beginPendingViewTransition(binding: FragHomeBinding) {
+internal fun beginPendingViewTransition(binding: FragHomeBinding, expanding: Boolean) {
     val root = binding.root
     TransitionManager.endTransitions(root)
     TransitionManager.endTransitions(binding.appBar)
     val context = root.context
+    val resize = ChangeBounds().apply {
+        duration = MotionUtils.resolveThemeDuration(
+            context,
+            if (expanding) MaterialR.attr.motionDurationMedium1 else MaterialR.attr.motionDurationShort3,
+            if (expanding) 250 else 150
+        ).toLong()
+    }
+    val appear = Fade(Fade.IN).apply {
+        duration = MotionUtils.resolveThemeDuration(
+            context,
+            if (expanding) MaterialR.attr.motionDurationShort3 else MaterialR.attr.motionDurationShort2,
+            if (expanding) 150 else 100
+        ).toLong()
+    }
     val transition = TransitionSet().apply {
         ordering = TransitionSet.ORDERING_SEQUENTIAL
         interpolator = MotionUtils.resolveThemeInterpolator(
@@ -101,12 +117,18 @@ internal fun beginPendingViewTransition(binding: FragHomeBinding) {
         addTransition(Fade(Fade.OUT).apply {
             duration = MotionUtils.resolveThemeDuration(context, MaterialR.attr.motionDurationShort1, 50).toLong()
         })
-        addTransition(ChangeBounds().apply {
-            duration = MotionUtils.resolveThemeDuration(context, MaterialR.attr.motionDurationShort3, 150).toLong()
-        })
-        addTransition(Fade(Fade.IN).apply {
-            duration = MotionUtils.resolveThemeDuration(context, MaterialR.attr.motionDurationShort2, 100).toLong()
-        })
+        if (expanding) {
+            // Reveal the rows during the expansion's tail instead of pausing on an empty card.
+            appear.startDelay = (resize.duration - appear.duration).coerceAtLeast(0L)
+            addTransition(TransitionSet().apply {
+                ordering = TransitionSet.ORDERING_TOGETHER
+                addTransition(resize)
+                addTransition(appear)
+            })
+        } else {
+            addTransition(resize)
+            addTransition(appear)
+        }
         // Keep the shared scene root without capturing conversation rows or search contents.
         listOf(
             binding.appBar,
@@ -139,7 +161,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     private var mSearchView: SearchView? = null
     private var searchDisposable: Disposable? = null
     private var searchAdapter: SmartListAdapter? = null
-    private var pendingAdapter: SmartListAdapter? = null
+    private var pendingAdapter: PendingRequestAdapter? = null
     private var pendingRequests = emptyList<Conversation>()
     private var pendingFeeds = false
     private val conversationFilter = BehaviorSubject.createDefault<ConversationFilter>(ConversationFilter.All)
@@ -356,7 +378,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         }
 
         // Setup invitation card adapter.
-        invitationCard.pendingList.adapter = SmartListAdapter(null,
+        invitationCard.pendingList.adapter = PendingRequestAdapter(mConversationFacade,
                 object : SmartListViewHolder.SmartListListeners {
                     override fun onItemClick(item: Conversation) {
                         (requireActivity() as HomeActivity).startConversation(item.accountId, item.uri)
@@ -366,11 +388,11 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
                         displayConversationRequestDialog(item)
                     }
                 },
-                mConversationFacade,
                 mDisposable
         ).apply { pendingAdapter = this }
 
-        invitationCard.invitationGroup.setOnClickListener {
+        invitationCard.invitationGroup.clipToOutline = true
+        invitationCard.invitationSummary.setOnClickListener {
             expandPendingView()
         }
 
@@ -463,20 +485,22 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         } else if (conversationFilter.value == ConversationFilter.Feeds || conversationFilter.value is ConversationFilter.Label) {
             binding.conversationFilterBar.conversationFilters.check(R.id.filter_all)
         }
-        pendingAdapter?.update(pendingRequests)
+        pendingAdapter?.submitList(pendingRequests.toList())
         binding.invitationCard.pendingToolbar.setTitle(pendingTitle(pendingFeeds))
 
-        beginPendingViewTransition(binding)
+        beginPendingViewTransition(binding, expanding = true)
 
         // Make the invitation card take all the height.
         binding.appBar.updateLayoutParams {
             height = ViewGroup.LayoutParams.MATCH_PARENT
         }
 
-        // Adapt the margins of the invitation card.
-        requireContext().resources.getDimensionPixelSize(R.dimen.bottom_sheet_radius).let {
-            (binding.invitationCard.invitationGroup.layoutParams as ViewGroup.MarginLayoutParams)
-                .setMargins(it, it, it, 2*it)
+        // Leave room for the category chips above the expanded list.
+        binding.invitationCard.invitationGroup.updateLayoutParams<LinearLayout.LayoutParams> {
+            height = 0
+            weight = 1f
+            val margin = resources.getDimensionPixelSize(R.dimen.padding_large)
+            setMargins(margin, resources.getDimensionPixelSize(R.dimen.padding_small), margin, margin)
         }
 
         // Enable invitation pending list scroll (remove side effect with appbar behavior).
@@ -508,7 +532,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     fun collapsePendingView() {
         val binding = mBinding ?: return
 
-        beginPendingViewTransition(binding)
+        beginPendingViewTransition(binding, expanding = false)
 
         binding.appBar.updatePadding(bottom = 0)
 
@@ -517,10 +541,11 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             height = ViewGroup.LayoutParams.WRAP_CONTENT
         }
 
-        // Adapt the margins of the invitation card.
-        requireContext().resources.getDimensionPixelSize(R.dimen.bottom_sheet_radius).let {
-            (binding.invitationCard.invitationGroup.layoutParams as ViewGroup.MarginLayoutParams)
-                .setMargins(it, 0, it, 0)
+        binding.invitationCard.invitationGroup.updateLayoutParams<LinearLayout.LayoutParams> {
+            height = ViewGroup.LayoutParams.WRAP_CONTENT
+            weight = 0f
+            val margin = resources.getDimensionPixelSize(R.dimen.padding_large)
+            setMargins(margin, 0, margin, 0)
         }
 
         disableAppBarScroll()
@@ -737,14 +762,15 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         }
         pendingRequests = requests
         pendingFeeds = isFeed
-        pendingAdapter?.update(requests)
+        pendingAdapter?.submitList(requests.toList())
         val hasRequests = requests.isNotEmpty()
         binding.invitationCard.apply {
             invitationGroup.isVisible = hasRequests
             invitationReceivedLabel.setText(pendingTitle(isFeed))
             invitationIcon.setImageResource(if (isFeed) R.drawable.ic_feed else R.drawable.new_invitation)
-            invitationIcon.imageTintList = if (isFeed) invitationReceivedLabel.textColors else null
+            invitationIcon.imageTintList = if (isFeed) invitationBadge.textColors else null
             invitationBadge.text = NumberFormat.getIntegerInstance().format(requests.size)
+            pendingCount.text = invitationBadge.text
             invitationReceivedTxt.text = previews.joinToString(", ") { it.title }
         }
         updateAppBarLayoutBottomPadding(hasRequests)
