@@ -243,21 +243,8 @@ class ConversationAdapter(
     @SuppressLint("NotifyDataSetChanged")
     fun updateDataset(list: MutableList<Interaction>) {
         Log.d(TAG, "updateDataset: list size=" + list.size)
-        when {
-            mInteractions.isEmpty() -> {
-                mInteractions = list
-                notifyDataSetChanged()
-            }
-            list.size > mInteractions.size -> {
-                val oldSize = mInteractions.size
-                mInteractions = list
-                notifyItemRangeInserted(oldSize, list.size)
-            }
-            else -> {
-                mInteractions = list
-                notifyDataSetChanged()
-            }
-        }
+        mInteractions = list
+        notifyDataSetChanged()
     }
 
     fun getMessageFromPosition(position: Int): Interaction? =

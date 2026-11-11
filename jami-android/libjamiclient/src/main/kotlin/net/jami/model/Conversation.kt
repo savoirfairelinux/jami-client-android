@@ -707,6 +707,11 @@ class Conversation(
                 }
             }
         }
+        if (!added) {
+            // A merge can announce messages before reconnecting them to the loaded chain.
+            aggregateHistory.add(interaction)
+            newLeaf = true
+        }
         if (newLeaf) {
             if (isVisible) {
                 interaction.read()
@@ -715,9 +720,8 @@ class Conversation(
             if (interaction.type != Interaction.InteractionType.INVALID)
                 lastEvent = interaction
         }
-        if (!added) {
-            Log.e(TAG, "Unable to attach interaction $id with parent ${interaction.parentId}")
-        }
+        if (!added)
+            clearedSubject.onNext(ArrayList(aggregateHistory))
         mPendingMessages.remove(id)?.onSuccess(interaction)
     }
 
@@ -839,7 +843,7 @@ class Conversation(
     @Synchronized
     fun updateSwarmMessage(interaction: Interaction) {
         val existingInteraction = interaction.messageId?.let { getMessage(it) } ?: return
-        interaction.parentId?.let { existingInteraction.updateParent(it) }
+        existingInteraction.updateParent(interaction.parentId)
         existingInteraction.replaceEdits(interaction.history)
         existingInteraction.replaceReactions(interaction.reactions)
         existingInteraction.body = interaction.body
@@ -849,9 +853,26 @@ class Conversation(
             existingInteraction.transferStatus = Interaction.TransferStatus.FILE_REMOVED
         }
 
-        updatedElementSubject.onNext(Pair(existingInteraction, ElementStatus.UPDATE))
-        if (lastEvent == existingInteraction) {
-            lastEventSubject.onNext(existingInteraction)
+        val oldIndex = aggregateHistory.indexOf(existingInteraction)
+        val parentIndex = aggregateHistory.indexOfLast { it.messageId == existingInteraction.parentId }
+        val newIndex = when {
+            existingInteraction.parentId == null -> 0
+            parentIndex >= 0 -> parentIndex + if (oldIndex in 0..parentIndex) 0 else 1
+            oldIndex >= 0 -> oldIndex
+            else -> aggregateHistory.indexOfFirst { it.parentId == existingInteraction.messageId }
+                .takeIf { it >= 0 } ?: aggregateHistory.size
+        }
+        // Replay the whole moved tail, even when a child's parent ID did not change.
+        if (oldIndex != newIndex) {
+            if (oldIndex >= 0)
+                aggregateHistory.removeAt(oldIndex)
+            aggregateHistory.add(newIndex, existingInteraction)
+            lastEvent = aggregateHistory.lastOrNull { it.type != Interaction.InteractionType.INVALID }
+            clearedSubject.onNext(ArrayList(aggregateHistory))
+        } else {
+            updatedElementSubject.onNext(Pair(existingInteraction, ElementStatus.UPDATE))
+            if (lastEvent == existingInteraction)
+                lastEventSubject.onNext(existingInteraction)
         }
     }
 
