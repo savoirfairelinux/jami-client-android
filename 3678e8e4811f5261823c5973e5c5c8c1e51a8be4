@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "593ca165_69faf4c9",
+        "filename": "jami-android/app/src/main/java/cx/ring/utils/ActionHelper.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-11T17:52:13Z",
+      "side": 1,
+      "message": "[warning] Line 267: 🟡 For feed invitations, the error path in `launchAcceptInvitation` only logs and then exits, so tapping Join can become a no-op with no user feedback if `observeConversation(...).firstOrError()` fails. Add a fallback (e.g., use `conversation.title`/URI and still show the dialog) or surface an explicit error message so the action doesn’t silently fail.",
+      "revId": "3678e8e4811f5261823c5973e5c5c8c1e51a8be4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
