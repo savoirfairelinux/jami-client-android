@@ -149,7 +149,7 @@ class ConversationPresenter @Inject constructor(
                 if (req == null) {
                     view.switchToUnknownView()
                 } else {
-                    view.switchToIncomingTrustRequestView(c.uriTitle, req.mode)
+                    view.switchToIncomingTrustRequestView(if (c.isFeed()) c.title else c.uriTitle, req.mode)
                 }
             } else if (c.isSwarm || account.isContact(c.uri)) {
                 if ((c.mode == Conversation.Mode.OneToOne) && c.getContact()?.contact?.isBlocked == true) {

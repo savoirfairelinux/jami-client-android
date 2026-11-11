@@ -45,6 +45,7 @@ import net.jami.model.Contact
 import net.jami.model.Conversation
 import net.jami.model.Conversation.ConversationActionCallback
 import net.jami.model.Uri
+import net.jami.services.ConversationFacade
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.roundToInt
@@ -236,22 +237,35 @@ object ActionHelper {
     fun launchAcceptInvitation(
         context: Context,
         conversation: Conversation,
+        conversationFacade: ConversationFacade,
         callback: (conversation: Conversation) -> Unit,
     ): Disposable {
-        val contact = conversation.contact
-            ?: return Disposable.empty()
-        return (contact.username ?: Single.just(""))
-            .map { name -> name.takeIf { it.isNotEmpty() } ?: contact.uri.uri }
-            .onErrorReturn { contact.uri.uri }
+        val isFeed = conversation.effectiveMode == Conversation.Mode.Feed
+        val name = if (isFeed) {
+            conversationFacade.observeConversation(conversation).map { it.title }.firstOrError()
+        } else {
+            val contact = conversation.contact ?: return Disposable.empty()
+            (contact.username ?: Single.just(""))
+                .map { name -> name.takeIf { it.isNotEmpty() } ?: contact.uri.uri }
+                .onErrorReturn { contact.uri.uri }
+        }
+        return name
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { displayName ->
+            .subscribe({ displayName ->
                 MaterialAlertDialogBuilder(context)
-                    .setTitle(R.string.accept_invitation)
-                    .setMessage(context.getString(R.string.accept_invitation_body, displayName))
-                    .setPositiveButton(android.R.string.ok) { _, _ -> callback(conversation) }
+                    .setTitle(if (isFeed) R.string.join_feed else R.string.accept_invitation)
+                    .setMessage(
+                        if (isFeed) context.getString(R.string.joinable_feed_message, displayName)
+                        else context.getString(R.string.accept_invitation_body, displayName)
+                    )
+                    .setPositiveButton(if (isFeed) R.string.join_feed else android.R.string.ok) { _, _ ->
+                        callback(conversation)
+                    }
                     .setNegativeButton(android.R.string.cancel) { _, _ -> }.show()
-            }
+            }, { error ->
+                Log.e(TAG, "Unable to load request details", error)
+            })
     }
 
     fun launchUnblockContactAction(
