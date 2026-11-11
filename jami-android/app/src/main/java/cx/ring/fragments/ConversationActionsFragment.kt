@@ -219,7 +219,8 @@ class ConversationActionsFragment : Fragment() {
                 else if (conversation.mode.blockingFirst() == Conversation.Mode.Request)
                     mDisposableBag.add(ActionHelper.launchAcceptInvitation(
                         context = requireContext(),
-                        conversation = conversation
+                        conversation = conversation,
+                        conversationFacade = mConversationFacade
                     ) {
                         mConversationFacade.acceptRequest(it)
                         val resultIntent = Intent()
@@ -328,7 +329,8 @@ class ConversationActionsFragment : Fragment() {
                 if (conversation.mode.blockingFirst() == Conversation.Mode.Request)
                     mDisposableBag.add(ActionHelper.launchAcceptInvitation(
                         context = requireContext(),
-                        conversation = conversation
+                        conversation = conversation,
+                        conversationFacade = mConversationFacade
                     ) {
                         mConversationFacade.acceptRequest(it)
                         val resultIntent = Intent()
@@ -353,7 +355,9 @@ class ConversationActionsFragment : Fragment() {
             }
 
             if (conversation.mode.blockingFirst() == Conversation.Mode.Request) {
-                conversationDelete.text = resources.getString(R.string.accept_invitation)
+                conversationDelete.setText(
+                    if (conversationMode == Conversation.Mode.Feed) R.string.join_feed else R.string.accept_invitation
+                )
                 conversationActionsPanel.visibility = View.GONE
             }
 
