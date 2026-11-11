@@ -71,6 +71,7 @@ import net.jami.services.ConversationFacade
 import net.jami.smartlist.ConversationFilter
 import net.jami.smartlist.ConversationItemViewModel
 import java.util.concurrent.TimeUnit
+import java.text.NumberFormat
 import javax.inject.Inject
 import com.google.android.material.search.SearchView.TransitionState
 import com.google.android.material.shape.MaterialShapeDrawable
@@ -91,6 +92,8 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     private var searchDisposable: Disposable? = null
     private var searchAdapter: SmartListAdapter? = null
     private var pendingAdapter: SmartListAdapter? = null
+    private var pendingRequests = emptyList<Conversation>()
+    private var pendingFeeds = false
     private val conversationFilter = BehaviorSubject.createDefault(ConversationFilter.All)
     private val querySubject = BehaviorSubject.createDefault("")
     private val debouncedQuery = querySubject.debounce { item ->
@@ -306,7 +309,6 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
                 mDisposable
         ).apply { pendingAdapter = this }
 
-        // Setup invitation card
         invitationCard.invitationGroup.setOnClickListener {
             expandPendingView()
         }
@@ -316,6 +318,9 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
         mBinding = this
     }.root
+
+    private fun pendingTitle(isFeed: Boolean): Int =
+        if (isFeed) R.string.joinable_feeds else R.string.invitation_card_title
 
     private fun displayConversationRequestDialog(conversation: Conversation) {
         val request = conversation.request ?: return
@@ -332,7 +337,16 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
                 }.show()
         else
             MaterialAlertDialogBuilder(requireContext())
-                .setItems(R.array.swarm_request_group_actions) { _, which ->
+                .apply {
+                    if (conversation.effectiveMode == Conversation.Mode.Feed) {
+                        setTitle(R.string.joinable_feeds)
+                        setIcon(R.drawable.ic_feed)
+                    }
+                }
+                .setItems(
+                    if (conversation.effectiveMode == Conversation.Mode.Feed) R.array.feed_request_actions
+                    else R.array.swarm_request_group_actions
+                ) { _, which ->
                     when (which) {
                         0 -> mConversationFacade.acceptRequest(conversation)
                         1 -> mConversationFacade
@@ -361,6 +375,13 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
     private fun expandPendingView() {
         val binding = mBinding ?: return
+        if (pendingFeeds) {
+            binding.conversationFilters.check(R.id.filter_feeds)
+        } else if (conversationFilter.value == ConversationFilter.Feeds) {
+            binding.conversationFilters.check(R.id.filter_all)
+        }
+        pendingAdapter?.update(pendingRequests)
+        binding.invitationCard.pendingToolbar.setTitle(pendingTitle(pendingFeeds))
 
         // Transitions to animate the changes
         // Make the search bar slide down
@@ -391,6 +412,10 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         binding.invitationCard.invitationSummary.isVisible = false
         binding.fragmentContainer.isVisible = false
         binding.newSwarmFab.isVisible = false
+        binding.filterAll.isVisible = !pendingFeeds
+        binding.filterContacts.isVisible = !pendingFeeds
+        binding.filterGroups.isVisible = !pendingFeeds
+        binding.filterFeeds.isVisible = pendingFeeds
 
         // Display pending list.
         binding.invitationCard.pendingListGroup.isVisible = true
@@ -444,6 +469,10 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         binding.invitationCard.invitationSummary.isVisible = true
         binding.newSwarmFab.isVisible = true
         binding.fragmentContainer.isVisible = true
+        binding.filterAll.isVisible = true
+        binding.filterContacts.isVisible = true
+        binding.filterGroups.isVisible = true
+        binding.filterFeeds.isVisible = true
 
         // Hide pending list.
         binding.invitationCard.pendingListGroup.isVisible = false
@@ -507,6 +536,9 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         super.onDestroyView()
         mSmartListFragment = null
         pendingAdapter = null
+        pendingRequests = emptyList()
+        pendingFeeds = false
+        conversationBackPressedCallback.isEnabled = false
         searchAdapter = null
         mBinding = null
         mDisposable.clear()
@@ -526,29 +558,29 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             }
         )
 
-        // Subscribe on invitation pending list to show a badge counter
         mDisposable.add(mAccountService
             .currentAccountSubject
             .switchMap { account ->
                 Observable.combineLatest(
                     account.getPendingSubject(),
                     conversationFilter.distinctUntilChanged()
-                ) { list, filter -> list.filter(filter::matches) }
-                    .switchMap { list ->
-                        Log.w(TAG, "setBadge getPendingSubject ${list.size}")
-                        if (list.isEmpty()) Observable.just(Pair(emptyList(), emptyList()))
-                        else mConversationFacade.observeConversations(
-                            account, list.take(3), false
-                        ).map { Pair(it, list) }
+                ) { list, filter ->
+                    list.filter {
+                        filter.matches(it) &&
+                            (filter == ConversationFilter.Feeds || it.effectiveMode != Conversation.Mode.Feed)
+                    }
+                }
+                    .switchMap { requests ->
+                        val previews = if (requests.isEmpty()) {
+                            Observable.just(emptyList<ConversationItemViewModel>())
+                        } else {
+                            mConversationFacade.observeConversations(account, requests.take(3), false)
+                        }
+                        previews.map { Pair(requests, it) }.observeOn(DeviceUtils.uiScheduler)
                     }
             }
-            .observeOn(DeviceUtils.uiScheduler)
-            .subscribe { count ->
-                // Collapse pending view if there is no more pending invitations
-                if(count.first.isEmpty()) {
-                    collapsePendingView()
-                }
-                setInvitationBadge(count.second, count.first)
+            .subscribe { (requests, previews) ->
+                setPendingRequests(requests, previews)
             }
         )
 
@@ -603,19 +635,25 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         recyclerView.clipToPadding = enabled
     }
 
-    /**
-     * Set a badge to display how many invitations are pending.
-     */
-    private fun setInvitationBadge(conversations: List<Conversation>, snip: List<ConversationItemViewModel>) {
+    private fun setPendingRequests(requests: List<Conversation>, previews: List<ConversationItemViewModel>) {
         val binding = mBinding ?: return
-        pendingAdapter?.update(conversations)
-        val hasInvites = conversations.isNotEmpty()
-        binding.invitationCard.invitationGroup.isVisible = hasInvites
-        if (hasInvites) {
-            binding.invitationCard.invitationBadge.text = conversations.size.toString()
-            binding.invitationCard.invitationReceivedTxt.text = snip.joinToString(", ") { it.title }
+        val isFeed = requests.firstOrNull()?.effectiveMode == Conversation.Mode.Feed
+        if (conversationBackPressedCallback.isEnabled && (requests.isEmpty() || pendingFeeds != isFeed)) {
+            collapsePendingView()
         }
-        updateAppBarLayoutBottomPadding(hasInvites)
+        pendingRequests = requests
+        pendingFeeds = isFeed
+        pendingAdapter?.update(requests)
+        val hasRequests = requests.isNotEmpty()
+        binding.invitationCard.apply {
+            invitationGroup.isVisible = hasRequests
+            invitationReceivedLabel.setText(pendingTitle(isFeed))
+            invitationIcon.setImageResource(if (isFeed) R.drawable.ic_feed else R.drawable.new_invitation)
+            invitationIcon.imageTintList = if (isFeed) invitationReceivedLabel.textColors else null
+            invitationBadge.text = NumberFormat.getIntegerInstance().format(requests.size)
+            invitationReceivedTxt.text = previews.joinToString(", ") { it.title }
+        }
+        updateAppBarLayoutBottomPadding(hasRequests)
     }
 
     fun handleIntent(intent: Intent) {
@@ -636,8 +674,23 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             }
 
             NotificationService.NOTIF_TRUST_REQUEST_MULTIPLE -> {
-                mBinding?.conversationFilters?.check(R.id.filter_all)
-                expandPendingView()
+                mDisposable.add(mAccountService.currentAccountSubject
+                    .switchMap { it.getPendingSubject() }
+                    .firstOrError()
+                    .observeOn(DeviceUtils.uiScheduler)
+                    .subscribe({ list ->
+                        val (feeds, invitations) = list.partition { it.effectiveMode == Conversation.Mode.Feed }
+                        val isFeed = invitations.isEmpty()
+                        mBinding?.conversationFilters?.check(
+                            if (isFeed) R.id.filter_feeds else R.id.filter_all
+                        )
+                        pendingRequests = if (isFeed) feeds else invitations
+                        pendingFeeds = isFeed
+                        if (pendingRequests.isNotEmpty()) expandPendingView()
+                    }, { error ->
+                        Log.e(TAG, "Unable to open pending requests", error)
+                    })
+                )
             }
 
             else -> {}

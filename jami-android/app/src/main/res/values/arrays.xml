@@ -65,6 +65,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         <item>@string/accept_invitation</item>
         <item>@string/decline_invitation</item>
     </string-array>
+    <string-array name="feed_request_actions">
+        <item>@string/join_feed</item>
+        <item>@string/notif_dismiss</item>
+    </string-array>
 
     <string-array name="video_bitrates">
         <item>0</item>

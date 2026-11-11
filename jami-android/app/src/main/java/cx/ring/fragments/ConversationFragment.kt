@@ -1823,7 +1823,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             unknownContactPrompt.visibility = View.GONE
             trustRequestPrompt.visibility = View.VISIBLE
             btnBlock.isVisible = requestMode == Conversation.Mode.OneToOne
-            trustRequestMessage.text = getString(R.string.invitation_received_message, name)
+            val isFeed = requestMode == Conversation.Mode.Feed
+            btnAccept.setText(if (isFeed) R.string.join_feed else R.string.accept)
+            btnRefuse.setText(if (isFeed) R.string.notif_dismiss else R.string.decline)
+            trustRequestMessage.text = if (isFeed) getString(R.string.joinable_feed_message, name)
+                else getString(R.string.invitation_received_message, name)
             trustRequestMessage.visibility = View.VISIBLE
             currentBottomView = trustRequestPrompt
         }
