@@ -79,7 +79,14 @@ class Account(
         }
     }
 
-    private val pendingSubject: Observable<List<Conversation>> = getLatest(pendingMapSubject).map(::getSorted).replayingShare()
+    private val pendingSubject: Observable<List<Conversation>> = getLatest(pendingMapSubject).map { entries ->
+        // Request history is initialized lazily when opened.
+        entries.map { it as Pair<Conversation, Interaction> }
+            .sortedWith(compareByDescending<Pair<Conversation, Interaction>> {
+                it.first.request?.timestamp ?: it.second.timestamp
+            }.thenBy { it.first.uri.uri })
+            .map { it.first }
+    }.replayingShare()
 
     var historyLoader: Single<Account>? = null
     var loadedProfile: Single<Profile>? = null
