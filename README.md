@@ -125,6 +125,22 @@ reconnection. Concurrent edits use the daemon's last-writer-wins rule for this
 register. Metadata change signals update labels and filters without restarting
 the app. Removing and re-adding a contact retains its labels.
 
+## Feed resubscription
+
+When a follower leaves a Feed, it disappears from subscribed conversations and
+appears under **Joinable Feeds** in the **Feeds** filter. Open its existing request
+preview and choose **Join Feed** to resubscribe, or **Dismiss** to remove the
+invitation. Leaving does not automatically resubscribe or keep fetching Feed
+activity. Retained invitations are restored after restarting the app and
+synchronized with the account's other devices.
+
+This uses the daemon's ordinary conversation requests; Android does not create
+replacement invitations or maintain separate rejoin state. It requires daemon
+support for retained Feed invitations and peers supporting follower leave commits
+(see [ADR-013](daemon/doc/adr/ADR-013-retain-feed-invitations-after-leaving.md)).
+Older peers may reject the leave commit. Admin behavior, moderation, and ordinary
+conversation departures are unchanged.
+
 ## Backup and device transfer
 
 Android cloud backup is disabled by explicit data-extraction rules. Device-to-device
