@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18b9dbb1_ed218877",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-12T15:48:30Z",
+      "side": 1,
+      "message": "[warning] Line 245: 🟡 Replacing all update paths with `notifyDataSetChanged()` forces a full rebind for every history refresh and removes insert/move animations. For large or busy conversations this is avoidable UI work and can cause jank. Keep correctness for reorder snapshots, but switch to `DiffUtil`/`ListAdapter` (or targeted notify calls) to preserve performance.",
+      "revId": "e126d96fb3ffd312871c05127d2d31047d16c5da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e76cbe7_0a4fc81d",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Conversation.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-12T15:48:30Z",
+      "side": 1,
+      "message": "[error] Line 866: 🔴 In the `oldIndex !\u003d newIndex` branch, `lastEvent` is reassigned but `lastEventSubject` is never emitted. Consumers that rely on `lastEventSubject` can remain stale after a replay-driven reorder. Emit `lastEventSubject.onNext(lastEvent)` when `lastEvent` changes in this branch (or centralize last-event publication after both branches).",
+      "revId": "e126d96fb3ffd312871c05127d2d31047d16c5da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
