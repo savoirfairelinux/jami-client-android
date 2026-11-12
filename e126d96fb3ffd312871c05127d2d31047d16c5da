@@ -33,6 +33,24 @@
       "message": "[error] Line 866: 🔴 In the `oldIndex !\u003d newIndex` branch, `lastEvent` is reassigned but `lastEventSubject` is never emitted. Consumers that rely on `lastEventSubject` can remain stale after a replay-driven reorder. Emit `lastEventSubject.onNext(lastEvent)` when `lastEvent` changes in this branch (or centralize last-event publication after both branches).",
       "revId": "e126d96fb3ffd312871c05127d2d31047d16c5da",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df2f47af_aa627ea6",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Conversation.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-11-12T16:02:48Z",
+      "side": 1,
+      "message": "lastEvent  has a custom setter that already calls  lastEventSubject.onNext(e)  for non-null assignments. The assignment in the reorder branch invokes that setter, so publication is not missing. Adding an explicit  onNext()  here would duplicate the notification.",
+      "parentUuid": "6e76cbe7_0a4fc81d",
+      "revId": "e126d96fb3ffd312871c05127d2d31047d16c5da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
