@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fdd8eb9_16953962",
+        "filename": "jami-android/app/src/main/java/cx/ring/about/ui/AboutScreen.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-13T16:37:33Z",
+      "side": 1,
+      "message": "[warning] Line 160: 🟡 The license body text is hardcoded in English (`buildAnnotatedString { append(\"This software is provided...\") }`), which regresses localization and consistency with the previous XML (`@string/license`). Move the full sentence to string resources (with translatable entries) and style only the link part in Compose.",
+      "revId": "2d29a0d8c3b8d920a71cc0400ed42aea398655cb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96a26639_a00f6084",
+        "filename": "jami-android/app/src/test/java/cx/ring/about/AboutFragmentTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-13T16:37:33Z",
+      "side": 1,
+      "message": "[error] Line 40: 🔴 `FragmentTransaction.add(fragment, tag)` adds a non-UI fragment, so `fragment.view` is expected to stay null for a regular `Fragment`. This makes the test logically incorrect and potentially failing/flaky. Attach the fragment to a real container (e.g., `add(containerViewId, fragment, tag)`) or use `FragmentScenario.launchInContainer` so `onCreateView` is actually exercised.",
+      "revId": "2d29a0d8c3b8d920a71cc0400ed42aea398655cb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c612dd4f_9b6135b9",
+        "filename": "jami-android/app/src/test/java/cx/ring/about/AboutScreenshotTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-13T16:37:33Z",
+      "side": 1,
+      "message": "[warning] Line 22: 🟡 This test writes PNG files to `migration_artifacts/after_screenshots` but never asserts expected output, so it can pass even when rendering regresses. Convert it to an assertion-based screenshot/golden test (or at least assert key UI semantics) and avoid unconditional filesystem writes in standard unit tests to keep CI runs deterministic.",
+      "revId": "2d29a0d8c3b8d920a71cc0400ed42aea398655cb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
