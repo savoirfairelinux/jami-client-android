@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04921ba1_f6f6432f",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 12
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-13T16:36:28Z",
+      "side": 1,
+      "message": "[error] Line 412: 🔴 `continueThreadNavigation()` now force-unwraps `messageId` (`history.map { it.messageId!! }` and later `loaded.map { it.messageId!! }`). Legacy/invalid interactions can have `messageId \u003d\u003d null`, so opening or searching into threads can crash with NPE. Keep navigation null-safe by using a stable non-null key (`messageId ?: \"legacy:${id}\"`) or `mapNotNull`, and make the progress/exhaustion check independent from nullable IDs so null-id rows do not crash or falsely terminate navigation.",
+      "revId": "c5867d9ae821537b1bd553dff2353258b73970d7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
