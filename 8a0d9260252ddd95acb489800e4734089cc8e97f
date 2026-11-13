@@ -16,6 +16,24 @@
       "message": "[error] Line 207: 🔴 Removing `kspTest(libs.hilt.android.compiler)` leaves `testImplementation(libs.hilt.android.testing)` without a test-scope Hilt processor. Local/JVM tests using `@HiltAndroidTest` (or other Hilt-generated test components) can fail at compile time because required generated classes are missing. Keep `kspTest(libs.hilt.android.compiler)` (or an equivalent test-scope processor setup) unless all Hilt-based unit tests are removed.",
       "revId": "8a0d9260252ddd95acb489800e4734089cc8e97f",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dda9479d_75535f9f",
+        "filename": "jami-android/app/build.gradle.kts",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2026-11-13T16:34:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee0c6285_a73fcaaf",
+      "revId": "8a0d9260252ddd95acb489800e4734089cc8e97f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
