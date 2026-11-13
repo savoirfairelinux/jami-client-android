@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2025 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2026 Savoir-faire Linux Inc.
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,29 +23,39 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.BuildConfig
 import cx.ring.R
-import cx.ring.databinding.FragAboutBinding
+import cx.ring.about.ui.AboutScreen
+import cx.ring.about.ui.AboutUiState
+import cx.ring.ui.theme.JamiTheme
 
 class AboutFragment : Fragment() {
-    private var binding: FragAboutBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
-         FragAboutBinding.inflate(inflater, container, false).apply {
-             release.text = getString(R.string.app_release, BuildConfig.VERSION_NAME)
-             logo.setOnClickListener { visitWebpage(getString(R.string.app_website)) }
-             sflLogo.setOnClickListener { visitWebpage(getString(R.string.savoirfairelinux_website)) }
-             contributeContainer.setOnClickListener { visitWebpage(getString(R.string.app_website_contribute)) }
-             licenseContainer.setOnClickListener { visitWebpage(getString(R.string.gnu_license_website)) }
-             submitIssueContainer
-                 .setOnClickListener { visitWebpage(getString(R.string.submit_issue_link)) }
-             credits.setOnClickListener { creditsClicked() }
-             toolbar.setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
-             binding = this
-        }.root
+        ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                JamiTheme {
+                    AboutScreen(
+                        uiState = AboutUiState(
+                            releaseVersion = getString(R.string.app_release, BuildConfig.VERSION_NAME)
+                        ),
+                        onBackClick = { activity?.onBackPressedDispatcher?.onBackPressed() },
+                        onLogoClick = { visitWebpage(getString(R.string.app_website)) },
+                        onCreditsClick = { creditsClicked() },
+                        onContributeClick = { visitWebpage(getString(R.string.app_website_contribute)) },
+                        onLicenseClick = { visitWebpage(getString(R.string.gnu_license_website)) },
+                        onSubmitIssueClick = { visitWebpage(getString(R.string.submit_issue_link)) },
+                        onSflLogoClick = { visitWebpage(getString(R.string.savoirfairelinux_website)) }
+                    )
+                }
+            }
+        }
 
     private fun creditsClicked() {
         val dialog: BottomSheetDialogFragment = AboutBottomSheetDialogFragment()

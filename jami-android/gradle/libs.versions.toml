@@ -1,5 +1,5 @@
 [versions]
-agp = "9.5.0-rc02"
+agp = "9.5.1"
 kotlin = "2.4.21"
 hilt = "2.60.1"
 ksp = "2.3.6"
@@ -55,6 +55,9 @@ mockito = "5.24.0"
 gson = "2.14.0"
 huawei-agconnect = "1.9.6.300"
 huaweiPush = "6.13.0.301"
+
+composeBom = "2026.09.00"
+activityCompose = "1.13.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -128,9 +131,17 @@ huawei-agconnect = { group = "com.huawei.agconnect", name = "agcp", version.ref 
 huawei-agconnect-core = { group = "com.huawei.agconnect", name = "agconnect-core", version.ref = "huawei-agconnect" }
 huawei-push = { group = "com.huawei.hms", name = "push", version.ref = "huaweiPush" }
 
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
