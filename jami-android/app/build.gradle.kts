@@ -13,6 +13,7 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.protobuf)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -61,6 +62,7 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+        compose = true
     }
     testOptions {
         unitTests.isIncludeAndroidResources = true
@@ -98,6 +100,12 @@ android {
     }
     sourceSets.getByName("main") {
         assets.srcDir(collabEditorAssets)
+    }
+}
+
+androidComponents {
+    beforeVariants { variantBuilder ->
+        (variantBuilder as? com.android.build.api.variant.HasUnitTestBuilder)?.enableUnitTest = true
     }
 }
 
@@ -178,6 +186,14 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.process)
     implementation(libs.androidx.window)
+
+    // Jetpack Compose
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.activity.compose)
 
     implementation(libs.androidx.camera.core)
     implementation(libs.androidx.camera.camera2)
