@@ -310,6 +310,24 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="contact_labels_assign">Label contacts: %1$s</string>
     <string name="contact_labels_apply">Apply label</string>
     <string name="contact_labels_name_required">Enter a label name.</string>
+    <string name="contact_labels_share_title">Share with label</string>
+    <string name="contact_labels_share_chip">Share with %1$s</string>
+    <string name="contact_labels_share_action">Send to everyone</string>
+    <string name="contact_labels_share_empty">This label has no available recipients.</string>
+    <string name="contact_labels_sharing">Sharing with label members…</string>
+    <string name="contact_labels_share_failure">Could not complete sharing. Some items may already have been sent. Check the conversations before trying again.</string>
+    <plurals name="contact_labels_share_partial">
+        <item quantity="one">Shared with %1$d contact; %2$d could not receive everything. Some items may already have been sent to them. Check the conversations before trying again.</item>
+        <item quantity="other">Shared with %1$d contacts; %2$d could not receive everything. Some items may already have been sent to them. Check the conversations before trying again.</item>
+    </plurals>
+    <plurals name="contact_labels_share_confirm">
+        <item quantity="one">Send the shared content individually to %1$d contact labeled “%2$s”? No group will be created.</item>
+        <item quantity="other">Send the shared content individually to %1$d contacts labeled “%2$s”? No group will be created.</item>
+    </plurals>
+    <plurals name="contact_labels_share_success">
+        <item quantity="one">Shared with %d contact</item>
+        <item quantity="other">Shared with %d contacts</item>
+    </plurals>
     <string name="conversation_filter_groups">Groups</string>
     <string name="conversation_filter_feeds">Feeds</string>
     <string name="new_group">New group</string>
