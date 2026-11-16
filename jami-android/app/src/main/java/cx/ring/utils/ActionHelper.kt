@@ -52,10 +52,12 @@ import kotlin.math.roundToInt
 
 object ActionHelper {
     val TAG = ActionHelper::class.simpleName!!
-    const val ACTION_COPY = 0
-    const val ACTION_CLEAR = 1
-    const val ACTION_DELETE = 2
-    const val ACTION_BLOCK = 3
+    const val ACTION_DETAILS = 0
+    const val ACTION_COPY = 1
+    const val ACTION_CLEAR = 2
+    const val ACTION_DELETE = 3
+    const val ACTION_BLOCK = 4
+    const val ACTION_GROUP_LEAVE = 1
 
     data class Padding(
         val pixelsLeft: Int, val pixelsTop: Int,

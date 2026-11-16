@@ -16,17 +16,22 @@
  */
 package cx.ring.fragments
 
+import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.adapters.SmartListAdapter
 import cx.ring.client.CallActivity
+import cx.ring.client.ConversationDetailsActivity
+import cx.ring.client.ConversationDetailsActivity.Companion.EXIT_REASON
+import cx.ring.client.ConversationDetailsActivity.Companion.ExitReason
 import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragSmartlistBinding
 import cx.ring.mvp.BaseSupportFragment
@@ -51,6 +56,29 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     SmartListListeners, ConversationActionCallback, SmartListView {
     private var mSmartListAdapter: SmartListAdapter? = null
     private var binding: FragSmartlistBinding? = null
+    private var detailsTargetPath: ConversationPath? = null
+
+    private val conversationDetailsLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            val targetPath = detailsTargetPath
+            detailsTargetPath = null
+            if (result.resultCode == Activity.RESULT_OK && targetPath != null) {
+                when (result.data?.extras?.getString(EXIT_REASON)) {
+                    ExitReason.CONTACT_ADDED.toString(),
+                    ExitReason.CONTACT_DELETED.toString(),
+                    ExitReason.CONTACT_BLOCKED.toString(),
+                    ExitReason.CONTACT_UNBLOCKED.toString(),
+                    ExitReason.CONVERSATION_LEFT.toString(),
+                    ExitReason.INVITATION_ACCEPTED.toString() -> {
+                        val openConv = activity?.supportFragmentManager
+                            ?.findFragmentByTag(ConversationFragment.TAG) as? ConversationFragment
+                        if (openConv != null && ConversationPath.fromBundle(openConv.arguments) == targetPath) {
+                            openConv.goToHome()
+                        }
+                    }
+                }
+            }
+        }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragSmartlistBinding.inflate(inflater, container, false).apply {
@@ -195,7 +223,8 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                     R.array.swarm_group_action_icons
                 ) { which ->
                     when (which) {
-                        0 -> presenter.removeConversation(item)
+                        ActionHelper.ACTION_DETAILS -> openConversationDetails(item)
+                        ActionHelper.ACTION_GROUP_LEAVE -> presenter.removeConversation(item)
                     }
                 }.show(childFragmentManager, "SmartListFragment")
             } else {
@@ -204,10 +233,11 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                     R.array.swarm_one_to_one_action_icons
                 ) { which ->
                     when (which) {
-                        0 -> presenter.copyNumber(item)
-                        1 -> presenter.clearConversation(item)
-                        2 -> presenter.removeConversation(item)
-                        3 -> presenter.blockContact(item)
+                        ActionHelper.ACTION_DETAILS -> openConversationDetails(item)
+                        ActionHelper.ACTION_COPY -> presenter.copyNumber(item)
+                        ActionHelper.ACTION_CLEAR -> presenter.clearConversation(item)
+                        ActionHelper.ACTION_DELETE -> presenter.removeConversation(item)
+                        ActionHelper.ACTION_BLOCK -> presenter.blockContact(item)
                     }
                 }.show(childFragmentManager, "SmartListFragment")
             }
@@ -217,6 +247,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                 R.array.conversation_action_icons
             ) { which ->
                 when (which) {
+                    ActionHelper.ACTION_DETAILS -> openConversationDetails(item)
                     ActionHelper.ACTION_COPY -> presenter.copyNumber(item)
                     ActionHelper.ACTION_CLEAR -> presenter.clearConversation(item)
                     ActionHelper.ACTION_DELETE -> presenter.removeConversation(item)
@@ -224,6 +255,16 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                 }
             }.show(childFragmentManager, "SmartListFragment")
         }
+    }
+
+    private fun openConversationDetails(conversation: Conversation) {
+        (parentFragment as? HomeFragment)?.collapseSearchActionView()
+        val path = ConversationPath(conversation)
+        detailsTargetPath = path
+        conversationDetailsLauncher.launch(
+            Intent(Intent.ACTION_VIEW, path.toUri())
+                .setClass(requireContext().applicationContext, ConversationDetailsActivity::class.java)
+        )
     }
 
     companion object {
