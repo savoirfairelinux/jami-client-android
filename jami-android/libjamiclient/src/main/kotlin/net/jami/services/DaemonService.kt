@@ -195,6 +195,11 @@ class DaemonService(
             mExecutor.submit { mAccountService.contactRemoved(accountId, uri, blocked) }
         }
 
+        override fun contactMetadataChanged(accountId: String, uri: String, metadata: StringMap) {
+            val snapshot = metadata.toNativeFromUtf8()
+            mExecutor.submit { mAccountService.contactMetadataChanged(accountId, uri, snapshot) }
+        }
+
         override fun messageSend(message: String) {
             mHardwareService.logMessage(message)
         }

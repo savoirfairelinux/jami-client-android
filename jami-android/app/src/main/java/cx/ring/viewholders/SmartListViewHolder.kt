@@ -31,12 +31,14 @@ import cx.ring.utils.DeviceUtils
 import cx.ring.utils.TextUtils
 import cx.ring.views.AvatarDrawable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.core.Observable
 import net.jami.model.*
 import net.jami.model.interaction.CallHistory
 import net.jami.model.interaction.ContactEvent
 import net.jami.model.interaction.Interaction
 import net.jami.services.ConversationFacade
 import net.jami.smartlist.ConversationItemViewModel
+import net.jami.smartlist.ConversationFilter
 
 class SmartListViewHolder : RecyclerView.ViewHolder {
     private val binding: ItemSmartlistBinding?
@@ -86,6 +88,20 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
                 clickListener.onItemLongClick(conversation)
                 true
             }
+
+            compositeDisposable.add(Observable.combineLatest(
+                conversation.mode, conversation.contactUpdates
+            ) { _, contacts ->
+                if (ConversationFilter.Contacts.matches(conversation)) contacts.filterNot { it.isUser }
+                else emptyList()
+            }.switchMap { contacts ->
+                val contact = contacts.firstOrNull()
+                if (contact == null) Observable.just(emptySet<String>())
+                else contact.updatesSubject.startWithItem(contact).map { it.labels }
+            }
+                .distinctUntilChanged()
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe { binding.contactLabels.setLabels(it, compact = true) })
 
             compositeDisposable.add(conversation.currentStateObservable
                 .observeOn(DeviceUtils.uiScheduler)
@@ -140,6 +156,7 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
 
     fun unbind() {
         binding?.photo?.setAvatar(null)
+        binding?.contactLabels?.setLabels(emptySet(), compact = true)
         compositeDisposable.clear()
     }
 

@@ -3,10 +3,12 @@ package net.jami.services
 import io.reactivex.rxjava3.core.Single
 import net.jami.daemon.JamiService
 import net.jami.daemon.StringVect
+import net.jami.daemon.StringMap
 import net.jami.model.Account
 import net.jami.model.AccountConfig
 import net.jami.model.AccountDevice
 import net.jami.model.ConfigKey
+import net.jami.model.ContactLabels
 import net.jami.model.Conversation
 import net.jami.model.MemberRole
 import net.jami.model.TrustRequest
@@ -26,6 +28,7 @@ import org.mockito.Mockito.doAnswer
 import org.mockito.Mockito.doReturn
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.mockStatic
+import org.mockito.Mockito.mockConstruction
 import org.mockito.Mockito.spy
 import org.mockito.Mockito.verify
 import java.util.concurrent.Callable
@@ -56,6 +59,170 @@ class AccountServiceTest {
             mock(VCardService::class.java)
         ))
     }
+
+    @Test
+    fun contactMetadataSignalsUpdateOnlyTheirAccountAndPreserveLabelsOnInvalidData() {
+        val account = labelAccount()
+        val other = labelAccount("other")
+        val peer = Uri.fromId("a".repeat(40))
+        account.addContact(peer.rawRingId, true)
+        other.addContact(peer.rawRingId, true)
+        doReturn(account).`when`(service).getAccount("account")
+        doReturn(other).`when`(service).getAccount("other")
+        val updates = account.getContactFromCache(peer).updatesSubject.test()
+        val labels = account.contactLabels.test()
+
+        service.contactMetadataChanged("account", peer.uri, mapOf("labels" to "[\"friends\"]", "other" to "preserved"))
+        assertEquals(setOf("friends"), account.getContactFromCache(peer).labels)
+        assertEquals(emptySet<String>(), other.getContactFromCache(peer).labels)
+        assertEquals(listOf("friends"), labels.values().last())
+        updates.assertValueCount(1)
+        service.contactMetadataChanged("account", peer.uri, mapOf("labels" to "[42]"))
+        assertEquals(setOf("friends"), account.getContactFromCache(peer).labels)
+        service.contactMetadataChanged("account", peer.uri, mapOf("labels" to "[]"))
+        assertEquals(emptySet<String>(), account.getContactFromCache(peer).labels)
+        assertEquals(emptyList<String>(), labels.values().last())
+        updates.assertValueCount(2)
+        updates.dispose()
+        labels.dispose()
+    }
+
+    @Test
+    fun labelsArePatchedOnlyAfterSuccessfulPersistenceAndCanBeCleared() {
+        val account = labelAccount()
+        val peer = Uri.fromId("a".repeat(40))
+        account.addContact(peer.rawRingId, true)
+        account.setContactLabels(peer, setOf("friends"))
+        doReturn(account).`when`(service).getAccount("account")
+        mockConstruction(StringMap::class.java).use { maps ->
+            mockStatic(JamiService::class.java).use { daemon ->
+                daemon.`when`<Boolean> {
+                    JamiService.setContactMetadata(org.mockito.ArgumentMatchers.eq("account"),
+                        org.mockito.ArgumentMatchers.eq(peer.rawRingId), any(StringMap::class.java))
+                }.thenReturn(false, true, true)
+
+                service.setContactLabels("account", peer, setOf("family")).test()
+                    .assertError(IllegalStateException::class.java)
+                assertEquals(setOf("friends"), account.getContactFromCache(peer).labels)
+                val labels = setOf("family", "caf\u00e9 \ud83c\udfe0")
+                service.setContactLabels("account", peer, labels).test().assertComplete().assertNoErrors()
+                assertEquals(labels, account.getContactFromCache(peer).labels)
+                verify(maps.constructed()[1]).setUnicode(ContactLabels.METADATA_KEY, ContactLabels.encode(labels))
+                service.setContactLabels("account", peer, emptySet()).test().assertComplete().assertNoErrors()
+                assertEquals(emptySet<String>(), account.getContactFromCache(peer).labels)
+                verify(maps.constructed()[2]).setUnicode(ContactLabels.METADATA_KEY, "[]")
+                maps.constructed().forEach { verify(it).delete() }
+            }
+        }
+    }
+
+    @Test
+    fun readdedContactsReloadTheirPersistedLabels() {
+        val account = labelAccount()
+        val peer = "a".repeat(40)
+        doReturn(account).`when`(service).getAccount("account")
+        val details = mock(StringMap::class.java)
+        doReturn(peer).`when`(details).get("id")
+        mockConstruction(StringMap::class.java) { metadata, _ ->
+            doReturn(hashMapOf("labels" to "[\"family\"]")).`when`(metadata).toNativeFromUtf8()
+        }.use {
+            mockStatic(JamiService::class.java).use { daemon ->
+                daemon.`when`<StringMap> { JamiService.getContactDetails("account", peer) }.thenReturn(details)
+                daemon.`when`<Boolean> {
+                    JamiService.getContactMetadata(org.mockito.ArgumentMatchers.eq("account"),
+                        org.mockito.ArgumentMatchers.eq(peer), any(StringMap::class.java))
+                }.thenReturn(true)
+                service.contactAdded("account", peer, true)
+                assertEquals(setOf("family"), account.getContactFromCache(peer).labels)
+                account.removeContact(peer, false)
+                service.contactAdded("account", peer, true)
+                assertEquals(listOf("family"), account.contactLabels.blockingFirst())
+            }
+        }
+    }
+
+    @Test
+    fun labelsRejectUnknownContactsSipAccountsAndOversizedUpdatesBeforeNativeCalls() {
+        val account = labelAccount()
+        val peer = Uri.fromId("a".repeat(40))
+        doReturn(account).`when`(service).getAccount("account")
+        mockStatic(JamiService::class.java).use { daemon ->
+            service.setContactLabels("account", peer, setOf("friends")).test()
+                .assertError(IllegalArgumentException::class.java)
+            account.addContact(peer.rawRingId, true)
+            service.setContactLabels("account", peer, setOf("x".repeat(65536))).test()
+                .assertError(IllegalArgumentException::class.java)
+            account.setDetail(ConfigKey.ACCOUNT_TYPE, AccountConfig.ACCOUNT_TYPE_SIP)
+            service.setContactLabels("account", peer, setOf("friends")).test()
+                .assertError(IllegalArgumentException::class.java)
+            daemon.verifyNoInteractions()
+        }
+    }
+
+    @Test
+    fun creatingALabelAddsItToChosenContactsWithoutReplacingExistingLabels() {
+        val account = labelAccount()
+        val first = Uri.fromId("a".repeat(40))
+        val second = Uri.fromId("b".repeat(40))
+        listOf(first, second).forEach { account.addContact(it.rawRingId, true) }
+        account.setContactLabels(first, setOf("work"))
+        doReturn(account).`when`(service).getAccount("account")
+        mockConstruction(StringMap::class.java).use { maps ->
+            mockStatic(JamiService::class.java).use { daemon ->
+                daemon.`when`<Boolean> {
+                    JamiService.setContactMetadata(org.mockito.ArgumentMatchers.eq("account"),
+                        org.mockito.ArgumentMatchers.anyString(), any(StringMap::class.java))
+                }.thenReturn(true)
+                service.addContactLabel("account", listOf(first, second, first), " friends ")
+                    .test().assertComplete().assertNoErrors()
+                assertEquals(setOf("friends", "work"), account.getContactFromCache(first).labels)
+                assertEquals(setOf("friends"), account.getContactFromCache(second).labels)
+                assertEquals(2, maps.constructed().size)
+                verify(maps.constructed()[0]).setUnicode("labels", "[\"friends\",\"work\"]")
+                verify(maps.constructed()[1]).setUnicode("labels", "[\"friends\"]")
+            }
+        }
+    }
+
+    @Test
+    fun labelCreationRejectsUnassignedAndInvalidSelectionsBeforeWritingAnyContact() {
+        val account = labelAccount()
+        val first = Uri.fromId("a".repeat(40))
+        val unknown = Uri.fromId("b".repeat(40))
+        account.addContact(first.rawRingId, true)
+        doReturn(account).`when`(service).getAccount("account")
+        mockStatic(JamiService::class.java).use { daemon ->
+            for ((contacts, label) in listOf(
+                emptyList<Uri>() to "friends", listOf(first, unknown) to "friends", listOf(first) to " "
+            )) {
+                service.addContactLabel("account", contacts, label).test()
+                    .assertError(IllegalArgumentException::class.java)
+            }
+            daemon.verifyNoInteractions()
+            assertEquals(emptySet<String>(), account.getContactFromCache(first).labels)
+        }
+    }
+
+    @Test
+    fun failedLabelCreationIsReportedAndKeepsExistingAssignments() {
+        val account = labelAccount()
+        val peer = Uri.fromId("a".repeat(40))
+        account.addContact(peer.rawRingId, true)
+        account.setContactLabels(peer, setOf("work"))
+        doReturn(account).`when`(service).getAccount("account")
+        mockConstruction(StringMap::class.java).use {
+            mockStatic(JamiService::class.java).use {
+                service.addContactLabel("account", listOf(peer), "friends").test()
+                    .assertError(IllegalStateException::class.java)
+                assertEquals(setOf("work"), account.getContactFromCache(peer).labels)
+            }
+        }
+    }
+
+    private fun labelAccount(id: String = "account") = Account(
+        id, mapOf(ConfigKey.ACCOUNT_TYPE.key to AccountConfig.ACCOUNT_TYPE_JAMI),
+        emptyList(), mapOf(ConfigKey.ACCOUNT_REGISTRATION_STATUS.key to "REGISTERED")
+    )
 
     @Test
     fun feedInitialCommitIsVisibleAndSortsAnEmptyFeedFirst() {

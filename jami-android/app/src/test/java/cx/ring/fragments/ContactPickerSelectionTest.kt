@@ -144,6 +144,19 @@ class ContactPickerSelectionTest {
     }
 
     @Test
+    fun labelPickerOnlyOffersExistingContactsIncludingWhenSelectingAGroup() {
+        val alice = contact("account-a", "alice")
+        val bob = contact("account-a", "bob")
+        val source = group("group", alice.members + bob.members).conversation
+        val roles = (alice.members + bob.members).associate { it.contact.uri.uri to MemberRole.MEMBER }
+        val allowed = alice.memberUris
+        val item = createContactPickerItem(source, emptySet(), roles, allowed)!!
+        assertEquals(alice.members, item.members)
+        assertNull(createContactPickerItem(bob.conversation, emptySet(), emptyMap(), allowed))
+        assertNull(createContactPickerItem(source, emptySet(), roles, emptySet()))
+    }
+
+    @Test
     fun groupSourcesExcludeSelfRemovedBlockedAndAlreadyPresentContacts() {
         val names = listOf("self", "admin", "member", "invited", "blocked", "left", "unknown", "existing")
         val members = names.map { name ->

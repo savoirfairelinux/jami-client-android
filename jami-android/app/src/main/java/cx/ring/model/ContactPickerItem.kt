@@ -39,9 +39,9 @@ data class ContactPickerItem(
 internal fun createContactPickerItem(
     conversation: ConversationItemViewModel,
     excluded: Set<String>,
-    roles: Map<String, MemberRole>
-): ContactPickerItem? {
-    val members = when {
+    roles: Map<String, MemberRole>,
+    allowed: Set<String>? = null
+): ContactPickerItem? = when {
         conversation.mode == Conversation.Mode.Legacy || conversation.mode == Conversation.Mode.OneToOne ->
             listOfNotNull(conversation.getContact())
         conversation.mode.isGroup && conversation.mode != Conversation.Mode.Feed && !conversation.isEnded ->
@@ -52,8 +52,8 @@ internal fun createContactPickerItem(
                 }
             }
         else -> return null
-    }.filter { !it.contact.isUser && it.contact.uri.rawUriString !in excluded }
-        .distinctBy { it.contact.uri }
-
-    return members.takeIf { it.isNotEmpty() }?.let { ContactPickerItem(conversation, it) }
-}
+    }.filter {
+        !it.contact.isUser && it.contact.uri.rawUriString !in excluded &&
+            (allowed == null || it.contact.uri.rawUriString in allowed)
+    }
+    .takeIf { it.isNotEmpty() }?.let { ContactPickerItem(conversation, it) }

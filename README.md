@@ -88,6 +88,34 @@ cd jami-client-android/daemon/extras/tools
 ./bootstrap && make .pkg-config
 ```
 
+## Contact labels
+
+In a Jami contact's details, use **Labels** to select existing labels or create
+custom ones. A contact can have multiple labels; deselect all of them to clear
+its labels. The conversation list has one filter row with All, Contacts,
+Groups, Feeds, and contact labels. Select either a conversation type or a
+label. Use the trailing **+** button to enter a label name and choose the
+contacts to apply it to; canceling does not create an unused label. Labels
+remain available while assigned to at least one active contact. Labels apply
+to individual contacts, not groups or feeds, and are not available for SIP
+accounts or unknown contacts. Back returns a filtered conversation list to All.
+
+Labels are displayed as end-aligned, wrapping pills in contact details, with
+the first line aligned with the Labels field. In the conversation list, a
+compact, single-line summary sits beside contact names without adding another
+row. Up to two label names fit in the available space; extra labels are
+represented by a `+N` pill. Accessibility descriptions retain all label names.
+
+Labels are private to the account, never sent to the contact. They use the
+daemon contact metadata API: the `labels` register contains a UTF-8 JSON array
+of trimmed, unique, case-sensitive strings, with `[]` representing no labels.
+Only that register is patched, leaving other contact metadata untouched.
+The daemon persists the data, includes it in account archives, and synchronizes
+it with the account's other devices over existing sync connections and on
+reconnection. Concurrent edits use the daemon's last-writer-wins rule for this
+register. Metadata change signals update labels and filters without restarting
+the app. Removing and re-adding a contact retains its labels.
+
 ## Backup and device transfer
 
 Android cloud backup is disabled by explicit data-extraction rules. Device-to-device

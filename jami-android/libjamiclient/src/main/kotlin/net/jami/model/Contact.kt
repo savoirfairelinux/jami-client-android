@@ -67,6 +67,13 @@ class Contact(val uri: Uri, val isUser: Boolean = false) {
     private val mConversationUri: BehaviorSubject<Uri> = BehaviorSubject.createDefault(uri)
     private val mContactUpdates: Subject<Contact> = BehaviorSubject.create()
     var updates: Observable<Contact>? = null
+    var labels: Set<String> = emptySet()
+        private set
+
+    fun setContactLabels(labels: Set<String>) {
+        this.labels = labels.toSet()
+        mContactUpdates.onNext(this)
+    }
 
     fun updateDates(details: Map<String, String>) {
         if (details.containsKey("added") || details.containsKey("addedMs"))

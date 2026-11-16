@@ -96,9 +96,18 @@ class ContactPickerFragment : AppCompatDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         val binding = checkNotNull(binding)
         val addingMembers = arguments?.getBoolean(ARG_ADD_MEMBERS) == true
-        binding.toolbar.setTitle(if (addingMembers) R.string.picker_add_members else R.string.new_group)
+        val label = arguments?.getString(RESULT_LABEL)
+        binding.toolbar.title = when {
+            label != null -> getString(R.string.contact_labels_assign, label)
+            addingMembers -> getString(R.string.picker_add_members)
+            else -> getString(R.string.new_group)
+        }
         binding.toolbar.setNavigationOnClickListener { dismiss() }
-        binding.createGroupBtn.setText(if (addingMembers) R.string.picker_add_members else R.string.picker_create_group)
+        binding.createGroupBtn.setText(when {
+            label != null -> R.string.contact_labels_apply
+            addingMembers -> R.string.picker_add_members
+            else -> R.string.picker_create_group
+        })
         adapter = ContactPickerAdapter(::onContactClicked)
         binding.contactList.adapter = adapter
         binding.contactList.itemAnimator = DefaultItemAnimator().apply {
@@ -117,7 +126,15 @@ class ContactPickerFragment : AppCompatDialogFragment() {
                 renderSelection()
                 return@setOnClickListener
             }
-            dataPasser.onContactPicked(pickerAccountId, selection)
+            if (label == null) {
+                dataPasser.onContactPicked(pickerAccountId, selection)
+            } else {
+                parentFragmentManager.setFragmentResult(RESULT_LABEL_CONTACTS, Bundle().apply {
+                    putString(RESULT_ACCOUNT, pickerAccountId)
+                    putString(RESULT_LABEL, label)
+                    putStringArrayList(RESULT_CONTACTS, ArrayList(selection.map { it.uri.rawUriString }))
+                })
+            }
             dismiss()
         }
         ViewCompat.setOnApplyWindowInsetsListener(view) { root, insets ->
@@ -164,27 +181,21 @@ class ContactPickerFragment : AppCompatDialogFragment() {
 
     private fun observeContacts() {
         val excluded = arguments?.getStringArrayList(ARG_EXCLUDED_CONTACTS).orEmpty().toSet()
-        val collator = Collator.getInstance()
-        disposables.add(mConversationFacade.getConversationViewModelList()
+        val allowed = arguments?.getStringArrayList(ARG_ALLOWED_CONTACTS)?.toSet()
+        val labelAccount = arguments?.getString(RESULT_ACCOUNT)
+        disposables.add(mConversationFacade.getConversationViewModelList(labelAccount)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ conversations ->
-                val newAccountId = conversations.firstOrNull()?.accountId
-                if (accountId != null && newAccountId != null && accountId != newAccountId) {
-                    selectedContactUris.clear()
-                }
+                val newAccountId = labelAccount ?: conversations.firstOrNull()?.accountId
                 accountId = newAccountId
                 availableContacts = conversations
-                    .filter { it.accountId == newAccountId }
                     .mapNotNull {
                         createContactPickerItem(
                             it, excluded,
-                            mConversationFacade.getConversation(it.accountId, it.uri)?.roles.orEmpty()
+                            mConversationFacade.getConversation(it.accountId, it.uri)?.roles.orEmpty(),
+                            allowed
                         )
                     }
-                    .distinctBy {
-                        if (it.conversation.mode.isGroup) it.conversation.uri else it.members.single().contact.uri
-                    }
-                    .sortedWith { first, second -> collator.compare(first.conversation.title, second.conversation.title) }
                 selectedContactUris.retainAll(availableContacts.flatMap { it.memberUris }.toSet())
                 renderSelection()
                 renderContacts()
@@ -285,16 +296,22 @@ class ContactPickerFragment : AppCompatDialogFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        dataPasser = context as OnContactedPicked
+        if (arguments?.getString(RESULT_LABEL) == null)
+            dataPasser = context as OnContactedPicked
     }
 
     companion object {
         val TAG: String = ContactPickerFragment::class.java.simpleName
         private const val ARG_EXCLUDED_CONTACTS = "excludedContacts"
         private const val ARG_ADD_MEMBERS = "addMembers"
+        private const val ARG_ALLOWED_CONTACTS = "allowedContacts"
         private const val STATE_SELECTION = "selectedContacts"
         private const val STATE_ACCOUNT = "accountId"
         private const val STATE_QUERY = "searchQuery"
+        const val RESULT_LABEL_CONTACTS = "labelContacts"
+        const val RESULT_ACCOUNT = "labelAccount"
+        const val RESULT_LABEL = "contactLabel"
+        const val RESULT_CONTACTS = "labelContactUris"
 
         fun newInstance(contacts: List<Contact>) = ContactPickerFragment().apply {
             arguments = Bundle().apply {
@@ -302,6 +319,15 @@ class ContactPickerFragment : AppCompatDialogFragment() {
                 putBoolean(ARG_ADD_MEMBERS, true)
             }
         }
+
+        fun forLabel(accountId: String, label: String, contacts: Collection<Contact>) =
+            ContactPickerFragment().apply {
+                arguments = Bundle().apply {
+                    putString(RESULT_ACCOUNT, accountId)
+                    putString(RESULT_LABEL, label)
+                    putStringArrayList(ARG_ALLOWED_CONTACTS, ArrayList(contacts.map { it.uri.rawUriString }))
+                }
+            }
     }
 
     interface OnContactedPicked {
