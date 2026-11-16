@@ -274,9 +274,10 @@ object AndroidFileUtils {
      * @param inputFile uri of the input file
      * @return Single<File> which points to the newly created copy in the cache
     </File> */
-    fun getCacheFile(context: Context, inputFile: Uri): Single<File> =
+    fun getCacheFile(context: Context, inputFile: Uri, directory: File = context.cacheDir): Single<File> =
         Single.fromCallable {
-            val outputFile = File(context.cacheDir, getFilename(context.contentResolver, inputFile))
+            val outputFile = File(directory, getFilename(context.contentResolver, inputFile))
+            require(outputFile.canonicalFile.parentFile == directory.canonicalFile) { "Invalid shared filename" }
             if (outputFile.canonicalPath == inputFile.path?.let { File(it).canonicalPath }) {
                 Log.w(TAG, "Input and output files path are the same. Skipping copy.")
                 return@fromCallable outputFile

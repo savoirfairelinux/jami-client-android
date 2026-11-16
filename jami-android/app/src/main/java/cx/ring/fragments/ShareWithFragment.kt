@@ -32,14 +32,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
 import androidx.core.view.MenuProvider
 import androidx.core.view.doOnNextLayout
+import androidx.core.view.children
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
@@ -49,6 +57,8 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.chip.Chip
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.adapters.SmartListAdapter
 import cx.ring.client.HomeActivity
@@ -60,6 +70,7 @@ import cx.ring.utils.ContentUri.getShareItems
 import cx.ring.utils.ConversationPath
 import cx.ring.viewholders.SmartListViewHolder.SmartListListeners
 import cx.ring.views.PreviewVideoView
+import cx.ring.viewmodel.LabelShareViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
@@ -70,12 +81,16 @@ import io.reactivex.rxjava3.subjects.Subject
 import net.jami.model.Conversation
 import net.jami.services.ContactService
 import net.jami.services.ConversationFacade
+import net.jami.services.AccountService
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @AndroidEntryPoint
 class ShareWithFragment : Fragment() {
     private val mDisposable = CompositeDisposable()
+    private val labelShare: LabelShareViewModel by activityViewModels()
+    private var shareDialog: AlertDialog? = null
 
     @Inject
     @Singleton
@@ -85,12 +100,21 @@ class ShareWithFragment : Fragment() {
     @Singleton
     lateinit var mContactService: ContactService
 
+    @Inject
+    lateinit var mAccountService: AccountService
+
     private var mPendingIntent: Intent? = null
     private var adapter: SmartListAdapter? = null
     private var binding: FragSharewithBinding? = null
     private var searchView: SearchView? = null
 
     private val query: Subject<String> = BehaviorSubject.createDefault("")
+
+    private val sharingBackPressedCallback = object : OnBackPressedCallback(false) {
+        override fun handleOnBackPressed() {
+            Toast.makeText(requireContext(), R.string.contact_labels_sharing, Toast.LENGTH_SHORT).show()
+        }
+    }
 
     private val searchBackPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
@@ -131,6 +155,7 @@ class ShareWithFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         adapter = SmartListAdapter(null, object : SmartListListeners {
             override fun onItemClick(item: Conversation) {
+                if (labelShare.state.value != LabelShareViewModel.State.Idle) return
                 mPendingIntent?.let { intent ->
                     mPendingIntent = null
                     intent.putExtras(ConversationPath.toBundle(item.accountId, item.uri))
@@ -164,9 +189,73 @@ class ShareWithFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                labelShare.state.collect { state ->
+                    val binding = binding ?: return@collect
+                    val sending = state == LabelShareViewModel.State.Sending
+                    binding.labelShareProgress.isVisible = sending
+                    binding.shareLabels.children.forEach { it.isEnabled = !sending }
+                    sharingBackPressedCallback.isEnabled = sending
+                    when (state) {
+                        is LabelShareViewModel.State.Finished -> {
+                            if (state.failed == 0) {
+                                Toast.makeText(requireContext(), resources.getQuantityString(
+                                    R.plurals.contact_labels_share_success, state.sent, state.sent
+                                ), Toast.LENGTH_LONG).show()
+                                requireActivity().finish()
+                            } else showShareFailure(resources.getQuantityString(
+                                R.plurals.contact_labels_share_partial, state.sent, state.sent, state.failed
+                            ))
+                        }
+                        LabelShareViewModel.State.Failed -> showShareFailure(getString(R.string.contact_labels_share_failure))
+                        else -> Unit
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showShareFailure(message: String) {
+        shareDialog?.setOnDismissListener(null)
+        shareDialog?.dismiss()
+        shareDialog = MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.contact_labels_share_title)
+            .setMessage(message)
+            .setPositiveButton(android.R.string.ok, null)
+            .setOnDismissListener { labelShare.clearResult() }
+            .show()
+    }
+
+    private fun confirmLabelShare(accountId: String, label: String) {
+        if (labelShare.state.value != LabelShareViewModel.State.Idle) return
+        val recipients = mAccountService.getAccount(accountId)?.getContactsWithLabel(label).orEmpty()
+        if (recipients.isEmpty()) {
+            Toast.makeText(requireContext(), R.string.contact_labels_share_empty, Toast.LENGTH_SHORT).show()
+            return
+        }
+        val items = HomeActivity.shareIntentSanitizer.sanitizeByFiltering(checkNotNull(mPendingIntent))
+            .getShareItems(requireContext())
+        val confirmed = recipients.map { it.uri.uri }.toSet()
+        shareDialog?.dismiss()
+        shareDialog = MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.contact_labels_share_title)
+            .setMessage(resources.getQuantityString(
+                R.plurals.contact_labels_share_confirm, recipients.size, recipients.size, label
+            ))
+            .setPositiveButton(R.string.contact_labels_share_action) { _, _ ->
+                labelShare.share(accountId, label, confirmed, items)
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         requireActivity().onBackPressedDispatcher.addCallback(this, searchBackPressedCallback)
+        requireActivity().onBackPressedDispatcher.addCallback(this, sharingBackPressedCallback)
     }
 
     override fun onStart() {
@@ -179,6 +268,29 @@ class ShareWithFragment : Fragment() {
             .getFullConversationList(mConversationFacade.currentAccountSubject, query)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { list -> adapter?.update(list) })
+        mDisposable.add(mConversationFacade.currentAccountSubject
+            .switchMap { account -> account.contactLabels.map { account to it } }
+            .distinctUntilChanged()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ (account, labels) ->
+                val binding = binding ?: return@subscribe
+                binding.labelScroll.isVisible = labels.isNotEmpty()
+                binding.labelShareHeader.isVisible = labels.isNotEmpty()
+                binding.shareLabels.removeAllViews()
+                for (label in labels) {
+                    val chip = (layoutInflater.inflate(R.layout.item_contact_label, binding.shareLabels, false) as Chip).apply {
+                        text = label
+                        isCheckable = false
+                        isEnabled = labelShare.state.value != LabelShareViewModel.State.Sending
+                        contentDescription = getString(R.string.contact_labels_share_chip, label)
+                        setOnClickListener { confirmLabelShare(account.accountId, label) }
+                    }
+                    binding.shareLabels.addView(chip)
+                }
+            }, { error ->
+                android.util.Log.e("ShareWith", "Cannot load label recipients", error)
+                Toast.makeText(requireContext(), R.string.generic_error, Toast.LENGTH_SHORT).show()
+            }))
     }
 
     override fun onStop() {
@@ -189,6 +301,15 @@ class ShareWithFragment : Fragment() {
     override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
         mPendingIntent = requireActivity().intent
+    }
+
+    override fun onDestroyView() {
+        shareDialog?.setOnDismissListener(null)
+        shareDialog?.dismiss()
+        shareDialog = null
+        binding?.shareList?.adapter = null
+        binding = null
+        super.onDestroyView()
     }
 
     override fun onDestroy() {
