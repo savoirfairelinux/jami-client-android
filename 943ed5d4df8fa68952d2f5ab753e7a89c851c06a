@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8fed894_a3f1f3e5",
+        "filename": "jami-android/app/src/main/res/values-es-rES/strings_account.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-16T06:05:36Z",
+      "side": 1,
+      "message": "[warning] Line 189: 🟡 `account_device_last_sync` remains in English (`Synced: %1$s`) inside a Spanish locale file. Localize this string (e.g., `Sincronizado: %1$s`) for consistency. The same pattern appears in other Spanish variants in this patchset.",
+      "revId": "943ed5d4df8fa68952d2f5ab753e7a89c851c06a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f12ae46f_ff3782bf",
+        "filename": "jami-android/app/src/main/res/values-es/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-16T06:05:36Z",
+      "side": 1,
+      "message": "[error] Line 498: 🔴 `picker_selection_count` was added with empty plural values, so the selected-count label will render blank in Spanish. Fill each plural item with localized text (e.g., `%d seleccionado` / `%d seleccionados`) to avoid a broken UI string.",
+      "revId": "943ed5d4df8fa68952d2f5ab753e7a89c851c06a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48b7f0c2_1c110c71",
+        "filename": "jami-android/app/src/main/res/values-zh-rCN/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-16T06:05:36Z",
+      "side": 1,
+      "message": "[error] Line 125: 🔴 `action_call_mic_unmute` is translated as `麦克风静音` (mute), which is the opposite action. This makes the unmute control misleading. Replace with an explicit unmute string (e.g., `取消麦克风静音` / `打开麦克风`) to preserve action semantics.",
+      "revId": "943ed5d4df8fa68952d2f5ab753e7a89c851c06a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42a88477_bf17fbd3",
+        "filename": "jami-android/app/src/main/res/values-zh-rCN/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-16T06:05:36Z",
+      "side": 1,
+      "message": "[warning] Line 129: 🟡 `action_call_lower_hand` is translated as `免提` (speakerphone), which is unrelated to lowering a raised hand. Use a hand-lowering term (e.g., `放下手`) to match feature behavior and avoid incorrect UX text.",
+      "revId": "943ed5d4df8fa68952d2f5ab753e7a89c851c06a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
