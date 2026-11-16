@@ -64,7 +64,10 @@ class Account(
     private val conversationMapSubject: Subject<Map<String, Conversation>> = BehaviorSubject.create()
     private val pendingMapSubject: Subject<Map<String, Conversation>> = BehaviorSubject.create()
 
-    private val contactListSubject = BehaviorSubject.create<Collection<Contact>>()
+    private val contactListSubject = BehaviorSubject.createDefault<Collection<Contact>>(emptyList())
+    val contactLabels: Observable<List<String>> = contactListSubject.map { contacts ->
+        contacts.filterNot { it.isBlocked }.flatMap { it.labels }.distinct().sorted()
+    }
     private val contactLocations: MutableMap<Contact, Observable<ContactLocation>> = HashMap()
     private val mLocationSubject: Subject<Map<Contact, Observable<ContactLocation>>> = BehaviorSubject.createDefault(contactLocations)
     private val mLocationStartedSubject: Subject<ContactLocationEntry> = PublishSubject.create()
@@ -534,6 +537,14 @@ class Account(
 
     fun getContact(uri: Uri): Contact? = getContact(uri.rawRingId)
     fun getContact(ringId: String?): Contact? = mContacts[ringId]
+
+    fun setContactLabels(uri: Uri, labels: Set<String>) {
+        val contact = getContactFromCache(uri)
+        if (contact.labels == labels) return
+        contact.setContactLabels(labels)
+        contactListSubject.onNext(mContacts.values)
+        conversationChanged()
+    }
 
     fun addContact(id: String, confirmed: Boolean) {
         val contact = mContacts.getOrPut(id) { getContactFromCache(Uri.fromId(id)) }

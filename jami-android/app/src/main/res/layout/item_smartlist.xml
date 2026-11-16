@@ -17,7 +17,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
+    android:layout_height="wrap_content"
+    android:minHeight="72dp"
     android:background="@drawable/background_item_smartlist"
     android:foreground="?attr/selectableItemBackground"
     android:descendantFocusability="blocksDescendants"
@@ -42,28 +43,47 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/photo">
 
-        <TextView
-            android:id="@+id/conv_participant"
+        <LinearLayout
+            android:id="@+id/conv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:ellipsize="middle"
-            android:fontFamily="@font/ubuntu_regular"
-            android:gravity="start"
-            android:paddingBottom="3dp"
-            android:singleLine="true"
-            android:maxLines="1"
-            android:textAlignment="viewStart"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="@dimen/text_size_medium"
-            android:textStyle="bold"
-            tools:text="@tools:sample/full_names" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:baselineAligned="false"
+            android:paddingBottom="3dp">
+
+            <TextView
+                android:id="@+id/conv_participant"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="middle"
+                android:fontFamily="@font/ubuntu_regular"
+                android:gravity="start"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:textAlignment="viewStart"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold"
+                tools:text="@tools:sample/full_names" />
+
+            <cx.ring.views.ContactLabelsView
+                android:id="@+id/contact_labels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/conv_last_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/conv_participant"
+            android:layout_below="@id/conv_title"
             android:layout_marginStart="5dp"
             android:layout_toEndOf="@id/conv_last_time"
             android:ellipsize="end"
@@ -79,7 +99,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             android:id="@+id/conv_last_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/conv_participant"
+            android:layout_below="@id/conv_title"
             android:fontFamily="@font/ubuntu_regular"
             android:textColor="?attr/colorOnSurface"
             android:textSize="@dimen/text_size_small"

@@ -325,8 +325,8 @@ class ConversationFacade(
                 .switchMapSingle { conversations -> Single.zip(conversations) { it.toMutableList() as MutableList<ConversationItemViewModel> } }
         }*/
 
-    fun getConversationViewModelList(): Observable<MutableList<ConversationItemViewModel>> =
-        getConversationViewModelList(mAccountService.currentAccountSubject)
+    fun getConversationViewModelList(accountId: String? = null): Observable<MutableList<ConversationItemViewModel>> =
+        getConversationViewModelList(if (accountId == null) mAccountService.currentAccountSubject else mAccountService.getAccountSingle(accountId).toObservable())
 
     private fun getConversationViewModelList(
         currentAccount: Observable<Account>,
