@@ -43,6 +43,8 @@ import cx.ring.views.setDate
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
+import net.jami.model.Contact
 import net.jami.model.Conversation
 import net.jami.model.Uri
 import net.jami.services.AccountService
@@ -190,18 +192,40 @@ class ConversationActionsFragment : Fragment() {
 
         if (conversationMode == Conversation.Mode.OneToOne || conversation.isLegacy()) {
             mDisposableBag.add(conversation.contactUpdates
-                .observeOn(DeviceUtils.uiScheduler)
-                .subscribe { contacts ->
-                    val contact = contacts.firstOrNull { !it.isUser }
-                    secureP2pConnection.setOnClickListener(null)
-                    if (contact != null) {
-                        secureP2pConnection.setOnClickListener {
-                            startActivity(Intent(Intent.ACTION_VIEW, ConversationPath.toUri(
-                                conversation.accountId,
-                                contact.uri.rawRingId
-                            )).setClass(requireContext(), CertificateViewerActivity::class.java))
-                        }
+                .map { contacts -> contacts.filterNot { it.isUser } }
+                .filter(List<Contact>::isNotEmpty)
+                .map { it.first() }
+                .switchMap { contact ->
+                    contact.updatesSubject.startWithItem(contact).flatMapSingle {
+                        (it.username ?: Single.just("")).map { name -> Pair(it, name) }
                     }
+                }
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe { (contact, registeredName) ->
+                    val identifier = contact.uri
+                    contactPanel.isVisible = true
+                    contactSectionHeader.isVisible = true
+                    userNamePanel.isVisible = registeredName.isNotEmpty()
+                    userName.text = registeredName
+                    this.identifier.text = identifier.uri
+                    contactAddedDate.setDate(R.string.contact_added_date, contact.addedDate?.time ?: 0L)
+                    contactRemovedDate.setDate(R.string.contact_removed_date, contact.removedDate?.time ?: 0L)
+                    identifierPanel.setOnClickListener {
+                        copyAndShow(requireContext(), getString(R.string.clip_contact_uri), identifier.uri)
+                    }
+                    userNamePanel.setOnClickListener {
+                        copyAndShow(requireContext(), getString(R.string.clip_contact_uri), registeredName)
+                    }
+                    secureP2pConnection.setOnClickListener {
+                        startActivity(Intent(Intent.ACTION_VIEW, ConversationPath.toUri(
+                            conversation.accountId,
+                            identifier.rawRingId
+                        )).setClass(requireContext(), CertificateViewerActivity::class.java))
+                    }
+                    shareButton.setOnClickListener {
+                        shareContact(registeredName.ifEmpty { identifier.uri })
+                    }
+                    qrCode.setOnClickListener { showContactQRCode(identifier) }
                 })
             conversationDelete.setOnClickListener {
                 if (conversation.isLegacy())
@@ -305,6 +329,7 @@ class ConversationActionsFragment : Fragment() {
                 conversationRemove.isVisible = false
                 blockContact.text = resources.getString(R.string.conversation_action_unblock_this)
                 conversationDetailsPanel.visibility = View.GONE
+                conversationSectionHeader.visibility = View.GONE
                 conversationActionsPanel.visibility = View.GONE
             }
 
@@ -314,6 +339,7 @@ class ConversationActionsFragment : Fragment() {
                 conversationRemove.isVisible = false
                 conversationActionsPanel.visibility = View.GONE
                 conversationDetailsPanel.visibility = View.GONE
+                conversationSectionHeader.visibility = View.GONE
                 conversationDelete.isVisible = !mAccountService.currentAccount!!.isSip
                 conversationDelete.text = resources.getString(R.string.ab_action_contact_add)
             } else if (conversation.mode.blockingFirst() == Conversation.Mode.Request) {
@@ -324,6 +350,8 @@ class ConversationActionsFragment : Fragment() {
                 conversationDelete.text = resources.getString(R.string.delete_contact)
             }
         } else {    // If conversation mode is not one to one
+            contactPanel.isVisible = false
+            contactSectionHeader.isVisible = false
             conversationDelete.setText(if (conversationMode == Conversation.Mode.Feed) R.string.leave_feed else R.string.leave_conversation)
             conversationDelete.setOnClickListener {
                 if (conversation.mode.blockingFirst() == Conversation.Mode.Request)
@@ -415,6 +443,24 @@ class ConversationActionsFragment : Fragment() {
         binding = null
         mDisposableBag.dispose()
         super.onDestroy()
+    }
+
+    private fun shareContact(displayName: String) {
+        val sharingIntent = Intent(Intent.ACTION_SEND)
+        sharingIntent.type = "text/plain"
+        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getText(R.string.share_contact_intent_title))
+        sharingIntent.putExtra(
+            Intent.EXTRA_TEXT,
+            getString(R.string.share_contact_intent_body, displayName, getText(R.string.app_website))
+        )
+        startActivity(Intent.createChooser(sharingIntent, getText(R.string.share_via)))
+    }
+
+    private fun showContactQRCode(contactUri: Uri) {
+        QRCodeFragment.newInstance(
+            QRCodeFragment.MODE_SHARE,
+            contactUri = contactUri
+        ).show(parentFragmentManager, QRCodeFragment::class.java.simpleName)
     }
 
     companion object {
