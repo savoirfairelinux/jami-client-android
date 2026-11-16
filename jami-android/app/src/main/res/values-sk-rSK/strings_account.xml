@@ -250,6 +250,7 @@
   <string name="account_rename_device_hint">Zvoľte nový názov zariadenia</string>
   <string name="account_device_name_empty">Názov zariadenia nemôže byť prázdny.</string>
   <string name="account_device_this_indicator">Toto zariadenie</string>
+  <string name="account_device_never_synced">Nikdy</string>
   <string name="account_disabled_indicator">Znižujúci</string>
   <string name="account_device_id">ID zariadenia</string>
   <!--Link a new device-->

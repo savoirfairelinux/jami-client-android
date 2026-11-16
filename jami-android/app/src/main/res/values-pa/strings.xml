@@ -285,4 +285,5 @@
   <string name="shared_services_type_custom_label">ਮਨਮਰਜ਼ੀ</string>
   <!--Collaborative documents-->
   <string name="collab_create">ਬਣਾਓ</string>
+  <!--Threaded conversations-->
 </resources>

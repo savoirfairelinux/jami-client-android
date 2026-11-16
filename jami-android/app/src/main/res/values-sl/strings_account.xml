@@ -250,6 +250,7 @@
   <string name="account_rename_device_hint">Izberite novo ime naprave</string>
   <string name="account_device_name_empty">Ime naprave ne more biti prazno.</string>
   <string name="account_device_this_indicator">Ta naprava</string>
+  <string name="account_device_never_synced">Nikoli</string>
   <string name="account_disabled_indicator">Onemogočeno</string>
   <string name="account_device_id">ID naprave</string>
   <!--Link a new device-->

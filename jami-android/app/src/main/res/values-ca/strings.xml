@@ -120,6 +120,8 @@
   <string name="action_call_end_accept">Accepta la trucada entrant i finalitza l\'actual</string>
   <string name="action_call_decline">Rebutja</string>
   <string name="action_call_mic_mute">Silencia el micròfon</string>
+  <string name="action_call_mic_unmute">Activa el so del micròfon</string>
+  <string name="action_call_lower_hand">Man baixa</string>
   <string name="action_load_extension">Carrega l\'extensió</string>
   <string name="ab_action_speakerphone">Activa l\'altaveu</string>
   <string name="ab_action_contact_add">Afegeix als contactes</string>
@@ -132,7 +134,7 @@
   <string name="scan_qr">Escaneja un codi QR</string>
   <string name="qr_code">Codi QR</string>
   <string name="qr_code_not_contact">No és un codi QR de contacte de Jami</string>
-  <string name="new_group">Crea un grup nou</string>
+  <string name="new_group">Grup nou</string>
   <string name="ab_action_flipcamera">Canvia la càmera</string>
   <string name="ab_action_hidepreview">Amaga la previsualització</string>
   <string name="remote_recording">%s gravant...</string>
@@ -629,4 +631,5 @@
   <string name="collab_link_add">Afegir</string>
   <string name="collab_link_remove">Eliminar</string>
   <string name="collab_remove">Eliminar</string>
+  <!--Threaded conversations-->
 </resources>

@@ -97,6 +97,8 @@
   <string name="switch_to_video">Gaitu bideoa</string>
   <string name="action_call_decline">Ukatu</string>
   <string name="action_call_mic_mute">Mututu mikrofonoa</string>
+  <string name="action_call_mic_unmute">Kendu mutua mikrofonoari</string>
+  <string name="action_call_lower_hand">Beheko eskua</string>
   <string name="ab_action_contact_add">Gehitu kontaktuetara</string>
   <string name="ab_action_contact_add_question">Gehitu kontaktuetara?</string>
   <string name="ab_action_audio_call">Hasi audio-deia</string>
@@ -105,7 +107,6 @@
   <string name="share_via">Partekatu honen bidez</string>
   <string name="scan_qr">Eskaneatu QR kodea</string>
   <string name="qr_code">QR kodea</string>
-  <string name="new_group">Sortu talde berria</string>
   <string name="ab_action_flipcamera">Itzulbiratu kamera</string>
   <string name="ab_action_hidepreview">Ezkutatu aurretiko bista</string>
   <string name="remote_recording">%s Grabatzen...</string>
@@ -394,4 +395,5 @@
   <string name="collab_link_add">Gehitu</string>
   <string name="collab_link_remove">Kendu</string>
   <string name="collab_remove">Kendu</string>
+  <!--Threaded conversations-->
 </resources>

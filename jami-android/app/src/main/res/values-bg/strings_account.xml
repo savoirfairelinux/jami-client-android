@@ -196,6 +196,7 @@
   <string name="rename_device_button">Преименуване на устройството</string>
   <string name="account_rename_device_hint">Изберете ново име за устройството</string>
   <string name="account_device_this_indicator">Това устройство</string>
+  <string name="account_device_never_synced">Никога</string>
   <string name="account_disabled_indicator">Опасни</string>
   <string name="account_device_id">Идентификатор на устройството</string>
   <!--Link a new device-->

@@ -197,6 +197,7 @@
   <string name="rename_device_button">Ubah nama perangkat</string>
   <string name="account_rename_device_hint">Pilih nama perangkat baru</string>
   <string name="account_device_this_indicator">Perangkat ini</string>
+  <string name="account_device_never_synced">Tidak Akan</string>
   <string name="account_disabled_indicator">Dinonaktifan</string>
   <string name="account_device_id">ID perangkat</string>
   <!--Link a new device-->

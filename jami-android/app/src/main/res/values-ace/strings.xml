@@ -56,6 +56,7 @@
   <string name="switch_to_video">ڤرلو ممڤوپا?? ي ڤيديو</string>
   <string name="action_call_decline">ڤڠڬيلن</string>
   <string name="action_call_mic_mute">ميكروفون خاموش</string>
+  <string name="action_call_lower_hand">يڠ دالم لالو</string>
   <string name="ab_action_contact_add">مڠهادڤکن ڤڠݢونا</string>
   <string name="ab_action_audio_call">ڤرودوک ڤرودوک</string>
   <string name="ab_action_video_call">ڤرلو ممبنتو ڤيليهن</string>
@@ -197,4 +198,5 @@
   <string name="collab_link_add">مڠمبيل</string>
   <string name="collab_link_remove">Sampôh</string>
   <string name="collab_remove">Sampôh</string>
+  <!--Threaded conversations-->
 </resources>

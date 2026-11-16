@@ -250,6 +250,7 @@
   <string name="account_rename_device_hint">Kies een nieuwe apparaatnaam</string>
   <string name="account_device_name_empty">Apparaatnaam mag niet leeg zijn.</string>
   <string name="account_device_this_indicator">Dit apparaat</string>
+  <string name="account_device_never_synced">Nooit</string>
   <string name="account_disabled_indicator">Belemmeringen</string>
   <string name="account_device_id">Apparaat-ID</string>
   <!--Link a new device-->

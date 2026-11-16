@@ -117,6 +117,7 @@
   <string name="action_call_end_accept">Aceutar llamada entrante y desaniciar l\'actual</string>
   <string name="action_call_decline">Refugar</string>
   <string name="action_call_mic_mute">Callar los micrófonos</string>
+  <string name="action_call_lower_hand">La mano inferior</string>
   <string name="action_load_extension">Cargar estensión</string>
   <string name="ab_action_speakerphone">Encender altavoces</string>
   <string name="ab_action_contact_add">Aponer a los contactos</string>
@@ -129,7 +130,6 @@
   <string name="scan_qr">Escaniar códigu QR</string>
   <string name="qr_code">Códigu QR</string>
   <string name="qr_code_not_contact">Non ye un códigu QR de Jami</string>
-  <string name="new_group">Crear nuevo grupu</string>
   <string name="ab_action_flipcamera">Voltiar cámara</string>
   <string name="ab_action_hidepreview">Esconder vista previa</string>
   <string name="remote_recording">%s grabando...</string>
@@ -412,4 +412,5 @@
   <string name="collab_link_add">Aumenta</string>
   <string name="collab_link_remove">Desaniciar</string>
   <string name="collab_remove">Desaniciar</string>
+  <!--Threaded conversations-->
 </resources>

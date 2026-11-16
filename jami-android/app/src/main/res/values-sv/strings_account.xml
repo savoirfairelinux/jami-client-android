@@ -250,6 +250,7 @@
   <string name="account_rename_device_hint">Välj nytt enhetsnamn</string>
   <string name="account_device_name_empty">Enhetsnamnet får inte vara tomt.</string>
   <string name="account_device_this_indicator">Denna enhet</string>
+  <string name="account_device_never_synced">Aldrig</string>
   <string name="account_disabled_indicator">Behindrade</string>
   <string name="account_device_id">Enhets-ID</string>
   <!--Link a new device-->

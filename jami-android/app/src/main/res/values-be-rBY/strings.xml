@@ -67,10 +67,11 @@
   <string name="switch_to_video">Уключыць відэа</string>
   <string name="action_call_decline">Падзенне</string>
   <string name="action_call_mic_mute">Непаўны мікрафон</string>
+  <string name="action_call_mic_unmute">Зняць заглушэнне мікрафона</string>
+  <string name="action_call_lower_hand">Ніжняя рука</string>
   <string name="ab_action_contact_add">Дадаць да кантактаў</string>
   <string name="ab_action_audio_call">Пачатак аўдыё-запаведзі</string>
   <string name="ab_action_video_call">Пачатак відэазванку</string>
-  <string name="new_group">Стварыць новую групу</string>
   <!--Text messages-->
   <string name="message_failed">Недасягнуты</string>
   <string name="time_just_now">Толькі што</string>
@@ -251,4 +252,5 @@
   <string name="collab_link_add">Дадаць</string>
   <string name="collab_link_remove">Выдаліць</string>
   <string name="collab_remove">Выдаліць</string>
+  <!--Threaded conversations-->
 </resources>

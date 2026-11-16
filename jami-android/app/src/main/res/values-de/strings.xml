@@ -123,6 +123,13 @@
   <string name="action_call_end_accept">Eingehenden Anruf annehmen und den aktuellen Anruf beenden</string>
   <string name="action_call_decline">Ablehnen</string>
   <string name="action_call_mic_mute">Mikrofon stummschalten</string>
+  <string name="action_call_mic_unmute">Mikrofon-Stummschaltung aufheben</string>
+  <string name="action_call_camera_on">Kamera einschalten</string>
+  <string name="action_call_camera_off">Kamera ausschalten</string>
+  <string name="action_call_stop_screen_share">Bildschirmfreigabe beenden</string>
+  <string name="action_call_lower_hand">Hand senken</string>
+  <string name="action_call_show_extensions">Erweiterungen anzeigen</string>
+  <string name="action_call_show_participants">Teilnehmer anzeigen</string>
   <string name="action_load_extension">Erweiterung laden</string>
   <string name="ab_action_speakerphone">Lautsprecher einschalten</string>
   <string name="ab_action_contact_add">Zu Kontakten hinzufügen</string>
@@ -135,7 +142,7 @@
   <string name="scan_qr">QR-Code scannen</string>
   <string name="qr_code">QR-Code</string>
   <string name="qr_code_not_contact">Kein QR-Code eines Jami-Kontakts</string>
-  <string name="new_group">Neue Gruppe erstellen</string>
+  <string name="new_group">Neue Gruppe</string>
   <string name="ab_action_flipcamera">Kamera wechseln</string>
   <string name="ab_action_hidepreview">Vorschau ausblenden</string>
   <string name="remote_recording">Aufnahme läuft bei %s</string>
@@ -480,6 +487,16 @@
   <string name="dialog_hint_description">Beschreibung</string>
   <string name="picker_title">Kontakte auswählen</string>
   <string name="picker_btn">Kontakte wählen</string>
+  <string name="picker_close">Kontaktauswahl schließen</string>
+  <string name="picker_search_hint">Kontakte suchen</string>
+  <string name="picker_create_group">Gruppe erstellen</string>
+  <string name="picker_add_members">Mitglieder hinzufügen</string>
+  <string name="picker_no_matches">Keine passenden Kontakte gefunden</string>
+  <string name="picker_remove_contact">%1$s entfernen</string>
+  <plurals name="picker_selection_count">
+    <item quantity="one">%d ausgewählt</item>
+    <item quantity="other">%d ausgewählt</item>
+  </plurals>
   <string name="no_contact_to_add">Sie haben keinen Kontakt zum Hinzufügen</string>
   <string name="bottomsheet_contact">Kontakt Jami\n%1$s</string>
   <string name="bottomsheet_block">Mitglied blockieren</string>
@@ -694,4 +711,5 @@
   <string name="collab_document_removed_message">\"%1$s\" wurde von seinem Autor entfernt.</string>
   <string name="collab_document_removed_locally">Dokument von diesem Gerät entfernt</string>
   <string name="collab_document_removed_locally_message">\"%1$s\" ist nicht mehr auf diesem Gerät. Beim erneuten Öffnen wird es wieder heruntergeladen.</string>
+  <!--Threaded conversations-->
 </resources>

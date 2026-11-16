@@ -188,6 +188,7 @@
   <string name="rename_device_button">Re-nomigilo</string>
   <string name="account_rename_device_hint">Elektu novan aparaton</string>
   <string name="account_device_this_indicator">Tiu aparato</string>
+  <string name="account_device_never_synced">Neniam</string>
   <string name="account_disabled_indicator">Malsanaj</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Tiu formato ne estas subtenata.</string>

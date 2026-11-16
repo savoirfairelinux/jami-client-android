@@ -250,6 +250,7 @@
   <string name="account_rename_device_hint">Pasirinkti naują įrenginio pavadinimą</string>
   <string name="account_device_name_empty">Įrenginio pavadinimas negali būti tuščias.</string>
   <string name="account_device_this_indicator">Šis įrenginys</string>
+  <string name="account_device_never_synced">Niekada</string>
   <string name="account_disabled_indicator">Išjungta</string>
   <string name="account_device_id">Įrenginio ID</string>
   <!--Link a new device-->

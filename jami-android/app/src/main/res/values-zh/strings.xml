@@ -122,6 +122,13 @@
   <string name="action_call_end_accept">接听来电并结束当前通话</string>
   <string name="action_call_decline">拒接</string>
   <string name="action_call_mic_mute">关闭麦克风</string>
+  <string name="action_call_mic_unmute">麦克风静音</string>
+  <string name="action_call_camera_on">打开摄像头</string>
+  <string name="action_call_camera_off">关闭摄像头</string>
+  <string name="action_call_stop_screen_share">停止分享畫面</string>
+  <string name="action_call_lower_hand">放下手</string>
+  <string name="action_call_show_extensions">显示扩展</string>
+  <string name="action_call_show_participants">显示参与者</string>
   <string name="action_load_extension">加载扩展</string>
   <string name="ab_action_speakerphone">打开扬声器</string>
   <string name="ab_action_contact_add">添加至通讯录</string>
@@ -134,7 +141,7 @@
   <string name="scan_qr">扫描二维码</string>
   <string name="qr_code">二维码</string>
   <string name="qr_code_not_contact">不是 Jami 的二维码</string>
-  <string name="new_group">建立新群组</string>
+  <string name="new_group">新群组</string>
   <string name="ab_action_flipcamera">翻转相机</string>
   <string name="ab_action_hidepreview">隐藏预览</string>
   <string name="remote_recording">%s录制中...</string>
@@ -480,6 +487,15 @@
   <string name="dialog_hint_description">描述</string>
   <string name="picker_title">选择联系人</string>
   <string name="picker_btn">选择联系人</string>
+  <string name="picker_close">关闭联系人选择器</string>
+  <string name="picker_search_hint">搜索联系人</string>
+  <string name="picker_create_group">创建群组</string>
+  <string name="picker_add_members">添加成员</string>
+  <string name="picker_no_matches">没有匹配的联系人</string>
+  <string name="picker_remove_contact">移除%1$s</string>
+  <plurals name="picker_selection_count">
+    <item quantity="other">已选择%d项</item>
+  </plurals>
   <string name="no_contact_to_add">您没有要添加的联系人</string>
   <string name="bottomsheet_contact">联系Jami\n%1$s</string>
   <string name="bottomsheet_block">群员</string>
@@ -692,4 +708,5 @@
   <string name="collab_document_removed_message">“%1$s”已被其作者移除。</string>
   <string name="collab_document_removed_locally">文档已从此设备移除</string>
   <string name="collab_document_removed_locally_message">“%1$s”已不在此设备上。再次打开将重新下载。</string>
+  <!--Threaded conversations-->
 </resources>

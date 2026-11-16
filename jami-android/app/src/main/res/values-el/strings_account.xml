@@ -205,6 +205,7 @@
   <string name="rename_device_button">Επανακατακατηγορία</string>
   <string name="account_rename_device_hint">Επιλέξτε νέο όνομα συσκευής</string>
   <string name="account_device_this_indicator">Αυτή η συσκευή</string>
+  <string name="account_device_never_synced">Ποτέ</string>
   <string name="account_disabled_indicator">Αναπηρία</string>
   <string name="account_device_id">Αναγνωριστικό συσκευής</string>
   <!--Link a new device-->

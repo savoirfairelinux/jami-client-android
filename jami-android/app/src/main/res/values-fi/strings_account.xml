@@ -250,6 +250,7 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_rename_device_hint">Valitse laitteelle uusi nimi</string>
   <string name="account_device_name_empty">Laitteen nimi ei voi olla tyhjä.</string>
   <string name="account_device_this_indicator">Tämä laite</string>
+  <string name="account_device_never_synced">Ei koskaan</string>
   <string name="account_disabled_indicator">Poistettu</string>
   <string name="account_device_id">Laite id</string>
   <!--Link a new device-->

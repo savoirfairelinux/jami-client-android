@@ -123,6 +123,13 @@
   <string name="action_call_end_accept">Vasta uuele sissetulevale kõnele ja lõpeta pooleliolev kõne</string>
   <string name="action_call_decline">Keeldu</string>
   <string name="action_call_mic_mute">Summuta mikrofon</string>
+  <string name="action_call_mic_unmute">Lõpeta mikrofoni summutamine</string>
+  <string name="action_call_camera_on">Lülita kaamera sisse</string>
+  <string name="action_call_camera_off">Lülita kaamera välja</string>
+  <string name="action_call_stop_screen_share">Lõpeta ekraani jagamine</string>
+  <string name="action_call_lower_hand">Lase käsi alla</string>
+  <string name="action_call_show_extensions">Näita lisamooduleid</string>
+  <string name="action_call_show_participants">Näita osalejaid</string>
   <string name="action_load_extension">Laadi lisamoodul</string>
   <string name="ab_action_speakerphone">Lülita valjuhääldi sisse</string>
   <string name="ab_action_contact_add">Lisa kontaktitele</string>
@@ -135,7 +142,7 @@
   <string name="scan_qr">Skaneeri QR-koodi</string>
   <string name="qr_code">QR-kood</string>
   <string name="qr_code_not_contact">See pole Jami kontakti QR-kood</string>
-  <string name="new_group">Loo uus grupp</string>
+  <string name="new_group">Uus grupp</string>
   <string name="ab_action_flipcamera">Pööra kaamerat</string>
   <string name="ab_action_hidepreview">Peida eelvaade</string>
   <string name="remote_recording">%s on salvestamas...</string>
@@ -480,6 +487,16 @@
   <string name="dialog_hint_description">Kirjeldus</string>
   <string name="picker_title">Vali kontaktid</string>
   <string name="picker_btn">Vali kontaktid</string>
+  <string name="picker_close">Sulge kontaktivalija</string>
+  <string name="picker_search_hint">Otsi kontakte</string>
+  <string name="picker_create_group">Lisa grupp</string>
+  <string name="picker_add_members">Lisa osalejaid</string>
+  <string name="picker_no_matches">Otsingule vastavaid kontakte polnud</string>
+  <string name="picker_remove_contact">Eemalda %1$s</string>
+  <plurals name="picker_selection_count">
+    <item quantity="one">%d on valitud</item>
+    <item quantity="other">%d on valitud</item>
+  </plurals>
   <string name="no_contact_to_add">Sul pole ühtegi lisatavat kontakti</string>
   <string name="bottomsheet_contact">Võta ühendust Jami arendajatega\n%1$s</string>
   <string name="bottomsheet_block">Blokeeri osaleja</string>
@@ -696,4 +713,5 @@ Kui klõpsid „Kinnita“, siis jätkame kasutajakonto eksportimisega.</string>
   <string name="collab_document_removed_message">„%1$s“ on autori poolt eemaldatud.</string>
   <string name="collab_document_removed_locally">Dokument on sellest seadmest eemaldatud.</string>
   <string name="collab_document_removed_locally_message">„%1$s“ dokumenti enam ei leidu selles seadmes. Tema uuesti avamisel laaditakse ta uuesti alla.</string>
+  <!--Threaded conversations-->
 </resources>

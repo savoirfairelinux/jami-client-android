@@ -250,6 +250,7 @@ Możesz to zmienić później.</string>
   <string name="account_rename_device_hint">Wybierz nową nazwę dla urządzenia</string>
   <string name="account_device_name_empty">Nazwa urządzenia nie może być pusta.</string>
   <string name="account_device_this_indicator">To urządzenie</string>
+  <string name="account_device_never_synced">Nigdy</string>
   <string name="account_disabled_indicator">Niepełnosprawni</string>
   <string name="account_device_id">ID urządzenia</string>
   <!--Link a new device-->

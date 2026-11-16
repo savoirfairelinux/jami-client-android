@@ -205,6 +205,7 @@
   <string name="rename_device_button">أعد تسمية الجهاز</string>
   <string name="account_rename_device_hint">اختر اسم جهاز جديد</string>
   <string name="account_device_this_indicator">هذا الجهاز</string>
+  <string name="account_device_never_synced">أبدا</string>
   <string name="account_disabled_indicator">معطل</string>
   <string name="account_device_id">معرّف الجهاز</string>
   <!--Link a new device-->

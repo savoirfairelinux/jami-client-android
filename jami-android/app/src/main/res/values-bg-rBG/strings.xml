@@ -97,6 +97,8 @@
   <string name="switch_to_video">Активиране на видео</string>
   <string name="action_call_decline">Отказ</string>
   <string name="action_call_mic_mute">Заглушаване на микрофона</string>
+  <string name="action_call_mic_unmute">Премахване на заглушаването на микрофона</string>
+  <string name="action_call_lower_hand">Ниска ръка</string>
   <string name="ab_action_contact_add">Добавяне към контактите</string>
   <string name="ab_action_contact_add_question">Добавяне към контактите?</string>
   <string name="ab_action_audio_call">Започване на гласов разговор</string>
@@ -105,7 +107,6 @@
   <string name="share_via">Споделяне чрез</string>
   <string name="scan_qr">Сканиране на QR-код</string>
   <string name="qr_code">QR код</string>
-  <string name="new_group">Създаване на нова група</string>
   <string name="ab_action_flipcamera">Обръщане на камерата</string>
   <string name="ab_action_hidepreview">Скрийте предварителното преглеждане</string>
   <string name="remote_recording">Записване на %s...</string>
@@ -397,4 +398,5 @@
   <string name="collab_link_add">Добавяне</string>
   <string name="collab_link_remove">Премахване</string>
   <string name="collab_remove">Премахване</string>
+  <!--Threaded conversations-->
 </resources>

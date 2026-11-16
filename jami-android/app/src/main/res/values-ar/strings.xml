@@ -105,6 +105,8 @@
   <string name="switch_to_video">فعل الفيديو</string>
   <string name="action_call_decline">رفض</string>
   <string name="action_call_mic_mute">كتم ميكروفون</string>
+  <string name="action_call_mic_unmute">إلغاء كتم الميكروفون</string>
+  <string name="action_call_lower_hand">اليد السفلى</string>
   <string name="ab_action_speakerphone">تشغيل مكبر الصوت</string>
   <string name="ab_action_contact_add">إضافة إلى جهات الاتصال</string>
   <string name="ab_action_contact_add_question">إضافة إلى جهات الإتصال؟</string>
@@ -114,7 +116,7 @@
   <string name="share_via">مشاركة عبر</string>
   <string name="scan_qr">مسح رمز الإستجابة السريعة</string>
   <string name="qr_code">رمز الإستجابة السريعة</string>
-  <string name="new_group">إنشاء مجموعة جديدة</string>
+  <string name="new_group">مجموعة جديدة</string>
   <string name="ab_action_flipcamera">قلب كاميرا</string>
   <string name="ab_action_hidepreview">إخفاء معاينة</string>
   <string name="remote_recording">%s تسجيل... </string>
@@ -433,4 +435,5 @@
   <string name="collab_link_add">إضافة</string>
   <string name="collab_link_remove">احذف</string>
   <string name="collab_remove">احذف</string>
+  <!--Threaded conversations-->
 </resources>

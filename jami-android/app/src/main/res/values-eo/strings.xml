@@ -86,6 +86,7 @@
   <string name="switch_to_video">Ŝalti Videon</string>
   <string name="action_call_decline">Rifuzi</string>
   <string name="action_call_mic_mute">Muta mikrofono</string>
+  <string name="action_call_lower_hand">Malsupra mano</string>
   <string name="ab_action_contact_add">Aldoni al kontaktoj</string>
   <string name="ab_action_contact_add_question">Ĉu aldoni al kontaktoj?</string>
   <string name="ab_action_audio_call">Komenci la aŭdian alvokon</string>
@@ -352,4 +353,5 @@
   <string name="collab_link_add">Aldoni</string>
   <string name="collab_link_remove">Forigi</string>
   <string name="collab_remove">Forigi</string>
+  <!--Threaded conversations-->
 </resources>

@@ -16,6 +16,14 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <!--Call Fragment-->
+  <string name="action_call_mic_unmute">Activar micrófono</string>
+  <string name="action_call_camera_on">Encender la cámara</string>
+  <string name="action_call_camera_off">Apagar la cámara</string>
+  <string name="action_call_stop_screen_share">Dejar de compartir pantalla</string>
+  <string name="action_call_lower_hand">Bajar la mano</string>
+  <string name="action_call_show_extensions">Mostrar extensiones</string>
+  <string name="action_call_show_participants">Mostrar participantes</string>
+  <string name="new_group">Nuevo grupo</string>
   <!--Text messages-->
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
@@ -41,6 +49,12 @@
   <!--Bottom sheet-->
   <string name="audio_output_mute">Silenciar</string>
   <!--Swarm Details-->
+  <string name="picker_close">Selector de contactos cercanos</string>
+  <string name="picker_search_hint">Buscar contactos</string>
+  <string name="picker_create_group">Crear grupo</string>
+  <string name="picker_add_members">Añadir miembros</string>
+  <string name="picker_no_matches">Sin contactos coincidentes</string>
+  <string name="picker_remove_contact">Eliminar %1$s</string>
   <string name="bottomsheet_block">Miembro bloqueado</string>
   <string name="bottomsheet_unblock">Miembro desbloqueado</string>
   <string name="group_member_blocked">Bloqueado</string>
@@ -106,4 +120,5 @@
   <string name="collab_document_removed_message">\"%1$s\" su autor lo eliminó.</string>
   <string name="collab_document_removed_locally">Documento eliminado de este dispositivo</string>
   <string name="collab_document_removed_locally_message">\"%1$s\" ya no está en este dispositivo. Al abrirlo otra vez se descarga de nuevo.</string>
+  <!--Threaded conversations-->
 </resources>

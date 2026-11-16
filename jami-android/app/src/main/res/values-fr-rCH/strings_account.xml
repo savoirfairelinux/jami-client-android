@@ -250,6 +250,7 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <string name="account_rename_device_hint">Choisir un nouveau nom d\'appareil</string>
   <string name="account_device_name_empty">Le nom d\'appareil ne peut être vide.</string>
   <string name="account_device_this_indicator">Cet appareil</string>
+  <string name="account_device_never_synced">Jamais</string>
   <string name="account_disabled_indicator">Désactivé</string>
   <string name="account_device_id">Identifiant d\'appareil</string>
   <!--Link a new device-->

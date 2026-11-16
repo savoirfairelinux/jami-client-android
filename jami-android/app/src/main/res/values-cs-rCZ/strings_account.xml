@@ -251,6 +251,7 @@ Zadejte, prosím, své heslo.</string>
   <string name="account_rename_device_hint">Zvolit si název nového zařízení</string>
   <string name="account_device_name_empty">Název zařízení nesmí být prázdný.</string>
   <string name="account_device_this_indicator">Toto zařízení</string>
+  <string name="account_device_never_synced">Nikdy</string>
   <string name="account_disabled_indicator">zakázáno</string>
   <string name="account_device_id">ID zařízení</string>
   <!--Link a new device-->

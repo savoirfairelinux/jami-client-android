@@ -100,6 +100,8 @@
   <string name="switch_to_video">Ενεργοποίηση βίντεο</string>
   <string name="action_call_decline">Απόρριψη κλήσης</string>
   <string name="action_call_mic_mute">Σίγαση μικροφώνου</string>
+  <string name="action_call_mic_unmute">Κατάργηση σίγασης μικροφώνου</string>
+  <string name="action_call_lower_hand">Κάτω χέρι</string>
   <string name="ab_action_speakerphone">Ενεργοποίηση ηχείου</string>
   <string name="ab_action_contact_add">Προσθήκη στις επαφές</string>
   <string name="ab_action_contact_add_question">Προσθήκη στις επαφές;</string>
@@ -109,7 +111,7 @@
   <string name="share_via">Μοίρασμα μέσω</string>
   <string name="scan_qr">Σάρωση QR κώδικα</string>
   <string name="qr_code">QR κώδικας</string>
-  <string name="new_group">Δημιουργία νέας ομάδας</string>
+  <string name="new_group">Νέα ομάδα</string>
   <string name="ab_action_flipcamera">Εναλλαγή κάμερας</string>
   <string name="ab_action_hidepreview">Απόκρυψη προεπισκόπησης</string>
   <string name="remote_recording">%s καταγράφει...</string>
@@ -426,4 +428,5 @@
   <string name="collab_link_add">Προσθήκη</string>
   <string name="collab_link_remove">Απομακρύνετε</string>
   <string name="collab_remove">Απομακρύνετε</string>
+  <!--Threaded conversations-->
 </resources>
