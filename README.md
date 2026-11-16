@@ -106,6 +106,15 @@ compact, single-line summary sits beside contact names without adding another
 row. Up to two label names fit in the available space; extra labels are
 represented by a `+N` pill. Accessibility descriptions retain all label names.
 
+The Android share screen also offers label chips. Selecting one asks for
+confirmation with the recipient count, then queues the text and/or files
+individually to the label's current, unblocked contacts on that account; it
+does not create a group. Recipient membership is checked again before sending.
+Each recipient gets a separate file copy, and temporary share copies are removed
+afterward. The operation survives screen rotation. Failures are reported,
+including partial completion; there is no automatic retry that could duplicate
+messages. Other recipients are still attempted if one recipient fails.
+
 Labels are private to the account, never sent to the contact. They use the
 daemon contact metadata API: the `labels` register contains a UTF-8 JSON array
 of trimmed, unique, case-sensitive strings, with `[]` representing no labels.

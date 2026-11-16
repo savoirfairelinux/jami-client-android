@@ -164,7 +164,7 @@ class ConversationFacade(
         }
         if (conversation.isSwarm) {
             val destPath = mDeviceRuntimeService.getNewConversationPath(conversation.accountId, conversation.uri.rawRingId, file.name)
-            moveFile(file, destPath)
+            check(moveFile(file, destPath)) { "Cannot prepare outgoing file" }
             mAccountService.sendFile(conversation, destPath, replyTo)
         }
     }

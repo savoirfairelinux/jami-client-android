@@ -68,6 +68,10 @@ class Account(
     val contactLabels: Observable<List<String>> = contactListSubject.map { contacts ->
         contacts.filterNot { it.isBlocked }.flatMap { it.labels }.distinct().sorted()
     }
+
+    fun getContactsWithLabel(label: String): List<Contact> =
+        contacts.values.filter { !it.isBlocked && !it.isUser && label in it.labels }
+
     private val contactLocations: MutableMap<Contact, Observable<ContactLocation>> = HashMap()
     private val mLocationSubject: Subject<Map<Contact, Observable<ContactLocation>>> = BehaviorSubject.createDefault(contactLocations)
     private val mLocationStartedSubject: Subject<ContactLocationEntry> = PublishSubject.create()
