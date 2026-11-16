@@ -36,7 +36,7 @@ class SmartListPresenter @Inject constructor(
     @param:Named("UiScheduler") private val uiScheduler: Scheduler
 ) : RootPresenter<SmartListView>() {
 
-    private val conversationFilter = BehaviorSubject.createDefault(ConversationFilter.All)
+    private val conversationFilter = BehaviorSubject.createDefault<ConversationFilter>(ConversationFilter.All)
 
     override fun bindView(view: SmartListView) {
         super.bindView(view)

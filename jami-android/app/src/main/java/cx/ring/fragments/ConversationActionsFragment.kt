@@ -22,6 +22,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -31,6 +32,7 @@ import cx.ring.client.ColorChooserBottomSheet
 import cx.ring.client.ConversationDetailsActivity.Companion.EXIT_REASON
 import cx.ring.client.ConversationDetailsActivity.Companion.ExitReason
 import cx.ring.client.EmojiChooserBottomSheet
+import cx.ring.client.showContactLabelsDialog
 import cx.ring.databinding.DialogSwarmTitleBinding
 import cx.ring.databinding.FragConversationActionsBinding
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationColor
@@ -66,6 +68,7 @@ class ConversationActionsFragment : Fragment() {
     private var binding: FragConversationActionsBinding? = null
     private val mDisposableBag = CompositeDisposable()
     private lateinit var conversationPath: ConversationPath
+    private var labelsDialog: AlertDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -209,6 +212,17 @@ class ConversationActionsFragment : Fragment() {
                     this.identifier.text = identifier.uri
                     contactAddedDate.setDate(R.string.contact_added_date, contact.addedDate?.time ?: 0L)
                     contactRemovedDate.setDate(R.string.contact_removed_date, contact.removedDate?.time ?: 0L)
+                    val account = mAccountService.getAccount(path.accountId)
+                    contactLabelsPanel.isVisible = account?.isJami == true && account.isContact(identifier) && !contact.isUser
+                    contactLabels.setLabels(contact.labels)
+                    contactLabelsEmpty.isVisible = contact.labels.isEmpty()
+                    contactLabelsPanel.setOnClickListener {
+                        labelsDialog = showContactLabelsDialog(
+                            requireContext(), contact.labels, account!!.contactLabels.blockingFirst()
+                        ) { labels ->
+                            mAccountService.setContactLabels(path.accountId, identifier, labels)
+                        }
+                    }
                     identifierPanel.setOnClickListener {
                         copyAndShow(requireContext(), getString(R.string.clip_contact_uri), identifier.uri)
                     }
@@ -437,6 +451,12 @@ class ConversationActionsFragment : Fragment() {
 
         binding = this
     }.root
+
+    override fun onDestroyView() {
+        labelsDialog?.dismiss()
+        labelsDialog = null
+        super.onDestroyView()
+    }
 
     override fun onDestroy() {
         binding = null

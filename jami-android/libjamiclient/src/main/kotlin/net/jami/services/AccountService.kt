@@ -16,6 +16,7 @@
  */
 package net.jami.services
 
+import com.google.gson.JsonParseException
 import com.google.gson.JsonParser
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Flowable
@@ -317,7 +318,13 @@ class AccountService(
         Log.w(TAG, "${account.accountId} loading devices")
         account.devices = loadAccountDevices(account.accountId)
         Log.w(TAG, "${account.accountId} loading contacts")
-        account.setContacts(JamiService.getContacts(account.accountId).toNative())
+        val contacts = JamiService.getContacts(account.accountId).toNative()
+        account.setContacts(contacts)
+        Completable.fromAction {
+            for (contact in account.contacts.values.toList()) {
+                loadContactMetadata(account, contact.uri)
+            }
+        }.subscribeOn(scheduler).blockingAwait()
         val conversations: List<String> = JamiService.getConversations(account.accountId)
         Log.w(TAG, "${account.accountId} loading ${conversations.size} conversations: ")
         for (conversationId in conversations) {
@@ -1445,6 +1452,7 @@ class AccountService(
         getAccount(accountId)?.let { account ->
             val details: Map<String, String> = JamiService.getContactDetails(accountId, uri)
             val contact = account.addContact(details)
+            loadContactMetadata(account, contact.uri)
             val conversationUri = contact.conversationUri.blockingFirst()
             if (conversationUri.isSwarm) {
                 var conversation = account.getByUri(conversationUri)
@@ -1457,6 +1465,69 @@ class AccountService(
             if (account.isEnabled) lookupAddress(accountId, "", uri)
         }
     }
+
+    private fun loadContactMetadata(account: Account, uri: Uri) {
+        val metadata = StringMap()
+        try {
+            if (!JamiService.getContactMetadata(account.accountId, uri.rawRingId, metadata)) {
+                Log.e(TAG, "Cannot load contact metadata for ${account.accountId}")
+                return
+            }
+            applyContactMetadata(account, uri, metadata.toNativeFromUtf8())
+        } finally {
+            metadata.delete()
+        }
+    }
+
+    fun contactMetadataChanged(accountId: String, uri: String, metadata: Map<String, String>) {
+        getAccount(accountId)?.let { applyContactMetadata(it, Uri.fromString(uri), metadata) }
+    }
+
+    private fun applyContactMetadata(account: Account, uri: Uri, metadata: Map<String, String>) {
+        try {
+            account.setContactLabels(uri, ContactLabels.decode(metadata[ContactLabels.METADATA_KEY]))
+        } catch (e: JsonParseException) {
+            Log.e(TAG, "Invalid contact labels metadata", e)
+        } catch (e: IllegalArgumentException) {
+            Log.e(TAG, "Invalid contact labels metadata", e)
+        }
+    }
+
+    fun setContactLabels(accountId: String, uri: Uri, labels: Collection<String>): Completable =
+        Completable.fromAction {
+            saveContactLabels(checkNotNull(getAccount(accountId)) { "Account is unavailable" }, uri, labels)
+        }.subscribeOn(scheduler)
+
+    private fun saveContactLabels(account: Account, uri: Uri, labels: Collection<String>) {
+        require(account.isJami && account.isContact(uri)) { "Labels require an existing Jami contact" }
+        val normalized = ContactLabels.normalize(labels)
+        val encoded = ContactLabels.encode(normalized)
+        val updates = StringMap()
+        try {
+            updates.setUnicode(ContactLabels.METADATA_KEY, encoded)
+            check(JamiService.setContactMetadata(account.accountId, uri.rawRingId, updates)) {
+                "Cannot save contact labels"
+            }
+            account.setContactLabels(uri, normalized)
+        } finally {
+            updates.delete()
+        }
+    }
+
+    fun addContactLabel(accountId: String, uris: Collection<Uri>, label: String): Completable =
+        Completable.fromAction {
+            val account = checkNotNull(getAccount(accountId)) { "Account is unavailable" }
+            val name = requireNotNull(ContactLabels.normalize(listOf(label)).singleOrNull()) { "A label name is required" }
+            require(account.isJami && uris.isNotEmpty() && uris.all(account::isContact)) {
+                "Labels require existing Jami contacts"
+            }
+            val updates = uris.distinct().map { uri ->
+                val labels = account.getContactFromCache(uri).labels + name
+                ContactLabels.encode(labels)
+                uri to labels
+            }
+            updates.forEach { (uri, labels) -> saveContactLabels(account, uri, labels) }
+        }.subscribeOn(scheduler)
 
     fun contactRemoved(accountId: String, uri: String, blocked: Boolean) {
         Log.d(TAG, "Contact removed: $uri User is blocked: $blocked")

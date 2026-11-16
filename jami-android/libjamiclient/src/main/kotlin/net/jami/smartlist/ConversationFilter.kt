@@ -18,8 +18,12 @@ package net.jami.smartlist
 
 import net.jami.model.Conversation
 
-enum class ConversationFilter {
-    All, Contacts, Groups, Feeds;
+sealed class ConversationFilter(val name: String) {
+    data object All : ConversationFilter("All")
+    data object Contacts : ConversationFilter("Contacts")
+    data object Groups : ConversationFilter("Groups")
+    data object Feeds : ConversationFilter("Feeds")
+    data class Label(val label: String) : ConversationFilter("Label")
 
     fun matches(conversation: Conversation): Boolean {
         val mode = conversation.effectiveMode
@@ -28,6 +32,12 @@ enum class ConversationFilter {
             Contacts -> mode == Conversation.Mode.Legacy || mode == Conversation.Mode.OneToOne
             Groups -> mode.isGroup && mode != Conversation.Mode.Feed
             Feeds -> mode == Conversation.Mode.Feed
+            is Label -> Contacts.matches(conversation) && conversation.contact?.labels?.contains(label) == true
         }
+    }
+
+    companion object {
+        val entries: List<ConversationFilter>
+            get() = listOf(All, Contacts, Groups, Feeds)
     }
 }

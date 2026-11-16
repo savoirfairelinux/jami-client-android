@@ -28,9 +28,11 @@ import android.view.ViewGroup
 import android.view.accessibility.AccessibilityManager
 import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.app.AlertDialog
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -54,11 +56,13 @@ import cx.ring.account.AccountWizardActivity
 import cx.ring.adapters.SmartListAdapter
 import cx.ring.client.AccountAdapter
 import cx.ring.client.HomeActivity
+import cx.ring.client.showCreateContactLabelDialog
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.utils.BitmapUtils
 import cx.ring.utils.DeviceUtils
 import cx.ring.viewholders.SmartListViewHolder
 import cx.ring.views.AvatarDrawable
+import cx.ring.views.ConversationFilterChips
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -94,7 +98,9 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     private var pendingAdapter: SmartListAdapter? = null
     private var pendingRequests = emptyList<Conversation>()
     private var pendingFeeds = false
-    private val conversationFilter = BehaviorSubject.createDefault(ConversationFilter.All)
+    private val conversationFilter = BehaviorSubject.createDefault<ConversationFilter>(ConversationFilter.All)
+    private var filterChips: ConversationFilterChips? = null
+    private var newLabelDialog: AlertDialog? = null
     private val querySubject = BehaviorSubject.createDefault("")
     private val debouncedQuery = querySubject.debounce { item ->
         if (item.isEmpty()) Observable.empty()
@@ -106,6 +112,23 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
     @Inject
     lateinit var mConversationFacade: ConversationFacade
+
+    private val filterBackPressedCallback = object : OnBackPressedCallback(false) {
+        override fun handleOnBackPressed() {
+            // Home stays started behind the conversation pane and settings.
+            if (!isVisible || parentFragmentManager.backStackEntryCount > 0 ||
+                parentFragmentManager.findFragmentByTag(ConversationFragment.TAG) != null) {
+                isEnabled = false
+                try {
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                } finally {
+                    isEnabled = mBinding != null && conversationFilter.value != ConversationFilter.All
+                }
+                return
+            }
+            selectConversationFilter(ConversationFilter.All)
+        }
+    }
 
     private val searchBackPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
@@ -122,6 +145,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     override fun onAttach(context: Context) {
         super.onAttach(context)
         requireActivity().onBackPressedDispatcher.let {
+            it.addCallback(this, filterBackPressedCallback)
             it.addCallback(this, conversationBackPressedCallback)
             it.addCallback(this, searchBackPressedCallback)
         }
@@ -130,7 +154,9 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         savedInstanceState?.getString(STATE_CONVERSATION_FILTER)?.let { name ->
-            val filter = ConversationFilter.entries.find { it.name == name }
+            val filter = if (name == "Label") {
+                savedInstanceState.getString(STATE_LABEL_FILTER)?.let { ConversationFilter.Label(it) }
+            } else ConversationFilter.entries.find { it.name == name }
             if (filter != null) conversationFilter.onNext(filter)
             else Log.w(TAG, "Unknown saved conversation filter: $name")
         }
@@ -139,6 +165,9 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(STATE_CONVERSATION_FILTER, checkNotNull(conversationFilter.value).name)
+        (conversationFilter.value as? ConversationFilter.Label)?.let {
+            outState.putString(STATE_LABEL_FILTER, it.label)
+        }
     }
 
     override fun onCreateView(
@@ -151,25 +180,11 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         newSwarm.setOnClickListener { startNewSwarm() }
         newFeed.setOnClickListener { startNewFeed() }
 
-        conversationFilters.check(
-            when (checkNotNull(conversationFilter.value)) {
-                ConversationFilter.All -> R.id.filter_all
-                ConversationFilter.Contacts -> R.id.filter_contacts
-                ConversationFilter.Groups -> R.id.filter_groups
-                ConversationFilter.Feeds -> R.id.filter_feeds
-            }
-        )
-        conversationFilters.setOnCheckedStateChangeListener { _, checkedIds ->
-            val filter = when (checkedIds.singleOrNull()) {
-                R.id.filter_all -> ConversationFilter.All
-                R.id.filter_contacts -> ConversationFilter.Contacts
-                R.id.filter_groups -> ConversationFilter.Groups
-                R.id.filter_feeds -> ConversationFilter.Feeds
-                else -> return@setOnCheckedStateChangeListener
-            }
-            conversationFilter.onNext(filter)
-            mSmartListFragment?.setConversationFilter(filter)
-            mSmartListFragment?.scrollToTop()
+        filterChips = ConversationFilterChips(
+            conversationFilterBar.conversationFilters, ::selectConversationFilter, ::createContactLabel
+        ).apply {
+            val selected = checkNotNull(conversationFilter.value)
+            render(listOfNotNull((selected as? ConversationFilter.Label)?.label), selected, false)
         }
 
         // SearchBar is composed of:
@@ -319,6 +334,28 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         mBinding = this
     }.root
 
+    private fun selectConversationFilter(filter: ConversationFilter) {
+        filterBackPressedCallback.isEnabled = filter != ConversationFilter.All
+        conversationFilter.onNext(filter)
+        filterChips?.select(filter)
+        mSmartListFragment?.setConversationFilter(filter)
+        mSmartListFragment?.scrollToTop()
+    }
+
+    private fun createContactLabel() {
+        val account = mAccountService.currentAccount
+        if (account == null || !account.isJami) {
+            Log.w(TAG, "Cannot create a label without a Jami account")
+            Toast.makeText(requireContext(), R.string.generic_error, Toast.LENGTH_SHORT).show()
+            return
+        }
+        newLabelDialog = showCreateContactLabelDialog(requireContext()) { label ->
+            ContactPickerFragment.forLabel(
+                account.accountId, label, account.contacts.values.filterNot { it.isBlocked || it.isUser }
+            ).show(childFragmentManager, ContactPickerFragment.TAG)
+        }
+    }
+
     private fun pendingTitle(isFeed: Boolean): Int =
         if (isFeed) R.string.joinable_feeds else R.string.invitation_card_title
 
@@ -376,9 +413,9 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     private fun expandPendingView() {
         val binding = mBinding ?: return
         if (pendingFeeds) {
-            binding.conversationFilters.check(R.id.filter_feeds)
-        } else if (conversationFilter.value == ConversationFilter.Feeds) {
-            binding.conversationFilters.check(R.id.filter_all)
+            binding.conversationFilterBar.conversationFilters.check(R.id.filter_feeds)
+        } else if (conversationFilter.value == ConversationFilter.Feeds || conversationFilter.value is ConversationFilter.Label) {
+            binding.conversationFilterBar.conversationFilters.check(R.id.filter_all)
         }
         pendingAdapter?.update(pendingRequests)
         binding.invitationCard.pendingToolbar.setTitle(pendingTitle(pendingFeeds))
@@ -412,10 +449,11 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         binding.invitationCard.invitationSummary.isVisible = false
         binding.fragmentContainer.isVisible = false
         binding.newSwarmFab.isVisible = false
-        binding.filterAll.isVisible = !pendingFeeds
-        binding.filterContacts.isVisible = !pendingFeeds
-        binding.filterGroups.isVisible = !pendingFeeds
-        binding.filterFeeds.isVisible = pendingFeeds
+        binding.conversationFilterBar.filterAll.isVisible = !pendingFeeds
+        binding.conversationFilterBar.filterContacts.isVisible = !pendingFeeds
+        binding.conversationFilterBar.filterGroups.isVisible = !pendingFeeds
+        binding.conversationFilterBar.filterFeeds.isVisible = pendingFeeds
+        filterChips?.showLabelActions(false)
 
         // Display pending list.
         binding.invitationCard.pendingListGroup.isVisible = true
@@ -469,10 +507,11 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         binding.invitationCard.invitationSummary.isVisible = true
         binding.newSwarmFab.isVisible = true
         binding.fragmentContainer.isVisible = true
-        binding.filterAll.isVisible = true
-        binding.filterContacts.isVisible = true
-        binding.filterGroups.isVisible = true
-        binding.filterFeeds.isVisible = true
+        binding.conversationFilterBar.filterAll.isVisible = true
+        binding.conversationFilterBar.filterContacts.isVisible = true
+        binding.conversationFilterBar.filterGroups.isVisible = true
+        binding.conversationFilterBar.filterFeeds.isVisible = true
+        filterChips?.showLabelActions(true)
 
         // Hide pending list.
         binding.invitationCard.pendingListGroup.isVisible = false
@@ -496,6 +535,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        filterBackPressedCallback.isEnabled = conversationFilter.value != ConversationFilter.All
 
         ViewCompat.setOnApplyWindowInsetsListener(mBinding!!.searchView) { v, insets ->
             if (v.paddingTop > 0) {
@@ -515,6 +555,20 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
         mSmartListFragment = mBinding!!.fragmentContainer.getFragment()
         mSmartListFragment?.setConversationFilter(checkNotNull(conversationFilter.value))
+        childFragmentManager.setFragmentResultListener(ContactPickerFragment.RESULT_LABEL_CONTACTS, viewLifecycleOwner) { _, result ->
+            val accountId = checkNotNull(result.getString(ContactPickerFragment.RESULT_ACCOUNT))
+            val label = checkNotNull(result.getString(ContactPickerFragment.RESULT_LABEL))
+            val contacts = checkNotNull(result.getStringArrayList(ContactPickerFragment.RESULT_CONTACTS)).map(Uri::fromString)
+            mDisposable.add(mAccountService.addContactLabel(accountId, contacts, label)
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe({
+                    if (mAccountService.currentAccount?.accountId == accountId)
+                        selectConversationFilter(ConversationFilter.Label(label))
+                }, { error ->
+                    Log.e(TAG, "Cannot create contact label", error)
+                    Toast.makeText(requireContext(), R.string.contact_labels_save_error, Toast.LENGTH_LONG).show()
+                }))
+        }
 
         disableAppBarScroll()
 
@@ -534,10 +588,14 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
     override fun onDestroyView() {
         super.onDestroyView()
+        newLabelDialog?.dismiss()
+        newLabelDialog = null
+        filterChips = null
         mSmartListFragment = null
         pendingAdapter = null
         pendingRequests = emptyList()
         pendingFeeds = false
+        filterBackPressedCallback.isEnabled = false
         conversationBackPressedCallback.isEnabled = false
         searchAdapter = null
         mBinding = null
@@ -558,13 +616,24 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             }
         )
 
+        mDisposable.add(mAccountService.currentAccountSubject
+            .switchMap { account -> account.loaded.andThen(account.contactLabels).map { account to it } }
+            .observeOn(DeviceUtils.uiScheduler)
+            .subscribe({ (account, labels) ->
+                filterChips?.render(labels, checkNotNull(conversationFilter.value), account.isJami)
+            }, { error ->
+                Log.e(TAG, "Cannot load contact label filters", error)
+                Toast.makeText(requireContext(), R.string.generic_error, Toast.LENGTH_SHORT).show()
+            }))
+
         mDisposable.add(mAccountService
             .currentAccountSubject
             .switchMap { account ->
                 Observable.combineLatest(
                     account.getPendingSubject(),
-                    conversationFilter.distinctUntilChanged()
-                ) { list, filter ->
+                    conversationFilter.distinctUntilChanged(),
+                    account.contactLabels
+                ) { list, filter, _ ->
                     list.filter {
                         filter.matches(it) &&
                             (filter == ConversationFilter.Feeds || it.effectiveMode != Conversation.Mode.Feed)
@@ -681,7 +750,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
                     .subscribe({ list ->
                         val (feeds, invitations) = list.partition { it.effectiveMode == Conversation.Mode.Feed }
                         val isFeed = invitations.isEmpty()
-                        mBinding?.conversationFilters?.check(
+                        mBinding?.conversationFilterBar?.conversationFilters?.check(
                             if (isFeed) R.id.filter_feeds else R.id.filter_all
                         )
                         pendingRequests = if (isFeed) feeds else invitations
@@ -762,6 +831,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     companion object {
         private val TAG = HomeFragment::class.simpleName!!
         private const val STATE_CONVERSATION_FILTER = "conversation_filter"
+        private const val STATE_LABEL_FILTER = "label_filter"
     }
 
 }

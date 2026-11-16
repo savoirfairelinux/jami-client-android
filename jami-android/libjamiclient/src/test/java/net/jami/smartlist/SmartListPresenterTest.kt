@@ -6,6 +6,9 @@ import io.reactivex.rxjava3.schedulers.TestScheduler
 import io.reactivex.rxjava3.subjects.PublishSubject
 import net.jami.model.Account
 import net.jami.model.Conversation
+import net.jami.model.ConfigKey
+import net.jami.model.AccountConfig
+import net.jami.model.MemberRole
 import net.jami.model.TrustRequest
 import net.jami.model.Uri
 import net.jami.services.AccountService
@@ -19,6 +22,52 @@ import org.mockito.Mockito.`when`
 import java.util.concurrent.TimeUnit
 
 class SmartListPresenterTest {
+    @Test
+    fun labelsAndConversationTypesAreAlternativeFiltersAndMetadataChangesRefreshTheList() {
+        val account = Account("account",
+            mapOf(ConfigKey.ACCOUNT_TYPE.key to AccountConfig.ACCOUNT_TYPE_JAMI), emptyList(),
+            mapOf(ConfigKey.ACCOUNT_REGISTRATION_STATUS.key to "REGISTERED")).apply { setHistoryLoaded() }
+        val peer = Uri.fromId("a".repeat(40))
+        account.addContact(peer.rawRingId, true)
+        val contact = account.getContactFromCache(peer)
+        val direct = account.newSwarm("direct", Conversation.Mode.OneToOne)
+        direct.addContact(contact, MemberRole.MEMBER)
+        account.conversationStarted(direct)
+        val group = account.newSwarm("group", Conversation.Mode.InvitesOnly)
+        group.addContact(contact, MemberRole.MEMBER)
+        account.conversationStarted(group)
+        val facade = mock(ConversationFacade::class.java)
+        val accounts = Observable.just(account)
+        `when`(facade.currentAccountSubject).thenReturn(accounts)
+        `when`(facade.getConversationList(accounts)).thenReturn(
+            account.getConversationsSubject().map { ConversationFacade.ConversationList(it) }
+        )
+        val presenter = SmartListPresenter(facade, mock(AccountService::class.java), Schedulers.trampoline())
+        val displayed = mutableListOf<List<Conversation>>()
+        var emptyStates = 0
+        val view = mock(SmartListView::class.java) { invocation ->
+            when (invocation.method.name) {
+                "updateList" -> displayed.add(invocation.getArgument<ConversationFacade.ConversationList>(0).conversations)
+                "displayNoConversationMessage" -> emptyStates++
+            }
+            null
+        }
+        presenter.bindView(view)
+        account.setContactLabels(peer, setOf("friends"))
+        presenter.setConversationFilter(ConversationFilter.Label("friends"))
+        assertEquals(listOf(direct), displayed.last())
+        presenter.setConversationFilter(ConversationFilter.Groups)
+        assertEquals(listOf(group), displayed.last())
+        presenter.setConversationFilter(ConversationFilter.Contacts)
+        assertEquals(listOf(direct), displayed.last())
+        presenter.setConversationFilter(ConversationFilter.Label("friends"))
+        account.setContactLabels(peer, emptySet())
+        assertEquals(1, emptyStates)
+        presenter.setConversationFilter(ConversationFilter.All)
+        assertEquals(setOf(direct, group), displayed.last().toSet())
+        presenter.unbindView()
+    }
+
     @Test
     fun filtersSeparateContactsNormalGroupsAndFeeds() {
         val modes = listOf(
