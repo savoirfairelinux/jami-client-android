@@ -167,7 +167,6 @@ class ConversationActionsFragment : Fragment() {
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe {
                 conversationJoinedDate.setDate(R.string.conversation_joined_date, it)
-                lifecycleDatesPanel.isVisible = conversationJoinedDate.root.isVisible
             })
 
         // Update color on RX color signal.
