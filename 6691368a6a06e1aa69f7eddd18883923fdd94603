@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fc3d82f_6a449204",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-17T15:47:11Z",
+      "side": 1,
+      "message": "[warning] Line 323: 🟡 `Completable.fromAction { ... }.subscribeOn(scheduler).blockingAwait()` in account loading can deadlock when this method is already running on the same single-thread scheduler, and adds unnecessary Rx scheduling overhead for a synchronous loop. Prefer a direct loop on the current thread here, or a fully async chain without blocking.",
+      "revId": "6691368a6a06e1aa69f7eddd18883923fdd94603",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff9eae31_28dea1b5",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1488,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-17T15:47:11Z",
+      "side": 1,
+      "message": "[error] Line 1488: 🔴 `applyContactMetadata` unconditionally decodes `metadata[\"labels\"]`. If `contactMetadataChanged` delivers a partial metadata delta that does not include the `labels` key, this resolves to `null` and clears existing labels (`emptySet`) on unrelated metadata updates. Only update labels when `metadata` actually contains `ContactLabels.METADATA_KEY` (or merge with the current value) so non-label metadata changes cannot erase labels.",
+      "revId": "6691368a6a06e1aa69f7eddd18883923fdd94603",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
