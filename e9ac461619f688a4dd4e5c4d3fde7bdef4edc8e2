@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "393bfabc_58b78277",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationActionsFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-17T15:41:22Z",
+      "side": 1,
+      "message": "[warning] Line 192: 🟡 Filtering out empty contact lists (`filter(List\u003cContact\u003e::isNotEmpty)`) prevents any emission when the contact disappears/unloads, so previously rendered contact data can stay visible and stale. Handle the empty-list case explicitly (e.g., map to nullable/current state and hide `contactPanel`/clear listeners when no contact is available).",
+      "revId": "e9ac461619f688a4dd4e5c4d3fde7bdef4edc8e2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "664447d2_2e2cd285",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationActionsFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-17T15:41:22Z",
+      "side": 1,
+      "message": "[error] Line 200: 🔴 `subscribe { ... }` has no `onError` handler after introducing `switchMap`/`flatMapSingle` (notably `contact.updatesSubject` and `it.username`). If either source errors, RxJava will raise `OnErrorNotImplementedException` and crash the screen. Add an explicit error consumer (consistent with existing fragment error handling) and keep the UI in a safe state on failure.",
+      "revId": "e9ac461619f688a4dd4e5c4d3fde7bdef4edc8e2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
