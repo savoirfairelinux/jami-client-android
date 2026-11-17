@@ -78,6 +78,7 @@ android {
         }
         create("withHuaweiPush") {
             dimension = "push"
+            proguardFile("proguard-huawei.pro")
         }
     }
     signingConfigs {
