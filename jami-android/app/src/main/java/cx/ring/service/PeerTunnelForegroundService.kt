@@ -30,7 +30,7 @@ import cx.ring.backup.RuntimeServiceGuard
 import cx.ring.client.HomeActivity
 import cx.ring.services.NotificationServiceImpl.Companion.NOTIF_CHANNEL_PEER_TUNNEL
 import dagger.hilt.android.AndroidEntryPoint
-import net.jami.services.ExposedServicesService
+import net.jami.services.SharedServicesService
 import net.jami.services.PeerServicesService
 import java.util.concurrent.Executors
 import javax.inject.Inject
@@ -41,7 +41,7 @@ class PeerTunnelForegroundService : Service() {
     @Inject
     lateinit var peerServicesService: PeerServicesService
     @Inject
-    lateinit var exposedServicesService: ExposedServicesService
+    lateinit var sharedServicesService: SharedServicesService
     private val worker = Executors.newSingleThreadExecutor()
     private val mainHandler = Handler(Looper.getMainLooper())
 
@@ -65,7 +65,7 @@ class PeerTunnelForegroundService : Service() {
             worker.execute {
                 peerServicesService.closeAllTunnels()
                 mainHandler.post {
-                    exposedServicesService.disableAllHostedServices()
+                    sharedServicesService.disableAllHostedServices()
                     stopForeground(STOP_FOREGROUND_REMOVE)
                     stopSelfResult(startId)
                 }

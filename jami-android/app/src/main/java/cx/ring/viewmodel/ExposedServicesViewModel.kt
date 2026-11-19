@@ -23,8 +23,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import net.jami.services.AccountService
-import net.jami.services.ExposedServiceInfo
-import net.jami.services.ExposedServicesService
+import net.jami.services.SharedServiceInfo
+import net.jami.services.SharedServicesService
 import net.jami.services.PeerServicesService
 import net.jami.services.TunnelInfo
 import net.jami.utils.Log
@@ -32,7 +32,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ExposedServicesViewModel @Inject constructor(
-    private val exposedServicesService: ExposedServicesService,
+    private val sharedServicesService: SharedServicesService,
     private val peerServicesService: PeerServicesService,
     private val accountService: AccountService,
 ) : ViewModel() {
@@ -43,7 +43,7 @@ class ExposedServicesViewModel @Inject constructor(
     fun loadServices(accountId: String) {
         _uiState.update { it.copy(isLoading = true, errorMessage = null) }
         try {
-            val services = exposedServicesService.getExposedServices(accountId)
+            val services = sharedServicesService.getSharedServices(accountId)
             _uiState.update { it.copy(services = services, isLoading = false) }
         } catch (e: Exception) {
             Log.e(TAG, "Error loading services", e)
@@ -51,10 +51,10 @@ class ExposedServicesViewModel @Inject constructor(
         }
     }
 
-    fun addService(accountId: String, service: ExposedServiceInfo) {
+    fun addService(accountId: String, service: SharedServiceInfo) {
         try {
             Log.i(TAG, "addService: accountId='$accountId' service=$service")
-            val serviceId = exposedServicesService.addExposedService(accountId, service)
+            val serviceId = sharedServicesService.addSharedService(accountId, service)
             if (serviceId.isNotEmpty()) {
                 Log.i(TAG, "addService: success, serviceId='$serviceId', reloading list")
                 loadServices(accountId)
@@ -68,9 +68,9 @@ class ExposedServicesViewModel @Inject constructor(
         }
     }
 
-    fun updateService(accountId: String, service: ExposedServiceInfo) {
+    fun updateService(accountId: String, service: SharedServiceInfo) {
         try {
-            val success = exposedServicesService.updateExposedService(accountId, service)
+            val success = sharedServicesService.updateSharedService(accountId, service)
             if (success) {
                 loadServices(accountId)
             } else {
@@ -84,7 +84,7 @@ class ExposedServicesViewModel @Inject constructor(
 
     fun removeService(accountId: String, serviceId: String) {
         try {
-            val success = exposedServicesService.removeExposedService(accountId, serviceId)
+            val success = sharedServicesService.removeSharedService(accountId, serviceId)
             if (success) {
                 loadServices(accountId)
             } else {
@@ -96,9 +96,9 @@ class ExposedServicesViewModel @Inject constructor(
         }
     }
 
-    fun toggleEnabled(accountId: String, service: ExposedServiceInfo) {
+    fun toggleEnabled(accountId: String, service: SharedServiceInfo) {
         try {
-            val success = exposedServicesService.setServiceEnabled(accountId, service, !service.enabled)
+            val success = sharedServicesService.setServiceEnabled(accountId, service, !service.enabled)
             if (success) {
                 loadServices(accountId)
             } else {
@@ -115,7 +115,7 @@ class ExposedServicesViewModel @Inject constructor(
     }
 
     fun getActiveConnections(): Pair<List<HostedServiceItem>, List<TunnelInfo>> {
-        val hosted = exposedServicesService.getRunningHostedServices().map { (accId, service) ->
+        val hosted = sharedServicesService.getRunningHostedServices().map { (accId, service) ->
             HostedServiceItem(service.name, accountLabel(accId))
         }
         val tunnels = peerServicesService.getAllActiveTunnels()
@@ -130,7 +130,7 @@ class ExposedServicesViewModel @Inject constructor(
     fun disconnectAll(accountId: String) {
         try {
             peerServicesService.closeAllTunnels()
-            exposedServicesService.disableAllHostedServices()
+            sharedServicesService.disableAllHostedServices()
             loadServices(accountId)
         } catch (e: Exception) {
             Log.e(TAG, "Error disconnecting all", e)
@@ -145,7 +145,7 @@ class ExposedServicesViewModel @Inject constructor(
 
 data class ExposedServicesUiState(
     val isLoading: Boolean = false,
-    val services: List<ExposedServiceInfo> = emptyList(),
+    val services: List<SharedServiceInfo> = emptyList(),
     val errorMessage: String? = null,
 )
 

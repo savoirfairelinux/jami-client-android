@@ -27,14 +27,14 @@ object ContactLabels {
             require(it.none { label -> '\u0000' in label }) { "Labels cannot contain NUL" }
         }
 
-    fun encode(labels: Collection<String>): String =
-        JsonArray().apply { normalize(labels).forEach { add(it) } }.toString().also {
-            require(it.toByteArray(Charsets.UTF_8).size <= 65536) { "Contact labels exceed the metadata value limit" }
+    fun encode(labels: Collection<String>): ByteArray =
+        JsonArray().apply { normalize(labels).forEach { add(it) } }.toString().toByteArray(Charsets.UTF_8).also {
+            require(it.size <= 65536) { "Contact labels exceed the metadata value limit" }
         }
 
-    fun decode(value: String?): Set<String> {
-        if (value.isNullOrEmpty()) return emptySet()
-        val json = JsonParser.parseString(value)
+    fun decode(value: ByteArray?): Set<String> {
+        if (value == null || value.isEmpty()) return emptySet()
+        val json = JsonParser.parseString(String(value, Charsets.UTF_8))
         require(json.isJsonArray) { "Contact labels must be a JSON array" }
         return normalize(json.asJsonArray.map {
             require(it.isJsonPrimitive && it.asJsonPrimitive.isString) { "Contact labels must be strings" }

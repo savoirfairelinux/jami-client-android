@@ -14,7 +14,7 @@ import net.jami.services.ContactService
 import net.jami.services.ConversationFacade
 import net.jami.services.DaemonService
 import net.jami.services.DeviceRuntimeService
-import net.jami.services.ExposedServicesService
+import net.jami.services.SharedServicesService
 import net.jami.services.HardwareService
 import net.jami.services.HistoryService
 import net.jami.services.LogService
@@ -52,7 +52,7 @@ object UiServicesModule {
     fun device(): DeviceRuntimeService = mock(DeviceRuntimeService::class.java)
 
     @Provides @Singleton
-    fun exposedServices(): ExposedServicesService = mock(ExposedServicesService::class.java)
+    fun exposedServices(): SharedServicesService = mock(SharedServicesService::class.java)
 
     @Provides @Singleton
     fun hardware(): HardwareService = mock(HardwareService::class.java)

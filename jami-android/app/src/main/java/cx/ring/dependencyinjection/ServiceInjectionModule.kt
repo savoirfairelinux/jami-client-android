@@ -85,8 +85,8 @@ object ServiceInjectionModule {
 
     @Provides
     @Singleton
-    fun provideExposedServicesService(@ApplicationContext appContext: Context, accountService: AccountService): ExposedServicesService {
-        return AndroidExposedServicesService(accountService, appContext)
+    fun provideExposedServicesService(@ApplicationContext appContext: Context, accountService: AccountService): SharedServicesService {
+        return AndroidSharedServicesService(accountService, appContext)
     }
 
     @Provides

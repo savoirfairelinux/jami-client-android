@@ -28,12 +28,12 @@ import androidx.core.widget.addTextChangedListener
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cx.ring.R
 import cx.ring.databinding.DialogAddEditExposedServiceBinding
-import net.jami.services.ExposedServiceInfo
-import net.jami.services.ExposedServiceType
+import net.jami.services.SharedServiceInfo
+import net.jami.services.SharedServiceType
 
 class AddEditExposedServiceDialog(
-    private val editingService: ExposedServiceInfo?,
-    private val onSave: ((ExposedServiceInfo) -> Unit)?
+    private val editingService: SharedServiceInfo?,
+    private val onSave: ((SharedServiceInfo) -> Unit)?
 ) : BottomSheetDialogFragment() {
     private var selectedDirectoryUri: String = ""
     private var binding: DialogAddEditExposedServiceBinding? = null
@@ -113,13 +113,13 @@ class AddEditExposedServiceDialog(
             )
         }
         // Default selection
-        val initialType = editingService?.type ?: ExposedServiceType.CUSTOM
-        b.toggleType.check(if (initialType == ExposedServiceType.CUSTOM) R.id.btn_type_custom else R.id.btn_type_website)
+        val initialType = editingService?.type ?: SharedServiceType.CUSTOM
+        b.toggleType.check(if (initialType == SharedServiceType.CUSTOM) R.id.btn_type_custom else R.id.btn_type_website)
     }
 
     private fun populateForEditing(b: DialogAddEditExposedServiceBinding) {
         val service = editingService ?: return
-        if (service.type == ExposedServiceType.CUSTOM) {
+        if (service.type == SharedServiceType.CUSTOM) {
             b.etName.setText(service.name)
             b.etDescription.setText(service.description)
             b.etHost.setText(service.localHost.ifEmpty { "localhost" })
@@ -196,8 +196,8 @@ class AddEditExposedServiceDialog(
         }
         if (!valid) return
 
-        val service = (editingService ?: ExposedServiceInfo()).copy(
-            type = ExposedServiceType.CUSTOM,
+        val service = (editingService ?: SharedServiceInfo()).copy(
+            type = SharedServiceType.CUSTOM,
             name = name,
             description = description,
             localHost = host,
@@ -235,8 +235,8 @@ class AddEditExposedServiceDialog(
         // can use DocumentFile (SAF) to read files. Falls back to display path for
         // existing services migrated before this change.
         val directoryValue = selectedDirectoryUri.ifEmpty { displayDirectory }
-        val service = (editingService ?: ExposedServiceInfo()).copy(
-            type = ExposedServiceType.EMBEDDED,
+        val service = (editingService ?: SharedServiceInfo()).copy(
+            type = SharedServiceType.EMBEDDED,
             name = name,
             description = "",
             localHost = "localhost",
@@ -261,8 +261,8 @@ class AddEditExposedServiceDialog(
         private val POLICY_VALUES = listOf("contacts", "public", "specific")
 
         fun newInstance(
-            service: ExposedServiceInfo?,
-            onSave: (ExposedServiceInfo) -> Unit
+            service: SharedServiceInfo?,
+            onSave: (SharedServiceInfo) -> Unit
         ): AddEditExposedServiceDialog = AddEditExposedServiceDialog(service, onSave)
     }
 }

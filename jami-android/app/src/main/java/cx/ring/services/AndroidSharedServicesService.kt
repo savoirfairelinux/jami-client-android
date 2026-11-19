@@ -22,17 +22,17 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import net.jami.daemon.JamiService
 import net.jami.services.AccountService
-import net.jami.services.ExposedServiceInfo
-import net.jami.services.ExposedServiceType
-import net.jami.services.ExposedServicesService
+import net.jami.services.SharedServiceInfo
+import net.jami.services.SharedServiceType
+import net.jami.services.SharedServicesService
 import net.jami.utils.Log
 import java.io.File
 import java.io.IOException
 
-class AndroidExposedServicesService(
+class AndroidSharedServicesService(
     private val accountService: AccountService,
     private val context: Context,
-) : ExposedServicesService() {
+) : SharedServicesService() {
     /** key = "$accountId/$serviceId" */
     private val runningServers = mutableMapOf<String, NanoHTTPD>()
 
@@ -119,14 +119,14 @@ class AndroidExposedServicesService(
 
     private fun syncEmbeddedServers(accountId: String) {
         if (accountId.isEmpty()) return
-        val services = super.getExposedServices(accountId)
+        val services = super.getSharedServices(accountId)
         val desiredKeys = mutableSetOf<String>()
 
         for (service in services) {
             val serviceId = service.id
             if (serviceId.isEmpty()) continue
 
-            if (service.type != ExposedServiceType.EMBEDDED || !service.enabled
+            if (service.type != SharedServiceType.EMBEDDED || !service.enabled
                 || !isDirectoryAccessible(service.directory)) {
                 stopServer(accountId, serviceId)
                 continue
@@ -146,7 +146,7 @@ class AndroidExposedServicesService(
             // update it so peers receive the correct tunnelling address.
             if (service.localPort != server.listeningPort) {
                 Log.i(TAG, "syncEmbeddedServers: updating stale port ${service.localPort} → ${server.listeningPort} for '$serviceId'")
-                super.updateExposedService(accountId, service.copy(localPort = server.listeningPort))
+                super.updateSharedService(accountId, service.copy(localPort = server.listeningPort))
             }
         }
 
@@ -160,11 +160,11 @@ class AndroidExposedServicesService(
         emitHostingState()
     }
 
-    override fun addExposedService(accountId: String, service: ExposedServiceInfo): String {
+    override fun addSharedService(accountId: String, service: SharedServiceInfo): String {
         val id = resolveAccountId(accountId)
 
-        if (service.type != ExposedServiceType.EMBEDDED) {
-            val serviceId = super.addExposedService(id, service)
+        if (service.type != SharedServiceType.EMBEDDED) {
+            val serviceId = super.addSharedService(id, service)
             if (serviceId.isNotEmpty()) syncEmbeddedServers(id)
             return serviceId
         }
@@ -172,30 +172,30 @@ class AndroidExposedServicesService(
         // Start server first to obtain a real port for the daemon
         val server = startServer(id, "", service.directory)
             ?: return run {
-                Log.e(TAG, "addExposedService: could not start server for '${service.directory}'")
+                Log.e(TAG, "addSharedService: could not start server for '${service.directory}'")
                 ""
             }
 
-        val serviceId = super.addExposedService(id, service.copy(localPort = server.listeningPort))
+        val serviceId = super.addSharedService(id, service.copy(localPort = server.listeningPort))
 
         if (serviceId.isEmpty()) {
-            Log.e(TAG, "addExposedService: daemon rejected — stopping server")
+            Log.e(TAG, "addSharedService: daemon rejected — stopping server")
             server.stop()
             runningServers.remove(serverKey(id, ""))
         } else {
             runningServers.remove(serverKey(id, ""))
             runningServers[serverKey(id, serviceId)] = server
-            Log.i(TAG, "addExposedService: success id='$serviceId' port=${server.listeningPort}")
+            Log.i(TAG, "addSharedService: success id='$serviceId' port=${server.listeningPort}")
         }
         syncEmbeddedServers(id)
         return serviceId
     }
 
-    override fun updateExposedService(accountId: String, service: ExposedServiceInfo): Boolean {
+    override fun updateSharedService(accountId: String, service: SharedServiceInfo): Boolean {
         val id = resolveAccountId(accountId)
 
-        if (service.type != ExposedServiceType.EMBEDDED) {
-            val ok = super.updateExposedService(id, service)
+        if (service.type != SharedServiceType.EMBEDDED) {
+            val ok = super.updateSharedService(id, service)
             if (ok) syncEmbeddedServers(id)
             return ok
         }
@@ -204,8 +204,8 @@ class AndroidExposedServicesService(
             val lastPort = runningServers[serverKey(id, service.id)]?.listeningPort
                 ?: service.localPort
             stopServer(id, service.id)
-            val ok = super.updateExposedService(id, service.copy(localPort = lastPort))
-            Log.i(TAG, "updateExposedService: disabled id='${service.id}' ok=$ok port=$lastPort")
+            val ok = super.updateSharedService(id, service.copy(localPort = lastPort))
+            Log.i(TAG, "updateSharedService: disabled id='${service.id}' ok=$ok port=$lastPort")
             syncEmbeddedServers(id)
             return ok
         }
@@ -217,31 +217,31 @@ class AndroidExposedServicesService(
         } else {
             stopServer(id, service.id)
             startServer(id, service.id, service.directory) ?: return run {
-                Log.e(TAG, "updateExposedService: could not start server for '${service.directory}'")
+                Log.e(TAG, "updateSharedService: could not start server for '${service.directory}'")
                 false
             }
         }
 
-        val ok = super.updateExposedService(id, service.copy(localPort = server.listeningPort))
-        Log.i(TAG, "updateExposedService: id='${service.id}' enabled=true ok=$ok port=${server.listeningPort}")
+        val ok = super.updateSharedService(id, service.copy(localPort = server.listeningPort))
+        Log.i(TAG, "updateSharedService: id='${service.id}' enabled=true ok=$ok port=${server.listeningPort}")
         syncEmbeddedServers(id)
         return ok
     }
 
-    override fun removeExposedService(accountId: String, serviceId: String): Boolean {
+    override fun removeSharedService(accountId: String, serviceId: String): Boolean {
         val id = resolveAccountId(accountId)
         stopServer(id, serviceId)
-        val ok = super.removeExposedService(id, serviceId)
+        val ok = super.removeSharedService(id, serviceId)
         // Sync to prune any other stale entries
         syncEmbeddedServers(id)
         return ok
     }
 
-    override fun getExposedServices(accountId: String): List<ExposedServiceInfo> {
+    override fun getSharedServices(accountId: String): List<SharedServiceInfo> {
         val id = resolveAccountId(accountId)
         // Sync first so callers (and peers) always see up-to-date port/state
         syncEmbeddedServers(id)
-        return super.getExposedServices(id)
+        return super.getSharedServices(id)
     }
 
     fun syncAllAccounts() {
@@ -254,15 +254,15 @@ class AndroidExposedServicesService(
         emitHostingState()
     }
 
-    override fun getRunningHostedServices(): List<Pair<String, ExposedServiceInfo>> {
-        val result = mutableListOf<Pair<String, ExposedServiceInfo>>()
+    override fun getRunningHostedServices(): List<Pair<String, SharedServiceInfo>> {
+        val result = mutableListOf<Pair<String, SharedServiceInfo>>()
         val runningKeys = runningServers.keys.toSet()
         val accounts = JamiService.getAccountList()
         for (i in 0 until accounts.size) {
             val accountId = accounts[i]
             if (accountId.isEmpty()) continue
-            super.getExposedServices(accountId)
-                .filter { it.type == ExposedServiceType.EMBEDDED
+            super.getSharedServices(accountId)
+                .filter { it.type == SharedServiceType.EMBEDDED
                     && serverKey(accountId, it.id) in runningKeys }
                 .forEach { result.add(accountId to it) }
         }
@@ -274,17 +274,17 @@ class AndroidExposedServicesService(
         for (i in 0 until accounts.size) {
             val accountId = accounts[i]
             if (accountId.isEmpty()) continue
-            super.getExposedServices(accountId)
-                .filter { it.type == ExposedServiceType.EMBEDDED && it.enabled && it.id.isNotEmpty() }
+            super.getSharedServices(accountId)
+                .filter { it.type == SharedServiceType.EMBEDDED && it.enabled && it.id.isNotEmpty() }
                 .forEach { service ->
                     Log.i(TAG, "disableAllHostedServices: disabling '${service.id}' on '$accountId'")
-                    updateExposedService(accountId, service.copy(enabled = false))
+                    updateSharedService(accountId, service.copy(enabled = false))
                 }
         }
         emitHostingState()
     }
 
     companion object {
-        private const val TAG = "AndroidExposedServicesService"
+        private const val TAG = "AndroidSharedServicesService"
     }
 }

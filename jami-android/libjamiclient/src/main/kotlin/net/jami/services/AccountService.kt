@@ -1467,23 +1467,24 @@ class AccountService(
     }
 
     private fun loadContactMetadata(account: Account, uri: Uri) {
-        val metadata = StringMap()
+        val metadata = BlobMap()
         try {
             if (!JamiService.getContactMetadata(account.accountId, uri.rawRingId, metadata)) {
                 Log.e(TAG, "Cannot load contact metadata for ${account.accountId}")
                 return
             }
-            applyContactMetadata(account, uri, metadata.toNativeFromUtf8())
+            val native = metadata.entries.associate { it.key to it.value.bytes }
+            applyContactMetadata(account, uri, native)
         } finally {
             metadata.delete()
         }
     }
 
-    fun contactMetadataChanged(accountId: String, uri: String, metadata: Map<String, String>) {
+    fun contactMetadataChanged(accountId: String, uri: String, metadata: Map<String, ByteArray>) {
         getAccount(accountId)?.let { applyContactMetadata(it, Uri.fromString(uri), metadata) }
     }
 
-    private fun applyContactMetadata(account: Account, uri: Uri, metadata: Map<String, String>) {
+    private fun applyContactMetadata(account: Account, uri: Uri, metadata: Map<String, ByteArray>) {
         try {
             account.setContactLabels(uri, ContactLabels.decode(metadata[ContactLabels.METADATA_KEY]))
         } catch (e: JsonParseException) {
@@ -1502,9 +1503,9 @@ class AccountService(
         require(account.isJami && account.isContact(uri)) { "Labels require an existing Jami contact" }
         val normalized = ContactLabels.normalize(labels)
         val encoded = ContactLabels.encode(normalized)
-        val updates = StringMap()
+        val updates = BlobMap()
         try {
-            updates.setUnicode(ContactLabels.METADATA_KEY, encoded)
+            updates[ContactLabels.METADATA_KEY] = Blob().apply { bytes = encoded }
             check(JamiService.setContactMetadata(account.accountId, uri.rawRingId, updates)) {
                 "Cannot save contact labels"
             }

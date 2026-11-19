@@ -47,9 +47,9 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.launch
-import net.jami.services.ExposedServiceInfo
-import net.jami.services.ExposedServiceType
-import net.jami.services.ExposedServicesService
+import net.jami.services.SharedServiceInfo
+import net.jami.services.SharedServiceType
+import net.jami.services.SharedServicesService
 import net.jami.services.PeerServicesService
 import javax.inject.Inject
 
@@ -59,7 +59,7 @@ class ExposedServicesSettingsFragment : Fragment() {
     @Inject
     lateinit var peerServicesService: PeerServicesService
     @Inject
-    lateinit var exposedServicesService: ExposedServicesService
+    lateinit var sharedServicesService: SharedServicesService
     private val viewModel: ExposedServicesViewModel by viewModels()
     private var binding: FragExposedServicesSettingsBinding? = null
     private var accountId: String = ""
@@ -99,7 +99,7 @@ class ExposedServicesSettingsFragment : Fragment() {
         disposables.add(
             Observable.combineLatest(
                 peerServicesService.observeAnyActiveTunnel(),
-                exposedServicesService.observeHostingActive(),
+                sharedServicesService.observeHostingActive(),
             ) { hasTunnels, hasHosting -> hasTunnels || hasHosting }
                 .distinctUntilChanged()
                 .subscribeOn(Schedulers.io())
@@ -173,17 +173,17 @@ class ExposedServicesSettingsFragment : Fragment() {
         }.show(childFragmentManager, "add_service_dialog")
     }
 
-    private fun openEditDialog(service: ExposedServiceInfo) {
+    private fun openEditDialog(service: SharedServiceInfo) {
         AddEditExposedServiceDialog.newInstance(service) { updated ->
             viewModel.updateService(accountId, updated)
         }.show(childFragmentManager, "edit_service_dialog")
     }
 
-    private fun deleteService(service: ExposedServiceInfo) {
+    private fun deleteService(service: SharedServiceInfo) {
         viewModel.removeService(accountId, service.id)
     }
 
-    private fun toggleService(service: ExposedServiceInfo) {
+    private fun toggleService(service: SharedServiceInfo) {
         viewModel.toggleEnabled(accountId, service)
     }
 
@@ -196,18 +196,18 @@ class ExposedServicesSettingsFragment : Fragment() {
     }
 }
 
-private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ExposedServiceInfo>() {
-    override fun areItemsTheSame(oldItem: ExposedServiceInfo, newItem: ExposedServiceInfo) =
+private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<SharedServiceInfo>() {
+    override fun areItemsTheSame(oldItem: SharedServiceInfo, newItem: SharedServiceInfo) =
         oldItem.id == newItem.id
-    override fun areContentsTheSame(oldItem: ExposedServiceInfo, newItem: ExposedServiceInfo) =
+    override fun areContentsTheSame(oldItem: SharedServiceInfo, newItem: SharedServiceInfo) =
         oldItem == newItem
 }
 
 class ExposedServiceAdapter(
-    private val onEdit: (ExposedServiceInfo) -> Unit,
-    private val onDelete: (ExposedServiceInfo) -> Unit,
-    private val onToggle: (ExposedServiceInfo) -> Unit,
-) : ListAdapter<ExposedServiceInfo, ExposedServiceViewHolder>(DIFF_CALLBACK) {
+    private val onEdit: (SharedServiceInfo) -> Unit,
+    private val onDelete: (SharedServiceInfo) -> Unit,
+    private val onToggle: (SharedServiceInfo) -> Unit,
+) : ListAdapter<SharedServiceInfo, ExposedServiceViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ExposedServiceViewHolder(
@@ -222,14 +222,14 @@ class ExposedServiceAdapter(
 
 class ExposedServiceViewHolder(
     private val binding: ItemExposedServiceBinding,
-    private val onEdit: (ExposedServiceInfo) -> Unit,
-    private val onDelete: (ExposedServiceInfo) -> Unit,
-    private val onToggle: (ExposedServiceInfo) -> Unit,
+    private val onEdit: (SharedServiceInfo) -> Unit,
+    private val onDelete: (SharedServiceInfo) -> Unit,
+    private val onToggle: (SharedServiceInfo) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(service: ExposedServiceInfo) {
+    fun bind(service: SharedServiceInfo) {
         val ctx = itemView.context
-        val isWebsite = service.type == ExposedServiceType.EMBEDDED
+        val isWebsite = service.type == SharedServiceType.EMBEDDED
 
         if (isWebsite) {
             binding.serviceTypeIcon.setImageResource(R.drawable.baseline_language_18)

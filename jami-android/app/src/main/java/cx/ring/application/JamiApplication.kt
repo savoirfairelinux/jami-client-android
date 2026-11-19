@@ -46,7 +46,7 @@ import cx.ring.service.DRingService
 import cx.ring.service.JamiJobService
 import cx.ring.service.PeerTunnelForegroundService
 import cx.ring.linkpreview.LinkPreview
-import cx.ring.services.AndroidExposedServicesService
+import cx.ring.services.AndroidSharedServicesService
 import cx.ring.services.CallServiceImpl.Companion.CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY
 import cx.ring.services.DaemonNetworkMonitor
 import cx.ring.utils.AndroidFileUtils
@@ -110,7 +110,7 @@ abstract class JamiApplication : Application() {
     var peerServicesService: PeerServicesService
 
     @Inject lateinit
-    var mExposedServicesService: ExposedServicesService
+    var mSharedServicesService: SharedServicesService
 
     private val ringerModeListener: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -204,7 +204,7 @@ abstract class JamiApplication : Application() {
                 // load accounts from Daemon
                 mAccountService.loadAccountsFromDaemon(mPreferencesService.hasNetworkConnected())
                 // Sync embedded HTTP servers
-                (mExposedServicesService as? AndroidExposedServicesService)?.syncAllAccounts()
+                (mSharedServicesService as? AndroidSharedServicesService)?.syncAllAccounts()
                 // Recover tunnels the daemon kept alive across a process restart
                 peerServicesService.refreshActiveTunnels()
                 if (mPreferencesService.settings.enablePushNotifications) {
@@ -415,7 +415,7 @@ abstract class JamiApplication : Application() {
         Observable.combineLatest(
             appInForeground,
             peerServicesService.observeAnyActiveTunnel(),
-            mExposedServicesService.observeHostingActive(),
+            mSharedServicesService.observeHostingActive(),
         ) { inForeground, hasTunnels, hasHosting -> !inForeground && (hasTunnels || hasHosting) }
             .distinctUntilChanged()
             .switchMap { shouldRun ->

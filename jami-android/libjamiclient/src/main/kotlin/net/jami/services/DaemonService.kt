@@ -195,8 +195,8 @@ class DaemonService(
             mExecutor.submit { mAccountService.contactRemoved(accountId, uri, blocked) }
         }
 
-        override fun contactMetadataChanged(accountId: String, uri: String, metadata: StringMap) {
-            val snapshot = metadata.toNativeFromUtf8()
+        override fun contactMetadataChanged(accountId: String, uri: String, metadata: BlobMap) {
+            val snapshot = metadata.entries.associate { it.key to it.value.bytes }
             mExecutor.submit { mAccountService.contactMetadataChanged(accountId, uri, snapshot) }
         }
 
