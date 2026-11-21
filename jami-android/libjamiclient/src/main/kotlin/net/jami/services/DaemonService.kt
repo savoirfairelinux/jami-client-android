@@ -267,12 +267,12 @@ class DaemonService(
             mCallService.connectionUpdate(id, state)
         }
 
-        override fun remoteRecordingChanged(call_id: String, peer_number: String, state: Boolean) {
-            mCallService.remoteRecordingChanged(call_id, Uri.fromString(peer_number), state)
+        override fun remoteRecordingChanged(callId: String, peerNumber: String, state: Boolean) {
+            mCallService.remoteRecordingChanged(callId, Uri.fromString(peerNumber), state)
         }
 
-        override fun onConferenceInfosUpdated(confId: String, infos: VectMap) {
-            mCallService.onConferenceInfoUpdated(confId, infos.toNative())
+        override fun conferenceInfosUpdated(confId: String, infos: VectMap) {
+            mCallService.conferenceInfosUpdated(confId, infos.toNative())
         }
 
         override fun incomingMessage(accountId: String, callId: String, from: String, messages: StringMap) {

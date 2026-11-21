@@ -102,8 +102,8 @@ abstract class CallService(
         mExecutor.execute { JamiService.setIsComposing(accountId, uri, isComposing) }
     }
 
-    fun onConferenceInfoUpdated(confId: String, info: List<Map<String, String>>) {
-        Log.w(TAG, "onConferenceInfoUpdated $confId $info")
+    fun conferenceInfosUpdated(confId: String, info: List<Map<String, String>>) {
+        Log.w(TAG, "conferenceInfosUpdated $confId $info")
 
         val conference = getConference(confId)
         if (conference != null) {
