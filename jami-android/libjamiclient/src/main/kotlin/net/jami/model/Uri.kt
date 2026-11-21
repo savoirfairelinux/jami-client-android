@@ -103,8 +103,7 @@ class Uri : Serializable {
     companion object {
         private val ANGLE_BRACKETS_PATTERN = Pattern.compile("^\\s*([^<>]+)?\\s*<([^<>]+)>\\s*$")
         private val HEX_ID_PATTERN = Pattern.compile("^\\p{XDigit}{40}$", Pattern.CASE_INSENSITIVE)
-        private val RING_URI_PATTERN = Pattern.compile("^\\s*(?:ring(?:[\\s:]+))?(\\p{XDigit}{40})(?:@ring\\.dht)?\\s*$", Pattern.CASE_INSENSITIVE)
-        private val URI_PATTERN = Pattern.compile("^\\s*(\\w+:)?(?:([\\w.]+)@)?(?:([\\d\\w.\\-]+)(?::(\\d+))?)\\s*$", Pattern.CASE_INSENSITIVE)
+        private val URI_PATTERN = Pattern.compile("^\\s*(\\w+:)?(?:([\\w.]+)@)?([\\w.\\-]+)(?::(\\d+))?\\s*$", Pattern.CASE_INSENSITIVE)
         const val RING_URI_SCHEME = "ring:"
         const val JAMI_URI_SCHEME = "jami:"
         const val SIP_URI_SCHEME = "sip:"
@@ -112,7 +111,18 @@ class Uri : Serializable {
         const val SWARM_SCHEME = "swarm:"
         const val RENDEZVOUS_SCHEME = "rdv:"
         private const val ipv4Pattern = "(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])"
-        private const val ipv6Pattern = "([0-9a-f]{1,4}:){7}([0-9a-f]){1,4}"
+        private const val h16 = "[0-9a-f]{1,4}"
+        private const val ipv6Pattern = "(" +
+                "($h16:){7}$h16" +
+                "|($h16:){1,7}:" +
+                "|($h16:){1,6}:$h16" +
+                "|($h16:){1,5}(:$h16){1,2}" +
+                "|($h16:){1,4}(:$h16){1,3}" +
+                "|($h16:){1,3}(:$h16){1,4}" +
+                "|($h16:){1,2}(:$h16){1,5}" +
+                "|$h16:(:$h16){1,6}" +
+                "|:((:$h16){1,7}|:)" +
+                ")"
         private val VALID_IPV4_PATTERN = Pattern.compile(ipv4Pattern, Pattern.CASE_INSENSITIVE)
         private val VALID_IPV6_PATTERN = Pattern.compile(ipv6Pattern, Pattern.CASE_INSENSITIVE)
 
