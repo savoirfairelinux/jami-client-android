@@ -48,6 +48,7 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Mottagna inbjudningar</string>
+  <string name="join_feed">Anslut</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d konversation</item>
     <item quantity="other">%d konversationer</item>
@@ -134,6 +135,7 @@
   <string name="scan_qr">Skanna QR-kod</string>
   <string name="qr_code">QR-kod</string>
   <string name="qr_code_not_contact">Inte en QR-kod för en Jami-kontakt</string>
+  <string name="contact_labels_save">Spara</string>
   <string name="new_group">Ny grupp</string>
   <string name="ab_action_flipcamera">Vänd kameran</string>
   <string name="ab_action_hidepreview">Dölj förhandsvisningen</string>

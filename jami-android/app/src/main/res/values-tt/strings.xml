@@ -60,6 +60,7 @@
   <string name="ab_action_contact_add">Контактларга өстәү</string>
   <string name="ab_action_audio_call">Аудиокызылышны башлау</string>
   <string name="ab_action_video_call">Видеокүршетүне башлау</string>
+  <string name="contact_labels_save">Каплагыз</string>
   <!--Text messages-->
   <string name="message_failed">Җиңелгән</string>
   <string name="time_just_now">Әле генә</string>

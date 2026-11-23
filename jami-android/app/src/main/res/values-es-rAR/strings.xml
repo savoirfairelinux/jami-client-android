@@ -51,6 +51,7 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Invitaciones recibidas</string>
+  <string name="join_feed">Ingresar</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%dConversación</item>
     <item quantity="many">%dConversaciones</item>
@@ -143,6 +144,9 @@
   <string name="scan_qr">Leer código QR</string>
   <string name="qr_code">Código QR</string>
   <string name="qr_code_not_contact">No es un código QR de Jami Contact</string>
+  <string name="conversation_filter_all">Todo</string>
+  <string name="contact_labels_save">Guardar</string>
+  <string name="conversation_filter_groups">Grupos</string>
   <string name="new_group">Nuevo grupo</string>
   <string name="ab_action_flipcamera">Girar cámara</string>
   <string name="ab_action_hidepreview">Ocultar previsualización</string>
@@ -313,6 +317,9 @@
   <string name="hist_contact_blocked">Contacto bloqueado</string>
   <string name="hist_contact_unblocked">Contacto desbloqueado</string>
   <string name="hist_invitation_received">Invitación recibida</string>
+  <string name="conversation_joined_date">Se ha unido</string>
+  <string name="contact_added_date">Añadido</string>
+  <string name="contact_removed_date">Eliminado</string>
   <!--Account summary-->
   <string name="profile">Perfil</string>
   <string name="profile_name">Nombre de perfil</string>
@@ -494,6 +501,11 @@
   <string name="picker_add_members">Añadir miembros</string>
   <string name="picker_no_matches">Sin contactos coincidentes</string>
   <string name="picker_remove_contact">Eliminar %1$s</string>
+  <plurals name="picker_selection_count">
+    <item quantity="one">%d seleccionado</item>
+    <item quantity="many">%d seleccionados</item>
+    <item quantity="other">%d seleccionados</item>
+  </plurals>
   <string name="no_contact_to_add">No tiene contacto para agregar</string>
   <string name="bottomsheet_contact">Contacta con Jami\n%1$s</string>
   <string name="bottomsheet_block">Miembro de bloque</string>
@@ -701,4 +713,17 @@
   <string name="collab_document_removed_locally">Documento eliminado de este dispositivo</string>
   <string name="collab_document_removed_locally_message">\"%1$s\" ya no está en este dispositivo. Al abrirlo otra vez se descarga de nuevo.</string>
   <!--Threaded conversations-->
+  <string name="conversation_threaded_view">Vista enlazada</string>
+  <string name="conversation_threaded_view_summary">Mostrar respuestas en hilos. Abrir un hilo para leerlo y responder</string>
+  <string name="conversation_thread_title">Hilo</string>
+  <string name="conversation_thread_reply_hint">Responder en el hilo</string>
+  <string name="conversation_thread_missing">El mensaje original no está disponible. Vuelve a la conversación para continuar.</string>
+  <string name="conversation_thread_finding">Encontrar mensaje en el historial de la conversación..</string>
+  <string name="conversation_thread_unavailable">El mensaje o su original no está disponible.</string>
+  <string name="conversation_thread_close">Volver a la conversación</string>
+  <plurals name="conversation_thread_replies">
+    <item quantity="one">%d respuesta</item>
+    <item quantity="many">%d respuestas</item>
+    <item quantity="other">%d respuestas</item>
+  </plurals>
 </resources>

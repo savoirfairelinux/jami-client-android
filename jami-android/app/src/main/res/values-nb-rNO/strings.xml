@@ -31,6 +31,7 @@
   <string name="dial_number">Slå nummer</string>
   <!--History Fragment-->
   <!--Home Fragment-->
+  <string name="join_feed">Bli med</string>
   <!--ContactList Fragment-->
   <string name="searchbar_hint">Søk eller legg til</string>
   <!--FileExplorerDFragement-->
@@ -77,6 +78,7 @@
   <string name="ab_action_video_call">Start videosamtale</string>
   <string name="write_a_message">Skriv melding</string>
   <string name="qr_code_not_contact">Ikke en QR-kode for en Jami-kontakt</string>
+  <string name="contact_labels_save">Lagre</string>
   <string name="new_group">Ny gruppe</string>
   <!--Text messages-->
   <string name="time_just_now">Akkurat nå</string>

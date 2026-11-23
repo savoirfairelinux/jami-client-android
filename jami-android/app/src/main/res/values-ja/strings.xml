@@ -38,6 +38,7 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">招待を受信しました</string>
+  <string name="join_feed">参加</string>
   <plurals name="home_conferences_title">
     <item quantity="other">%d 件の会話</item>
   </plurals>

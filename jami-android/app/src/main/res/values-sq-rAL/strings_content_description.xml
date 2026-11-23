@@ -29,7 +29,9 @@
   <string name="collab_format_image">Futni figurë</string>
   <string name="collab_format_clear">Spastroja formatimin</string>
   <string name="collab_format_paragraph_style">Stil paragrafësh</string>
+  <string name="collab_format_font">Shkronja</string>
   <string name="collab_format_size">Madhësi shkronjash</string>
+  <string name="collab_format_alignment">Drejtim paragrafi</string>
   <string name="collab_undo">Zhbëje</string>
   <string name="collab_redo">Ribëje</string>
 </resources>

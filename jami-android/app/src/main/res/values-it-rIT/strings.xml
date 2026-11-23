@@ -48,6 +48,7 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Inviti ricevuti</string>
+  <string name="join_feed">Partecipa</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d Conversazione</item>
     <item quantity="many">%d Conversazioni</item>

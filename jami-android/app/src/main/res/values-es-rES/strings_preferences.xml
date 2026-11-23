@@ -14,6 +14,7 @@
   <string name="pref_mobileData_summary">Permitir a Ring usar redes 3G/LTE a demás del Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notificaciones push</string>
   <string name="pref_pushNotifications_summary">Usar servidores de Google para recibir llamadas/mensajes en segundo plano</string>
+  <string name="pref_huaweiPush_summary">Utilice los servidores de Huawei para permitir recibir llamadas / mensajes en el fondo</string>
   <string name="pref_video_advanced_title">Configuraciones avanzadas de video</string>
   <string name="pref_video_advanced_summary">Cambia la tasa de bits, la resolución de video y accede a características experimentales</string>
   <string name="pref_hd_summary">Permitir el envío de vídeo en HD</string>
@@ -47,6 +48,7 @@
   <string name="pref_link_preview_title">Vista previas de vínculos web</string>
   <string name="pref_link_preview_summary">La vista previa requiere la descarga de contenido desde servidores de terceros.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_huawei_push_description">Utiliza Huawei Push Kit y un proxy DHT para recibir notificaciones de empuje.</string>
   <string name="connectivity_custom_title">Personalizado</string>
   <!--Extension-->
   <string name="account_advanced_reset">Restablecer la configuración avanzada</string>

@@ -96,6 +96,7 @@
   <string name="share_via">Partejar via</string>
   <string name="scan_qr">Escanar lo còdi QR</string>
   <string name="qr_code">Còdi QR</string>
+  <string name="contact_labels_save">Salvar</string>
   <string name="ab_action_flipcamera">Camèra de virar</string>
   <string name="ab_action_hidepreview">Escondir preview</string>
   <string name="remote_recording">%s enregistrament...</string>

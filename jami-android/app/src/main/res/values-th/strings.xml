@@ -106,6 +106,7 @@
   <string name="share_via">แบ่งปันผ่าน</string>
   <string name="scan_qr">สแกนคิวอาร์โค้ด</string>
   <string name="qr_code">คิวอาร์โค้ด</string>
+  <string name="contact_labels_save">เก็บ</string>
   <string name="ab_action_flipcamera">พลิกกล้อง</string>
   <string name="ab_action_hidepreview">ซ่อนตัวอย่าง</string>
   <string name="remote_recording">กำลังบันทึก…%s</string>

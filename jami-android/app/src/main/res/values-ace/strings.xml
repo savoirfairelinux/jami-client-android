@@ -60,6 +60,7 @@
   <string name="ab_action_contact_add">مڠهادڤکن ڤڠݢونا</string>
   <string name="ab_action_audio_call">ڤرودوک ڤرودوک</string>
   <string name="ab_action_video_call">ڤرلو ممبنتو ڤيليهن</string>
+  <string name="contact_labels_save">ڤڠاجين</string>
   <!--Text messages-->
   <string name="message_failed">ڤڠاجرن</string>
   <string name="send_file">ڤرسکوتوان</string>

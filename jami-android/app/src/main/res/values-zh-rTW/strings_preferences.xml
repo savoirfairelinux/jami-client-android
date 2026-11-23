@@ -15,6 +15,7 @@
   <string name="pref_pushNotifications_title">推播通知</string>
   <string name="pref_pushNotifications_summary">使用 Google 的伺服器以讓您可以在背景收到通話/訊息</string>
   <string name="pref_unifiedPush_summary">使用 UnifiedPush 服務，允許在背景中接收電話/訊息</string>
+  <string name="pref_huaweiPush_summary">使用華為伺服器在背景接收來電和訊息</string>
   <string name="pref_video_advanced_title">進階視訊設定</string>
   <string name="pref_video_advanced_summary">變更視訊位元率、解析度並存取實驗性功能</string>
   <string name="pref_hd_summary">啟用傳送高畫質視訊</string>
@@ -69,6 +70,7 @@
   <string name="connectivity_local_node_title">本地 DHT 節點</string>
   <string name="connectivity_local_node_description">使用本地 DHT 節點與其他 Jami 裝置和聯絡人連線。</string>
   <string name="connectivity_unified_push_description">使用自訂 UnifiedPush 伺服器接收推送通知。</string>
+  <string name="connectivity_huawei_push_description">使用華為 Push Kit 和 DHT 代理接收推送通知。</string>
   <string name="connectivity_custom_title">自訂</string>
   <string name="connectivity_custom_description">目前尚無使用任何可用的調整設定預設集。</string>
   <!--Extension-->
