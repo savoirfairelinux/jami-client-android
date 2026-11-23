@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a01db010_dae4098a",
+        "filename": "jami-android/app/src/main/res/values-cmn/strings_preferences.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-23T16:36:38Z",
+      "side": 1,
+      "message": "[warning] Line 16: 🟡 `pref_huaweiPush_summary` is left in English in a Chinese locale file. Translate this string (and keep terminology aligned with nearby push-notification strings) to avoid mixed-language UI.",
+      "revId": "2a35fe196f29f22da5ad1478c8b73da6f60f2b9f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff3a65aa_0b50d711",
+        "filename": "jami-android/app/src/main/res/values-cmn/strings_preferences.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-23T16:36:38Z",
+      "side": 1,
+      "message": "[warning] Line 69: 🟡 `connectivity_huawei_push_description` is also left in English in this Chinese locale. Please provide a Chinese translation to keep settings text consistent.",
+      "revId": "2a35fe196f29f22da5ad1478c8b73da6f60f2b9f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62f599de_17eb02db",
+        "filename": "jami-android/app/src/main/res/values-hak/strings_preferences.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-23T16:36:38Z",
+      "side": 1,
+      "message": "[warning] Line 16: 🟡 `pref_huaweiPush_summary` is untranslated English text in a localized file. Replace it with the target-language translation to avoid a mixed-language experience.",
+      "revId": "2a35fe196f29f22da5ad1478c8b73da6f60f2b9f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d8538cf_4916ad97",
+        "filename": "jami-android/app/src/main/res/values-hak/strings_preferences.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-23T16:36:38Z",
+      "side": 1,
+      "message": "[warning] Line 69: 🟡 `connectivity_huawei_push_description` remains in English. Translate it in this locale for consistency with the rest of the file.",
+      "revId": "2a35fe196f29f22da5ad1478c8b73da6f60f2b9f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "139d1cdf_a637f0ae",
+        "filename": "jami-android/app/src/main/res/values-nan/strings_preferences.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-23T16:36:38Z",
+      "side": 1,
+      "message": "[warning] Line 16: 🟡 `pref_huaweiPush_summary` is currently English in this locale file. Add a proper localized translation.",
+      "revId": "2a35fe196f29f22da5ad1478c8b73da6f60f2b9f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86ce17c5_faf3cd73",
+        "filename": "jami-android/app/src/main/res/values-nan/strings_preferences.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-23T16:36:38Z",
+      "side": 1,
+      "message": "[warning] Line 69: 🟡 `connectivity_huawei_push_description` is also untranslated English text here. Localize it to match the rest of the UI strings.",
+      "revId": "2a35fe196f29f22da5ad1478c8b73da6f60f2b9f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
