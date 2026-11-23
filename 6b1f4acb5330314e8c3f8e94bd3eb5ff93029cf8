@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84acde29_c68bcd81",
+        "filename": "jami-android/app/src/main/res/values-cmn/strings_preferences.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-23T16:41:54Z",
+      "side": 1,
+      "message": "[error] 🔴 This locale file adds English strings (`pref_huaweiPush_summary`, `connectivity_huawei_push_description`) in an otherwise Chinese translation file. That causes mixed-language UI for cmn users. Translate both keys to Chinese (matching the terminology used in other Chinese locales) or remove these overrides to allow proper fallback.",
+      "revId": "6b1f4acb5330314e8c3f8e94bd3eb5ff93029cf8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f300298_7dbaa76b",
+        "filename": "jami-android/app/src/main/res/values-es/strings_preferences.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-23T16:41:54Z",
+      "side": 1,
+      "message": "[warning] Line 18: 🟡 `pref_huaweiPush_summary` says \"...en el historial\" (in history), but the source meaning is background reception. This appears to be a mistranslation and may confuse users. Use wording aligned with other Spanish locales, e.g. \"...en segundo plano\".",
+      "revId": "6b1f4acb5330314e8c3f8e94bd3eb5ff93029cf8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c22bae9e_874d5fab",
+        "filename": "jami-android/app/src/main/res/values-hak/strings_preferences.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-23T16:41:54Z",
+      "side": 1,
+      "message": "[error] 🔴 English text was introduced for `pref_huaweiPush_summary` and `connectivity_huawei_push_description` in this Chinese locale file. This is a user-visible localization regression. Please provide localized Chinese translations for both keys (or remove locale entries so fallback remains consistent).",
+      "revId": "6b1f4acb5330314e8c3f8e94bd3eb5ff93029cf8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7640c918_69eae150",
+        "filename": "jami-android/app/src/main/res/values-nan/strings_preferences.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-23T16:41:54Z",
+      "side": 1,
+      "message": "[error] 🔴 Two newly added strings are in English (`pref_huaweiPush_summary`, `connectivity_huawei_push_description`) while this file is Chinese. This creates inconsistent UI language. Replace both with localized Chinese translations (or rely on fallback by removing these locale-specific entries).",
+      "revId": "6b1f4acb5330314e8c3f8e94bd3eb5ff93029cf8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
