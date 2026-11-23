@@ -45,6 +45,7 @@ contact@jami.net</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">دعوت‌نامه‌های دریافت شده</string>
+  <string name="join_feed">پیوستن</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d گفتگو</item>
     <item quantity="other">%d گفتگوها</item>
@@ -123,6 +124,9 @@ contact@jami.net</string>
   <string name="share_via">اشتراک از طریق</string>
   <string name="scan_qr">اسکن کد QR</string>
   <string name="qr_code">کد QR</string>
+  <string name="conversation_filter_all">همه</string>
+  <string name="contact_labels_save">ذخیره</string>
+  <string name="conversation_filter_groups">گروه‌ها</string>
   <string name="ab_action_flipcamera">چرخاندن دوربین</string>
   <string name="ab_action_hidepreview">مخفی‌کردن پیش‌نمایش</string>
   <string name="remote_recording">%s در حال ضبط...</string>

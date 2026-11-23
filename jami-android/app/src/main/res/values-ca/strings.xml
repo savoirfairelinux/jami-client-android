@@ -48,6 +48,7 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Invitacions rebudes</string>
+  <string name="join_feed">Uniu-vos</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d Conversa</item>
     <item quantity="other">%d Converses</item>
@@ -134,6 +135,7 @@
   <string name="scan_qr">Escaneja un codi QR</string>
   <string name="qr_code">Codi QR</string>
   <string name="qr_code_not_contact">No és un codi QR de contacte de Jami</string>
+  <string name="contact_labels_save">Desa</string>
   <string name="new_group">Grup nou</string>
   <string name="ab_action_flipcamera">Canvia la càmera</string>
   <string name="ab_action_hidepreview">Amaga la previsualització</string>

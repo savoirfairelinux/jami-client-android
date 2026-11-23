@@ -26,8 +26,13 @@
   <string name="collab_format_align_center">Centrat</string>
   <string name="collab_format_align_right">Aliniat la dreapta</string>
   <string name="collab_format_align_justify">Aliniat la ambele</string>
+  <string name="collab_format_link">Introdu legătura</string>
+  <string name="collab_format_image">Introdu imaginea</string>
+  <string name="collab_format_clear">Șterge formatarea</string>
+  <string name="collab_format_paragraph_style">Stilul paragrafului</string>
   <string name="collab_format_font">Caractere</string>
   <string name="collab_format_size">Mărimea literelor</string>
+  <string name="collab_format_alignment">Alinierea paragrafului</string>
   <string name="collab_format_choice">%1$s: %2$s</string>
   <string name="collab_undo">Anulează</string>
   <string name="collab_redo">Refă</string>

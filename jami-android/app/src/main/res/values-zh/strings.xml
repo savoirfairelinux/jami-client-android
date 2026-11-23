@@ -51,6 +51,7 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">邀请已发送</string>
+  <string name="join_feed">加入</string>
   <plurals name="home_conferences_title">
     <item quantity="other">%d个对话</item>
   </plurals>
@@ -122,7 +123,7 @@
   <string name="action_call_end_accept">接听来电并结束当前通话</string>
   <string name="action_call_decline">拒接</string>
   <string name="action_call_mic_mute">关闭麦克风</string>
-  <string name="action_call_mic_unmute">麦克风静音</string>
+  <string name="action_call_mic_unmute">取消麦克风静音</string>
   <string name="action_call_camera_on">打开摄像头</string>
   <string name="action_call_camera_off">关闭摄像头</string>
   <string name="action_call_stop_screen_share">停止分享畫面</string>
@@ -141,6 +142,8 @@
   <string name="scan_qr">扫描二维码</string>
   <string name="qr_code">二维码</string>
   <string name="qr_code_not_contact">不是 Jami 的二维码</string>
+  <string name="conversation_filter_all">全部</string>
+  <string name="contact_labels_save">保存</string>
   <string name="new_group">新群组</string>
   <string name="ab_action_flipcamera">翻转相机</string>
   <string name="ab_action_hidepreview">隐藏预览</string>
@@ -312,6 +315,9 @@
   <string name="hist_contact_blocked">联系人被封锁</string>
   <string name="hist_contact_unblocked">联系人解除封锁</string>
   <string name="hist_invitation_received">已接受邀请</string>
+  <string name="conversation_joined_date">已加入</string>
+  <string name="contact_added_date">已添加</string>
+  <string name="contact_removed_date">已移除</string>
   <!--Account summary-->
   <string name="profile">账户</string>
   <string name="profile_name">账户名称</string>
@@ -709,4 +715,15 @@
   <string name="collab_document_removed_locally">文档已从此设备移除</string>
   <string name="collab_document_removed_locally_message">“%1$s”已不在此设备上。再次打开将重新下载。</string>
   <!--Threaded conversations-->
+  <string name="conversation_threaded_view">会话串视图</string>
+  <string name="conversation_threaded_view_summary">在会话串中显示回复。打开会话串即可阅读并回复</string>
+  <string name="conversation_thread_title">会话串</string>
+  <string name="conversation_thread_reply_hint">在会话串中回复</string>
+  <string name="conversation_thread_missing">原始消息不可用。请返回会话继续操作</string>
+  <string name="conversation_thread_finding">正在会话历史中查找消息…</string>
+  <string name="conversation_thread_unavailable">该消息或其原始消息不可用</string>
+  <string name="conversation_thread_close">返回会话</string>
+  <plurals name="conversation_thread_replies">
+    <item quantity="other">%d条评论</item>
+  </plurals>
 </resources>

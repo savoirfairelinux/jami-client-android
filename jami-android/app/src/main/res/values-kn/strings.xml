@@ -107,6 +107,7 @@
   <string name="share_via">ಮೂಲಕ ಹಂಚಿಕೆ</string>
   <string name="scan_qr">QR ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ</string>
   <string name="qr_code">ಕ್ಯೂಆರ್ ಕೋಡ್</string>
+  <string name="contact_labels_save">ಉಳಿಸಿ</string>
   <string name="ab_action_flipcamera">ಫ್ಲಿಪ್ ಕ್ಯಾಮೆರಾ</string>
   <string name="ab_action_hidepreview">ಪೂರ್ವವೀಕ್ಷಣೆ ಮರೆಮಾಡಿ</string>
   <string name="remote_recording">%s ರೆಕಾರ್ಡಿಂಗ್</string>

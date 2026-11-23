@@ -95,6 +95,7 @@
   <string name="share_via">દ્વારા શેર કરો</string>
   <string name="scan_qr">QR કોડ સ્કેન કરો</string>
   <string name="qr_code">ક્યૂઆર કોડ</string>
+  <string name="contact_labels_save">સાચવો</string>
   <string name="ab_action_flipcamera">ફ્લિપ કેમેરા</string>
   <string name="ab_action_hidepreview">પૂર્વદર્શન છુપાવો</string>
   <string name="remote_recording">%s રેકોર્ડિંગ...</string>

@@ -48,6 +48,7 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Pozvání přijato</string>
+  <string name="join_feed">Spojit</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d Konverzace</item>
     <item quantity="few">%d Konverzace</item>
@@ -136,6 +137,7 @@
   <string name="scan_qr">Skenovat kód QR</string>
   <string name="qr_code">Kód QR</string>
   <string name="qr_code_not_contact">Nejedná se o QR kód kontaktu Jami</string>
+  <string name="contact_labels_save">Uložit</string>
   <string name="new_group">Nová skupina</string>
   <string name="ab_action_flipcamera">Otočit kameru</string>
   <string name="ab_action_hidepreview">Skrýt náhled</string>

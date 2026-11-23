@@ -48,6 +48,7 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Invitations reçues</string>
+  <string name="join_feed">Rejoindre</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d Conversation</item>
     <item quantity="many">%d Conversations</item>
@@ -135,6 +136,7 @@
   <string name="scan_qr">Scanner un code QR</string>
   <string name="qr_code">Code QR</string>
   <string name="qr_code_not_contact">QR code de contact Jami invalide</string>
+  <string name="contact_labels_save">Sauvegarder</string>
   <string name="new_group">Nouveau groupe</string>
   <string name="ab_action_flipcamera">Changer de caméra</string>
   <string name="ab_action_hidepreview">Masquer l\'aperçu</string>
