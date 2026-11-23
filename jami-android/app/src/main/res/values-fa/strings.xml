@@ -125,6 +125,7 @@ contact@jami.net.</string>
   <string name="share_via">اشتراک از طریق</string>
   <string name="scan_qr">اسکن کد QR</string>
   <string name="qr_code">کد QR</string>
+  <string name="conversation_filter_all">همه</string>
   <string name="ab_action_flipcamera">چرخاندن دوربین</string>
   <string name="ab_action_hidepreview">مخفی‌کردن پیش‌نمایش</string>
   <string name="remote_recording">%s در حال ضبط...</string>

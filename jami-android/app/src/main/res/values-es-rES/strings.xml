@@ -105,6 +105,7 @@
   <string name="share_via">Compatir via</string>
   <string name="scan_qr">Escanear código QR</string>
   <string name="qr_code">Código QR</string>
+  <string name="conversation_filter_all">Todo</string>
   <string name="new_group">Nuevo grupo</string>
   <string name="ab_action_flipcamera">Cambiar de cámara</string>
   <string name="ab_action_hidepreview">Ocultar vista previa</string>
@@ -345,6 +346,11 @@
   <string name="picker_add_members">Añadir miembros</string>
   <string name="picker_no_matches">Sin contactos coincidentes</string>
   <string name="picker_remove_contact">Eliminar %1$s</string>
+  <plurals name="picker_selection_count">
+    <item quantity="one">%d seleccionado</item>
+    <item quantity="many">%d seleccionados</item>
+    <item quantity="other">%d seleccionados</item>
+  </plurals>
   <string name="bottomsheet_block">Miembro bloqueado</string>
   <string name="bottomsheet_unblock">Miembro desbloqueado</string>
   <string name="group_member_blocked">Bloqueado</string>
@@ -494,4 +500,12 @@
   <string name="collab_document_removed_locally">Documento eliminado de este dispositivo</string>
   <string name="collab_document_removed_locally_message">\"%1$s\" ya no está en este dispositivo. Al abrirlo otra vez se descarga de nuevo.</string>
   <!--Threaded conversations-->
+  <string name="conversation_threaded_view">Vista enlazada</string>
+  <string name="conversation_threaded_view_summary">Mostrar respuestas en hilos. Abrir un hilo para leerlo y responder</string>
+  <string name="conversation_thread_title">Hilo</string>
+  <string name="conversation_thread_reply_hint">Responder en el hilo</string>
+  <string name="conversation_thread_missing">El mensaje original no está disponible. Vuelve a la conversación para continuar.</string>
+  <string name="conversation_thread_finding">Encontrar mensaje en el historial de la conversación..</string>
+  <string name="conversation_thread_unavailable">El mensaje o su original no está disponible.</string>
+  <string name="conversation_thread_close">Volver a la conversación</string>
 </resources>

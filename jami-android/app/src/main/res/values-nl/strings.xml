@@ -48,6 +48,7 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Uitnodigingen ontvangen</string>
+  <string name="join_feed">Deelnemen</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d gesprek</item>
     <item quantity="other">%d gesprekken</item>
@@ -134,6 +135,7 @@
   <string name="scan_qr">QR-code scannen</string>
   <string name="qr_code">QR-code</string>
   <string name="qr_code_not_contact">Geen Jami contact QR code</string>
+  <string name="contact_labels_save">Opslaan</string>
   <string name="new_group">Nieuwe groep</string>
   <string name="ab_action_flipcamera">Camera draaien</string>
   <string name="ab_action_hidepreview">Verberg voorbeeld</string>

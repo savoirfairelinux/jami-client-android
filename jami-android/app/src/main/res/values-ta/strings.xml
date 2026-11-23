@@ -112,6 +112,7 @@
   <string name="write_a_message">செய்தி எழுத</string>
   <string name="scan_qr">QR குறியீட்டை ஸ்கேன் செய்யவும்</string>
   <string name="qr_code">QR குறியீடு</string>
+  <string name="contact_labels_save">சேமி</string>
   <string name="ab_action_flipcamera">ஃபில்ப் கேமரா</string>
   <string name="ab_action_hidepreview">முன்னோட்டத்தை மறைக்கவும்</string>
   <string name="remote_recording">%s பதிவு.</string>

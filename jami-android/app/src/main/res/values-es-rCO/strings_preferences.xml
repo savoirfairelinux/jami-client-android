@@ -15,6 +15,7 @@
   <string name="pref_pushNotifications_title">Notificaciones push</string>
   <string name="pref_pushNotifications_summary">Usar servidores de Google para recibir llamadas/mensajes en segundo plano</string>
   <string name="pref_unifiedPush_summary">Utilice un servicio UnifiedPush para permitir la recepción de llamadas/mensajes en segundo plano</string>
+  <string name="pref_huaweiPush_summary">Utilice los servidores de Huawei para permitir recibir llamadas / mensajes en el fondo</string>
   <string name="pref_video_advanced_title">Configuración avanzada de video</string>
   <string name="pref_video_advanced_summary">Cambiar la tasa de bits y la resolución de video y acceder a características experimentales</string>
   <string name="pref_hd_summary">Activar envío de video HD</string>
@@ -69,6 +70,7 @@ notificaciones pulsadas.</string>
   <string name="connectivity_local_node_title">Nodo local DHT</string>
   <string name="connectivity_local_node_description">Utilizar un nodo DHT local para conectarse con otros dispositivos y contactos Jami.</string>
   <string name="connectivity_unified_push_description">Utilizar un servidor UnifiedPush personalizado para recibir notificaciones push.</string>
+  <string name="connectivity_huawei_push_description">Utiliza Huawei Push Kit y un proxy DHT para recibir notificaciones de empuje.</string>
   <string name="connectivity_custom_title">Personalizado</string>
   <string name="connectivity_custom_description">Actualmente no utiliza ninguno de los ajustes preestablecidos de configuración disponibles.</string>
   <!--Extension-->

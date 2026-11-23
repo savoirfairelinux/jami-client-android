@@ -250,6 +250,8 @@
   <string name="account_rename_device_hint">Alege un nume nou pentru aparat</string>
   <string name="account_device_name_empty">Numele aparatului trebuie pus</string>
   <string name="account_device_this_indicator">Acest aparat</string>
+  <string name="account_device_last_sync">Sincronizat: %1$s</string>
+  <string name="account_device_never_synced">Niciodată</string>
   <string name="account_disabled_indicator">Dezactivat</string>
   <string name="account_device_id">ID-ul aparatului</string>
   <!--Link a new device-->

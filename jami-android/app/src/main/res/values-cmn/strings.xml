@@ -122,7 +122,7 @@
   <string name="action_call_end_accept">接听来电并结束当前通话</string>
   <string name="action_call_decline">拒接</string>
   <string name="action_call_mic_mute">禁用麦克风</string>
-  <string name="action_call_mic_unmute">麦克风静音</string>
+  <string name="action_call_mic_unmute">取消麦克风静音</string>
   <string name="action_call_camera_on">打开摄像头</string>
   <string name="action_call_camera_off">关闭摄像头</string>
   <string name="action_call_stop_screen_share">停止分享畫面</string>
@@ -709,4 +709,15 @@
   <string name="collab_document_removed_locally">文档已从此设备移除</string>
   <string name="collab_document_removed_locally_message">“%1$s”已不在此设备上。再次打开将重新下载。</string>
   <!--Threaded conversations-->
+  <string name="conversation_threaded_view">会话串视图</string>
+  <string name="conversation_threaded_view_summary">在会话串中显示回复。打开会话串即可阅读并回复</string>
+  <string name="conversation_thread_title">会话串</string>
+  <string name="conversation_thread_reply_hint">在会话串中回复</string>
+  <string name="conversation_thread_missing">原始消息不可用。请返回会话继续操作</string>
+  <string name="conversation_thread_finding">正在会话历史中查找消息…</string>
+  <string name="conversation_thread_unavailable">该消息或其原始消息不可用</string>
+  <string name="conversation_thread_close">返回会话</string>
+  <plurals name="conversation_thread_replies">
+    <item quantity="other">%d条评论</item>
+  </plurals>
 </resources>

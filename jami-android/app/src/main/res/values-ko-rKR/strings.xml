@@ -133,6 +133,7 @@
   <string name="scan_qr">QR 코드 스캔</string>
   <string name="qr_code">QR 코드</string>
   <string name="qr_code_not_contact">Jami 연락처 QR 코드가 아닙니다</string>
+  <string name="contact_labels_save">저장</string>
   <string name="new_group">새 모임</string>
   <string name="ab_action_flipcamera"> 카메라 뒤집기</string>
   <string name="ab_action_hidepreview">미리보기 숨기기</string>

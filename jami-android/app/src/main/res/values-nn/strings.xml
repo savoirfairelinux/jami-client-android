@@ -134,6 +134,7 @@
   <string name="scan_qr">Skanna QR-kode</string>
   <string name="qr_code">QR-kode</string>
   <string name="qr_code_not_contact">Dette er ikkje ein QR kode for å kontakta andre på Jami</string>
+  <string name="contact_labels_save">Ta vare på</string>
   <string name="new_group">Ny gruppe</string>
   <string name="ab_action_flipcamera">Flip-kamera</string>
   <string name="ab_action_hidepreview">Skjå ut forhandsvisning</string>

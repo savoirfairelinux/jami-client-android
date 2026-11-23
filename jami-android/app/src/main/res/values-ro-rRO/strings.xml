@@ -44,11 +44,14 @@
   <string name="menu_item_share">Distribuie contul meu</string>
   <string name="menu_item_about">Despre Jami</string>
   <string name="video_setting_title">Reglări video</string>
+  <string name="pref_conference_resolution_title">Claritatea video a conferinței</string>
+  <string name="pref_conference_resolution_summary">Aleasă: %1$s. Se aplică conferințelor noi găzduite de acest aparat.</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Formează numărul</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Invitații primite</string>
+  <string name="join_feed">Participă</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d Conversație</item>
     <item quantity="few">%d Conversații</item>
@@ -123,7 +126,11 @@
   <string name="action_call_decline">Refuză</string>
   <string name="action_call_mic_mute">Oprește microfonul</string>
   <string name="action_call_mic_unmute">Pornește microfonul</string>
+  <string name="action_call_camera_on">Pornește camera</string>
+  <string name="action_call_camera_off">Oprește camera</string>
+  <string name="action_call_stop_screen_share">Oprește distribuirea ecranului</string>
   <string name="action_call_lower_hand">Coboară mâna</string>
+  <string name="action_call_show_extensions">Arată extensiile</string>
   <string name="action_call_show_participants">Arată participanții</string>
   <string name="action_load_extension">Încarcă extensia</string>
   <string name="ab_action_speakerphone">Pornește difuzorul</string>
@@ -137,6 +144,7 @@
   <string name="scan_qr">Scanează codul QR</string>
   <string name="qr_code">Cod QR</string>
   <string name="qr_code_not_contact">Nu este un cod QR de contact Jami</string>
+  <string name="contact_labels_save">Salvează</string>
   <string name="new_group">Grup nou</string>
   <string name="ab_action_flipcamera">Schimbă camera</string>
   <string name="ab_action_hidepreview">Ascunde previzualizarea</string>
@@ -482,7 +490,17 @@
   <string name="dialog_hint_description">Descriere</string>
   <string name="picker_title">Alege contacte</string>
   <string name="picker_btn">Alege contacte</string>
+  <string name="picker_close">Închide alegerea contactelor</string>
   <string name="picker_search_hint">Caută contacte</string>
+  <string name="picker_create_group">Creează un grup</string>
+  <string name="picker_add_members">Adaugă membri</string>
+  <string name="picker_no_matches">Niciun contact potrivit</string>
+  <string name="picker_remove_contact">Elimină %1$s</string>
+  <plurals name="picker_selection_count">
+    <item quantity="one">%d ales</item>
+    <item quantity="few">%d alese</item>
+    <item quantity="other">%d alese</item>
+  </plurals>
   <string name="no_contact_to_add">Nu ai niciun contact de adăugat</string>
   <string name="bottomsheet_contact">Contactează Jami\n%1$s</string>
   <string name="bottomsheet_block">Blochează membrul</string>
@@ -700,4 +718,17 @@
   <string name="collab_document_removed_locally">Document eliminat din acest aparat</string>
   <string name="collab_document_removed_locally_message">„%1$s” nu mai este în acest aparat. Redeschiderea acestuia îl va descărca din nou.</string>
   <!--Threaded conversations-->
+  <string name="conversation_threaded_view">Gruparea mesajelor</string>
+  <string name="conversation_threaded_view_summary">Grupează răspunsurile. Deschide un grup pentru a-l citi și pentru a răspunde</string>
+  <string name="conversation_thread_title">Grup</string>
+  <string name="conversation_thread_reply_hint">Răspunde în grup</string>
+  <string name="conversation_thread_missing">Mesajul original nu este disponibil. Revino la conversație pentru a continua.</string>
+  <string name="conversation_thread_finding">Se caută mesajul în conversație…</string>
+  <string name="conversation_thread_unavailable">Mesajul sau originalul nu sunt disponibile.</string>
+  <string name="conversation_thread_close">Revino la conversație</string>
+  <plurals name="conversation_thread_replies">
+    <item quantity="one">%d comentariu</item>
+    <item quantity="few">%d comentarii</item>
+    <item quantity="other">%d de comentarii</item>
+  </plurals>
 </resources>

@@ -48,6 +48,7 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Alınan davetler</string>
+  <string name="join_feed">Katıl</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d görüşme</item>
     <item quantity="other">%d görüşme</item>
@@ -134,6 +135,7 @@
   <string name="scan_qr">QR Kod Tara</string>
   <string name="qr_code">QR Kod</string>
   <string name="qr_code_not_contact">QR bir Jami kişisi kodu değil</string>
+  <string name="contact_labels_save">Kaydet</string>
   <string name="new_group">Yeni grup</string>
   <string name="ab_action_flipcamera">Kamerayı döndür</string>
   <string name="ab_action_hidepreview">Ön izlemeyi gizle</string>

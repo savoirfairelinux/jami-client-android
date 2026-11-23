@@ -48,6 +48,7 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">prejetih povabil</string>
+  <string name="join_feed">Pridruži se</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d pogovor</item>
     <item quantity="two">%d pogovora</item>
@@ -136,6 +137,7 @@
   <string name="scan_qr">Preberi QR-kodo</string>
   <string name="qr_code">QR-koda</string>
   <string name="qr_code_not_contact">Ni koda QR stika Jami</string>
+  <string name="contact_labels_save">Shrani</string>
   <string name="new_group">Nova skupina</string>
   <string name="ab_action_flipcamera">Zrcali kamero</string>
   <string name="ab_action_hidepreview">Skrij predogled</string>

@@ -139,6 +139,7 @@
   <string name="scan_qr">Skannaa QR-koodi</string>
   <string name="qr_code">QR-koodi</string>
   <string name="qr_code_not_contact">Ei Jamissa - henkilön QR-koodi</string>
+  <string name="conversation_filter_all">Kaikki</string>
   <string name="new_group">Uusi ryhmä</string>
   <string name="ab_action_flipcamera">Käännä kamera</string>
   <string name="ab_action_hidepreview">Piilota esikatselu</string>
