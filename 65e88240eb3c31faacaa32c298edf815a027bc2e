@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdb32084_0061803e",
+        "filename": "jami-android/app/src/main/res/values-es/strings_preferences.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-23T16:49:58Z",
+      "side": 1,
+      "message": "[warning] Line 18: 🟡 `pref_huaweiPush_summary` translates background delivery as `en el historial` (“in history”), which changes the meaning of the setting. Use wording aligned with background processing (for example, `... en segundo plano`) to avoid misleading users about notification behavior.",
+      "revId": "65e88240eb3c31faacaa32c298edf815a027bc2e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1a24c48_e2341825",
+        "filename": "jami-android/app/src/main/res/values-pl/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-23T16:49:58Z",
+      "side": 1,
+      "message": "[warning] Line 51: 🟡 `join_feed` is translated as `Dołączył się` (past tense: “has joined”), but this string is used as an action label. Replace it with an imperative form (for example, `Dołącz`) so the UI action text is grammatically correct.",
+      "revId": "65e88240eb3c31faacaa32c298edf815a027bc2e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd0e1c2b_13a995c4",
+        "filename": "jami-android/app/src/main/res/values-zh/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-23T16:49:58Z",
+      "side": 1,
+      "message": "[warning] Line 146: 🟡 In `values-zh` (Simplified Chinese), `contact_labels_save` is set to `儲存` (Traditional Chinese). Use Simplified script (`保存`) to keep locale consistency and avoid mixed-script UI in this resource set.",
+      "revId": "65e88240eb3c31faacaa32c298edf815a027bc2e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
