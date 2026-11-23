@@ -36,6 +36,7 @@
   <!--Dialing Fragment-->
   <!--History Fragment-->
   <!--Home Fragment-->
+  <string name="join_feed">Присъединяване</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d разговор</item>
     <item quantity="other">%d разговора</item>
@@ -107,6 +108,7 @@
   <string name="share_via">Споделяне чрез</string>
   <string name="scan_qr">Сканиране на QR-код</string>
   <string name="qr_code">QR код</string>
+  <string name="contact_labels_save">Запазване</string>
   <string name="ab_action_flipcamera">Обръщане на камерата</string>
   <string name="ab_action_hidepreview">Скрийте предварителното преглеждане</string>
   <string name="remote_recording">Записване на %s...</string>

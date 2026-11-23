@@ -39,6 +39,7 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">الدعوات المستلمة</string>
+  <string name="join_feed">انضم</string>
   <plurals name="home_conferences_title">
     <item quantity="zero">%d مكالمة</item>
     <item quantity="one">%d مكالمة</item>
@@ -116,6 +117,7 @@
   <string name="share_via">مشاركة عبر</string>
   <string name="scan_qr">مسح رمز الإستجابة السريعة</string>
   <string name="qr_code">رمز الإستجابة السريعة</string>
+  <string name="contact_labels_save">سجل</string>
   <string name="new_group">مجموعة جديدة</string>
   <string name="ab_action_flipcamera">قلب كاميرا</string>
   <string name="ab_action_hidepreview">إخفاء معاينة</string>

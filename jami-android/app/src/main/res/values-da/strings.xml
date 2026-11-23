@@ -48,6 +48,7 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Invitationer modtaget</string>
+  <string name="join_feed">Deltag</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d samtale</item>
     <item quantity="other">%d samtaler</item>
@@ -134,6 +135,7 @@
   <string name="scan_qr">Scan QR-kode</string>
   <string name="qr_code">QR-kode</string>
   <string name="qr_code_not_contact">QR koden er ikke til en Jami kontakt</string>
+  <string name="contact_labels_save">Gem</string>
   <string name="new_group">Ny gruppe</string>
   <string name="ab_action_flipcamera">Vend kamera</string>
   <string name="ab_action_hidepreview">Skjul forhåndsvisning</string>

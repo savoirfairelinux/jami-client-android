@@ -36,6 +36,7 @@
   <!--Dialing Fragment-->
   <!--History Fragment-->
   <!--Home Fragment-->
+  <string name="join_feed">הצטרף</string>
   <!--ContactList Fragment-->
   <string name="searchbar_hint">חפש או הוסף</string>
   <string name="choose_number">נא לבחור מספר</string>
@@ -78,6 +79,7 @@
   <string name="ab_action_contact_add">הוסף לקשרים</string>
   <string name="ab_action_audio_call">תחילת שיחת קול</string>
   <string name="ab_action_video_call">תתחילו שיחת וידאו</string>
+  <string name="contact_labels_save">שמור</string>
   <!--Text messages-->
   <string name="send_message">שליחת הודעה</string>
   <string name="message_failed">כשל</string>

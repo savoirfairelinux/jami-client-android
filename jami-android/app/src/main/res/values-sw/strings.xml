@@ -107,6 +107,7 @@
   <string name="share_via">Kushiriki kupitia</string>
   <string name="scan_qr">Scan QR Code</string>
   <string name="qr_code">Nambari ya QR</string>
+  <string name="contact_labels_save">Kuokoa</string>
   <string name="ab_action_flipcamera">Kamera flip</string>
   <string name="ab_action_hidepreview">Ficha ya awali ya kuficha</string>
   <string name="remote_recording">Kurekodi %s...</string>

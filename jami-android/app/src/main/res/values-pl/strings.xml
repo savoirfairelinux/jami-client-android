@@ -48,6 +48,7 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Otrzymano zaproszenia</string>
+  <string name="join_feed">Dołączył się</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d Rozmowa</item>
     <item quantity="few">%d Rozmowy</item>
@@ -136,6 +137,7 @@
   <string name="scan_qr">Zeskanuj kod QR</string>
   <string name="qr_code">Kod QR</string>
   <string name="qr_code_not_contact">Nie jest to kod QR kontaktu Jami</string>
+  <string name="contact_labels_save">Zapisz</string>
   <string name="new_group">Nowa grupa</string>
   <string name="ab_action_flipcamera">Zamień kamerę</string>
   <string name="ab_action_hidepreview">Ukryj podgląd</string>

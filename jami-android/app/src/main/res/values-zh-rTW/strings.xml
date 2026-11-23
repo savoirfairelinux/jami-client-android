@@ -51,6 +51,7 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">邀請已經收到</string>
+  <string name="join_feed">加入</string>
   <plurals name="home_conferences_title">
     <item quantity="other">%d 交談</item>
   </plurals>
@@ -122,7 +123,7 @@
   <string name="action_call_end_accept">接聽來電，並結束目前通話</string>
   <string name="action_call_decline">拒接</string>
   <string name="action_call_mic_mute">靜音麥克風</string>
-  <string name="action_call_mic_unmute">麥克風靜音</string>
+  <string name="action_call_mic_unmute">取消麥克風靜音</string>
   <string name="action_call_camera_on">打开摄像头</string>
   <string name="action_call_camera_off">关闭摄像头</string>
   <string name="action_call_stop_screen_share">停止分享畫面</string>
@@ -141,6 +142,8 @@
   <string name="scan_qr">掃瞄二維條碼</string>
   <string name="qr_code">QR code 二維條碼</string>
   <string name="qr_code_not_contact">此非 Jami 二維條碼</string>
+  <string name="conversation_filter_all">全部</string>
+  <string name="contact_labels_save">儲存</string>
   <string name="new_group">新建群組</string>
   <string name="ab_action_flipcamera">翻轉相機</string>
   <string name="ab_action_hidepreview">隱藏預覽</string>
@@ -311,6 +314,9 @@
   <string name="hist_contact_blocked">聯絡人已被封鎖</string>
   <string name="hist_contact_unblocked">聯絡人解除封鎖</string>
   <string name="hist_invitation_received">已經收到邀請</string>
+  <string name="conversation_joined_date">已加入</string>
+  <string name="contact_added_date">已添加</string>
+  <string name="contact_removed_date">已移除</string>
   <!--Account summary-->
   <string name="profile">個人資訊</string>
   <string name="profile_name">個人資訊名稱</string>
@@ -708,4 +714,15 @@
   <string name="collab_document_removed_locally">文件已經自此裝置移除</string>
   <string name="collab_document_removed_locally_message">%1$s 已經不在此裝置上。再次開啟將重新下載回來。</string>
   <!--Threaded conversations-->
+  <string name="conversation_threaded_view">討論串檢視</string>
+  <string name="conversation_threaded_view_summary">在討論串中顯示回覆。開啟討論串即可閱讀並回覆</string>
+  <string name="conversation_thread_title">討論串</string>
+  <string name="conversation_thread_reply_hint">在討論串中回覆</string>
+  <string name="conversation_thread_missing">無法取得原始訊息。請返回對話以繼續</string>
+  <string name="conversation_thread_finding">正在對話記錄中尋找訊息…</string>
+  <string name="conversation_thread_unavailable">無法取得這則訊息或其原始訊息</string>
+  <string name="conversation_thread_close">返回對話</string>
+  <plurals name="conversation_thread_replies">
+    <item quantity="other">%d 則留言</item>
+  </plurals>
 </resources>

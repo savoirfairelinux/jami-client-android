@@ -107,6 +107,7 @@
   <string name="share_via">арқылы бөлісу</string>
   <string name="scan_qr">QR кодын сканерлеу</string>
   <string name="qr_code">QR кодтары</string>
+  <string name="contact_labels_save">Сақтау</string>
   <string name="ab_action_flipcamera">Қалған камера</string>
   <string name="ab_action_hidepreview">Алдын ала қарауды жасыру</string>
   <string name="remote_recording">%s жазуы...</string>

@@ -95,6 +95,7 @@
   <string name="share_via">द्वारे सामायिक करा</string>
   <string name="scan_qr">QR कोड स्कॅन करा</string>
   <string name="qr_code">QR कोड</string>
+  <string name="contact_labels_save">जतन करा</string>
   <string name="ab_action_flipcamera">फ्लिप कॅमेरा</string>
   <string name="ab_action_hidepreview">पूर्वावलोकन लपवा</string>
   <string name="remote_recording">%s रेकॉर्डिंग</string>

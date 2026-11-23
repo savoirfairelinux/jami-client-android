@@ -15,6 +15,7 @@
   <string name="pref_pushNotifications_title">Notificări</string>
   <string name="pref_pushNotifications_summary">Utilizează serverele Google pentru a primi apeluri/mesaje când Jami e ascuns</string>
   <string name="pref_unifiedPush_summary">Utilizează un serviciu UnifiedPush pentru a primi apeluri/mesaje când Jami e ascuns</string>
+  <string name="pref_huaweiPush_summary">Utilizează serverele Huawei pentru a primi apeluri/mesaje cînd Jami e ascuns</string>
   <string name="pref_video_advanced_title">Reglări video avansate</string>
   <string name="pref_video_advanced_summary">Schimbă calitatea video, claritatea și accesul la caracteristicile experimentale</string>
   <string name="pref_hd_summary">Activează trimiterea de video HD</string>
@@ -69,6 +70,7 @@
   <string name="connectivity_local_node_title">Nod DHT local</string>
   <string name="connectivity_local_node_description">Foloseste un nod DHT local pentru a te conecta cu alte aparate și contacte Jami.</string>
   <string name="connectivity_unified_push_description">Folosește un server Unified Push personalizat pentru a primi notificări.</string>
+  <string name="connectivity_huawei_push_description">Folosește Huawei Push Kit și un proxy DHT pentru a primi notificări.</string>
   <string name="connectivity_custom_title">Personalizată</string>
   <string name="connectivity_custom_description">În prezent, nu este utilizată niciuna dintre opțiunile disponibile.</string>
   <!--Extension-->

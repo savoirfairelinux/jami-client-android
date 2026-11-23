@@ -15,6 +15,7 @@
   <string name="pref_pushNotifications_title">推送通知</string>
   <string name="pref_pushNotifications_summary">使用 Google 服务从而允许在后台接受到电话或消息</string>
   <string name="pref_unifiedPush_summary">使用 UnifiedPush 服务,允许在背景中接收电话/消息</string>
+  <string name="pref_huaweiPush_summary">使用华为服务器在后台接收来电和消息</string>
   <string name="pref_video_advanced_title">高级视频设置</string>
   <string name="pref_video_advanced_summary">更改视频比特率、分辨率以及访问实验性功能</string>
   <string name="pref_hd_summary">启用发送高清视频</string>
@@ -68,6 +69,7 @@
   <string name="connectivity_local_node_title">本地DHT节点</string>
   <string name="connectivity_local_node_description">使用本地DHT节点与其他Jami设备和联系人连接。</string>
   <string name="connectivity_unified_push_description">使用自定义UnifiedPush服务器接收推送通知。</string>
+  <string name="connectivity_huawei_push_description">使用华为 Push Kit 和 DHT 代理接收推送通知。</string>
   <string name="connectivity_custom_title">自訂</string>
   <string name="connectivity_custom_description">当前未使用任何可用的配置预设。</string>
   <!--Extension-->
