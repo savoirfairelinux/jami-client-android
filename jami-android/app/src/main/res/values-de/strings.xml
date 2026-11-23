@@ -51,6 +51,7 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Einladungen erhalten</string>
+  <string name="join_feed">Beitreten</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d Unterhaltung</item>
     <item quantity="other">%d Unterhaltungen</item>
@@ -142,6 +143,9 @@
   <string name="scan_qr">QR-Code scannen</string>
   <string name="qr_code">QR-Code</string>
   <string name="qr_code_not_contact">Kein QR-Code eines Jami-Kontakts</string>
+  <string name="conversation_filter_all">Alle</string>
+  <string name="contact_labels_save">Speichern</string>
+  <string name="conversation_filter_groups">Gruppen</string>
   <string name="new_group">Neue Gruppe</string>
   <string name="ab_action_flipcamera">Kamera wechseln</string>
   <string name="ab_action_hidepreview">Vorschau ausblenden</string>
@@ -312,6 +316,9 @@
   <string name="hist_contact_blocked">Kontakt blockiert</string>
   <string name="hist_contact_unblocked">Blockierung des Kontaktes aufgehoben</string>
   <string name="hist_invitation_received">Einladung erhalten</string>
+  <string name="conversation_joined_date">Beigetreten</string>
+  <string name="contact_added_date">Hinzugefügt</string>
+  <string name="contact_removed_date">Entfernt</string>
   <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Profilname</string>
@@ -712,4 +719,16 @@
   <string name="collab_document_removed_locally">Dokument von diesem Gerät entfernt</string>
   <string name="collab_document_removed_locally_message">\"%1$s\" ist nicht mehr auf diesem Gerät. Beim erneuten Öffnen wird es wieder heruntergeladen.</string>
   <!--Threaded conversations-->
+  <string name="conversation_threaded_view">Thread-Ansicht</string>
+  <string name="conversation_threaded_view_summary">Antworten in Threads anzeigen. Einen Thread öffnen, um ihn zu lesen und darauf zu antworten.</string>
+  <string name="conversation_thread_title">Thread</string>
+  <string name="conversation_thread_reply_hint">Im Thread antworten</string>
+  <string name="conversation_thread_missing">Die ursprüngliche Nachricht ist nicht verfügbar. Zur Unterhaltung zurückkehren, um fortzufahren.</string>
+  <string name="conversation_thread_finding">Nachricht im Unterhaltungsverlauf wird gesucht…</string>
+  <string name="conversation_thread_unavailable">Die Nachricht oder ihr Original ist nicht verfügbar.</string>
+  <string name="conversation_thread_close">Zur Unterhaltung zurückkehren</string>
+  <plurals name="conversation_thread_replies">
+    <item quantity="one">%d Kommentar</item>
+    <item quantity="other">%d Kommentare</item>
+  </plurals>
 </resources>

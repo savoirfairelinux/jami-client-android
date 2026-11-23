@@ -48,6 +48,7 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Запрошення отримані</string>
+  <string name="join_feed">Приєднатися</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d груповий чат</item>
     <item quantity="few">%d групових чатів</item>
@@ -136,6 +137,7 @@
   <string name="scan_qr">Сканування QR коду</string>
   <string name="qr_code">QR код</string>
   <string name="qr_code_not_contact">Це не QR-код контакту Jami</string>
+  <string name="contact_labels_save">Зберігти</string>
   <string name="new_group">Нова група</string>
   <string name="ab_action_flipcamera">Змінити камеру</string>
   <string name="ab_action_hidepreview">Сховати передогляд</string>

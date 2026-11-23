@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_huaweiPush_summary">Utilice los servidores de Huawei para permitir recibir llamadas / mensajes en el fondo</string>
+  <!--Notifications Visibility-->
+  <string name="connectivity_huawei_push_description">Utiliza Huawei Push Kit y un proxy DHT para recibir notificaciones de empuje.</string>
+  <!--Extension-->
+</resources>

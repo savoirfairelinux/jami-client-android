@@ -112,6 +112,7 @@
   <string name="scan_qr">QR कोड स्कैन करें</string>
   <string name="qr_code">क्यूआर कोड</string>
   <string name="qr_code_not_contact">यह जामी संपर्क क्यूआर कोड नहीं है</string>
+  <string name="contact_labels_save">सहेजें</string>
   <string name="new_group">नया समूह</string>
   <string name="ab_action_flipcamera">फ्लिप कैमरा</string>
   <string name="ab_action_hidepreview">पूर्वावलोकन छिपाएँ</string>

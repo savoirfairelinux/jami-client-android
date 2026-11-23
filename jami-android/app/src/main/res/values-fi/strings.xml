@@ -49,6 +49,7 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Kutsut vastaanotettu</string>
+  <string name="join_feed">Liity</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d keskustelu</item>
     <item quantity="other">%d keskustelua</item>
@@ -139,6 +140,9 @@
   <string name="scan_qr">Skannaa QR-koodi</string>
   <string name="qr_code">QR-koodi</string>
   <string name="qr_code_not_contact">Ei Jamissa - henkilön QR-koodi</string>
+  <string name="conversation_filter_all">Kaikki</string>
+  <string name="contact_labels_save">Tallenna</string>
+  <string name="conversation_filter_groups">Ryhmät</string>
   <string name="new_group">Uusi ryhmä</string>
   <string name="ab_action_flipcamera">Käännä kamera</string>
   <string name="ab_action_hidepreview">Piilota esikatselu</string>

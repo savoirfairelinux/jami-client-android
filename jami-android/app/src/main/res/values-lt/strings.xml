@@ -43,6 +43,7 @@
   <string name="dial_number">Rinkti numerį</string>
   <!--History Fragment-->
   <!--Home Fragment-->
+  <string name="join_feed">Prisijungti</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d pokalbis</item>
     <item quantity="few">%d pokalbiai</item>
@@ -117,6 +118,7 @@
   <string name="scan_qr">Skenuoti QR kodą</string>
   <string name="qr_code">QR kodas</string>
   <string name="qr_code_not_contact">Ne Jami adresato QR kodas</string>
+  <string name="contact_labels_save">Įrašyti</string>
   <string name="new_group">Nauja grupė</string>
   <string name="ab_action_flipcamera">Apversti kamerą</string>
   <string name="ab_action_hidepreview">Slėpti peržiūrą</string>

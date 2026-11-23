@@ -125,6 +125,7 @@
   <string name="scan_qr">ക്യുആർ കോഡ് സ്കാൻ ചെയ്യുക</string>
   <string name="qr_code">ക്യുആർ കോഡ്</string>
   <string name="qr_code_not_contact">ഒരു ജാമി കോണ്ടാക്ടിന്റെ QR കോഡല്ല</string>
+  <string name="contact_labels_save">സംരക്ഷിക്കുക</string>
   <string name="ab_action_flipcamera">ഫ്ലിപ്പ് ക്യാമറ</string>
   <string name="ab_action_hidepreview">പ്രിവ്യൂ മറയ്ക്കുക</string>
   <string name="remote_recording">%s റെക്കോർഡിംഗ്</string>

@@ -95,6 +95,7 @@
   <string name="share_via">اشتراک</string>
   <string name="scan_qr">QR کد سکن</string>
   <string name="qr_code">QR کد</string>
+  <string name="contact_labels_save">ساقلاماق</string>
   <string name="ab_action_flipcamera">فلپ کاميرا</string>
   <string name="ab_action_hidepreview">اؤنروو اؤرت</string>
   <string name="remote_recording">%s ضبط...</string>

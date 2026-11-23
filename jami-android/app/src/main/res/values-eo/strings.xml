@@ -31,6 +31,7 @@
   <!--Dialing Fragment-->
   <!--History Fragment-->
   <!--Home Fragment-->
+  <string name="join_feed">Kunigi</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d Konversacio</item>
     <item quantity="other">%d Konversacioj</item>
@@ -95,6 +96,7 @@
   <string name="share_via">Kunhavi per</string>
   <string name="scan_qr">Skani QR Kodon</string>
   <string name="qr_code">QR-kodo</string>
+  <string name="contact_labels_save">Savi</string>
   <string name="ab_action_flipcamera">Renversi kameraon</string>
   <string name="ab_action_hidepreview">Kaŝu antaŭvidon</string>
   <string name="remote_recording">%s-registrado...</string>

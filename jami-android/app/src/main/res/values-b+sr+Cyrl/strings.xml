@@ -135,6 +135,7 @@
   <string name="scan_qr">Скенирај QR код</string>
   <string name="qr_code">QR код</string>
   <string name="qr_code_not_contact">Nije QR kod za kontakt sa Jami</string>
+  <string name="contact_labels_save">Сачувај</string>
   <string name="new_group">Нова група</string>
   <string name="ab_action_flipcamera">Обрни камеру</string>
   <string name="ab_action_hidepreview">Сакриј преглед</string>

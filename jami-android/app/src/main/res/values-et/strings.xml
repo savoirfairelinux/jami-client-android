@@ -51,6 +51,7 @@
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Sulle on kutseid</string>
+  <string name="join_feed">Liitu</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d vestlus</item>
     <item quantity="other">%d vestlust</item>
@@ -142,6 +143,9 @@
   <string name="scan_qr">Skaneeri QR-koodi</string>
   <string name="qr_code">QR-kood</string>
   <string name="qr_code_not_contact">See pole Jami kontakti QR-kood</string>
+  <string name="conversation_filter_all">Kõik</string>
+  <string name="contact_labels_save">Salvesta</string>
+  <string name="conversation_filter_groups">Grupid</string>
   <string name="new_group">Uus grupp</string>
   <string name="ab_action_flipcamera">Pööra kaamerat</string>
   <string name="ab_action_hidepreview">Peida eelvaade</string>
@@ -312,6 +316,9 @@
   <string name="hist_contact_blocked">Kontakt on blokeeritud</string>
   <string name="hist_contact_unblocked">Kontakti blokeering on eemaldatud</string>
   <string name="hist_invitation_received">Said kutse</string>
+  <string name="conversation_joined_date">Liitunud</string>
+  <string name="contact_added_date">Lisatud</string>
+  <string name="contact_removed_date">Eemaldatud</string>
   <!--Account summary-->
   <string name="profile">Profiil</string>
   <string name="profile_name">Profiili nimi</string>
@@ -714,4 +721,16 @@ Kui klõpsid „Kinnita“, siis jätkame kasutajakonto eksportimisega.</string>
   <string name="collab_document_removed_locally">Dokument on sellest seadmest eemaldatud.</string>
   <string name="collab_document_removed_locally_message">„%1$s“ dokumenti enam ei leidu selles seadmes. Tema uuesti avamisel laaditakse ta uuesti alla.</string>
   <!--Threaded conversations-->
+  <string name="conversation_threaded_view">Vaade jutulõngadena</string>
+  <string name="conversation_threaded_view_summary">Näed vastuseid jutulõngadena. Avades jutulõnga saad seda lugeda ja sõnumitele vastata.</string>
+  <string name="conversation_thread_title">Jutulõng</string>
+  <string name="conversation_thread_reply_hint">Vasta jutulõngas</string>
+  <string name="conversation_thread_missing">Algne sõnum pole saadaval. Jätkamiseks mine tagasi vestluse juurde.</string>
+  <string name="conversation_thread_finding">Otsin vestlusajaloost sõnumit…</string>
+  <string name="conversation_thread_unavailable">Sõnum või tema algne teave pole saadaval.</string>
+  <string name="conversation_thread_close">Tagasi vestluse juurde</string>
+  <plurals name="conversation_thread_replies">
+    <item quantity="one">%d kommentaar</item>
+    <item quantity="other">%d kommentaari</item>
+  </plurals>
 </resources>
