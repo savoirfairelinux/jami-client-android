@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "693b347a_ab56b783",
+        "filename": "jami-android/app/src/main/res/values-es/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-23T06:05:32Z",
+      "side": 1,
+      "message": "[error] Line 730: 🔴 `conversation_thread_replies` has empty plural values (`one`, `many`, `other`). This will render blank reply-count labels in Spanish UI. Fill each item with localized text containing `%d` (for example: `%d respuesta` / `%d respuestas`).",
+      "revId": "da858fb465cdd80438d43dec387bf3ab393c6cc4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8fbd0a4d_4bcb5cac",
+        "filename": "jami-android/app/src/main/res/values-vi/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-23T06:05:32Z",
+      "side": 1,
+      "message": "[warning] Line 101: 🟡 `contact_labels_save` is malformed (`- Cứu`): it includes a leading hyphen and uses wording that means “rescue” rather than “save”. Replace with the correct Vietnamese action label (e.g., `Lưu`) to avoid confusing users.",
+      "revId": "da858fb465cdd80438d43dec387bf3ab393c6cc4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0959d6ba_03f1a540",
+        "filename": "jami-android/app/src/main/res/values-zh-rCN/strings_preferences.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-23T06:05:32Z",
+      "side": 1,
+      "message": "[warning] Line 16: 🟡 Newly added Huawei push strings are left in English in a Chinese locale (`pref_huaweiPush_summary` and `connectivity_huawei_push_description`). This causes mixed-language settings UI. Localize these strings (and the same pattern in related Chinese locale files) to the target language.",
+      "revId": "da858fb465cdd80438d43dec387bf3ab393c6cc4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eaf29da7_5a0692ba",
+        "filename": "jami-android/app/src/main/res/values-zh-rTW/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-23T06:05:32Z",
+      "side": 1,
+      "message": "[warning] Line 718: 🟡 New threaded-conversation strings are in Simplified Chinese in a Traditional Chinese (`zh-rTW`) resource file (e.g., `会话串视图`, `返回会话`). This creates mixed-script UX. Replace these entries with Traditional Chinese equivalents for consistency with the locale.",
+      "revId": "da858fb465cdd80438d43dec387bf3ab393c6cc4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
