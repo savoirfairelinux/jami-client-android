@@ -36,6 +36,7 @@ import android.widget.Toast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.adapters.MessageType
+import cx.ring.viewholders.ConversationViewHolder
 import cx.ring.views.AvatarView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
@@ -389,7 +390,7 @@ object ActionHelper {
             mView = viewHolder.itemView
             imageDrawable = context.getDrawable(R.drawable.baseline_reply_24) ?: return 0
 
-            val messageType = MessageType.values()[viewHolder.itemViewType]
+            val messageType = (viewHolder as? ConversationViewHolder)?.type ?: return 0
 
             val incomingMessageType = listOf(
                 MessageType.INCOMING_TEXT_MESSAGE,

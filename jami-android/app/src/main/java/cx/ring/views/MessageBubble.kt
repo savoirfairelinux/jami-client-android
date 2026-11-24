@@ -126,7 +126,7 @@ class MessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context,
     /**
      * Updates the view to display a standard message.
      */
-    fun updateStandard(message: CharSequence, time: String, messageIsEdited: Boolean) {
+    fun updateStandard(message: CharSequence, time: String?, messageIsEdited: Boolean) {
         messageEdited.isVisible = messageIsEdited
         messageText.apply {
             setTextSize(TypedValue.COMPLEX_UNIT_PX, defaultTextSize)
@@ -134,37 +134,42 @@ class MessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context,
             setTextIsSelectable(true)
             text = message
         }
-        messageTime.text = time
+        updateTime(time)
         updateTextColor(defaultTextColor)
     }
 
     /**
      * Updates the view to display a deleted message.
      */
-    fun updateDeleted(time: String, username: String) {
+    fun updateDeleted(time: String?, username: String) {
         messageEdited.visibility = GONE
-        messageTime.text = time
+        updateTime(time)
         messageText.setTextSize(TypedValue.COMPLEX_UNIT_PX, defaultTextSize)
         messageText.setTypeface(null, Typeface.ITALIC)
         messageText.text = String.format(context.getString(R.string.conversation_message_deleted), username)
         messageText.setTextIsSelectable(false)
 
-        background.setTint(context.getColor(R.color.conversation_secondary_background))
+        background?.setTint(context.getColor(R.color.conversation_secondary_background))
         updateTextColor(context.getColor(R.color.msg_display_name))
     }
 
     /**
      * Updates the view to display an emoji message.
      */
-    fun updateEmoji(text: String, time: String, messageIsEdited: Boolean) {
+    fun updateEmoji(text: String, time: String?, messageIsEdited: Boolean) {
         messageEdited.isVisible = messageIsEdited
         messageText.setTextSize(TypedValue.COMPLEX_UNIT_PX, emojiOnlyTextSize)
         messageText.setTypeface(null, Typeface.NORMAL)
         messageText.text = text
         messageText.setTextIsSelectable(true)
-        messageTime.text = time
+        updateTime(time)
         // Emoji is not in the bubble, so should be contrasted with conversation background.
         updateTextColor(contrastedDefaultTextColor)
+    }
+
+    private fun updateTime(time: String?) {
+        messageTime.text = time
+        messageTime.isVisible = time != null
     }
 
     /**
@@ -187,6 +192,10 @@ class MessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context,
         }
 
         measureChildren(widthMeasureSpec, heightMeasureSpec)
+        if (!messageTime.isVisible) {
+            val zero = MeasureSpec.makeMeasureSpec(0, MeasureSpec.EXACTLY)
+            messageTime.measure(zero, zero)
+        }
         val width = MeasureSpec.getSize(widthMeasureSpec)
 
         // Get current layout case.

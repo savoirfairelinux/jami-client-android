@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cx.ring.views.MessageBubble xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/message_content"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="start"
+    android:textColor="?attr/colorOnSurface">
+
+    <include
+        android:id="@+id/link_preview"
+        layout="@layout/msg_link_preview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+</cx.ring.views.MessageBubble>

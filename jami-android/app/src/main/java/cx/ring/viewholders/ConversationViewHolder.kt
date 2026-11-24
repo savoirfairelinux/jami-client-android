@@ -46,7 +46,15 @@ import cx.ring.views.WaveformView
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import com.google.android.material.button.MaterialButton
 
-class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView.ViewHolder(v) {
+class ConversationViewHolder(
+    v: ViewGroup,
+    val type: MessageType,
+    val isFeedPost: Boolean = false,
+    val isFeedComment: Boolean = false
+) : RecyclerView.ViewHolder(v) {
+    val feedAvatar: AvatarView? = v.findViewById(R.id.feed_post_avatar)
+    val feedAuthor: TextView? = v.findViewById(R.id.feed_post_author)
+    val feedTimestamp: TextView? = v.findViewById(R.id.feed_post_timestamp)
     val threadReplies: MaterialButton? = v.findViewById(R.id.thread_replies)
     val threadFooter: LinearLayout? = v.findViewById(R.id.thread_message_footer)
     val mItem: View? = when (type) {
@@ -116,7 +124,8 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     var mReplyName: TextView? = null
     var mReplyTxt: TextView? = null
 
-    val reactionChip: TextView? = v.findViewById(R.id.reaction_chip)
+    val reactionChip: TextView? =
+        v.findViewById(if (isFeedPost) R.id.feed_post_reactions else R.id.reaction_chip)
     private val reactionTopMargin =
         (reactionChip?.layoutParams as? ViewGroup.MarginLayoutParams)?.topMargin ?: 0
     val mIcon: ImageView? = when (type) {

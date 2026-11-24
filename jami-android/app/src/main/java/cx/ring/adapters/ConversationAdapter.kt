@@ -51,12 +51,14 @@ import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.core.view.setPadding
 import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
@@ -122,6 +124,8 @@ class ConversationAdapter(
         val type: Int,
         val revision: Int,
         val replies: Int,
+        val expanded: Boolean,
+        val followedByComment: Boolean,
         val previous: String?,
         val next: String?
     ) {
@@ -139,7 +143,10 @@ class ConversationAdapter(
         replyCounts: Map<String, Int>,
         changedIds: Set<String>,
         forceRefresh: Boolean,
-        composingStatus: ComposingStatus
+        composingStatus: ComposingStatus,
+        feedTimeline: Boolean,
+        expandedFeedPosts: Set<String> = emptySet(),
+        feedCommentIds: Set<String> = emptySet()
     ) {
         check(isThreadProjection)
         val oldRows = projectionRows
@@ -149,11 +156,17 @@ class ConversationAdapter(
         val newRows = messages.mapIndexed { index, message ->
             val key = message.messageId ?: "legacy:${message.id}"
             val old = oldById[key]
+            val isPost = feedTimeline && (message.type == Interaction.InteractionType.TEXT ||
+                message.type == Interaction.InteractionType.DATA_TRANSFER)
+            val type = getMessageViewType(message)
             ProjectionRow(
-                message, getMessageViewType(message),
+                message, if (!isPost) type else type + MessageType.entries.size *
+                    if (message.messageId in feedCommentIds) 2 else 1,
                 (old?.revision ?: 0) +
                     if (forceRefresh || key in changedIds) 1 else 0,
                 replyCounts[message.messageId] ?: 0,
+                message.messageId in expandedFeedPosts,
+                messages.getOrNull(index + 1)?.messageId in feedCommentIds,
                 messages.getOrNull(index - 1)?.messageId,
                 messages.getOrNull(index + 1)?.messageId
             )
@@ -366,6 +379,8 @@ class ConversationAdapter(
         if (isComposing && position == mInteractions.size)
             return MessageType.COMPOSING_INDICATION.ordinal
 
+        if (isThreadProjection)
+            return projectionRows[position].type
         return getMessageViewType(mInteractions[position])
     }
 
@@ -425,6 +440,21 @@ class ConversationAdapter(
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConversationViewHolder {
+        if (viewType >= MessageType.entries.size) {
+            val type = MessageType.entries[viewType % MessageType.entries.size]
+            val isComment = viewType >= 2 * MessageType.entries.size
+            val inflater = LayoutInflater.from(parent.context)
+            val row = inflater.inflate(
+                if (isComment) R.layout.item_feed_comment else R.layout.item_feed_post, parent, false
+            ) as ViewGroup
+            val content = row.findViewById<FrameLayout>(R.id.feed_post_content)
+            val isText = type == MessageType.INCOMING_TEXT_MESSAGE ||
+                type == MessageType.OUTGOING_TEXT_MESSAGE
+            val layout = if (isText) R.layout.item_feed_post_text else type.layout
+            val body = inflater.inflate(layout, content, false)
+            content.addView(body)
+            return ConversationViewHolder(row, type, isFeedPost = true, isFeedComment = isComment)
+        }
         val type = MessageType.entries[viewType]
         val v = if (type == MessageType.INVALID) FrameLayout(parent.context)
         else (LayoutInflater.from(parent.context).inflate(type.layout, parent, false) as ViewGroup)
@@ -572,7 +602,7 @@ class ConversationAdapter(
                                     if (it.value > 1) it.key + it.value else it.key
                                 }
 
-                            (chip.background as GradientDrawable).apply {
+                            (chip.background as? GradientDrawable)?.apply {
                                 mutate()
                                 setStroke(
                                     context.resources
@@ -695,8 +725,11 @@ class ConversationAdapter(
 
         val interaction = mInteractions[position]
         conversationViewHolder.compositeDisposable.clear()
-        if (conversationViewHolder.threadFooter != null)
+        if (conversationViewHolder.threadFooter != null || conversationViewHolder.isFeedPost)
             conversationViewHolder.reactionChip?.isVisible = false
+
+        if (conversationViewHolder.isFeedPost)
+            configureFeedPost(conversationViewHolder, interaction, projectionRows[position])
 
         when (interaction.type) {
             Interaction.InteractionType.INVALID -> {
@@ -742,7 +775,7 @@ class ConversationAdapter(
             configureReactions(conversationViewHolder, interaction)
         }
 
-        conversationViewHolder.threadReplies?.apply {
+        conversationViewHolder.threadReplies?.takeUnless { conversationViewHolder.isFeedPost }?.apply {
             val count = threadReplyCounts[interaction.messageId] ?: 0
             isVisible = count > 0
             text = res.getQuantityString(R.plurals.conversation_thread_replies, count, count)
@@ -754,6 +787,82 @@ class ConversationAdapter(
 
         if (isSearch)
             configureSearchResult(conversationViewHolder, interaction)
+    }
+
+    private fun configureFeedPost(holder: ConversationViewHolder, post: Interaction, row: ProjectionRow) {
+        val context = holder.itemView.context
+        val card = holder.itemView.findViewById<MaterialCardView>(R.id.feed_post_card)
+        val radius = res.getDimension(R.dimen.feed_card_corner)
+        val gap = res.getDimensionPixelSize(R.dimen.feed_card_gap)
+        val joinsAbove = holder.isFeedComment
+        val joinsBelow = row.followedByComment
+        card.strokeWidth = if (joinsAbove || joinsBelow) 0
+            else res.getDimensionPixelSize(R.dimen.feed_card_stroke)
+        card.shapeAppearanceModel = card.shapeAppearanceModel.toBuilder()
+            .setTopLeftCornerSize(if (joinsAbove) 0f else radius)
+            .setTopRightCornerSize(if (joinsAbove) 0f else radius)
+            .setBottomLeftCornerSize(if (joinsBelow) 0f else radius)
+            .setBottomRightCornerSize(if (joinsBelow) 0f else radius)
+            .build()
+        holder.itemView.updatePadding(
+            top = if (joinsAbove) 0 else gap,
+            bottom = if (joinsBelow) 0 else gap
+        )
+        val contact = post.contact
+        val account = post.account
+        holder.feedAvatar?.setAvatar(null)
+        holder.feedAuthor?.text = contact?.primaryNumber
+        if (contact != null && account != null) {
+            holder.compositeDisposable.add(
+                presenter.contactService.observeContact(account, contact, false)
+                    .observeOn(DeviceUtils.uiScheduler)
+                    .subscribe { author ->
+                        holder.feedAuthor?.text = author.displayName
+                        holder.feedAvatar?.setAvatar(AvatarDrawable.Builder()
+                            .withContact(author)
+                            .withCircleCrop(true)
+                            .withPresence(false)
+                            .build(context))
+                    }
+            )
+        }
+        holder.compositeDisposable.add(timestampUpdateTimer
+            .observeOn(DeviceUtils.uiScheduler)
+            .subscribe {
+                val time = TextUtils.timestampToTime(context, formatter, post.timestamp)
+                holder.feedTimestamp?.text = if (holder.isFeedComment) time else context.getString(
+                    R.string.feed_post_timestamp,
+                    TextUtils.timestampToDate(context, formatter, post.timestamp),
+                    time
+                )
+            })
+        val isDeleted = (post.type == Interaction.InteractionType.TEXT && post.body.isNullOrEmpty()) ||
+            post.transferStatus == TransferStatus.FILE_REMOVED
+        holder.itemView.setOnLongClickListener(if (isDeleted) null else View.OnLongClickListener { row ->
+            openItemMenu(holder, row, post)
+            true
+        })
+        holder.itemView.isLongClickable = !isDeleted
+        holder.itemView.findViewById<View>(R.id.feed_post_react)?.apply {
+            isVisible = presenter.hasPermission(Conversation.Permission.Reaction)
+            setOnClickListener { openItemMenu(holder, it, post, showEmojiPicker = true) }
+        }
+        val id = post.messageId
+        val canReply = id != null && (presenter.canSendText(id) || presenter.canSendFile(id))
+        holder.itemView.findViewById<View>(R.id.feed_comment_reply)?.apply {
+            isVisible = canReply
+            setOnClickListener { presenter.startReplyTo(post) }
+        }
+        holder.threadReplies?.apply {
+            isVisible = id != null && (row.expanded || row.replies > 0 || canReply)
+            text = if (row.replies > 0) String.format(res.configuration.locales[0], "%d", row.replies) else ""
+            contentDescription = if (row.replies == 0) context.getText(R.string.feed_comment)
+                else res.getQuantityString(R.plurals.feed_comment_count, row.replies, row.replies)
+            androidx.core.view.ViewCompat.setStateDescription(this, context.getText(
+                if (row.expanded) R.string.feed_comments_expanded else R.string.feed_comments_collapsed
+            ))
+            setOnClickListener { conversationFragment.toggleFeedComments(post) }
+        }
     }
 
     override fun onViewAttachedToWindow(holder: ConversationViewHolder) {
@@ -800,6 +909,7 @@ class ConversationAdapter(
         }
         holder.mMsgTxt?.setOnLongClickListener(null)
         holder.mItem?.setOnClickListener(null)
+        holder.feedAvatar?.setAvatar(null)
         // Stop any running animations (e.g. typing indicator, file download):
         // an AnimatedVectorDrawable keeps requesting frames until stopped explicitly.
         (holder.mIcon?.drawable as? Animatable)?.stop()
@@ -1064,7 +1174,12 @@ class ConversationAdapter(
     /**
      * Display and manage the popup that allows user to react/reply/share/edit/delete message ...
      */
-    private fun openItemMenu(viewHolder: ConversationViewHolder, view: View, interaction: Interaction) {
+    private fun openItemMenu(
+        viewHolder: ConversationViewHolder,
+        view: View,
+        interaction: Interaction,
+        showEmojiPicker: Boolean = false
+    ) {
         MenuConversationBinding.inflate(LayoutInflater.from(view.context)).apply {
             val history = interaction.historyObservable.blockingFirst()
             val isDeleted = interaction is TextMessage && interaction.body.isNullOrEmpty()
@@ -1092,6 +1207,10 @@ class ConversationAdapter(
             convActionFileDelete.isVisible = isFileMenu
             convActionCopyText.isVisible = !isDeleted && interaction !is DataTransfer
             updateActions()
+            if (showEmojiPicker && presenter.hasPermission(Conversation.Permission.Reaction)) {
+                menuActions.isVisible = false
+                emojiPicker.isVisible = true
+            }
             convActionHistory.isVisible = !isDeleted && history.size > 1
             root.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
 
@@ -1129,13 +1248,15 @@ class ConversationAdapter(
             viewHolder.compositeDisposable.add(disposable)
 
             popupWindow.setOnDismissListener {
-                val type = viewHolder.type.transferType
-                if (convColor != 0 && (interaction.type == Interaction.InteractionType.TEXT
-                            || type == MessageType.TransferType.FILE
-                            || type == MessageType.TransferType.AUDIO ) && !interaction.isIncoming
-                ) {
-                    view.background?.setTint(convColor)
-                } else view.background?.setTintList(null)
+                if (!viewHolder.isFeedPost) {
+                    val type = viewHolder.type.transferType
+                    if (convColor != 0 && (interaction.type == Interaction.InteractionType.TEXT
+                                || type == MessageType.TransferType.FILE
+                                || type == MessageType.TransferType.AUDIO ) && !interaction.isIncoming
+                    ) {
+                        view.background?.setTint(convColor)
+                    } else view.background?.setTintList(null)
+                }
 
                 viewHolder.compositeDisposable.remove(disposable)
             }
@@ -1584,18 +1705,18 @@ class ConversationAdapter(
         val contact = interaction.contact ?: return
         val isDeleted = interaction.body.isNullOrEmpty() || interaction.transferStatus == TransferStatus.FILE_REMOVED
         val isEdited = interaction.history.size > 1
-        val isReplying = showsReplyPreview(interaction.replyToId, threadRootId)
+        val isReplying = !viewHolder.isFeedPost && showsReplyPreview(interaction.replyToId, threadRootId)
 
         val messageBubble = viewHolder.mMessageBubble ?: return
         val replyBubble = viewHolder.mReplyBubble
         val answerLayout = viewHolder.mAnswerLayout
 
-        val isDateShown = hasPermanentDateString(interaction, position)
-        val msgSequenceType = getMsgSequencing(position, isDateShown)
+        val isDateShown = !viewHolder.isFeedPost && hasPermanentDateString(interaction, position)
+        val msgSequenceType = if (viewHolder.isFeedPost) SequenceType.SINGLE else getMsgSequencing(position, isDateShown)
 
         val message = interaction.body?.trim() ?: ""
-        val messageTime = TextUtils.timestampToTime(context, formatter, mInteractions[position].timestamp)
-        val timePermanent = viewHolder.mMsgDetailTxtPerm
+        val messageTime = if (viewHolder.isFeedPost) null
+            else TextUtils.timestampToTime(context, formatter, interaction.timestamp)
 
         // Add margin if message need to be separated.
         val isMessageSeparationNeeded = isMessageSeparationNeeded(isDateShown, position)
@@ -1617,7 +1738,7 @@ class ConversationAdapter(
         else messageBubble.updateLayoutParams<MarginLayoutParams> { topMargin = 0 }
 
         // Manage the background of the message bubble.
-        updateMessageBackground(
+        if (!viewHolder.isFeedPost) updateMessageBackground(
             context, messageBubble, msgSequenceType,
             isOnlyEmoji = StringUtils.isOnlyEmoji(message),
             isReplying = isReplying,
@@ -1628,9 +1749,11 @@ class ConversationAdapter(
         // Manage long press.
         messageBubble.setOnLongClickListener { v: View ->
             openItemMenu(viewHolder, v, interaction)
-            if (interaction.isIncoming)
-                messageBubble.setBubbleColor(context.getColor(R.color.grey_500))
-            else messageBubble.setBubbleColor(convColor)
+            if (!viewHolder.isFeedPost) {
+                if (interaction.isIncoming)
+                    messageBubble.setBubbleColor(context.getColor(R.color.grey_500))
+                else messageBubble.setBubbleColor(convColor)
+            }
             true
         }
 
@@ -1871,7 +1994,7 @@ class ConversationAdapter(
     ) {
         val avatar = viewHolder.mAvatar
         val peerDisplayName = viewHolder.mPeerDisplayName
-        if (presenter.isGroup() && interaction.isIncoming) {
+        if (!viewHolder.isFeedPost && presenter.isGroup() && interaction.isIncoming) {
             val contact = interaction.contact ?: return
             val account = interaction.account ?: return
             val endOfSeq = sequenceType == SequenceType.LAST || sequenceType == SequenceType.SINGLE

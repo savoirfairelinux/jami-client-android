@@ -32,6 +32,7 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito.RETURNS_DEEP_STUBS
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
@@ -74,6 +75,82 @@ class MessageGroupingTest {
     @After
     fun tearDown() {
         holders.forEach { it.compositeDisposable.clear() }
+    }
+
+    @Test
+    fun feedPostShowsCommentsAccordingToPermissionAndCount() {
+        val fragment = mock(ConversationFragment::class.java)
+        `when`(fragment.resources).thenReturn(context.resources)
+        `when`(fragment.requireContext()).thenReturn(context)
+        val feed = ConversationAdapter(fragment, presenter, isThreadProjection = true)
+            .apply { showLinkPreviews = false }
+        val post = message().apply { setSwarmInfo("feed", "post", null) }
+        val idle = net.jami.model.Account.ComposingStatus.Idle
+        feed.updateProjection(listOf(post), emptyMap(), emptySet(), false, idle, feedTimeline = true)
+        val holder = feed.onCreateViewHolder(FrameLayout(context), feed.getItemViewType(0))
+            .also { holders.add(it) }
+        val comments = requireNotNull(holder.threadReplies)
+        val react = holder.itemView.findViewById<View>(R.id.feed_post_react)
+        feed.onBindViewHolder(holder, 0)
+        assertTrue(holder.itemView.isLongClickable)
+        assertEquals(View.GONE, comments.visibility)
+        assertEquals(View.GONE, react.visibility)
+        assertTrue(holder.itemView.paddingBottom > 0)
+
+        `when`(presenter.canSendText("post")).thenReturn(true)
+        `when`(presenter.hasPermission(net.jami.model.Conversation.Permission.Reaction)).thenReturn(true)
+        feed.onBindViewHolder(holder, 0)
+        assertEquals(View.VISIBLE, comments.visibility)
+        assertEquals(View.VISIBLE, react.visibility)
+        assertTrue(comments.text.isEmpty())
+        assertEquals(context.getString(R.string.feed_comment), comments.contentDescription.toString())
+
+        `when`(presenter.canSendText("post")).thenReturn(false)
+        feed.updateProjection(listOf(post), mapOf("post" to 2), emptySet(), false, idle, feedTimeline = true)
+        feed.onBindViewHolder(holder, 0)
+        assertEquals(View.VISIBLE, comments.visibility)
+        assertEquals("2", comments.text.toString())
+        assertEquals(context.resources.getQuantityString(R.plurals.feed_comment_count, 2, 2), comments.contentDescription.toString())
+        assertTrue(comments.performClick())
+        verify(fragment).toggleFeedComments(post)
+
+        val postType = feed.getItemViewType(0)
+        val reply = message().apply {
+            setSwarmInfo("feed", "reply", null)
+            replyToId = "post"
+        }
+        val projection = net.jami.model.ConversationThreads(listOf(post, reply, message()))
+        val expandedPosts = setOf("post")
+        feed.updateProjection(
+            projection.timelineWithComments(expandedPosts), mapOf("post" to 1), emptySet(),
+            false, idle, feedTimeline = true, expandedFeedPosts = expandedPosts,
+            feedCommentIds = setOf("reply")
+        )
+        assertEquals(1, feed.getMessagePosition("reply"))
+        feed.onBindViewHolder(holder, 0)
+        assertEquals(0, holder.itemView.paddingBottom)
+        assertEquals("1", comments.text.toString())
+        assertEquals(context.resources.getQuantityString(R.plurals.feed_comment_count, 1, 1), comments.contentDescription.toString())
+        val replyHolder = feed.onCreateViewHolder(FrameLayout(context), feed.getItemViewType(1))
+            .also { holders.add(it) }
+        feed.onBindViewHolder(replyHolder, 1)
+        assertNull(replyHolder.threadReplies)
+        assertTrue(replyHolder.itemView.isLongClickable)
+        assertEquals(0, replyHolder.itemView.paddingTop)
+        assertTrue(replyHolder.itemView.paddingBottom > 0)
+        val replyButton = replyHolder.itemView.findViewById<View>(R.id.feed_comment_reply)
+        assertEquals(View.GONE, replyButton.visibility)
+        `when`(presenter.canSendText("reply")).thenReturn(true)
+        feed.onBindViewHolder(replyHolder, 1)
+        assertTrue(replyButton.performClick())
+        verify(presenter).startReplyTo(reply)
+
+        feed.updateProjection(listOf(post), emptyMap(), emptySet(), false, idle, feedTimeline = true)
+        feed.onBindViewHolder(holder, 0)
+        assertTrue(holder.itemView.paddingBottom > 0)
+
+        feed.updateProjection(listOf(post), emptyMap(), emptySet(), false, idle, feedTimeline = false)
+        assertNotEquals(postType, feed.getItemViewType(0))
     }
 
     @Test

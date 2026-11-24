@@ -339,6 +339,18 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="feed_name">Feed name</string>
     <string name="create_feed">Create Feed</string>
     <string name="feed_details">Feed details</string>
+    <string name="feed_write_post">Write a post</string>
+    <string name="feed_write_comment">Write a comment</string>
+    <string name="feed_comment">Comment</string>
+    <string name="feed_reply">Reply</string>
+    <string name="feed_react">React to post</string>
+    <string name="feed_comments_expanded">Comments expanded</string>
+    <string name="feed_comments_collapsed">Comments collapsed</string>
+    <string name="feed_post_timestamp">%1$s · %2$s</string>
+    <plurals name="feed_comment_count">
+        <item quantity="one">%d comment</item>
+        <item quantity="other">%d comments</item>
+    </plurals>
     <string name="conversation_type_feed">Feed</string>
     <string name="leave_feed">Leave Feed</string>
     <string name="leave_feed_title">Leave this Feed?</string>

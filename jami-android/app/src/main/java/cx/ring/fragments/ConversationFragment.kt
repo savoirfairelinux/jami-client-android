@@ -121,6 +121,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     private var threads: ConversationThreads? = null
     private var restoredThreadRoot: String? = null
+    private val expandedFeedPosts = linkedSetOf<String>()
     private var threadRenderJob: Disposable? = null
     private var threadScreenAnimation: Animation? = null
     private var pendingThreadSlide: Boolean? = null
@@ -345,6 +346,12 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     fun openThread(rootId: String, onOpened: (() -> Unit)? = null) {
+        if (isFeedConversation()) {
+            expandedFeedPosts.add(rootId)
+            onOpened?.invoke()
+            scheduleThreadRender()
+            return
+        }
         if (!threadState.enabled || threadState.rootId == rootId) return
         rememberMainScroll()
         transitionThreadScreen(forward = true) {
@@ -358,6 +365,28 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             onOpened?.invoke()
             scheduleThreadRender()
         }
+    }
+
+    fun toggleFeedComments(post: Interaction) {
+        val id = post.messageId ?: return
+        val list = binding?.histList ?: return
+        val manager = list.layoutManager as? LinearLayoutManager
+        val position = visibleAdapter?.getMessagePosition(id) ?: -1
+        manager?.findViewByPosition(position)?.let {
+            pendingThreadScroll = id
+            pendingThreadOffset = it.top - list.paddingTop
+            pendingThreadHighlight = false
+        }
+        if (expandedFeedPosts.remove(id)) {
+            val reply = replyingTo?.messageId
+            if (reply == id || reply != null && threads?.rootId(reply) == id)
+                clearReply()
+        } else {
+            expandedFeedPosts.add(id)
+            if (presenter.canSendText(id) || presenter.canSendFile(id))
+                showReplyPreview(post, focus = false)
+        }
+        scheduleThreadRender()
     }
 
     private fun closeThread(onClosed: (() -> Unit)? = null) {
@@ -401,6 +430,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private fun updateThreadHeader() {
         val binding = binding ?: return
         val root = threadState.rootId
+        val feed = isFeedConversation()
+        binding.histList.setBackgroundResource(
+            if (feed && root == null) R.drawable.background_feed_timeline else 0
+        )
         if (binding.threadBar.isVisible != (root != null)) {
             val transition = binding.appbar.layoutTransition
             binding.appbar.layoutTransition = null
@@ -423,7 +456,12 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         binding.msgInputTxt.isVisible = canText
         binding.msgInputTxt.isEnabled = canCompose && canText
         binding.msgInputTxt.setHint(
-            if (root == null) R.string.write_a_message else R.string.conversation_thread_reply_hint
+            when {
+                feed && replyTo == null -> R.string.feed_write_post
+                feed -> R.string.feed_write_comment
+                root == null -> R.string.write_a_message
+                else -> R.string.conversation_thread_reply_hint
+            }
         )
         binding.msgSend.isVisible = canText && !binding.msgInputTxt.text.isNullOrEmpty()
         binding.emojiSend.isVisible = canText && binding.msgInputTxt.text.isNullOrEmpty()
@@ -490,13 +528,17 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         if (threadState.enabled != enabled) setThreadingEnabled(enabled)
     }
 
+    private fun isFeedConversation(): Boolean {
+        mConversationItem?.let { return it.isFeed() }
+        val path = ConversationPath.fromBundle(arguments) ?: return false
+        return accountService.getAccount(path.accountId)?.getByUri(path.conversationUri)
+            ?.effectiveMode == Conversation.Mode.Feed
+    }
+
     private fun threadingEnabled(): Boolean {
         val path = ConversationPath.fromBundle(arguments) ?: return false
-        val isFeed = mConversationItem?.isFeed() == true ||
-            accountService.getAccount(path.accountId)?.getByUri(path.conversationUri)
-                ?.effectiveMode == Conversation.Mode.Feed
         return ConversationThreadState.shouldEnable(
-            path.conversationUri.isSwarm, isFeed,
+            path.conversationUri.isSwarm, isFeedConversation(),
             accountPreferences?.getBoolean(PREF_THREADED_VIEW, false) == true
         )
     }
@@ -555,6 +597,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         if (!threadState.enabled) return
         val history = mAdapter?.history ?: return
         val root = threadState.rootId
+        val feedTimeline = root == null && isFeedConversation()
         val changed = changedThreadMessages.toSet()
         val added = newThreadMessages.toSet()
         val force = forceThreadRefresh
@@ -565,8 +608,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 val list = binding?.histList ?: return@subscribe
                 val adapter = threadAdapter ?: return@subscribe
                 if (!threadState.enabled || threadState.rootId != root) return@subscribe
-                val messages = if (root == null) projection.timeline
-                    else projection.messages(root)
+                val messages = when {
+                    feedTimeline -> projection.timelineWithComments(expandedFeedPosts)
+                    root == null -> projection.timeline
+                    else -> projection.messages(root)
+                }
                 val oldIds = adapter.history.map { it.messageId }.toSet()
                 val incoming = messages.filter {
                     it.messageId in added && it.messageId !in oldIds
@@ -580,7 +626,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 adapter.threadRootId = root
                 adapter.updateProjection(
                     messages, counts, changed, force,
-                    if (root == null) composingStatus else ComposingStatus.Idle
+                    if (root == null) composingStatus else ComposingStatus.Idle,
+                    feedTimeline = feedTimeline,
+                    expandedFeedPosts = if (feedTimeline) expandedFeedPosts else emptySet(),
+                    feedCommentIds = if (feedTimeline) messages.mapNotNull { message ->
+                        val id = message.messageId ?: return@mapNotNull null
+                        id.takeIf { projection.rootId(it)?.let { rootId -> rootId != it } == true }
+                    }.toSet() else emptySet()
                 )
                 threads = projection
                 changedThreadMessages.removeAll(changed)
@@ -594,7 +646,14 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 else if (incoming.isNotEmpty() &&
                     (nearEnd || incoming.any { !it.isIncoming })
                 ) {
-                    scrollToEnd()
+                    if (!feedTimeline || incoming.any { it.replyToId.isNullOrEmpty() }) {
+                        scrollToEnd()
+                    } else {
+                        incoming.lastOrNull { !it.isIncoming }?.messageId?.let { id ->
+                            val position = adapter.getMessagePosition(id)
+                            if (position != -1) list.smoothScrollToPosition(position)
+                        }
+                    }
                     if (incoming.any { it.isIncoming })
                         announceIncomingMessageForAccessibility()
                 }
@@ -611,6 +670,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         val manager = list?.layoutManager as? LinearLayoutManager
         val position = manager?.findFirstVisibleItemPosition() ?: -1
         outState.putString(STATE_THREAD_ROOT, threadState.rootId)
+        outState.putStringArrayList(STATE_EXPANDED_FEED_POSTS, ArrayList(expandedFeedPosts))
         outState.putString(
             STATE_SCROLL_MESSAGE,
             visibleAdapter?.getMessageFromPosition(position)?.messageId
@@ -679,7 +739,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         if (threadState.enabled) {
             val projection = ConversationThreads(mAdapter?.history.orEmpty())
             val root = projection.rootId(messageId)
-            if (root != null && root != threadState.rootId &&
+            if (isFeedConversation()) {
+                if (root != null && root != messageId) expandedFeedPosts.add(root)
+                pendingThreadOffset = 0
+            } else if (root != null && root != threadState.rootId &&
                 (root != messageId || threadState.rootId != null)
             ) {
                 openThread(root) { scrollToMessage(messageId, highlight) }
@@ -725,6 +788,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         restoredThreadRoot = savedInstanceState?.getString(STATE_THREAD_ROOT)
+        expandedFeedPosts.clear()
+        expandedFeedPosts.addAll(savedInstanceState?.getStringArrayList(STATE_EXPANDED_FEED_POSTS).orEmpty())
             ?: threadState.rootId
         pendingThreadScroll = savedInstanceState?.getString(STATE_SCROLL_MESSAGE)
         pendingThreadOffset = savedInstanceState?.getInt(STATE_SCROLL_OFFSET) ?: 0
@@ -1552,7 +1617,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         accountPreferences = getAccountPreferences(requireContext(), path.accountId)
         threadState = ConversationThreadState(
             threadingEnabled(),
-            restoredThreadRoot
+            restoredThreadRoot.takeUnless { isFeedConversation() }
         )
 
         // Load shared preferences. Usually useful for non-swarm conversations.
@@ -1617,8 +1682,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun displayContact(conversation: ConversationItemViewModel) {
+        val wasFeed = isFeedConversation()
         mConversationItem = conversation
         applyThreadPreference()
+        if (wasFeed != conversation.isFeed()) {
+            updateThreadHeader()
+            scheduleThreadRender()
+        }
         val avatar = AvatarFactory.getAvatar(requireContext(), conversation).blockingGet()
         mParticipantAvatars[conversation.uri.rawRingId] = AvatarDrawable(avatar)
         setupActionbar(conversation, avatar)
@@ -1774,13 +1844,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             conversationAvatar.setImageDrawable(img)
             setConversationTitle(contactTitle, conversation)
             setConversationTitle(threadConversationName, conversation)
-            if (conversation.uriTitle != conversation.title) {
-                contactSubtitle.text = conversation.uriTitle
-                contactSubtitle.visibility = View.VISIBLE
-            } else {
-                contactSubtitle.text = ""
-                contactSubtitle.visibility = View.GONE
-            }
+            val subtitle = if (conversation.isFeed()) conversation.conversationProfile.description
+                else conversation.uriTitle
+            contactSubtitle.text = subtitle
+            contactSubtitle.isVisible = !subtitle.isNullOrBlank() && subtitle != conversation.title
         }
     }
 
@@ -1855,6 +1922,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun updateConversationPermissions() {
+        if (isFeedConversation() && threadState.rootId == null) {
+            forceThreadRefresh = true
+            scheduleThreadRender()
+        }
         updateThreadHeader()
         updatePaddings()
         binding?.apply {
@@ -2007,7 +2078,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         if (threadState.enabled) {
             val id = interaction.messageId
             val root = id?.let { ConversationThreads(mAdapter?.history.orEmpty()).rootId(it) }
-            if (root != null && root != threadState.rootId) {
+            if (root != null && isFeedConversation()) {
+                expandedFeedPosts.add(root)
+                scheduleThreadRender()
+            } else if (root != null && root != threadState.rootId) {
                 openThread(root) {
                     showReplyPreview(interaction, focus = false)
                     threadScreenOnShown = { showReplyPreview(interaction, focus = true) }
@@ -2019,6 +2093,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     private fun showReplyPreview(interaction: Interaction, focus: Boolean) {
+        if (isFeedConversation()) {
+            val id = interaction.messageId
+            val root = id?.let { threads?.rootId(it) } ?: id
+            if (root != null && expandedFeedPosts.add(root)) scheduleThreadRender()
+        }
         replyingTo = interaction
         mPreferences?.edit { putString(threadState.replyDraftKey, interaction.messageId) }
         binding?.apply {
@@ -2092,6 +2171,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         const val REQ_ADD_CONTACT = 42
         const val KEY_PREFERENCE_PENDING_MESSAGE = ConversationThreadState.MAIN_DRAFT_KEY
         private const val STATE_THREAD_ROOT = "threadRoot"
+        private const val STATE_EXPANDED_FEED_POSTS = "expandedFeedPosts"
         private const val STATE_SCROLL_MESSAGE = "threadScrollMessage"
         private const val STATE_SCROLL_OFFSET = "threadScrollOffset"
         private const val STATE_MAIN_SCROLL_MESSAGE = "mainScrollMessage"

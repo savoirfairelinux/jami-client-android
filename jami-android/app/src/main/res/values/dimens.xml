@@ -15,6 +15,11 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 -->
 <resources>
+    <dimen name="feed_column_width">720dp</dimen>
+    <dimen name="feed_post_inset">16dp</dimen>
+    <dimen name="feed_card_corner">16dp</dimen>
+    <dimen name="feed_card_gap">5dp</dimen>
+    <dimen name="feed_card_stroke">1dp</dimen>
 
     <dimen name="padding_xsmall">2dp</dimen>
     <dimen name="padding_small">8dp</dimen>

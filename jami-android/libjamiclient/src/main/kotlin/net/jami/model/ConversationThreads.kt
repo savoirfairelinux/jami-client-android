@@ -53,6 +53,14 @@ class ConversationThreads(history: List<Interaction>) {
 
     fun replyCount(rootId: String): Int = (messages(rootId).size - 1).coerceAtLeast(0)
 
+    fun timelineWithComments(expandedPosts: Set<String>): List<Interaction> = buildList {
+        for (post in timeline) {
+            add(post)
+            val id = post.messageId ?: continue
+            if (id in expandedPosts) addAll(messages(id).drop(1))
+        }
+    }
+
     private fun resolveRoot(id: String) {
         var current = id
         var root: String? = null
