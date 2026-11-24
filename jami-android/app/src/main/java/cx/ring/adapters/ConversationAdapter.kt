@@ -900,6 +900,7 @@ class ConversationAdapter(
         holder.mImage?.setOnLongClickListener(null)
 
         holder.video?.let { video ->
+            Glide.with(video.context.applicationContext).clear(video)
             video.setOnClickListener(null)
         }
         holder.surface?.release()
@@ -1122,28 +1123,40 @@ class ConversationAdapter(
         val context = viewHolder.itemView.context
         val imageView = viewHolder.video ?: return
         val cardLayout = viewHolder.mLayout as? CardView ?: return
-        val thumbnail = try {
-            ThumbnailUtils.createVideoThumbnail(
-                path.canonicalPath,
-                MediaStore.Video.Thumbnails.MINI_KIND
-            )
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to create video thumbnail", e)
+        val thumbnail = if (viewHolder.isFeedPost) {
+            Glide.with(context)
+                .asBitmap()
+                .load(path)
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .centerCrop()
+                .placeholder(R.drawable.video_thumbnail_fallback)
+                .error(R.drawable.video_thumbnail_fallback)
+                .dontAnimate()
+                .into(imageView)
             null
-        }
-
-        if (thumbnail != null) {
-            val maxDim = max(thumbnail.width, thumbnail.height)
-            val targetWidth = thumbnail.width * mPictureMaxSize / maxDim
-            val targetHeight = thumbnail.height * mPictureMaxSize / maxDim
-
-            imageView.layoutParams = imageView.layoutParams.apply {
-                width = targetWidth
-                height = targetHeight
-            }
-            imageView.setImageBitmap(thumbnail)
         } else {
-            imageView.setImageResource(R.drawable.video_thumbnail_fallback)
+            Glide.with(imageView).clear(imageView)
+            val bitmap = try {
+                ThumbnailUtils.createVideoThumbnail(
+                    path.canonicalPath,
+                    MediaStore.Video.Thumbnails.MINI_KIND
+                )
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to create video thumbnail", e)
+                null
+            }
+
+            if (bitmap != null) {
+                val maxDim = max(bitmap.width, bitmap.height)
+                imageView.layoutParams = imageView.layoutParams.apply {
+                    width = bitmap.width * mPictureMaxSize / maxDim
+                    height = bitmap.height * mPictureMaxSize / maxDim
+                }
+                imageView.setImageBitmap(bitmap)
+            } else {
+                imageView.setImageResource(R.drawable.video_thumbnail_fallback)
+            }
+            bitmap
         }
 
         ContextCompat.getDrawable(context, R.drawable.baseline_play_arrow_24)
