@@ -105,7 +105,9 @@ class MediaViewerFragment : Fragment() {
                     val thumbRatio = calculateAspectRatio(previewWidth, previewHeight)
                     val videoRatio = calculateAspectRatio(videoWidth, videoHeight)
 
-                    if (abs(thumbRatio - videoRatio) > 0.01f) {
+                    if (videoWidth > 0 && videoHeight > 0 &&
+                        (previewWidth <= 0 || previewHeight <= 0 || abs(thumbRatio - videoRatio) > 0.01f)
+                    ) {
                         val screenWidth = resources.displayMetrics.widthPixels
                         val screenHeight = resources.displayMetrics.heightPixels
                         val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
