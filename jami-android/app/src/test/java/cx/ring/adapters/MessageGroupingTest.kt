@@ -154,6 +154,43 @@ class MessageGroupingTest {
     }
 
     @Test
+    fun feedAttachmentsAlignToTheStartInEitherDirection() {
+        val fragment = mock(ConversationFragment::class.java)
+        `when`(fragment.resources).thenReturn(context.resources)
+        `when`(fragment.requireContext()).thenReturn(context)
+        val feed = ConversationAdapter(fragment, presenter, isThreadProjection = true)
+        for (incoming in listOf(true, false)) {
+            for (name in listOf("photo.jpg", "clip.mp4", "voice.m4a", "document.pdf")) {
+                val post = transfer(name).apply {
+                    isIncoming = incoming
+                    setSwarmInfo("feed", "attachment", null)
+                }
+                for (comment in listOf(false, true)) {
+                    feed.updateProjection(
+                        listOf(post), emptyMap(), emptySet(), false,
+                        net.jami.model.Account.ComposingStatus.Idle, feedTimeline = true,
+                        feedCommentIds = if (comment) setOf("attachment") else emptySet()
+                    )
+                    val holder = feed.onCreateViewHolder(FrameLayout(context), feed.getItemViewType(0))
+                    val row = holder.itemView
+                    row.measure(
+                        View.MeasureSpec.makeMeasureSpec(480, View.MeasureSpec.EXACTLY),
+                        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+                    )
+                    row.layout(0, 0, row.measuredWidth, row.measuredHeight)
+                    val content = row.findViewById<View>(R.id.feed_post_content)
+                    val media = requireNotNull(
+                        holder.mImage ?: holder.video ?: holder.mAudioInfoLayout ?: holder.mFileInfoLayout
+                    )
+                    assertTrue(media.height > 0)
+                    assertEquals(0, media.left)
+                    if (holder.mAudioInfoLayout == null) assertEquals(content.width, media.width)
+                }
+            }
+        }
+    }
+
+    @Test
     fun gapIsInclusiveAndMeasuredBetweenNeighbors() {
         assertEquals(hour, MessageGrouping.MAX_GAP_MILLIS)
         val first = message()

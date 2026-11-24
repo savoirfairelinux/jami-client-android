@@ -450,7 +450,14 @@ class ConversationAdapter(
             val content = row.findViewById<FrameLayout>(R.id.feed_post_content)
             val isText = type == MessageType.INCOMING_TEXT_MESSAGE ||
                 type == MessageType.OUTGOING_TEXT_MESSAGE
-            val layout = if (isText) R.layout.item_feed_post_text else type.layout
+            val layout = when {
+                isText -> R.layout.item_feed_post_text
+                type.transferType == MessageType.TransferType.IMAGE -> R.layout.item_feed_post_image
+                type.transferType == MessageType.TransferType.VIDEO -> R.layout.item_feed_post_video
+                type.transferType == MessageType.TransferType.AUDIO -> R.layout.item_feed_post_audio
+                type.transferType == MessageType.TransferType.FILE -> R.layout.item_feed_post_file
+                else -> type.layout
+            }
             val body = inflater.inflate(layout, content, false)
             content.addView(body)
             return ConversationViewHolder(row, type, isFeedPost = true, isFeedComment = isComment)
@@ -1414,7 +1421,10 @@ class ConversationAdapter(
         val file = interaction as DataTransfer
         val path = presenter.deviceRuntimeService.getConversationPath(file)
         val timeString = TextUtils.timestampToTime(context, formatter, file.timestamp)
-        viewHolder.mFileTime?.text = timeString
+        viewHolder.mFileTime?.apply {
+            text = timeString
+            isVisible = !viewHolder.isFeedPost
+        }
 
         if (interaction.transferStatus == TransferStatus.FILE_REMOVED) {
             // handle in the same way as removed text
@@ -1436,8 +1446,8 @@ class ConversationAdapter(
             }
         })
 
-        val isDateShown = hasPermanentDateString(file, position)
-        val msgSequenceType = getMsgSequencing(position, isDateShown)
+        val isDateShown = !viewHolder.isFeedPost && hasPermanentDateString(file, position)
+        val msgSequenceType = if (viewHolder.isFeedPost) SequenceType.SINGLE else getMsgSequencing(position, isDateShown)
         configureTimestamp(viewHolder, file, isDateShown)
         configureSender(viewHolder, interaction, position, msgSequenceType)
         val type = viewHolder.type.transferType
@@ -1448,7 +1458,9 @@ class ConversationAdapter(
             else -> viewHolder.mFileInfoLayout
         } ?: return
 
-        if (type == MessageType.TransferType.AUDIO || type == MessageType.TransferType.FILE) {
+        val usesChatBubble = !viewHolder.isFeedPost &&
+            (type == MessageType.TransferType.AUDIO || type == MessageType.TransferType.FILE)
+        if (usesChatBubble) {
             val template = ContextCompat.getDrawable(
                 context, msgBGLayouts[msgSequenceType.ordinal + (if (file.isIncoming) 4 else 0)]
             ) as GradientDrawable
@@ -1458,7 +1470,7 @@ class ConversationAdapter(
         }
 
         longPressView.setOnLongClickListener { v: View ->
-            if (type == MessageType.TransferType.AUDIO || type == MessageType.TransferType.FILE) {
+            if (usesChatBubble) {
                 if (file.isIncoming) {
                     longPressView.background.setTint(context.getColor(R.color.grey_500))
                 } else {
@@ -1469,7 +1481,7 @@ class ConversationAdapter(
             true
         }
 
-        val isMessageSeparationNeeded = isMessageSeparationNeeded(isDateShown, position)
+        val isMessageSeparationNeeded = !viewHolder.isFeedPost && isMessageSeparationNeeded(isDateShown, position)
         when (type) {
             MessageType.TransferType.IMAGE -> {
                 // Add margin if message need to be separated.
@@ -1496,14 +1508,13 @@ class ConversationAdapter(
                         .getDimensionPixelSize(R.dimen.conversation_message_separation)
                 }
                 viewHolder.mAudioInfoLayout?.setOnClickListener(null)
-                // Set the tint of the audio file background
-                if (file.isOutgoing) {
-                    viewHolder.mAudioInfoLayout?.background?.setTint(convColor)
-                } else {
-                    viewHolder.mAudioInfoLayout?.background?.setTint(
-                        context.getColor(R.color.conversation_secondary_background)
-                    )
-                }
+                val tint = if (file.isOutgoing) convColor
+                    else context.getColor(R.color.conversation_secondary_background)
+                viewHolder.mAudioInfoLayout?.background?.setTint(tint)
+                if (viewHolder.isFeedPost)
+                    viewHolder.mMsgTxt?.setTextColor(context.getColor(
+                        if (file.isOutgoing) R.color.white else R.color.colorOnSurface
+                    ))
                 configureAudio(viewHolder, path, file.isOutgoing, file.fileId)
             }
 
@@ -1518,12 +1529,16 @@ class ConversationAdapter(
                 (viewHolder.mIcon?.drawable as? Animatable)?.stop()
                 viewHolder.mIcon?.setPadding(res.getDimensionPixelSize(R.dimen.padding_large))
                 viewHolder.mIcon?.setClipToOutline(true)
-                viewHolder.mIcon?.imageTintList = context.getColorStateList(R.color.file_icon_out)
-                viewHolder.mIcon?.backgroundTintList = context.getColorStateList(if (file.isOutgoing) R.color.file_icon_background_out else R.color.file_icon_background_in)
+                viewHolder.mIcon?.imageTintList = if (viewHolder.isFeedPost)
+                    ColorStateList.valueOf(MaterialColors.getColor(longPressView, com.google.android.material.R.attr.colorOnSurfaceVariant))
+                else context.getColorStateList(R.color.file_icon_out)
+                if (!viewHolder.isFeedPost)
+                    viewHolder.mIcon?.backgroundTintList = context.getColorStateList(if (file.isOutgoing) R.color.file_icon_background_out else R.color.file_icon_background_in)
                 viewHolder.mFileTitle?.text = file.displayName
                 viewHolder.mFileInfoLayout?.setOnClickListener(null)
                 // Set the tint of the file background
-                if (file.isOutgoing) viewHolder.mFileInfoLayout?.background?.setTint(convColor)
+                if (!viewHolder.isFeedPost && file.isOutgoing)
+                    viewHolder.mFileInfoLayout?.background?.setTint(convColor)
 
                 when {
                     !file.hasExactContent && (status == TransferStatus.TRANSFER_AWAITING_HOST ||

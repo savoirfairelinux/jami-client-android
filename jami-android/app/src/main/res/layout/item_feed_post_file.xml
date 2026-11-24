@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@id/fileInfoLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="56dp"
+    android:background="@drawable/background_feed_attachment"
+    android:foreground="?attr/selectableItemBackground"
+    android:padding="8dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@id/file_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/file_icon_background"
+        android:importantForAccessibility="no"
+        android:scaleType="fitCenter"
+        app:backgroundTint="?attr/colorSurface"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:srcCompat="@drawable/baseline_attach_file_24"
+        app:tint="?attr/colorOnSurfaceVariant" />
+
+    <TextView
+        android:id="@id/file_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textAppearance="?attr/textAppearanceTitleSmall"
+        android:textColor="?attr/colorOnSurface"
+        app:layout_constraintBottom_toTopOf="@id/file_download_progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/file_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@id/file_download_progress"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:indeterminate="false"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/file_size"
+        app:layout_constraintEnd_toEndOf="@id/file_title"
+        app:layout_constraintStart_toStartOf="@id/file_title"
+        app:layout_constraintTop_toBottomOf="@id/file_title" />
+
+    <TextView
+        android:id="@id/file_size"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceBodySmall"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/file_title"
+        app:layout_constraintStart_toStartOf="@id/file_title"
+        app:layout_constraintTop_toBottomOf="@id/file_download_progress" />
+</androidx.constraintlayout.widget.ConstraintLayout>

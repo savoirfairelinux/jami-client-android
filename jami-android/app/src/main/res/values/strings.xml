@@ -346,6 +346,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="feed_react">React to post</string>
     <string name="feed_comments_expanded">Comments expanded</string>
     <string name="feed_comments_collapsed">Comments collapsed</string>
+    <string name="feed_open_photo">Open photo</string>
+    <string name="feed_play_video">Play video</string>
     <string name="feed_post_timestamp">%1$s · %2$s</string>
     <plurals name="feed_comment_count">
         <item quantity="one">%d comment</item>
