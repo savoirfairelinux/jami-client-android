@@ -551,7 +551,7 @@ class AccountServiceTest {
     @Test
     fun invitationsDecodeFeedAndPreserveExistingDefaults() {
         val account = Account("account", emptyMap(), emptyList(),
-            mapOf(ConfigKey.ACCOUNT_REGISTRATION_STATUS.key to "REGISTERED"))
+            mapOf(ConfigKey.ACCOUNT_REGISTRATION_STATUS.key to "REGISTERED")).apply { setHistoryLoaded() }
         doReturn(account).`when`(service).getAccount("account")
         for ((mode, expected) in listOf(
             "5" to Conversation.Mode.Feed,
@@ -564,7 +564,12 @@ class AccountServiceTest {
 
             service.conversationRequestReceived("account", conversationId, metadata)
 
-            val request = account.getByUri(Uri(Uri.SWARM_SCHEME, conversationId))!!
+            val request = account.getPendingSubject()
+                .flatMapIterable { it }
+                .filter { it.uri.rawRingId == conversationId }
+                .firstOrError()
+                .timeout(3, TimeUnit.SECONDS)
+                .blockingGet()
             assertEquals(Conversation.Mode.Request, request.mode.blockingFirst())
             assertEquals(expected, request.requestMode)
             assertEquals(expected, request.request!!.mode)

@@ -479,7 +479,7 @@ class ConversationFacade(
     private fun getSmartlist(account: Account): Single<Account> {
         val actions: MutableList<Completable> = ArrayList(account.getConversations().size + 1)
         for (c in account.getConversations()) {
-            if (c.isSwarm) actions.add(c.lastElementLoaded)
+            if (c.isSwarm && !c.isSyncing()) actions.add(c.lastElementLoaded)
         }
         if (!account.isJami)
             actions.add(mHistoryService.getSmartlist(account.accountId)
@@ -555,11 +555,6 @@ class ConversationFacade(
     }
 
     fun acceptRequest(conversation: Conversation) {
-        if (conversation.mode.blockingFirst() == Conversation.Mode.Request) {
-            conversation.loaded = null
-            conversation.clearHistory(true)
-            conversation.setMode(Conversation.Mode.Syncing)
-        }
         acceptRequest(conversation.accountId, conversation.uri)
     }
 

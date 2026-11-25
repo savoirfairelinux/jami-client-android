@@ -56,7 +56,7 @@ class Conversation(
     val isNotificationEnabled: Boolean
         get() = isNotificationEnabledSubject.blockingFirst()
 
-    private val mContactSubject: Subject<List<Contact>> = BehaviorSubject.create()
+    private val mContactSubject: Subject<List<Contact>> = BehaviorSubject.createDefault(emptyList())
     var loaded: Single<Conversation>? = null
     val lastElementLoadedSubject = SingleSubject.create<Completable>()
     val lastElementLoaded = lastElementLoadedSubject.flatMapCompletable { it }

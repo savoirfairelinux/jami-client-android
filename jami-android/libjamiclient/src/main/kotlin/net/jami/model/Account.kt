@@ -215,7 +215,10 @@ class Account(
         else conversationsSubject.map { list ->
             // In case where blocked contact is in a swarm:group, we want to keep the conversation,
             // except if it is a swarm:group with only him and the user.
-            list.filter { it.isGroup() || it.contact?.isBlocked == false }
+            list.filter {
+                it.isGroup() || it.contact?.isBlocked == false ||
+                    (it.isSyncing() && (it.effectiveMode.isGroup || it.contact == null))
+            }
         }
 
     /**

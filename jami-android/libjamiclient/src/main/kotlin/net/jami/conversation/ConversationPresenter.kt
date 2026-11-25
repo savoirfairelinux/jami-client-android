@@ -137,13 +137,13 @@ class ConversationPresenter @Inject constructor(
     private fun initContact(account: Account, c: ConversationItemViewModel, view: ConversationView) {
         if (account.isJami) {
             Log.w(TAG, "initContact ${c.uri} mode: ${c.mode}")
-            if (c.isEnded) {
+            if (c.mode === Conversation.Mode.Syncing) {
+                view.switchToSyncingView()
+            } else if (c.isEnded) {
                 val contactC = c.getContact()?.contact
                 val canSwitch = !c.isGroup() && contactC?.conversationUri?.blockingFirst() != c.uri
                 Log.w(TAG, "initContact switchToEndedView canSwitch=$canSwitch for ${c.uri}: isGroup=${c.isGroup()} conversationUri=${contactC?.conversationUri?.blockingFirst()}")
                 view.switchToEndedView(canSwitch)
-            } else if (c.mode === Conversation.Mode.Syncing) {
-                view.switchToSyncingView()
             } else if (c.mode == Conversation.Mode.Request) {
                 val req = c.request
                 if (req == null) {
@@ -504,8 +504,9 @@ class ConversationPresenter @Inject constructor(
     fun onAcceptIncomingContactRequest() {
         mConversation?.let { conversation ->
             conversationFacade.acceptRequest(conversation)
+            if (!conversation.isSwarm)
+                view?.switchToConversationView()
         }
-        view?.switchToConversationView()
     }
 
     fun onAddContact() {

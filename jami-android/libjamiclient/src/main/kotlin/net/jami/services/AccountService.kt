@@ -376,7 +376,7 @@ class AccountService(
                         }
                     }
                 }
-                if (!conversation.lastElementLoadedSubject.hasValue())
+                if (!conversation.isSyncing() && !conversation.lastElementLoadedSubject.hasValue())
                     conversation.lastElementLoadedSubject.onSuccess(loadMore(conversation, 8).ignoreElement().cache())
                 account.conversationStarted(conversation)
             } catch (e: Exception) {
@@ -1782,6 +1782,36 @@ class AccountService(
         }}
     }
 
+    fun conversationAdded(accountId: String, conversationId: String) {
+        conversationCallbacks.dispatch(accountId, conversationId) {
+            val account = getAccount(accountId)
+            if (account == null) {
+                Log.w(TAG, "conversationAdded: unable to find account $accountId")
+                return@dispatch
+            }
+            val uri = Uri(Uri.SWARM_SCHEME, conversationId)
+            val existing = account.getByUri(uri)
+            if (existing != null && !existing.isSyncing() && existing.mode.blockingFirst() != Conversation.Mode.Request) {
+                account.removeRequest(uri)
+                return@dispatch
+            }
+            val info = JamiService.conversationInfos(accountId, conversationId).toNativeFromUtf8()
+            val conversation = existing ?: account.newSwarm(conversationId, Conversation.Mode.Syncing)
+            info["mode"]?.let { mode ->
+                parseConversationMode(accountId, conversationId, mode)?.let { conversation.requestMode = it }
+            }
+            if (info.isNotEmpty())
+                conversation.setProfile(mVCardService.loadConversationProfile(info))
+            conversation.updateTimestamps(info)
+            val timestamp = TimestampUtils.fromDetails(info, "created")
+                .takeIf { it > 0L } ?: conversation.request?.timestamp
+            if (timestamp != null)
+                conversation.lastEvent = ContactEvent(timestamp)
+            conversation.setLastMessageNotified(mHistoryService.getLastMessageNotified(accountId, uri))
+            account.conversationStarted(conversation, Conversation.Mode.Syncing)
+        }
+    }
+
     fun conversationReady(accountId: String, conversationId: String) {
         conversationCallbacks.dispatch(accountId, conversationId) {
             conversationReadyNow(accountId, conversationId)
@@ -1827,10 +1857,10 @@ class AccountService(
                     conversation.addContact(contact, role)
                 }
             }
-            if (!conversation.lastElementLoadedSubject.hasValue())
-                conversation.lastElementLoadedSubject.onSuccess(loadMore(conversation, 8).ignoreElement().cache())
         }
         account.conversationStarted(conversation, if (setMode) mode else null)
+        if (!conversation.lastElementLoadedSubject.hasValue())
+            conversation.lastElementLoadedSubject.onSuccess(loadMore(conversation, 8).ignoreElement().cache())
         loadMore(conversation, 2)
     }
 
@@ -1851,8 +1881,10 @@ class AccountService(
     }
 
     fun conversationRequestDeclined(accountId: String, conversationId: String) {
-        Log.d(TAG, "conversation request for $conversationId is declined")
-        getAccount(accountId)?.removeRequest(Uri(Uri.SWARM_SCHEME, conversationId))
+        conversationCallbacks.dispatch(accountId, conversationId) {
+            Log.d(TAG, "conversation request for $conversationId is declined")
+            getAccount(accountId)?.removeRequest(Uri(Uri.SWARM_SCHEME, conversationId))
+        }
     }
 
     private fun parseConversationMode(
@@ -1870,6 +1902,12 @@ class AccountService(
     }
 
     fun conversationRequestReceived(accountId: String, conversationId: String, metadata: Map<String, String>) {
+        conversationCallbacks.dispatch(accountId, conversationId) {
+            conversationRequestReceivedNow(accountId, conversationId, metadata)
+        }
+    }
+
+    private fun conversationRequestReceivedNow(accountId: String, conversationId: String, metadata: Map<String, String>) {
         Log.w(TAG, "ConversationCallback: conversationRequestReceived $accountId/$conversationId ${metadata.size}")
         val account = getAccount(accountId)
         if (account == null || conversationId.isEmpty()) {
