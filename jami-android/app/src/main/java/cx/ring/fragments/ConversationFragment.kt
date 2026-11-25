@@ -140,6 +140,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private var threadNavigationSnackbar: Snackbar? = null
     private var historyRequestInFlight = false
     private var historyExhausted = false
+    private var feedPageHadOnlyHiddenEvents = false
     private var viewGeneration = 0
     private var attachmentReplyTarget: String? = null
     private var audioReplyTarget: String? = null
@@ -508,17 +509,26 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         if (loading || historyRequestInFlight || historyExhausted ||
             threadState.rootId != null || threadNavigation.target != null
         ) return
+        val feed = isFeedConversation()
         val knownIds = mAdapter?.history.orEmpty().map { it.messageId }.toSet()
+        feedPageHadOnlyHiddenEvents = false
         historyRequestInFlight = true
         loading = true
         val generation = viewGeneration
         presenter.loadMore {
             if (generation != viewGeneration || binding == null) return@loadMore
             historyRequestInFlight = false
-            historyExhausted = mAdapter?.history.orEmpty().all { it.messageId in knownIds }
+            val newMessages = mAdapter?.history.orEmpty().asSequence()
+                .filterNot { it.messageId in knownIds }
+            historyExhausted = newMessages.none()
             loading = false
             if (threadNavigation.target != null) continueThreadNavigation()
-            else if (threadState.enabled) scheduleThreadRender()
+            else if (threadState.enabled) {
+                feedPageHadOnlyHiddenEvents =
+                    feed && !historyExhausted && newMessages.none(::isFeedMessage)
+                // Continue on the next render so even a synchronous load cannot recurse.
+                scheduleThreadRender()
+            }
         }
     }
 
@@ -534,6 +544,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         return accountService.getAccount(path.accountId)?.getByUri(path.conversationUri)
             ?.effectiveMode == Conversation.Mode.Feed
     }
+
+    private fun isFeedMessage(message: Interaction): Boolean =
+        message.type != Interaction.InteractionType.CONTACT &&
+            message.type != Interaction.InteractionType.INVALID
 
     private fun threadingEnabled(): Boolean {
         val path = ConversationPath.fromBundle(arguments) ?: return false
@@ -601,7 +615,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         val changed = changedThreadMessages.toSet()
         val added = newThreadMessages.toSet()
         val force = forceThreadRefresh
-        threadRenderJob = Single.fromCallable { ConversationThreads(history) }
+        threadRenderJob = Single.fromCallable {
+            ConversationThreads(if (feedTimeline) history.filter(::isFeedMessage) else history)
+        }
             .subscribeOn(Schedulers.computation())
             .observeOn(uiScheduler)
             .subscribe({ projection ->
@@ -658,6 +674,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                         announceIncomingMessageForAccessibility()
                 }
                 showThreadScreen()
+                val feedHasOnlyHiddenHistory = messages.isEmpty() && history.isNotEmpty()
+                if (feedTimeline && (feedPageHadOnlyHiddenEvents || feedHasOnlyHiddenHistory))
+                    loadEarlierMessages()
             }, { error ->
                 cancelThreadScreenTransition()
                 Log.e(TAG, "Unable to display conversation threads", error)
@@ -1020,6 +1039,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         snackbar?.dismiss()
         historyRequestInFlight = false
         historyExhausted = false
+        feedPageHadOnlyHiddenEvents = false
         requestedThreadRoot = null
         binding?.histList?.removeCallbacks(renderThread)
         threadRenderJob?.dispose()
