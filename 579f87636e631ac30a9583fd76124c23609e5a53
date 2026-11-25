@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0341de13_ead784c0",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/DaemonService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-25T21:32:23Z",
+      "side": 1,
+      "message": "[error] Line 401: 🔴 `metadata.toNativeFromUtf8()` is now executed inside `snapshotConversationCallback { ... }`, which defers execution. `metadata` comes from the daemon callback boundary and may not be valid after the callback returns, so this can read invalid/native-freed data or produce corrupted request metadata. Convert the map before scheduling (e.g., `val decoded \u003d metadata.toNativeFromUtf8(); snapshotConversationCallback { mAccountService.conversationRequestReceived(accountId, conversationId, decoded) }`).",
+      "revId": "579f87636e631ac30a9583fd76124c23609e5a53",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
