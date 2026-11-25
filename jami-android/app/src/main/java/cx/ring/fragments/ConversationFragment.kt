@@ -508,6 +508,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         if (loading || historyRequestInFlight || historyExhausted ||
             threadState.rootId != null || threadNavigation.target != null
         ) return
+        val feed = isFeedConversation()
         val knownIds = mAdapter?.history.orEmpty().map { it.messageId }.toSet()
         historyRequestInFlight = true
         loading = true
@@ -515,10 +516,16 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         presenter.loadMore {
             if (generation != viewGeneration || binding == null) return@loadMore
             historyRequestInFlight = false
-            historyExhausted = mAdapter?.history.orEmpty().all { it.messageId in knownIds }
+            val newMessages = mAdapter?.history.orEmpty().filterNot { it.messageId in knownIds }
+            historyExhausted = newMessages.isEmpty()
             loading = false
             if (threadNavigation.target != null) continueThreadNavigation()
-            else if (threadState.enabled) scheduleThreadRender()
+            else if (threadState.enabled) {
+                scheduleThreadRender()
+                // A page of hidden notices adds no rows to trigger another scroll callback.
+                if (feed && !historyExhausted && newMessages.none(::isFeedMessage))
+                    loadEarlierMessages()
+            }
         }
     }
 
@@ -534,6 +541,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         return accountService.getAccount(path.accountId)?.getByUri(path.conversationUri)
             ?.effectiveMode == Conversation.Mode.Feed
     }
+
+    private fun isFeedMessage(message: Interaction): Boolean =
+        message.type != Interaction.InteractionType.CONTACT &&
+            message.type != Interaction.InteractionType.INVALID
 
     private fun threadingEnabled(): Boolean {
         val path = ConversationPath.fromBundle(arguments) ?: return false
@@ -601,7 +612,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         val changed = changedThreadMessages.toSet()
         val added = newThreadMessages.toSet()
         val force = forceThreadRefresh
-        threadRenderJob = Single.fromCallable { ConversationThreads(history) }
+        threadRenderJob = Single.fromCallable {
+            ConversationThreads(if (feedTimeline) history.filter(::isFeedMessage) else history)
+        }
             .subscribeOn(Schedulers.computation())
             .observeOn(uiScheduler)
             .subscribe({ projection ->
@@ -658,6 +671,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                         announceIncomingMessageForAccessibility()
                 }
                 showThreadScreen()
+                if (feedTimeline && messages.isEmpty() && history.isNotEmpty())
+                    loadEarlierMessages()
             }, { error ->
                 cancelThreadScreenTransition()
                 Log.e(TAG, "Unable to display conversation threads", error)
