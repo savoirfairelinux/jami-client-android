@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbbe23e1_25f96b9d",
+        "filename": "jami-android/app/src/main/res/layout/item_feed_post_audio.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-25T15:56:54Z",
+      "side": 1,
+      "message": "[warning] Line 13: 🟡 This feed-specific layout still depends on `@drawable/textmsg_bg_in` (chat bubble drawable). That reintroduces coupling to chat styling and risks unintended feed regressions when chat bubble visuals change. Use a feed-dedicated background (e.g., `background_feed_attachment`) or a new audio-feed drawable to keep feed and chat layouts independent as intended by the change.",
+      "revId": "848268bd6bedaceb6e2957630b94277cef47f2a6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
