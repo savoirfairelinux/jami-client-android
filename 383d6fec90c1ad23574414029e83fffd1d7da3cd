@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e853a354_fc88aab9",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-25T16:43:10Z",
+      "side": 1,
+      "message": "[warning] Line 525: 🟡 `loadEarlierMessages()` is called recursively from inside the `loadMore` callback. If `presenter.loadMore` can ever complete synchronously (e.g., cache/DB-backed path), a long streak of hidden events can create deep recursion and risk stack growth while also monopolizing the UI flow. Prefer an iterative/asynchronous re-trigger (e.g., post to main thread or loop with a bounded page budget per pass) instead of direct self-calls.",
+      "revId": "383d6fec90c1ad23574414029e83fffd1d7da3cd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d28f309_566695c9",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-25T16:43:10Z",
+      "side": 1,
+      "message": "[warning] Line 671: 🟡 There are two independent auto-pagination triggers (`newMessages.none(::isFeedMessage)` in `loadEarlierMessages` and `messages.isEmpty() \u0026\u0026 history.isNotEmpty()` after thread render). This can produce request bursts and makes pagination behavior harder to reason about. Consolidate to a single trigger point with clear guards so hidden-only page traversal stays deterministic.",
+      "revId": "383d6fec90c1ad23574414029e83fffd1d7da3cd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
