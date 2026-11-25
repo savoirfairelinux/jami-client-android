@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3dfadb5_8d55d0f3",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-25T15:55:50Z",
+      "side": 1,
+      "message": "[warning] Line 632: 🟡 `feedCommentIds` currently marks every non-root message as a comment, but feed-card rendering in the adapter is limited to TEXT and DATA_TRANSFER types. This mismatch can produce incorrect card joins/padding when expanded threads contain other interaction types. Compute `feedCommentIds` with the same type predicate used for feed rendering (or derive joins from resolved row view types) so visual grouping stays consistent.",
+      "revId": "45d51ba59f18e511b1bca82d94c7be15104d4dd1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df622b69_3b7a76e6",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2026-11-25T15:55:50Z",
+      "side": 1,
+      "message": "[warning] Line 790: 🟡 `expandedFeedPosts.addAll(... ) ?: threadState.rootId` is a no-op fallback: `addAll` returns non-null `Boolean`, so the Elvis right side is never used. This makes the line misleading and can hide intended state-restore behavior. Replace it with explicit logic (e.g., restore list, then conditionally add `threadState.rootId` if needed) or remove the dead fallback entirely.",
+      "revId": "45d51ba59f18e511b1bca82d94c7be15104d4dd1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
