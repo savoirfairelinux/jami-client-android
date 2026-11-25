@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1b35e31_fc3ed6fa",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-11-25T17:49:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e853a354_fc88aab9",
+      "revId": "383d6fec90c1ad23574414029e83fffd1d7da3cd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7d28f309_566695c9",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-11-25T16:43:10Z",
       "side": 1,
       "message": "[warning] Line 671: 🟡 There are two independent auto-pagination triggers (`newMessages.none(::isFeedMessage)` in `loadEarlierMessages` and `messages.isEmpty() \u0026\u0026 history.isNotEmpty()` after thread render). This can produce request bursts and makes pagination behavior harder to reason about. Consolidate to a single trigger point with clear guards so hidden-only page traversal stays deterministic.",
+      "revId": "383d6fec90c1ad23574414029e83fffd1d7da3cd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "508d4455_f429cee2",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2026-11-25T17:49:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d28f309_566695c9",
       "revId": "383d6fec90c1ad23574414029e83fffd1d7da3cd",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
